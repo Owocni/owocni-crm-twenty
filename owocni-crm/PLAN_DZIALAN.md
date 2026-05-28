@@ -32,6 +32,9 @@
 | B2 | Zarchiwizować snapshoty POC jako dowód Fazy 1, nie jako SSOT | `twenty/snapshots/` bez zmian |
 | B3 | Weryfikacja z właścicielem: kryteria stage'ów (ADR #5) | wymaga handlowców |
 | B4 | Preflight POC: native webhook payload (`data.before`?) | Decyzja #11 |
+| B5 | **AUDIT_AKK tura A** — kroki 1–7, fault-only | `AUDIT_AKK.md` — tylko P1 do domknięcia |
+| B6 | **AUDIT_AKK tura B** — kroki 8–9 (Twenty + Stape) | po domknięciu P1 (#12–#14) |
+| B7 | Przygotować szkice pod **AUDIT_MIGRACJA** | `migration/README.md`, `STAGE_MAPPING.md` — pełny audyt przed importem |
 
 ---
 

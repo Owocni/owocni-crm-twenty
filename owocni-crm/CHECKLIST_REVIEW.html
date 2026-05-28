@@ -249,6 +249,28 @@
     .decisions-panel li { margin-bottom: 6px; }
     .legend { font-size: 12px; color: var(--text-2); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 
+    .info-panels { margin-top: 10px; display: grid; gap: 8px; }
+    .info-box {
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      line-height: 1.45;
+    }
+    .info-box strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      margin-bottom: 6px;
+    }
+    .info-box.known { background: #f0fdf4; border-color: #86efac; }
+    .info-box.known strong { color: #166534; }
+    .info-box.learn { background: #fffbeb; border-color: #fcd34d; }
+    .info-box.learn strong { color: #92400e; }
+    .info-box ul { margin: 0; padding-left: 18px; }
+    .info-box li { margin-bottom: 4px; }
+
     .choices {
       display: flex;
       gap: 8px;
@@ -425,10 +447,13 @@
       <li><strong>ADR #14</strong> — jedna nomenklatura eventów (`purchase`, nie `closed_won`/`WON` jako event_name)</li>
       <li><strong>ADR #15</strong> — rozdział MVP vs Etap 2/3 (telefony, transkrypty, liczniki, auto-odpowiedzi)</li>
       <li><strong>ADR #5, #6, #8, #10, #11</strong> — nadal otwarte technicznie (były otwarte przed review)</li>
+      <li><strong>P1 inbound (blok 6)</strong> — 4 pytania rozstrzygające: matryca kanałów, pierwszy obserwator <code>kontakt@</code>, merge cross-channel, test anty-kolizyjny</li>
+      <li><strong>Audyty (blok 7)</strong> — AKK 1–7 teraz (fault-only), AKK 8–9 preflight, migracja przed importem — procedura: <code>AUDIT_AKK.md</code></li>
     </ul>
     <div class="legend">
       <strong>Stres-testy</strong> = scenariusze „na twardo” (np. mail+telefon, duplikaty, sandbox vs prod, brak idOid).<br>
-      <strong>Rekonsyliacja</strong> = ujednolicenie wszystkich dokumentów (owocni-crm + orkiestracja + legacy) do jednej prawdy.
+      <strong>Rekonsyliacja</strong> = ujednolicenie wszystkich dokumentów (owocni-crm + orkiestracja + legacy) do jednej prawdy.<br>
+      <strong>AKK</strong> = audyt spójności SSOT w dokumentach (automat/LLM, patrzymy tylko na fault) — <code>AUDIT_AKK.md</code>.
     </div>
   </div>
 
@@ -479,6 +504,8 @@
       <dt>DATA_MODEL.md</dt><dd>Pola w Twenty, w tym campaignRejected</dd>
       <dt>CRM_ARCHITECTURE_CURRENT.md</dt><dd>Skąd wpadają leady, dokąd idą eventy</dd>
       <dt>DECISION_REGISTER.md</dt><dd>Co jeszcze otwarte</dd>
+      <dt>AUDIT_AKK.md</dt><dd>Auto-audyt SSOT (kroki 1–10, fault-only)</dd>
+      <dt>AUDIT_MIGRACJA.md</dt><dd>Audyt migracji (przed importem)</dd>
     </dl>
   </div>
 
@@ -498,7 +525,7 @@
 
 <script>
 (function () {
-  const STORAGE_KEY = 'owocni-crm-review-ssot-v3';
+  const STORAGE_KEY = 'owocni-crm-review-ssot-v6';
 
   // Wynik review = interpretacja biznesowa (nie to samo co przycisk Tak/Nie/Do domknięcia)
   const REVIEW_OUTCOMES = {
@@ -520,7 +547,15 @@
     '5.1': { stance: 'approved', label: 'Zatwierdzone na start', adrs: ['#6'] },
     '5.2': { stance: 'open', label: 'Model sandbox OK (ADR #7), ale wymaga doprecyzowania operacyjnego dla zespołu', adrs: ['#7'] },
     '5.3': { stance: 'conditional', label: 'Tak, ale warunkowo: julia362 OFF dopiero po #12/#13', adrs: ['#12', '#13'] },
-    '5.4': { stance: 'open', label: 'Poza MVP: ręczny SOP po WON; pełne dane firmy/automatyzacje = Etap 2+', adrs: ['#15'] }
+    '5.4': { stance: 'open', label: 'Poza MVP: ręczny SOP po WON; pełne dane firmy/automatyzacje = Etap 2+', adrs: ['#15'] },
+    'I1': { stance: 'open', label: 'Brak zamkniętej matrycy wszystkich kanałów z triggerem idOid lub adnotacją sieroty', adrs: ['#12'] },
+    'I2': { stance: 'open', label: 'kontakt@ nie jest na liście IMAP julia362; wymaga potwierdzenia forwardu i docelowej ścieżki po wyłączeniu legacy', adrs: ['#12'] },
+    'I3': { stance: 'open', label: 'Mechanizm resolve jest w Sortowni, ale brak prostego testu „krótki odstęp / odwrotna kolejność kanałów” z jasnym PASS/FAIL', adrs: ['#13'] },
+    'I4': { stance: 'open', label: 'idOid nadaje Sortownia także dla manuali; otwarty jest konflikt 2 profili/2 idOid i reguła scalenia', adrs: ['#13'] },
+    'A1': { stance: 'open', label: 'Procedura AKK jest w AUDIT_AKK.md; pierwsza tura A (kroki 1–7) jeszcze nie uruchomiona', adrs: ['#14', '#9'] },
+    'A2': { stance: 'approved', label: 'Zaakceptowane: pusty wynik AKK ≠ zielone światło na cutover (meta-pytanie = NIE)', adrs: [] },
+    'A3': { stance: 'open', label: 'AKK 8–9 (Twenty + Stape) = preflight po P1; AUDIT_MIGRACJA dopiero przed dry-run importu', adrs: ['#16', '#10', '#11'] },
+    'A4': { stance: 'open', label: 'Fault P1 z AKK muszą trafić do DECISION_REGISTER lub poprawki SSOT przed kolejnym review', adrs: ['#9'] }
   };
 
   const SEEDED_REVIEW_STATE = {
@@ -529,16 +564,24 @@
       '2.1': 'yes', '2.2': 'yes', '2.3': 'yes', '2.4': 'yes', '2.5': 'yes',
       '3.1': 'yes', '3.2': 'notes', '3.3': 'notes',
       '4.1': 'yes', '4.2': 'yes', '4.3': 'yes',
-      '5.1': 'yes', '5.2': 'notes', '5.3': 'notes', '5.4': 'notes'
+      '5.1': 'yes', '5.2': 'notes', '5.3': 'notes', '5.4': 'notes',
+      'I1': 'notes', 'I2': 'notes', 'I3': 'notes', 'I4': 'notes',
+      'A1': 'notes', 'A2': 'yes', 'A3': 'yes', 'A4': 'notes'
     },
     notes: {
       '1.2': 'Czarna dziura: kontakt@, telefon, inne kanały bez pełnego przejścia przez Sortownię.',
       '1.4': '7 plików = hipoteza robocza; przed cutoverem: stres-testy + rekonsyliacja z docs orkiestracji.',
       '3.2': 'Nazwa pola w Twenty ma być biznesowa (jak w Bitrix), nie techniczna „Campaign Rejected”.',
       '3.3': 'Najtrudniejszy obszar: nadawanie idOid, deduplikacja, edge case mail+telefon.',
-      '5.2': 'Sandbox: env-guard + safe sink (Sheets); kto testuje i jak — do opisania operacyjnie.',
-      '5.3': 'julia362 nie wyłączamy, dopóki nie ma obsługi inbound spoza Sortowni.',
-      '5.4': 'Po WON na razie manual; później m.in. uzupełnianie danych firmy po NIP.'
+      '5.2': 'Propozycja wdrożenia: przerobić Sortownię — ruch z obecnych kanałów (formularz/web, generate_lead) zostaje PROD bez zmian; ruch z Twenty (webhook OUT, CRM) idzie jako SANDBOX i zapisuje się do osobnego debugowego arkusza Google Sheets (nie do adapterów reklamowych).',
+      '5.3': 'julia362 OFF dopiero po ADR #12 (inbound spoza Sortowni: kontakt@, telefon, manual, maile na skrzynki zespołu) i ADR #13 (id_oid + deduplikacja/merge). Dopóki nie domknięte — zostawiamy watcher.',
+      'I1': 'julia362 = 7 skrzynek IMAP. Po Sortowni ryzyko: obsłużymy formularz ze strony, a nie mail wprost na studio@/marta@/gosia@. Matryca kanałów w I1.',
+      'I2': 'julia362 nasłuchuje 7 skrzynek (m.in. leads@, studio@, marta@…) — NIE kontakt@ wprost. Auto-lead w legacy = głównie leads@ INBOX. kontakt@: sprawdzić forward na serwerze mail.',
+      '5.4': 'Po WON na razie manual; później m.in. uzupełnianie danych firmy po NIP.',
+      'I3': 'Sortownia ma resolve (_oid→email→phone→ga_client_id) i multi-key write, ale nie ma prostego testu: ta sama osoba wpada 2 kanałami w krótkim odstępie / odwrotnej kolejności. Propozycja: dopisać S1b (telefon→mail i mail→telefon), po każdym kroku snapshot identity_map i twardy werdykt PASS/FAIL.',
+      'I4': 'Ręczne leady też dostają idOid przez Sortownię; do domknięcia zostaje konflikt, gdy email i telefon wskazują dwa różne istniejące profile. Propozycja: reguła merge: (1) _oid ma najwyższy priorytet, (2) gdy email+phone wskazują ten sam profil -> merge auto, (3) gdy wskazują różne profile -> status conflict + kolejka manual review + zapis decyzji merge do audytu.',
+      'A1': 'Propozycja: uruchomić tura A z promptem w AUDIT_AKK.md (run_id np. AKK-2026-05-28-A), wynik tylko fault CSV, P1 do DECISION_REGISTER.',
+      'A4': 'Propozycja: arkusz AKK_faults — kolumny: run_id, krok, wymiar, opis, severity, status, owner; zamknięcie = poprawka w SSOT + status=fixed.'
     },
     lostEventNotes: '',
     verdict: 'hold',
@@ -588,9 +631,140 @@
       id: '5', title: 'Założenia techniczne', time: '~5 min', critical: false,
       questions: [
         { id: '5.1', text: 'Twenty Pro ($9/user) wystarczy na start (audit log = git snapshoty)?', hint: 'ADR #6 otwarte', explain: 'Skrót: formalny audyt zmian wspieramy snapshotami/commitami w repo (co zmieniono, kiedy, dlaczego), jeśli plan nie daje pełnego audytu enterprise.' },
-        { id: '5.2', text: 'Dwa workspace: sandbox + produkcja?', hint: 'ADR #7 — zamknięte', explain: 'Bez pełnej duplikacji GTM/GCP. Ruch rozdzielamy po environment: sandbox idzie do safe sink (np. Google Sheets), a prod do adapterów reklamowych. Najpierw test w sandbox, potem 1:1 na prod.' },
-        { id: '5.3', text: 'julia362 wyłączamy w dniu cutoveru (twarda data)?', hint: 'CUTOVER_RUNBOOK' },
+        { id: '5.2', text: 'Dwa workspace: sandbox + produkcja?', hint: 'ADR #7 — zamknięte', explain: 'Bez pełnej duplikacji GTM/GCP. Propozycja: w Sortowni rozdzielić po źródle — obecne kanały (formularz ze strony, generate_lead) = PROD jak dziś; zdarzenia z Twenty (webhook OUT) = SANDBOX → osobny arkusz Google Sheets (debug), bez wysyłki do Google/Meta prod.' },
+        { id: '5.3', text: 'julia362 wyłączamy w dniu cutoveru (twarda data)?', hint: 'CUTOVER_RUNBOOK', explain: 'Warunek: ADR #12 = domknięty inbound spoza Sortowni (kontakt@, telefon, ręczne leady, mail bezpośrednio na skrzynki zespołu np. studio@). ADR #13 = reguły id_oid i scalania cross-channel. Bez tego wyłączenie julia362 odetnie maile, które dziś idą przez IMAP watcher.' },
         { id: '5.4', text: 'Bitrix24 (deale księgowe) poza tym projektem; po WON = ręczny SOP?', hint: 'ARCHITECTURE', explain: 'Ręczny SOP = manualny krok wg procedury (np. ręczne dodanie/przekazanie deala do Bitrix24), dopóki nie automatyzujemy tego odcinka.' }
+      ]
+    },
+    {
+      id: '6', title: 'Inbound — pytania rozstrzygające (P1)', time: '~15 min', critical: true,
+      questions: [
+        {
+          id: 'I1',
+          text: 'Czy mamy zamkniętą listę WSZYSTKICH kanałów wejścia leada (z triggerem idOid lub adnotacją „kanał-sierota”)?',
+          hint: 'ADR #12 — inwentaryzacja kanałów',
+          known: [
+            'Kanał kanoniczny: formularz → Sortownia → mint idOid → Twenty.',
+            'julia362 (legacy) nasłuchuje IMAP na 7 skrzynkach: copywriting@, pomoc@, studio@, marta@, gosia@, mariusz@, leads@.',
+            'Po przełączeniu na Sortownię jako główne źródło — łatwo założyć, że obsłużymy głównie maile „ze strony” (formularz → leads@), a nie każdy kanał mailowy.',
+            'W SSOT brak pełnej tabeli: co z mailem wprost na studio@ / marta@ / gosia@ itd.'
+          ],
+          toLearn: [
+            'Pełna lista kanałów: paid, kontakt@, skrzynki handlowców (studio@, marta@…), telefon, polecenie, ręczne dodanie.',
+            'Dla każdego kanału: trigger idOid przez Sortownię LUB adnotacja „sierota” + konsekwencja.',
+            'Co się dzieje z mailem bezpośrednim na skrzynkę zespołu po wyłączeniu julia362.',
+            'Czy forward/alias (np. kontakt@ → leads@) jest udokumentowany na mail.owocni.pl.'
+          ]
+        },
+        {
+          id: 'I2',
+          text: 'Dla maila na kontakt@ (poza paid flow): kto jest pierwszym obserwatorem i co dzieje się w sekundzie zero?',
+          hint: 'ADR #12 — architektura wejścia mailowego',
+          known: [
+            'julia362 NIE nasłuchuje kontakt@ wprost — watcher ma 7 innych skrzynek (m.in. leads@, studio@).',
+            'Auto-tworzenie leada w legacy (better-bitrix) = głównie leads@owocni.pl, folder INBOX.',
+            'kontakt@ może być tylko adresem formularza / forwardem — to trzeba potwierdzić na serwerze mail.',
+            'Email Sync leads@ w Twenty = głównie timeline, nie zastępuje pełnego inbound ADR #12.'
+          ],
+          toLearn: [
+            'Potwierdzić reguły forward/alias dla kontakt@ (czy trafia do leads@ lub innej skrzynki z watchera).',
+            'Docelowy pierwszy obserwator kontakt@ po cutoverze (Sortownia vs Twenty vs ręcznie).',
+            'Sekwencja sekundy zero: kiedy powstaje rekord w Twenty i kiedy mintuje się idOid.'
+          ]
+        },
+        {
+          id: 'I3',
+          text: 'Czy mamy prosty test: ta sama osoba wpada 2 kanałami w krótkim odstępie (lub odwrotnej kolejności), a wynik to 1 idOid?',
+          hint: 'STRESS_TEST_PLAN + ADR #13',
+          known: [
+            'Jest S1: mail → potem telefon (sekwencyjnie), oczekiwany jeden byt + stabilne idOid.',
+            'W Sortowni działa waterfall resolve (_oid → email → phone → ga_client_id) i multi-key write.',
+            'W normalnym flow „najpierw jedno wejście, potem drugie” to powinno się sklejać poprawnie.',
+            'Nie mamy jeszcze prostego testu na przypadki graniczne (krótki odstęp, odwrotna kolejność kanałów).'
+          ],
+          toLearn: [
+            'S1b (prosto): klient A wpada najpierw telefonem, po chwili mailem; potem odwracamy kolejność.',
+            'PASS: zawsze 1 idOid i 1 profil klienta; FAIL: 2 profile albo 2 idOid dla tej samej osoby.',
+            'Dowód: zrzut/log z identity_map przed i po teście + krótki werdykt.',
+            'Propozycja wdrożeniowa: dodać S1b do STRESS_TEST_PLAN i checklistę wykonania (kroki + expected output).'
+          ]
+        },
+        {
+          id: 'I4',
+          text: 'Czy mamy deterministyczną regułę scalania cross-channel (klucz + adapter), żeby uniknąć duplikatów?',
+          hint: 'ADR #13 — deduplikacja i merge',
+          known: [
+            'Zasada: idOid mintuje tylko Sortownia (nie Twenty).',
+            'Ręcznie dodany lead też wpada na resolve w Sortowni, więc źródło idOid pozostaje jedno.',
+            'W szkicu: deduplikacja po email/telefon + sygnał manual merge.',
+            'To jest oznaczone jako najtrudniejsza część review.'
+          ],
+          toLearn: [
+            'Deterministyczny klucz merge (email? telefon? oba? priorytet kanału?).',
+            'Nazwany proces/adapter (np. system:merge_oid) i owner.',
+            'Reguła konfliktu: co robimy, gdy email i telefon trafiają w dwa różne istniejące profile (2 idOid).',
+            'Scenariusze: mail → telefon → formularz w odstępie czasu (nie tylko równolegle).',
+            'Propozycja wdrożeniowa: status conflict + manual review queue + audyt decyzji merge (kto/kiedy/dlaczego).'
+          ]
+        }
+      ]
+    },
+    {
+      id: '7', title: 'Audyty automatyczne (AKK)', time: '~5 min', critical: false,
+      questions: [
+        {
+          id: 'A1',
+          text: 'Czy uruchamiamy teraz AUDIT_AKK turę A (kroki 1–7, fault-only) na pakiecie SSOT + docs orkiestracji?',
+          hint: 'AUDIT_AKK.md — tylko trafienia, bez raportu „wszystko OK”',
+          known: [
+            'Procedura jest w AUDIT_AKK.md (szablon tabeli, prompt LLM, macierz faz).',
+            'Kroki 1–7 = spójność wewnętrzna — odpowiednik rekonsyliacji (#14, #9).',
+            'Audyt migracji (AUDIT_MIGRACJA.md) jest świadomie odłożony na przed import.'
+          ],
+          toLearn: [
+            'Kto uruchamia pierwszą turę i jaki run_id (np. AKK-2026-05-28-A).',
+            'Gdzie lądują faulty (arkusz / issue list).',
+            'Termin domknięcia fault P1 przed kolejnym review go/no-go.'
+          ]
+        },
+        {
+          id: 'A2',
+          text: 'Czy akceptujemy, że pusty wynik AKK (kroki 1–9) NIE oznacza sam w sobie zgody na cutover?',
+          hint: 'AUDIT_AKK.md § Meta-pytanie',
+          explain: 'Odpowiedź SSOT: NIE. Cutover wymaga też: stres-testów PASS, zamknięcia P1 ADR (#12–#14), a przy imporcie — AUDIT_MIGRACJA.',
+          known: [
+            'Meta-pytanie ma odpowiedź NIE — zapisane w AUDIT_AKK.md.',
+            'Krok 10 (wykonalność operacyjna) i STRESS_TEST uzupełniają AKK.'
+          ],
+          toLearn: []
+        },
+        {
+          id: 'A3',
+          text: 'Czy zgadzamy się na podział: AKK 8–9 (Twenty + Stape) = preflight po P1; AUDIT_MIGRACJA = przed dry-run importu?',
+          hint: 'Macierz faz w AUDIT_AKK.md',
+          known: [
+            'Krok 8 mapuje na ADR #16 (Twenty 2.8.0).',
+            'Krok 9 mapuje na ADR #10/#11 + kod Sortowni/Robot jako ground truth.',
+            'Pełny audyt migracji 1–7 nie blokuje pracy nad dokumentacją, tylko sam import.'
+          ],
+          toLearn: [
+            'Data orientacyjna tury B (po domknięciu których ADR).',
+            'Kto weryfikuje fault Stape vs kod (developer Sortowni).'
+          ]
+        },
+        {
+          id: 'A4',
+          text: 'Czy każdy fault P1 z AKK ma trafić do DECISION_REGISTER lub poprawki SSOT zanim podniesiemy werdykt?',
+          hint: 'AUDIT_AKK.md — severity P1',
+          known: [
+            'Szablon tabeli ma kolumny severity, status, owner.',
+            'Przykłady P1: homonimy eventów, brak właściciela id_oid, kanał bez triggera.'
+          ],
+          toLearn: [
+            'Kto jest ownerem zamknięcia faultów (właściciel vs developer).',
+            'Czy fault P2 może zostać deferred do Etap 2 (np. SALES_OPS).'
+          ]
+        }
       ]
     }
   ];
@@ -673,6 +847,18 @@
             ${ro.adrs.length ? `<div class="adr-tags">${ro.adrs.map(a => `<span class="adr-tag">${a}</span>`).join('')}</div>` : ''}
           </div>
         ` : '';
+        const knownHtml = (q.known && q.known.length) ? `
+          <div class="info-panels">
+            <div class="info-box known">
+              <strong>Co wiemy (SSOT teraz)</strong>
+              <ul>${q.known.map(i => `<li>${i}</li>`).join('')}</ul>
+            </div>
+            <div class="info-box learn">
+              <strong>Co musimy się dowiedzieć / ustalić</strong>
+              <ul>${q.toLearn.map(i => `<li>${i}</li>`).join('')}</ul>
+            </div>
+          </div>
+        ` : '';
         const showNotes = ans === 'notes' || (state.notes[q.id] || '').trim();
         div.innerHTML = `
           <div class="q-meta">
@@ -684,6 +870,7 @@
                 ${q.explain ? `<span class="tip-wrap"><button type="button" class="tip-btn" aria-label="Doprecyzowanie">i</button><span class="tip-box">${q.explain}</span></span>` : ''}
               </div>
               ${outcomeHtml}
+              ${knownHtml}
             </div>
           </div>
           <div class="choices" role="group" aria-label="Odpowiedź ${q.id}">
@@ -808,6 +995,14 @@
         const ro = REVIEW_OUTCOMES[q.id];
         lines.push(`[${q.id}] ${label} — ${q.text}`);
         if (ro) lines.push(`    Wynik review: ${ro.label}${ro.adrs.length ? ' (' + ro.adrs.join(', ') + ')' : ''}`);
+        if (q.known && q.known.length) {
+          lines.push('    Co wiemy:');
+          q.known.forEach(k => lines.push('      - ' + k));
+        }
+        if (q.toLearn && q.toLearn.length) {
+          lines.push('    Do ustalenia:');
+          q.toLearn.forEach(t => lines.push('      - ' + t));
+        }
         const n = (state.notes[q.id] || '').trim();
         if (n) lines.push(`    Uwaga: ${n}`);
       });
@@ -834,6 +1029,21 @@
     if (open.length) {
       lines.push('DO DECISION_REGISTER (NIE/UWAGI):');
       open.forEach(o => lines.push('  - ' + o));
+    }
+
+    const inboundBlock = BLOCKS.find(b => b.id === '6');
+    if (inboundBlock) {
+      lines.push('');
+      lines.push('=== BLOK ROZSTRZYGAJĄCY INBOUND (P1) ===');
+      inboundBlock.questions.forEach(q => {
+        const a = state.answers[q.id];
+        const label = a === 'yes' ? 'TAK' : a === 'no' ? 'NIE' : a === 'notes' ? 'DO DOMKNIĘCIA' : '—';
+        lines.push(`[${q.id}] ${label}`);
+        if (q.known) q.known.forEach(k => lines.push('  Wiemy: ' + k));
+        if (q.toLearn) q.toLearn.forEach(t => lines.push('  Ustalić: ' + t));
+        const n = (state.notes[q.id] || '').trim();
+        if (n) lines.push('  Uwaga: ' + n);
+      });
     }
 
     return lines.join('\n');

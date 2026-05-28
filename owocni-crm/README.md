@@ -22,6 +22,8 @@
 11. Wymagania operacyjne sprzedaży (MVP vs Etap 2/3) → `SALES_OPS_REQUIREMENTS.md`.
 12. Mapowanie stage i nomenklatury eventów → `STAGE_MAPPING.md`.
 13. Plan stres-testów (Red Team) przed cutoverem → `STRESS_TEST_PLAN.md`.
+14. Audyt konsystencji SSOT (AKK, fault-only, kroki 1–10) → `AUDIT_AKK.md`.
+15. Audyt migracji (przed dry-run importu) → `AUDIT_MIGRACJA.md`.
 
 **Pełna wersja konstytucji i bram fazowych:** `../twenty/OWOCNI_CRM_fundamenty (1).md` (materiał źródłowy szefa — rekonsyliować z plikami tutaj).
 
@@ -42,6 +44,9 @@
 | Jak mapować SQL/QUALIFIED/WON i nazwy eventów? | `STAGE_MAPPING.md` | `EVENT_CONTRACT.md` |
 | Jakie są wymagania sprzedażowe poza rdzeniem migracji? | `SALES_OPS_REQUIREMENTS.md` | `DECISION_REGISTER.md` #15 |
 | Jak testujemy edge case'y przed cutoverem? | `STRESS_TEST_PLAN.md` | `CUTOVER_RUNBOOK.md` |
+| Czy SSOT jest wewnętrznie spójny (auto-audyt)? | `AUDIT_AKK.md` (kroki 1–7 teraz) | `DECISION_REGISTER.md` #14, #16 |
+| Czy SSOT zgadza się z Twenty 2.8.0 / Stape? | `AUDIT_AKK.md` (kroki 8–9 preflight) | `ops/OPS_NOTES.md` |
+| Czy migracja jest bezpieczna? | `AUDIT_MIGRACJA.md` (przed importem) | `migration/README.md` |
 | Co z POC (webhook.site, lead_won)? | `POC_MAPPING.md` | `EVENT_CONTRACT.md` |
 | Review SSOT (~30 min) | `CHECKLIST_REVIEW.html` | — (single source of truth) |
 | Helpdesk w MVP? | `CRM_CONSTITUTION.md` (Prawo 9) | — **poza MVP** |

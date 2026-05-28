@@ -30,9 +30,15 @@
 
 ## Preflight przed pierwszym importem
 
+- [ ] **AUDIT_MIGRACJA** (kroki 1–7, fault-only) — `../AUDIT_MIGRACJA.md`
 - [ ] Test idOid unique + null (3× null, 2× unique) — sandbox
 - [ ] Import 3–5 rekordów próbnych
 - [ ] Backup Supabase
+
+## Import ≠ ruch operacyjny (gate z audytu migracji krok 4)
+
+Bulk import **nie może** wyzwalać: eventów do platform (`purchase`, `qualify_lead`, …), mint `id_oid` poza planem, workflow Twenty, alertów outbound.  
+Szczegóły i tabela fault: `../AUDIT_MIGRACJA.md` krok 4.
 
 ---
 

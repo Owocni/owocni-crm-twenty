@@ -56,6 +56,15 @@
 - [ ] Zweryfikować założenia custom fields i ograniczeń platformy względem docs.twenty.com.
 - [ ] Zsynchronizować `owocni-crm/*` z dokumentacją orkiestracji po cleanupie.
 
+### Procedura audytów (fault-only)
+
+| Audyt | Kiedy | Plik |
+|-------|-------|------|
+| AKK kroki 1–7 (wewnętrzny) | **Teraz** (tura A) | `AUDIT_AKK.md` |
+| AKK kroki 8–9 (Twenty + Stape) | **Preflight** po P1 | `AUDIT_AKK.md` |
+| AKK meta: pusty wynik ≠ cutover OK | Zaakceptowane w SSOT | `AUDIT_AKK.md` § Meta-pytanie |
+| Audyt migracji 1–7 | **Przed dry-run importu** | `AUDIT_MIGRACJA.md` |
+
 ---
 
 ## Sekcja B — Closed decisions (ADR)
