@@ -35,7 +35,7 @@
 | Jak wpadają leady ze strony? | `CRM_ARCHITECTURE_CURRENT.md` §5.1 | `EVENT_CONTRACT.md` §3 |
 | Co z julia362? | `CRM_ARCHITECTURE_CURRENT.md` §2 | `CUTOVER_RUNBOOK.md` krok 5 |
 | Co z POC (webhook.site, lead_won)? | `POC_MAPPING.md` | `EVENT_CONTRACT.md` |
-| Review SSOT ze szefem (~30 min) | `CHECKLIST_REVIEW_SZEF.html` | — (single source of truth) |
+| Review SSOT (~30 min) | `CHECKLIST_REVIEW.html` | — (single source of truth) |
 | Helpdesk w MVP? | `CRM_CONSTITUTION.md` (Prawo 9) | — **poza MVP** |
 | SSOT orkiestracji (Sortownia, Robot, Routing) | Dokumentacja orkiestracji (poza tym pakietem) | `CRM_ARCHITECTURE_CURRENT.md` §7 |
 

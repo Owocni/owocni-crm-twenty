@@ -9,7 +9,7 @@ Zawiera połączone katalogi:
 ## Start here
 
 1. `owocni-crm/README.md` — główny routing dokumentacji SSOT.
-2. `owocni-crm/CHECKLIST_REVIEW_SZEF.html` — interaktywny review checklist (single source of truth).
+2. `owocni-crm/CHECKLIST_REVIEW.html` — interaktywny review checklist (single source of truth).
 
 ## Kluczowe dokumenty SSOT
 
@@ -32,5 +32,5 @@ Zawiera połączone katalogi:
 
 ## Uwagi
 
-- Checklista review jest utrzymywana tylko w HTML: `owocni-crm/CHECKLIST_REVIEW_SZEF.html`.
+- Checklista review jest utrzymywana tylko w HTML: `owocni-crm/CHECKLIST_REVIEW.html`.
 - `twenty/EVENT_CONTRACT_OWOCNI.md` ma status legacy; obowiązująca wersja to `owocni-crm/EVENT_CONTRACT.md`.
