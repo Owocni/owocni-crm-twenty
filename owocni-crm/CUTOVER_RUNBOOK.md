@@ -19,7 +19,8 @@
   - [ ] Inteligentny Routing: qualify_lead, purchase, rejected_lead, generate_lead
   - [ ] Guard `environment`: sandbox → safe sink (np. Google Sheets), prod → adaptery reklamowe
   - [ ] Loop prevention przetestowany
-- [ ] ADR #5, #6, #8 zamknięte w `DECISION_REGISTER.md`
+- [ ] ADR #5, #6, #8, #12, #13, #14, #16 zamknięte w `DECISION_REGISTER.md`
+- [ ] `STRESS_TEST_PLAN.md` wykonany i udokumentowany (PASS dla S1-S5)
 
 ---
 
@@ -35,6 +36,8 @@
 8. E2E: 5 scenariuszy z `EVENT_CONTRACT.md`
 9. Komunikat: system aktywny
 10. Monitoring 4h (Ratownik + logs)
+
+**Warunek bezpieczeństwa kroku 5:** julia362 wyłączamy dopiero po uzgodnieniu i wdrożeniu obsługi inbound spoza Sortowni (ADR #12/#13).
 
 ---
 

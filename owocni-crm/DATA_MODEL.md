@@ -14,7 +14,7 @@ Tylko pola **krytyczne** (systemowe / eventowe / integracyjne). Standardowe pola
 |-------------|------|--------|-------|-------|---------|---------|-------------------------|
 | `idOid` | TEXT | YES | Sortownia (mint) | null przy manual | Wszystkie SSOT eventy; upsert ingress | **FROZEN** | Cross-system id_oid; mint Sortownia przy generate_lead |
 | `stage` | SELECT | NO | Handlowiec | default NEW | qualify_lead, purchase | **FROZEN** | NEW / CONTACTED / QUALIFIED / PROPOSAL / WON / LOST |
-| `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | Odrzucenie wzorzec kampanii — NIE to samo co LOST |
+| `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | Odrzucenie wzorzec kampanii — NIE to samo co LOST (potwierdzone użycie przez sprzedaż) |
 | `rejectionReason` | SELECT | NO | Handlowiec | null | rejected_lead (raport) | **FROZEN** | Powód odrzucenia kampanii — raportowo |
 | `bizProduct` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | **FROZEN** | Produkt (web, logo, …) |
 | `bizSource` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | OPEN | Źródło leada |
@@ -51,7 +51,7 @@ Brak custom fields w Etapie 1 MVP.
 2. Każde nowe pole: 6 pytań (kto, kiedy, po co, decyzja biznesowa, kategoria, Twenty vs poza).
 3. **Required** — Twenty 2.8.0 nie wspiera required na custom fields; walidacja przy emisji eventu / w Adapterze platformy.
 4. **Konwencja:** camelCase w API; prefiks `id`/`biz` dla pól orkiestracji; snake_case w payloadach SSOT.
-5. **POC:** pole `campaignRejected` zweryfikowane live — semantyka zgodna z tym dokumentem.
+5. **POC + operacje:** pole `campaignRejected` zweryfikowane live i potwierdzone w realnym użyciu przez sprzedaż.
 
 ---
 

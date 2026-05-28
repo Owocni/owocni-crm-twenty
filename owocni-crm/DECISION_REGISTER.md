@@ -21,6 +21,11 @@
 | 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
 | 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Owner Sortowni | **open** |
 | 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Developer | **open** — POC test |
+| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** — czarna dziura |
+| 13 | idOid ownership i deduplikacja cross-channel | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** — edge cases |
+| 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `WON`/`closed_won`) | Semantyczna | **cutover** | **ADR** | 4 | Owner Sortowni | **open** — rekonsyliacja nazewnictwa |
+| 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **open** |
+| 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Właściciel + Developer | **open** |
 
 ### Decyzja #7 — doprecyzowanie (zamknięta)
 
@@ -36,6 +41,20 @@
 | → WON | purchase |
 | campaignRejected true | rejected_lead |
 | → LOST | *(brak)* |
+
+### Priorytety po review 2026-05-28
+
+- **P1:** #12 i #13 (inbound spoza Sortowni + idOid/deduplikacja) blokują bezpieczny cutover.
+- **P1:** #14 (jednoznaczne nazwy eventów) — usuwa chaos implementacyjny w adapterach.
+- **P2:** #15 (scope Etap 1 vs Etap 2/3) — ogranicza mieszanie wymagań MVP i roadmapy.
+- **P2:** #16 (rekonsyliacja z Twenty 2.8.0 + best practices) — podnosi zaufanie do SSOT.
+
+### Task rekonsyliacji dokumentów (#14 + #16)
+
+- [ ] Ujednolicić nazewnictwo eventów w dokumentacji orkiestracji (usunąć `closed_won`/`WON` jako event_name).
+- [ ] Potwierdzić zgodność pól i stage z aktualną wersją Twenty (2.8.0 lub nowszą).
+- [ ] Zweryfikować założenia custom fields i ograniczeń platformy względem docs.twenty.com.
+- [ ] Zsynchronizować `owocni-crm/*` z dokumentacją orkiestracji po cleanupie.
 
 ---
 

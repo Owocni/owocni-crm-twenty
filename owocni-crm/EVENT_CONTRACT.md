@@ -40,6 +40,21 @@
 | **Odrzucony wzorzec kampanii** (nadal można sprzedawać) | `campaignRejected = true` | `rejected_lead` |
 | **Wygrany** | Stage WON | `purchase` |
 
+### Tabela decyzyjna (LOST vs rejected_lead)
+
+| Stan w CRM | Emitować `rejected_lead`? | Uzasadnienie |
+|---|---|---|
+| `campaignRejected=true` | TAK | Odrzucenie kampanijne |
+| `stage=LOST`, `campaignRejected=false` | NIE | Przegrana sprzedaż, nie odrzucenie kampanijne |
+| `stage=LOST`, `campaignRejected=true` | TAK | Triggerem jest `campaignRejected`, nie LOST |
+| `lostReason` uzupełniony | NIE (samo z siebie) | Pole analityczne CRM-only |
+
+### Nomenklatura eventów (twarda reguła)
+
+- **Dozwolone `event_name`:** `generate_lead`, `qualify_lead`, `rejected_lead`, `purchase`, `consent_update`.
+- **Zakazane jako `event_name`:** `lead_won`, `closed_won`, `won`, `WON`.
+- Dopuszczalne: `WON` jako nazwa stage/statusu handlowego w UI CRM, ale **nie** jako nazwa eventu integracyjnego.
+
 ---
 
 ## 3. Transport outbound (DECYZJA D2)
@@ -83,6 +98,8 @@ else → SKIP
 Formularz → Sortownia `generate_lead` → adapter `crm:twenty_create_lead` → Twenty REST/GraphQL.
 
 Szczegóły: `CRM_ARCHITECTURE_CURRENT.md` §5.1.
+
+**Uwaga po review (2026-05-28):** inbound spoza Sortowni (np. `kontakt@owocni.pl`, telefon, ręczne utworzenie) wymaga osobnego ADR przed cutoverem (`DECISION_REGISTER` #12, #13).
 
 ---
 

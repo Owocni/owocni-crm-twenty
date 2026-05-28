@@ -49,6 +49,8 @@ Formularz owocni.pl
 
 **Legacy (wyłączyć):** julia362 → better-bitrix → Supabase.
 
+**Cutover blocker:** inbound spoza kanonicznego flow (kontakt@, telefon, manual) — spec: `INBOUND_EDGE_CASES.md`.
+
 ---
 
 ## 4. Diagram outbound

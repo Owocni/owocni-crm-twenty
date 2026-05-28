@@ -18,6 +18,10 @@
 7. Jak przeprowadzić cutover → `CUTOVER_RUNBOOK.md`.
 8. Fakty platformowe Twenty / incydenty → `ops/OPS_NOTES.md`.
 9. Import historyczny → `migration/README.md`.
+10. Edge cases inbound (`kontakt@`, telefon, manual) → `INBOUND_EDGE_CASES.md`.
+11. Wymagania operacyjne sprzedaży (MVP vs Etap 2/3) → `SALES_OPS_REQUIREMENTS.md`.
+12. Mapowanie stage i nomenklatury eventów → `STAGE_MAPPING.md`.
+13. Plan stres-testów (Red Team) przed cutoverem → `STRESS_TEST_PLAN.md`.
 
 **Pełna wersja konstytucji i bram fazowych:** `../twenty/OWOCNI_CRM_fundamenty (1).md` (materiał źródłowy szefa — rekonsyliować z plikami tutaj).
 
@@ -34,6 +38,10 @@
 | Dlaczego nie Workflow HTTP do Sortowni? | `ops/OPS_NOTES.md` (Twenty Verified Facts) | `CRM_ARCHITECTURE_CURRENT.md` §8 |
 | Jak wpadają leady ze strony? | `CRM_ARCHITECTURE_CURRENT.md` §5.1 | `EVENT_CONTRACT.md` §3 |
 | Co z julia362? | `CRM_ARCHITECTURE_CURRENT.md` §2 | `CUTOVER_RUNBOOK.md` krok 5 |
+| Co z inbound spoza Sortowni? | `INBOUND_EDGE_CASES.md` | `DECISION_REGISTER.md` #12/#13 |
+| Jak mapować SQL/QUALIFIED/WON i nazwy eventów? | `STAGE_MAPPING.md` | `EVENT_CONTRACT.md` |
+| Jakie są wymagania sprzedażowe poza rdzeniem migracji? | `SALES_OPS_REQUIREMENTS.md` | `DECISION_REGISTER.md` #15 |
+| Jak testujemy edge case'y przed cutoverem? | `STRESS_TEST_PLAN.md` | `CUTOVER_RUNBOOK.md` |
 | Co z POC (webhook.site, lead_won)? | `POC_MAPPING.md` | `EVENT_CONTRACT.md` |
 | Review SSOT (~30 min) | `CHECKLIST_REVIEW.html` | — (single source of truth) |
 | Helpdesk w MVP? | `CRM_CONSTITUTION.md` (Prawo 9) | — **poza MVP** |
