@@ -1,0 +1,48 @@
+{
+  "snapshotVersion": "002",
+  "exportedAt": "2026-05-25T09:30:00Z",
+  "description": "POC import stats: 50 leads, 50 companies, 25 people z Supabase better-bitrix",
+  "workspace": "zany-maroon-panther.twenty.com",
+  "importStats": {
+    "companies": {
+      "total": 50,
+      "source": "Supabase companies (WHERE id IN active leads)"
+    },
+    "people": {
+      "total": 25,
+      "source": "Supabase email_addresses via company_email_addresses"
+    },
+    "opportunities": {
+      "total": 50,
+      "source": "Supabase leads (WHERE is_archived = false, LIMIT 50)"
+    }
+  },
+  "stageMapping": {
+    "unsorted,to_call,reminder": "NEW",
+    "inquiry,cold,hot,indifferent,excited": "CONTACTED",
+    "negotiations,call_after_offer": "QUALIFIED",
+    "pays,analysis": "PROPOSAL",
+    "lead_won,service": "WON",
+    "lead_lost,error,blackday": "LOST"
+  },
+  "stageDistribution": {
+    "CONTACTED": 24,
+    "QUALIFIED": 24,
+    "PROPOSAL": 2,
+    "NEW": 0,
+    "WON": 0,
+    "LOST": 0
+  },
+  "fieldMapping": {
+    "leads.title": "opportunity.name",
+    "leads.stage_name": "opportunity.stage (mapped via stageMapping)",
+    "leads.amount_paid": "opportunity.amount",
+    "leads.primary_product": "opportunity.bizProduct (web/logo/name/marketing/copywriting/opakowanie/inne)",
+    "leads.engagement": "opportunity.engagement (HOT/COLD)",
+    "leads.is_follow_up": "opportunity.isFollowUp",
+    "leads.snooze_until": "opportunity.snoozeUntil",
+    "leads.loss_category": "opportunity.lossCategory",
+    "leads.loss_description": "opportunity.lossDescription",
+    "companies.title": "company.name"
+  }
+}

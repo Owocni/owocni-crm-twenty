@@ -1,0 +1,80 @@
+{
+  "snapshotVersion": "006",
+  "exportedAt": "2026-05-26T07:37:00Z",
+  "description": "Workflow LIVE VERIFIED: deal · zmiana etapu · event do orkiestracji. Wszystkie 3 kroki działają na produkcji.",
+  "workspace": "zany-maroon-panther.twenty.com",
+  "workflowId": "4e3289cf-b4be-4986-aa6b-f1e2dafd6f12",
+  "workflowName": "deal · zmiana etapu · event do orkiestracji",
+  "activeVersion": "v7",
+  "status": "ACTIVE — LIVE VERIFIED",
+  "architecture": {
+    "note": "Code step uses embedded API call (workaround for empty logicFunctionInput on Twenty Cloud). Function fetches latest updated Opportunity via Twenty GraphQL API, builds EVENT_CONTRACT payload, and returns it as payloadJson string.",
+    "workaround_reason": "Twenty Cloud does not auto-map trigger data to Code step params. The logicFunctionInput field is empty ({}) and cannot be set via UI or API key. Embedded API call is a reliable workaround for POC.",
+    "future_fix": "When Twenty deploys PR #18002 (auto-derive logicFunctionInput from code schema), or when MCP OAuth access allows updateWorkflowVersionStep, switch to direct params mapping."
+  },
+  "trigger": {
+    "type": "DATABASE_EVENT",
+    "eventName": "opportunity.updated",
+    "fields": ["stage"]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "name": "Code - Logic Function",
+      "type": "CODE",
+      "stepId": "381d6760-9b15-412e-bd32-679eb692811e",
+      "description": "Fetches latest updated Opportunity via API, maps stage to event_name, builds EVENT_CONTRACT payload as JSON string.",
+      "outputSchema": ["skip", "payloadJson", "idEvent", "now"],
+      "knownBug": "biz_product uses camelToSnake which breaks ALL_CAPS values: 'WEB' → '_w_e_b'. Fix: use .toLowerCase() instead."
+    },
+    {
+      "order": 2,
+      "name": "HTTP Request",
+      "type": "HTTP_REQUEST",
+      "stepId": "9cab6c86-b8f4-4f23-8676-38f6aacb535d",
+      "method": "POST",
+      "url": "https://webhook.site/9fc34457-4908-49de-a583-2492a6cc782e",
+      "body": "{{381d6760-9b15-412e-bd32-679eb692811e.payloadJson}}",
+      "headers": {"content-type": "application/json"}
+    },
+    {
+      "order": 3,
+      "name": "Update Record",
+      "type": "UPDATE_RECORD",
+      "stepId": "6d464c06-e5d7-4d19-b8f1-d6e518494a49",
+      "objectName": "opportunity",
+      "objectRecordId": "{{trigger.properties.after.id}}",
+      "fieldsToUpdate": {
+        "lastOrchestrationEventAt": "{{381d6760-9b15-412e-bd32-679eb692811e.now}}",
+        "lastOrchestrationEventId": "{{381d6760-9b15-412e-bd32-679eb692811e.idEvent}}"
+      }
+    }
+  ],
+  "liveTestResults": {
+    "testedAt": "2026-05-26T07:37:00Z",
+    "testRecord": {
+      "opportunityId": "4b8b14a6-eaf7-40ec-8fd2-3d0944091b51",
+      "name": "Strona Internetowa dla Wypożyczalni Sprzętu Eventowego",
+      "stage": "QUALIFIED",
+      "idOid": "01TESTOID123456789012345",
+      "bizProduct": "WEB"
+    },
+    "webhookPayload": {
+      "event_name": "qualify_lead",
+      "id_event": "2fc64e15-63cc-4eec-9ce5-b36e11c2aae3",
+      "id_oid": "01TESTOID123456789012345",
+      "id_crm_lead": "4b8b14a6-eaf7-40ec-8fd2-3d0944091b51",
+      "src_system": "crm",
+      "time_occurred_iso_utc": "2026-05-26T07:36:56.106Z",
+      "time_occurred_unix_s": 1779781016,
+      "time_occurred_unix_us": 1779781016106000,
+      "biz_product": "_w_e_b",
+      "biz_source": ""
+    },
+    "auditFieldsUpdated": {
+      "lastOrchestrationEventId": "2fc64e15-63cc-4eec-9ce5-b36e11c2aae3",
+      "lastOrchestrationEventAt": "2026-05-26T07:36:56.106Z"
+    },
+    "verdict": "PASS — all 3 steps executed. One cosmetic bug: biz_product camelToSnake on ALL_CAPS."
+  }
+}

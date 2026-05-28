@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analiza migracji: better-bitrix → Twenty CRM — Owocni</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --text-2: #555770;
+      --text-3: #888;
+      --accent: #4361ee;
+      --accent-light: #eef0ff;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --orange: #f59e0b;
+      --orange-light: #fffbeb;
+      --red: #ef4444;
+      --red-light: #fef2f2;
+      --blue-light: #eff6ff;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --purple-light: #f5f3ff;
+      --border: #e2e5ea;
+      --radius: 10px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 40px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    /* HEADER */
+    header { text-align: center; margin-bottom: 48px; }
+    header .badge {
+      display: inline-block; background: var(--accent-light); color: var(--accent);
+      font-size: 13px; font-weight: 600; padding: 4px 14px; border-radius: 20px;
+      margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    header .subtitle { font-size: 16px; color: var(--text-2); }
+    header .date { font-size: 13px; color: var(--text-3); margin-top: 8px; }
+
+    /* SECTIONS */
+    section {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px; margin-bottom: 24px;
+    }
+    section h2 {
+      font-size: 20px; font-weight: 700; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    section h2 .icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 8px; font-size: 16px; flex-shrink: 0;
+    }
+    section h3 { font-size: 16px; font-weight: 600; margin: 20px 0 10px; }
+    p, li { font-size: 15px; color: var(--text-2); }
+    p + p { margin-top: 10px; }
+    ul, ol { padding-left: 20px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* BOXES */
+    .box {
+      border-radius: var(--radius); padding: 20px 24px; margin: 16px 0;
+      font-size: 15px; font-weight: 500;
+    }
+    .box.red { background: var(--red-light); border-left: 4px solid var(--red); color: #991b1b; }
+    .box.green { background: var(--green-light); border-left: 4px solid var(--green); color: #065f46; }
+    .box.orange { background: var(--orange-light); border-left: 4px solid var(--orange); color: #92400e; }
+    .box.blue { background: var(--blue-light); border-left: 4px solid var(--blue); color: #1e40af; }
+    .box.purple { background: var(--purple-light); border-left: 4px solid var(--purple); color: #5b21b6; }
+
+    /* TABLES */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    thead th {
+      background: var(--bg); text-align: left; padding: 10px 14px; font-weight: 600;
+      color: var(--text); border-bottom: 2px solid var(--border);
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    tbody td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      color: var(--text-2); vertical-align: top;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--bg); }
+
+    /* TAGS */
+    .tag {
+      display: inline-block; padding: 2px 10px; border-radius: 12px;
+      font-size: 12px; font-weight: 600;
+    }
+    .tag.supabase { background: var(--green-light); color: #065f46; }
+    .tag.bitrix { background: var(--red-light); color: #991b1b; }
+    .tag.hybrid { background: var(--orange-light); color: #92400e; }
+    .tag.external { background: var(--purple-light); color: #5b21b6; }
+    .tag.none { background: var(--bg); color: var(--text-3); border: 1px solid var(--border); }
+
+    /* STATS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px; margin: 16px 0;
+    }
+    .stat-card {
+      background: var(--bg); border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .stat-card .number { font-size: 28px; font-weight: 700; color: var(--accent); }
+    .stat-card .label { font-size: 13px; color: var(--text-2); margin-top: 4px; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; margin: 20px 0; }
+    .timeline::before {
+      content: ''; position: absolute; left: 11px; top: 6px; bottom: 6px;
+      width: 2px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 28px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -25px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid var(--accent); background: var(--surface);
+    }
+    .timeline-item.done::before { background: var(--green); border-color: var(--green); }
+    .timeline-item .phase-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--accent); margin-bottom: 4px;
+    }
+    .timeline-item.done .phase-label { color: var(--green); }
+    .timeline-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .timeline-item p { font-size: 14px; }
+    .timeline-item .est {
+      display: inline-block; margin-top: 8px; background: var(--bg);
+      padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text-2);
+    }
+
+    /* ARCHITECTURE DIAGRAM */
+    .arch-diagram {
+      background: var(--bg); border-radius: var(--radius); padding: 24px;
+      margin: 16px 0; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px;
+      line-height: 1.8; overflow-x: auto; color: var(--text-2);
+    }
+    .arch-diagram .highlight { color: var(--accent); font-weight: 600; }
+    .arch-diagram .dim { color: var(--text-3); }
+    .arch-diagram .supabase-color { color: var(--green); font-weight: 600; }
+    .arch-diagram .sgtm-color { color: var(--purple); font-weight: 600; }
+    .arch-diagram .make-color { color: var(--orange); font-weight: 600; }
+
+    /* DOC STATUS */
+    .doc-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .doc-item:last-child { border-bottom: none; }
+    .doc-icon {
+      width: 28px; height: 28px; border-radius: 6px; display: flex;
+      align-items: center; justify-content: center; font-size: 14px;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .doc-icon.ok { background: var(--green-light); color: var(--green); }
+    .doc-icon.warn { background: var(--orange-light); color: var(--orange); }
+    .doc-icon.miss { background: var(--red-light); color: var(--red); }
+    .doc-content { flex: 1; }
+    .doc-content strong { color: var(--text); font-size: 14px; }
+    .doc-content p { font-size: 13px; margin-top: 2px; }
+
+    code {
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px;
+      background: var(--bg); padding: 1px 6px; border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* TWO COL */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+      header h1 { font-size: 24px; }
+      section { padding: 20px; }
+    }
+
+    footer {
+      text-align: center; padding: 32px 0 16px;
+      font-size: 13px; color: var(--text-3);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="badge">Analiza techniczna</div>
+    <h1>Migracja better-bitrix → Twenty CRM</h1>
+    <p class="subtitle">Rzeczywisty stan systemu, ocena dokumentacji i strategia migracji<br><em style="font-size:14px;color:var(--text-3);">Scope: better-bitrix (leady, helpdesk, statystyki). Deale i faktury w Bitrix24 — osobny temat, poza zakresem tego dokumentu.</em></p>
+    <p class="date">Przygotowano: 25 maja 2026 &middot; Zaktualizowano: 28 maja 2026 (SSOT /owocni-crm/)</p>
+  </header>
+
+  <!-- ===== 0. SSOT ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--accent-light);color:var(--accent);">📁</span> Źródło prawdy (SSOT) — od 28.05.2026</h2>
+    <div class="box green">
+      <strong>Operacyjny pakiet dokumentacji:</strong> <code>owocni-crm/</code> w repo (7 plików + migration + ops).  
+      Zacznij od <code>owocni-crm/README.md</code> i <code>owocni-crm/PLAN_DZIALAN.md</code>.
+    </div>
+    <table>
+      <thead><tr><th>Temat</th><th>Plik SSOT</th></tr></thead>
+      <tbody>
+        <tr><td>Eventy (purchase, rejected_lead, qualify_lead)</td><td><code>owocni-crm/EVENT_CONTRACT.md</code></td></tr>
+        <tr><td>Pola (campaignRejected, idOid)</td><td><code>owocni-crm/DATA_MODEL.md</code></td></tr>
+        <tr><td>Flow inbound/outbound</td><td><code>owocni-crm/CRM_ARCHITECTURE_CURRENT.md</code></td></tr>
+        <tr><td>POC vs produkcja</td><td><code>owocni-crm/POC_MAPPING.md</code></td></tr>
+        <tr><td>Decyzje otwarte / cutover</td><td><code>owocni-crm/DECISION_REGISTER.md</code>, <code>CUTOVER_RUNBOOK.md</code></td></tr>
+      </tbody>
+    </table>
+    <div class="box orange">
+      <strong>Rekonsyliacja eventów:</strong> POC używał <code>lead_won</code>, <code>lead_lost</code>, <code>lead_rejected</code> + Workflow HTTP.  
+      SSOT docelowy: <code>purchase</code>, <code>rejected_lead</code> (tylko <code>campaignRejected</code>), <code>qualify_lead</code>; stage LOST <strong>bez</strong> eventu; outbound przez <strong>native webhook OUT</strong> → Sortownia.
+    </div>
+    <p>Legacy: <code>twenty/EVENT_CONTRACT_OWOCNI.md</code> — nie używać bez porównania z <code>owocni-crm/EVENT_CONTRACT.md</code>.</p>
+  </section>
+
+  <!-- ===== 1. KLUCZOWE ODKRYCIE ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--green-light);color:var(--green);">✓</span> Kluczowe odkrycie: „Bitrix" to Supabase</h2>
+    <div class="box green">
+      <strong>Moduł leadów (<code>/lead</code>), którego używacie na co dzień, jest w 100% oparty na Supabase.</strong>
+      Bitrix24 API nie jest wywoływany z żadnego elementu tego modułu — ani z kanbana, ani z formularzy, ani z kontekstowego menu, ani z dialogów wygrania/przegrania leada.
+    </div>
+    <p>
+      Nazwa „better-bitrix" jest historyczna. Aplikacja była budowana jako nakładka na Bitrix24,
+      ale z czasem <strong>praktycznie cały pipeline leadowy został przeniesiony na Supabase</strong>.
+      Stare endpointy Bitrix24 (<code>api/newLead/v1-v3</code>) nadal istnieją w kodzie, ale nikt ich nie wywołuje z frontendu.
+    </p>
+
+    <h3>Dowody z kodu — flow leada od A do Z</h3>
+    <table>
+      <thead>
+        <tr><th>Operacja</th><th>Źródło danych</th><th>Backend</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Kanban — lista leadów</td>
+          <td><code>useGetLeadsV2</code></td>
+          <td><span class="tag supabase">Supabase</span> tabela <code>leads</code> + widok <code>leads_extended_materialized</code></td>
+        </tr>
+        <tr>
+          <td>Otwarcie leada (modal)</td>
+          <td><code>useGetLead</code> → <code>fetchLead</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+        </tr>
+        <tr>
+          <td>Edycja pól leada</td>
+          <td><code>useUpdateLead</code></td>
+          <td><span class="tag supabase">Supabase</span> <code>.update()</code></td>
+        </tr>
+        <tr>
+          <td>Zmiana statusu (drag &amp; drop / menu)</td>
+          <td><code>useUpdateLead</code> + <code>logLeadStageChangeByInternalStage</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+        </tr>
+        <tr>
+          <td>Lead Wygrany</td>
+          <td><code>WonLeadDialog</code></td>
+          <td><span class="tag supabase">Supabase</span> + <span class="tag external">Make.com</span> (gclid) + <span class="tag external">sGTM</span></td>
+        </tr>
+        <tr>
+          <td>Lead Przegrany</td>
+          <td><code>LostLeadDialog</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+        </tr>
+        <tr>
+          <td>Lead Odrzucony</td>
+          <td><code>RejectedLeadDialog</code></td>
+          <td><span class="tag supabase">Supabase</span> + <span class="tag external">sGTM</span></td>
+        </tr>
+        <tr>
+          <td>Kwalifikacja leada (SQL dialog)</td>
+          <td><code>leadKanbanColumn</code></td>
+          <td><span class="tag supabase">Supabase</span> + <span class="tag external">sGTM</span> (qualify_lead)</td>
+        </tr>
+        <tr>
+          <td>Tworzenie leada z emaila</td>
+          <td><code>createLeadv2.ts</code> (z <code>newEmail</code>)</td>
+          <td><span class="tag supabase">Supabase</span> + <span class="tag external">OpenAI</span> (parsing)</td>
+        </tr>
+        <tr>
+          <td>Real-time refresh</td>
+          <td>Supabase Realtime (postgres_changes)</td>
+          <td><span class="tag supabase">Supabase</span></td>
+        </tr>
+        <tr>
+          <td>Przypisywanie / read status</td>
+          <td><code>useUpdateLead</code> / <code>useUpdateReadLead</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Gdzie jeszcze żyje Bitrix24 API?</h3>
+    <p>Endpointy <code>api/newLead/</code>, <code>api/newLead/v2/</code>, <code>api/newLead/v3/</code> nadal importują <code>@2bad/bitrix</code> i wywołują <code>crm.lead.get</code>, <code>crm.company.add</code>, <code>bitrix.leads.update</code>. Jednak <strong>żaden z nich nie jest wywoływany</strong> z frontendu <code>/lead</code> ani z nowego flow tworzenia leadów (<code>createLeadv2.ts</code>). To martwy kod — relikt z czasów, gdy leady szły przez Bitrix.</p>
+  </section>
+
+  <!-- ===== 1B. TERMINOLOGIA ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--orange-light);color:var(--orange);">⚠</span> Ważne: różnica terminologiczna „Deal" vs „Lead"</h2>
+    <div class="box orange">
+      <strong>EVENT_CONTRACT_OWOCNI.md używa słowa „Deal" — ale to nomenklatura Twenty, nie Bitrix24.</strong>
+    </div>
+    <p>W Twenty CRM główny obiekt pipeline'u sprzedażowego nazywa się <strong>Opportunity</strong> (alias „Deal"). To jest odpowiednik tego, co w better-bitrix nazywacie <strong>„leadem"</strong> — wpis w kanbanie ze statusami: nowy → kwalifikowany → wygrany/przegrany.</p>
+    <p>Wasze <strong>„deale" w Bitrix24</strong> to zupełnie inny koncept — workflow realizacji projektu po wygranym leadzie. Dokumentacja Twenty tego w ogóle nie porusza. To osobny system, osobny temat.</p>
+    <table>
+      <thead><tr><th>Termin</th><th>Gdzie żyje</th><th>Co oznacza</th><th>Czy dotyczy tej migracji?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Lead</strong> (better-bitrix)</td>
+          <td><code>crm.owocni.pl/lead</code></td>
+          <td>Pipeline sprzedażowy: formularz → kwalifikacja → wygrana/przegrana</td>
+          <td><span class="tag supabase">Tak — główny scope</span></td>
+        </tr>
+        <tr>
+          <td><strong>Deal / Opportunity</strong> (Twenty)</td>
+          <td>Twenty CRM</td>
+          <td>To samo co wasz „lead" — obiekt pipeline'u sprzedażowego w Twenty</td>
+          <td><span class="tag supabase">Tak — docelowy obiekt</span></td>
+        </tr>
+        <tr>
+          <td><strong>Deal</strong> (Bitrix24)</td>
+          <td>Bitrix24 (osobna platforma)</td>
+          <td>Workflow realizacji projektu po wygranym leadzie</td>
+          <td><span class="tag none">Nie — poza zakresem</span></td>
+        </tr>
+        <tr>
+          <td><strong>Faktura</strong> (Bitrix24)</td>
+          <td>Bitrix24 / inne narzędzie</td>
+          <td>Dokumenty fakturowe</td>
+          <td><span class="tag none">Nie — poza zakresem</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>W dalszej części dokumentu, gdy piszemy „Opportunity/Deal w Twenty", zawsze mamy na myśli wasz <strong>lead</strong> (pipeline sprzedażowy), nie deal z Bitrix24.</p>
+  </section>
+
+  <!-- ===== 2. SCOPE MIGRACJI ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--accent-light);color:var(--accent);">📋</span> Scope migracji: co przenosimy, a co zostaje</h2>
+    <p>Migracja dotyczy <strong>wyłącznie better-bitrix</strong> (crm.owocni.pl). Bitrix24 (deale, workflow realizacji) to osobny system — nie jest częścią tego projektu.</p>
+
+    <h3>Przenosimy na Twenty (aktywnie używane moduły better-bitrix)</h3>
+    <table>
+      <thead>
+        <tr><th>Moduł</th><th>Route</th><th>Backend</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Leady (pipeline sprzedażowy)</strong></td>
+          <td><code>/lead</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+          <td>Główny moduł — priorytet #1</td>
+        </tr>
+        <tr>
+          <td><strong>Helpdesk (tickety)</strong></td>
+          <td><code>/helpdesk</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+          <td>Priorytet #2</td>
+        </tr>
+        <tr>
+          <td><strong>Statystyki leadów</strong></td>
+          <td><code>/statistics/lead/*</code></td>
+          <td><span class="tag supabase">Supabase</span></td>
+          <td>Priorytet #3</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Poza zakresem tej migracji</h3>
+    <table>
+      <thead>
+        <tr><th>System</th><th>Co robi</th><th>Dlaczego poza zakresem</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bitrix24 — Deale</strong></td>
+          <td>Workflow realizacji projektu po wygranym leadzie</td>
+          <td>Osobna platforma, osobny proces. Ewentualna migracja deali na Twenty to <strong>oddzielny projekt</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Bitrix24 / inne — Faktury</strong></td>
+          <td>Dokumenty fakturowe</td>
+          <td>Osobne narzędzie, nie zarządzane w ramach tego projektu.</td>
+        </tr>
+        <tr>
+          <td><strong>better-bitrix — inne moduły</strong></td>
+          <td>Inbox, chat, WordPress, narzędzia AI, szukanie, logi</td>
+          <td>Istnieją w kodzie, ale nie są w scope'ie core migracji. Mogą zostać przeniesione później lub pozostać jako osobne serwisy.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 3. ARCHITEKTURA INTEGRACJI ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--purple-light);color:var(--purple);">⚡</span> Aktualna architektura integracji (moduł /lead)</h2>
+
+    <div class="box purple">
+      <strong>ODKRYCIE (26.05.2026):</strong> Leady wpadają do CRM przez <strong>email</strong>, nie bezpośrednio z formularza. Formularz na owocni.pl wysyła maila na <code>leads@owocni.pl</code>. External Email Watcher na serwerze <code>julia362.mikrus.xyz</code> wykrywa nowy email i pushuje do better-bitrix.
+    </div>
+
+    <h3>Pełny flow wejścia leada (dwa kanały)</h3>
+    <div class="arch-diagram">
+<pre>
+  ┌──────────────────────┐
+  │   owocni.pl           │
+  │   (formularz)         │
+  └────┬─────────┬────────┘
+       │         │
+  <span class="dim">KANAŁ 1</span>       <span class="dim">KANAŁ 2</span>
+  <span class="dim">(marketing)</span>   <span class="dim">(CRM)</span>
+       │         │
+       │         │ email do leads@owocni.pl
+       ▼         ▼
+  ┌──────────┐  ┌──────────────────────────────────────┐
+  │<span class="sgtm-color">Stape sGTM</span>│  │  <span class="highlight">julia362.mikrus.xyz</span> (Email Watcher)   │
+  │Sortownia │  │  mail-listener5 → IMAP mail.owocni.pl │
+  │→ identity│  │  7 skrzynek, nasłuch real-time         │
+  │→ task_q  │  │  PM2: app2.js (restartowany 3x/dzień)  │
+  └────┬─────┘  └──────────────┬───────────────────────┘
+       │                       │ POST [{messageId, folder, inbox}]
+       │                       │ (batch max 5, bufor 5s)
+       ▼                       ▼
+  ┌──────────┐  ┌──────────────────────┐       ┌──────────────┐
+  │<span class="make-color">Robot GCF</span> │  │ <span class="highlight">better-bitrix</span>         │       │ <span class="supabase-color">Supabase</span>      │
+  │GA4,Meta, │  │ api/newEmail          │──────▶│ email_message │
+  │GoogleAds │  │ → IMAP fetch pełnego  │INSERT │ leads         │
+  │(adaptery)│  │ → OpenAI GPT-4o parse │──────▶│ companies     │
+  └──────────┘  │ → createLead          │       │ email_addr    │
+                └──────────┬────────────┘       └──────────────┘
+                           │
+                ┌──────────▼────────────┐
+                │  Sprzedawca            │
+                │  crm.owocni.pl/lead    │
+                │  (kanban, dialogi)     │
+                └──────┬──────┬─────────┘
+                       │      │ qualify / won / rejected
+                       │      ▼
+                       │   ┌────────────────────┐
+                       │   │  <span class="sgtm-color">sGTM (Stape)</span>        │
+                       │   │  notifyLeadEvent    │
+                       │   └────────────────────┘
+                       │ lead_won + gclid
+                       ▼
+                ┌────────────────────┐
+                │  <span class="make-color">Make.com</span> webhook    │
+                │  → Google Ads conv. │
+                └────────────────────┘
+</pre>
+    </div>
+
+    <h3>julia362 Email Watcher — szczegóły techniczne</h3>
+    <table>
+      <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+      <tbody>
+        <tr><td>Serwer</td><td><code>julia362.mikrus.xyz</code> (SSH port 10362)</td></tr>
+        <tr><td>Skrypt</td><td><code>/root/mail/app2.js</code> (4.6 KB, mail-listener5)</td></tr>
+        <tr><td>Process Manager</td><td>PM2, restartowany cron o 5:00, 10:00, 16:00</td></tr>
+        <tr><td>Node.js</td><td>v19.6.0</td></tr>
+        <tr><td>Nasłuchiwane skrzynki</td><td>7: copywriting@, pomoc@, studio@, marta@, gosia@, mariusz@, leads@ (INBOX + Sent; leads tylko INBOX)</td></tr>
+        <tr><td>IMAP</td><td>mail.owocni.pl:993 (TLS)</td></tr>
+        <tr><td>Filtr IMAP</td><td>SINCE 7 dni wstecz (odliczane od momentu startu)</td></tr>
+        <tr><td>Bufor</td><td>5 sekund, batch max 5 emaili</td></tr>
+        <tr><td>Webhook</td><td><code>POST https://crm.owocni.pl/api/newEmail</code></td></tr>
+        <tr><td>Payload</td><td><code>[{messageId, folderPath, inbox, date}]</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="box orange">
+      <strong>Minimum do przełączenia:</strong> zmiana jednego URL-a w <code>app2.js</code> na julia362 (<code>crm.owocni.pl/api/newEmail</code> → nowy endpoint). Ale to podejście zachowuje 5 warstw pośrednich (IMAP → fetch → GPT-4o → parse → create).
+    </div>
+    <div class="box green">
+      <strong>Lepsza opcja:</strong> Formularz na owocni.pl <strong>już wysyła ustrukturyzowane dane</strong> do Stape/Sortowni (<code>generate_lead</code>). EVENT_CONTRACT (sekcja 9.1–9.2) definiuje adapter <code>crm:twenty_create_deal</code>, który POSTuje bezpośrednio do Twenty API — <strong>bez julia362, bez IMAP, bez GPT-4o</strong>. Szczegóły i porównanie opcji → <a href="#opcje-inbound">sekcja „Opcje inbound leadów"</a>.
+    </div>
+
+    <h3>Sortownia (sGTM) + Robot (GCF) — rola w ekosystemie</h3>
+    <table>
+      <thead><tr><th>Komponent</th><th>Co robi</th><th>Czy tworzy leada w CRM?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Sortownia</strong> (Stape sGTM Custom Template)</td>
+          <td>Przyjmuje <code>generate_lead</code> z formularzy owocni.pl. Normalizuje PII (email, phone). Tworzy profil w <code>identity_map</code> (Stape Store). Dodaje tasks do <code>task_queue</code>.</td>
+          <td><span class="tag none">NIE</span> — zapisuje do Stape Store, nie do CRM.</td>
+        </tr>
+        <tr>
+          <td><strong>Robot</strong> (Google Cloud Function)</td>
+          <td>Przetwarza <code>task_queue</code> z Sortowni. Wysyła eventy do GA4 Measurement Protocol, Meta CAPI, Google Ads Enhanced Conversions.</td>
+          <td><span class="tag none">NIE</span> — wysyła do platform marketingowych.</td>
+        </tr>
+        <tr>
+          <td><strong>julia362 Email Watcher</strong></td>
+          <td>Nasłuchuje IMAP <code>leads@owocni.pl</code>. POSTuje messageId do better-bitrix.</td>
+          <td><span class="tag supabase">TAK</span> — pośrednio: via better-bitrix → Supabase.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box blue">
+      <strong>Wniosek:</strong> Do CRM leady docierają wyłącznie kanałem email (julia362 → better-bitrix). Sortownia i Robot obsługują marketing, nie CRM. W przyszłości Sortownia może wywoływać adapter <code>crm:twenty_create_deal</code> (opisany w EVENT_CONTRACT_OWOCNI.md sekcja 9), ale na dziś to nie jest skonfigurowane.
+    </div>
+
+    <p>
+      <strong>Bitrix24 API nie jest częścią tego flow.</strong> Stare endpointy <code>api/newLead/v1-v3</code> (które importują <code>@2bad/bitrix</code>) nie są wywoływane — to martwy kod.
+    </p>
+  </section>
+
+  <!-- ===== 4. OCENA DOKUMENTACJI ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--orange-light);color:var(--orange);">📄</span> Ocena istniejącej dokumentacji migracyjnej</h2>
+    <p>W folderze <code>twenty/</code> znajdują się dwa dokumenty. Oto ich ocena w kontekście rzeczywistego stanu systemu:</p>
+
+    <h3>EVENT_CONTRACT_OWOCNI.md</h3>
+    <div class="doc-item">
+      <div class="doc-icon ok">✓</div>
+      <div class="doc-content">
+        <strong>Mapowanie pól Twenty ↔ Event Contract orkiestracji</strong>
+        <p>Poprawne i kompletne. Dobrze zdefiniowane prefixy, translation rules, webhook payloady.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon ok">✓</div>
+      <div class="doc-content">
+        <strong>Edge cases (idempotency, loop prevention, manual leads, korekta wsteczna)</strong>
+        <p>Solidnie przemyślane. Loop prevention z <code>src_system: "crm"</code> jest krytyczny i dobrze opisany.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon ok">✓</div>
+      <div class="doc-content">
+        <strong>biz_message_content jako Note w Twenty</strong>
+        <p>Konkretny upgrade nad Bitrixem (Note entity z relations vs. plain text COMMENTS field). Dobrze udokumentowany.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon warn">⚠</div>
+      <div class="doc-content">
+        <strong>Sekcja 9 „Migracja Bitrix → Twenty" — częściowo nieaktualna</strong>
+        <p>Dokument zakłada migrację z Bitrix24 API. W rzeczywistości moduł <code>/lead</code> jest już na Supabase. Adapter rename (<code>crm:bitrix_create_lead</code> → <code>crm:twenty_create_deal</code>) nadal ma sens — dotyczy Sortowni, nie CRM-u.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon warn">⚠</div>
+      <div class="doc-content">
+        <strong>Migracja historycznych danych (sekcja 9.3) — zakłada eksport z Bitrix</strong>
+        <p>W rzeczywistości dane leadów żyją w Supabase, nie w Bitrix24. Eksport powinien być z Supabase, nie z Bitrix REST API.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon miss">✗</div>
+      <div class="doc-content">
+        <strong>Brak strategii migracji CRM-u jako całości</strong>
+        <p>Dokument opisuje TYLKO warstwę orkiestracji (Stape ↔ CRM). Nie porusza migracji: danych z Supabase (~30 tabel), logiki biznesowej, integracji (IMAP, OpenAI, Make.com), UI/UX.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon miss">✗</div>
+      <div class="doc-content">
+        <strong>Brak odpowiedzi na pytanie: „od razu czy równolegle?"</strong>
+        <p>Dokument nie definiuje strategii cutover — czy oba systemy działają równolegle, kiedy jest punkt odcięcia, jak wygląda rollback.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">twenty-smaczki-v2.html</h3>
+    <div class="doc-item">
+      <div class="doc-icon ok">✓</div>
+      <div class="doc-content">
+        <strong>Kompletny przegląd Twenty 2.0 — 41 punktów w 9 kategoriach</strong>
+        <p>Rzetelna analiza „adwokata diabła". Dobrze identyfikuje zarówno mocne strony jak i luki. Rekomendacje (cloud Pro $9/user) trafne.</p>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon warn">⚠</div>
+      <div class="doc-content">
+        <strong>Brak kontekstu specyficznego dla Owocni</strong>
+        <p>Dokument opisuje Twenty generycznie. Nie mapuje funkcji better-bitrix na konkretne możliwości Twenty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4B. POC RESULTS ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--green-light);color:var(--green);">🧪</span> Wyniki POC (25–26 maja 2026)</h2>
+
+    <div class="box green">
+      <strong>POC zakończony sukcesem.</strong> W ciągu 2 dni (7-dniowy trial Twenty Cloud) zweryfikowano: schema, import danych, outbound eventy, inbound adapter.
+    </div>
+
+    <h3>Workspace</h3>
+    <p><a href="https://zany-maroon-panther.twenty.com" target="_blank">https://zany-maroon-panther.twenty.com</a> (trial, wygasa ~1 czerwca 2026)</p>
+
+    <h3>Co zostało zrobione i zweryfikowane</h3>
+    <table>
+      <thead><tr><th>Element</th><th>Status</th><th>Szczegóły</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Schema Opportunity</strong></td>
+          <td><span class="tag supabase">DONE</span></td>
+          <td>6 stages (NEW→CONTACTED→QUALIFIED→PROPOSAL→WON→LOST), ~11 custom fields (idOid, bizProduct, bizSource, engagement, lossCategory, lossDescription, campaignRejected, isFollowUp, snoozeUntil, lastOrchestrationEventAt, lastOrchestrationEventId)</td>
+        </tr>
+        <tr>
+          <td><strong>Import danych z Supabase</strong></td>
+          <td><span class="tag supabase">DONE</span></td>
+          <td>57 Opportunities, 63 Companies, 31 People — API batch import via GraphQL</td>
+        </tr>
+        <tr>
+          <td><strong>Outbound: qualify_lead</strong></td>
+          <td><span class="tag supabase">VERIFIED</span></td>
+          <td>Workflow trigger → Code step → HTTP Request → webhook.site</td>
+        </tr>
+        <tr>
+          <td><strong>Outbound: lead_won</strong></td>
+          <td><span class="tag hybrid">POC only</span></td>
+          <td>SSOT docelowy: <code>purchase</code> — patrz <code>owocni-crm/EVENT_CONTRACT.md</code></td>
+        </tr>
+        <tr>
+          <td><strong>Outbound: lead_lost</strong></td>
+          <td><span class="tag hybrid">POC only</span></td>
+          <td>SSOT: stage LOST <strong>nie emituje</strong> eventu do platform</td>
+        </tr>
+        <tr>
+          <td><strong>Outbound: lead_rejected</strong></td>
+          <td><span class="tag supabase">VERIFIED</span></td>
+          <td>SSOT docelowy: <code>rejected_lead</code> (campaignRejected=true). POC nazwa: lead_rejected</td>
+        </tr>
+        <tr>
+          <td><strong>Inbound: create_lead API</strong></td>
+          <td><span class="tag supabase">VERIFIED</span></td>
+          <td>Person → Opportunity (stage=NEW) → Note → NoteTargets via GraphQL API</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Snapshoty w Git</h3>
+    <table>
+      <thead><tr><th>Plik</th><th>Zawartość</th></tr></thead>
+      <tbody>
+        <tr><td><code>001-initial-schema.json</code></td><td>Schema po konfiguracji stages + fields</td></tr>
+        <tr><td><code>002-sample-import-stats.json</code></td><td>Statystyki importu z Supabase</td></tr>
+        <tr><td><code>003-views-config.json</code></td><td>Weryfikacja danych post-import</td></tr>
+        <tr><td><code>004-workflow-outbound-event.json</code></td><td>Blueprint workflow outbound</td></tr>
+        <tr><td><code>005-test-plan-day7.json</code></td><td>Plan testów</td></tr>
+        <tr><td><code>006-workflow-live-verified.json</code></td><td>Verify: qualify_lead live</td></tr>
+        <tr><td><code>007-all-events-verified.json</code></td><td>Verify: wszystkie 3 stage events</td></tr>
+        <tr><td><code>008-inbound-adapter-spec.json</code></td><td>Spec adaptera inbound (create_lead → Twenty)</td></tr>
+        <tr><td><code>009-final-poc-snapshot.json</code></td><td>Finalny snapshot: schema + workflows + dane + verdict</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Znane ograniczenia (odkryte w POC)</h3>
+    <table>
+      <thead><tr><th>Ograniczenie</th><th>Workaround</th><th>Wpływ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Code step <code>params</code> nie mapuje trigger data</td>
+          <td>Embedded GraphQL API call w Code step (fetch latest updated record w 3s window)</td>
+          <td>Race condition: jeśli 2 Opportunity zmienią stage w &lt;3s, Code może pobrać niewłaściwy rekord</td>
+        </tr>
+        <tr>
+          <td>Workflow steps nie edytowalne przez API key</td>
+          <td>Konfiguracja przez UI Twenty (API key zwraca FORBIDDEN na createWorkflowVersion)</td>
+          <td>Workflow nie jest w pełni „schema as code" — wymaga manualnej konfiguracji w UI</td>
+        </tr>
+        <tr>
+          <td>Person nie ma pola <code>idOid</code></td>
+          <td><code>idOid</code> tylko na Opportunity — EVENT_CONTRACT wymaga korekty</td>
+          <td>Minimalny — Person linkowany przez pointOfContact relację</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 5. CO TRZEBA PRZENIEŚĆ ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--accent-light);color:var(--accent);">🔀</span> Co dokładnie trzeba przenieść na Twenty</h2>
+
+    <h3>A. Dane (Supabase → Twenty)</h3>
+    <table>
+      <thead><tr><th>Supabase tabela</th><th>Twenty obiekt</th><th>Uwagi</th></tr></thead>
+      <tbody>
+        <tr><td><code>leads</code></td><td>Opportunity</td><td>Główna tabela — ~18 kolumn + relacje. W Twenty wasze „leady" to obiekt Opportunity (w dokumentacji nazywany też „Deal" — to jest nomenklatura Twenty, nie wasze deale z Bitrix24).</td></tr>
+        <tr><td><code>lead_stages</code> + <code>view_stages</code></td><td>Pipeline stages</td><td>Twenty ma natywne stage'y na Opportunity</td></tr>
+        <tr><td><code>companies</code></td><td>Company</td><td>Twenty ma natywny obiekt Company</td></tr>
+        <tr><td><code>users</code></td><td>Workspace Members</td><td>Twenty ma natywne zarządzanie użytkownikami</td></tr>
+        <tr><td><code>lead_stage_changes</code></td><td>Custom object lub Activity log</td><td>Audit trail — Twenty ma audit logs (Enterprise)</td></tr>
+        <tr><td><code>ticket</code></td><td>Custom object „Ticket"</td><td>Wymaga zbudowania (patrz osobny dokument: <code>analiza-helpdesk-twenty.html</code>)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>B. Logika biznesowa (Next.js → Twenty Workflows / Logic Functions)</h3>
+    <table>
+      <thead><tr><th>Obecna logika</th><th>Realizacja w Twenty</th></tr></thead>
+      <tbody>
+        <tr><td>Tworzenie leada z emaila (OpenAI parsing)</td><td>Logic Function z triggerem HTTP + OpenAI API</td></tr>
+        <tr><td>Eventy do sGTM (qualify, won, rejected)</td><td>Workflow z Code Action (opisane w EVENT_CONTRACT)</td></tr>
+        <tr><td>Webhook do Make.com (gclid konwersja)</td><td>Workflow z HTTP Request action</td></tr>
+        <tr><td>Auto-assign / round-robin</td><td>Workflow z Code Action</td></tr>
+        <tr><td>Snooze / follow-up</td><td>Custom pole datowe + Scheduled Workflow</td></tr>
+        <tr><td>Read/unread tracking</td><td>Custom pole (array user IDs) lub Twenty natywne</td></tr>
+        <tr><td>Lost reason categorization</td><td>Custom select pole na Opportunity</td></tr>
+        <tr><td>Statystyki leadów (dashboardy)</td><td>Front Components (sandboxed React) lub Kanban Aggregations</td></tr>
+      </tbody>
+    </table>
+
+    <h3>C. Integracje zewnętrzne (w scope'ie)</h3>
+    <table>
+      <thead><tr><th>Integracja</th><th>Obecny sposób</th><th>W Twenty</th></tr></thead>
+      <tbody>
+        <tr><td>sGTM / Stape (orkiestracja)</td><td><code>notifyLeadEvent()</code></td><td>Workflow → Webhook (opisane w EVENT_CONTRACT)</td></tr>
+        <tr><td>Make.com (gclid → Google Ads)</td><td>Webhook POST z WonLeadDialog</td><td>Workflow → HTTP Request action</td></tr>
+        <tr><td>OpenAI (lead parsing z emaila)</td><td><code>createLeadv2.ts</code></td><td>Logic Function + OpenAI API</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 6. STRATEGIA MIGRACJI ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--blue-light);color:var(--blue);">🗺</span> Proponowana strategia migracji</h2>
+
+    <div class="box blue">
+      <strong>Rekomendacja: migracja etapowa z krótkim okresem równoległego działania.</strong><br>
+      Nie „big bang" (zbyt ryzykowne), nie „na zawsze równolegle" (zbyt kosztowne). Każda faza ma jasny moment cut-off.
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item done">
+        <div class="phase-label">Faza 0 — Fundament (DONE ✓)</div>
+        <h4>Przygotowanie Twenty + orkiestracja</h4>
+        <p>Workspace Twenty skonfigurowany. Custom fieldy na Opportunity zdefiniowane (~11 pól). Pipeline stages ustawione (NEW→CONTACTED→QUALIFIED→PROPOSAL→WON→LOST). Próbka danych zaimportowana z Supabase (57 Opportunities, 63 Companies, 31 People).</p>
+        <span class="est">DONE — 25-26 maja 2026 (POC)</span>
+      </div>
+
+      <div class="timeline-item done">
+        <div class="phase-label">Faza 0b — Outbound Events (DONE ✓)</div>
+        <h4>Workflow: eventy do orkiestracji Stape</h4>
+        <p>Dwa workflow Twenty zbudowane i zweryfikowane live:
+          <br>1) <strong>deal · zmiana etapu · event do orkiestracji</strong> — trigger na stage change → qualify_lead / lead_won / lead_lost na webhook.site
+          <br>2) <strong>deal · campaign rejected · event do orkiestracji</strong> — trigger na campaignRejected=true → lead_rejected na webhook.site
+          <br>Do produkcji: zamienić webhook.site na endpoint Stape/Sortowni.</p>
+        <span class="est">DONE — 26 maja 2026 (POC)</span>
+      </div>
+
+      <div class="timeline-item done">
+        <div class="phase-label">Faza 0c — Inbound Adapter Spec (DONE ✓)</div>
+        <h4>Spec + test: create_lead → Twenty API</h4>
+        <p>Zweryfikowano API flow: Person → Opportunity (stage=NEW) → Note → NoteTargets. Test script przeszedł. Spec w <code>008-inbound-adapter-spec.json</code>.</p>
+        <span class="est">DONE — 26 maja 2026 (POC)</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase-label">Faza 1a — Inbound: nowe leady ze strony → Twenty</div>
+        <h4>Adapter Sortownia + Email Sync (Opcja A+B)</h4>
+        <p>1) Dodać adapter <code>crm:twenty_create_deal</code> w Sortowni (Custom Code sGTM) — przy <code>generate_lead</code> → Twenty API (Person + Opportunity + Note). Dane już ustrukturyzowane — <strong>bez GPT-4o, bez IMAP</strong>.
+          <br>2) Podpiąć <code>leads@owocni.pl</code> do Twenty Email Sync (IMAP) — email widoczny na timeline rekordu.
+          <br>3) Po weryfikacji: wyłączyć julia362 (<code>pm2 stop app2</code>).
+          <br><strong>Fallback (Opcja C):</strong> jeśli Sortownia adapter niemożliwy → serverless endpoint zamiast julia362.</p>
+        <span class="est">2–4 dni</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase-label">Faza 1b — Pełna migracja danych</div>
+        <h4>Historyczne leady z Supabase → Twenty</h4>
+        <p>Eksport wszystkich aktywnych leadów z Supabase (tabela <code>leads</code> + <code>companies</code> + <code>email_addresses</code> + <code>phone_numbers</code>). Import do Twenty z pełnym mapowaniem pól i linkowaniem relacji Person ↔ Opportunity ↔ Company. API import już przetestowany w POC — skrypt wymaga rozszerzenia o brakujące pola (bizSource, contact linking).</p>
+        <span class="est">2–3 dni</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase-label">Faza 1c — Cutover</div>
+        <h4>Sprzedawcy przechodzą na Twenty</h4>
+        <p>Zaproszenie handlowców (Settings → Members). Email Sync (Google/M365). Szkolenie 1-2h (Cmd+K, pipeline, workflow). Better-bitrix <code>/lead</code> w trybie read-only przez 2 tygodnie, potem wyłączony. Julia362 wysyła już TYLKO do Twenty.</p>
+        <span class="est">1–2 tygodnie</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase-label">Faza 2 — Helpdesk</div>
+        <h4>Tickety → Custom object w Twenty lub zewnętrzne narzędzie</h4>
+        <p>Zbuduj custom object „Ticket" z defineObject() lub zintegruj zewnętrzne narzędzie (Zammad / FreeScout). Szczegóły w osobnym dokumencie: <code>analiza-helpdesk-twenty.html</code>.</p>
+        <span class="est">2–3 tygodnie</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase-label">Faza 3 — Statystyki</div>
+        <h4>Dashboardy analityczne leadów → Twenty</h4>
+        <p>Twenty Kanban Aggregations (Sum/Average per kolumna) pokryją podstawowe metryki. Dla zaawansowanych dashboardów: Front Components (sandboxed React) lub integracja z zewnętrznym narzędziem BI. Statystyki z <code>/statistics/lead/*</code> do odtworzenia.</p>
+        <span class="est">1–2 tygodnie</span>
+      </div>
+    </div>
+
+    <div class="box blue" style="margin-top: 24px;">
+      <strong>Uwaga: deale z Bitrix24 NIE są częścią tej migracji.</strong> Bitrix24 (workflow realizacji projektów) działa niezależnie. Ewentualne przeniesienie deali na Twenty to osobny projekt, który można zaplanować po zakończeniu migracji leadów.
+    </div>
+
+    <h3>Łączny szacunek</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="number" style="color:var(--green);">3/7</div>
+        <div class="label">faz ukończonych (POC)</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">3–6</div>
+        <div class="label">tygodni do pełnej migracji</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">~2 tyg.</div>
+        <div class="label">okres równoległy</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">Faza 1a</div>
+        <div class="label">następny krok krytyczny</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">$9/user/mies.</div>
+        <div class="label">koszt Twenty Cloud Pro</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. CO NIE TRZEBA MIGROWAĆ ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--green-light);color:var(--green);">✂</span> Co NIE trzeba migrować</h2>
+    <div class="two-col">
+      <div>
+        <h3>Twenty ma natywnie</h3>
+        <ul>
+          <li><strong>Kanban / Table / Calendar views</strong> — gotowe, z filtrami, sortowaniem, aggregacjami. Nie trzeba budować.</li>
+          <li><strong>Cmd+K Command Menu</strong> — zastąpi custom search i nawigację.</li>
+          <li><strong>REST + GraphQL API</strong> — auto-generowane. Nie trzeba pisać endpointów.</li>
+          <li><strong>Webhooks z HMAC</strong> — gotowe. Nie trzeba budować infrastruktury powiadomień.</li>
+          <li><strong>Real-time</strong> — natywny WebSocket. Nie trzeba konfigurować Supabase Realtime.</li>
+          <li><strong>MCP Server</strong> — AI agenty mogą operować na CRM natywnie.</li>
+          <li><strong>Email &amp; Calendar Sync</strong> — Google / M365 out-of-the-box (przydatne przy leadach, nie trzeba custom IMAP).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Poza scope'em / do porzucenia</h3>
+        <ul>
+          <li><strong>Bitrix24 (deale + faktury)</strong> — osobny system, osobna migracja w przyszłości.</li>
+          <li><strong>/lead2</strong> — nieużywany moduł w better-bitrix.</li>
+          <li><strong>api/newLead/v1-v3</strong> — martwy kod Bitrix w better-bitrix.</li>
+          <li><strong>api/bitrix/*</strong> — stare proxy do Bitrix24.</li>
+          <li><strong>lib/bitrix/</strong> — cały connector Bitrix.</li>
+          <li><strong>queries/lead_old/</strong> — stare query hooki.</li>
+          <li><strong>Inne moduły better-bitrix</strong> (inbox, chat, WordPress, tools) — nie w scope'ie, mogą być przeniesione później.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. OPCJE INBOUND ===== -->
+  <section id="opcje-inbound">
+    <h2><span class="icon" style="background:var(--accent-light);color:var(--accent);">🔌</span> Opcje inbound leadów: jak leady trafiają do Twenty</h2>
+
+    <div class="box green">
+      <strong>Kluczowe odkrycie:</strong> Formularz na owocni.pl <strong>już wysyła ustrukturyzowane dane</strong> do Stape/Sortowni (<code>generate_lead</code> z <code>biz_name</code>, <code>biz_email</code>, <code>biz_phone</code>, <code>biz_product</code>, <code>biz_source</code>, <code>biz_message_content</code>). Email do <code>leads@owocni.pl</code> jest tylko pośrednikiem — <strong>nie musi być jedynym kanałem</strong>.
+    </div>
+
+    <h3>Opcja A: Sortownia → Twenty API bezpośrednio (rekomendowana)</h3>
+    <div class="box green" style="margin-bottom: 12px;">
+      <strong>Najlepsza opcja.</strong> Zero pośredników. Dane ustrukturyzowane. Odporność na błędy: retry wbudowany w Stape.
+    </div>
+    <table>
+      <thead><tr><th>Parametr</th><th>Opis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Flow</strong></td><td>Formularz → Stape → Sortownia → adapter <code>crm:twenty_create_deal</code> → Twenty GraphQL API</td></tr>
+        <tr><td><strong>Co robi adapter</strong></td><td>1) createPerson (name, email, phone) 2) createOpportunity (stage=NEW, bizProduct, bizSource, idOid, linkPerson) 3) createNote (biz_message_content) 4) createNoteTargets</td></tr>
+        <tr><td><strong>Dane</strong></td><td>Już ustrukturyzowane z formularza — <strong>nie trzeba GPT-4o</strong> do parsowania</td></tr>
+        <tr><td><strong>EVENT_CONTRACT</strong></td><td>Sekcja 9.1–9.2 definiuje adapter, mapowanie pól, loop prevention. Spec gotowy.</td></tr>
+        <tr><td><strong>Retry / error handling</strong></td><td>Stape ma natywne retry. Przy błędzie API Twenty → task wraca do queue → kolejna próba.</td></tr>
+        <tr><td><strong>Eliminuje</strong></td><td>julia362, better-bitrix <code>api/newEmail</code>, IMAP fetch, GPT-4o parsing — <strong>4 warstwy mniej</strong></td></tr>
+        <tr><td><strong>Implementacja</strong></td><td>Dodanie Custom Code w Sortowni (sGTM template) — ~50 linii kodu (fetch do Twenty GraphQL)</td></tr>
+        <tr><td><strong>Odporność</strong></td><td>Jedyny punkt awarii: Stape ↔ Twenty API. Obie strony managed (cloud), SLA &gt;99.9%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="arch-diagram" style="font-size: 12px;">
+<pre>
+  <span class="dim">OBECNY FLOW (5 warstw):</span>
+  Formularz → email → julia362 IMAP → better-bitrix → GPT-4o → Supabase
+  <span class="dim">     ↓         ↓        ↓               ↓           ↓         ↓</span>
+  <span class="dim">   punkt     punkt    punkt           punkt       punkt     punkt</span>
+  <span class="dim">   awarii    awarii   awarii          awarii      awarii    awarii</span>
+
+  <span class="highlight">OPCJA A (1 warstwa):</span>
+  Formularz → Stape/Sortownia → Twenty API
+  <span class="dim">     ↓            ↓                ↓</span>
+  <span class="dim">   managed      managed          managed</span>
+  <span class="dim">   (web)        (cloud)          (cloud)</span>
+</pre>
+    </div>
+
+    <h3>Opcja B: Twenty Email Sync IMAP (uzupełniająca)</h3>
+    <table>
+      <thead><tr><th>Parametr</th><th>Opis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Flow</strong></td><td>Twenty podpina <code>leads@owocni.pl</code> przez IMAP (Settings → Accounts → SMTP/CalDAV)</td></tr>
+        <tr><td><strong>Co robi</strong></td><td>Synchronizuje emaile i linkuje je do istniejących rekordów People/Company na timeline. Sprzedawca widzi treść maila bez opuszczania CRM.</td></tr>
+        <tr><td><strong>Czego NIE robi</strong></td><td>Nie tworzy automatycznie Opportunity z maila. Nie parsuje danych. To jest <strong>widoczność emaili</strong>, nie tworzenie leadów.</td></tr>
+        <tr><td><strong>Znane ograniczenia</strong></td><td>IMAP sync na non-Google/M365 providerach miewał problemy (GitHub issue #13884 — sync stuck na "ONGOING"). <code>mail.owocni.pl</code> to custom provider — wymaga testów.</td></tr>
+        <tr><td><strong>Rola</strong></td><td>Uzupełnienie Opcji A — <strong>nie zamiennik</strong>. Lead tworzony przez Sortownię, email widoczny na timeline przez Email Sync.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Opcja C: Serverless endpoint zamiast julia362 (fallback)</h3>
+    <table>
+      <thead><tr><th>Parametr</th><th>Opis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Flow</strong></td><td>Zamienić <code>app2.js</code> na julia362 na Cloud Function / Lambda / Vercel serverless. Nowy endpoint przyjmuje POST z messageId, fetchuje IMAP, GPT-4o parsuje, tworzy w Twenty.</td></tr>
+        <tr><td><strong>Kiedy użyć</strong></td><td>Jeśli z jakiegoś powodu Opcja A nie jest możliwa (np. Stape ograniczenia, lub leady przychodzą z emaili spoza formularza — ktoś pisze bezpośrednio na leads@owocni.pl).</td></tr>
+        <tr><td><strong>Zalety vs julia362</strong></td><td>Auto-scaling, managed retry, monitoring, dead letter queue, zero PM2/cron</td></tr>
+        <tr><td><strong>Wady vs Opcja A</strong></td><td>Nadal wymaga IMAP fetch + GPT-4o = więcej punktów awarii + koszt OpenAI za każdy lead</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Rekomendacja: A + B razem</h3>
+    <table>
+      <thead><tr><th>Element</th><th>Kto robi</th><th>Rola</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Tworzenie leada (Opportunity)</strong></td>
+          <td>Sortownia — adapter <code>crm:twenty_create_deal</code></td>
+          <td>Jedyne źródło prawdy. Dane ustrukturyzowane z formularza.</td>
+        </tr>
+        <tr>
+          <td><strong>Widoczność emaila na timeline</strong></td>
+          <td>Twenty Email Sync (IMAP <code>leads@owocni.pl</code>)</td>
+          <td>Kontekst dla sprzedawcy. Email linkowany do istniejącego rekordu.</td>
+        </tr>
+        <tr>
+          <td><strong>Email od kogoś bez formularza</strong></td>
+          <td>Twenty Workflow (trigger: nowy email od nieznanego kontaktu)</td>
+          <td>Edge case: opcjonalnie auto-create Opportunity lub alert dla sprzedawcy.</td>
+        </tr>
+        <tr>
+          <td><strong>julia362</strong></td>
+          <td>Wyłączony</td>
+          <td>Niepotrzebny po wdrożeniu A+B</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-4o parsing</strong></td>
+          <td>Niepotrzebny</td>
+          <td>Sortownia już ma dane strukturalne z formularza</td>
+        </tr>
+        <tr>
+          <td><strong>better-bitrix <code>api/newEmail</code></strong></td>
+          <td>Wyłączony</td>
+          <td>Zastąpiony przez Sortownię + Email Sync</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="arch-diagram">
+<pre>
+  ┌──────────────────────┐
+  │   owocni.pl           │
+  │   (formularz)         │
+  └────┬─────────┬────────┘
+       │         │
+  <span class="dim">KANAŁ 1</span>        <span class="dim">KANAŁ 2</span>
+  <span class="dim">(dane + CRM)</span>   <span class="dim">(email treść)</span>
+       │         │
+       │         │ email do leads@owocni.pl
+       ▼         ▼
+  ┌──────────┐  ┌──────────────────────────┐
+  │<span class="sgtm-color">Stape sGTM</span>│  │ <span class="highlight">Twenty Email Sync</span>        │
+  │Sortownia │  │ IMAP leads@owocni.pl      │
+  │          │  │ → email na timeline rec.  │
+  └────┬─────┘  └──────────────────────────┘
+       │
+       │ adapter crm:twenty_create_deal
+       │ (Person + Opportunity + Note)
+       ▼
+  ┌──────────────────────────┐
+  │ <span class="highlight">Twenty CRM</span>                │
+  │ Opportunity (stage=NEW)   │
+  │ + Person + Note           │
+  │ + email widoczny na       │
+  │   timeline (z Sync)       │
+  └──────────────────────────┘
+</pre>
+    </div>
+  </section>
+
+  <!-- ===== 8. RYZYKA ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--red-light);color:var(--red);">⚠</span> Ryzyka i otwarte pytania</h2>
+    <table>
+      <thead><tr><th>#</th><th>Ryzyko / pytanie</th><th>Wpływ</th><th>Mitygacja</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Połączenie lead → deal</strong> — po wygraniu leada w Twenty, deal trafia do Bitrix24. Jak handoff?</td>
+          <td>Wysoki</td>
+          <td>Twenty Workflow (trigger: stage=won) → webhook/API do Bitrix24 tworzący deal. Lub manualny proces.</td>
+          <td><span class="tag none">otwarte</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Inbound leady: julia362 → Twenty</strong> — nowy endpoint musi replikować logikę better-bitrix: IMAP fetch → GPT-4o parse → Twenty create.</td>
+          <td>Wysoki</td>
+          <td>Spec gotowy (<code>008-inbound-adapter-spec.json</code>). API calls zweryfikowane w POC. Do zbudowania: endpoint + IMAP fetch + OpenAI prompt.</td>
+          <td><span class="tag hybrid">nowe — krytyczne</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>julia362 stabilność</strong> — PM2 restartuje app2.js 3x/dzień cronem. mail-listener5 miewał problemy z IMAP disconnect.</td>
+          <td>Średni</td>
+          <td>Monitor PM2 status. Rozważyć przeniesienie watchera na Cloud Run/Lambda. Po migracji: Email Sync w Twenty może zastąpić cały watcher.</td>
+          <td><span class="tag hybrid">nowe</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Race condition w Code step</strong> — embedded GraphQL w Code step używa 3s time window. Dwa stage change'y w &lt;3s mogą dać błędny payload.</td>
+          <td>Niski</td>
+          <td>Stage change'y są manualne. Collision mało prawdopodobna. Monitor via lastOrchestrationEventAt.</td>
+          <td><span class="tag hybrid">nowe — POC</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>OpenAI parsing leadów</strong> — <code>createLeadv2.ts</code> używa GPT-4o do ekstrakcji danych z emaili.</td>
+          <td>Średni</td>
+          <td>Kod przeanalizowany. Prompt GPT-4o + field mapping gotowe do przeniesienia do nowego endpointu.</td>
+          <td><span class="tag supabase">przeanalizowane</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><strong>Make.com webhook</strong> (gclid → Google Ads) — hardcoded URL w <code>WonLeadDialog</code>.</td>
+          <td>Niski</td>
+          <td>Dodać jako HTTP Request w workflow lead_won. Lub przenieść do Stape (Robot → Google Ads).</td>
+          <td><span class="tag none">otwarte</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>Okres równoległy</strong> — sprzedawcy muszą wiedzieć, gdzie pracować.</td>
+          <td>Wysoki</td>
+          <td>Jasna data cut-off. Szkolenie przed Fazą 1c. Fallback na better-bitrix max 2 tygodnie.</td>
+          <td><span class="tag none">otwarte</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><strong>Statystyki</strong> — dashboardy w better-bitrix custom-built.</td>
+          <td>Średni</td>
+          <td>Kanban Aggregations pokryją podstawy. Dla zaawansowanych: Front Components lub zewnętrzne BI.</td>
+          <td><span class="tag none">otwarte</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><strong>Sortownia → Twenty</strong> — Sortownia NIE tworzy leadów w CRM. Generuje eventy marketingowe (GA4, Meta, Ads). Lead do CRM idzie kanałem email (julia362).</td>
+          <td>—</td>
+          <td>Nie jest blokerem. Sortownia nie wymaga zmian na start. Przyszłość: adapter <code>crm:twenty_create_deal</code> w EVENT_CONTRACT.</td>
+          <td><span class="tag supabase">wyjaśnione</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 9. PODSUMOWANIE ===== -->
+  <section>
+    <h2><span class="icon" style="background:var(--accent-light);color:var(--accent);">📊</span> Podsumowanie</h2>
+
+    <div class="box green">
+      <strong>POC zakończony sukcesem (26 maja 2026).</strong> Schema, import danych, outbound (workflow POC) i inbound adapter API — zweryfikowane live.  
+      <strong>Następny krok:</strong> pakiet SSOT <code>owocni-crm/</code> + przepisanie outbound na native webhook (Faza 4).
+    </div>
+
+    <div class="box green">
+      <strong>Dobra wiadomość:</strong> Migracja jest łatwiejsza niż zakładano. Moduł <code>/lead</code> jest w 100% na Supabase. Julia362 Email Watcher wymaga zmiany jednego URL-a. Outbound eventy do orkiestracji już działają.
+    </div>
+
+    <div class="box orange">
+      <strong>Główne wyzwanie (opcja A):</strong> Dodanie adaptera <code>crm:twenty_create_deal</code> w Sortowni (~50 linii kodu). Eliminuje julia362, IMAP, GPT-4o. Spec w EVENT_CONTRACT sekcja 9.1–9.2.
+    </div>
+
+    <div class="box purple">
+      <strong>Bonus:</strong> Twenty oferuje natywnie rzeczy, które w better-bitrix są custom-built: Email/Calendar Sync, Kanban z aggregacjami, REST/GraphQL API, MCP Server, AI Chatbot. Migracja to nie tylko „przeniesienie" — to upgrade platformy.
+    </div>
+
+    <h3>Następne kroki — zgodnie z <code>owocni-crm/PLAN_DZIALAN.md</code></h3>
+    <ol>
+      <li><strong>Review SSOT</strong> z właścicielem — potwierdzenie mapowania eventów (<code>purchase</code>, <code>rejected_lead</code>, brak eventu na LOST).</li>
+      <li><strong>Adapter <code>crm:twenty_create_lead</code> w Sortowni</strong> — przy <code>generate_lead</code> → Twenty API. Spec POC: <code>008-inbound-adapter-spec.json</code>; SSOT: <code>owocni-crm/CRM_ARCHITECTURE_CURRENT.md</code>.</li>
+      <li><strong>Twenty Email Sync</strong> — podpiąć <code>leads@owocni.pl</code> via IMAP (Settings → Accounts → SMTP/CalDAV). Przetestować stabilność synca na custom providerze <code>mail.owocni.pl</code>.</li>
+      <li><strong>Outbound produkcyjny:</strong> native webhook OUT + adapter Sortowni (zastąpić workflow POC + webhook.site). <code>owocni-crm/EVENT_CONTRACT.md</code>.</li>
+      <li><strong>Zdefiniuj handoff lead → deal</strong> — jak wygrany lead w Twenty ma trafić do Bitrix24 jako deal? Webhook, API, manualnie?</li>
+      <li><strong>Zaprosić handlowców</strong> do Twenty workspace, szkolenie 1-2h.</li>
+      <li><strong>Pełna migracja danych</strong> — eksport wszystkich leadów z Supabase, import do Twenty z pełnym mapowaniem.</li>
+      <li><strong>Wyłączyć julia362</strong> — po potwierdzeniu, że adapter Sortowni i Email Sync działają poprawnie.</li>
+      <li><strong>Cutover</strong> — better-bitrix read-only → wyłączony. Twenty jako jedyny CRM.</li>
+      <li><strong>Osobna analiza (przyszłość)</strong> — czy i kiedy przenosić deale z Bitrix24 na Twenty.</li>
+    </ol>
+  </section>
+
+  <footer>
+    Dokument wygenerowany na podstawie analizy kodu better-bitrix-main, dokumentacji Twenty CRM (EVENT_CONTRACT_OWOCNI.md, twenty-smaczki-v2.html), wyników POC (25–26.05.2026), analizy julia362.mikrus.xyz (app2.js), SORTOWNIA_V2_POPRAWIONY.js, GoogleCloudRobot.js &middot; Owocni 2026
+  </footer>
+
+</div>
+</body>
+</html>

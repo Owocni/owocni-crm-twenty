@@ -1,0 +1,102 @@
+{
+  "snapshotVersion": "009",
+  "exportedAt": "2026-05-26T09:00:00Z",
+  "description": "Finalny snapshot POC Twenty CRM — schema, workflows, dane, adaptery, eventy.",
+
+  "schema": {
+    "opportunityFields": {
+      "native": [
+        "id", "name", "stage", "amount", "closeDate", "owner", "ownerId",
+        "company", "companyId", "pointOfContact", "pointOfContactId",
+        "position", "createdAt", "updatedAt", "deletedAt", "createdBy", "updatedBy", "searchVector"
+      ],
+      "custom": {
+        "idOid":                      { "type": "String",  "label": "ID OID (ULID from Stape)" },
+        "bizProduct":                 { "type": "Enum",    "label": "Produkt", "values": ["WEB", "LOGO", "NAME", "MARKETING", "COPYWRITING", "OPAKOWANIE", "INNE"] },
+        "bizSource":                  { "type": "Enum",    "label": "Źródło", "values": ["FORM", "POLECENIE", "GOOGLE_ADS", "INNE"] },
+        "engagement":                 { "type": "Enum",    "label": "Engagement", "values": ["HOT", "COLD"] },
+        "lossCategory":               { "type": "Enum",    "label": "Kategoria straty", "values": ["BRAK_ODPOWIEDZI", "CENA", "KONKURENCJA", "NIE_OBSLUGIWANE", "INNE"] },
+        "lossDescription":            { "type": "String",  "label": "Opis straty" },
+        "campaignRejected":           { "type": "Boolean", "label": "Campaign Rejected (odrzucony wzorzec kampanii)" },
+        "isFollowUp":                 { "type": "Boolean", "label": "Follow-up?" },
+        "snoozeUntil":                { "type": "DateTime","label": "Odłóż do" },
+        "lastOrchestrationEventAt":   { "type": "DateTime","label": "Ostatni event orchestration (audit)" },
+        "lastOrchestrationEventId":   { "type": "String",  "label": "ID ostatniego eventu (audit)" }
+      },
+      "stages": ["NEW", "CONTACTED", "QUALIFIED", "PROPOSAL", "WON", "LOST"]
+    }
+  },
+
+  "workflows": {
+    "active": [
+      {
+        "name": "deal · zmiana etapu · event do orkiestracji",
+        "trigger": "Record Updated on Opportunity — field: Stage",
+        "steps": [
+          "1. Code (Logic Function): fetch latest Opportunity via GraphQL API (filter: updatedAt ≥ 3s ago + stage in [QUALIFIED, WON, LOST]). Build EVENT_CONTRACT payload. Return payloadJson, idEvent, now.",
+          "2. HTTP Request: POST payloadJson to webhook.site (POC) / Stape endpoint (prod).",
+          "3. Update Record: set lastOrchestrationEventAt = now, lastOrchestrationEventId = idEvent."
+        ],
+        "events": ["qualify_lead", "lead_won", "lead_lost"],
+        "status": "ACTIVE + VERIFIED"
+      },
+      {
+        "name": "deal · campaign rejected · event do orkiestracji",
+        "trigger": "Record Updated on Opportunity — field: campaignRejected",
+        "steps": [
+          "1. Code (Logic Function): fetch latest Opportunity via GraphQL API (filter: updatedAt ≥ 3s ago + campaignRejected = true). Build lead_rejected payload. Return payloadJson, idEvent, now.",
+          "2. HTTP Request: POST payloadJson to webhook.site (POC) / Stape endpoint (prod)."
+        ],
+        "events": ["lead_rejected"],
+        "status": "ACTIVE + VERIFIED"
+      }
+    ]
+  },
+
+  "outboundEvents": {
+    "qualify_lead": { "trigger": "stage → QUALIFIED", "status": "LIVE VERIFIED" },
+    "lead_won":     { "trigger": "stage → WON",       "status": "LIVE VERIFIED" },
+    "lead_lost":    { "trigger": "stage → LOST",      "status": "LIVE VERIFIED" },
+    "lead_rejected":{ "trigger": "campaignRejected → true", "status": "LIVE VERIFIED" }
+  },
+
+  "inboundAdapter": {
+    "name": "crm:twenty_create_deal",
+    "livesIn": "Stape (Sortownia)",
+    "apiTarget": "https://api.twenty.com/graphql",
+    "steps": "Person → Opportunity (stage=NEW) → Note → NoteTargets",
+    "specSnapshot": "008-inbound-adapter-spec.json",
+    "testScript": "twenty/scripts/test-inbound-create-lead.sh",
+    "status": "VERIFIED"
+  },
+
+  "dataCounts": {
+    "opportunities": 57,
+    "companies": 63,
+    "people": 31,
+    "notes": 1
+  },
+
+  "pocVerdict": {
+    "startDate": "2026-05-25",
+    "endDate": "2026-05-26",
+    "outcome": "PASS",
+    "completedTasks": [
+      "Schema: 6 stages, ~11 custom fields na Opportunity",
+      "Import: 56 Opportunities + 59 Companies + 25 People z Supabase",
+      "Outbound: 4 eventy (qualify_lead, lead_won, lead_lost, lead_rejected) verified on webhook.site",
+      "Inbound: adapter spec + test script verified (Person + Opportunity + Note via API)"
+    ],
+    "pendingForProduction": [
+      "Zmiana webhook.site → Stape endpoint w workflow Code step",
+      "Zaproszenie handlowców (Settings → Members)",
+      "Email Sync (każdy handlowiec Settings → Accounts)",
+      "Feedback zespołu i iteracja"
+    ],
+    "knownLimitations": [
+      "Code step params nie mapuje trigger data — workaround: embedded GraphQL API call wewnątrz Code",
+      "Race condition: jeśli 2 Opportunities zmienią stage w <3s, Code może pobrać niewłaściwy rekord",
+      "idOid nie istnieje na Person — tylko na Opportunity (EVENT_CONTRACT mówi o Person.idOid ale schema Twenty tego nie wspiera)"
+    ]
+  }
+}

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review SSOT — OWOCNI CRM × Twenty</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --surface: #fff;
+      --text: #1a1a2e;
+      --text-2: #555770;
+      --text-3: #888;
+      --accent: #4361ee;
+      --accent-light: #eef0ff;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --orange: #f59e0b;
+      --orange-light: #fffbeb;
+      --red: #ef4444;
+      --red-light: #fef2f2;
+      --border: #e2e5ea;
+      --radius: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 24px 16px 80px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    header .badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+    header p { color: var(--text-2); font-size: 15px; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .progress-wrap { flex: 1; min-width: 180px; }
+    .progress-label { font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
+    .progress-bar {
+      height: 8px;
+      background: var(--bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: 4px;
+      transition: width .3s ease;
+      width: 0%;
+    }
+    .save-hint {
+      font-size: 12px;
+      color: var(--green);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .save-hint.show { opacity: 1; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { filter: brightness(1.05); color: #fff; }
+
+    .intro {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .intro h2 { font-size: 16px; margin-bottom: 10px; }
+    .intro ol { padding-left: 20px; color: var(--text-2); font-size: 14px; }
+    .intro li { margin-bottom: 6px; }
+
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .block-header {
+      padding: 14px 18px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .block-header h2 { font-size: 15px; font-weight: 700; }
+    .block-header .time { font-size: 12px; color: var(--text-3); }
+    .block-header.critical h2 { color: var(--orange); }
+    .block-count { font-size: 12px; color: var(--text-3); }
+
+    .question {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .question:last-child { border-bottom: none; }
+    .question.answered-yes { background: var(--green-light); }
+    .question.answered-no { background: var(--red-light); }
+    .question.answered-notes { background: var(--orange-light); }
+
+    .q-meta { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .q-id {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg);
+      color: var(--text-2);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .q-text { font-size: 15px; font-weight: 600; color: var(--text); }
+    .q-hint {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 4px;
+      padding-left: 0;
+    }
+    .hint-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .tip-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .tip-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 700;
+      cursor: help;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .tip-box {
+      display: none;
+      position: absolute;
+      z-index: 20;
+      top: 24px;
+      left: 0;
+      width: min(340px, calc(100vw - 48px));
+      background: #111827;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      box-shadow: 0 8px 18px rgba(0,0,0,.22);
+    }
+    .tip-wrap:hover .tip-box,
+    .tip-wrap:focus-within .tip-box {
+      display: block;
+    }
+
+    .choices {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .choice {
+      flex: 1;
+      min-width: 72px;
+      max-width: 120px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      user-select: none;
+      transition: all .15s;
+    }
+    .choice:hover { border-color: var(--accent); }
+    .choice.selected-yes { border-color: var(--green); background: var(--green-light); color: #065f46; }
+    .choice.selected-no { border-color: var(--red); background: var(--red-light); color: #991b1b; }
+    .choice.selected-notes { border-color: var(--orange); background: var(--orange-light); color: #92400e; }
+
+    .q-notes {
+      margin-top: 12px;
+      display: none;
+    }
+    .q-notes.visible { display: block; }
+    .q-notes textarea {
+      width: 100%;
+      min-height: 56px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+    }
+    .q-notes textarea:focus { outline: none; border-color: var(--accent); }
+
+    .conditional-box {
+      margin: 0 18px 16px;
+      padding: 14px;
+      background: var(--orange-light);
+      border-radius: 8px;
+      border-left: 4px solid var(--orange);
+      display: none;
+    }
+    .conditional-box.visible { display: block; }
+    .conditional-box label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 8px; }
+    .conditional-box textarea { width: 100%; min-height: 60px; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; font-size: 14px; }
+
+    .verdict-block { margin-top: 8px; }
+    .verdict-options { display: flex; flex-direction: column; gap: 10px; padding: 0 18px 16px; }
+    .verdict-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .verdict-opt:hover { border-color: var(--accent); }
+    .verdict-opt.selected { border-color: var(--accent); background: var(--accent-light); }
+    .verdict-opt input { margin-top: 3px; accent-color: var(--accent); width: 18px; height: 18px; }
+    .verdict-opt strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .verdict-opt span { font-size: 13px; color: var(--text-2); }
+
+    .footer-fields {
+      padding: 16px 18px;
+      display: grid;
+      gap: 12px;
+    }
+    .footer-fields label { font-size: 13px; font-weight: 600; }
+    .footer-fields input, .footer-fields textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .info-list {
+      padding: 16px 18px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+    .info-list dt { font-weight: 600; color: var(--text); margin-top: 10px; }
+    .info-list dt:first-child { margin-top: 0; }
+    .info-list dd { margin-left: 0; margin-top: 2px; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius);
+      max-width: 560px;
+      width: 100%;
+      max-height: 80vh;
+      overflow: auto;
+      padding: 24px;
+    }
+    .modal h3 { margin-bottom: 12px; }
+    .modal pre {
+      background: var(--bg);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 50vh;
+      overflow: auto;
+    }
+    .modal .btn-row { margin-top: 16px; }
+
+    @media (max-width: 500px) {
+      .choice { min-width: 60px; padding: 14px 6px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="badge">Review · ok. 30 min</div>
+    <h1>Zatwierdzenie kierunku SSOT</h1>
+    <p>OWOCNI CRM → Twenty · kliknij odpowiedź — zapisuje się automatycznie w tej przeglądarce</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progressText">0 / 0</span> pytań z odpowiedzią</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <span class="save-hint" id="saveHint">Zapisano</span>
+    <div class="btn-row">
+      <button type="button" class="btn" id="btnExport">Podsumowanie</button>
+      <button type="button" class="btn" id="btnReset">Wyczyść</button>
+    </div>
+  </div>
+
+  <div class="intro">
+    <h2>Jak to działa</h2>
+    <ol>
+      <li>Przy każdym pytaniu wybierz <strong>Tak</strong>, <strong>Nie</strong> lub <strong>Uwagi</strong> — jednym kliknięciem.</li>
+      <li>Odpowiedzi zapisują się same (ta sama przeglądarka, ten sam komputer).</li>
+      <li>Na końcu wybierz werdykt i opcjonalnie wpisz poprawki.</li>
+      <li>Kliknij <strong>Podsumowanie</strong>, skopiuj wynik i wyślij mailem / wklej do notatek.</li>
+    </ol>
+  </div>
+
+  <div id="blocksContainer"></div>
+
+  <div class="block verdict-block">
+    <div class="block-header">
+      <h2>Werdykt spotkania</h2>
+    </div>
+    <div class="verdict-options" id="verdictOptions">
+      <label class="verdict-opt" data-verdict="approved">
+        <input type="radio" name="verdict" value="approved">
+        <div>
+          <strong>Zatwierdzamy SSOT</strong>
+          <span>Można iść w Fazę 2 (schema) + preflight webhook (test payloadu przed produkcją)</span>
+        </div>
+      </label>
+      <label class="verdict-opt" data-verdict="amendments">
+        <input type="radio" name="verdict" value="amendments">
+        <div>
+          <strong>Zatwierdzamy z poprawkami</strong>
+          <span>Lista poprawek poniżej — ponowny review ~15 min</span>
+        </div>
+      </label>
+      <label class="verdict-opt" data-verdict="hold">
+        <input type="radio" name="verdict" value="hold">
+        <div>
+          <strong>Wstrzymujemy</strong>
+          <span>Wymaga większej dyskusji — opisz w poprawkach</span>
+        </div>
+      </label>
+    </div>
+    <div class="footer-fields">
+      <label for="amendmentsText">Poprawki do SSOT (jeśli „z poprawkami” lub wstrzymanie)</label>
+      <textarea id="amendmentsText" rows="4" placeholder="Np. LOST ma wysyłać event X…"></textarea>
+      <label for="signName">Imię i nazwisko (opcjonalnie)</label>
+      <input type="text" id="signName" placeholder="Właściciel / uczestnik review">
+      <label for="signDate">Data</label>
+      <input type="date" id="signDate">
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-header"><h2>Pliki SSOT — skrót</h2></div>
+    <dl class="info-list">
+      <dt>README.md</dt><dd>Gdzie szukać odpowiedzi</dd>
+      <dt>EVENT_CONTRACT.md</dt><dd>Jakie eventy (purchase, rejected_lead…)</dd>
+      <dt>DATA_MODEL.md</dt><dd>Pola w Twenty, w tym campaignRejected</dd>
+      <dt>CRM_ARCHITECTURE_CURRENT.md</dt><dd>Skąd wpadają leady, dokąd idą eventy</dd>
+      <dt>DECISION_REGISTER.md</dt><dd>Co jeszcze otwarte</dd>
+    </dl>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Podsumowanie review</h3>
+    <p style="font-size:14px;color:var(--text-2);margin-bottom:12px;">Skopiuj tekst poniżej (Cmd+C) i wyślij lub wklej do DECISION_REGISTER.</p>
+    <pre id="exportPre"></pre>
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="btnCopy">Kopiuj do schowka</button>
+      <button type="button" class="btn" id="btnCloseModal">Zamknij</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'owocni-crm-review-ssot-v1';
+
+  const BLOCKS = [
+    {
+      id: '1', title: 'Decyzje strategiczne', time: '~5 min', critical: false,
+      questions: [
+        { id: '1.1', text: 'Na start robimy tylko CRM (leady), bez helpdesku?', hint: 'SSOT: Helpdesk poza MVP (Prawo 9)' },
+        { id: '1.2', text: 'Leady ze strony idą Sortownia → Twenty, nie przez julia362?', hint: 'SSOT: jedna ścieżka wejścia — adapter w Sortowni' },
+        { id: '1.3', text: 'Eventy do Google/Meta przez native webhook Twenty → Sortownia (nie workflow HTTP w Twenty)?', hint: 'Limit Pro: ~50 workflow credits/rok', explain: 'Workflow HTTP zużywa Workflow Credits. Native webhook działa poza workflow, więc nie spala tego limitu dla outbound eventów.' },
+        { id: '1.4', text: 'Pakiet owocni-crm/ (7 plików) to nasze jedyne SSOT?', hint: 'Nie rozproszone legacy bez rekonsyliacji' }
+      ]
+    },
+    {
+      id: '2', title: 'Semantyka eventów', time: '~10 min', critical: true,
+      questions: [
+        { id: '2.1', text: 'Wygrany lead = event purchase (nie lead_won)?', hint: 'EVENT_CONTRACT §2' },
+        { id: '2.2', text: 'Odrzucenie w kampanii = rejected_lead tylko gdy campaignRejected = true?', hint: 'To nie to samo co stage LOST' },
+        { id: '2.3', text: 'Stage LOST (przegrany) = brak automatycznego eventu do platform reklamowych?', hint: 'Tylko analiza w CRM' },
+        { id: '2.4', text: 'Handlowcy zrozumieją różnicę: „przegrany” vs „odrzucony w kampanii”?', hint: 'Szkolenie przed cutoverem' },
+        { id: '2.5', text: 'Kryteria stage\'ów (kiedy QUALIFIED, WON) ustalimy z handlowcami przed cutoverem?', hint: 'ADR #5 — obecnie otwarte' }
+      ],
+      conditional: { showIf: '2.3', value: 'no', label: 'Jeśli przy LOST ma iść event — jaki i dokąd?', fieldId: 'lostEventNotes' }
+    },
+    {
+      id: '3', title: 'Pola i campaignRejected', time: '~5 min', critical: false,
+      questions: [
+        { id: '3.1', text: 'Pole campaignRejected zostaje jako boolean (akcja/przycisk, nie osobny stage)?', hint: 'DATA_MODEL' },
+        { id: '3.2', text: 'Każdy wie po co jest campaignRejected (opis pola w Twenty)?', hint: 'Prawo 3d' },
+        { id: '3.3', text: 'idOid tworzy tylko Sortownia, nie Twenty?', hint: 'Prawo 6' }
+      ]
+    },
+    {
+      id: '4', title: 'Helpdesk', time: '~3 min', critical: false,
+      questions: [
+        { id: '4.1', text: 'Helpdesk nie wchodzi w ten projekt do cutoveru CRM?', hint: 'Poza rdzeń MVP' },
+        { id: '4.2', text: 'Helpdesk zostaje w better-bitrix do osobnego projektu?', hint: 'Status quo' },
+        { id: '4.3', text: 'Helpdesk w Twenty dopiero po retrospektywie Etapu 1?', hint: 'Osobny mini-projekt', explain: 'Najpierw kończymy CRM leadowy i robimy retrospektywę Etapu 1. Dopiero potem decyzja, czy i jak przenosić helpdesk jako osobny projekt.' }
+      ]
+    },
+    {
+      id: '5', title: 'Założenia techniczne', time: '~5 min', critical: false,
+      questions: [
+        { id: '5.1', text: 'Twenty Pro ($9/user) wystarczy na start (audit log = git snapshoty)?', hint: 'ADR #6 otwarte', explain: 'Skrót: formalny audyt zmian wspieramy snapshotami/commitami w repo (co zmieniono, kiedy, dlaczego), jeśli plan nie daje pełnego audytu enterprise.' },
+        { id: '5.2', text: 'Dwa workspace: sandbox + produkcja?', hint: 'ADR #7 — zamknięte', explain: 'Bez pełnej duplikacji GTM/GCP. Ruch rozdzielamy po environment: sandbox idzie do safe sink (np. Google Sheets), a prod do adapterów reklamowych. Najpierw test w sandbox, potem 1:1 na prod.' },
+        { id: '5.3', text: 'julia362 wyłączamy w dniu cutoveru (twarda data)?', hint: 'CUTOVER_RUNBOOK' },
+        { id: '5.4', text: 'Bitrix24 (deale księgowe) poza tym projektem; po WON = ręczny SOP?', hint: 'ARCHITECTURE', explain: 'Ręczny SOP = manualny krok wg procedury (np. ręczne dodanie/przekazanie deala do Bitrix24), dopóki nie automatyzujemy tego odcinka.' }
+      ]
+    }
+  ];
+
+  let state = loadState();
+
+  function defaultState() {
+    return {
+      answers: {},
+      notes: {},
+      lostEventNotes: '',
+      verdict: '',
+      amendmentsText: '',
+      signName: '',
+      signDate: new Date().toISOString().slice(0, 10)
+    };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return { ...defaultState(), ...JSON.parse(raw) };
+    } catch (e) {}
+    return defaultState();
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      flashSave();
+    } catch (e) {}
+  }
+
+  function flashSave() {
+    const el = document.getElementById('saveHint');
+    el.classList.add('show');
+    clearTimeout(flashSave._t);
+    flashSave._t = setTimeout(() => el.classList.remove('show'), 1500);
+  }
+
+  function allQuestionIds() {
+    return BLOCKS.flatMap(b => b.questions.map(q => q.id));
+  }
+
+  function setAnswer(qId, value) {
+    state.answers[qId] = value;
+    saveState();
+    render();
+  }
+
+  function setNote(qId, text) {
+    state.notes[qId] = text;
+    saveState();
+  }
+
+  function render() {
+    const container = document.getElementById('blocksContainer');
+    container.innerHTML = '';
+
+    BLOCKS.forEach(block => {
+      const section = document.createElement('section');
+      section.className = 'block';
+      const answered = block.questions.filter(q => state.answers[q.id]).length;
+      section.innerHTML = `
+        <div class="block-header ${block.critical ? 'critical' : ''}">
+          <h2>${block.title}${block.critical ? ' · ważne' : ''}</h2>
+          <span class="block-count">${answered}/${block.questions.length} · ${block.time}</span>
+        </div>
+      `;
+
+      block.questions.forEach(q => {
+        const ans = state.answers[q.id] || '';
+        const div = document.createElement('div');
+        div.className = 'question';
+        if (ans === 'yes') div.classList.add('answered-yes');
+        if (ans === 'no') div.classList.add('answered-no');
+        if (ans === 'notes') div.classList.add('answered-notes');
+
+        const showNotes = ans === 'notes' || (state.notes[q.id] || '').trim();
+        div.innerHTML = `
+          <div class="q-meta">
+            <span class="q-id">${q.id}</span>
+            <div>
+              <div class="q-text">${q.text}</div>
+              <div class="hint-row">
+                <div class="q-hint">${q.hint}</div>
+                ${q.explain ? `<span class="tip-wrap"><button type="button" class="tip-btn" aria-label="Doprecyzowanie">i</button><span class="tip-box">${q.explain}</span></span>` : ''}
+              </div>
+            </div>
+          </div>
+          <div class="choices" role="group" aria-label="Odpowiedź ${q.id}">
+            <button type="button" class="choice ${ans === 'yes' ? 'selected-yes' : ''}" data-q="${q.id}" data-v="yes">Tak</button>
+            <button type="button" class="choice ${ans === 'no' ? 'selected-no' : ''}" data-q="${q.id}" data-v="no">Nie</button>
+            <button type="button" class="choice ${ans === 'notes' ? 'selected-notes' : ''}" data-q="${q.id}" data-v="notes">Uwagi</button>
+          </div>
+          <div class="q-notes ${showNotes ? 'visible' : ''}">
+            <textarea data-note="${q.id}" placeholder="Krótka uwaga (opcjonalnie przy Tak/Nie też)">${escapeHtml(state.notes[q.id] || '')}</textarea>
+          </div>
+        `;
+        section.appendChild(div);
+      });
+
+      if (block.conditional) {
+        const c = block.conditional;
+        const show = state.answers[c.showIf] === c.value;
+        const box = document.createElement('div');
+        box.className = 'conditional-box' + (show ? ' visible' : '');
+        box.innerHTML = `
+          <label>${c.label}</label>
+          <textarea id="lostEventNotes" placeholder="Opisz…">${escapeHtml(state.lostEventNotes || '')}</textarea>
+        `;
+        section.appendChild(box);
+      }
+
+      container.appendChild(section);
+    });
+
+    bindEvents();
+    updateProgress();
+    syncVerdictUI();
+    syncFooterFields();
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function bindEvents() {
+    document.querySelectorAll('.choice').forEach(btn => {
+      btn.onclick = () => setAnswer(btn.dataset.q, btn.dataset.v);
+    });
+    document.querySelectorAll('textarea[data-note]').forEach(ta => {
+      ta.oninput = () => setNote(ta.dataset.note, ta.value);
+      ta.onclick = e => e.stopPropagation();
+    });
+    const lost = document.getElementById('lostEventNotes');
+    if (lost) {
+      lost.oninput = () => { state.lostEventNotes = lost.value; saveState(); };
+    }
+  }
+
+  function updateProgress() {
+    const ids = allQuestionIds();
+    const done = ids.filter(id => state.answers[id]).length;
+    const pct = ids.length ? Math.round((done / ids.length) * 100) : 0;
+    document.getElementById('progressText').textContent = `${done} / ${ids.length} pytań z odpowiedzią`;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function syncVerdictUI() {
+    document.querySelectorAll('.verdict-opt').forEach(label => {
+      const v = label.dataset.verdict;
+      const radio = label.querySelector('input');
+      radio.checked = state.verdict === v;
+      label.classList.toggle('selected', state.verdict === v);
+    });
+  }
+
+  function syncFooterFields() {
+    document.getElementById('amendmentsText').value = state.amendmentsText || '';
+    document.getElementById('signName').value = state.signName || '';
+    document.getElementById('signDate').value = state.signDate || '';
+  }
+
+  document.getElementById('verdictOptions').addEventListener('change', e => {
+    if (e.target.name === 'verdict') {
+      state.verdict = e.target.value;
+      saveState();
+      syncVerdictUI();
+    }
+  });
+  document.querySelectorAll('.verdict-opt').forEach(label => {
+    label.addEventListener('click', () => {
+      const radio = label.querySelector('input');
+      radio.checked = true;
+      state.verdict = radio.value;
+      saveState();
+      syncVerdictUI();
+    });
+  });
+
+  ['amendmentsText', 'signName', 'signDate'].forEach(id => {
+    document.getElementById(id).addEventListener('input', e => {
+      state[id === 'amendmentsText' ? 'amendmentsText' : id === 'signName' ? 'signName' : 'signDate'] = e.target.value;
+      saveState();
+    });
+  });
+
+  function buildExport() {
+    const lines = [];
+    lines.push('REVIEW SSOT — OWOCNI CRM × Twenty');
+    lines.push('Data eksportu: ' + new Date().toLocaleString('pl-PL'));
+    if (state.signName) lines.push('Uczestnik: ' + state.signName);
+    if (state.signDate) lines.push('Data review: ' + state.signDate);
+    lines.push('');
+
+    const verdictLabels = {
+      approved: 'Zatwierdzamy SSOT',
+      amendments: 'Zatwierdzamy z poprawkami',
+      hold: 'Wstrzymujemy'
+    };
+    if (state.verdict) lines.push('WERDYKT: ' + (verdictLabels[state.verdict] || state.verdict));
+    lines.push('');
+
+    BLOCKS.forEach(block => {
+      lines.push('--- ' + block.title.toUpperCase() + ' ---');
+      block.questions.forEach(q => {
+        const a = state.answers[q.id];
+        const label = a === 'yes' ? 'TAK' : a === 'no' ? 'NIE' : a === 'notes' ? 'UWAGI' : '—';
+        lines.push(`[${q.id}] ${label} — ${q.text}`);
+        const n = (state.notes[q.id] || '').trim();
+        if (n) lines.push(`    Uwaga: ${n}`);
+      });
+      lines.push('');
+    });
+
+    if (state.answers['2.3'] === 'no' && state.lostEventNotes) {
+      lines.push('LOST — alternatywa (pyt. 2.3 = NIE):');
+      lines.push(state.lostEventNotes);
+      lines.push('');
+    }
+
+    if (state.amendmentsText) {
+      lines.push('POPRAWKI DO SSOT:');
+      lines.push(state.amendmentsText);
+      lines.push('');
+    }
+
+    const open = [];
+    allQuestionIds().forEach(id => {
+      const a = state.answers[id];
+      if (a === 'no' || a === 'notes') open.push(id + (state.notes[id] ? ': ' + state.notes[id] : ''));
+    });
+    if (open.length) {
+      lines.push('DO DECISION_REGISTER (NIE/UWAGI):');
+      open.forEach(o => lines.push('  - ' + o));
+    }
+
+    return lines.join('\n');
+  }
+
+  document.getElementById('btnExport').onclick = () => {
+    document.getElementById('exportPre').textContent = buildExport();
+    document.getElementById('modalOverlay').classList.add('open');
+  };
+  document.getElementById('btnCloseModal').onclick = () => {
+    document.getElementById('modalOverlay').classList.remove('open');
+  };
+  document.getElementById('btnCopy').onclick = async () => {
+    const text = buildExport();
+    try {
+      await navigator.clipboard.writeText(text);
+      document.getElementById('btnCopy').textContent = 'Skopiowano!';
+      setTimeout(() => { document.getElementById('btnCopy').textContent = 'Kopiuj do schowka'; }, 2000);
+    } catch (e) {
+      alert('Skopiuj ręcznie z okna poniżej.');
+    }
+  };
+
+  document.getElementById('btnReset').onclick = () => {
+    if (confirm('Usunąć wszystkie zapisane odpowiedzi w tej przeglądarce?')) {
+      state = defaultState();
+      saveState();
+      render();
+    }
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
