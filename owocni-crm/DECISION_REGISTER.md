@@ -12,20 +12,20 @@
 |---|---------|-------|--------|------|------|-----|--------|
 | 1 | Konwencja nazw pól (camelCase, prefiks id/biz) | Strukturalna | none | known-fact | 2 | — | **closed** |
 | 2 | Model obiektów (Opportunity/Person/Company/Note) | Strukturalna | none | known-fact | 2 | — | **closed** (POC) |
-| 3 | idOid unique + null tolerance | Strukturalna | step | preflight | 2 | Developer | **open** — sandbox test |
-| 4 | Ingress kanoniczny: crm:twenty_create_lead | Strukturalna | step | impl. standard | 3 | Developer | **open** — implementacja Sortowni |
-| 5 | Kryteria stage'ów + mapowanie eventów | Semantyczna | **cutover** | **ADR** | 4 | Właściciel + handlowcy | **open** |
-| 6 | Twenty Pro vs Organization | Semantyczna+$$ | **cutover** | **ADR** | 4 | Właściciel | **open** |
+| 3 | idOid unique + null tolerance | Strukturalna | step | preflight | 2 | Dawid | **open** — sandbox test |
+| 4 | Ingress kanoniczny: crm:twenty_create_lead | Strukturalna | step | impl. standard | 3 | Dawid | **open** — implementacja Sortowni |
+| 5 | Kryteria stage'ów + mapowanie eventów | Semantyczna | **cutover** | **ADR** | 4 | Właściciel | **closed** (plan) — szkolenie Twenty przed cutover |
+| 6 | Twenty Pro vs Organization | Semantyczna+$$ | **cutover** | **ADR** | 4 | Właściciel | **open** — `PLAN_DZIALAN.md` § ADR #6 |
 | 7 | Sandbox + prod (bez duplikacji całego GTM/GCP) | Proceduralna | cutover | ADR | 5 | Właściciel | **closed** — env-guard + safe sink |
-| 8 | Runbook cutover (data, rollback) | Proceduralna | cutover | ADR | 5 | Właściciel | **open** |
+| 8 | Runbook cutover (data, rollback) | Proceduralna | cutover | ADR | 5 | Właściciel | **open** — data po testach + parzycie BB |
 | 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
-| 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Owner Sortowni | **open** |
-| 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Developer | **open** — POC test |
-| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual, Email Sync) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** (impl.) — **plan zamknięty** 2026-05-28: `IDENTITY_AND_INBOUND.md` §5.1 |
-| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** (impl.) — **plan zamknięty** §8.4; handoff Mariusz + Krzysztof |
-| 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `WON`/`closed_won`) | Semantyczna | **cutover** | **ADR** | 4 | Owner Sortowni | **open** — rekonsyliacja nazewnictwa |
+| 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Dawid | **open** (impl.) |
+| 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Dawid | **open** — 1 test sandbox |
+| 12 | Inbound spoza Sortowni (Email Sync, telefon, manual) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §5.1; `kontakt@` nie obsługiwana; Email Sync Etap 1.2 |
+| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §8.4 |
+| 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `lead_won`) | Semantyczna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — wpisane w plan |
 | 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **open** |
-| 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Właściciel + Developer | **open** |
+| 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Dawid | **open** |
 
 ### Decyzja #7 — doprecyzowanie (zamknięta)
 
@@ -46,9 +46,12 @@
 
 | Temat | Ustalenie | Dokument |
 |-------|-----------|----------|
-| `kontakt@owocni.pl` | Osobna skrzynka, bez forwardu; backlog = spam/reklamy; sync w Twenty | `IDENTITY_AND_INBOUND.md` §5.1 |
-| Email Sync | Wszystkie skrzynki sprzedawców + `leads@` + `studio@` + `kontakt@` w Twenty; odpowiedzi przez Twenty | §5.1 |
-| Ścieżki kanałów | Opisane — przekazanie implementacji Mariusz + Krzysztof | §5–6, §8.4 |
+| `kontakt@owocni.pl` | Istnieje, bez forwardu; **nie obsługujemy** w Twenty/CRM | `IDENTITY_AND_INBOUND.md` §5.1 |
+| Email Sync | `leads@`, `studio@`, skrzynki handlowców — Etap **1.2**; **bez** `kontakt@` | §5.1 |
+| Owner techniczny | **Dawid** (Twenty, GTM, sGTM, Stape/Sortownia) | `PLAN_DZIALAN.md` |
+| Szablony maili | Migracja z better-bitrix **przed** cutover — must-have | `SALES_OPS_REQUIREMENTS.md` |
+| Szkolenie | Nowe szkolenie Twenty przed cutover (stage’e już znane) | `PLAN_DZIALAN.md` |
+| Ścieżki kanałów | Opisane w §5–6 | `IDENTITY_AND_INBOUND.md` |
 | Identity Resolver | Plan ADD-2 → ADD-1 → ADD-3 (+ FIX osobno) | §8.4 |
 
 ### Priorytety po review 2026-05-28
@@ -58,12 +61,12 @@
 - **P2:** #15 (scope Etap 1 vs Etap 2/3) — ogranicza mieszanie wymagań MVP i roadmapy.
 - **P2:** #16 (rekonsyliacja z Twenty 2.8.0 + best practices) — podnosi zaufanie do SSOT.
 
-### Task rekonsyliacji dokumentów (#14 + #16)
+### Task rekonsyliacji dokumentów (#14 + #16) — owner: **Dawid**
 
-- [ ] Ujednolicić nazewnictwo eventów w dokumentacji orkiestracji (usunąć `closed_won`/`WON` jako event_name).
-- [ ] Potwierdzić zgodność pól i stage z aktualną wersją Twenty (2.8.0 lub nowszą).
-- [ ] Zweryfikować założenia custom fields i ograniczeń platformy względem docs.twenty.com.
-- [ ] Zsynchronizować `owocni-crm/*` z dokumentacją orkiestracji po cleanupie.
+- [ ] Ujednolicić nazewnictwo eventów w dokumentacji orkiestracji (Google Docs) — `purchase` zamiast `lead_won`/`closed_won`
+- [ ] Zaktualizować mapowanie w `GoogleCloudRobot.js` jeśli nadal `lead_won`
+- [ ] Potwierdzić zgodność pól i stage z Twenty 2.8.0
+- [ ] Zsynchronizować `owocni-crm/*` po cleanupie
 
 ### Procedura audytów (fault-only)
 

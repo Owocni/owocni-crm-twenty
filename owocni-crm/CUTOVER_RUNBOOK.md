@@ -8,7 +8,11 @@
 
 ## Pre-cutover (T-7 … T-1)
 
-- [ ] Dry-run w sandbox + smoke testy (`EVENT_CONTRACT.md` §7) — 5/5 PASS
+- [ ] **Szablony email** z better-bitrix przeniesione do Twenty (P0 — przed cutover)
+- [ ] **Szkolenie handlowców** — Twenty (zaplanowane i wykonane przed T-0)
+- [ ] Etap 1.1 ukończony (schema, paid, webhook OUT)
+- [ ] Etap 1.2 ukończony (Email Sync — **bez** `kontakt@` — + Resolver)
+- [ ] Parzystość funkcjonalna z better-bitrix — checklist w `SALES_OPS_REQUIREMENTS.md` §3
 - [ ] Komunikat do zespołu (handlowcy)
 - [ ] Zamrożenie nowych pól/workflowów (okno zmian)
 - [ ] Backup Supabase legacy

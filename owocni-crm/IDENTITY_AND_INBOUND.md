@@ -132,8 +132,8 @@ Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co 
 | Formularz **nie-paid** / organic | Sortownia `generate_lead` jeśli event jest | automat jeśli event | T1–T3 jeśli przez Twenty |
 | Mail → **`leads@`** | Twenty Email Sync | Resolver T1–T4 | T3 dla nowego nadawcy |
 | Mail → **`studio@`** | Twenty Email Sync | Resolver | T3/T4 |
-| Mail → **skrzynki handlowców** (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | Twenty Email Sync | Resolver | T3/T4 |
-| Mail → **`kontakt@`** | Twenty Email Sync | Resolver | T3/T4; email generyczny → reguła §11 (Company) |
+| Mail → **skrzynki handlowców** (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | Twenty Email Sync (Etap 1.2) | Resolver | T3/T4 |
+| Mail → **`kontakt@`** | **NIE obsługiwana** | — | Kanał-sierota: skrzynka istnieje, spam w backlogu; **bez** Email Sync i **bez** leadów w Twenty |
 | **Telefon** | Handlowiec (Twenty) | Po zapisie numeru → resolver | T1–T4 |
 | Polecenie / ręczne dodanie | Handlowiec | Po zapisie PII → resolver | T1–T3 typowo |
 
@@ -147,44 +147,46 @@ Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co 
 | **`kontakt@`** | **Nie** na liście watchera julia362; **osobna skrzynka** (patrz §5.1) |
 | Wyłączenie | Po ADR #12/#13 + Email Sync + Resolver działają — `CUTOVER_RUNBOOK` |
 
-### 5.1 Decyzje planowe — mail (2026-05-28)
+### 5.1 Decyzje planowe — mail (2026-05-28, aktualizacja ról)
 
-**Status:** zamknięte na poziomie planu. Implementacja = Email Sync w Twenty + Identity Resolver + przekazanie planu **Mariuszowi** i **Krzysztofowi**.
+**Status:** zamknięte na poziomie planu.  
+**Owner techniczny (wdrożenie):** **Dawid** — Twenty, GTM, sGTM, Stape/Sortownia, aktualizacje w Sortowni i docs orkiestracji.  
+**Mariusz i Krzysztof** — przełożeni; uzgodnienia biznesowe/architektoniczne, nie wykonawcy wdrożenia.
 
-#### `kontakt@owocni.pl`
+#### `kontakt@owocni.pl` — **nie obsługujemy**
 
 | Fakt | Ustalenie |
 |------|-----------|
-| Skrzynka | **Istnieje** — osobna skrzynka, **bez przekierowania** na inne adresy |
-| Backlog | Nieodczytane wiadomości od kilku miesięcy — **spam i reklamy**, nie leady operacyjne |
-| julia362 | **Nie** nasłuchuje tej skrzynki (legacy) |
-| Docelowo | **Twenty Email Sync** → Identity Resolver; email generyczny → **Company**, nie Person (§11) |
-| Migracja backlogu | **Nie** traktujemy historycznego spamu jako leadów do importu |
+| Skrzynka | **Istnieje** — osobna skrzynka, **bez przekierowania** |
+| Backlog | Spam i reklamy od miesięcy — **nie** importujemy, **nie** tworzymy leadów |
+| julia362 | **Nie** nasłuchuje |
+| Twenty Email Sync | **NIE** — świadomie **poza** zakresem |
+| W SSOT | Kanał oznaczony jako **„nie obsługiwany”** (nie pytamy resolvera ani handlowców o ten inbox) |
 
-#### Twenty Email Sync — zakres obowiązkowy
+#### Twenty Email Sync — zakres (Etap 1.2)
 
-**Decyzja:** wszystkie skrzynki sprzedawców oraz **`leads@`** i **`studio@`** muszą być podłączone w Twenty.
-
-**Po co (produkt):** odpowiedzi klientom, wątki mailowe, timeline — **cała obsługa mailowa sprzedaży przez Twenty** (nie przez legacy klienta / julia362). W Twenty: podsumowania wątków, zadania wg priorytetów (natywne workflow / AI Twenty — szczegóły scope w ADR #15).
+**Decyzja:** wszystkie skrzynki sprzedawców + **`leads@`** + **`studio@`** → Twenty (odpowiedzi, wątki, timeline).  
+**Faza:** **Etap 1.2** w ramach Etapu 1 (po rdzeniu 1.1: schema, paid inbound, webhook OUT) — od początku **planujemy** z miejscem na Email Sync, cutover dopiero gdy 1.2 gotowe.
 
 | Skrzynka | Email Sync w Twenty |
 |----------|---------------------|
-| `leads@owocni.pl` | **TAK** |
-| `studio@owocni.pl` | **TAK** |
-| `marta@`, `gosia@`, `mariusz@` | **TAK** |
-| `copywriting@`, `pomoc@` | **TAK** (legacy julia362 — wyłączyć po cutover) |
-| `kontakt@owocni.pl` | **TAK** |
+| `leads@owocni.pl` | **TAK** (Etap 1.2) |
+| `studio@owocni.pl` | **TAK** (Etap 1.2) |
+| `marta@`, `gosia@`, `mariusz@` | **TAK** (Etap 1.2) |
+| `copywriting@`, `pomoc@` | **TAK** (Etap 1.2) |
+| `kontakt@owocni.pl` | **NIE** — nie obsługiwana |
 
-**IMAP:** `mail.owocni.pl` (Twenty Email Sync).
+**IMAP:** `mail.owocni.pl`. Docelowo: podsumowania wątków i zadania wg priorytetów w Twenty (szczegóły Etap 1 vs 2 → ADR #15).
 
-#### Przekazanie implementacji
+#### Role wdrożenia
 
-Ścieżki per kanał opisane w §5–6. **Nie ma otwartych pytań architektonicznych** — pozostaje egzekucja:
-
-- **Mariusz** — Sortownia / Stape (ADD-1, ADD-2, ADD-3, Identity Resolver)
-- **Krzysztof** — Twenty (Email Sync, pola, webhook OUT, UI T4)
-
-Potwierdzenie przyjęcia planu przez obie strony = bramka przed startem Fazy 4 prod.
+| Obszar | Owner |
+|--------|--------|
+| Twenty (schema, Email Sync, webhook OUT, UI) | **Dawid** |
+| GTM / sGTM / Sortownia / Stape / Robot integracja | **Dawid** |
+| Aktualizacja nazw eventów w docs orkiestracji + kod Robot | **Dawid** (ADR #14) |
+| Uzgodnienia z przełożonymi | Dawid ↔ **Mariusz**, **Krzysztof** |
+| Harmonogram / plan prac | **Dawid** (+ Cursor); ten repo SSOT |
 
 ---
 
@@ -237,7 +239,7 @@ Bez integracji telefonii — resolver działa **w momencie zapisu pola**.
 | Formularze strony | Sortownia + często mail na `leads@` | Sortownia → Twenty; paid bez zmian |
 | Mail `leads@` | julia362 → GPT → **auto-lead** Supabase | Twenty sync + **Resolver** (T1–T3 auto, T4 człowiek) |
 | Mail `studio@` itd. | Mail zapisany; **brak auto-leada** dla nowego klienta | Twenty sync + **T3 auto_mint** dla nowego nadawcy |
-| `kontakt@` | Osobna skrzynka, spam w backlogu; nie julia362 | Twenty Email Sync + Resolver (§11 Company) |
+| `kontakt@` | Osobna skrzynka, spam; **nie obsługujemy** w Twenty | Bez zmian — poza CRM |
 | Telefon | Ręcznie w legacy CRM | Ręcznie w Twenty + Resolver |
 
 **julia362 OFF** dopiero gdy Email Sync + Resolver + reguły kanałów działają (ADR #12/#13).
@@ -415,8 +417,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 2. Format `time_occurred_iso_utc` — ISO vs epoch (FIX-2)
 3. Assist: implementacja pełna vs jawny deferral (FIX-1)
 4. Stape Store — wydajność wzorca wskaźnik → profil (2 odczyty)
-5. **Potwierdzenie przyjęcia planu** przez Mariusza i Krzysztofa (handoff)
-6. **Podsumowania maili / zadania priorytetowe w Twenty** — MVP (natywne Twenty) vs Etap 2 (ADR #15)
+5. **Podsumowania maili / zadania priorytetowe w Twenty** — część Etap 1.2+ (ADR #15)
 
 ---
 

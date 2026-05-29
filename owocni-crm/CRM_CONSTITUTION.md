@@ -19,7 +19,7 @@
 | Rola | Odpowiedzialność |
 |------|------------------|
 | **1. Właściciel** | Semantyka: co znaczy qualified, rejected, won; kryteria stage'ów; cutover |
-| **2. Developer** | Wdraża kontrakty; nie interpretuje biznesu |
+| **2. Developer / wdrożenie** | **Dawid** — Twenty, GTM, sGTM, Stape, Sortownia; uzgodnienia z Mariuszem i Krzysztofem (przełożeni) |
 | **3. Twenty** | Stan CRM, UI, **native webhook OUT** (nie business events) |
 | **4. Sortownia** | id_oid, atrybucja, routing, adaptery, Lista Zadań |
 | **5. n8n** | Ad-hoc LLM — **poza** critical path SSOT |

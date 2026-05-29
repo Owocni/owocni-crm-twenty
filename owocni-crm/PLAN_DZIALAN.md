@@ -1,86 +1,152 @@
 # Plan działań — OWOCNI CRM na Twenty (SSOT-first)
 
 **Status:** aktywny od 2026-05-28  
-**Źródło kierunku:** mail szefa + `OWOCNI_CRM_fundamenty.md` + `OWOCNI_CRM_pakiet_plikow.md`  
-**Zasada:** najpierw jeden zestaw prawdy (7 plików), potem egzekucja w Twenty/Sortowni.
+**Owner techniczny wdrożenia:** Dawid (Twenty, GTM, sGTM, Stape/Sortownia)  
+**Uzgodnienia:** Mariusz, Krzysztof (przełożeni — nie wykonawcy wdrożenia)  
+**Harmonogram:** ten dokument + praca w Cursor (Dawid)
 
 ---
 
-## Faza A — Fundament dokumentacji (TERAZ)
+## Role i odpowiedzialność
 
-| # | Zadanie | Plik | Status |
-|---|---------|------|--------|
-| A1 | Struktura repo + routing agentów | `README.md` | w toku |
-| A2 | Konstytucja (role, 9 praw) | `CRM_CONSTITUTION.md` | w toku |
-| A3 | Architektura stan obecny → docelowy | `CRM_ARCHITECTURE_CURRENT.md` | w toku |
-| A4 | Model danych (pola krytyczne) | `DATA_MODEL.md` | w toku |
-| A5 | Kontrakt eventów Twenty ↔ Sortownia | `EVENT_CONTRACT.md` | w toku |
-| A6 | Rejestr decyzji otwartych | `DECISION_REGISTER.md` | w toku |
-| A7 | Runbook cutover + ops + migration | `CUTOVER_RUNBOOK.md`, `/ops/`, `/migration/` | w toku |
-| A8 | Mapowanie POC → SSOT | `POC_MAPPING.md` | w toku |
-| A9 | Rekonsyliacja HTML analizy migracji | `../twenty/analiza-migracja-twenty.html` | kolejny |
-
-**Brama wyjścia Fazy A:** brak sprzeczności między `EVENT_CONTRACT.md` a `analiza-migracja-twenty.html` w nazwach eventów i ścieżce outbound.
+| Kto | Rola |
+|-----|------|
+| **Dawid** | Wdrożenie: Twenty, GTM, sGTM, Stape, Sortownia, adaptery, Email Sync, webhook OUT, aktualizacja docs orkiestracji (#14), routing w Sortowni (#10) |
+| **Mariusz, Krzysztof** | Przełożeni — akceptacja kierunku, decyzje biznesowe; **nie** przypisani jako wykonawcy techniczni |
+| **Handlowcy** | Znają już stage’e i różnicę LOST vs „Odrzuć leada”; przed cutoverem = **nowe szkolenie Twenty** (patrz niżej) |
+| **Właściciel produktu** | Cutover date, scope Etap 2, Twenty Pro vs Org (#6) |
 
 ---
 
-## Faza B — Rekonsyliacja z istniejącymi docs (po A)
+## Etap 1 — podział na fazy (plan od początku)
 
-| # | Zadanie | Uwagi |
-|---|---------|-------|
-| B1 | Legacy kontrakt usunięty; SSOT = `owocni-crm/EVENT_CONTRACT.md` + routing w root `README.md` | **done** |
-| B2 | Zarchiwizować snapshoty POC jako dowód Fazy 1, nie jako SSOT | `twenty/snapshots/` bez zmian |
-| B3 | Weryfikacja z właścicielem: kryteria stage'ów (ADR #5) | wymaga handlowców |
-| B4 | Preflight POC: native webhook payload (`data.before`?) | Decyzja #11 |
-| B5 | **AUDIT_AKK tura A** — kroki 1–7, fault-only | `AUDIT_AKK.md` — tylko P1 do domknięcia |
-| B6 | **AUDIT_AKK tura B** — kroki 8–9 (Twenty + Stape) | po domknięciu P1 (#12–#14) |
-| B7 | Przygotować szkice pod **AUDIT_MIGRACJA** | `migration/README.md`, `STAGE_MAPPING.md` — pełny audyt przed importem |
+Cutover **dopiero** gdy mamy **parzystość funkcjonalną** z better-bitrix (obecny CRM) + testy PASS.
 
----
+| Faza | Co wchodzi | Uwagi |
+|------|------------|--------|
+| **Etap 1.1** | Schema Twenty, paid inbound (Sortownia→Twenty), native webhook OUT + adapter, szablony maili z better-bitrix, szkolenie zaplanowane | julia362 **włączone** dla maili do czasu 1.2 |
+| **Etap 1.2** | Email Sync: `leads@`, `studio@`, skrzynki handlowców; Identity Resolver (ADD-1…3); odpowiedzi mailowe w Twenty | **Nie** obejmuje `kontakt@` |
+| **Testy** | S0–S5, S1b, parzystość z better-bitrix | Bramka przed datą cutover |
+| **Cutover** | Data **po** testach — gdy wiemy, że wszystko gotowe (#8) | `CUTOVER_RUNBOOK.md` |
 
-## Faza C — Egzekucja techniczna (po zamknięciu A + B1)
-
-Zgodnie z bramą 5-fazową z fundamentów:
-
-| Faza | Co robimy | Zależności |
-|------|-----------|------------|
-| **1 Sandbox** | Już częściowo zrobione (POC workspace) | — |
-| **2 Schema prod** | Pola FROZEN w Twenty UI + opisy | Pliki 1–3 gotowe |
-| **3 Import** | Pełny import + ledger CSV | Plik 3 + `/migration/` |
-| **4 Eventy** | Native webhook OUT + adapter Sortowni | Plik 4 + smoke testy |
-| **5 Cutover** | Wyłączenie julia362, handlowcy na Twenty | Plik 6 + ADR cutover |
-
-**Nie robimy w Fazie C (MVP):** Helpdesk, MCP write, dashboardy jako fundament, workflow HTTP outbound w Twenty.
+**`kontakt@owocni.pl`:** skrzynka istnieje (spam w backlogu), **nie podłączamy** — jawnie poza obsługą CRM.
 
 ---
 
-## Kluczowe decyzje już przyjęte (nie negocjować w kodzie)
+## Must-have przed cutover (operacyjne)
 
-1. **Inbound kanoniczny:** Sortownia `generate_lead` → adapter `crm:twenty_create_lead` → Twenty API.
-2. **Outbound:** Twenty **native webhook OUT** → Sortownia `inbound:twenty_webhook` (NIE Workflow HTTP — limit 50 credits/rok).
-3. **Eventy SSOT z CRM:** `qualify_lead`, `purchase`, `rejected_lead` (+ `generate_lead` przy manual create).
-4. **Stage LOST:** brak automatycznego eventu do platform.
-5. **`campaignRejected`:** wyłącznie → `rejected_lead` (nie stage LOST).
-6. **julia362:** legacy, twarda data wyłączenia w cutover.
-
----
-
-## Różnice POC vs SSOT (do naprawy w egzekucji)
-
-| POC (25–26.05) | SSOT docelowy |
-|----------------|---------------|
-| Workflow Code + HTTP → webhook.site | Native webhook OUT → Sortownia |
-| `lead_won` | `purchase` |
-| `lead_lost` (stage LOST) | brak eventu |
-| `lead_rejected` | `rejected_lead` |
-| `qualify_lead` | `qualify_lead` (bez zmian) |
-
-Szczegóły: `POC_MAPPING.md`.
+| # | Element | Status planu |
+|---|---------|----------------|
+| 1 | **Szablony email** przeniesione z better-bitrix → Twenty | **Must-have na start** (przed odejściem od better-bitrix) |
+| 2 | **Szkolenie handlowców** — Twenty UI, stage’e, „Odrzuć leada”, mail w Twenty | Zaplanować przed przełączeniem (handlowcy znają już logikę z Bitrix) |
+| 3 | Parzystość funkcji CRM vs better-bitrix | Lista w `SALES_OPS_REQUIREMENTS.md` + testy akceptacyjne |
+| 4 | Stres-testy S0–S5 PASS | `STRESS_TEST_PLAN.md` |
 
 ---
 
-## Następny krok po Fazie A
+## Faza A — Fundament dokumentacji
 
-1. Review pakietu SSOT z szefem (30 min) — potwierdzenie mapowania eventów i braku helpdesku w MVP.
-2. Preflight w sandbox: native webhook payload schema.
-3. Rozpocząć Fazę 4 (adapter Sortowni) dopiero po zamknięciu ADR #5 (kryteria stage'ów).
+| # | Zadanie | Status |
+|---|---------|--------|
+| A1–A8 | Pakiet SSOT `owocni-crm/` | **done** (utrzymywać przy zmianach) |
+| A9 | Rekonsyliacja `analiza-migracja-twenty.html` | kolejny |
+
+---
+
+## Faza B — przed pełnym wdrożeniem prod
+
+| # | Zadanie | Owner | Wyjaśnienie |
+|---|---------|-------|-------------|
+| B3 | Kryteria stage’ów | **Zamknięte** — handlowcy znają; tylko **szkolenie Twenty** przed cutoverem | ADR #5 |
+| B4 | Preflight webhook payload | **Dawid** | ADR #11 — patrz § poniżej |
+| B5 | AUDIT_AKK tura A | Dawid / LLM | fault-only |
+| B14 | Rekonsyliacja nazw eventów w docs orkiestracji + Robot (`purchase` zamiast `lead_won`) | **Dawid** | ADR #14 — wpisane w plan prac Sortowni |
+| B10 | Routing w Sortowni (qualify_lead, purchase, rejected_lead) | **Dawid** | ADR #10 |
+
+---
+
+## Wyjaśnienia decyzji otwartych
+
+### ADR #11 — native webhook payload (preflight, Dawid)
+
+Twenty przy zmianie rekordu wysyła webhook. Trzeba **jednym testem w sandbox** sprawdzić, czy payload zawiera:
+
+- `data.before` / `data.after` (stan przed i po), **czy**
+- tylko aktualny stan rekordu.
+
+**Dlaczego to ważne:** adapter `inbound:twenty_webhook` musi wykryć *przejście* (np. stage NEW→QUALIFIED), a nie każdy update.  
+- Jeśli jest `data.before` → adapter porównuje before/after, **bez** pamięci w Stape Store.  
+- Jeśli nie ma → adapter trzyma w Stape Store `last_stage` i `last_campaignRejected` per `opportunity_id` (2 pola).
+
+**Krok:** zmiana stage w sandbox → zapis payloadu → decyzja w `EVENT_CONTRACT.md` / adapterze.
+
+### ADR #6 — Twenty Pro vs Organization
+
+| | **Pro** (~$9/user/mc) | **Organization** |
+|---|----------------------|------------------|
+| CRM pipeline, pola, Email Sync | Tak | Tak |
+| Workflow credits | ~50/rok (mało) | Więcej |
+| Audit log enterprise | Ograniczony | Pełniejszy |
+| Nasz kompensat | Snapshoty git + `ops/OPS_NOTES.md` | — |
+
+**Decyzja do uzgodnienia z właścicielem:** czy Pro + git wystarczy na start, czy wymagamy Organization ze względu na audyt/compliance.
+
+### ADR #8 — data cutover
+
+**Nie ustalamy daty z góry.** Cutover wyznaczamy **po**:
+
+1. Etap 1.1 + 1.2 ukończone,
+2. Szablony maili w Twenty,
+3. Szkolenie handlowców przeprowadzone,
+4. Testy S0–S5 PASS,
+5. Potwierdzenie parzystości z better-bitrix.
+
+Wtedy wybieramy **T-0** w `CUTOVER_RUNBOOK.md`.
+
+### FIX-1 — pole `assist` w Sortowni (paid)
+
+W profilu klienta jest pole **`assist`** (asystent właściciela). W kodzie bywa niespójne (czasem null, czasem logika niepełna).
+
+| Opcja | Co robimy |
+|-------|-----------|
+| **A** | Dokończyć logikę assist w Sortowni paid |
+| **B** | Jawny deferral: `assist` zawsze `null` w SSOT do czasu osobnego ADR |
+
+**Decyzja:** wybrać A lub B przed commitem FIX-1 (osobny commit, nie mieszać z ADD).
+
+### FIX-2 — `AktTimestamp` (format czasu)
+
+Pole **`AktTimestamp`** (aktywność własności) bywa zapisywane jako ISO string lub epoch — różne formaty utrudniają porównania w Stape/Robot.
+
+**FIX-2:** ujednolicić na **epoch milliseconds** + parser tolerancyjny dla starych wartości.
+
+---
+
+## Faza C — egzekucja (mapowanie na fundamenty)
+
+| Faza fundamentów | Owocni plan | Owner |
+|------------------|-------------|--------|
+| 1 Sandbox | POC workspace | done |
+| 2 Schema prod | Etap 1.1 | Dawid |
+| 3 Import | Po `AUDIT_MIGRACJA` | Dawid |
+| 4 Eventy | Webhook OUT + adapter Sortowni | Dawid |
+| 5 Cutover | Po testach + parzystość BB | Dawid + właściciel (data) |
+
+**Poza MVP:** Helpdesk, MCP write, workflow HTTP outbound w Twenty.
+
+---
+
+## Kluczowe decyzje już przyjęte
+
+Patrz `DECISION_REGISTER.md` (sekcja zamknięte) oraz `EVENT_CONTRACT.md`.
+
+---
+
+## Następny krok (Dawid)
+
+1. Etap 1.1: schema + paid path + webhook preflight (#11) + **migracja szablonów maili**.
+2. Równolegle: ADR #14 cleanup nazw w docs orkiestracji.
+3. Etap 1.2: Email Sync (bez `kontakt@`) + Identity Resolver.
+4. Szkolenie handlowców + testy → **dopiero wtedy** data cutover.
+
+Szczegóły kanałów: `IDENTITY_AND_INBOUND.md` §5–6.
