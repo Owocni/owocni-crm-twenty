@@ -3,7 +3,7 @@
 **Purpose:** Operacyjny pakiet dokumentów SSOT dla CRM OWOCNI.PL na Twenty CRM + integracja ze Sortownią (Stape).  
 **Status:** Pre-cutover — Faza A (dokumentacja SSOT) w toku.  
 **Owner:** Królu złoty (OWOCNI.PL).  
-**Last updated:** 2026-05-28
+**Last updated:** 2026-05-29
 
 ---
 

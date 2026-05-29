@@ -1,7 +1,8 @@
 # IDENTITY_AND_INBOUND — tożsamość klienta i wejście leadów
 
 **Status:** SSOT (canonical) — zastępuje `OWOCNI_CRM_SSOT_1_*`, `OWOCNI_CRM_SSOT_3_*`, `INBOUND_EDGE_CASES.md`  
-**Wersja:** 2026-05-28  
+**Wersja:** 2026-05-29  
+**Last updated:** 2026-05-29 (C13 skrzynki, FIX-1 Opcja A, parzystość BB — decyzje planowe z 2026-05-28 bez zmian dat)  
 **Platforma:** Twenty CLOUD + Stape (Sortownia / Identity Resolver / Robot)  
 **Blokuje cutover:** ADR #12, ADR #13  
 **Kod (repo `AdrianKrauza/owocni`):**

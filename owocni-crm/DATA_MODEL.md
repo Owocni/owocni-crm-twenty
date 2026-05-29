@@ -1,7 +1,7 @@
 # DATA_MODEL — pola krytyczne Twenty CRM
 
 **Status:** Etap 1 MVP  
-**Last updated:** 2026-05-28  
+**Last updated:** 2026-05-29 (prefiksy pól custom §Reguły)  
 **Pełna konstytucja pól:** `CRM_CONSTITUTION.md` Prawa 3–4
 
 Tylko pola **krytyczne** (systemowe / eventowe / integracyjne). Standardowe pola Twenty (firstName, email) — przez MCP / Settings UI.

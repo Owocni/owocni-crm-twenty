@@ -1,6 +1,7 @@
 # SALES_OPS_REQUIREMENTS — wymagania operacyjne sprzedaży
 
-**Status:** Zaktualizowano 2026-05-28 (scope cutover)  
+**Status:** Zaktualizowano 2026-05-29 (parzystość BB §3, scope cutover)  
+**Last updated:** 2026-05-29  
 **Powiązane decyzje:** `DECISION_REGISTER.md` #15  
 **Owner techniczny:** Dawid
 

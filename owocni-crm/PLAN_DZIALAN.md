@@ -1,6 +1,7 @@
 # Plan działań — OWOCNI CRM na Twenty (SSOT-first)
 
-**Status:** aktywny od 2026-05-28  
+**Status:** aktywny  
+**Last updated:** 2026-05-29 (FIX-1 Opcja A, parzystość BB)  
 **Owner techniczny wdrożenia:** Dawid (Twenty, GTM, sGTM, Stape/Sortownia)  
 **Uzgodnienia:** Mariusz, Krzysztof (przełożeni — nie wykonawcy wdrożenia)  
 **Harmonogram:** ten dokument + praca w Cursor (Dawid)

@@ -1,6 +1,6 @@
 # DECISION_REGISTER — decyzje otwarte i ADR
 
-**Last updated:** 2026-05-28
+**Last updated:** 2026-05-29
 
 **Reguła:** Dopóki pozycja **ADR** z `Blocks=cutover` ma status **open**, cutover **nie startuje**.
 
