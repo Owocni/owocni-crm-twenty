@@ -82,14 +82,8 @@ Twenty przy zmianie rekordu wysyła webhook. Trzeba **jednym testem w sandbox** 
 
 ### ADR #6 — Twenty Pro vs Organization
 
-| | **Pro** (~$9/user/mc) | **Organization** |
-|---|----------------------|------------------|
-| CRM pipeline, pola, Email Sync | Tak | Tak |
-| Workflow credits | ~50/rok (mało) | Więcej |
-| Audit log enterprise | Ograniczony | Pełniejszy |
-| Nasz kompensat | Snapshoty git + `ops/OPS_NOTES.md` | — |
-
-**Decyzja do uzgodnienia z właścicielem:** czy Pro + git wystarczy na start, czy wymagamy Organization ze względu na audyt/compliance.
+**Decyzja (2026-05-28):** na start wybieramy **Twenty Pro**.  
+Audit zmian: snapshoty git + `ops/OPS_NOTES.md`. Organization tylko jeśli później wymóg compliance.
 
 ### ADR #8 — data cutover
 
@@ -103,22 +97,31 @@ Twenty przy zmianie rekordu wysyła webhook. Trzeba **jednym testem w sandbox** 
 
 Wtedy wybieramy **T-0** w `CUTOVER_RUNBOOK.md`.
 
-### FIX-1 — pole `assist` w Sortowni (paid)
+### FIX-1 — pole `assist` w Sortowni (paid) — proste wyjaśnienie
 
-W profilu klienta jest pole **`assist`** (asystent właściciela). W kodzie bywa niespójne (czasem null, czasem logika niepełna).
+W profilu klienta w Stape są dwa pola dotyczące reklam:
 
-| Opcja | Co robimy |
-|-------|-----------|
-| **A** | Dokończyć logikę assist w Sortowni paid |
-| **B** | Jawny deferral: `assist` zawsze `null` w SSOT do czasu osobnego ADR |
+| Pole | Po ludzku | Dziś w kodzie |
+|------|-----------|----------------|
+| **`owner`** | **Pierwszy** kanał, który „przyniósł” klienta (np. Google Ads, Meta) — pierwsze dotknięcie | Działa — liczy się do reguł 90 dni i VBB |
+| **`assist`** | **Drugi** kanał (pomocniczy dotyk) — np. klient najpierw z Facebooka, potem z Google | Prawie zawsze **`null`** — logika nie jest dokończona |
 
-**Decyzja:** wybrać A lub B przed commitem FIX-1 (osobny commit, nie mieszać z ADD).
+**FIX-1** = decyzja: czy w ogóle chcemy drugi kanał (`assist`), czy na razie wystarczy nam tylko pierwszy (`owner`).
+
+| Opcja | Sens |
+|-------|------|
+| **A** | Budujemy pełne „kto był drugi” (więcej pracy, multi-touch) |
+| **B** (proponowane na start) | Mówimy wprost: **używamy tylko `owner`**, `assist` zostaje puste — bez udawania, że działa |
+
+**Nie blokuje cutover CRM** — dotyczy tylko raportowania reklamowego w Sortowni paid.
 
 ### FIX-2 — `AktTimestamp` (format czasu)
 
-Pole **`AktTimestamp`** (aktywność własności) bywa zapisywane jako ISO string lub epoch — różne formaty utrudniają porównania w Stape/Robot.
+W Sortowni pole **`AktTimestamp`** (kiedy powstało „prawo własności” do klienta) bywa zapisywane raz jako tekst, raz jako liczba — przez to trudniej porównywać „czy minęło 90 dni”.
 
-**FIX-2:** ujednolicić na **epoch milliseconds** + parser tolerancyjny dla starych wartości.
+**FIX-2 (Sortownia):** zapisywać spójnie **epoch ms** + czytać stare formaty wstecznie.
+
+**Robot (GoogleCloudRobot):** już zamienia czas na format wymagany przez daną platformę (Google/Meta itd.) — **tego nie ruszamy** w FIX-2.
 
 ---
 

@@ -15,7 +15,7 @@
 | 3 | idOid unique + null tolerance | Strukturalna | step | preflight | 2 | Dawid | **open** — sandbox test |
 | 4 | Ingress kanoniczny: crm:twenty_create_lead | Strukturalna | step | impl. standard | 3 | Dawid | **open** — implementacja Sortowni |
 | 5 | Kryteria stage'ów + mapowanie eventów | Semantyczna | **cutover** | **ADR** | 4 | Właściciel | **closed** (plan) — szkolenie Twenty przed cutover |
-| 6 | Twenty Pro vs Organization | Semantyczna+$$ | **cutover** | **ADR** | 4 | Właściciel | **open** — `PLAN_DZIALAN.md` § ADR #6 |
+| 6 | Twenty Pro vs Organization | Semantyczna+$$ | **cutover** | **ADR** | 4 | Właściciel | **closed** — **Twenty Pro** na start (2026-05-28) |
 | 7 | Sandbox + prod (bez duplikacji całego GTM/GCP) | Proceduralna | cutover | ADR | 5 | Właściciel | **closed** — env-guard + safe sink |
 | 8 | Runbook cutover (data, rollback) | Proceduralna | cutover | ADR | 5 | Właściciel | **open** — data po testach + parzycie BB |
 | 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
@@ -24,7 +24,7 @@
 | 12 | Inbound spoza Sortowni (Email Sync, telefon, manual) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §5.1; `kontakt@` nie obsługiwana; Email Sync Etap 1.2 |
 | 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §8.4 |
 | 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `lead_won`) | Semantyczna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — wpisane w plan |
-| 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **open** |
+| 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **closed** (plan) — schedule mail, SMS, AI podsumowania = **Etap 2+** (po uruchomieniu; BB dziś tego nie ma) |
 | 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Dawid | **open** |
 
 ### Decyzja #7 — doprecyzowanie (zamknięta)
@@ -50,6 +50,8 @@
 | Email Sync | `leads@`, `studio@`, skrzynki handlowców — Etap **1.2**; **bez** `kontakt@` | §5.1 |
 | Owner techniczny | **Dawid** (Twenty, GTM, sGTM, Stape/Sortownia) | `PLAN_DZIALAN.md` |
 | Szablony maili | Migracja z better-bitrix **przed** cutover — must-have | `SALES_OPS_REQUIREMENTS.md` |
+| Twenty Pro | Na start | ADR #6 zamknięte |
+| Schedule mail / SMS / AI | Etap 2+ po uruchomieniu | ADR #15 zamknięte |
 | Szkolenie | Nowe szkolenie Twenty przed cutover (stage’e już znane) | `PLAN_DZIALAN.md` |
 | Ścieżki kanałów | Opisane w §5–6 | `IDENTITY_AND_INBOUND.md` |
 | Identity Resolver | Plan ADD-2 → ADD-1 → ADD-3 (+ FIX osobno) | §8.4 |
