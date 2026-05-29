@@ -168,9 +168,15 @@ Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co 
 **Decyzja:** wszystkie skrzynki sprzedawców + **`leads@`** + **`studio@`** → Twenty (odpowiedzi, wątki, timeline).  
 **Faza:** **Etap 1.2** w ramach Etapu 1 (po rdzeniu 1.1: schema, paid inbound, webhook OUT) — od początku **planujemy** z miejscem na Email Sync, cutover dopiero gdy 1.2 gotowe.
 
+**Model operacyjny (parzystość BB, C13):**
+
+- Każdy handlowiec ma **własną skrzynkę** podłączoną w Twenty (Email Sync).
+- Dodatkowo **skrzynka ogólna** (`leads@` — główny kanał rozdziału) przyjmuje wątki od klientów; wątki muszą trafiać do **właściwego leada / handlowca** (przypisanie Opportunity owner).
+- Wdrożenie: reguły Twenty (routing, assignee) lub proces operacyjny przy pierwszym kontakcie — szczegóły w runbooku Etap 1.2; wymaganie biznesowe jest **zamknięte** (`SALES_OPS_REQUIREMENTS.md` §3.C13).
+
 | Skrzynka | Email Sync w Twenty |
 |----------|---------------------|
-| `leads@owocni.pl` | **TAK** (Etap 1.2) |
+| `leads@owocni.pl` | **TAK** (Etap 1.2) — **ogólna**, rozdział wątków |
 | `studio@owocni.pl` | **TAK** (Etap 1.2) |
 | `marta@`, `gosia@`, `mariusz@` | **TAK** (Etap 1.2) |
 | `copywriting@`, `pomoc@` | **TAK** (Etap 1.2) |
@@ -303,7 +309,7 @@ Klasy: **FIX** = dotyka działającego paid (osobny commit + regresja). **ADD** 
 | **ADD-1** | ADD | Wskaźniki `by_*` + profil pod `id_oid` + migracja | Średnie |
 | **ADD-3** | ADD | Identity Resolver (webhook Twenty, macierz T1–T5, idempotencja, retry) | Średnie |
 | **FIX-2** | FIX | Ujednolicić `AktTimestamp` (epoch ms); parser tolerancyjny | Średnie |
-| **FIX-1** | FIX | `assist` zawsze null — Opcja A (pełna) lub B (jawny deferral w SSOT) | Średnie |
+| **FIX-1** | FIX | **Opcja A (2026-05-28):** dokończyć `assist` w paid (multi-touch); wymagane przy identyfikacji i dopisywaniu sygnałów przez handlowców | Średnie |
 
 **Kolejność:** ADD-2 → ADD-1 → ADD-3 → (Email Sync + testy) → FIX-2 → FIX-1. **FIX i ADD nie w jednym commicie.**
 
@@ -411,13 +417,12 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 
 ## 14. Pytania otwarte (planowanie / implementacja)
 
-**Zamknięte planowo (2026-05-28):** `kontakt@` (§5.1), zakres Email Sync (§5.1), ścieżki per kanał (§5–6), plan ADR #13 (§8.4).
+**Zamknięte planowo (2026-05-28):** `kontakt@` (§5.1), zakres Email Sync (§5.1), ścieżki per kanał (§5–6), plan ADR #13 (§8.4), **FIX-1 Opcja A** (`assist` pełne), parzystość BB (`SALES_OPS_REQUIREMENTS.md` §3).
 
 1. Niezawodność Email Sync przy wielu skrzynkach (wolumen ~80 leadów/m) — **test operacyjny**, nie blokada planu
 2. Format `time_occurred_iso_utc` — ISO vs epoch (FIX-2)
-3. Assist: implementacja pełna vs jawny deferral (FIX-1)
-4. Stape Store — wydajność wzorca wskaźnik → profil (2 odczyty)
-5. **Podsumowania maili / zadania priorytetowe w Twenty** — część Etap 1.2+ (ADR #15)
+3. Stape Store — wydajność wzorca wskaźnik → profil (2 odczyty)
+4. **Podsumowania maili / zadania priorytetowe w Twenty** — **Etap 2+** (ADR #15)
 
 ---
 

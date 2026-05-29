@@ -55,6 +55,10 @@
 | Szkolenie | Nowe szkolenie Twenty przed cutover (stage’e już znane) | `PLAN_DZIALAN.md` |
 | Ścieżki kanałów | Opisane w §5–6 | `IDENTITY_AND_INBOUND.md` |
 | Identity Resolver | Plan ADD-2 → ADD-1 → ADD-3 (+ FIX osobno) | §8.4 |
+| **FIX-1 `assist`** | **Opcja A** — dokończyć multi-touch w Sortowni paid (identity + handlowcy) | `PLAN_DZIALAN.md`, §8.4 |
+| **Parzystość better-bitrix** | A–D + E18 = P0 przed cutover; E19–E20, F21–F23 = później | `SALES_OPS_REQUIREMENTS.md` §3 |
+| **Model skrzynek (C13)** | Skrzynka per handlowiec + `leads@` rozdziela wątki do ownerów | §5.1, `SALES_OPS` §3.C13 |
+| **Eventy outbound (E18)** | Automatycznie: QUALIFIED→`qualify_lead`, WON→`purchase`, reject→`rejected_lead` | `EVENT_CONTRACT.md` |
 
 ### Priorytety po review 2026-05-28
 

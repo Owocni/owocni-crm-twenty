@@ -106,14 +106,14 @@ W profilu klienta w Stape są dwa pola dotyczące reklam:
 | **`owner`** | **Pierwszy** kanał, który „przyniósł” klienta (np. Google Ads, Meta) — pierwsze dotknięcie | Działa — liczy się do reguł 90 dni i VBB |
 | **`assist`** | **Drugi** kanał (pomocniczy dotyk) — np. klient najpierw z Facebooka, potem z Google | Prawie zawsze **`null`** — logika nie jest dokończona |
 
-**FIX-1** = decyzja: czy w ogóle chcemy drugi kanał (`assist`), czy na razie wystarczy nam tylko pierwszy (`owner`).
+**Decyzja (2026-05-28): Opcja A** — **dokończyć `assist`** w Sortowni paid (multi-touch). Uzasadnienie: rosnąca rola identyfikacji klienta, dopisywania sygnałów przez sprzedawców, Resolver T1–T5 — spójne `owner` + `assist` ma sens przy pełniejszym obrazie dotknięć.
 
-| Opcja | Sens |
-|-------|------|
-| **A** | Budujemy pełne „kto był drugi” (więcej pracy, multi-touch) |
-| **B** (proponowane na start) | Mówimy wprost: **używamy tylko `owner`**, `assist` zostaje puste — bez udawania, że działa |
+| Opcja | Status |
+|-------|--------|
+| **A** | **Wybrane** — implementacja w ramach FIX-1 (osobny commit, przed/po ADD według kolejności §8.4) |
+| **B** | Odrzucone |
 
-**Nie blokuje cutover CRM** — dotyczy tylko raportowania reklamowego w Sortowni paid.
+Powiązane: `IDENTITY_AND_INBOUND.md` §8.4 (FIX-1), Identity Resolver, ręczne uzupełnianie PII przez handlowców.
 
 ### FIX-2 — `AktTimestamp` (format czasu)
 

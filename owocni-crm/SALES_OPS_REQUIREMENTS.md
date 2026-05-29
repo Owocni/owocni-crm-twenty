@@ -38,16 +38,70 @@ Mapowanie techniczne: `STAGE_MAPPING.md`.
 
 ## 3. Parzystość z better-bitrix (bramka cutover)
 
-Cutover dopiero gdy Twenty oferuje **co najmniej** funkcjonalność używaną dziś w better-bitrix:
+**Źródło:** potwierdzenie Dawida 2026-05-28.  
+**Zasada:** wszystko z sekcji A–D i E18 **musi** być w Twenty przed cutover. F21–F23 i E19–E20 — **nie** na start.
 
-- [ ] Pipeline leadów (stage’e)
-- [ ] Pola produkt / źródło / odrzucenie kampanii
-- [ ] Szablony maili (P0)
-- [ ] Timeline / maile (po Etap 1.2 Email Sync)
-- [ ] Eventy outbound (qualify, purchase, rejected) — przez Sortownię
-- [ ] Backup formularzy → Sheets (bez regresji — `STRESS_TEST_PLAN` S0)
+### A. Pipeline i lead — **wszystko TAK (P0)**
 
-Lista uzupełniana w trakcie testów akceptacyjnych.
+| # | Wymaganie BB dziś | Twenty przed cutover |
+|---|-------------------|----------------------|
+| A1 | Kanban / lista ze stage’ami | TAK |
+| A2 | Ręczne dodawanie leada | TAK |
+| A3 | Przypisanie do handlowca | TAK |
+| A4 | Pole produkt | TAK (`bizProduct`) |
+| A5 | Pole źródło | TAK (`bizSource`) |
+| A6 | Notatki przy leadzie | TAK (Note / timeline) |
+
+### B. Akcje na leadzie — **wszystko TAK (P0)**
+
+| # | Wymaganie BB dziś | Twenty przed cutover |
+|---|-------------------|----------------------|
+| B7 | Wygrana (WON) + wartość | TAK (`stage` WON, `bizValueWon`) |
+| B8 | Przegrana (LOST) | TAK (bez eventu reklamowego — SSOT) |
+| B9 | Odrzuć w kampanii (≠ LOST) | TAK (`campaignRejected` → UI „Odrzuć leada”) |
+| B10 | Powód odrzucenia | TAK (`rejectionReason`) |
+
+### C. Mail — **P0 z doprecyzowaniem skrzynek**
+
+| # | Wymaganie | Przed cutover | Uwagi |
+|---|-----------|---------------|--------|
+| C11 | Wysyłka maila do klienta z CRM | **TAK** | Twenty Email Sync + compose |
+| C12 | Szablony maili | **TAK** | ~kilkanaście szt., daily-use; migracja z BB |
+| C13 | Wątki / historia maili | **TAK** (Etap 1.2) | Każdy handlowiec: **własna skrzynka** w Twenty + **skrzynka ogólna** (`leads@` lub równoważna), która **rozdziela wątki** do leadów przypisanych do konkretnych handlowców |
+| C14 | Odbieranie i odpisywanie z CRM | **TAK** (Etap 1.2) | Nie tylko podgląd — pełna obsługa z Twenty |
+
+**Model skrzynek (C13):** patrz `IDENTITY_AND_INBOUND.md` §5.1 — Email Sync na skrzynkach handlowców + `leads@` / `studio@`; reguły przypisania wątku → Opportunity owner w Twenty (proces lub automatyzacja — do doprecyzowania przy wdrożeniu 1.2).
+
+### D. Wyszukiwanie i widoki
+
+| # | Wymaganie | Przed cutover |
+|---|-----------|---------------|
+| D15 | Szukanie po emailu | **TAK** |
+| D16 | Filtry | **TAK** — podstawowe wystarczą |
+| D17 | Sortowanie | **TAK** — podstawowe wystarczy |
+
+### E. Integracje
+
+| # | Wymaganie | Przed cutover | Uwagi |
+|---|-----------|---------------|--------|
+| E18 | Eventy do Sortowni/reklam | **TAK** — automatycznie | **SQL** → `qualify_lead`; **WON** → `purchase`; **Rejected** → `rejected_lead` (native webhook OUT) |
+| E19 | GPT / auto-opis przy leadzie z maila | **NIE** | Etap późniejszy |
+| E20 | Helpdesk / tickety w tym samym CRM | **NIE** | Całkowicie później (osobny projekt) |
+
+### F. Świadomie poza startem (zgodne z ADR #15)
+
+| # | Funkcja | Na start w Twenty |
+|---|---------|-------------------|
+| F21 | Planowana wysyłka maila | NIE |
+| F22 | SMS z mailem | NIE |
+| F23 | AI podsumowania wątku | NIE |
+
+### Inne bramki cutover
+
+- [ ] Backup formularzy → Sheets (`STRESS_TEST_PLAN` S0)
+- [ ] Testy akceptacyjne: każdy wiersz P0 powyżej = PASS w sandbox/prod
+
+**Werdykt planowy:** lista parzystości **zamknięta** — pozostaje egzekucja i testy PASS.
 
 ---
 
@@ -90,8 +144,6 @@ Dzienne/tygodniowe kolumny kategoria × źródło — backlog operacyjny.
 
 ---
 
-## 7. ADR #15 — otwarte (nie blokuje planu architektury)
+## 7. ADR #15 — zamknięte (2026-05-28)
 
-1. Schedule mail / SMS — Etap 2?
-2. AI podsumowania wątków w Twenty — 1.2 czy 2?
-3. Właściciel backlogu operacyjnego sprzedaży (poza Dawidem technicznym)
+Schedule mail, SMS, AI podsumowania, GPT przy leadzie, helpdesk — **Etap 2+** (patrz §2 i §3.F).
