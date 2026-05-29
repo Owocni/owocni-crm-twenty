@@ -1,7 +1,7 @@
 # CUTOVER_RUNBOOK — przełączenie na Twenty
 
 **Wersja:** 0.1 (szkic — data cutover TBD)  
-**Owner:** Właściciel + Developer  
+**Owner:** Dawid (wdrożenie) + Właściciel (data cutover)  
 **Pełna wersja:** `../twenty/OWOCNI_CRM_pakiet_plikow (1).md` Plik 6
 
 ---
