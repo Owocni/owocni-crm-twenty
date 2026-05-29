@@ -442,8 +442,8 @@
     <h2>Decyzje z review 2026-05-28 (już zapadłe / do domknięcia)</h2>
     <p>Werdykt ogólny: <strong>Wstrzymujemy cutover</strong> do czasu domknięcia P1 poniżej.</p>
     <ul>
-      <li><strong>ADR #12</strong> — inbound spoza Sortowni (`kontakt@`, telefon, manual): spec w `IDENTITY_AND_INBOUND.md`</li>
-      <li><strong>ADR #13</strong> — Stape = master `id_oid`; Identity Resolver T1–T5; wskaźniki Stape (wdrożenie + testy T4/T5)</li>
+      <li><strong>ADR #12</strong> — plan zamknięty (§5.1 IDENTITY): kontakt@, Email Sync wszystkich skrzynek, handoff Mariusz + Krzysztof</li>
+      <li><strong>ADR #13</strong> — plan zamknięty (§8.4); implementacja ADD-1/2/3 + Resolver</li>
       <li><strong>ADR #14</strong> — jedna nomenklatura eventów (`purchase`, nie `closed_won`/`WON` jako event_name)</li>
       <li><strong>ADR #15</strong> — rozdział MVP vs Etap 2/3 (telefony, transkrypty, liczniki, auto-odpowiedzi)</li>
       <li><strong>ADR #5, #6, #8, #10, #11</strong> — nadal otwarte technicznie (były otwarte przed review)</li>
@@ -528,7 +528,7 @@
 
 <script>
 (function () {
-  const STORAGE_KEY = 'owocni-crm-review-ssot-v9';
+  const STORAGE_KEY = 'owocni-crm-review-ssot-v10';
 
   // Wynik review = interpretacja biznesowa (nie to samo co przycisk Tak/Nie/Do domknięcia)
   const REVIEW_OUTCOMES = {
@@ -552,8 +552,8 @@
     '5.3': { stance: 'conditional', label: 'Tak, ale warunkowo: julia362 OFF dopiero po #12/#13', adrs: ['#12', '#13'] },
     '5.4': { stance: 'open', label: 'Poza MVP: ręczny SOP po WON; pełne dane firmy/automatyzacje = Etap 2+', adrs: ['#15'] },
     '5.5': { stance: 'approved', label: 'Równoległy zapis formularzy → Google Sheets (Make) zostaje; cutover Twenty tego nie wyłącza', adrs: [] },
-    'I1': { stance: 'open', label: 'Lista kanałów jest w IDENTITY §5; brak potwierdzenia operacyjnego (forward kontakt@, Email Sync na skrzynkach zespołu)', adrs: ['#12'] },
-    'I2': { stance: 'open', label: 'SSOT: Email Sync + Resolver; do potwierdzenia forward kontakt@ i sekundy zero po wyłączeniu julia362', adrs: ['#12'] },
+    'I1': { stance: 'conditional', label: 'Plan kanałów + Email Sync zamknięty §5.1; bramka: handoff Mariusz/Krzysztof + podłączenie skrzynek w Twenty', adrs: ['#12'] },
+    'I2': { stance: 'approved', label: 'kontakt@ = osobna skrzynka, bez forwardu, spam w backlogu; pierwszy obserwator = Twenty Email Sync → Resolver', adrs: ['#12'] },
     'I3': { stance: 'open', label: 'Paid resolve w Sortowni OK; brak testu S1b dla nie-paid (Twenty + Resolver) przy krótkim odstępie / odwrotnej kolejności', adrs: ['#13'] },
     'I4': { stance: 'open', label: 'SSOT: Identity Resolver T1–T5 w IDENTITY_AND_INBOUND; do wdrożenia i testów konfliktu T4/T5', adrs: ['#13'] },
     'A1': { stance: 'open', label: 'Procedura AKK jest w AUDIT_AKK.md; pierwsza tura A (kroki 1–7) jeszcze nie uruchomiona', adrs: ['#14', '#9'] },
@@ -569,7 +569,7 @@
       '3.1': 'yes', '3.2': 'yes', '3.3': 'notes',
       '4.1': 'yes', '4.2': 'yes', '4.3': 'yes',
       '5.1': 'yes', '5.2': 'notes', '5.3': 'notes', '5.4': 'notes', '5.5': 'yes',
-      'I1': 'notes', 'I2': 'notes', 'I3': 'notes', 'I4': 'notes',
+      'I1': 'yes', 'I2': 'yes', 'I3': 'notes', 'I4': 'notes',
       'A1': 'notes', 'A2': 'yes', 'A3': 'yes', 'A4': 'notes'
     },
     notes: {
@@ -579,8 +579,8 @@
       '3.3': 'Stape (Profil Klienta) = master id_oid. Mint: Sortownia (paid) lub Identity Resolver T3 (nie-paid). Twenty tylko projekcja — rekord może być bez id_oid (needs_review).',
       '5.2': 'Propozycja wdrożenia: przerobić Sortownię — ruch z obecnych kanałów (formularz/web, generate_lead) zostaje PROD bez zmian; ruch z Twenty (webhook OUT, CRM) idzie jako SANDBOX i zapisuje się do osobnego debugowego arkusza Google Sheets (nie do adapterów reklamowych).',
       '5.3': 'julia362 OFF dopiero po ADR #12 (Email Sync + Resolver na wszystkich kanałach mailowych) i ADR #13 (Resolver T1–T5 wdrożony + testy T4). Dopóki nie domknięte — zostawiamy watcher.',
-      'I1': 'IDENTITY §5 = zamknięta lista kanałów (paid, leads@, skrzynki zespołu, kontakt@, telefon, manual). Do potwierdzenia operacyjnego: forward kontakt@, Email Sync na studio@/marta@ itd.',
-      'I2': 'Docelowo: Twenty Email Sync (pierwszy obserwator) → Identity Resolver. kontakt@ nie na liście julia362 — sprawdzić forward. studio@/marta@ dziś: mail zapisany, brak auto-leada → docelowo T3 auto_mint.',
+      'I1': '§5.1: Email Sync obowiązkowy na leads@, studio@, skrzynkach handlowców (marta@, gosia@, mariusz@, copywriting@, pomoc@) i kontakt@. Odpowiedzi przez Twenty. Do zrobienia: handoff Mariusz + Krzysztof, podłączenie IMAP.',
+      'I2': 'kontakt@ istnieje, bez przekierowania. Backlog = spam/reklamy — nie importujemy jako leadów. Sync w Twenty → Resolver; generyczny email → Company (§11).',
       '5.4': 'Po WON na razie manual; później m.in. uzupełnianie danych firmy po NIP.',
       '5.5': 'Formularze: dataLayer→Sortownia + Make→mail + sendToGoogleSheets→Sheets (backup). Nie usuwać przy cutoverze. Test S0 w STRESS_TEST_PLAN.',
       'I3': 'Paid: Sortownia resolve (_oid→email→phone) OK. Nie-paid: Identity Resolver po Twenty. Brak S1b: ta sama osoba telefon↔mail w krótkim odstępie → 1 id_oid lub jawny T4.',
@@ -650,34 +650,32 @@
           text: 'Czy mamy zamkniętą listę WSZYSTKICH kanałów wejścia leada (z triggerem idOid lub adnotacją „kanał-sierota”)?',
           hint: 'ADR #12 — inwentaryzacja kanałów',
           known: [
-            'IDENTITY_AND_INBOUND §5: zamknięta lista kanałów z pierwszym obserwatorem i tierem resolvera.',
-            'Paid: formularz → Sortownia → mint id_oid → Twenty (bez zmian).',
-            'Mail docelowo: Twenty Email Sync → Identity Resolver (T1–T4).',
-            'julia362 (legacy) = 7 skrzynek IMAP; auto-lead tylko leads@ INBOX.',
-            'studio@/marta@/gosia@ dziś: mail zapisany, bez auto-leada dla nowego klienta.'
+            'IDENTITY §5.1: zamknięta lista kanałów + decyzja Email Sync (leads@, studio@, handlowcy, kontakt@).',
+            'Paid: formularz → Sortownia → Twenty. Mail: Twenty Email Sync → Resolver.',
+            'kontakt@: osobna skrzynka, bez forwardu; backlog spam — nie migrujemy jako leadów.',
+            'Odpowiedzi mailowe i timeline — przez Twenty (hub sprzedaży).',
+            'Implementacja: przekazanie planu Mariusz (Stape) + Krzysztof (Twenty).'
           ],
           toLearn: [
-            'Potwierdzić forward/alias kontakt@ na serwerze mail (nie na liście julia362).',
-            'Wdrożyć Email Sync na skrzynkach zespołu (studio@, marta@…) przed cutoverem.',
-            'Zweryfikować sekwencję sekundy zero: rekord Twenty → webhook → Resolver → id_oid.',
-            'Czy każdy kanał z §5 ma test PASS lub jawny stan needs_review (T4).'
+            'Potwierdzenie przyjęcia planu przez Mariusza i Krzysztofa.',
+            'Podłączenie wszystkich skrzynek §5.1 w Twenty Email Sync (IMAP mail.owocni.pl).',
+            'Test sekundy zero: mail → rekord Twenty → webhook → Resolver → id_oid.',
+            'PASS/FAIL per kanał przed wyłączeniem julia362.'
           ]
         },
         {
           id: 'I2',
-          text: 'Dla maila na kontakt@ (poza paid flow): kto jest pierwszym obserwatorem i co dzieje się w sekundzie zero?',
-          hint: 'ADR #12 — architektura wejścia mailowego',
+          text: 'Czy wiemy co robić z mailem na kontakt@ (skrzynka, forward, pierwszy obserwator)?',
+          hint: 'IDENTITY_AND_INBOUND §5.1',
           known: [
-            'SSOT docelowo: Twenty Email Sync = pierwszy obserwator maila → Identity Resolver.',
-            'julia362 NIE nasłuchuje kontakt@ — watcher ma 7 innych skrzynek.',
-            'Legacy auto-lead = głównie leads@ INBOX (better-bitrix + GPT).',
-            'Handlowiec przy T4 wybiera kandydata — nie przepisuje leada od zera (IDENTITY §6.2).'
+            'kontakt@owocni.pl istnieje — osobna skrzynka, bez przekierowania.',
+            'Nieodczytane od miesięcy = spam/reklamy — nie traktujemy backlogu jako leadów.',
+            'julia362 nie nasłuchuje kontakt@.',
+            'Docelowo: Twenty Email Sync → Identity Resolver; generyczny adres → Company (§11).'
           ],
           toLearn: [
-            'Potwierdzić reguły forward/alias dla kontakt@ (czy trafia do skrzynki z Email Sync).',
-            'Czas Email Sync (~5 min) vs oczekiwania handlowca — czy akceptowalne.',
-            'Sekwencja sekundy zero: mail → Person/Opportunity w Twenty → webhook → Resolver → id_oid.',
-            'Test kontakt@ end-to-end przed wyłączeniem julia362.'
+            'Podłączyć kontakt@ w Twenty Email Sync razem z pozostałymi skrzynkami §5.1.',
+            'Polityka filtrowania nowego spamu (opcjonalnie — poza rdzeniem cutover).'
           ]
         },
         {

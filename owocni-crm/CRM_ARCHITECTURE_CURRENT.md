@@ -45,7 +45,7 @@ Formularz owocni.pl
   Twenty: Person + Opportunity (NEW) + Note
 ```
 
-**Opcjonalnie (kontekst):** Twenty Email Sync — pierwszy obserwator maili nie-paid → Identity Resolver (`IDENTITY_AND_INBOUND.md` §5–6).
+**Opcjonalnie (kontekst):** Twenty Email Sync — hub mailowy sprzedaży (wszystkie skrzynki §5.1 w `IDENTITY_AND_INBOUND.md`); odpowiedzi, timeline, docelowo podsumowania/zadania w Twenty.
 
 **Legacy (wyłączyć):** julia362 → better-bitrix → Supabase.
 

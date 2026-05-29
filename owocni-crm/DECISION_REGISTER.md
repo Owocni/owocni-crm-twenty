@@ -21,8 +21,8 @@
 | 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
 | 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Owner Sortowni | **open** |
 | 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Developer | **open** — POC test |
-| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual, Email Sync) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** — spec: `IDENTITY_AND_INBOUND.md` |
-| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** — spec: `IDENTITY_AND_INBOUND.md` |
+| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual, Email Sync) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** (impl.) — **plan zamknięty** 2026-05-28: `IDENTITY_AND_INBOUND.md` §5.1 |
+| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** (impl.) — **plan zamknięty** §8.4; handoff Mariusz + Krzysztof |
 | 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `WON`/`closed_won`) | Semantyczna | **cutover** | **ADR** | 4 | Owner Sortowni | **open** — rekonsyliacja nazewnictwa |
 | 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **open** |
 | 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Właściciel + Developer | **open** |
@@ -41,6 +41,15 @@
 | → WON | purchase |
 | campaignRejected true | rejected_lead |
 | → LOST | *(brak)* |
+
+### Decyzje planowe zamknięte (2026-05-28)
+
+| Temat | Ustalenie | Dokument |
+|-------|-----------|----------|
+| `kontakt@owocni.pl` | Osobna skrzynka, bez forwardu; backlog = spam/reklamy; sync w Twenty | `IDENTITY_AND_INBOUND.md` §5.1 |
+| Email Sync | Wszystkie skrzynki sprzedawców + `leads@` + `studio@` + `kontakt@` w Twenty; odpowiedzi przez Twenty | §5.1 |
+| Ścieżki kanałów | Opisane — przekazanie implementacji Mariusz + Krzysztof | §5–6, §8.4 |
+| Identity Resolver | Plan ADD-2 → ADD-1 → ADD-3 (+ FIX osobno) | §8.4 |
 
 ### Priorytety po review 2026-05-28
 
