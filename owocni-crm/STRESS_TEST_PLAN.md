@@ -18,6 +18,13 @@
 
 ## 2. Scenariusze krytyczne
 
+### S0 — Backup formularza → Google Sheets (niezależnie od Stape/Twenty)
+
+- Wejście: submit formularza kontaktowego (lub innego z `sendToGoogleSheets`).
+- Oczekiwanie: nowy wiersz w arkuszu Google Sheets via Make.com **nawet gdy** GTM/Stape/Sortownia są niedostępne (symulacja offline Stape).
+- Oczekiwanie: submit użytkownika **nie** failuje gdy Sheets padnie (fire-and-forget).
+- Dowód: timestamp w arkuszu + brak regresji w kodzie formularza po zmianach CRM.
+
 ### S1 — Mail i telefon tego samego klienta
 
 - Wejście: klient pisze na `kontakt@`, potem dzwoni.
@@ -49,7 +56,7 @@
 
 ### PASS
 
-- 100% testów S1–S5 przechodzi.
+- 100% testów S0–S5 przechodzi.
 - Brak rekordu produkcyjnego bez `idOid` > SLA.
 - Brak event_name poza kanonem.
 - Brak wycieku sandbox -> produkcja.

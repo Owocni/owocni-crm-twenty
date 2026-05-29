@@ -14,7 +14,7 @@ Tylko pola **krytyczne** (systemowe / eventowe / integracyjne). Standardowe pola
 |-------------|------|--------|-------|-------|---------|---------|-------------------------|
 | `idOid` | TEXT | YES | Sortownia (mint) | null przy manual | Wszystkie SSOT eventy; upsert ingress | **FROZEN** | Cross-system id_oid; mint Sortownia przy generate_lead |
 | `stage` | SELECT | NO | Handlowiec | default NEW | qualify_lead, purchase | **FROZEN** | NEW / CONTACTED / QUALIFIED / PROPOSAL / WON / LOST |
-| `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | Odrzucenie wzorzec kampanii — NIE to samo co LOST (potwierdzone użycie przez sprzedaż) |
+| `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | **UI label:** „Odrzuć leada”. **Opis pola:** Informuje kanały reklamowe, że takich leadów nie szukamy. To nie to samo co stage LOST („przegrany deal”). API name: `campaignRejected`. |
 | `rejectionReason` | SELECT | NO | Handlowiec | null | rejected_lead (raport) | **FROZEN** | Powód odrzucenia kampanii — raportowo |
 | `bizProduct` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | **FROZEN** | Produkt (web, logo, …) |
 | `bizSource` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | OPEN | Źródło leada |

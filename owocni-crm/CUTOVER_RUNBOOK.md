@@ -20,7 +20,8 @@
   - [ ] Guard `environment`: sandbox → safe sink (np. Google Sheets), prod → adaptery reklamowe
   - [ ] Loop prevention przetestowany
 - [ ] ADR #5, #6, #8, #12, #13, #14, #16 zamknięte w `DECISION_REGISTER.md`
-- [ ] `STRESS_TEST_PLAN.md` wykonany i udokumentowany (PASS dla S1-S5)
+- [ ] `STRESS_TEST_PLAN.md` wykonany i udokumentowany (PASS dla S0–S5)
+- [ ] **Backup inbound:** równoległy zapis formularzy → Google Sheets (`sendToGoogleSheets`) **nadal aktywny** — nie usuwać przy cutoverze
 
 ---
 

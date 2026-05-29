@@ -25,7 +25,7 @@
 | Wpłaca | PROPOSAL/WON transition | brak | CRM-only operacyjne |
 | Obsługa | WON + obsługa post-sale | `purchase` przy wejściu do WON | Event tylko na przejściu do WON |
 | Przegrany | LOST | brak | Brak eventu reklamowego |
-| Odrzucony kampanijnie | `campaignRejected=true` | `rejected_lead` | Niezależne od LOST |
+| Odrzucony kampanijnie | `campaignRejected=true` | `rejected_lead` | UI Twenty: **„Odrzuć leada”** (API: `campaignRejected`). ≠ LOST |
 
 ---
 

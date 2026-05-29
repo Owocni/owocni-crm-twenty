@@ -443,11 +443,11 @@
     <p>Werdykt ogólny: <strong>Wstrzymujemy cutover</strong> do czasu domknięcia P1 poniżej.</p>
     <ul>
       <li><strong>ADR #12</strong> — inbound spoza Sortowni (`kontakt@`, telefon, manual): spec w `IDENTITY_AND_INBOUND.md`</li>
-      <li><strong>ADR #13</strong> — ownership `idOid` + deduplikacja cross-channel (mail + telefon ten sam klient)</li>
+      <li><strong>ADR #13</strong> — Stape = master `id_oid`; Identity Resolver T1–T5; wskaźniki Stape (wdrożenie + testy T4/T5)</li>
       <li><strong>ADR #14</strong> — jedna nomenklatura eventów (`purchase`, nie `closed_won`/`WON` jako event_name)</li>
       <li><strong>ADR #15</strong> — rozdział MVP vs Etap 2/3 (telefony, transkrypty, liczniki, auto-odpowiedzi)</li>
       <li><strong>ADR #5, #6, #8, #10, #11</strong> — nadal otwarte technicznie (były otwarte przed review)</li>
-      <li><strong>P1 inbound (blok 6)</strong> — 4 pytania rozstrzygające: matryca kanałów, pierwszy obserwator <code>kontakt@</code>, merge cross-channel, test anty-kolizyjny</li>
+      <li><strong>P1 inbound (blok 6)</strong> — 4 pytania: matryca kanałów (§5 IDENTITY), pierwszy obserwator <code>kontakt@</code>, test anty-kolizyjny S1b, wdrożenie Resolver T1–T5</li>
       <li><strong>Audyty (blok 7)</strong> — AKK 1–7 teraz (fault-only), AKK 8–9 preflight, migracja przed importem — procedura: <code>AUDIT_AKK.md</code></li>
     </ul>
     <div class="legend">
@@ -499,11 +499,14 @@
   <div class="block">
     <div class="block-header"><h2>Pliki SSOT — skrót</h2></div>
     <dl class="info-list">
-      <dt>README.md</dt><dd>Gdzie szukać odpowiedzi</dd>
-      <dt>EVENT_CONTRACT.md</dt><dd>Jakie eventy (purchase, rejected_lead…)</dd>
+      <dt>../README.md</dt><dd>Entry point + instrukcja dla LLM</dd>
+      <dt>IDENTITY_AND_INBOUND.md</dt><dd>Tożsamość, kanały, Identity Resolver T1–T5</dd>
+      <dt>EVENT_CONTRACT.md</dt><dd>Eventy (purchase, rejected_lead…)</dd>
       <dt>DATA_MODEL.md</dt><dd>Pola w Twenty, w tym campaignRejected</dd>
       <dt>CRM_ARCHITECTURE_CURRENT.md</dt><dd>Skąd wpadają leady, dokąd idą eventy</dd>
-      <dt>DECISION_REGISTER.md</dt><dd>Co jeszcze otwarte</dd>
+      <dt>DECISION_REGISTER.md</dt><dd>Co jeszcze otwarte (ADR)</dd>
+      <dt>STRESS_TEST_PLAN.md</dt><dd>Scenariusze S1/S1b przed cutoverem</dd>
+      <dt>STAGE_MAPPING.md</dt><dd>Stage ↔ event_name (zakaz lead_won)</dd>
       <dt>AUDIT_AKK.md</dt><dd>Auto-audyt SSOT (kroki 1–10, fault-only)</dd>
       <dt>AUDIT_MIGRACJA.md</dt><dd>Audyt migracji (przed importem)</dd>
     </dl>
@@ -525,12 +528,12 @@
 
 <script>
 (function () {
-  const STORAGE_KEY = 'owocni-crm-review-ssot-v7';
+  const STORAGE_KEY = 'owocni-crm-review-ssot-v9';
 
   // Wynik review = interpretacja biznesowa (nie to samo co przycisk Tak/Nie/Do domknięcia)
   const REVIEW_OUTCOMES = {
     '1.1': { stance: 'approved', label: 'Zatwierdzone — helpdesk poza MVP', adrs: [] },
-    '1.2': { stance: 'conditional', label: 'Tak kierunek Sortownia→Twenty, ale cutover dopiero po inbound spoza Sortowni', adrs: ['#12', '#13'] },
+    '1.2': { stance: 'conditional', label: 'Paid: Sortownia→Twenty OK. Mail/telefon/manual: Twenty + Identity Resolver — cutover po ADR #12/#13', adrs: ['#12', '#13'] },
     '1.3': { stance: 'approved', label: 'Zatwierdzone — Twenty webhook tylko do Sortowni; dalej Robot→Adaptery (nie bezpośrednio z CRM)', adrs: [] },
     '1.4': { stance: 'approved', label: 'SSOT w owocni-crm/ + root README z routingiem LLM; twenty/ = archiwum POC', adrs: ['#14'] },
     '2.1': { stance: 'approved', label: 'Zatwierdzone: won→purchase; posprzątać legacy nazwy w docs orkiestracji', adrs: ['#14'] },
@@ -539,8 +542,8 @@
     '2.4': { stance: 'approved', label: 'Zatwierdzone — wymaga szkolenia przed cutoverem', adrs: ['#5'] },
     '2.5': { stance: 'approved', label: 'Zatwierdzone — kryteria stage z handlowcami przed cutoverem', adrs: ['#5'] },
     '3.1': { stance: 'approved', label: 'Zatwierdzone — boolean/akcja; potwierdzone użycie przez sprzedaż', adrs: [] },
-    '3.2': { stance: 'conditional', label: 'Tak mechanizm; do ustalenia nazwa biznesowa w UI Twenty', adrs: [] },
-    '3.3': { stance: 'conditional', label: 'Tak zasada (Sortownia mintuje idOid); edge case wymagają ADR', adrs: ['#13'] },
+    '3.2': { stance: 'approved', label: 'UI: „Odrzuć leada” + opis o kanałach reklamowych; API campaignRejected bez zmian', adrs: [] },
+    '3.3': { stance: 'conditional', label: 'Master = Stape Profil Klienta; mint: Sortownia (paid) lub Resolver T3. Twenty = projekcja, nie mintuje.', adrs: ['#13'] },
     '4.1': { stance: 'approved', label: 'Zatwierdzone', adrs: [] },
     '4.2': { stance: 'approved', label: 'Zatwierdzone', adrs: [] },
     '4.3': { stance: 'approved', label: 'Zatwierdzone — helpdesk w Twenty po Etapie 1', adrs: ['#15'] },
@@ -548,9 +551,10 @@
     '5.2': { stance: 'open', label: 'Model sandbox OK (ADR #7), ale wymaga doprecyzowania operacyjnego dla zespołu', adrs: ['#7'] },
     '5.3': { stance: 'conditional', label: 'Tak, ale warunkowo: julia362 OFF dopiero po #12/#13', adrs: ['#12', '#13'] },
     '5.4': { stance: 'open', label: 'Poza MVP: ręczny SOP po WON; pełne dane firmy/automatyzacje = Etap 2+', adrs: ['#15'] },
-    'I1': { stance: 'open', label: 'Brak zamkniętej matrycy wszystkich kanałów z triggerem idOid lub adnotacją sieroty', adrs: ['#12'] },
-    'I2': { stance: 'open', label: 'kontakt@ nie jest na liście IMAP julia362; wymaga potwierdzenia forwardu i docelowej ścieżki po wyłączeniu legacy', adrs: ['#12'] },
-    'I3': { stance: 'open', label: 'Mechanizm resolve jest w Sortowni, ale brak prostego testu „krótki odstęp / odwrotna kolejność kanałów” z jasnym PASS/FAIL', adrs: ['#13'] },
+    '5.5': { stance: 'approved', label: 'Równoległy zapis formularzy → Google Sheets (Make) zostaje; cutover Twenty tego nie wyłącza', adrs: [] },
+    'I1': { stance: 'open', label: 'Lista kanałów jest w IDENTITY §5; brak potwierdzenia operacyjnego (forward kontakt@, Email Sync na skrzynkach zespołu)', adrs: ['#12'] },
+    'I2': { stance: 'open', label: 'SSOT: Email Sync + Resolver; do potwierdzenia forward kontakt@ i sekundy zero po wyłączeniu julia362', adrs: ['#12'] },
+    'I3': { stance: 'open', label: 'Paid resolve w Sortowni OK; brak testu S1b dla nie-paid (Twenty + Resolver) przy krótkim odstępie / odwrotnej kolejności', adrs: ['#13'] },
     'I4': { stance: 'open', label: 'SSOT: Identity Resolver T1–T5 w IDENTITY_AND_INBOUND; do wdrożenia i testów konfliktu T4/T5', adrs: ['#13'] },
     'A1': { stance: 'open', label: 'Procedura AKK jest w AUDIT_AKK.md; pierwsza tura A (kroki 1–7) jeszcze nie uruchomiona', adrs: ['#14', '#9'] },
     'A2': { stance: 'approved', label: 'Zaakceptowane: pusty wynik AKK ≠ zielone światło na cutover (meta-pytanie = NIE)', adrs: [] },
@@ -562,30 +566,31 @@
     answers: {
       '1.1': 'yes', '1.2': 'notes', '1.3': 'yes', '1.4': 'notes',
       '2.1': 'yes', '2.2': 'yes', '2.3': 'yes', '2.4': 'yes', '2.5': 'yes',
-      '3.1': 'yes', '3.2': 'notes', '3.3': 'notes',
+      '3.1': 'yes', '3.2': 'yes', '3.3': 'notes',
       '4.1': 'yes', '4.2': 'yes', '4.3': 'yes',
-      '5.1': 'yes', '5.2': 'notes', '5.3': 'notes', '5.4': 'notes',
+      '5.1': 'yes', '5.2': 'notes', '5.3': 'notes', '5.4': 'notes', '5.5': 'yes',
       'I1': 'notes', 'I2': 'notes', 'I3': 'notes', 'I4': 'notes',
       'A1': 'notes', 'A2': 'yes', 'A3': 'yes', 'A4': 'notes'
     },
     notes: {
-      '1.2': 'Czarna dziura: kontakt@, telefon, inne kanały bez pełnego przejścia przez Sortownię.',
-      '1.4': 'Katalog owocni-crm/ = SSOT; twenty/ = archiwum POC. Root README ma sekcję dla LLM: co czytać, czego nie używać.',
-      '3.2': 'Nazwa pola w Twenty ma być biznesowa (jak w Bitrix), nie techniczna „Campaign Rejected”.',
-      '3.3': 'Najtrudniejszy obszar: nadawanie idOid, deduplikacja, edge case mail+telefon.',
+      '1.2': 'Paid ze strony: Sortownia→Twenty (bez julia362). Mail/telefon/manual: Twenty Email Sync + Identity Resolver T1–T5 (IDENTITY §5–6). Cutover po wdrożeniu ADR #12/#13.',
+      '1.4': 'Katalog owocni-crm/ = SSOT; twenty/ = archiwum POC. Root README ma sekcję dla LLM + linki do kodu Sortowni/Robota i docs orkiestracji.',
+      '3.2': 'Label UI: „Odrzuć leada”. Opis: informuje kanały reklamowe, że takich leadów nie szukamy — to nie to samo co LOST. API: campaignRejected.',
+      '3.3': 'Stape (Profil Klienta) = master id_oid. Mint: Sortownia (paid) lub Identity Resolver T3 (nie-paid). Twenty tylko projekcja — rekord może być bez id_oid (needs_review).',
       '5.2': 'Propozycja wdrożenia: przerobić Sortownię — ruch z obecnych kanałów (formularz/web, generate_lead) zostaje PROD bez zmian; ruch z Twenty (webhook OUT, CRM) idzie jako SANDBOX i zapisuje się do osobnego debugowego arkusza Google Sheets (nie do adapterów reklamowych).',
-      '5.3': 'julia362 OFF dopiero po ADR #12 (inbound spoza Sortowni: kontakt@, telefon, manual, maile na skrzynki zespołu) i ADR #13 (id_oid + deduplikacja/merge). Dopóki nie domknięte — zostawiamy watcher.',
-      'I1': 'julia362 = 7 skrzynek IMAP. Po Sortowni ryzyko: obsłużymy formularz ze strony, a nie mail wprost na studio@/marta@/gosia@. Matryca kanałów w I1.',
-      'I2': 'julia362 nasłuchuje 7 skrzynek (m.in. leads@, studio@, marta@…) — NIE kontakt@ wprost. Auto-lead w legacy = głównie leads@ INBOX. kontakt@: sprawdzić forward na serwerze mail.',
+      '5.3': 'julia362 OFF dopiero po ADR #12 (Email Sync + Resolver na wszystkich kanałach mailowych) i ADR #13 (Resolver T1–T5 wdrożony + testy T4). Dopóki nie domknięte — zostawiamy watcher.',
+      'I1': 'IDENTITY §5 = zamknięta lista kanałów (paid, leads@, skrzynki zespołu, kontakt@, telefon, manual). Do potwierdzenia operacyjnego: forward kontakt@, Email Sync na studio@/marta@ itd.',
+      'I2': 'Docelowo: Twenty Email Sync (pierwszy obserwator) → Identity Resolver. kontakt@ nie na liście julia362 — sprawdzić forward. studio@/marta@ dziś: mail zapisany, brak auto-leada → docelowo T3 auto_mint.',
       '5.4': 'Po WON na razie manual; później m.in. uzupełnianie danych firmy po NIP.',
-      'I3': 'Sortownia ma resolve (_oid→email→phone→ga_client_id) i multi-key write, ale nie ma prostego testu: ta sama osoba wpada 2 kanałami w krótkim odstępie / odwrotnej kolejności. Propozycja: dopisać S1b (telefon→mail i mail→telefon), po każdym kroku snapshot identity_map i twardy werdykt PASS/FAIL.',
+      '5.5': 'Formularze: dataLayer→Sortownia + Make→mail + sendToGoogleSheets→Sheets (backup). Nie usuwać przy cutoverze. Test S0 w STRESS_TEST_PLAN.',
+      'I3': 'Paid: Sortownia resolve (_oid→email→phone) OK. Nie-paid: Identity Resolver po Twenty. Brak S1b: ta sama osoba telefon↔mail w krótkim odstępie → 1 id_oid lub jawny T4.',
       'I4': 'SSOT: Identity Resolver (osobny handler Stape) T1–T5 — auto tylko przy 0/1 kandydacie; T4 needs_review gdy email→profil A, phone→profil B; T5 merge_review_critical dla dwóch paid id_oid. Sortownia paid NIE robi pełnego cross-channel merge. Do domknięcia: wdrożenie resolvera + UI kolejki T4/T5 + testy.',
       'A1': 'Propozycja: uruchomić tura A z promptem w AUDIT_AKK.md (run_id np. AKK-2026-05-28-A), wynik tylko fault CSV, P1 do DECISION_REGISTER.',
       'A4': 'Propozycja: arkusz AKK_faults — kolumny: run_id, krok, wymiar, opis, severity, status, owner; zamknięcie = poprawka w SSOT + status=fixed.'
     },
     lostEventNotes: '',
     verdict: 'hold',
-    amendmentsText: 'SSOT traktujemy jako hipotezę roboczą. Przed cutoverem domykamy inbound spoza Sortowni, idOid/deduplikację, nazewnictwo eventów i stres-testy edge caseów.',
+    amendmentsText: 'SSOT = hipoteza robocza z domkniętym modelem tożsamości (Resolver T1–T5). Przed cutoverem: wdrożenie Email Sync + Resolver, testy S1b, rekonsyliacja eventów (ADR #14).',
     signName: '',
     signDate: '2026-05-28'
   };
@@ -595,7 +600,7 @@
       id: '1', title: 'Decyzje strategiczne', time: '~5 min', critical: false,
       questions: [
         { id: '1.1', text: 'Na start robimy tylko CRM (leady), bez helpdesku?', hint: 'SSOT: Helpdesk poza MVP (Prawo 9)' },
-        { id: '1.2', text: 'Leady ze strony idą Sortownia → Twenty, nie przez julia362?', hint: 'SSOT: jedna ścieżka wejścia — adapter w Sortowni' },
+        { id: '1.2', text: 'Paid ze strony idzie Sortownia → Twenty; mail/telefon idzie Twenty + Identity Resolver (nie julia362)?', hint: 'IDENTITY_AND_INBOUND §5–6 — dwa modele wejścia' },
         { id: '1.3', text: 'Eventy do Google/Meta przez native webhook Twenty → Sortownia (nie workflow HTTP w Twenty)?', hint: 'Limit Pro: ~50 workflow credits/rok', explain: 'Twenty wysyła webhook do Sortowni (0 workflow credits). Sortownia tworzy zadania → Robot uruchamia Adaptery (Google/Meta). CRM nie gada bezpośrednio z platformami reklamowymi.' },
         { id: '1.4', text: 'Pakiet owocni-crm/ to nasze SSOT (nie legacy poza repo bez rekonsyliacji)?', hint: 'Root README + owocni-crm/README — routing dla LLM' }
       ]
@@ -615,8 +620,8 @@
       id: '3', title: 'Pola i campaignRejected', time: '~5 min', critical: false,
       questions: [
         { id: '3.1', text: 'Pole campaignRejected zostaje jako boolean (akcja/przycisk, nie osobny stage)?', hint: 'DATA_MODEL', explain: 'Potwierdzone przez sprzedaż: pole było realnie używane. Do ustalenia pozostaje nazwa biznesowa i UX przycisku w Twenty.' },
-        { id: '3.2', text: 'Każdy wie po co jest campaignRejected (opis pola w Twenty)?', hint: 'Prawo 3d' },
-        { id: '3.3', text: 'idOid tworzy tylko Sortownia, nie Twenty?', hint: 'Prawo 6' }
+        { id: '3.2', text: 'Pole campaignRejected w UI to „Odrzuć leada” z opisem o sygnale do kanałów reklamowych (≠ LOST)?', hint: 'DATA_MODEL.md — label UI; API name bez zmian', explain: 'Label: „Odrzuć leada”. Opis pola: „Informuje kanały reklamowe, że takich leadów nie szukamy. To nie to samo co przegrany deal (LOST).” API name pozostaje campaignRejected → rejected_lead.' },
+        { id: '3.3', text: 'id_oid mintuje Stape (Sortownia paid lub Resolver T3) — Twenty tylko projekcja, nie master tożsamości?', hint: 'IDENTITY_AND_INBOUND §1 + Prawo 6' }
       ]
     },
     {
@@ -632,8 +637,9 @@
       questions: [
         { id: '5.1', text: 'Twenty Pro ($9/user) wystarczy na start (audit log = git snapshoty)?', hint: 'ADR #6 otwarte', explain: 'Skrót: formalny audyt zmian wspieramy snapshotami/commitami w repo (co zmieniono, kiedy, dlaczego), jeśli plan nie daje pełnego audytu enterprise.' },
         { id: '5.2', text: 'Dwa workspace: sandbox + produkcja?', hint: 'ADR #7 — zamknięte', explain: 'Bez pełnej duplikacji GTM/GCP. Propozycja: w Sortowni rozdzielić po źródle — obecne kanały (formularz ze strony, generate_lead) = PROD jak dziś; zdarzenia z Twenty (webhook OUT) = SANDBOX → osobny arkusz Google Sheets (debug), bez wysyłki do Google/Meta prod.' },
-        { id: '5.3', text: 'julia362 wyłączamy w dniu cutoveru (twarda data)?', hint: 'CUTOVER_RUNBOOK', explain: 'Warunek: ADR #12 = domknięty inbound spoza Sortowni (kontakt@, telefon, ręczne leady, mail bezpośrednio na skrzynki zespołu np. studio@). ADR #13 = reguły id_oid i scalania cross-channel. Bez tego wyłączenie julia362 odetnie maile, które dziś idą przez IMAP watcher.' },
-        { id: '5.4', text: 'Bitrix24 (deale księgowe) poza tym projektem; po WON = ręczny SOP?', hint: 'ARCHITECTURE', explain: 'Ręczny SOP = manualny krok wg procedury (np. ręczne dodanie/przekazanie deala do Bitrix24), dopóki nie automatyzujemy tego odcinka.' }
+        { id: '5.3', text: 'julia362 wyłączamy w dniu cutoveru (twarda data)?', hint: 'CUTOVER_RUNBOOK', explain: 'Warunek: ADR #12 = Email Sync + Identity Resolver na kanałach mailowych (leads@, studio@, kontakt@…). ADR #13 = Resolver T1–T5 wdrożony i przetestowany (w tym T4 needs_review). Bez tego wyłączenie julia362 odetnie maile obsługiwane dziś przez IMAP watcher.' },
+        { id: '5.4', text: 'Bitrix24 (deale księgowe) poza tym projektem; po WON = ręczny SOP?', hint: 'ARCHITECTURE', explain: 'Ręczny SOP = manualny krok wg procedury (np. ręczne dodanie/przekazanie deala do Bitrix24), dopóki nie automatyzujemy tego odcinka.' },
+        { id: '5.5', text: 'Równoległy backup formularzy → Google Sheets (Make.com) zostaje niezależnie od Sortowni/Twenty?', hint: 'CRM_ARCHITECTURE §3.1 + STRESS_TEST S0', explain: 'Przy submit: dataLayer→GTM→Sortownia ORAZ sendToGoogleSheets→Make→Sheets (fire-and-forget). Cutover Twenty i wyłączenie julia362 tego nie dotyka. Nie usuwać przy refaktorze formularzy bez ADR.' }
       ]
     },
     {
@@ -644,16 +650,17 @@
           text: 'Czy mamy zamkniętą listę WSZYSTKICH kanałów wejścia leada (z triggerem idOid lub adnotacją „kanał-sierota”)?',
           hint: 'ADR #12 — inwentaryzacja kanałów',
           known: [
-            'Kanał kanoniczny: formularz → Sortownia → mint idOid → Twenty.',
-            'julia362 (legacy) nasłuchuje IMAP na 7 skrzynkach: copywriting@, pomoc@, studio@, marta@, gosia@, mariusz@, leads@.',
-            'Po przełączeniu na Sortownię jako główne źródło — łatwo założyć, że obsłużymy głównie maile „ze strony” (formularz → leads@), a nie każdy kanał mailowy.',
-            'W SSOT brak pełnej tabeli: co z mailem wprost na studio@ / marta@ / gosia@ itd.'
+            'IDENTITY_AND_INBOUND §5: zamknięta lista kanałów z pierwszym obserwatorem i tierem resolvera.',
+            'Paid: formularz → Sortownia → mint id_oid → Twenty (bez zmian).',
+            'Mail docelowo: Twenty Email Sync → Identity Resolver (T1–T4).',
+            'julia362 (legacy) = 7 skrzynek IMAP; auto-lead tylko leads@ INBOX.',
+            'studio@/marta@/gosia@ dziś: mail zapisany, bez auto-leada dla nowego klienta.'
           ],
           toLearn: [
-            'Pełna lista kanałów: paid, kontakt@, skrzynki handlowców (studio@, marta@…), telefon, polecenie, ręczne dodanie.',
-            'Dla każdego kanału: trigger idOid przez Sortownię LUB adnotacja „sierota” + konsekwencja.',
-            'Co się dzieje z mailem bezpośrednim na skrzynkę zespołu po wyłączeniu julia362.',
-            'Czy forward/alias (np. kontakt@ → leads@) jest udokumentowany na mail.owocni.pl.'
+            'Potwierdzić forward/alias kontakt@ na serwerze mail (nie na liście julia362).',
+            'Wdrożyć Email Sync na skrzynkach zespołu (studio@, marta@…) przed cutoverem.',
+            'Zweryfikować sekwencję sekundy zero: rekord Twenty → webhook → Resolver → id_oid.',
+            'Czy każdy kanał z §5 ma test PASS lub jawny stan needs_review (T4).'
           ]
         },
         {
@@ -661,15 +668,16 @@
           text: 'Dla maila na kontakt@ (poza paid flow): kto jest pierwszym obserwatorem i co dzieje się w sekundzie zero?',
           hint: 'ADR #12 — architektura wejścia mailowego',
           known: [
-            'julia362 NIE nasłuchuje kontakt@ wprost — watcher ma 7 innych skrzynek (m.in. leads@, studio@).',
-            'Auto-tworzenie leada w legacy (better-bitrix) = głównie leads@owocni.pl, folder INBOX.',
-            'kontakt@ może być tylko adresem formularza / forwardem — to trzeba potwierdzić na serwerze mail.',
-            'Email Sync leads@ w Twenty = głównie timeline, nie zastępuje pełnego inbound ADR #12.'
+            'SSOT docelowo: Twenty Email Sync = pierwszy obserwator maila → Identity Resolver.',
+            'julia362 NIE nasłuchuje kontakt@ — watcher ma 7 innych skrzynek.',
+            'Legacy auto-lead = głównie leads@ INBOX (better-bitrix + GPT).',
+            'Handlowiec przy T4 wybiera kandydata — nie przepisuje leada od zera (IDENTITY §6.2).'
           ],
           toLearn: [
-            'Potwierdzić reguły forward/alias dla kontakt@ (czy trafia do leads@ lub innej skrzynki z watchera).',
-            'Docelowy pierwszy obserwator kontakt@ po cutoverze (Sortownia vs Twenty vs ręcznie).',
-            'Sekwencja sekundy zero: kiedy powstaje rekord w Twenty i kiedy mintuje się idOid.'
+            'Potwierdzić reguły forward/alias dla kontakt@ (czy trafia do skrzynki z Email Sync).',
+            'Czas Email Sync (~5 min) vs oczekiwania handlowca — czy akceptowalne.',
+            'Sekwencja sekundy zero: mail → Person/Opportunity w Twenty → webhook → Resolver → id_oid.',
+            'Test kontakt@ end-to-end przed wyłączeniem julia362.'
           ]
         },
         {
@@ -677,10 +685,10 @@
           text: 'Czy mamy prosty test: ta sama osoba wpada 2 kanałami w krótkim odstępie (lub odwrotnej kolejności), a wynik to 1 idOid?',
           hint: 'STRESS_TEST_PLAN + ADR #13',
           known: [
-            'Jest S1: mail → potem telefon (sekwencyjnie), oczekiwany jeden byt + stabilne idOid.',
-            'W Sortowni działa waterfall resolve (_oid → email → phone → ga_client_id) i multi-key write.',
-            'W normalnym flow „najpierw jedno wejście, potem drugie” to powinno się sklejać poprawnie.',
-            'Nie mamy jeszcze prostego testu na przypadki graniczne (krótki odstęp, odwrotna kolejność kanałów).'
+            'STRESS_TEST_PLAN S1: mail → potem telefon (sekwencyjnie) — oczekiwany 1 id_oid.',
+            'Paid: Sortownia waterfall resolve (_oid → email → phone → ga_client_id) + multi-key write.',
+            'Nie-paid: Identity Resolver (macierz email×phone, T1–T5) po zapisie pól w Twenty.',
+            'Brak S1b: krótki odstęp / odwrotna kolejność kanałów — brak twardego PASS/FAIL.'
           ],
           toLearn: [
             'S1b (prosto): klient A wpada najpierw telefonem, po chwili mailem; potem odwracamy kolejność.',

@@ -45,11 +45,41 @@ Formularz owocni.pl
   Twenty: Person + Opportunity (NEW) + Note
 ```
 
-**Opcjonalnie (kontekst):** Twenty Email Sync IMAP `leads@owocni.pl` — timeline, nie tworzenie leada.
+**Opcjonalnie (kontekst):** Twenty Email Sync — pierwszy obserwator maili nie-paid → Identity Resolver (`IDENTITY_AND_INBOUND.md` §5–6).
 
 **Legacy (wyłączyć):** julia362 → better-bitrix → Supabase.
 
 **Cutover blocker:** inbound spoza kanonicznego flow (kontakt@, telefon, manual) — spec: `IDENTITY_AND_INBOUND.md`.
+
+### 3.1 Ścieżka równoległa / backup inbound (formularze ze strony)
+
+Migracja na Twenty **nie zastępuje** równoległego zapisu leadów z formularzy. Przy submit formularza (np. `/kontakt`) działają **niezależne** ścieżki:
+
+```
+Formularz owocni.pl (submit)
+       │
+       ├──► dataLayer.push(generate_lead) ──► GTM/sGTM ──► Sortownia ──► (docelowo Twenty)
+       │
+       ├──► Make.com webhook ──► mail / powiadomienie zespołu
+       │
+       └──► sendToGoogleSheets() ──► Make.com ──► Google Sheets  (backup, fire-and-forget)
+```
+
+| Element | Gdzie w kodzie | Rola |
+|---------|----------------|------|
+| `sendToGoogleSheets` | repo `AdrianKrauza/owocni` — `packages/ui/src/form/utils/sendToGoogleSheets.ts` | Backup zapisu PII leada do arkusza |
+| Make webhook (Sheets) | ten sam repo — m.in. `form.tsx`, `sendMail.ts` | Most do Google Sheets |
+| `dataLayer` → Sortownia | GTM/sGTM | Ścieżka kanoniczna orkiestracji |
+| Make webhook (mail) | `form.tsx` | Backup powiadomienia gdy Stape/GTM padnie |
+
+**Zasady:**
+
+1. **Nie usuwać** `sendToGoogleSheets` przy refaktorze formularzy pod Twenty — wymaga ADR.
+2. Błąd Sheets **nie blokuje** submitu (celowo — użytkownik widzi „dziękujemy”).
+3. To **nie jest** ten sam arkusz co **safe sink sandboxu outbound** z Twenty (ADR #7) — inbound backup ≠ debug webhooków CRM.
+4. Cutover Twenty / wyłączenie julia362 **nie dotyka** tej ścieżki (strona → Make → Sheets jest niezależna od CRM).
+
+**Weryfikacja przed cutoverem:** scenariusz **S0** w `STRESS_TEST_PLAN.md`.
 
 ---
 
