@@ -47,14 +47,14 @@ Wykryć **tylko niespójności** (fault) między dokumentami SSOT i — w turach
 | 9 | `STAGE_MAPPING.md` |
 | 10 | `STRESS_TEST_PLAN.md` |
 | 11 | `SALES_OPS_REQUIREMENTS.md` (tylko gdy dotyczy własności/reguł MVP) |
-| 12 | **Dokumentacja orkiestracji Sortowni** (poza pakietem — pełna ścieżka w runbooku) |
+| 12 | **[Dokumentacja orkiestracji Sortowni](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an)** (Google Docs) |
 
 ### Opcjonalne ground truth (tura B: krok 9, weryfikacja styku)
 
 | Źródło | Po co |
 |--------|--------|
-| `SORTOWNIA_V2_POPRAWIONY.js` (repo aplikacji) | Faktyczny resolve, multi-key write, normalizacja PII |
-| `GoogleCloudRobot.js` | task_queue, adaptery, retry |
+| [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js) | Faktyczny resolve, multi-key write, normalizacja PII |
+| [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js) | task_queue, adaptery, retry |
 | `docs.twenty.com` / llms.txt | Krok 8 |
 | Dokumentacja Stape Store / sGTM | Krok 9 |
 

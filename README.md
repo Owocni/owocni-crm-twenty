@@ -47,7 +47,9 @@ Pakiet dokumentacji migracji CRM OWOCNI.PL → **Twenty CRM** + integracja ze **
 | POC vs produkcja | `POC_MAPPING.md` | |
 | Wymagania sprzedaży (MVP vs później) | `SALES_OPS_REQUIREMENTS.md` | |
 | Fakty platformowe Twenty | `ops/OPS_NOTES.md` | |
-| Pełny kontrakt eventów Sortowni (pola JSON) | Dokumentacja orkiestracji **poza repo** | Ten pakiet = warstwa CRM |
+| Pełny kontrakt eventów, adaptery, task queue | [Dokumentacja orkiestracji (Google Docs)](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) | Ten pakiet = warstwa CRM |
+| Kod Sortowni (paid, sGTM) | [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js) | Resolve, multi-key write, generate_lead |
+| Kod Robota (GCP, adaptery) | [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js) | task_queue, adaptery platform, retry |
 
 ### NIE używać jako SSOT (legacy / archiwum)
 
@@ -149,6 +151,11 @@ Pełna lista i tabela zadań: **`owocni-crm/README.md`**.
 
 ## Zewnętrzne SSOT (poza tym repo)
 
-- **Orkiestracja Sortowni** — pełne definicje eventów, adaptery, Robot (rekonsyliacja ADR #14)
-- **Twenty natywne API** — `docs.twenty.com` (terminologia platformy)
-- **Kod Sortowni (paid):** `SORTOWNIA_V2_POPRAWIONY.js` (poza tym pakietem GitHub)
+| Zasób | Link | Rola |
+|-------|------|------|
+| **Dokumentacja orkiestracji** | [Google Docs — Orkiestracja (konfiguracja techniczna)](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) | Pełne definicje eventów, adaptery, routing, konfiguracja Stape/Robot |
+| **Sortownia (paid, sGTM)** | [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js) | Etap A: oid_init, generate_lead, waterfall resolve, multi-key write |
+| **Robot (GCP)** | [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js) | Wykonanie tasków z kolejki Sortowni → adaptery (Google/Meta/CRM itd.) |
+| **Twenty natywne API** | [docs.twenty.com](https://docs.twenty.com) | Terminologia platformy, GraphQL, webhooki natywne |
+
+**Dla LLM:** warstwa CRM = ten repo (`owocni-crm/`). Warstwa orkiestracji (eventy JSON, adaptery, Robot) = Google Docs + kod w repo `AdrianKrauza/owocni`. Przy konflikcie nazw eventów: `owocni-crm/EVENT_CONTRACT.md` wygrywa dla CRM; rekonsyliacja z docs orkiestracji = ADR #14.

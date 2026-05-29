@@ -4,7 +4,11 @@
 **Wersja:** 2026-05-28  
 **Platforma:** Twenty CLOUD + Stape (Sortownia / Identity Resolver / Robot)  
 **Blokuje cutover:** ADR #12, ADR #13  
-**Kod Sortowni (paid):** `owocni strona/owocni/SORTOWNIA_V2_POPRAWIONY.js` (Etap A, sGTM)
+**Kod (repo `AdrianKrauza/owocni`):**
+- Sortownia (paid, sGTM): [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js)
+- Robot (GCP): [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js)
+
+**Orkiestracja (SSOT poza tym pakietem):** [Google Docs — konfiguracja techniczna](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an)
 
 **Dla LLM:** czytaj sekcje 1–6 (zasady + macierz T1–T5 + kanały). Sekcja 8 = backlog implementacji.  
 **Dla człowieka:** sekcja 7 = „dziś vs docelowo” w prostym języku.

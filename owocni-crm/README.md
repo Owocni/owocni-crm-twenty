@@ -50,7 +50,9 @@
 | Co z POC (webhook.site, lead_won)? | `POC_MAPPING.md` | `EVENT_CONTRACT.md` |
 | Review SSOT (~30 min) | `CHECKLIST_REVIEW.html` | — (single source of truth) |
 | Helpdesk w MVP? | `CRM_CONSTITUTION.md` (Prawo 9) | — **poza MVP** |
-| SSOT orkiestracji (Sortownia, Robot, Routing) | Dokumentacja orkiestracji (poza tym pakietem) | `CRM_ARCHITECTURE_CURRENT.md` §7 |
+| SSOT orkiestracji (Sortownia, Robot, Routing) | [Orkiestracja — Google Docs](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) | `CRM_ARCHITECTURE_CURRENT.md` §7 |
+| Kod Sortowni (paid) | [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js) | `IDENTITY_AND_INBOUND.md` §8 |
+| Kod Robota (GCP) | [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js) | `AUDIT_AKK.md` krok 9 |
 
 ---
 
@@ -64,8 +66,8 @@
 
 ## Co ten pakiet NIE jest
 
-- Nie zastępuje `docs.twenty.com/llms.txt` (terminy natywne Twenty).
-- Nie jest pełnym Event Contract SSOT orkiestracji Sortowni (ten żyje w dokumentacji orkiestracji).
+- Nie zastępuje [docs.twenty.com](https://docs.twenty.com) (terminy natywne Twenty).
+- Nie jest pełnym Event Contract SSOT orkiestracji — patrz [dokumentacja orkiestracji (Google Docs)](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) oraz kod: [Sortownia](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js), [Robot](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js).
 - Nie jest automatycznym eksportem z Twenty UI — aktualizacja ręczna przy każdej zmianie systemu (Prawo 1).
 
 ## Instrukcja dla LLM
