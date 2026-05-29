@@ -25,13 +25,14 @@ Mapowanie techniczne: `STAGE_MAPPING.md`.
 | 3 | Odpowiedzi mailowe przez Twenty (Email Sync Etap 1.2) | P0 | `leads@`, `studio@`, skrzynki handlowców |
 | 4 | Szkolenie handlowców (Twenty) | P0 | Zaplanować przed T-0 |
 
-### Etap 2+ (nie blokuje cutover jeśli zaakceptowane)
+### Etap 2+ (po uruchomieniu — better-bitrix tego dziś nie ma → nie blokuje cutover)
 
 - Wysyłka maila na wskazaną godzinę (schedule)
 - Automatyczna wysyłka SMS wraz z mailem
+- AI podsumowania wątków mailowych
 - Wyszukiwanie po fragmencie treści maila
 - Round-robin, limity nieodpisanych, urlopy
-- Liczniki leadów (dzienne/tygodniowe) — sekcja 6 poniżej jako backlog raportowy
+- Liczniki leadów (dzienne/tygodniowe)
 
 ---
 
