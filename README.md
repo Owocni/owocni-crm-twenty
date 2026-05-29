@@ -2,8 +2,8 @@
 
 Pakiet dokumentacji migracji CRM OWOCNI.PL → **Twenty CRM** + integracja ze **Sortownią (Stape)**.
 
-**Status:** Pre-cutover — dokumentacja SSOT aktywna, cutover wstrzymany do domknięcia ADR #12–#14.  
-**Last updated:** 2026-05-28
+**Status:** Pre-cutover — dokumentacja SSOT aktywna (parzystość BB, tożsamość, prefiksy pól); cutover wstrzymany do domknięcia ADR #12–#14 + testy.  
+**Last updated:** 2026-05-29
 
 ---
 
