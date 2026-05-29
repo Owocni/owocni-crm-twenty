@@ -55,4 +55,4 @@ POC **nie jest** architekturą produkcyjną outbound/inbound — wymaga przepisa
 - [ ] Adapter `inbound:twenty_webhook` w Sortowni
 - [ ] Workflow POC dezaktywowane lub usunięte
 - [ ] Smoke testy §7 `EVENT_CONTRACT.md` — 5/5 PASS
-- [ ] `EVENT_CONTRACT_OWOCNI.md` oznaczony legacy w README
+- [x] Legacy kontrakt usunięty; root `README.md` + `EVENT_CONTRACT.md` wskazują SSOT

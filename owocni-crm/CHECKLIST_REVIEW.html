@@ -442,7 +442,7 @@
     <h2>Decyzje z review 2026-05-28 (już zapadłe / do domknięcia)</h2>
     <p>Werdykt ogólny: <strong>Wstrzymujemy cutover</strong> do czasu domknięcia P1 poniżej.</p>
     <ul>
-      <li><strong>ADR #12</strong> — inbound spoza Sortowni (`kontakt@`, telefon, manual): spec w `INBOUND_EDGE_CASES.md`</li>
+      <li><strong>ADR #12</strong> — inbound spoza Sortowni (`kontakt@`, telefon, manual): spec w `IDENTITY_AND_INBOUND.md`</li>
       <li><strong>ADR #13</strong> — ownership `idOid` + deduplikacja cross-channel (mail + telefon ten sam klient)</li>
       <li><strong>ADR #14</strong> — jedna nomenklatura eventów (`purchase`, nie `closed_won`/`WON` jako event_name)</li>
       <li><strong>ADR #15</strong> — rozdział MVP vs Etap 2/3 (telefony, transkrypty, liczniki, auto-odpowiedzi)</li>
@@ -525,14 +525,14 @@
 
 <script>
 (function () {
-  const STORAGE_KEY = 'owocni-crm-review-ssot-v6';
+  const STORAGE_KEY = 'owocni-crm-review-ssot-v7';
 
   // Wynik review = interpretacja biznesowa (nie to samo co przycisk Tak/Nie/Do domknięcia)
   const REVIEW_OUTCOMES = {
     '1.1': { stance: 'approved', label: 'Zatwierdzone — helpdesk poza MVP', adrs: [] },
     '1.2': { stance: 'conditional', label: 'Tak kierunek Sortownia→Twenty, ale cutover dopiero po inbound spoza Sortowni', adrs: ['#12', '#13'] },
     '1.3': { stance: 'approved', label: 'Zatwierdzone — Twenty webhook tylko do Sortowni; dalej Robot→Adaptery (nie bezpośrednio z CRM)', adrs: [] },
-    '1.4': { stance: 'conditional', label: 'Pakiet 7 plików = drogowskaz roboczy, nie finalne SSOT bez stres-testów', adrs: ['#14', '#15'] },
+    '1.4': { stance: 'approved', label: 'SSOT w owocni-crm/ + root README z routingiem LLM; twenty/ = archiwum POC', adrs: ['#14'] },
     '2.1': { stance: 'approved', label: 'Zatwierdzone: won→purchase; posprzątać legacy nazwy w docs orkiestracji', adrs: ['#14'] },
     '2.2': { stance: 'approved', label: 'Zatwierdzone: rejected_lead tylko przy campaignRejected=true', adrs: ['#14'] },
     '2.3': { stance: 'approved', label: 'Zatwierdzone — LOST bez eventu reklamowego', adrs: [] },
@@ -551,7 +551,7 @@
     'I1': { stance: 'open', label: 'Brak zamkniętej matrycy wszystkich kanałów z triggerem idOid lub adnotacją sieroty', adrs: ['#12'] },
     'I2': { stance: 'open', label: 'kontakt@ nie jest na liście IMAP julia362; wymaga potwierdzenia forwardu i docelowej ścieżki po wyłączeniu legacy', adrs: ['#12'] },
     'I3': { stance: 'open', label: 'Mechanizm resolve jest w Sortowni, ale brak prostego testu „krótki odstęp / odwrotna kolejność kanałów” z jasnym PASS/FAIL', adrs: ['#13'] },
-    'I4': { stance: 'open', label: 'idOid nadaje Sortownia także dla manuali; otwarty jest konflikt 2 profili/2 idOid i reguła scalenia', adrs: ['#13'] },
+    'I4': { stance: 'open', label: 'SSOT: Identity Resolver T1–T5 w IDENTITY_AND_INBOUND; do wdrożenia i testów konfliktu T4/T5', adrs: ['#13'] },
     'A1': { stance: 'open', label: 'Procedura AKK jest w AUDIT_AKK.md; pierwsza tura A (kroki 1–7) jeszcze nie uruchomiona', adrs: ['#14', '#9'] },
     'A2': { stance: 'approved', label: 'Zaakceptowane: pusty wynik AKK ≠ zielone światło na cutover (meta-pytanie = NIE)', adrs: [] },
     'A3': { stance: 'open', label: 'AKK 8–9 (Twenty + Stape) = preflight po P1; AUDIT_MIGRACJA dopiero przed dry-run importu', adrs: ['#16', '#10', '#11'] },
@@ -570,7 +570,7 @@
     },
     notes: {
       '1.2': 'Czarna dziura: kontakt@, telefon, inne kanały bez pełnego przejścia przez Sortownię.',
-      '1.4': '7 plików = hipoteza robocza; przed cutoverem: stres-testy + rekonsyliacja z docs orkiestracji.',
+      '1.4': 'Katalog owocni-crm/ = SSOT; twenty/ = archiwum POC. Root README ma sekcję dla LLM: co czytać, czego nie używać.',
       '3.2': 'Nazwa pola w Twenty ma być biznesowa (jak w Bitrix), nie techniczna „Campaign Rejected”.',
       '3.3': 'Najtrudniejszy obszar: nadawanie idOid, deduplikacja, edge case mail+telefon.',
       '5.2': 'Propozycja wdrożenia: przerobić Sortownię — ruch z obecnych kanałów (formularz/web, generate_lead) zostaje PROD bez zmian; ruch z Twenty (webhook OUT, CRM) idzie jako SANDBOX i zapisuje się do osobnego debugowego arkusza Google Sheets (nie do adapterów reklamowych).',
@@ -579,7 +579,7 @@
       'I2': 'julia362 nasłuchuje 7 skrzynek (m.in. leads@, studio@, marta@…) — NIE kontakt@ wprost. Auto-lead w legacy = głównie leads@ INBOX. kontakt@: sprawdzić forward na serwerze mail.',
       '5.4': 'Po WON na razie manual; później m.in. uzupełnianie danych firmy po NIP.',
       'I3': 'Sortownia ma resolve (_oid→email→phone→ga_client_id) i multi-key write, ale nie ma prostego testu: ta sama osoba wpada 2 kanałami w krótkim odstępie / odwrotnej kolejności. Propozycja: dopisać S1b (telefon→mail i mail→telefon), po każdym kroku snapshot identity_map i twardy werdykt PASS/FAIL.',
-      'I4': 'Ręczne leady też dostają idOid przez Sortownię; do domknięcia zostaje konflikt, gdy email i telefon wskazują dwa różne istniejące profile. Propozycja: reguła merge: (1) _oid ma najwyższy priorytet, (2) gdy email+phone wskazują ten sam profil -> merge auto, (3) gdy wskazują różne profile -> status conflict + kolejka manual review + zapis decyzji merge do audytu.',
+      'I4': 'SSOT: Identity Resolver (osobny handler Stape) T1–T5 — auto tylko przy 0/1 kandydacie; T4 needs_review gdy email→profil A, phone→profil B; T5 merge_review_critical dla dwóch paid id_oid. Sortownia paid NIE robi pełnego cross-channel merge. Do domknięcia: wdrożenie resolvera + UI kolejki T4/T5 + testy.',
       'A1': 'Propozycja: uruchomić tura A z promptem w AUDIT_AKK.md (run_id np. AKK-2026-05-28-A), wynik tylko fault CSV, P1 do DECISION_REGISTER.',
       'A4': 'Propozycja: arkusz AKK_faults — kolumny: run_id, krok, wymiar, opis, severity, status, owner; zamknięcie = poprawka w SSOT + status=fixed.'
     },
@@ -597,7 +597,7 @@
         { id: '1.1', text: 'Na start robimy tylko CRM (leady), bez helpdesku?', hint: 'SSOT: Helpdesk poza MVP (Prawo 9)' },
         { id: '1.2', text: 'Leady ze strony idą Sortownia → Twenty, nie przez julia362?', hint: 'SSOT: jedna ścieżka wejścia — adapter w Sortowni' },
         { id: '1.3', text: 'Eventy do Google/Meta przez native webhook Twenty → Sortownia (nie workflow HTTP w Twenty)?', hint: 'Limit Pro: ~50 workflow credits/rok', explain: 'Twenty wysyła webhook do Sortowni (0 workflow credits). Sortownia tworzy zadania → Robot uruchamia Adaptery (Google/Meta). CRM nie gada bezpośrednio z platformami reklamowymi.' },
-        { id: '1.4', text: 'Pakiet owocni-crm/ (7 plików) to nasze jedyne SSOT?', hint: 'Nie rozproszone legacy bez rekonsyliacji' }
+        { id: '1.4', text: 'Pakiet owocni-crm/ to nasze SSOT (nie legacy poza repo bez rekonsyliacji)?', hint: 'Root README + owocni-crm/README — routing dla LLM' }
       ]
     },
     {
@@ -691,20 +691,22 @@
         },
         {
           id: 'I4',
-          text: 'Czy mamy deterministyczną regułę scalania cross-channel (klucz + adapter), żeby uniknąć duplikatów?',
-          hint: 'ADR #13 — deduplikacja i merge',
+          text: 'Czy mamy deterministyczną regułę tożsamości cross-channel (Identity Resolver T1–T5), żeby uniknąć duplikatów?',
+          hint: 'IDENTITY_AND_INBOUND §3–4 + ADR #13',
           known: [
-            'Zasada: idOid mintuje tylko Sortownia (nie Twenty).',
-            'Ręcznie dodany lead też wpada na resolve w Sortowni, więc źródło idOid pozostaje jedno.',
-            'W szkicu: deduplikacja po email/telefon + sygnał manual merge.',
-            'To jest oznaczone jako najtrudniejsza część review.'
+            'SSOT: Identity Resolver (osobny handler Stape) — nie pełny silnik merge w Sortowni paid.',
+            'T1/T2: auto_link gdy email i/lub phone trafia w dokładnie 1 id_oid (T2 = oba w ten sam profil).',
+            'T3: auto_mint gdy brak trafienia email i phone — nowy id_oid.',
+            'T4: needs_review gdy email→profil A, phone→profil B lub ≥2 kandydatów — bez auto-merge.',
+            'T5: merge_review_critical gdy łączenie dotyka dwóch paid id_oid z sygnałem reklamowym.',
+            'id_oid mintuje Stape (Profil Klienta); Twenty = projekcja, nie master tożsamości.'
           ],
           toLearn: [
-            'Deterministyczny klucz merge (email? telefon? oba? priorytet kanału?).',
-            'Nazwany proces/adapter (np. system:merge_oid) i owner.',
-            'Reguła konfliktu: co robimy, gdy email i telefon trafiają w dwa różne istniejące profile (2 idOid).',
-            'Scenariusze: mail → telefon → formularz w odstępie czasu (nie tylko równolegle).',
-            'Propozycja wdrożeniowa: status conflict + manual review queue + audyt decyzji merge (kto/kiedy/dlaczego).'
+            'Wdrożenie handlera resolvera (webhook Twenty → Stape) i triggerów na zapis email/phone.',
+            'UI kolejki T4/T5 w Twenty (flaga needs_review, wybór z kandydatów — nie dowolny merge).',
+            'Testy macierzy email×phone (IDENTITY_AND_INBOUND §4): ten sam profil, różne profile, 0/0 mint.',
+            'Audyt decyzji merge: kto/kiedy/dlaczego przy T4/T5.',
+            'S1b w STRESS_TEST_PLAN: krótki odstęp / odwrotna kolejność kanałów → zawsze 1 id_oid lub jawny T4.'
           ]
         }
       ]

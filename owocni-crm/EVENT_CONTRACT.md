@@ -3,7 +3,7 @@
 **Wersja:** 1.0 (SSOT OWOCNI CRM)  
 **Data:** 2026-05-28  
 **Synchronizacja:** `DATA_MODEL.md`, SSOT orkiestracji Sortowni  
-**Zastępuje (legacy):** `../twenty/EVENT_CONTRACT_OWOCNI.md` — nie używać jako SSOT bez rekonsyliacji
+**Legacy:** wcześniejsze wersje kontraktu (`EVENT_CONTRACT_OWOCNI*.md`) **usunięte z repo** — ten plik jest jedynym SSOT warstwy CRM
 
 ---
 
@@ -99,7 +99,7 @@ Formularz → Sortownia `generate_lead` → adapter `crm:twenty_create_lead` →
 
 Szczegóły: `CRM_ARCHITECTURE_CURRENT.md` §5.1.
 
-**Uwaga po review (2026-05-28):** inbound spoza Sortowni (np. `kontakt@owocni.pl`, telefon, ręczne utworzenie) wymaga osobnego ADR przed cutoverem (`DECISION_REGISTER` #12, #13).
+**Uwaga po review (2026-05-28):** inbound spoza Sortowni — spec: `IDENTITY_AND_INBOUND.md` (`DECISION_REGISTER` #12, #13).
 
 ---
 

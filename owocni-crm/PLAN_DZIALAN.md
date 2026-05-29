@@ -28,7 +28,7 @@
 
 | # | Zadanie | Uwagi |
 |---|---------|-------|
-| B1 | Oznaczyć `twenty/EVENT_CONTRACT_OWOCNI.md` jako **legacy / do zastąpienia** przez `owocni-crm/EVENT_CONTRACT.md` | link w README |
+| B1 | Legacy kontrakt usunięty; SSOT = `owocni-crm/EVENT_CONTRACT.md` + routing w root `README.md` | **done** |
 | B2 | Zarchiwizować snapshoty POC jako dowód Fazy 1, nie jako SSOT | `twenty/snapshots/` bez zmian |
 | B3 | Weryfikacja z właścicielem: kryteria stage'ów (ADR #5) | wymaga handlowców |
 | B4 | Preflight POC: native webhook payload (`data.before`?) | Decyzja #11 |

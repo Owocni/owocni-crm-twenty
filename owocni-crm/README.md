@@ -18,7 +18,7 @@
 7. Jak przeprowadzić cutover → `CUTOVER_RUNBOOK.md`.
 8. Fakty platformowe Twenty / incydenty → `ops/OPS_NOTES.md`.
 9. Import historyczny → `migration/README.md`.
-10. Edge cases inbound (`kontakt@`, telefon, manual) → `INBOUND_EDGE_CASES.md`.
+10. Tożsamość klienta + inbound (kanały, resolver T1–T5) → `IDENTITY_AND_INBOUND.md`.
 11. Wymagania operacyjne sprzedaży (MVP vs Etap 2/3) → `SALES_OPS_REQUIREMENTS.md`.
 12. Mapowanie stage i nomenklatury eventów → `STAGE_MAPPING.md`.
 13. Plan stres-testów (Red Team) przed cutoverem → `STRESS_TEST_PLAN.md`.
@@ -40,7 +40,7 @@
 | Dlaczego nie Workflow HTTP do Sortowni? | `ops/OPS_NOTES.md` (Twenty Verified Facts) | `CRM_ARCHITECTURE_CURRENT.md` §8 |
 | Jak wpadają leady ze strony? | `CRM_ARCHITECTURE_CURRENT.md` §5.1 | `EVENT_CONTRACT.md` §3 |
 | Co z julia362? | `CRM_ARCHITECTURE_CURRENT.md` §2 | `CUTOVER_RUNBOOK.md` krok 5 |
-| Co z inbound spoza Sortowni? | `INBOUND_EDGE_CASES.md` | `DECISION_REGISTER.md` #12/#13 |
+| Tożsamość, id_oid, inbound (mail/telefon/formularz)? | `IDENTITY_AND_INBOUND.md` | `DECISION_REGISTER.md` #12/#13 |
 | Jak mapować SQL/QUALIFIED/WON i nazwy eventów? | `STAGE_MAPPING.md` | `EVENT_CONTRACT.md` |
 | Jakie są wymagania sprzedażowe poza rdzeniem migracji? | `SALES_OPS_REQUIREMENTS.md` | `DECISION_REGISTER.md` #15 |
 | Jak testujemy edge case'y przed cutoverem? | `STRESS_TEST_PLAN.md` | `CUTOVER_RUNBOOK.md` |
@@ -68,10 +68,21 @@
 - Nie jest pełnym Event Contract SSOT orkiestracji Sortowni (ten żyje w dokumentacji orkiestracji).
 - Nie jest automatycznym eksportem z Twenty UI — aktualizacja ręczna przy każdej zmianie systemu (Prawo 1).
 
-## Legacy (do rekonsyliacji, nie SSOT)
+## Instrukcja dla LLM
+
+**Entry point:** `../README.md` (sekcja „Instrukcja dla LLM / agentów AI”).
+
+**Zasada:** Czytaj pliki z tego katalogu (`owocni-crm/`) jako SSOT. Folder `../twenty/` = archiwum POC — nie nadpisuj decyzji z `EVENT_CONTRACT.md` ani `IDENTITY_AND_INBOUND.md` danymi ze snapshotów.
+
+**Priorytet przy konflikcie:** `IDENTITY_AND_INBOUND.md` > `EVENT_CONTRACT.md` > `CRM_ARCHITECTURE_CURRENT.md` > `DECISION_REGISTER.md` (otwarte ADR) > `../twenty/*`.
+
+---
+
+## Legacy / archiwum (nie SSOT)
 
 | Plik | Status |
 |------|--------|
-| `../twenty/EVENT_CONTRACT_OWOCNI.md` | Legacy — zastępowany przez `EVENT_CONTRACT.md` |
-| `../twenty/analiza-migracja-twenty.html` | Analiza operacyjna — zaktualizowana pod SSOT |
-| `../twenty/snapshots/` | Dowód POC Fazy 1 — nie SSOT |
+| `../twenty/snapshots/` | POC 25–26.05 — `lead_won` itd. przestarzałe; patrz `../twenty/snapshots/README.md` |
+| `../twenty/analiza-migracja-twenty.html` | Analiza operacyjna — rekonsyliować z plikami tutaj |
+| `../twenty/OWOCNI_CRM_fundamenty (1).md` | Materiał źródłowy szefa |
+| Usunięte `EVENT_CONTRACT_OWOCNI*.md` | Zastąpione przez `EVENT_CONTRACT.md` w tym katalogu |

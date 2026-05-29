@@ -21,8 +21,8 @@
 | 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
 | 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Owner Sortowni | **open** |
 | 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Developer | **open** — POC test |
-| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** — czarna dziura |
-| 13 | idOid ownership i deduplikacja cross-channel | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** — edge cases |
+| 12 | Inbound spoza Sortowni (kontakt@, telefon, manual, Email Sync) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Owner Sortowni | **open** — spec: `IDENTITY_AND_INBOUND.md` |
+| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Właściciel + Developer | **open** — spec: `IDENTITY_AND_INBOUND.md` |
 | 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `WON`/`closed_won`) | Semantyczna | **cutover** | **ADR** | 4 | Owner Sortowni | **open** — rekonsyliacja nazewnictwa |
 | 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **open** |
 | 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Właściciel + Developer | **open** |

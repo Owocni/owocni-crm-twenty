@@ -43,7 +43,7 @@ Wykryć **tylko niespójności** (fault) między dokumentami SSOT i — w turach
 | 5 | `DECISION_REGISTER.md` |
 | 6 | `CUTOVER_RUNBOOK.md` |
 | 7 | `POC_MAPPING.md` |
-| 8 | `INBOUND_EDGE_CASES.md` |
+| 8 | `IDENTITY_AND_INBOUND.md` |
 | 9 | `STAGE_MAPPING.md` |
 | 10 | `STRESS_TEST_PLAN.md` |
 | 11 | `SALES_OPS_REQUIREMENTS.md` (tylko gdy dotyczy własności/reguł MVP) |
@@ -200,7 +200,7 @@ Nie pokrywa m.in.:
 | Konflikt 2× `id_oid` (email vs phone → 2 profile) | ADR #13, reguła merge + manual queue |
 | Import masowy bez fałszywych triggerów | `AUDIT_MIGRACJA.md` krok 4 |
 | Funkcje handlowca dnia po cutoverze | `SALES_OPS_REQUIREMENTS.md`, ADR #15 |
-| Ludzki SOP (`kontakt@`, ręczny lead) | `INBOUND_EDGE_CASES.md` |
+| Ludzki SOP (`kontakt@`, ręczny lead) | `IDENTITY_AND_INBOUND.md` |
 
 **Wniosek operacyjny:** zielone światło na cutover wymaga: **AKK fault=0 (P1)** + **stres-testy PASS** + **P1 ADR zamknięte** + (opcjonalnie) **Audyt Migracji** przed importem.
 

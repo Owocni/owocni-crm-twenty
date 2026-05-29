@@ -39,7 +39,7 @@ Wykryć faulty w przejściu **źródło (Bitrix / Supabase legacy)** → **Twent
 
 - Stan źródłowy: Bitrix / Supabase (eksport, opis pól, stage Kanban)
 - Model docelowy: `DATA_MODEL.md`, Twenty 2.8.0 schema
-- Sortownia: reguły `id_oid` w Profilu Klienta (`INBOUND_EDGE_CASES.md`, ADR #13)
+- Sortownia: reguły `id_oid` w Profilu Klienta (`IDENTITY_AND_INBOUND.md`, ADR #13)
 - `CUTOVER_RUNBOOK.md`, `migration/README.md`
 
 ---
