@@ -1,110 +1,187 @@
-# DECISION_REGISTER — decyzje otwarte i ADR
+---
+doc_id: DECISION_REGISTER
+title: "DECISION_REGISTER — rejestr decyzji (ADR-light), brama cutoveru"
+layer: core_ssot
+status: active
+edit_scope: content_and_structure
+owner: "Właściciel (biznes) / Dawid (techniczny)"
+last_verified: 2026-05-31
+recheck_trigger: "nowa decyzja / zmiana statusu decyzji / zamknięcie blokera cutoveru"
+default_trust: D:CORE
+related:
+  - CRM_CONSTITUTION
+  - EVENT_CONTRACT
+  - IDENTITY_AND_INBOUND
+  - runbooks/IMPLEMENTATION_PLAN
+---
 
-**Last updated:** 2026-05-29
+# DECISION_REGISTER — rejestr decyzji i brama cutoveru
 
-**Reguła:** Dopóki pozycja **ADR** z `Blocks=cutover` ma status **open**, cutover **nie startuje**.
+## 0. LLM QUICK ENTRY
+
+**Ten plik decyduje o:** statusie decyzji architektonicznych (ADR-light inline); które decyzje są otwartymi blokerami cutoveru; indeksie decyzji zamkniętych z dowodem; bramie cutoveru. Rozróżnia `decision_status` (czy zdecydowano) od `implementation_status` (czy wdrożono).
+
+**Ten plik NIE decyduje o:** zadaniach wykonawczych (→ `runbooks/IMPLEMENTATION_PLAN.md`); mechanice domenowej (→ pliki domenowe).
+
+**Zawsze czytaj razem z:** `runbooks/IMPLEMENTATION_PLAN.md` (MUST-PASS gates), pliki domenowe wskazane w evidence_source.
+
+**Najgroźniejszy błąd:** oznaczyć decyzję jako closed bez `evidence_source` (= NOT closed); albo pomylić „zdecydowano" z „wdrożono"; albo naruszyć legendę 3 osi faz.
+
+**Przy konflikcie:** status decyzji — ten plik (bije pliki domenowe co do tego, CZY rzecz jest rozstrzygnięta). Mechanika rzeczy → plik domenowy.
+
+**Zmiana wymaga:** zgody właściciela; reopen decyzji closed wymaga jawnej REWIZJI z powodem.
 
 ---
 
-## Sekcja A — Open decisions
+## 1. NEGATIVE RULES
 
-| # | Decyzja | Klasa | Blocks | Type | Faza | Kto | Status |
-|---|---------|-------|--------|------|------|-----|--------|
-| 1 | Konwencja nazw pól (camelCase, prefiks id/biz) | Strukturalna | none | known-fact | 2 | — | **closed** |
-| 2 | Model obiektów (Opportunity/Person/Company/Note) | Strukturalna | none | known-fact | 2 | — | **closed** (POC) |
-| 3 | idOid unique + null tolerance | Strukturalna | step | preflight | 2 | Dawid | **open** — sandbox test |
-| 4 | Ingress kanoniczny: crm:twenty_create_lead | Strukturalna | step | impl. standard | 3 | Dawid | **open** — implementacja Sortowni |
-| 5 | Kryteria stage'ów + mapowanie eventów | Semantyczna | **cutover** | **ADR** | 4 | Właściciel | **closed** (plan) — szkolenie Twenty przed cutover |
-| 6 | Twenty Pro vs Organization | Semantyczna+$$ | **cutover** | **ADR** | 4 | Właściciel | **closed** — **Twenty Pro** na start (2026-05-28) |
-| 7 | Sandbox + prod (bez duplikacji całego GTM/GCP) | Proceduralna | cutover | ADR | 5 | Właściciel | **closed** — env-guard + safe sink |
-| 8 | Runbook cutover (data, rollback) | Proceduralna | cutover | ADR | 5 | Właściciel | **open** — data po testach + parzycie BB |
-| 9 | Rekonsyliacja docs po cutoverze | Procedurowa | step | impl. standard | 5 | Właściciel | **open** |
-| 10 | Routing SSOT + webhook adapter Sortowni | Semantyczna | cutover | ADR | 4 | Dawid | **open** (impl.) |
-| 11 | Native webhook payload (data.before?) | Strukturalna | step | preflight | 4 | Dawid | **open** — 1 test sandbox |
-| 12 | Inbound spoza Sortowni (Email Sync, telefon, manual) | Semantyczna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §5.1; `kontakt@` nie obsługiwana; Email Sync Etap 1.2 |
-| 13 | idOid ownership, Identity Resolver T1–T5, wskaźniki Stape | Strukturalna+operacyjna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — plan §8.4 |
-| 14 | Nomenklatura eventów w SSOT orkiestracji (`purchase` vs `lead_won`) | Semantyczna | **cutover** | **ADR** | 4 | Dawid | **open** (impl.) — wpisane w plan |
-| 15 | Zakres MVP vs Etap 2/3 (telefony, transkrypty, auto-odpowiedzi, liczniki) | Produktowa | cutover | ADR | 5 | Właściciel | **closed** (plan) — schedule mail, SMS, AI podsumowania = **Etap 2+** (po uruchomieniu; BB dziś tego nie ma) |
-| 16 | Rekonsyliacja SSOT z Twenty 2.8.0 + docs.twenty.com (best practices) | Strukturalna+proceduralna | cutover | ADR | 5 | Dawid | **open** |
-
-### Decyzja #7 — doprecyzowanie (zamknięta)
-
-- Sandbox i produkcja zostają rozdzielone logicznie po `environment` (`sandbox` / `prod`).
-- Dla `sandbox` outbound z Twenty trafia do safe sink (np. Google Sheets), bez wysyłki do produkcyjnych adapterów reklamowych.
-- Nie wymagamy pełnej kopii infrastruktury GTM/GCP do testów CRM.
-
-### Mapowanie eventów (do zamknięcia w #5)
-
-| Twenty | Event SSOT |
-|--------|------------|
-| → QUALIFIED | qualify_lead |
-| → WON | purchase |
-| campaignRejected true | rejected_lead |
-| → LOST | *(brak)* |
-
-### Decyzje planowe zamknięte (2026-05-28)
-
-| Temat | Ustalenie | Dokument |
-|-------|-----------|----------|
-| `kontakt@owocni.pl` | Istnieje, bez forwardu; **nie obsługujemy** w Twenty/CRM | `IDENTITY_AND_INBOUND.md` §5.1 |
-| Email Sync | `leads@`, `studio@`, skrzynki handlowców — Etap **1.2**; **bez** `kontakt@` | §5.1 |
-| Owner techniczny | **Dawid** (Twenty, GTM, sGTM, Stape/Sortownia) | `PLAN_DZIALAN.md` |
-| Szablony maili | Migracja z better-bitrix **przed** cutover — must-have | `SALES_OPS_REQUIREMENTS.md` |
-| Twenty Pro | Na start | ADR #6 zamknięte |
-| Schedule mail / SMS / AI | Etap 2+ po uruchomieniu | ADR #15 zamknięte |
-| Szkolenie | Nowe szkolenie Twenty przed cutover (stage’e już znane) | `PLAN_DZIALAN.md` |
-| Ścieżki kanałów | Opisane w §5–6 | `IDENTITY_AND_INBOUND.md` |
-| Identity Resolver | Plan ADD-2 → ADD-1 → ADD-3 (+ FIX osobno) | §8.4 |
-| **FIX-1 `assist`** | **Opcja A** — dokończyć multi-touch w Sortowni paid (identity + handlowcy) | `PLAN_DZIALAN.md`, §8.4 |
-| **Parzystość better-bitrix** | A–D + E18 = P0 przed cutover; E19–E20, F21–F23 = później | `SALES_OPS_REQUIREMENTS.md` §3 |
-| **Model skrzynek (C13)** | Skrzynka per handlowiec + `leads@` rozdziela wątki do ownerów | §5.1, `SALES_OPS` §3.C13 |
-| **Eventy outbound (E18)** | Automatycznie: QUALIFIED→`qualify_lead`, WON→`purchase`, reject→`rejected_lead` | `EVENT_CONTRACT.md` |
-
-### Priorytety po review 2026-05-28
-
-- **P1:** #12 i #13 (inbound spoza Sortowni + idOid/deduplikacja) blokują bezpieczny cutover.
-- **P1:** #14 (jednoznaczne nazwy eventów) — usuwa chaos implementacyjny w adapterach.
-- **P2:** #15 (scope Etap 1 vs Etap 2/3) — ogranicza mieszanie wymagań MVP i roadmapy.
-- **P2:** #16 (rekonsyliacja z Twenty 2.8.0 + best practices) — podnosi zaufanie do SSOT.
-
-### Task rekonsyliacji dokumentów (#14 + #16) — owner: **Dawid**
-
-- [ ] Ujednolicić nazewnictwo eventów w dokumentacji orkiestracji (Google Docs) — `purchase` zamiast `lead_won`/`closed_won`
-- [ ] Zaktualizować mapowanie w `GoogleCloudRobot.js` jeśli nadal `lead_won`
-- [ ] Potwierdzić zgodność pól i stage z Twenty 2.8.0
-- [ ] Zsynchronizować `owocni-crm/*` po cleanupie
-
-### Procedura audytów (fault-only)
-
-| Audyt | Kiedy | Plik |
-|-------|-------|------|
-| AKK kroki 1–7 (wewnętrzny) | **Teraz** (tura A) | `AUDIT_AKK.md` |
-| AKK kroki 8–9 (Twenty + Stape) | **Preflight** po P1 | `AUDIT_AKK.md` |
-| AKK meta: pusty wynik ≠ cutover OK | Zaakceptowane w SSOT | `AUDIT_AKK.md` § Meta-pytanie |
-| Audyt migracji 1–7 | **Przed dry-run importu** | `AUDIT_MIGRACJA.md` |
+| ID | Zakaz | Powód | Konsekwencja | Odmraża | Gdzie |
+|---|---|---|---|---|---|
+| NR-1 | **Decyzja `closed` BEZ `evidence_source` (source_file + section + verified_by + date) = NIE jest closed.** | „Zamknięte" bez dowodu = domysł udający fakt. | Cutover na niezweryfikowanej decyzji. | — | §5.4 |
+| NR-2 | **NIE mylić `decision_status` z `implementation_status`.** Zdecydowano ≠ wdrożono. | Zlanie = „gotowe" gdy tylko zaplanowane. | Fałszywy obraz gotowości cutoveru. | — | §4 |
+| NR-3 | **NIE naruszać legendy 3 osi faz** (numeryczne 1–9 / A-B-C / Etap 1.1–1.2–2+) — kotwica 1:1. | Trzy różne osie fazowania mylone w jedną = chaos planистyczny. | Błędne przypisanie „kiedy". | Właściciel + ADR | §4 legenda |
+| NR-4 | **NIE awansować #5/#11/#6/#7 z `closed` do `open`** bez jawnej REWIZJI + powodu. | Zamknięte decyzje „odmykają się" przy zmęczeniu kontekstu. | Re-litygacja rozstrzygniętego. | Właściciel + REWIZJA | §5.3 |
+| NR-5 | **Decyzja z `blocks: cutover` w stanie `open` → cutover NIE startuje.** | Otwarty bloker = nierozstrzygnięte ryzyko nieodwracalne. | Cutover na otwartym ryzyku. | Właściciel + zamknięcie | §5.2 |
 
 ---
 
-## Sekcja B — Closed decisions (ADR)
+## 2. PURPOSE
 
-*Pusta na start. Po cutoverze: migracja zamkniętych z Sekcji A.*
-
----
-
-## Kiedy NIE pisać ADR
-
-Zmiana labelu, saved view, bugfix rutynowy, pole OPEN kosmetyczne.
+Jedno miejsce statusu decyzji architektonicznych (ADR-light) i brama cutoveru. Mówi CZY rzecz jest rozstrzygnięta i czym to udowodniono — nie powtarza mechaniki (ta żyje w plikach domenowych). Status: przed cutoverem.
 
 ---
 
-## Zamknięte przez dokumentację SSOT (2026-05-28)
+## 3. SCOPE
 
-| Temat | Decyzja |
-|-------|---------|
-| lead_lost vs rejected_lead | LOST bez eventu; rejected_lead tylko campaignRejected |
-| lead_won vs purchase | purchase |
-| Outbound POC workflow vs native webhook | native webhook (D2) |
-| Helpdesk w MVP | nie (Prawo 9) |
-| julia362 | legacy, wyłączenie w cutover |
+### Pokrywa
+- Status decyzji (open/closed), otwarte blokery cutoveru, indeks zamkniętych z dowodem, decyzje szczegółowo (ADR-light), przeniesione zadania, future `adr/`.
 
-Szczegóły: `EVENT_CONTRACT.md`, `POC_MAPPING.md`.
+### Nie pokrywa
+- Zadań wykonawczych (→ `runbooks/IMPLEMENTATION_PLAN.md`), mechaniki domenowej (→ pliki domenowe).
+
+---
+
+## 4. CANONICAL DEFINITIONS
+
+- **`decision_status`** = czy decyzja zapadła (`open` / `closed`).
+- **`implementation_status`** = czy wdrożono (`not_started` / `in_progress` / `done`). Niezależne od `decision_status` (NR-2).
+- **`evidence_source`** (wymagane przy `closed`) = `source_file` + `section` + `verified_by` + `date`.
+- **`blocks`** = `cutover` (otwarty = stop, NR-5) / `none`.
+
+### Legenda 3 osi faz (KOTWICA 1:1 — nienaruszalna, NR-3)
+
+System ma **trzy niezależne osie fazowania** — NIE mieszać:
+
+| Oś | Wartości | Co oznacza |
+|---|---|---|
+| **Oś decyzji (ADR)** | numeryczne **1–9** (#1…#15 jako ID) | Identyfikator decyzji architektonicznej; kolejność historyczna, NIE faza wdrożenia |
+| **Oś pewności / klasy** | **A / B / C** | Klasa/priorytet w grupowaniu (np. blokery A vs non-blocking C); NIE etap czasowy |
+| **Oś wdrożenia** | **Etap 1.1 / 1.2 / 2+** | Faza czasowa wdrożenia (rdzeń / mail / poza MVP) |
+
+Numer ADR (#13) ≠ klasa (C) ≠ Etap (1.2). Te trzy współrzędne są ortogonalne. Odwołanie „faza" bez wskazania osi jest niejednoznaczne.
+
+---
+
+## 5. BODY
+
+### 5.1 CUTOVER GATE
+
+**Cutover startuje wtedy i tylko wtedy, gdy:**
+1. Wszystkie decyzje `blocks: cutover` są `closed` (z `evidence_source`).
+2. Wszystkie MUST-PASS GATES G1–G8 + G-PAR = PASS (`runbooks/IMPLEMENTATION_PLAN.md` §5.4).
+
+Dziś: **NIE** — otwarte blokery §5.2.
+
+### 5.2 OPEN CUTOVER BLOCKERS (`blocks: cutover`, `decision_status: open`)
+
+| ADR | Decyzja | Dlaczego bloker | Powiązana brama | Rozstrzygnąć |
+|---|---|---|---|---|
+| **#12** | Inbound — kanały i `kontakt@` (które skrzynki → Twenty, które poza) | Niejasny zakres wejścia = ryzyko leadów-sierot / fałszywego ingestu | G7 identity-safety | Właściciel + Dawid (`IDENTITY_AND_INBOUND.md` §5.5) |
+| **#13** | Email Sync + Resolver muszą działać PRZED wyłączeniem julia362 | Wyłączenie legacy bez następcy = utrata kanału leadów | G7 / G-PAR | Dawid (test Email Sync + T1–T5) |
+| **#14** | Cleanup zakazanych nazw eventów (`lead_won`→`purchase`) w kodzie Robot + docs orkiestracji | Stary `event_name` w kodzie = niezgodność z kanonem SSOT | G1 event-semantics | Dawid (kod Robot) |
+| **L-1** (TRANSITION EXCEPTION) | Usunięcie `srcSystem`-SKIP dopiero po smoke #4 PASS | Przedwczesne usunięcie = drugi mint idOid (rozdwojenie) | G4 loop-prevention | Dawid (`EVENT_CONTRACT.md` §6.1) |
+| **MERGE** (3 bramki) | Webhook-oba-ID / nieodwracalność / T5 dwa paid | Nieznane zachowanie merge = nieodwracalne sklejenie tożsamości | G8 merge-safety | Dawid (`IDENTITY_AND_INBOUND.md` §5.9) |
+
+### 5.3 OPEN NON-BLOCKING (`decision_status: open`, `blocks: none`)
+
+| ADR | Decyzja | Uwaga |
+|---|---|---|
+| #15 | Email Sync: zakres podsumowań/zadań w Twenty — Etap 1 vs 2 | Plan domknięty co do kanałów; szczegóły AI-podsumowań → Etap 2 |
+| FIX-2 | Format `time_occurred` (ISO vs epoch ms) | Decyzja: epoch ms; wdrożenie w backlogu |
+| OQ (glosariusz) | Kanon glosariusza w CONSTITUTION vs osobny GLOSSARY.md | Próg powstania pliku (CONSTITUTION §5.6) |
+
+### 5.4 CLOSED INDEX (każda z `evidence_source`)
+
+| ADR | Decyzja (skrót) | source_file → section | verified_by | date |
+|---|---|---|---|---|
+| #1 | Natywne obiekty Twenty (Opportunity, nie custom Deal) | `CRM_CONSTITUTION.md` → Prawo 3a; `DATA_MODEL.md` → §5.3 | docs.twenty.com + decyzja właściciela | 2026-05-28 |
+| #2 | Outbound = native webhook → adapter Sortowni (nie workflow HTTP) | `ARCHITECTURE.md` → §5.4; `EVENT_CONTRACT.md` → §5.1 | POC + credit budget | 2026-05-28 |
+| #5 | SQL ≡ QUALIFIED (jeden stage, różnica językowa) | `EVENT_CONTRACT.md` → §4 | decyzja właściciela | 2026-05-29 |
+| #6 | Granica CRM↔orkiestracja widoczna w prefiksach pól | `CRM_CONSTITUTION.md` → Prawo 6b; `DATA_MODEL.md` → §5.6 | decyzja właściciela | 2026-05-28 |
+| #7 | Manual create rozpoznawany przez brak tożsamości (`idOid IS NULL`), nie `_operation` | `EVENT_CONTRACT.md` → §5.4 | instancja (payload bez `_operation`) | 2026-05-29 |
+| #11 | Native webhook nie niesie before/after — payload = stan aktualny | `EVENT_CONTRACT.md` → §5.4 (NR-2) | docs webhooks v2.8.0 | 2026-05-29 |
+| **#16** | HMAC: `X-Twenty-Webhook-Signature` SHA256 + `X-Twenty-Webhook-Timestamp`; signed string `{timestamp}:{payload}` | `ops/OPS_NOTES.md` → Twenty Verified Facts | docs.twenty.com | 2026-05-31 |
+
+> **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
+
+### 5.5 DECISION DETAILS (ADR-light — inline, tylko dla nieoczywistych)
+
+**ADR #16 (HMAC) — closed 2026-05-31.**
+Kontekst: jedno źródło podawało błędną nazwę nagłówka (`x-twenty-signature`). Decyzja: nazwa kanoniczna = `X-Twenty-Webhook-Signature` (+ `X-Twenty-Webhook-Timestamp`), signed string = `{timestamp}:{payload}` (nie sam payload). Dowód: docs.twenty.com (fakt publiczny, nie sprzeczność dla instancji). Dom faktu: `ops/OPS_NOTES.md`. Konsekwencja: `CRM_CONSTITUTION.md` Prawo 7g poprawione; `EVENT_CONTRACT.md` §5.1 cross-ref do OPS. Bez wiersza „recheck na instancji" — zamknięte z docs.
+
+**ADR #14 (cleanup nazw eventów) — open, blocks cutover.**
+Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzja docelowa: wszystkie `event_name` zgodne z kanonem `EVENT_CONTRACT.md` §5.2. Wdrożenie: Dawid, przed G1 PASS.
+
+### 5.6 TASKS MOVED OUT
+
+Zadania wykonawcze (etapy, backlog FIX/ADD, harmonogram, szkolenie) **nie żyją tutaj** → `runbooks/IMPLEMENTATION_PLAN.md`. Ten rejestr trzyma decyzje i ich status, nie listę zadań.
+
+### 5.7 FUTURE — `adr/` EXTRACTION
+
+Gdy liczba decyzji wymagających pełnego ADR (kontekst / opcje / konsekwencje) przekroczy próg czytelności inline, wydzielić katalog `adr/` (jeden plik per decyzja). Do tego czasu ADR-light inline (§5.5). Powstanie `adr/` = decyzja `[D:CORE]` (CONSTITUTION §5.6 reguła powstawania pliku).
+
+---
+
+## 6. CROSS-REFERENCES
+
+| Temat | Gdzie jest prawda |
+|---|---|
+| MUST-PASS gates G1–G8, zadania, backlog, harmonogram | `runbooks/IMPLEMENTATION_PLAN.md` |
+| HMAC fakt (dom) | `ops/OPS_NOTES.md` |
+| Mechanika eventów / manual-create / before-after | `EVENT_CONTRACT.md` |
+| Merge / tożsamość / kanały | `IDENTITY_AND_INBOUND.md` |
+| Reguła powstawania pliku / invarianty | `CRM_CONSTITUTION.md` |
+
+---
+
+## 7. OPEN QUESTIONS / DECISIONS NEEDED
+
+(Otwarte decyzje są w §5.2 / §5.3 — ta sekcja zostaje pusta celowo, by nie dublować rejestru.)
+
+---
+
+## 8. VERIFICATION / RECHECK
+
+| Co sprawdzić | Kiedy | Kto | Dowód |
+|---|---|---|---|
+| Każda decyzja `closed` ma komplet `evidence_source` | Przy każdej zmianie | Dawid | ten plik §5.4 |
+| Żaden `blocks: cutover` nie jest `open` przed startem | Przed cutover | Właściciel | §5.2 pusta |
+| #12/#13/#14/L-1/MERGE zamknięte z dowodem | Przed cutover | Dawid | source_file |
+
+---
+
+## 9. CHANGELOG
+
+| Data | Zmiana | Kto | Powód |
+|---|---|---|---|
+| 2026-05-31 | #16 (HMAC) → closed z evidence (docs.twenty.com) | właściciel | błąd źródła rozstrzygnięty docs |
+
+---
+
+## LEGENDA ZNACZNIKÓW
+
+- `[D:CORE]` — decyzja własna OWOCNI; zmiana tylko właściciel + ADR
+- `[D:VERIFIED]` — fakt zweryfikowany na platformie; recheck po triggerze
+- `[D:RESEARCH]` — rekomendacja researchu; podważyć tylko dowodem z instancji
+- `[D:OPEN]` — świadomie otwarte; agent nie domyka
+- Default tego pliku: `D:CORE`. Inline = odchylenie.
