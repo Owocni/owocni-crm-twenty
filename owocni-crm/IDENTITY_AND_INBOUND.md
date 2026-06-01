@@ -1,64 +1,80 @@
-# IDENTITY_AND_INBOUND — tożsamość klienta i wejście leadów
+---
+doc_id: IDENTITY_AND_INBOUND
+title: "IDENTITY_AND_INBOUND — tożsamość klienta (id_oid) i kanały wejścia"
+layer: core_ssot
+status: active
+edit_scope: structure_only
+owner: "Właściciel (biznes) / Dawid (techniczny)"
+last_verified: 2026-05-31
+recheck_trigger: "Twenty release (merge/email sync) / zmiana resolvera / preflight Stape"
+default_trust: D:CORE
+related:
+  - DATA_MODEL
+  - EVENT_CONTRACT
+  - CRM_CONSTITUTION
+  - runbooks/IMPLEMENTATION_PLAN
+---
 
-**Status:** SSOT (canonical) — zastępuje `OWOCNI_CRM_SSOT_1_*`, `OWOCNI_CRM_SSOT_3_*`, `INBOUND_EDGE_CASES.md`  
-**Wersja:** 2026-05-29  
-**Last updated:** 2026-05-29 (C13 skrzynki, FIX-1 Opcja A, parzystość BB — decyzje planowe z 2026-05-28 bez zmian dat)  
-**Platforma:** Twenty CLOUD + Stape (Sortownia / Identity Resolver / Robot)  
-**Blokuje cutover:** ADR #12, ADR #13  
-**Kod (repo `AdrianKrauza/owocni`):**
-- Sortownia (paid, sGTM): [SORTOWNIA_V2_POPRAWIONY.js](https://github.com/AdrianKrauza/owocni/blob/main/SORTOWNIA_V2_POPRAWIONY.js)
-- Robot (GCP): [GoogleCloudRobot.js](https://github.com/AdrianKrauza/owocni/blob/main/GoogleCloudRobot.js)
+# IDENTITY_AND_INBOUND — tożsamość i wejście leadów
 
-**Orkiestracja (SSOT poza tym pakietem):** [Google Docs — konfiguracja techniczna](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an)
+## 0. LLM QUICK ENTRY
 
-**Dla LLM:** czytaj sekcje 1–6 (zasady + macierz T1–T5 + kanały). Sekcja 8 = backlog implementacji.  
-**Dla człowieka:** sekcja 7 = „dziś vs docelowo” w prostym języku.
+**Ten plik decyduje o:** Resolver tożsamości T1–T5; macierz decyzyjna email × phone (2D); zamknięta lista kanałów wejścia; `id_oid` jako jedyne źródło prawdy o tożsamości (Stape master, Twenty projekcja); VBB gate; kiedy człowiek rozstrzyga konflikt (T4/T5); reguły procesowe; słownik tożsamości.
+
+**Ten plik NIE decyduje o:** mapowaniu eventów (→ `EVENT_CONTRACT.md`); polach Twenty (→ `DATA_MODEL.md`); backlogu implementacji (→ `runbooks/IMPLEMENTATION_PLAN.md`); granicach systemów (→ `ARCHITECTURE.md`).
+
+**Zawsze czytaj razem z:** `EVENT_CONTRACT.md` (loop-prevention, generate_lead), `DATA_MODEL.md` (`idOid`), `CRM_CONSTITUTION.md` (INV-7 fail-closed).
+
+**Najgroźniejszy błąd:** agresywne skrócenie gubi logikę T1–T5 i zamkniętą listę kanałów — albo opisanie merge jako rozstrzygniętego (3 bramki są `[D:OPEN]`).
+
+**Przy konflikcie:** tożsamość/kanał — ten plik jest właścicielem. Pole `idOid` (typ/frozen) → `DATA_MODEL.md`.
+
+**Zmiana wymaga:** ADR dla reguł tożsamości (T1–T5, fail-closed, merge). **Blokuje cutover:** ADR #12, ADR #13.
 
 ---
 
-## Spis treści
+## 1. NEGATIVE RULES (reguły tożsamości — NIE skracać, NIE backlog)
 
-1. [Zasada nadrzędna](#1-zasada-nadrzędna)
-2. [Architektura warstw](#2-architektura-warstw)
-3. [Identity Resolver — poziomy pewności T1–T5](#3-identity-resolver--poziomy-pewności-t1t5)
-4. [Macierz decyzyjna (email × phone)](#4-macierz-decyzyjna-email--phone)
-5. [Kanały wejścia — zamknięta lista](#5-kanały-wejścia--zamknięta-lista)
-6. [Przepływy per kanał](#6-przepływy-per-kanał)
-7. [Dziś vs docelowo (FAQ)](#7-dziś-vs-docelowo-faq)
-8. [Implementacja: Stape Store, Sortownia, backlog](#8-implementacja-stape-store-sortownia-backlog)
-9. [Twenty — narzędzia natywne i ograniczenia](#9-twenty--narzędzia-natywne-i-ograniczenia)
-10. [VBB gate (sygnały reklamowe)](#10-vbb-gate-sygnały-reklamowe)
-11. [Reguły procesowe (nie kod)](#11-reguły-procesowe-nie-kod)
-12. [Kolejność wdrożenia i bramki DO TESTU](#12-kolejność-wdrożenia-i-bramki-do-testu)
-13. [Słownik (dla LLM)](#13-słownik-dla-llm)
-14. [Pytania otwarte](#14-pytania-otwarte)
+| ID | Zakaz | Powód | Konsekwencja | Odmraża | Gdzie decyzja |
+|---|---|---|---|---|---|
+| NR-1 | NIE skracać T1–T5, zamkniętej listy kanałów, `kontakt@` jako świadomie nieobsługiwanego, VBB gate, T4/T5 human review. | To reguły tożsamości, nie backlog. | Utrata logiki resolvera = błędne sklejanie/rozdwojenie tożsamości. | Właściciel + ADR | tu |
+| NR-2 | **GA = sygnał, NIE klucz tożsamości** — nie wolno mintować `id_oid` z GA; GA nie wchodzi do macierzy jako trzecia oś. | `ga_client_id` identyfikuje przeglądarkę, nie osobę (współdzielony, czyszczony, gubiony). | Fałszywe sklejenie/rozdwojenie tożsamości. | Właściciel + ADR | §4 |
+| NR-3 | Dwa maile tego samego nadawcy NIE mogą stworzyć dwóch `id_oid` (concurrency mint-guard). | Race przy równoległym mincie. | Duplikat tożsamości. | Właściciel + ADR | §8 |
+| NR-4 | **Stape Store niedostępny podczas resolve → fail-closed (NIE mintuj, kolejkuj).** | Fail-open = duplikat `id_oid` = rozdwojenie tożsamości (nieodwracalne). Reguła o skutku tożsamościowym, nie parametr runtime. | Jeden klient, dwa profile, zepsuta atrybucja. | Właściciel + ADR | CRM_CONSTITUTION INV-7 |
+| NR-5 | **NIE merguj różnych osób tej samej firmy** (asystent ≠ szef). | Auto-merge = nieodwracalne sklejenie tożsamości. | Sklejone tożsamości dwóch osób. | Właściciel + ADR | §11 |
+| NR-6 | **Dwa paid `id_oid` → T5, ręczna korekta, NIGDY auto.** | Sygnał do platform z dwóch paid profili = nieodwracalny. | Błędna atrybucja platform. | Właściciel + ADR | §11, §3 (T5) |
 
 ---
 
-## 1. Zasada nadrzędna
+## 2. PURPOSE
 
-### 1.1 Jedna prawda o tożsamości
-
-**`id_oid` w Stape (Profil Klienta) jest JEDYNYM źródłem prawdy** o tym, kim jest klient — niezależnie od kanału wejścia.
-
-Twenty jest **projekcją** (widok handlowca). Twenty **nie rozstrzyga** tożsamości samodzielnie — nie ma identity graph (CDP).
-
-### 1.2 Automat vs człowiek
-
-> **Automat robi wszystko, co jest deterministyczne. Człowiek tylko tam, gdzie system ma ≥2 sensowne interpretacje.**
-
-- **NIE** probabilistyczny merge (imię + firma).
-- **NIE** pełny silnik auto-merge w Sortowni paid.
-- **TAK** cienka warstwa **Identity Resolver** (osobny handler) z regułami T1–T5.
-- **TAK** człowiek wybiera **z kandydatów** (T4), nie dowolny merge bez ograniczeń.
-
-### 1.3 Rekord ≠ id_oid
-
-Rekord w Twenty może istnieć **bez** przypisanego `id_oid` — stan jawny: `identity_status: needs_review` lub `unresolved`. To nie jest „czarna dziura”, tylko nazwany stan.
+Master identity systemu: `id_oid` w Stape (Profil Klienta) jest jedynym źródłem prawdy o tym, kim jest klient — niezależnie od kanału wejścia. To, czego Twenty nie zrobi (brak identity graph / CDP). Wersja 2026-05-29. **Platforma:** Twenty CLOUD + Stape (Sortownia / Identity Resolver / Robot).
 
 ---
 
-## 2. Architektura warstw
+## 3. SCOPE
+
+### Pokrywa
+- Resolver T1–T5, macierz email × phone, zamknięta lista kanałów, VBB gate, human review (T4/T5), reguły procesowe §11, słownik §13.
+- Stan tożsamości po stronie Stape (master) i Twenty (projekcja).
+
+### Nie pokrywa
+- Mapowania eventów (→ `EVENT_CONTRACT.md`), pól Twenty (→ `DATA_MODEL.md`), backlogu implementacji (→ `runbooks/IMPLEMENTATION_PLAN.md`).
+
+---
+
+## 4. CANONICAL DEFINITIONS
+
+- **`id_oid`** = kanoniczny identyfikator klienta w Stape (ULID); jedyne źródło prawdy o tożsamości.
+- **Twenty = projekcja** (widok handlowca) — NIE rozstrzyga tożsamości samodzielnie (brak identity graph).
+- **Rekord ≠ id_oid** — rekord w Twenty może istnieć bez `id_oid`: stan jawny `identity_status: needs_review` lub `unresolved` (nazwany stan, nie czarna dziura).
+- **Automat vs człowiek:** automat robi wszystko deterministyczne; człowiek tylko gdy system ma ≥2 sensowne interpretacje. NIE probabilistyczny merge; NIE pełny silnik auto-merge; TAK cienka warstwa Identity Resolver (T1–T5); TAK człowiek wybiera z kandydatów (T4).
+
+---
+
+## 5. BODY
+
+### 5.1 Architektura warstw
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
@@ -83,11 +99,9 @@ Rekord w Twenty może istnieć **bez** przypisanego `id_oid` — stan jawny: `id
                                   └────────────────┘
 ```
 
-**Przepływ prawdy:** zawsze **ku górze** (Twenty → Stape). Nigdy Stape pyta Twenty „kim jest klient”.
+**Przepływ prawdy:** zawsze **ku górze** (Twenty → Stape). Nigdy Stape nie pyta Twenty „kim jest klient".
 
----
-
-## 3. Identity Resolver — poziomy pewności T1–T5
+### 5.2 Identity Resolver — poziomy pewności T1–T5
 
 | Tier | Kod | Warunek | Akcja | `identity_status` | VBB |
 |------|-----|---------|-------|-------------------|-----|
@@ -99,16 +113,16 @@ Rekord w Twenty może istnieć **bez** przypisanego `id_oid` — stan jawny: `id
 
 **Reguła złota:** auto tylko przy **0 lub 1** kandydacie. Przy 2+ → **T4**, bez wyjątków.
 
-**Trigger resolvera:** webhook Twenty (`record.created` / `record.updated` / merge) **oraz** ręczny zapis pól email/phone w Twenty.
+**Trigger resolvera:** webhook Twenty (event `created` / `updated` — konkretna nazwa eventu webhooka Twenty → `ops/OPS_NOTES.md`, recheck na instancji) **oraz** ręczny zapis pól email/phone w Twenty. Resolver rozstrzyga po email/phone; `ga_client_id` NIE jest triggerem rozstrzygania tożsamości (sygnał atrybucji — patrz §5.3 „Rola GA").
 
----
+### 5.3 Macierz decyzyjna (email × phone)
 
-## 4. Macierz decyzyjna (email × phone)
+Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co w Sortowni).
 
-Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co w Sortowni):
+**Klucze rozstrzygające tożsamość: WYŁĄCZNIE email i phone.** Macierz jest świadomie dwuwymiarowa. `ga_client_id` NIE jest kluczem — patrz nota „Rola GA".
 
 | Trafienie email w Stape | Trafienie phone w Stape | Wynik |
-|-------------------------|-------------------------|--------|
+|---|---|---|
 | 0 | 0 | **T3** auto_mint |
 | 1 | 0 | **T1** auto_link |
 | 0 | 1 | **T1** auto_link |
@@ -116,19 +130,20 @@ Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co 
 | 1 | 1, **różne** id_oid | **T4** needs_review |
 | 2+ | * | **T4** + alert techniczny (duplikat wskaźników) |
 
-**Nie automatyzujemy:**
+#### Rola GA client_id (degradacja — NIE klucz tożsamości)
 
-- Ten sam telefon, dwa różne maile (Jan vs Anna) → T4
-- Adresy generyczne (`kontakt@`, `biuro@`) → T4 lub link do **Company**, nie Person
-- Phone wyciągnięty regexem z treści maila (niepewny) → ignoruj
-- Dopasowanie tylko po imieniu/firmie → nigdy
+`ga_client_id` identyfikuje **przeglądarkę**, nie osobę: bywa współdzielony, czyszczony (nowe cookie = nowy client_id dla tej samej osoby), gubiony. Dlatego:
+- **GA nigdy nie rozstrzyga tożsamości samodzielnie** — nie wchodzi do macierzy jako trzecia oś.
+- **GA wolno użyć WYŁĄCZNIE jako sygnał potwierdzający** już ustalone dopasowanie po email/phone (np. „email trafia w A, GA tego samego zdarzenia też wskazuje A" → wzmocnienie + log; samo GA→A bez email/phone NIE wystarcza do auto_link).
+- **GA→profil C przy email→A, phone→B:** GA się **ignoruje** dla rozstrzygnięcia; decyduje wyłącznie kolizja email vs phone (tu: różne → **T4**). GA zostaje zapisany pod `id_oid` jako atrybut atrybucji, ale nie jest głosem w rozstrzyganiu.
+- Powód: `ga_client_id` (jak `attr_gclid`, `attr_fbc`, `lead_id`) jest zapisywany **pod** `id_oid` w Profilu — jest własnością już-ustalonej tożsamości, nie jej źródłem.
 
----
+**Nie automatyzujemy:** ten sam telefon, dwa różne maile (Jan vs Anna) → T4; adresy generyczne (`kontakt@`, `biuro@`) → T4 lub link do **Company**, nie Person; phone wyciągnięty regexem z treści maila → ignoruj; dopasowanie tylko po imieniu/firmie → nigdy.
 
-## 5. Kanały wejścia — zamknięta lista
+### 5.4 Kanały wejścia — zamknięta lista
 
 | Kanał | Pierwszy obserwator (docelowo) | id_oid | Resolver |
-|-------|--------------------------------|--------|----------|
+|---|---|---|---|
 | Formularz **paid** (web, gclid/fbc) | Sortownia (real-time) | **automat** (Sortownia) | Nie dotyka — paid path |
 | Formularz **nie-paid** / organic | Sortownia `generate_lead` jeśli event jest | automat jeśli event | T1–T3 jeśli przez Twenty |
 | Mail → **`leads@`** | Twenty Email Sync | Resolver T1–T4 | T3 dla nowego nadawcy |
@@ -138,142 +153,71 @@ Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co 
 | **Telefon** | Handlowiec (Twenty) | Po zapisie numeru → resolver | T1–T4 |
 | Polecenie / ręczne dodanie | Handlowiec | Po zapisie PII → resolver | T1–T3 typowo |
 
-### Legacy (julia362) — do wyłączenia
+#### Legacy (julia362) — do wyłączenia
 
 | Fakt | Wartość |
-|------|---------|
+|---|---|
 | Serwer | `julia362.mikrus.xyz`, `app2.js` |
 | Nasłuch IMAP (7 skrzynek) | `copywriting@`, `pomoc@`, `studio@`, `marta@`, `gosia@`, `mariusz@`, `leads@` |
 | **Auto-tworzenie NOWEGO leada** | Tylko **`leads@` + INBOX** (better-bitrix + GPT) |
-| **`kontakt@`** | **Nie** na liście watchera julia362; **osobna skrzynka** (patrz §5.1) |
-| Wyłączenie | Po ADR #12/#13 + Email Sync + Resolver działają — `CUTOVER_RUNBOOK` |
+| **`kontakt@`** | **Nie** na liście watchera; **osobna skrzynka** (patrz §5.5) |
+| Wyłączenie | Po ADR #12/#13 + Email Sync + Resolver działają (`runbooks/IMPLEMENTATION_PLAN.md`) |
 
-### 5.1 Decyzje planowe — mail (2026-05-28, aktualizacja ról)
+### 5.5 Decyzje planowe — mail (2026-05-28, role)
 
-**Status:** zamknięte na poziomie planu.  
-**Owner techniczny (wdrożenie):** **Dawid** — Twenty, GTM, sGTM, Stape/Sortownia, aktualizacje w Sortowni i docs orkiestracji.  
-**Mariusz i Krzysztof** — przełożeni; uzgodnienia biznesowe/architektoniczne, nie wykonawcy wdrożenia.
+**Status:** zamknięte na poziomie planu. **Owner techniczny (wdrożenie):** **Dawid**. **Mariusz i Krzysztof** — przełożeni; uzgodnienia biznesowe/architektoniczne, nie wykonawcy.
 
-#### `kontakt@owocni.pl` — **nie obsługujemy**
+**`kontakt@owocni.pl` — nie obsługujemy:** skrzynka istnieje (osobna, bez przekierowania); backlog = spam od miesięcy (nie importujemy, nie tworzymy leadów); julia362 nie nasłuchuje; Twenty Email Sync — **NIE** (świadomie poza zakresem); w SSOT oznaczony „nie obsługiwany" (nie pytamy resolvera ani handlowców o ten inbox).
 
-| Fakt | Ustalenie |
-|------|-----------|
-| Skrzynka | **Istnieje** — osobna skrzynka, **bez przekierowania** |
-| Backlog | Spam i reklamy od miesięcy — **nie** importujemy, **nie** tworzymy leadów |
-| julia362 | **Nie** nasłuchuje |
-| Twenty Email Sync | **NIE** — świadomie **poza** zakresem |
-| W SSOT | Kanał oznaczony jako **„nie obsługiwany”** (nie pytamy resolvera ani handlowców o ten inbox) |
+**Twenty Email Sync — zakres (Etap 1.2):** wszystkie skrzynki sprzedawców + `leads@` + `studio@` → Twenty (odpowiedzi, wątki, timeline). Faza Etap 1.2 (po rdzeniu 1.1: schema, paid inbound, webhook OUT); cutover dopiero gdy 1.2 gotowe.
 
-#### Twenty Email Sync — zakres (Etap 1.2)
-
-**Decyzja:** wszystkie skrzynki sprzedawców + **`leads@`** + **`studio@`** → Twenty (odpowiedzi, wątki, timeline).  
-**Faza:** **Etap 1.2** w ramach Etapu 1 (po rdzeniu 1.1: schema, paid inbound, webhook OUT) — od początku **planujemy** z miejscem na Email Sync, cutover dopiero gdy 1.2 gotowe.
-
-**Model operacyjny (parzystość BB, C13):**
-
-- Każdy handlowiec ma **własną skrzynkę** podłączoną w Twenty (Email Sync).
-- Dodatkowo **skrzynka ogólna** (`leads@` — główny kanał rozdziału) przyjmuje wątki od klientów; wątki muszą trafiać do **właściwego leada / handlowca** (przypisanie Opportunity owner).
-- Wdrożenie: reguły Twenty (routing, assignee) lub proces operacyjny przy pierwszym kontakcie — szczegóły w runbooku Etap 1.2; wymaganie biznesowe jest **zamknięte** (`SALES_OPS_REQUIREMENTS.md` §3.C13).
+**Model operacyjny (parzystość BB, C13):** każdy handlowiec ma własną skrzynkę w Twenty (Email Sync); dodatkowo skrzynka ogólna `leads@` (główny kanał rozdziału) — wątki muszą trafiać do właściwego leada/handlowca (Opportunity owner). Wdrożenie: reguły Twenty lub proces operacyjny przy pierwszym kontakcie (szczegóły w runbooku Etap 1.2); wymaganie biznesowe zamknięte.
 
 | Skrzynka | Email Sync w Twenty |
-|----------|---------------------|
-| `leads@owocni.pl` | **TAK** (Etap 1.2) — **ogólna**, rozdział wątków |
+|---|---|
+| `leads@owocni.pl` | **TAK** (Etap 1.2) — ogólna, rozdział wątków |
 | `studio@owocni.pl` | **TAK** (Etap 1.2) |
 | `marta@`, `gosia@`, `mariusz@` | **TAK** (Etap 1.2) |
 | `copywriting@`, `pomoc@` | **TAK** (Etap 1.2) |
 | `kontakt@owocni.pl` | **NIE** — nie obsługiwana |
 
-**IMAP:** `mail.owocni.pl`. Docelowo: podsumowania wątków i zadania wg priorytetów w Twenty (szczegóły Etap 1 vs 2 → ADR #15).
+**IMAP:** `mail.owocni.pl`. Docelowo: podsumowania wątków i zadania wg priorytetów w Twenty (Etap 1 vs 2 → ADR #15).
 
-#### Role wdrożenia
+**Role wdrożenia:** Twenty (schema, Email Sync, webhook OUT, UI), GTM/sGTM/Sortownia/Stape/Robot, aktualizacja nazw eventów w docs orkiestracji + kod Robot (ADR #14) → **Dawid**. Uzgodnienia z przełożonymi: Dawid ↔ Mariusz, Krzysztof. Harmonogram/plan: Dawid (+ Cursor).
 
-| Obszar | Owner |
-|--------|--------|
-| Twenty (schema, Email Sync, webhook OUT, UI) | **Dawid** |
-| GTM / sGTM / Sortownia / Stape / Robot integracja | **Dawid** |
-| Aktualizacja nazw eventów w docs orkiestracji + kod Robot | **Dawid** (ADR #14) |
-| Uzgodnienia z przełożonymi | Dawid ↔ **Mariusz**, **Krzysztof** |
-| Harmonogram / plan prac | **Dawid** (+ Cursor); ten repo SSOT |
+### 5.6 Przepływy per kanał
 
----
+**Formularz paid:** `Formularz → Sortownia (oid_init → generate_lead) → id_oid + verified + vbb_eligible → adapter crm:twenty_create_lead → Twenty`. Sortownia Etap A: **nie przepisujemy** logiki Owner / Akt / 90 dni.
 
-## 6. Przepływy per kanał
+**Mail (Twenty Email Sync + Resolver):** mail → Email Sync (~5 min) → Person/Opportunity → webhook → Resolver → lookup Stape (by_email[from], opcjonalnie by_phone tylko z pola, nie z body) → T1/T2/T3 zapis id_oid + wskaźniki; T4 → flaga „Tożsamość do rozstrzygnięcia". Handlowiec **nie przepisuje** leada od zera — człowiek tylko przy T4.
 
-### 6.1 Formularz paid (bez zmian)
+**Telefon (ręczny):** handlowiec wpisuje numer (+ email jeśli zna) → webhook field updated → Resolver (ta sama macierz §5.3). Bez integracji telefonii — resolver działa w momencie zapisu pola.
 
-```
-Formularz → Sortownia (oid_init → generate_lead) → id_oid + verified + vbb_eligible
-         → adapter crm:twenty_create_lead → Twenty
-```
+**Scenariusz 3-dniowy:** D1 formularz paid, mail firmowy → `id_oid=A`, verified. D2 handlowiec dodaje telefon prywatny → phone 0 trafień → dopisz do A; email już na A → T1/T2. D3 mail z prywatnego Gmaila → email 0; jeśli additional email → T1; konflikt → T4 (jeden klik „dopnij do A").
 
-Sortownia Etap A: **nie przepisujemy** logiki Owner / Akt / 90 dni.
+### 5.7 Dziś vs docelowo (FAQ — dla człowieka)
 
-### 6.2 Mail (Twenty Email Sync + Resolver)
-
-```
-1. Mail wpada → Twenty Email Sync (~5 min) → Person/Opportunity
-2. Webhook → Identity Resolver
-3. Lookup Stape: by_email[from], opcjonalnie by_phone (tylko z pola, nie z body)
-4. T1/T2/T3 → zapis id_oid na polu Twenty + wskaźniki Stape
-5. T4 → flaga „Tożsamość do rozstrzygnięcia” — handlowiec wybiera kandydata
-```
-
-Handlowiec **nie przepisuje** leada od zera — sync tworzy rekord; człowiek tylko przy **T4**.
-
-### 6.3 Telefon (ręczny)
-
-```
-Handlowiec wpisuje numer (+ email jeśli zna)
-→ webhook field updated → Resolver (ta sama macierz §4)
-```
-
-Bez integracji telefonii — resolver działa **w momencie zapisu pola**.
-
-### 6.4 Scenariusz 3-dniowy (przykład)
-
-| Dzień | Zdarzenie | Wynik |
-|-------|-----------|--------|
-| 1 | Formularz paid, mail firmowy | Sortownia → `id_oid=A`, verified |
-| 2 | Handlowiec dodaje telefon prywatny | Phone: 0 trafień → dopisz do A; email już na A → **T1/T2** |
-| 3 | Mail z prywatnego Gmaila | Email: 0; jeśli Twenty ma additional email → **T1**; jeśli konflikt → **T4** (jeden klik: „dopnij do A”) |
-
----
-
-## 7. Dziś vs docelowo (FAQ)
-
-| Kanał | **Dziś** | **Docelowo** |
-|-------|----------|--------------|
+| Kanał | Dziś | Docelowo |
+|---|---|---|
 | Formularze strony | Sortownia + często mail na `leads@` | Sortownia → Twenty; paid bez zmian |
-| Mail `leads@` | julia362 → GPT → **auto-lead** Supabase | Twenty sync + **Resolver** (T1–T3 auto, T4 człowiek) |
-| Mail `studio@` itd. | Mail zapisany; **brak auto-leada** dla nowego klienta | Twenty sync + **T3 auto_mint** dla nowego nadawcy |
-| `kontakt@` | Osobna skrzynka, spam; **nie obsługujemy** w Twenty | Bez zmian — poza CRM |
+| Mail `leads@` | julia362 → GPT → auto-lead Supabase | Twenty sync + Resolver (T1–T3 auto, T4 człowiek) |
+| Mail `studio@` itd. | Mail zapisany; brak auto-leada dla nowego klienta | Twenty sync + T3 auto_mint dla nowego nadawcy |
+| `kontakt@` | Osobna skrzynka, spam; nie obsługujemy | Bez zmian — poza CRM |
 | Telefon | Ręcznie w legacy CRM | Ręcznie w Twenty + Resolver |
 
 **julia362 OFF** dopiero gdy Email Sync + Resolver + reguły kanałów działają (ADR #12/#13).
 
----
+### 5.8 Model danych Stape + implementacja
 
-## 8. Implementacja: Stape Store, Sortownia, backlog
+**Podział odpowiedzialności:** Sortownia Etap A (tylko paid: `oid_init`, `generate_lead`, Owner, Akt, task_queue) · Identity Resolver (T1–T5, lookup wskaźników, mint nie-paid, flagi — osobny handler) · Robot/GCF (VBB gate w adapterach) · Twenty (Email Sync, UI, merge ograniczony, webhook OUT).
 
-### 8.1 Podział odpowiedzialności
-
-| Komponent | Odpowiedzialność |
-|-----------|------------------|
-| **Sortownia Etap A** | Tylko **paid**: `oid_init`, `generate_lead`, Owner, Akt, task_queue |
-| **Identity Resolver** | T1–T5, lookup wskaźników, mint nie-paid, flagi — **osobny handler** |
-| **Robot (GCF)** | VBB gate w adapterach (`vbb_eligible`) |
-| **Twenty** | Email Sync, UI, merge (ograniczony), webhook OUT |
-
-### 8.2 Model danych Stape (ADD)
-
-**Profil** (klucz dokumentu = `id_oid`):
-
+**Profil** (klucz = `id_oid`):
 ```yaml
 id_oid: string          # ULID, klucz profilu
 canonical_oid: string   # na start == id_oid; przy łączeniu = zwycięzca
-identity_status: enum   # verified | needs_review | unresolved
+identity_status: enum    # verified | needs_review | unresolved
 vbb_eligible: bool
-identifiers:            # denormalizacja (opcjonalnie)
+identifiers:
   emails: string[]
   phones_e164: string[]
   ga_client_id: string
@@ -281,80 +225,35 @@ identifiers:            # denormalizacja (opcjonalnie)
 # + istniejące pola paid: owner, assist, order_id, AktTimestamp, attr_gclid, ...
 ```
 
-**Wskaźniki** (osobne dokumenty):
+**Wskaźniki** (osobne dokumenty): `by_email/{email_normalized}` · `by_phone/{phone_e164}` · `by_ga/{ga_client_id}` · `by_crm/{twenty_record_id}` → każdy `→ { id_oid }`. Lookup: wskaźnik → `id_oid` → profil. Dopinięcie drugiego emaila = **nowy wskaźnik**, bez nowego profilu. Migracja: obecny multi-key write (profil pod email/phone/ga) → wskaźniki + profil pod `id_oid`.
 
-```
-identity_map/by_email/{email_normalized}  → { id_oid }
-identity_map/by_phone/{phone_e164}        → { id_oid }
-identity_map/by_ga/{ga_client_id}          → { id_oid }
-identity_map/by_crm/{twenty_record_id}    → { id_oid }
-```
+**Czego NIE robimy w Sortowni paid:** automatyczny silnik merge nie-paid; probabilistyczne dopasowanie; lookup telefonu dla kanału mailowego w logice paid.
 
-Lookup: wskaźnik → `id_oid` → profil. Dopinięcie drugiego emaila = **nowy wskaźnik**, bez nowego profilu.
+**UI człowieka (T4):** przy `needs_review` handlowiec widzi 1–3 kandydatów z Stape (nie dowolny search): „To ten sam klient" → resolver dopina wskaźnik (nie merge dwóch paid); „To nowy klient" → T3 mint; „Eskaluj" → T5/admin. Każda decyzja → audyt (`who`, `when`, `tier`, `chosen_id_oid`). **Reconciliation** 1×/dobę: Twenty PII vs Stape wskaźniki → rozjazd = alert.
 
-**Migracja:** obecny multi-key write w `SORTOWNIA_V2_POPRAWIONY.js` (profil pod email/phone/ga) → wskaźniki + profil pod `id_oid`.
+> **Backlog kodu Sortowni (ADD-2/ADD-1/ADD-3/FIX-2/FIX-1) + kolejność wdrożenia → `runbooks/IMPLEMENTATION_PLAN.md`.** Tutaj pozostaje wskaźnik; backlog implementacji nie jest treścią tożsamości.
 
-### 8.3 Czego NIE robimy w Sortowni paid
+### 5.9 Twenty — narzędzia natywne i ograniczenia (merge — 3 bramki `[D:OPEN]`)
 
-- Automatyczny silnik merge nie-paid
-- Probabilistyczne dopasowanie
-- Lookup telefonu dla kanału mailowego w logice paid (telefon idzie przez Resolver po Twenty)
+**Wykorzystujemy:** Email Sync (IMAP `mail.owocni.pl`) — hub mailowy sprzedaży; **Merge rekordów (od v1.3)** — tylko w UI T4, z ograniczeniami; Additional emails/phones na Person.
 
-### 8.4 Backlog kodu Sortowni
+**Ograniczenia (DO TESTU — bramki, NIE backlog):**
+1. Email podlinkowany tylko do **jednego** kontaktu — duplikat additional email → cichy routing do starszego rekordu.
+2. **Merge może być nieodwracalny** — szkolenie + reguły §11. `[D:OPEN]`
+3. **Webhook przy merge — czy payload niesie oba ID?** `[D:OPEN]` — **bramka cutoveru**.
 
-Klasy: **FIX** = dotyka działającego paid (osobny commit + regresja). **ADD** = nowe, izolowane.
+> **Trzy bramki merge są `[D:OPEN]` i blokują bezpieczny cutover:** (a) webhook przy merge niesie oba ID? (b) nieodwracalność merge; (c) T5 `merge_review_critical` przy dwóch paid `id_oid`. Merge NIE jest opisany jako rozstrzygnięty. To trzeci, osobny wektor tożsamościowy (≠ fail-closed, ≠ backfill idOid).
 
-| ID | Klasa | Opis | Ryzyko |
-|----|-------|------|--------|
-| **ADD-2** | ADD | Pola `canonical_oid`, `identity_status`, `vbb_eligible` na profilu | Niskie |
-| **ADD-1** | ADD | Wskaźniki `by_*` + profil pod `id_oid` + migracja | Średnie |
-| **ADD-3** | ADD | Identity Resolver (webhook Twenty, macierz T1–T5, idempotencja, retry) | Średnie |
-| **FIX-2** | FIX | Ujednolicić `AktTimestamp` (epoch ms); parser tolerancyjny | Średnie |
-| **FIX-1** | FIX | **Opcja A (2026-05-28):** dokończyć `assist` w paid (multi-touch); wymagane przy identyfikacji i dopisywaniu sygnałów przez handlowców | Średnie |
-
-**Kolejność:** ADD-2 → ADD-1 → ADD-3 → (Email Sync + testy) → FIX-2 → FIX-1. **FIX i ADD nie w jednym commicie.**
-
-### 8.5 UI człowieka (T4) — odporność na błędy
-
-Przy `needs_review` handlowiec widzi **1–3 kandydatów** z Stape (nie dowolny search):
-
-- **„To ten sam klient”** → resolver dopina wskaźnik (nie merge dwóch paid)
-- **„To nowy klient”** → T3 mint (jeśli brak)
-- **„Eskaluj”** → T5 / admin
-
-Każda decyzja → audyt (`who`, `when`, `tier`, `chosen_id_oid`).  
-**Reconciliation** 1×/dobę: Twenty PII vs Stape wskaźniki → rozjazd = alert.
-
----
-
-## 9. Twenty — narzędzia natywne i ograniczenia
-
-### Wykorzystujemy
-
-- **Email Sync** (IMAP `mail.owocni.pl`) — **hub mailowy sprzedaży**: wszystkie skrzynki §5.1, odpowiedzi z Twenty, timeline, (docelowo) podsumowania i zadania wg priorytetów
-- **Merge rekordów** (od 1.3) — tylko w UI T4, z ograniczeniami
-- **Additional emails/phones** na Person — dopinanie identyfikatorów
-
-### Ograniczenia (DO TESTU)
-
-1. Email podlinkowany tylko do **jednego** kontaktu — duplikat additional email → cichy routing do starszego rekordu
-2. Merge może być **nieodwracalny** — szkolenie + reguły §11
-3. Webhook przy **merge** — czy payload ma oba ID? (bramka cutover)
-
----
-
-## 10. VBB gate (sygnały reklamowe)
+### 5.10 VBB gate (sygnały reklamowe)
 
 Wysyłka do Google/Meta tylko gdy:
-
 ```
 identity_status == verified  AND  vbb_eligible == true
 ```
-
-Inaczej task → `skipped_no_oid` (świadomy skip, nie `failed`).
+Inaczej task → `skipped_no_oid` (świadomy **skip ≠ fail**).
 
 | Źródło | Typowo |
-|--------|--------|
+|---|---|
 | paid + click-ID | verified + vbb_eligible true |
 | nie-paid przed resolverem | needs_review / unresolved → off |
 | po T1/T2/T3 | verified; vbb_eligible wg paid touch |
@@ -362,43 +261,62 @@ Inaczej task → `skipped_no_oid` (świadomy skip, nie `failed`).
 
 Bramka w **adapterach Robot**, nie w Sortowni paid.
 
----
+### 5.11 Reguły procesowe (NEGATIVE RULES — nie kod, nie skracać)
 
-## 11. Reguły procesowe (nie kod)
-
-1. **Generyczne maile** (`kontakt@`, `biuro@`) → powiązanie z **Company**, nie additional email osoby
-2. **Nie merguj** różnych osób tej samej firmy (asystent ≠ szef)
-3. **Paid telefon bez kontekstu** → akceptowany under-merge; identyfikacja później
-4. **`campaignRejected`** — zachować semantykę Bitrix; ≠ stage LOST
-5. **Dwa paid id_oid** → T5, ręczna korekta platform — nigdy auto
+1. **Generyczne maile** (`kontakt@`, `biuro@`) → powiązanie z **Company**, nie additional email osoby.
+2. **Nie merguj** różnych osób tej samej firmy (asystent ≠ szef).
+3. **Paid telefon bez kontekstu** → akceptowany under-merge; identyfikacja później.
+4. **`campaignRejected`** — zachować semantykę Bitrix; ≠ stage LOST.
+5. **Dwa paid id_oid** → T5, ręczna korekta platform — nigdy auto.
 
 ---
 
-## 12. Kolejność wdrożenia i bramki DO TESTU
+## 6. CROSS-REFERENCES
 
-| Krok | Co | Blokuje |
-|------|-----|---------|
-| 0 | Pomiar fragmentacji Identity Map (ile duplikatów id_oid) | Priorytety |
-| 1 | ADD-2 pola profilu | — |
-| 2 | ADD-1 wskaźniki + migracja | Resolver |
-| 3 | ADD-3 Identity Resolver v1 | Nie-paid auto |
-| 4 | Twenty Email Sync (skrzynki, reguły auto-create) | julia362 OFF |
-| 5 | UI T4 (kandydaci) | Operacje |
-| 6 | VBB gate w adapterach | Sygnały |
-| 7 | Reconciliation cron | Utrzymanie |
-| 8 | FIX-2, FIX-1 (osobno, regresja paid) | Stabilność paid |
-
-**DO TESTU (P0 przed cutover):**
-
-- [ ] Webhook Twenty przy merge — payload z oboma ID
-- [ ] Resolver T4 nie wysyła VBB
-- [ ] T3 mint + backfill pola `id_oid` w Twenty
-- [ ] `kontakt@` — prawdziwa skrzynka vs alias
-- [ ] S1/S1b w `STRESS_TEST_PLAN.md` — cross-channel PASS/FAIL
+| Temat | Gdzie jest prawda |
+|---|---|
+| Mapowanie eventów, loop-prevention, generate_lead (manual) | `EVENT_CONTRACT.md` |
+| Pole `idOid` (typ/frozen), srcSystem | `DATA_MODEL.md` |
+| INV-7 fail-closed, granica CRM↔orkiestracja | `CRM_CONSTITUTION.md` |
+| Backlog kodu Sortowni (ADD/FIX), kolejność wdrożenia, parzystość BB | `runbooks/IMPLEMENTATION_PLAN.md` |
+| Nazwa eventu webhooka Twenty (recheck) | `ops/OPS_NOTES.md` |
+| Granice systemów, diagramy in/out | `ARCHITECTURE.md` |
 
 ---
 
-## 13. Słownik (dla LLM)
+## 7. OPEN QUESTIONS / DECISIONS NEEDED
+
+| ID | Pytanie | Owner | Blocks | Gdzie rozstrzygnąć |
+|---|---|---|---|---|
+| OQ-I1 | Webhook Twenty przy merge — payload z oboma ID? | Dawid | **cutover** | preflight / instancja |
+| OQ-I2 | Merge nieodwracalny — reguła przepięcia `canonical_oid` | Dawid | **cutover** | preflight + §11 |
+| OQ-I3 | T5 przy dwóch paid id_oid — ścieżka admin | Dawid | **cutover** | preflight |
+| OQ-I4 | Niezawodność Email Sync przy wielu skrzynkach (~80 leadów/mc kanałem mailowym, nie mylić z ~150/mc całością — `ARCHITECTURE.md`) | Dawid | nie | test operacyjny |
+| OQ-I5 | Format `time_occurred_iso_utc` — ISO vs epoch (FIX-2) | Dawid | nie | implementacja |
+| OQ-I6 | Stape Store — wydajność wzorca wskaźnik → profil (2 odczyty) | Dawid | nie | preflight |
+
+---
+
+## 8. VERIFICATION / RECHECK (DO TESTU — P0 przed cutover)
+
+| Co sprawdzić | Kiedy | Kto | Dowód |
+|---|---|---|---|
+| Webhook Twenty przy merge — payload z oboma ID | Preflight | Dawid | instancja |
+| Resolver T4 nie wysyła VBB | Preflight | Dawid | runtime |
+| T3 mint + backfill pola `id_oid` w Twenty | Preflight | Dawid | runtime |
+| `kontakt@` — prawdziwa skrzynka vs alias | Preflight | Dawid | instancja |
+| Cross-channel scenariusze (plan testów) | Preflight | Dawid | PASS/FAIL |
+
+---
+
+## 9. CHANGELOG
+
+| Data | Zmiana | Kto | Powód |
+|---|---|---|---|
+
+---
+
+## SŁOWNIK (dla LLM — one-term-per-concept)
 
 | Termin | Znaczenie |
 |--------|-----------|
@@ -410,21 +328,17 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 | **Sortownia Etap A** | sGTM tag — tylko paid orchestration |
 | **Profil Klienta** | Dokument Stape pod kluczem `id_oid` |
 | **Wskaźnik** | Dokument `by_email` / `by_phone` → wskazuje na `id_oid` |
-| **T1–T5** | Poziomy pewności resolvera (§3) |
+| **T1–T5** | Poziomy pewności resolvera (§5.2) |
 | **Projekcja** | Twenty CRM — widok operacyjny, nie master tożsamości |
 | **julia362** | Legacy IMAP watcher → better-bitrix (wyłączyć po cutover) |
+| **owner** | Homonim. **(a) pole paid:** pierwszy kanał (first-touch), para z `assist`, wejście do reguł 90 dni / VBB (§5.8). **(b) Opportunity owner:** handlowiec przypisany do leada w Twenty (§5.6). (a) ≠ (b): inny system, inny byt. Poza tym plikiem `owner` bywa też meta-kolumną tabel (kto zapisuje pole) i kolumną ról (kto odpowiada) — patrz glosariusz `CRM_CONSTITUTION.md`. |
 
 ---
 
-## 14. Pytania otwarte (planowanie / implementacja)
+## LEGENDA ZNACZNIKÓW
 
-**Zamknięte planowo (2026-05-28):** `kontakt@` (§5.1), zakres Email Sync (§5.1), ścieżki per kanał (§5–6), plan ADR #13 (§8.4), **FIX-1 Opcja A** (`assist` pełne), parzystość BB (`SALES_OPS_REQUIREMENTS.md` §3).
-
-1. Niezawodność Email Sync przy wielu skrzynkach (wolumen ~80 leadów/m) — **test operacyjny**, nie blokada planu
-2. Format `time_occurred_iso_utc` — ISO vs epoch (FIX-2)
-3. Stape Store — wydajność wzorca wskaźnik → profil (2 odczyty)
-4. **Podsumowania maili / zadania priorytetowe w Twenty** — **Etap 2+** (ADR #15)
-
----
-
-**Powiązane pliki:** `DECISION_REGISTER.md` (#12, #13), `DATA_MODEL.md`, `CRM_ARCHITECTURE_CURRENT.md`, `STRESS_TEST_PLAN.md`, `CHECKLIST_REVIEW.html` (blok 6), `CUTOVER_RUNBOOK.md`
+- `[D:CORE]` — decyzja własna OWOCNI; zmiana tylko właściciel + ADR
+- `[D:VERIFIED]` — fakt zweryfikowany na platformie; recheck po triggerze
+- `[D:RESEARCH]` — rekomendacja researchu; podważyć tylko dowodem z instancji
+- `[D:OPEN]` — świadomie otwarte; agent nie domyka
+- Default tego pliku: `D:CORE`. Inline = odchylenie.
