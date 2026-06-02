@@ -38,7 +38,7 @@ function getEventParamFromEventParams(key) {
 // Web GTM tag GA4 zwykle przekazuje email/phone/etc. w obiekcie user_data,
 // nie na top-level event_data. Bez tego Sortownia nie widzi email/phone z formularza
 // przy generate_lead → profil w identity_map jest zapisany tylko pod id_oid + ga_client_id,
-// więc późniejszy CRM event (qualify_lead/purchase) lookuje po email/phone i dostaje 404.
+// więc późniejszy CRM event (qualify_lead/lead_won) lookuje po email/phone i dostaje 404.
 function getUserDataParam(key) {
   var ud = getEventData("user_data");
   if (!ud || typeof ud !== "object") return undefined;
@@ -723,20 +723,11 @@ function normalizePhone(raw) {
   return undefined;
 }
 
-// SSOT event names (owocni-crm/EVENT_CONTRACT.md §5.2) — legacy aliasy na wejściu
-function normalizeSsoEventName(name) {
-  if (!name) return name;
-  if (name === "lead_won" || name === "closed_won") return "purchase";
-  if (name === "lead_rejected") return "rejected_lead";
-  return name;
-}
-
 // KROK 0: Sprawdź typ eventu
-const eventName = normalizeSsoEventName(
+const eventName =
   getEventDataWithFallback("event_name") ||
   getEventDataWithFallback("event") ||
-  "generate_lead"
-);
+  "generate_lead";
 
 logToConsole("=== SORTOWNIA V2 START === event_name =", eventName);
 
@@ -1093,7 +1084,7 @@ function inferBizProductFromUrl(url) {
 var bizProduct =
   normalizeBizProductSlug(rawBizProduct) ||
   pricingKeyToProduct(rawBizPricingKey);
-const bizValue = getEventDataWithFallback("biz_value"); // Rzeczywista wartość dla purchase
+const bizValue = getEventDataWithFallback("biz_value"); // Rzeczywista wartość dla lead_won
 const ctxPageUrl =
   getEventDataWithFallback("ctx_page_url") ||
   getEventDataWithFallback("page_location");
@@ -1599,7 +1590,7 @@ function processNewProfile() {
   const idOid = generateULID();
 
   logToConsole("SORTOWNIA: ✨ Nowy id_oid =", idOid);
-  // 🔬 DIAGNOSTYKA: jeśli tu trafia event CRM (qualify_lead/purchase), to znaczy że
+  // 🔬 DIAGNOSTYKA: jeśli tu trafia event CRM (qualify_lead/lead_won), to znaczy że
   // Waterfall Resolve nie znalazł profilu po email/phone — fallback ga_client_id z profilu
   // nie zadziała, bo profilu po prostu nie ma (lub jest pod innym kluczem).
   logToConsole(
@@ -1711,7 +1702,7 @@ function saveProfileAndTask(
   existingBizProduct
 ) {
   // ✅ Fallback ga_client_id z profilu w identity_map.
-  // Kluczowe dla zdarzeń CRM (qualify_lead/purchase/rejected_lead), które nie mają
+  // Kluczowe dla zdarzeń CRM (qualify_lead/lead_won/lead_rejected), które nie mają
   // dostępu do cookie _ga przeglądarki — bez tego robot wysyłałby do GA4 MP
   // client_id = id_oid (ULID) i lejek nie sklejałby się z generate_lead z Web GTM.
   const resolvedGaClientId = gaClientId || existingGaClientId || null;
@@ -1874,7 +1865,7 @@ function saveProfileAndTask(
         biz_name: name,
         biz_product: resolvedBizProduct,
         biz_pricing_key: bizPricingKey, // Klucz cennika dla Lookup Table
-        biz_value: bizValue, // Rzeczywista wartość dla purchase
+        biz_value: bizValue, // Rzeczywista wartość dla lead_won
         attr_gclid: attrGclid || existingGclid,
         attr_fbc: attrFbc || existingFbc || null, // ✅ Dodano: Meta Click ID
         attr_gbraid: attrGbraid || null, // ✅ Dodano: Google Braid
@@ -1888,7 +1879,7 @@ function saveProfileAndTask(
             ? makeString(ctxTimeOnPageMs)
             : null, // ✅ Czas na stronie (jak w mailu)
         biz_message: bizMessage || null, // ✅ Treść wiadomości (jak w mailu)
-        // ✅ Używamy resolvedGaClientId (event ?? profil) — kluczowe dla CRM (qualify_lead/purchase),
+        // ✅ Używamy resolvedGaClientId (event ?? profil) — kluczowe dla CRM (qualify_lead/lead_won),
         // które nie znają cookie _ga, ale chcemy aby robot wysłał do GA4 MP ten sam client_id
         // co Web GTM dla generate_lead (sklejanie lejka w GA4).
         ga_client_id: resolvedGaClientId,
