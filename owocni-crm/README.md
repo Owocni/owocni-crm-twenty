@@ -58,4 +58,4 @@ Rozstrzyga **typ treści**, nie liniowa hierarchia: twardy zakaz/invariant → `
 
 Każdy plik ma sekcję **0. LLM QUICK ENTRY** (co decyduje / czego nie / co czytać razem / najgroźniejszy błąd) oraz **1. NEGATIVE RULES** (twarde zakazy). Zacznij od QUICK ENTRY pliku właściwego dla zadania. System znaczników: `[D:CORE]` / `[D:VERIFIED]` / `[D:RESEARCH]` / `[D:OPEN]` — legenda na końcu każdego pliku.
 
-**Entry point repo:** [`../README.md`](../README.md). **NIE czytać:** [`../_DO_USUNIECIA/`](../_DO_USUNIECIA/README.md) (stara dokumentacja i proces refaktoryzacji — docelowo usunąć).
+**Entry point repo:** [`../README.md`](../README.md). **Review dokumentacji:** [`../REVIEW_PACKAGE.md`](../REVIEW_PACKAGE.md). **NIE czytać:** [`../_DO_USUNIECIA/`](../_DO_USUNIECIA/README.md) (stara dokumentacja i proces refaktoryzacji — docelowo usunąć).
