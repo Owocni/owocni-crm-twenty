@@ -18,7 +18,9 @@ Kanoniczna dokumentacja (SSOT) migracji CRM OWOCNI.PL na **Twenty CRM** + integr
 
 ```
 owocni-crm-github/
+├── AGENTS.md                 ← OBOWIĄZKOWY protokół pracy LLM
 ├── README.md                 ← TEN plik
+├── REVIEW_PACKAGE.md         ← pakiet do weryfikacji docs
 ├── integrations/             ← kod Sortowni + Robot
 └── owocni-crm/               ← SSOT — dokumentacja kanoniczna
     ├── README.md
@@ -67,9 +69,12 @@ Proces / rozmowa z Mariuszem: [`_DO_USUNIECIA/proces-refaktoryzacji/AGENDA_ROZMO
 
 ## Dla agenta LLM
 
-- **START integrations/Twenty:** `integrations/README.md` → `integrations/TWENTY_PATHS.md`  
+**Zacznij od:** [`AGENTS.md`](AGENTS.md) — protokół obowiązkowy (zakaz szerokich promptów, workflow READ→PLAN→DIFF).
+
 - **SSOT:** `owocni-crm/` + `integrations/*.js` (bez `integrations/archive/`)  
+- **Kod / Twenty paths:** `integrations/README.md` → `TWENTY_PATHS.md`  
 - **Routing / konflikty:** `owocni-crm/README.md` + `CRM_CONSTITUTION.md` §0a  
+- **Anti-wpadki / deploy:** `integrations/runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`  
 - **NIE czytać:** `_DO_USUNIECIA/`, `integrations/archive/`
 
 Zewnętrznie: [dokumentacja orkiestracji (Google Docs)](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) · [docs.twenty.com](https://docs.twenty.com)

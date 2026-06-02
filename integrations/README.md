@@ -5,6 +5,7 @@
 
 ## LLM START (60 sek)
 
+0. **Obowiązkowy protokół:** [`../AGENTS.md`](../AGENTS.md) — przeczytaj przed jakąkolwiek edycją.
 1. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
 2. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
 3. **Kolejność wdrożenia:** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md)

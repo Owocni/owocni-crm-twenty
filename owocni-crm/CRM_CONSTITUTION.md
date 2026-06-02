@@ -120,7 +120,11 @@ Praw jest dziewięć — każde to osobne pole powierzchni: inny rodzaj błędu,
 - **Grupa II — Co odlewamy w fundamencie** (Prawa 3–6)
 - **Grupa III — Jak utrzymujemy system czytelnym i rozszerzalnym** (Prawa 7–9)
 
-**Rdzeń (nazwa + Test):**
+**Rdzeń (nazwa + Test) — INDEKS, nie pełne brzmienie:**
+
+> **Dla agenta LLM i implementacji:** tabela poniżej to **skrót nawigacyjny** (nazwa + pytanie testowe). **Nie wystarcza** jako podstawa zmian w kodzie, workflowach ani strukturze repo.  
+> **Obowiązkowe:** dla Prawa *N* przeczytaj **§5.3** (*Pełne brzmienie praw*) oraz plik‑właściciel domeny (`EVENT_CONTRACT`, `DATA_MODEL`, …).  
+> Protokół pracy agenta: [`../AGENTS.md`](../AGENTS.md).
 
 | # | Prawo (nazwa) | Test |
 |---|---|---|

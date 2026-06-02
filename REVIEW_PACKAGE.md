@@ -117,6 +117,7 @@ Cutover startuje wyłącznie wg `DECISION_REGISTER.md` §5.1 (wszystkie blockers
 
 | Temat | Plik |
 |-------|------|
+| Protokół pracy LLM (obowiązkowy) | `AGENTS.md` |
 | Anti-wpadki (LLM / zespół) | `integrations/runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md` |
 | Dlaczego runtime nie jest 100% | `integrations/runbooks/WHY_NOT_FULL_RUNTIME_YET.md` |
 | Kolejność prac po review | `integrations/runbooks/NEXT_STEPS.md` |
