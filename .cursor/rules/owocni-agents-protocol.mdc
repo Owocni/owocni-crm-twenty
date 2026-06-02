@@ -1,0 +1,41 @@
+---
+description: Obowiązkowy protokół LLM — AGENTS.md, wąskie zadania, SSOT (całe repo)
+alwaysApply: true
+---
+
+# OWOCNI CRM — protokół agenta
+
+**Pełna wersja:** [`AGENTS.md`](../../AGENTS.md) w root repo — przeczytaj przed edycją.
+
+## Tryb pracy
+
+- **Wąskie zadania** z jawnym plikiem‑właścicielem SSOT. Zakaz: „popraw repo”, „zsynchronizuj wszystko”, domykanie `[D:OPEN]` bez dowodu.
+- **Człowiek** decyduje o strukturze, cutover, deploy; agent proponuje minimalny diff po PLAN w odpowiedzi.
+
+## Kontekst `@owocni-crm/`
+
+Użytkownik często wskazuje folder **`owocni-crm/`** — to **wejście do SSOT** (`owocni-crm/README.md` → Primary plik), **nie** wyłączenie reszty repo.
+
+| Zakres zadania | Gdzie pracować |
+|----------------|----------------|
+| Semantyka, prawa, eventy, model | `owocni-crm/` (navigator w README) |
+| Sortownia, Robot, Twenty paths | `integrations/` + `EVENT_CONTRACT.md` |
+| Oba | Ta sama zmiana: SSOT + kod |
+
+**Nie czytać jako SSOT:** `_DO_USUNIECIA/**`, `integrations/archive/**`, `owocni-crm/archive/**`.
+
+## Workflow (skrót)
+
+`READ` → `CLASSIFY` → `LOCATE SSOT` → `PLAN` (w odpowiedzi) → `DIFF` → `VERIFY` → `UPDATE SSOT`
+
+Konstytucja **§5.2 = indeks**; przed implementacją **§5.3** dla danego Prawa.
+
+## Prompt od człowieka (szablon)
+
+```
+Zgodnie z AGENTS.md: [plik SSOT lub temat z owocni-crm/README.md].
+Cel: …
+Nie ruszaj: …
+```
+
+Przykład zły: „Przejrzyj i uporządkuj dokumentację w owocni-crm”.

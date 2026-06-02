@@ -16,6 +16,28 @@ Ten projekt jest **długotrwały i wielowarstwowy** (Twenty, Sortownia, Stape, R
 
 LLM **pomaga**, ale **nie decyduje samodzielnie** o strukturze systemu, governance ani cutover.
 
+**Cursor:** reguła projektu [`.cursor/rules/owocni-agents-protocol.mdc`](.cursor/rules/owocni-agents-protocol.mdc) (`alwaysApply`) — nie trzeba wklejać tego pliku ręcznie przy każdej sesji Agent w tym workspace.
+
+---
+
+## 0. Dla człowieka — jak delegować do LLM
+
+Ten plik jest **dla agenta**; Ty korzystasz z niego, żeby **wąsko** formułować zadania.
+
+**Typowy kontekst:** w Cursorze wskazujesz folder **`owocni-crm/`** (`@owocni-crm`) — to poprawne **wejście do SSOT** (`owocni-crm/README.md` → plik Primary). To **nie** znaczy „ignoruj `integrations/`” — gdy zadanie dotyka kodu, agent i tak musi trzymać `EVENT_CONTRACT.md` i ścieżki z `integrations/`.
+
+**Szablon promptu:**
+
+```
+Zgodnie z AGENTS.md: zaktualizuj [np. EVENT_CONTRACT.md §…].
+Cel: jedna konkretna zmiana.
+Nie ruszaj: [lista plików / integrations].
+```
+
+**Unikaj:** „popraw dokumentację w owocni-crm”, „zsynchronizuj repo”, „zamknij OPEN”.
+
+**Workspace:** otwórz root **`owocni-crm-github/`** (nie tylko podfolder), żeby Agent widział `AGENTS.md`, `.cursor/rules/` i `integrations/`.
+
 ---
 
 ## 1. Zasady nadrzędne (nie negocjuj)
