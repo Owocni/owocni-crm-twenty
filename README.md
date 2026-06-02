@@ -57,6 +57,8 @@ Szczegóły: [`_DO_USUNIECIA/README.md`](_DO_USUNIECIA/README.md).
 
 ## Start here (człowiek)
 
+**Przekazanie do weryfikacji dokumentacji:** [`REVIEW_PACKAGE.md`](REVIEW_PACKAGE.md) (1 strona + lista pytań dla recenzenta).
+
 1. [`owocni-crm/README.md`](owocni-crm/README.md) — routing temat → plik  
 2. [`owocni-crm/CRM_CONSTITUTION.md`](owocni-crm/CRM_CONSTITUTION.md) — prawa i INVARIANTS  
 3. [`owocni-crm/DECISION_REGISTER.md`](owocni-crm/DECISION_REGISTER.md) — blokery cutover  
