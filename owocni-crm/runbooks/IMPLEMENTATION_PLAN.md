@@ -173,6 +173,7 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 |---|---|---|---|---|
 | OQ-P1 | Data wyłączenia julia362 (zależna od Email Sync + Resolver) | Dawid | cutover | po G7/G8 |
 | OQ-P2 | Harmonogram okna cutoveru | Dawid + właściciel | cutover | po G1–G8 PASS |
+| OQ-P3 | Wydajność resolvera Stape (wzorzec wskaźnik→profil, 2 odczyty) | Dawid | nie | preflight performance (zaplanowane; bez realizacji „teraz") |
 
 ---
 
