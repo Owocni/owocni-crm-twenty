@@ -65,8 +65,9 @@ Proces / rozmowa z Mariuszem: [`_DO_USUNIECIA/proces-refaktoryzacji/AGENDA_ROZMO
 
 ## Dla agenta LLM
 
-- **SSOT:** `owocni-crm/` + `integrations/` (kod)  
+- **START integrations/Twenty:** `integrations/README.md` → `integrations/TWENTY_PATHS.md`  
+- **SSOT:** `owocni-crm/` + `integrations/*.js` (bez `integrations/archive/`)  
 - **Routing / konflikty:** `owocni-crm/README.md` + `CRM_CONSTITUTION.md` §0a  
-- **NIE czytać:** `_DO_USUNIECIA/` (chyba że explicit porównanie ze starą dokumentacją)
+- **NIE czytać:** `_DO_USUNIECIA/`, `integrations/archive/`
 
 Zewnętrznie: [dokumentacja orkiestracji (Google Docs)](https://docs.google.com/document/d/1RJOx2FpknlnP5vUBmuX42UFbkcH3H4cdGTvlueMVtAw/edit?tab=t.jwr3op45t6an) · [docs.twenty.com](https://docs.twenty.com)

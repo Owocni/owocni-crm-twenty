@@ -1,6 +1,7 @@
 const functions = require('@google-cloud/functions-framework');
 const { google } = require('googleapis');
 const crypto = require('crypto');
+const { partitionTasksByEnvironment, logSandboxPlatformSkip } = require('./shared/envGuard');
 
 // ============================================
 // KONFIGURACJA
@@ -208,7 +209,11 @@ console.log(`🧹 Cleaned up ${deletedCount} old "done" tasks from collection`);
       console.error(`❌ This will cause duplication! Check updateTaskStatus function.`);
     }
 
-    // KROK 5: Przygotuj i zapisz GA4 Events (imitacja) - dla WSZYSTKICH
+    // env-guard: sandbox taski → safe-sink (arkusze), bez prod Google/Meta/GA4 API
+    const { prod: prodTasks, sandbox: sandboxTasks } = partitionTasksByEnvironment(tasks);
+    logSandboxPlatformSkip(sandboxTasks.length);
+
+    // KROK 5: Przygotuj i zapisz GA4 Events (imitacja) — prod + sandbox (audyt)
     const ga4Events = tasks
       .map(task => prepareGA4Event(task, pricingConfig))
       .filter(event => event !== null);  // Usuń null (skipped events)
@@ -216,11 +221,14 @@ console.log(`🧹 Cleaned up ${deletedCount} old "done" tasks from collection`);
     const ga4Appended = await appendGA4EventsToSheets(ga4Events);
     console.log(`✅ Appended ${ga4Appended} GA4 events to GA4_Events sheet (debug)`);
 
-    // KROK 5b: Wyślij do GA4 Measurement Protocol (faktyczna wysyłka)
-    const ga4MPSent = await sendToGA4MeasurementProtocol(ga4Events);
-    console.log(`✅ Sent ${ga4MPSent} GA4 events to Measurement Protocol`);
+    // KROK 5b: Wyślij do GA4 Measurement Protocol (tylko prod)
+    const ga4EventsProd = prodTasks
+      .map(task => prepareGA4Event(task, pricingConfig))
+      .filter(event => event !== null);
+    const ga4MPSent = await sendToGA4MeasurementProtocol(ga4EventsProd);
+    console.log(`✅ Sent ${ga4MPSent} GA4 events to Measurement Protocol (prod only)`);
 
-    // KROK 6: Przygotuj i zapisz Meta Events (imitacja)
+    // KROK 6: Przygotuj i zapisz Meta Events (imitacja) — wszystkie; API tylko prod
     const metaEvents = tasks
       .map(task => prepareMetaEvent(task, pricingConfig))
       .filter(event => event !== null);
@@ -236,8 +244,8 @@ console.log(`🧹 Cleaned up ${deletedCount} old "done" tasks from collection`);
     const googleAdsAppended = await appendGoogleAdsEventsToSheets(googleAdsEvents);
     console.log(`✅ Appended ${googleAdsAppended} Google Ads events to GoogleAds_Events sheet`);
 
-    // KROK 7b: Wyślij konwersje do Google Ads API (Lead/SQL/Rejected → ctId 6897478455, Purchase → ctId 7512561962)
-    const googleAdsSent = await sendToGoogleAdsApi(tasks, pricingConfig);
+    // KROK 7b: Wyślij konwersje do Google Ads API (tylko prod)
+    const googleAdsSent = await sendToGoogleAdsApi(prodTasks, pricingConfig);
     console.log(`✅ Sent ${googleAdsSent} Google Ads conversions to API`);
 
     // Success response

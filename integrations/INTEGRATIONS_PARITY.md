@@ -36,9 +36,10 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 |---|---|---|---|
 | Sortownia paid / `generate_lead` / oid_init | **TAK** (`SORTOWNIA_V2_POPRAWIONY.js`) | Stape sGTM tag (deploy z tego pliku) | `EVENT_CONTRACT`, `IDENTITY` |
 | Robot / adaptery platform | **TAK** (`GoogleCloudRobot.js`) | GCP Cloud Function | `ARCHITECTURE`, `EVENT_CONTRACT` |
-| Adapter `inbound:twenty_webhook` | **NIE (jeszcze)** | Stape — osobny tag/handler | `EVENT_CONTRACT` §5.4 |
-| Adapter `crm:twenty_create_lead` | **NIE (jeszcze)** | Stape — osobny tag/handler | `ARCHITECTURE` §5.3 |
-| Adapter `crm:twenty_update_person` | **NIE (jeszcze)** | Stape — osobny tag/handler | `EVENT_CONTRACT` §6.1 |
+| Adapter `inbound:twenty_webhook` | **TAK (prep)** (`INBOUND_TWENTY_WEBHOOK.js`) | Stape HTTP tag — deploy po preflight | `EVENT_CONTRACT` §5.4 |
+| Adapter `crm:twenty_create_lead` | **TAK (stub)** (`CRM_TWENTY_CREATE_LEAD.stub.js`) | Stape tag | `ARCHITECTURE` §5.3 |
+| Adapter `crm:twenty_update_person` | **TAK (stub)** (`CRM_TWENTY_UPDATE_PERSON.stub.js`) | Stape tag | `EVENT_CONTRACT` §6.1 |
+| env-guard sandbox/prod | **TAK (prep)** | `shared/envGuard.js` + `ENV_GUARD.sGTM.js` + pole `environment` w task_queue | `ARCHITECTURE` §5.4 |
 | Identity Resolver T1–T5 | **NIE (jeszcze)** | Stape — osobny handler | `IDENTITY` §5.2 |
 
 > **Wniosek:** dokumentacja opisuje system cały; repo ma dziś **fragment runtime**. To normalne — ale wymaga jawnej checklisty (ten plik).
@@ -51,14 +52,14 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 |---|---|---|---|---|---|
 | P1 | Kanon eventów: `purchase`, `rejected_lead` (zakaz `lead_won` jako event_name) | `EVENT_CONTRACT` §5.2 | Robot: alias legacy → kanon (normalize) | **W toku** | Sandbox: task_queue z `purchase` / `rejected_lead` |
 | P2 | ADR #14 cleanup nazw w Robot + docs orkiestracji | `DECISION_REGISTER` #14 | Robot zaktualizowany; Google Docs — osobno | **W toku** | Przegląd docs orkiestracji |
-| P3 | Loop-prevention: pending-write Stape, **nie** `srcSystem`-SKIP | `EVENT_CONTRACT` NR-6, INV-3 | Adapter Twenty **poza repo**; Sortownia paid nie dotyczy | **OPEN** | Zaimplementować w `inbound:twenty_webhook` (Stape) + smoke |
-| P4 | Manual create: `idOid IS NULL` → `generate_lead` + backfill | `EVENT_CONTRACT` §5.4, §6.1 | Adapter Twenty **poza repo** | **OPEN** | Smoke #4 na sandboxie |
-| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` | `EVENT_CONTRACT` §5.4 | Adapter Twenty **poza repo** | **OPEN** | Preflight payload + implementacja Stape |
+| P3 | Loop-prevention: pending-write Stape, **nie** `srcSystem`-SKIP | `EVENT_CONTRACT` NR-6, INV-3 | Kod prep w `INBOUND_*` + `CRM_TWENTY_UPDATE_PERSON` | **OPEN** | Preflight TTL + smoke |
+| P4 | Manual create: `idOid IS NULL` → `generate_lead` + backfill | `EVENT_CONTRACT` §5.4, §6.1 | `INBOUND_TWENTY_WEBHOOK.js` + update_person stub | **OPEN** | Smoke #4 na sandboxie |
+| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` | `EVENT_CONTRACT` §5.4 | `INBOUND_TWENTY_WEBHOOK.js` (klucze `twenty:opp:`) | **OPEN** | Preflight payload + test |
 | P6 | VBB gate: `identity_status` + `vbb_eligible` | `IDENTITY` §5.10 | Robot: częściowo (consent); pełny gate — weryfikacja | **Do testu** | Test T4/T5 bez emisji VBB |
 | P7 | `srcSystem` = raportowe, nie SKIP | `DATA_MODEL` NR-4 | Adapter Twenty **poza repo** | **OPEN** | Usunąć SKIP po L-1 + smoke #4 |
 | P8 | Wskaźniki `by_*` + profil pod `id_oid` | `IDENTITY` §5.8 | Sortownia: multi-key write (legacy) | **OPEN** | ADD-1/ADD-2 w `IMPLEMENTATION_PLAN` |
 | P9 | `time_occurred` epoch ms (FIX-2) | `IMPLEMENTATION_PLAN` §5.7 | Sortownia: mieszane formaty | **OPEN** | Ujednolicić w Sortowni |
-| P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Adapter Twenty **poza repo** | **OPEN** | Preflight safe-sink |
+| P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Robot `envGuard` + Sortownia `environment` field | **W toku** | Test fixture sandbox bez prod API |
 
 ---
 
@@ -70,8 +71,11 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
    - warunki biznesowe przepięte na kanoniczne nazwy po normalizacji.
 3. **Sortownia paid (`SORTOWNIA_V2_POPRAWIONY.js`):**
    - normalizacja `event_name` na wejściu (gdy CRM/legacy wyśle starą nazwę).
+   - pole `environment` w `task_queue`.
+4. **Twenty (prep, bez deploy):**
+   - `INBOUND_TWENTY_WEBHOOK.js`, `CRM_TWENTY_*.stub.js`, `TWENTY_PATHS.md`, `shared/envGuard.js`.
 
-**Nie zmieniono (świadomie):** logiki `inbound:twenty_webhook` — nie ma jej w repo; następny etap = Stape + opcjonalny eksport do repo.
+**Deploy Stape/GCP:** dopiero po preflight payloadów Twenty (patrz `runbooks/WHY_NOT_FULL_RUNTIME_YET.md`).
 
 ---
 
