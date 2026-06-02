@@ -13,7 +13,7 @@
 5. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
 6. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
 
-**NIE czytaj:** `archive/**`, `_DO_USUNIECIA/**`
+**NIE czytaj jako SSOT:** `archive/**`
 
 ## Pliki runtime (kanon)
 
@@ -44,7 +44,7 @@ Symlinki do tego katalogu. Przy clone samego `AdrianKrauza/owocni` — użyj pli
 | Czytaj | Nie czytaj |
 |--------|------------|
 | Ten README, `TWENTY_PATHS.md`, `INTEGRATIONS_PARITY.md` | `archive/**` |
-| `*.js` poza `archive/` | `_DO_USUNIECIA/**` |
+| `*.js` poza `archive/` | — |
 | `owocni-crm/*.md` | Stary kod Bitrix w archiwum |
 
 Przy konflikcie: `owocni-crm/EVENT_CONTRACT.md` wygrywa nad kodem; kod ma dogonić SSOT (ADR #14).

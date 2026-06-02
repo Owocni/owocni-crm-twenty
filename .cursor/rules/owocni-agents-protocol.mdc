@@ -22,7 +22,7 @@ Użytkownik często wskazuje folder **`owocni-crm/`** — to **wejście do SSOT*
 | Sortownia, Robot, Twenty paths | `integrations/` + `EVENT_CONTRACT.md` |
 | Oba | Ta sama zmiana: SSOT + kod |
 
-**Nie czytać jako SSOT:** `_DO_USUNIECIA/**`, `integrations/archive/**`, `owocni-crm/archive/**`.
+**Nie czytać jako SSOT:** `integrations/archive/**`, `owocni-crm/archive/**`.
 
 ## Workflow (skrót)
 
