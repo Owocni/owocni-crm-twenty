@@ -96,17 +96,17 @@ Dziś: **NIE** — otwarte blokery §5.2.
 
 | ADR | Decyzja | Dlaczego bloker | Powiązana brama | Rozstrzygnąć |
 |---|---|---|---|---|
-| **#12** | Inbound — kanały i `kontakt@` (które skrzynki → Twenty, które poza) | Niejasny zakres wejścia = ryzyko leadów-sierot / fałszywego ingestu | G7 identity-safety | Właściciel + Dawid (`IDENTITY_AND_INBOUND.md` §5.5) |
-| **#13** | Email Sync + Resolver muszą działać PRZED wyłączeniem julia362 | Wyłączenie legacy bez następcy = utrata kanału leadów | G7 / G-PAR | Dawid (test Email Sync + T1–T5) |
-| **#14** | Cleanup zakazanych nazw eventów (`lead_won`→`purchase`) w kodzie Robot + docs orkiestracji | Stary `event_name` w kodzie = niezgodność z kanonem SSOT | G1 event-semantics | Dawid (kod Robot) |
+| **#12** | Inbound — kanały i `kontakt@` (które skrzynki → Twenty, które poza) | Niejasny zakres wejścia = ryzyko leadów-sierot / fałszywego ingestu | G7 identity-safety | **Kierunek zamknięty (2026-06-02):** opcja A (`kontakt@` poza CRM). Do zamknięcia ADR pozostaje evidence z testów operacyjnych. |
+| **#13** | Email Sync + Resolver muszą działać PRZED wyłączeniem julia362 | Wyłączenie legacy bez następcy = utrata kanału leadów | G7 / G-PAR | **Kierunek zamknięty (2026-06-02):** opcja A (wyłączenie dopiero po pełnych testach + przejściu handlowców). ADR zamknąć po PASS dowodach. |
+| **#14** | Cleanup zakazanych nazw eventów (`lead_won`→`purchase`) w kodzie Robot + docs orkiestracji | Stary `event_name` w kodzie = niezgodność z kanonem SSOT | G1 event-semantics | **Kierunek zamknięty (2026-06-02):** opcja A (pełny cleanup przed cutover). Do zamknięcia ADR: commit/evidence. |
 | **L-1** (TRANSITION EXCEPTION) | Usunięcie `srcSystem`-SKIP dopiero po smoke #4 PASS | Przedwczesne usunięcie = drugi mint idOid (rozdwojenie) | G4 loop-prevention | Dawid (`EVENT_CONTRACT.md` §6.1) |
-| **MERGE** (3 bramki) | Webhook-oba-ID / nieodwracalność / T5 dwa paid | Nieznane zachowanie merge = nieodwracalne sklejenie tożsamości | G8 merge-safety | Dawid (`IDENTITY_AND_INBOUND.md` §5.9) |
+| **MERGE** (3 bramki) | Webhook-oba-ID / nieodwracalność / T5 dwa paid | Nieznane zachowanie merge = nieodwracalne sklejenie tożsamości | G8 merge-safety | **Kierunek zamknięty (2026-06-02):** merge tylko przy pełnej zgodności tej samej osoby; zakaz łączenia różnych osób z jednej firmy (np. właściciel vs marketing). Do zamknięcia ADR: preflight + SOP admin. |
 
 ### 5.3 OPEN NON-BLOCKING (`decision_status: open`, `blocks: none`)
 
 | ADR | Decyzja | Uwaga |
 |---|---|---|
-| #15 | Email Sync: zakres podsumowań/zadań w Twenty — Etap 1 vs 2 | Plan domknięty co do kanałów; szczegóły AI-podsumowań → Etap 2 |
+| #15 | Email Sync: zakres podsumowań/zadań w Twenty — Etap 1 vs 2 | **Kierunek zamknięty (2026-06-02):** opcja A (zostaje w CONSTITUTION do czasu przekroczenia progu wydzielenia). Szczegóły AI-podsumowań → Etap 2 |
 | FIX-2 | Format `time_occurred` (ISO vs epoch ms) | Decyzja: epoch ms; wdrożenie w backlogu |
 | OQ (glosariusz) | Kanon glosariusza w CONSTITUTION vs osobny GLOSSARY.md | Próg powstania pliku (CONSTITUTION §5.6) |
 
@@ -131,6 +131,15 @@ Kontekst: jedno źródło podawało błędną nazwę nagłówka (`x-twenty-signa
 
 **ADR #14 (cleanup nazw eventów) — open, blocks cutover.**
 Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzja docelowa: wszystkie `event_name` zgodne z kanonem `EVENT_CONTRACT.md` §5.2. Wdrożenie: Dawid, przed G1 PASS.
+
+### 5.8 USTALENIA WŁAŚCICIELA (2026-06-02) — zebrane
+
+- **L-1 / smoke #4:** potwierdzone podejście A — usuwanie starego `srcSystem`-SKIP dopiero po PASS smoke #4.
+- **MERGE policy:** potwierdzone podejście A — merge wyłącznie dla tej samej osoby; zakaz łączenia różnych osób w tej samej firmie.
+- **Cutover date:** bez daty „z góry"; okno ustalane dopiero po pełnym PASS G1–G8 + G-PAR.
+- **Webhook naming/payload:** podejście A — potwierdzać sandboxem (nie zakładać z docs bez payloadu z instancji).
+- **Stape wydajność:** decyzja operacyjna — temat wpisany do planu preflight; realizacja później (nie teraz).
+- **Integrations parity:** po domknięciu decyzji uruchomić aktualizację `integrations/` do finalnej zgodności z SSOT i sandboxem.
 
 ### 5.6 TASKS MOVED OUT
 

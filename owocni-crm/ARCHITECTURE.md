@@ -125,8 +125,8 @@ Formularz owocni.pl (submit)
 
 | Element | Gdzie w kodzie | Rola |
 |---|---|---|
-| `sendToGoogleSheets` | repo `AdrianKrauza/owocni` — `packages/ui/src/form/utils/sendToGoogleSheets.ts` | Backup zapisu PII leada do arkusza |
-| Make webhook (Sheets) | ten sam repo — m.in. `form.tsx`, `sendMail.ts` | Most do Google Sheets |
+| `sendToGoogleSheets` | repo strony www `AdrianKrauza/owocni` — `packages/ui/src/form/utils/sendToGoogleSheets.ts` | Backup zapisu PII leada do arkusza |
+| Make webhook (Sheets) | repo strony www `AdrianKrauza/owocni` — `packages/ui/src/form/utils/sendMail.ts` oraz formularze `apps/owocni/app/**/components/form.tsx` | Most do Google Sheets (backup) |
 | `dataLayer` → Sortownia | GTM/sGTM | Ścieżka kanoniczna orkiestracji |
 | Make webhook (mail) | `form.tsx` | Backup powiadomienia gdy Stape/GTM padnie |
 
@@ -135,6 +135,8 @@ Formularz owocni.pl (submit)
 2. Błąd Sheets **nie blokuje** submitu (celowo — użytkownik widzi „dziękujemy").
 3. To **nie jest** ten sam arkusz co **safe sink sandboxu outbound** z Twenty (D7/env-guard) — inbound backup ≠ debug webhooków CRM.
 4. Cutover Twenty / wyłączenie julia362 **nie dotyka** tej ścieżki (strona → Make → Sheets niezależna od CRM).
+
+> Uwaga: to jest **warstwa strony www** (formularze). Nie mylić z `../integrations/` — tam jest runtime Sortowni/Robota, nie kod formularzy.
 
 **Weryfikacja przed cutoverem:** scenariusz backup inbound (plan testów — `runbooks/IMPLEMENTATION_PLAN.md`).
 
