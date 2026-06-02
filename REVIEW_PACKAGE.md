@@ -32,7 +32,7 @@ default_trust: D:CORE
 | R8 | Integracje (prep) | `integrations/TWENTY_PATHS.md`, `INTEGRATIONS_PARITY.md` | Czy opis ścieżek Twenty w kodzie prep odpowiada SSOT? |
 | R9 | Świadome OPEN | `owocni-crm/ops/OPS_NOTES.md` | Czy lista `platform_recheck_needed` jest sensowna przed sandboxem? |
 
-**Poza zakresem tego review:** konfiguracja Stape/GCP, testy smoke na żywo, data cutover, porównanie z `_DO_USUNIECIA/` (legacy — tylko na explicit prośbę).
+**Poza zakresem tego review:** konfiguracja Stape/GCP, testy smoke na żywo, data cutover.
 
 ---
 
@@ -121,4 +121,3 @@ Cutover startuje wyłącznie wg `DECISION_REGISTER.md` §5.1 (wszystkie blockers
 | Anti-wpadki (LLM / zespół) | `integrations/runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md` |
 | Dlaczego runtime nie jest 100% | `integrations/runbooks/WHY_NOT_FULL_RUNTIME_YET.md` |
 | Kolejność prac po review | `integrations/runbooks/NEXT_STEPS.md` |
-| Agenda rozmowy (kontekst procesu) | `_DO_USUNIECIA/proces-refaktoryzacji/AGENDA_ROZMOWA_Z_MARIUSZEM.md` |

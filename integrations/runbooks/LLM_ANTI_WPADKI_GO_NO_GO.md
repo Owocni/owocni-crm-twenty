@@ -30,7 +30,7 @@ Jeśli choć 1 pozycja = TAK, status: **NO-GO**.
 
 ## 2) Go Preconditions (muszą być spełnione)
 
-- [ ] Pracujesz na SSOT: `owocni-crm/*.md` + `integrations/*.js` (bez `archive/` i `_DO_USUNIECIA/`).
+- [ ] Pracujesz na SSOT: `owocni-crm/*.md` + `integrations/*.js` (bez `integrations/archive/`).
 - [ ] Masz aktualny runbook fazy (`NEXT_STEPS.md`) i jasno wskazany etap 0/1/2/3/4/5.
 - [ ] Wiesz, która brama jest celem zmiany (G1..G8, G-PAR).
 - [ ] Dla webhooków Twenty masz surowe payloady z sandbox + potwierdzony HMAC.

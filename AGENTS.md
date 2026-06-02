@@ -48,7 +48,7 @@ Nie ruszaj: [lista plików / integrations].
 4. **Nie zmieniaj struktury „przy okazji” implementacji** — najpierw problem, potem decyzja (człowiek), potem ADR jeśli trzeba.
 5. **Implementacja nie może wyprzedzać dokumentacji** — ten sam PR/zmiana aktualizuje SSOT albo jawnie zostawia `[D:OPEN]` z planem domknięcia.
 6. **Nie domykaj `[D:OPEN]`** ani nie zamieniaj `[D:RESEARCH]` na `[D:CORE]` bez testu + wpisu w `DECISION_REGISTER.md`.
-7. **Nie czytaj jako SSOT:** `_DO_USUNIECIA/**`, `integrations/archive/**`, `owocni-crm/archive/**`.
+7. **Nie czytaj jako SSOT:** `integrations/archive/**`, `owocni-crm/archive/**`.
 8. **MCP/AI default: read-only** — zapis tylko po aprobacie człowieka (`CRM_CONSTITUTION.md` §5.1).
 
 ---
@@ -116,7 +116,6 @@ Jeśli zadanie dotyka **Event Contract, Twenty, Stape, struktury repo lub govern
 - „Zamknij wszystkie OPEN”
 - „Zaimplementuj cutover”
 - „Deploy na produkcję”
-- „Usuń `_DO_USUNIECIA`” (bez osobnej decyzji właściciela)
 
 **Zamiast tego poproś o:** jeden plik, jeden ADR, jeden adapter, jeden test — z nazwą SSOT.
 
