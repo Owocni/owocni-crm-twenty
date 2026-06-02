@@ -19,6 +19,7 @@ Kanoniczna dokumentacja (SSOT) migracji CRM OWOCNI.PL na **Twenty CRM** + integr
 ```
 owocni-crm-github/
 ├── AGENTS.md                 ← OBOWIĄZKOWY protokół pracy LLM
+├── .cursor/rules/            ← Cursor Agent (alwaysApply → AGENTS.md)
 ├── README.md                 ← TEN plik
 ├── REVIEW_PACKAGE.md         ← pakiet do weryfikacji docs
 ├── integrations/             ← kod Sortowni + Robot
@@ -69,7 +70,7 @@ Proces / rozmowa z Mariuszem: [`_DO_USUNIECIA/proces-refaktoryzacji/AGENDA_ROZMO
 
 ## Dla agenta LLM
 
-**Zacznij od:** [`AGENTS.md`](AGENTS.md) — protokół obowiązkowy (zakaz szerokich promptów, workflow READ→PLAN→DIFF).
+**Zacznij od:** [`AGENTS.md`](AGENTS.md) — protokół obowiązkowy (w Cursorze ładuje też [`.cursor/rules/`](.cursor/rules/)). Często wskazujesz `@owocni-crm` — to wejście SSOT; kod → `integrations/`.
 
 - **SSOT:** `owocni-crm/` + `integrations/*.js` (bez `integrations/archive/`)  
 - **Kod / Twenty paths:** `integrations/README.md` → `TWENTY_PATHS.md`  
