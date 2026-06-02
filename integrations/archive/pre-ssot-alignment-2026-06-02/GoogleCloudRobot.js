@@ -45,34 +45,6 @@ const GOOGLE_ADS_LOGIN_CUSTOMER_ID = (process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID |
 const SERVICE_ACCOUNT_KEY = JSON.parse(process.env.SERVICE_ACCOUNT_KEY || '{}');
 
 // ============================================
-// SSOT EVENT NAMES (owocni-crm/EVENT_CONTRACT.md §5.2, ADR #14)
-// ============================================
-const SSOT_EVENT_ALIASES = {
-  lead_won: 'purchase',
-  closed_won: 'purchase',
-  lead_rejected: 'rejected_lead',
-};
-
-function normalizeSsoEventName(eventName) {
-  if (!eventName) return eventName;
-  const key = String(eventName).trim();
-  const mapped = SSOT_EVENT_ALIASES[key];
-  if (mapped && mapped !== key) {
-    console.warn(`⚠️ SSOT normalize: legacy event_name "${key}" → "${mapped}"`);
-    return mapped;
-  }
-  return key;
-}
-
-function normalizeTasksEventNames(tasks) {
-  tasks.forEach((task) => {
-    if (task.data && task.data.event_name) {
-      task.data.event_name = normalizeSsoEventName(task.data.event_name);
-    }
-  });
-}
-
-// ============================================
 // GŁÓWNA FUNKCJA (HTTP TRIGGER)
 // ============================================
 functions.http('processTaskQueue', async (req, res) => {
@@ -95,7 +67,6 @@ console.log(`🧹 Cleaned up ${deletedCount} old "done" tasks from collection`);
 
     // KROK 2: Pobierz pending LUB monitored tasks z Stape Store
     let tasks = await fetchPendingTasks();
-    normalizeTasksEventNames(tasks);
     console.log(`📥 Fetched ${tasks.length} tasks to process (pending OR monitored)`);
 
     // DODATKOWE ZABEZPIECZENIE: Sprawdź statusy zadań przed przetworzeniem
@@ -796,8 +767,8 @@ return null;
 const ga4EventMap = {
 'generate_lead': 'lead',
 'qualify_lead': 'qualify_lead',
-'purchase': 'purchase',
-'rejected_lead': 'lead_rejected'
+'lead_won': 'purchase',
+'lead_rejected': 'lead_rejected'
 };
 
 const ga4EventName = ga4EventMap[eventName] || eventName;
@@ -806,10 +777,10 @@ const ga4EventName = ga4EventMap[eventName] || eventName;
 let value = null;
 let currency = taskData.biz_currency || 'PLN';
 
-if (eventName === 'purchase') {
-// purchase używa rzeczywistej wartości (biz_value)
+if (eventName === 'lead_won') {
+// lead_won używa rzeczywistej wartości
 value = taskData.biz_value || null;
-console.log(`💰 purchase value: ${value} (from biz_value)`);
+console.log(`💰 lead_won value: ${value} (from biz_value)`);
 } else {
 // Inne eventy używają Pricing Key
 let pricingKey = taskData.biz_pricing_key;
@@ -818,7 +789,7 @@ let pricingKey = taskData.biz_pricing_key;
     const prefixMap = {
       'generate_lead': 'lead',
       'qualify_lead': 'sql',
-      'rejected_lead': 'rejected'
+      'lead_rejected': 'rejected'
     };
 
     const prefix = prefixMap[eventName] || 'lead';
@@ -1010,7 +981,7 @@ const mpEventNameMap = {
 'generate_lead': 'generate_lead',
 'qualify_lead': 'qualify_lead',
 'purchase': 'purchase',
-'rejected_lead': 'lead_rejected'
+'lead_rejected': 'lead_rejected'
 };
 const mpEventName = mpEventNameMap[event.event_name] || event.event_name;
 
@@ -1104,8 +1075,8 @@ return null; // Funkcja już zwraca null dla skipped events
 const metaEventMap = {
 'generate_lead': 'Lead',
 'qualify_lead': 'QualifiedLead',
-'purchase': 'Purchase',
-'rejected_lead': 'rejected'
+'lead_won': 'Purchase',
+'lead_rejected': 'rejected'
 };
 
 const metaEventName = metaEventMap[eventName] || eventName;
@@ -1114,7 +1085,7 @@ const metaEventName = metaEventMap[eventName] || eventName;
 let value = null;
 let currency = taskData.biz_currency || 'PLN';
 
-if (eventName === 'purchase') {
+if (eventName === 'lead_won') {
 value = taskData.biz_value || null;
 } else {
 let pricingKey = taskData.biz_pricing_key;
@@ -1122,7 +1093,7 @@ let pricingKey = taskData.biz_pricing_key;
     const prefixMap = {
       'generate_lead': 'lead',
       'qualify_lead': 'sql',
-      'rejected_lead': 'rejected'
+      'lead_rejected': 'rejected'
     };
 
     const prefix = prefixMap[eventName] || 'lead';
@@ -1590,8 +1561,8 @@ return null; // Funkcja już zwraca null dla skipped events
 const googleAdsConversionMap = {
 'generate_lead': 'Lead_Form_Submission',
 'qualify_lead': 'SQL_Lead',
-'purchase': 'Purchase',
-'rejected_lead': 'Rejected_Lead'
+'lead_won': 'Purchase',
+'lead_rejected': 'Rejected_Lead'
 };
 
 const conversionName = googleAdsConversionMap[eventName] || 'Lead_Form_Submission';
@@ -1600,7 +1571,7 @@ const conversionName = googleAdsConversionMap[eventName] || 'Lead_Form_Submissio
 let value = null;
 let currency = taskData.biz_currency || 'PLN';
 
-if (eventName === 'purchase') {
+if (eventName === 'lead_won') {
 value = taskData.biz_value || null;
 } else {
 let pricingKey = taskData.biz_pricing_key;
@@ -1608,7 +1579,7 @@ let pricingKey = taskData.biz_pricing_key;
     const prefixMap = {
       'generate_lead': 'lead',
       'qualify_lead': 'sql',
-      'rejected_lead': 'rejected'
+      'lead_rejected': 'rejected'
     };
 
     const prefix = prefixMap[eventName] || 'lead';
@@ -1727,11 +1698,11 @@ throw error;
 function getGoogleAdsValueForTask(taskData, eventName, pricingConfig) {
 let value = null;
 const currency = (taskData.biz_currency || 'PLN').trim() || 'PLN';
-if (eventName === 'purchase') {
+if (eventName === 'lead_won') {
 value = taskData.biz_value != null ? parseFloat(taskData.biz_value) : null;
 return { value, currency };
 }
-const prefixMap = { 'generate_lead': 'lead', 'qualify_lead': 'sql', 'rejected_lead': 'rejected' };
+const prefixMap = { 'generate_lead': 'lead', 'qualify_lead': 'sql', 'lead_rejected': 'rejected' };
 const prefix = prefixMap[eventName] || 'lead';
 let pricingKey = taskData.biz_pricing_key;
 if (pricingKey) {
@@ -1744,7 +1715,7 @@ if (pricingKey && pricingConfig) {
 value = getPricingValue(pricingKey, 'google_ads', pricingConfig);
 if (value === null) value = getPricingValue('Other', 'google_ads', pricingConfig);
 }
-if (eventName === 'rejected_lead') value = 0;
+if (eventName === 'lead_rejected') value = 0;
 return { value: value != null ? parseFloat(value) : null, currency };
 }
 
@@ -1852,7 +1823,7 @@ const adjustments = [];
 
 for (const task of tasks) {
 const taskData = task.data || {};
-const eventName = normalizeSsoEventName(taskData.event_name);
+const eventName = taskData.event_name;
 const owner = taskData.owner || '';
 const assist = taskData.assist || '';
 if (!isGoogleAdsRelevantOwner(owner, assist)) continue;
@@ -1874,8 +1845,8 @@ conversionValue,
 currencyCode: (currency || 'PLN').toUpperCase()
 };
 tryPushGoogleAdsClickConversion(conversions, conv, taskData, eventName, owner, assist);
-} else if (eventName === 'purchase') {
-if (!orderId) { console.warn('⚠️ Google Ads: pomijam purchase bez order_id'); continue; }
+} else if (eventName === 'lead_won') {
+if (!orderId) { console.warn('⚠️ Google Ads: pomijam lead_won bez order_id'); continue; }
 const purchaseValue = taskData.biz_value != null ? parseFloat(taskData.biz_value) : 0.01;
 const conv = {
 conversionAction: GOOGLE_ADS_PURCHASE_ACTION,
@@ -1885,7 +1856,7 @@ conversionValue: purchaseValue > 0 ? purchaseValue : 0.01,
 currencyCode: (taskData.biz_currency || 'PLN').toUpperCase()
 };
 tryPushGoogleAdsClickConversion(conversions, conv, taskData, eventName, owner, assist);
-} else if (eventName === 'qualify_lead' || eventName === 'rejected_lead') {
+} else if (eventName === 'qualify_lead' || eventName === 'lead_rejected') {
 if (!orderId) { console.warn(`⚠️ Google Ads: pomijam ${eventName} bez order_id`); continue; }
 const { value, currency } = getGoogleAdsValueForTask(taskData, eventName, pricingConfig);
 let adjustedValue = (value != null && !isNaN(value)) ? Number(value) : 0.01;

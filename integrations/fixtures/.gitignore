@@ -1,0 +1,3 @@
+webhook-captures/*.json
+webhook-captures/*.log
+!webhook-captures/.gitkeep
