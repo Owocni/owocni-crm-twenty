@@ -1,38 +1,49 @@
-# integrations/ — kod wykonawczy Sortownia + Robot
+# integrations/ — kod wykonawczy Sortownia + Robot (+ Twenty)
 
 **Status:** kanoniczna lokalizacja w repo `owocni-crm-github`  
 **Last updated:** 2026-06-02
 
-## Pliki
+## LLM START (60 sek)
 
-| Plik | Rola | SSOT dokumentacji |
-|------|------|-------------------|
-| `SORTOWNIA_V2_POPRAWIONY.js` | Sortownia (paid, sGTM/Stape) — resolve, multi-key write, `generate_lead`, oid_init | `owocni-crm/IDENTITY_AND_INBOUND.md`, `owocni-crm/EVENT_CONTRACT.md` |
-| `GoogleCloudRobot.js` | Robot (GCP) — task_queue, adaptery platform (Google/Meta/CRM), retry | `owocni-crm/ARCHITECTURE.md`, ADR #14 w `DECISION_REGISTER.md` |
-| `INTEGRATIONS_PARITY.md` | Checklista zgodności docs ↔ kod, luki (np. brak `inbound:twenty_webhook` w repo) | `owocni-crm/runbooks/IMPLEMENTATION_PLAN.md` |
-| `archive/` | Snapshot kodu **przed** wyrównaniem SSOT — **NIE czytać jako SSOT** | `archive/README.md` |
+1. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
+2. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
+3. **Kolejność wdrożenia:** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md)
+4. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
+5. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
+6. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
+
+**NIE czytaj:** `archive/**`, `_DO_USUNIECIA/**`
+
+## Pliki runtime (kanon)
+
+| Plik | Rola | Runtime |
+|------|------|---------|
+| `SORTOWNIA_V2_POPRAWIONY.js` | Paid: oid_init, generate_lead, identity_map, task_queue | Stape sGTM |
+| `GoogleCloudRobot.js` | task_queue → platformy + env-guard | GCP Node |
+| `INBOUND_TWENTY_WEBHOOK.js` | Twenty webhook → business event → task_queue | Stape HTTP tag |
+| `CRM_TWENTY_CREATE_LEAD.stub.js` | Sortownia → Twenty (create lead) | Stape tag |
+| `CRM_TWENTY_UPDATE_PERSON.stub.js` | Backfill idOid + pending-write | Stape tag |
+| `ENV_GUARD.sGTM.js` | Fragment env sandbox/prod (copy-paste) | Stape |
+| `shared/envGuard.js` | env-guard dla Robota | Node |
+| `shared/ssotPaths.js` | Stałe adapterów/kolekcji | Node (+ ref) |
 
 ## SSOT alignment (2026-06-02)
 
-- Kanoniczne `event_name`: `generate_lead`, `qualify_lead`, `purchase`, `rejected_lead`, `consent_update`, `oid_init` — patrz `owocni-crm/EVENT_CONTRACT.md` §5.2.
-- **Zakaz** `lead_won` jako `event_name` w nowym kodzie; w Robot/Sortownia legacy aliasy są normalizowane na wejściu.
-- Adapter **`inbound:twenty_webhook`** jest opisany w SSOT, ale **nie ma jeszcze pliku w tym repo** — implementacja w Stape; śledź w `INTEGRATIONS_PARITY.md` (P3–P5).
+- Kanoniczne `event_name`: `generate_lead`, `qualify_lead`, `purchase`, `rejected_lead`, `consent_update`, `oid_init`.
+- Legacy `lead_won` / `lead_rejected` → normalizacja na wejściu (Robot + Sortownia + inbound).
+- `environment: sandbox` → Robot **nie** wysyła prod Google Ads / GA4 MP; arkusze debug OK.
+- Adaptery Twenty są **w repo jako kod przygotowawczy** — deploy Stape wymaga preflight payloadów (bez zgadywania JSON).
 
 ## Mirror w repo `owocni strona/owocni/`
 
-W poprzedniej lokalizacji (`owocni strona/owocni/`) pliki są **symlinkami** do tego katalogu — dla kompatybilności lokalnej i istniejących ścieżek deploy. Kopie zapasowe sprzed migracji: `*.bak-before-mirror`.
-
-**Przy clone samego repo `AdrianKrauza/owocni`:** symlinki nie działają — użyj plików stąd (`integrations/`) jako źródła prawdy.
-
-**Stara dokumentacja i POC:** `_DO_USUNIECIA/legacy-stara-dokumentacja/` (nie SSOT) — docelowo usunąć cały `_DO_USUNIECIA/`.
+Symlinki do tego katalogu. Przy clone samego `AdrianKrauza/owocni` — użyj plików stąd.
 
 ## Dla agenta LLM
 
 | Czytaj | Nie czytaj |
 |--------|------------|
-| `integrations/README.md`, `INTEGRATIONS_PARITY.md` | `integrations/archive/**` |
-| `owocni-crm/*.md` (SSOT) | `_DO_USUNIECIA/**` (tryb produkcyjny) |
+| Ten README, `TWENTY_PATHS.md`, `INTEGRATIONS_PARITY.md` | `archive/**` |
+| `*.js` poza `archive/` | `_DO_USUNIECIA/**` |
+| `owocni-crm/*.md` | Stary kod Bitrix w archiwum |
 
-- Semantyka eventów i tożsamości → `owocni-crm/` (SSOT Markdown).
-- Implementacja runtime → ten katalog (pliki `.js` poza `archive/`).
-- Przy konflikcie nazw eventów: `owocni-crm/EVENT_CONTRACT.md` wygrywa; rekonsyliacja kodu = ADR #14 + `INTEGRATIONS_PARITY.md`.
+Przy konflikcie: `owocni-crm/EVENT_CONTRACT.md` wygrywa nad kodem; kod ma dogonić SSOT (ADR #14).

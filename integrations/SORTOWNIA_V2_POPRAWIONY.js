@@ -1860,8 +1860,13 @@ function saveProfileAndTask(
         "consent_analytics_storage"
       );
       const consentAd = getEventDataWithFallback("consent_ad_storage");
+      var taskEnvironment =
+        getEventDataWithFallback("environment") ||
+        getEventDataWithFallback("runtime_environment") ||
+        "prod";
       logToConsole("SORTOWNIA: consent_analytics_storage =", consentAnalytics);
       logToConsole("SORTOWNIA: consent_ad_storage =", consentAd);
+      logToConsole("SORTOWNIA: environment =", taskEnvironment);
       const taskData = {
         id_oid: idOid,
         id_event: timestamp + "_" + eventName,
@@ -1869,6 +1874,7 @@ function saveProfileAndTask(
         job_type: "analytics:ga4_mp",
         status: "pending",
         created_at: timestamp,
+        environment: taskEnvironment,
         biz_email: email,
         biz_phone: phone,
         biz_name: name,
