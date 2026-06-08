@@ -26,11 +26,15 @@ related:
 | Symbol | Kto | Jak |
 |--------|-----|-----|
 | **🤖 REPO** | Agent / Dawid w Cursor | Pliki w `integrations/`, `owocni-crm/`, commit do GitHub |
-| **☁️ TWENTY** | Dawid ręcznie | Twenty Cloud UI (brak Twenty MCP — instrukcje w runbookach) |
-| **📦 STAPE** | Dawid ręcznie | Stape UI — tagi, zmienne, Store (brak Stape MCP) |
-| **☁️ GCP** | Dawid ręcznie | Google Cloud Function Robot — deploy z repo |
+| **🔌 TWENTY-API** | **Agent (preferowane)** | Metadata GraphQL `https://api.twenty.com/metadata` + skrypt `integrations/tools/twenty_schema.py` — **tak jak POC 2026-05-25** |
+| **☁️ TWENTY-UI** | Dawid tylko gdy API nie wystarczy | [zany-maroon-panther.twenty.com](https://zany-maroon-panther.twenty.com) — webhooks, Email Sync, kanban |
+| **📦 STAPE** | Dawid | Stape UI — tagi, zmienne, Store |
+| **☁️ GCP** | Dawid | Google Cloud Function Robot — deploy z repo |
 
-**Zasada:** jeśli krok ma instrukcję ☁️ — wykonuj ją **dokładnie raz** na sandboxie, zapisuj dowód (screenshot / JSON / notatka w `OPS_NOTES`).
+**Instancja:** `https://zany-maroon-panther.twenty.com` (workspace Owocni).  
+**Sekrety:** `.env.local` w root repo (wzór `.env.example`) — **nigdy do git**.
+
+**Zasada:** T1 (pola, stage) = **API przez agenta**. UI tylko dla webhooków / maili / rzeczy bez endpointu w Metadata API.
 
 ---
 
@@ -70,24 +74,26 @@ flowchart TD
 
 ---
 
-## T1 — Twenty sandbox: schema (☁️ TWENTY)
+## T1 — Twenty schema (🔌 TWENTY-API — agent)
 
-**Runbook:** [TWENTY_SANDBOX_STEP01_FIELDS.md](./TWENTY_SANDBOX_STEP01_FIELDS.md)
+**Runbook API:** [TWENTY_SANDBOX_STEP01_FIELDS.md](./TWENTY_SANDBOX_STEP01_FIELDS.md) (sekcja API)  
+**Narzędzie:** `python3 integrations/tools/twenty_schema.py audit`
 
 | ID | Zadanie | Status | Dowód |
 |----|---------|--------|-------|
-| T1.1 | Workspace **sandbox** (osobny od prod docelowego) | ☐ | URL workspace |
-| T1.2 | Opportunity: custom fields z `DATA_MODEL.md` §5.1 | ☐ | screenshot Settings |
-| T1.3 | Person: pole `idOid` (TEXT, unique) | ☐ | screenshot |
-| T1.4 | `stage` = SELECT z wartościami NEW…LOST | ☐ | lista opcji |
-| T1.5 | `campaignRejected` — label UI **„Odrzuć leada"** | ☐ | screenshot |
-| T1.6 | `srcSystem` SELECT: OWOCNI_SORTOWNIA / TWENTY_UI / BETTER_BITRIX_LEGACY | ☐ | |
-| T1.7 | Kanban view z kolumnami stage | ☐ | |
-| T1.8 | API key / OAuth do testów (Settings → Developers) — **nie do repo** | ☐ | zmienna lokalna |
+| T1.0 | `TWENTY_API_KEY` w `.env.local` (Settings → Developers) | ☐ | audit bez 403 |
+| T1.1 | Audit schema vs `DATA_MODEL.md` | ☐ | `twenty_schema.py audit` |
+| T1.2 | Opportunity: custom fields (agent: Metadata API) | ☐ | audit PASS |
+| T1.3 | Person: `idOid` unique | ☐ | audit PASS |
+| T1.4 | `stage` = NEW…LOST (updateOneField) | ☐ | audit stage |
+| T1.5 | `campaignRejected` label „Odrzuć leada" | ☐ | API / UI |
+| T1.6 | `srcSystem` SELECT opcje | ☐ | audit |
+| T1.7 | Kanban view (opcjonalnie UI) | ☐ | |
+| T1.8 | Snapshot → `generated/twenty-schema.snapshot.json` | ☐ | commit |
 
-**PASS T1:** wszystkie pola FROZEN istnieją z `description`; można ręcznie utworzyć Opportunity testową.
+**PASS T1:** `twenty_schema.py audit` = 0 brakujących pól + stage zgodny.
 
-**Po PASS:** wyślij agentowi screenshot listy pól lub eksport Metadata — uzupełnimy `generated/twenty-schema.snapshot.json`.
+**Ty tylko raz:** wygeneruj API key jeśli wygasł / brak w `.env.local`.
 
 ---
 
@@ -165,11 +171,11 @@ flowchart TD
 
 ---
 
-## Co robimy **teraz** (krok 1 dla Ciebie)
+## Co robimy **teraz**
 
-1. **Otwórz** [TWENTY_SANDBOX_STEP01_FIELDS.md](./TWENTY_SANDBOX_STEP01_FIELDS.md) i wykonaj T1 w Twenty sandbox (~2 h).
-2. **Wróć do czatu** z: URL workspace + potwierdzenie „pola OK" (lub screenshot / lista brakujących).
-3. Agent dopasuje kod i przygotuje T2 (webhook).
+1. **Ty (jednorazowo):** skopiuj `.env.example` → `.env.local`, wklej `TWENTY_API_KEY` z [Twenty Developers](https://zany-maroon-panther.twenty.com/settings/developers) (lub `export` w terminalu Cursor).
+2. **Agent:** `python3 integrations/tools/twenty_schema.py audit` → uzupełnienie brakujących pól przez Metadata API (jak w POC).
+3. **Ty tylko przy T2:** native webhook w UI (API webhooków bywa ograniczone) + ewentualny login w przeglądarce.
 
 ---
 

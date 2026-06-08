@@ -1,0 +1,5 @@
+.env
+.env.local
+.env.*.local
+integrations/fixtures/webhook-captures/*.json
+!integrations/fixtures/webhook-captures/.gitkeep
