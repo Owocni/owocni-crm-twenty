@@ -25,6 +25,7 @@ Katalog kanonicznej dokumentacji migracji CRM OWOCNI.PL na **Twenty CRM** + inte
 | Który system za co odpowiada? Przepływy in/out? | `ARCHITECTURE.md` | `EVENT_CONTRACT.md` |
 | Co jest zdecydowane, a co blokuje cutover? | `DECISION_REGISTER.md` | `runbooks/IMPLEMENTATION_PLAN.md` |
 | Jak i kiedy wdrażamy? Bramy go/no-go? | `runbooks/IMPLEMENTATION_PLAN.md` | `DECISION_REGISTER.md` |
+| **Plan krok po kroku Twenty (T1 sandbox → smoke)** | `../integrations/runbooks/TWENTY_ROLLOUT_MASTER.md` | `TWENTY_SANDBOX_STEP01_FIELDS.md` |
 | Jak audytować migrację danych? | `audits/AUDIT_MIGRACJA.md` | `EVENT_CONTRACT.md` |
 | Fakt platformowy Twenty (HMAC, credits, R-18)? | `ops/OPS_NOTES.md` | — |
 | Kod Sortowni / Robot (runtime) | [`../integrations/`](../integrations/README.md) | `EVENT_CONTRACT.md`, `IDENTITY_AND_INBOUND.md` |

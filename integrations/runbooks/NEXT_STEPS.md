@@ -16,9 +16,11 @@ related:
 
 # Kolejne kroki — integrations po punkcie 17
 
-**Stan wejściowy (2026-06-02):** archiwum `integrations/archive/`, normalizacja `event_name` w Robot + Sortownia paid, brak adaptera `inbound:twenty_webhook` w repo.
+**Stan wejściowy (2026-06-08):** review SSOT PASS; merge v2.0 w docs; `INBOUND_TWENTY_WEBHOOK.js` prep w repo.
 
 **Cel:** przejść od „kod częściowo zgodny z SSOT” do **PASS G1–G4 + smoke matrix** na sandboxie, potem commit evidence i dopiero plan cutover.
+
+**👉 Start tutaj:** [TWENTY_ROLLOUT_MASTER.md](./TWENTY_ROLLOUT_MASTER.md) — pełny plan krok po kroku (T1 Twenty UI → T2 webhook → Stape).
 
 ---
 

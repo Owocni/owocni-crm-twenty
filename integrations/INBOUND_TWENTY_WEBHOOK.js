@@ -30,10 +30,12 @@ var REASON_SKIP_DUPLICATE_BUSINESS_EVENT = "SKIP_DUPLICATE_BUSINESS_EVENT";
 var REASON_SKIP_UNSUPPORTED_OBJECT = "SKIP_UNSUPPORTED_OBJECT";
 var REASON_EMITTED = "EMITTED";
 
-// TODO: podłącz z zmiennej kontenera Stape (nie hardcode prod)
-var BASE_URL = "https://uinpcbwf.eug.stape.io";
-var API_KEY = "2d389d8d0875343a76c07c6ff388c586bbd9347duinpcbwf";
-var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
+// Zmienne kontenera Stape (Settings → Variables) — NIE commituj wartości
+var BASE_URL = getEventDataWithFallback("stape_base_url") || "";
+var API_KEY = getEventDataWithFallback("stape_store_api_key") || "";
+var API_BASE = BASE_URL && API_KEY
+  ? BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections"
+  : "";
 
 function normalizeSsoEventName(name) {
   if (!name) return name;
