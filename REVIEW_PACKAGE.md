@@ -55,7 +55,7 @@ Opcjonalnie głębiej: `IDENTITY_AND_INBOUND.md`, `DATA_MODEL.md`, `audits/AUDIT
 Źródło: `DECISION_REGISTER.md` §5.8 — prosimy o **TAK / NIE / uwagi**:
 
 - [ ] **L-1:** `srcSystem`-SKIP usuwamy dopiero po PASS smoke #4 (manual create + backfill).  
-- [ ] **MERGE:** merge tylko ta sama osoba; zakaz łączenia właściciel vs marketing w jednej firmie.  
+- [ ] **MERGE:** **nigdy auto** — system **proponuje** merge po corporate domain (`company_domain_key`); handlowiec scala ręcznie; **free-mail** (`wp.pl`, `gmail`, …) wyłączone z propozycji (`IDENTITY` §5.8.2, §5.9).
 - [ ] **Cutover:** bez daty z góry — okno po PASS G1–G8 + G-PAR.  
 - [ ] **Webhook:** nazwy/payload Twenty potwierdzamy sandboxem, nie zgadujemy z docs.  
 - [ ] **#12:** `kontakt@` poza CRM (kierunek A).  

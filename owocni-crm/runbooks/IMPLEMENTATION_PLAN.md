@@ -139,7 +139,7 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 | Materiał | Zawartość | Owner |
 |---|---|---|
 | Szablony maili | Odpowiedzi handlowców w Twenty (spójne z timeline) | Dawid + sprzedaż |
-| Szkolenie handlowców | Stage/`campaignRejected` („Odrzuć leada" ≠ LOST), merge (nieodwracalny — kiedy NIE), T4 „Tożsamość do rozstrzygnięcia" | Dawid |
+| Szkolenie handlowców | Stage/`campaignRejected` („Odrzuć leada" ≠ LOST), merge (**propozycja corporate OK, ręczne scalenie; free-mail NIE**), T4 „Tożsamość do rozstrzygnięcia" | Dawid |
 | SOP handoff WON → Bitrix24 | Manual (MVP); `bitrixDealId` wpisywany ręcznie | sprzedaż |
 
 ### 5.7 Backlog kodu Sortowni (przeniesiony z IDENTITY §8.4)

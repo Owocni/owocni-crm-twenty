@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-05-31
+last_verified: 2026-06-08
 recheck_trigger: "Twenty release (merge/email sync) / zmiana resolvera / preflight Stape"
 default_trust: D:CORE
 related:
@@ -25,7 +25,7 @@ related:
 
 **Zawsze czytaj razem z:** `EVENT_CONTRACT.md` (loop-prevention, generate_lead), `DATA_MODEL.md` (`idOid`), `CRM_CONSTITUTION.md` (INV-7 fail-closed).
 
-**Najgroźniejszy błąd:** agresywne skrócenie gubi logikę T1–T5 i zamkniętą listę kanałów — albo opisanie merge jako rozstrzygniętego (3 bramki są `[D:OPEN]`).
+**Najgroźniejszy błąd:** agresywne skrócenie gubi logikę T1–T5 i waterfall free-mail — albo **auto-merge** zamiast propozycji (§5.9); 3 bramki techniczne G8 nadal `[D:OPEN]`.
 
 **Przy konflikcie:** tożsamość/kanał — ten plik jest właścicielem. Pole `idOid` (typ/frozen) → `DATA_MODEL.md`.
 
@@ -41,7 +41,7 @@ related:
 | NR-2 | **GA = sygnał, NIE klucz tożsamości** — nie wolno mintować `id_oid` z GA; GA nie wchodzi do macierzy jako trzecia oś. | `ga_client_id` identyfikuje przeglądarkę, nie osobę (współdzielony, czyszczony, gubiony). | Fałszywe sklejenie/rozdwojenie tożsamości. | Właściciel + ADR | §4 |
 | NR-3 | Dwa maile tego samego nadawcy NIE mogą stworzyć dwóch `id_oid` (concurrency mint-guard). | Race przy równoległym mincie. | Duplikat tożsamości. | Właściciel + ADR | §8 |
 | NR-4 | **Stape Store niedostępny podczas resolve → fail-closed (NIE mintuj, kolejkuj).** | Fail-open = duplikat `id_oid` = rozdwojenie tożsamości (nieodwracalne). Reguła o skutku tożsamościowym, nie parametr runtime. | Jeden klient, dwa profile, zepsuta atrybucja. | Właściciel + ADR | CRM_CONSTITUTION INV-7 |
-| NR-5 | **NIE merguj różnych osób tej samej firmy** (asystent ≠ szef). | Auto-merge = nieodwracalne sklejenie tożsamości. | Sklejone tożsamości dwóch osób. | Właściciel + ADR | §11 |
+| NR-5 | **NIGDY auto-merge tożsamości.** System **nie scala** sam — może **proponować** merge handlowcowi, gdy `company_domain_key` wskazuje tę samą firmę (corporate mail). **NIGDY** propozycji merge dla free-mail (waterfall §5.8.2). Wykonanie merge = **ręczne** w Twenty (T4) + aktualizacja Stape. | Auto-merge = nieodwracalne sklejenie; free-mail = fałszywe propozycje. | Sklejone tożsamości / utrata leadów firmowych. | Właściciel + ADR | §5.9, §5.8.2 |
 | NR-6 | **Dwa paid `id_oid` → T5, ręczna korekta, NIGDY auto.** | Sygnał do platform z dwóch paid profili = nieodwracalny. | Błędna atrybucja platform. | Właściciel + ADR | §11, §3 (T5) |
 
 ---
@@ -68,7 +68,7 @@ Master identity systemu: `id_oid` w Stape (Profil Klienta) jest jedynym źródł
 - **`id_oid`** = kanoniczny identyfikator klienta w Stape (ULID); jedyne źródło prawdy o tożsamości.
 - **Twenty = projekcja** (widok handlowca) — NIE rozstrzyga tożsamości samodzielnie (brak identity graph).
 - **Rekord ≠ id_oid** — rekord w Twenty może istnieć bez `id_oid`: stan jawny `identity_status: needs_review` lub `unresolved` (nazwany stan, nie czarna dziura).
-- **Automat vs człowiek:** automat robi wszystko deterministyczne; człowiek tylko gdy system ma ≥2 sensowne interpretacje. NIE probabilistyczny merge; NIE pełny silnik auto-merge; TAK cienka warstwa Identity Resolver (T1–T5); TAK człowiek wybiera z kandydatów (T4).
+- **Automat vs człowiek:** automat robi wszystko deterministyczne (T1–T3 link/mint po **tym samym emailu/telefonie**); człowiek przy ≥2 interpretacjach (T4) **oraz** przy **propozycji merge firmowego** (ten sam `company_domain_key`, różne osoby — np. asystent + szef). **NIGDY** auto-merge; **NIGDY** propozycji merge na free-mail. Merge w UI = decyzja handlowca/admina.
 
 ---
 
@@ -117,7 +117,7 @@ Master identity systemu: `id_oid` w Stape (Profil Klienta) jest jedynym źródł
 
 ### 5.3 Macierz decyzyjna (email × phone)
 
-Po normalizacji (`normalizeEmail`, `normalizePhone` E.164 — ta sama logika co w Sortowni).
+Po normalizacji (`normalize_email` §5.8.1, `normalizePhone` E.164 — ta sama logika co w Sortowni).
 
 **Klucze rozstrzygające tożsamość: WYŁĄCZNIE email i phone.** Macierz jest świadomie dwuwymiarowa. `ga_client_id` NIE jest kluczem — patrz nota „Rola GA".
 
@@ -225,24 +225,100 @@ identifiers:
 # + istniejące pola paid: owner, assist, order_id, AktTimestamp, attr_gclid, ...
 ```
 
-**Wskaźniki** (osobne dokumenty): `by_email/{email_normalized}` · `by_phone/{phone_e164}` · `by_ga/{ga_client_id}` · `by_crm/{twenty_record_id}` → każdy `→ { id_oid }`. Lookup: wskaźnik → `id_oid` → profil. Dopinięcie drugiego emaila = **nowy wskaźnik**, bez nowego profilu. Migracja: obecny multi-key write (profil pod email/phone/ga) → wskaźniki + profil pod `id_oid`.
+**Wskaźniki** (osobne dokumenty): `by_email/{email_normalized}` · `by_phone/{phone_e164}` · `by_ga/{ga_client_id}` · `by_crm/{twenty_record_id}` · opcjonalnie `by_company_domain/{company_domain_key}` (tylko lookup propozycji merge, nie auto-link) → każdy `→ { id_oid }`. Lookup: wskaźnik → `id_oid` → profil. Dopinięcie drugiego emaila = **nowy wskaźnik**, bez nowego profilu (albo merge ręczny — §5.9). Migracja: obecny multi-key write (profil pod email/phone/ga) → wskaźniki + profil pod `id_oid`.
+
+#### 5.8.1 Normalizacja PII — `normalize_email(biz_email) → email_normalized`
+
+Stabilna reguła (Sortownia + Identity Resolver — **identyczna implementacja**):
+
+1. `trim` + `lowercase`
+2. Usuń **wszystkie** whitespace (także w środku adresu)
+3. Jeśli nie ma **dokładnie jednego** `@` → ustaw `sys_invalid_email=true` i **nie używaj** emaila do resolve/merge
+4. Domenę przetwórz jako IDN → **punycode** (np. `ąę.pl` nie psuje matchingu)
+
+**Plus-addressing (tylko tam, gdzie 100% bezpieczne):**
+
+- Jeśli domena ∈ `{gmail.com, googlemail.com}`:
+  - usuń wszystko po `+` w local-part
+  - usuń kropki w local-part (Gmail je ignoruje)
+- **Reszty providerów nie ruszaj** (KISS — zero niespodzianek na egzotycznych serwerach)
+
+Wyjście: `email_normalized` (klucz wskaźnika `by_email`) + flagi pomocnicze.
+
+#### 5.8.2 Domena firmowa — `company_domain_key` (merge proposals v2.0)
+
+**Cel:** wykryć, że `jan@stocznia-gdynia.pl` i `biuro@stocznia-gdynia.pl` to **ta sama firma** (asystent + szef) — i **zaproponować** handlowcowi merge do jednego `id_oid`. **Nie** łączyć automatycznie.
+
+**Krok A — registrable domain (eTLD+1, nie „ostatnie 2 segmenty"):**
+
+```
+compute_registrable_domain(email_domain) → domain_reg   # Public Suffix List (PSL)
+```
+
+Przykłady:
+- `mail.firma.pl` → `firma.pl`
+- `firma.co.uk` → `firma.co.uk` (nie `co.uk`)
+
+**Krok B — waterfall `is_free_mail(domain_reg)`** (kolejność obowiązkowa):
+
+| Krok | Warunek | Wynik |
+|------|---------|--------|
+| **1 (PL)** | `domain_reg` **dokładnie** na liście PL | **STOP** — free mail, `is_free_mail=true` |
+| **2 (Global)** | część po `@` (lub `domain_reg`) **zawiera** frazę z blacklisty globalnej (substring) | **STOP** — free mail |
+| **3 (Hosting suffix)** | domena **kończy się** na `.home.pl` lub `.nazwa.pl` (subdomeny hostingowe) | **STOP** — free mail |
+| **Wynik** | wszystkie pozostałe (np. `jan@stocznia-gdynia.pl`) | **corporate** — możliwy merge proposal |
+
+Listy kanoniczne: `data/free_mail_domains_v1.json` (PL exact + global substring + hosting suffix + plus-addressing domains).
+
+**Krok C — `company_domain_key`:**
+
+```
+is_free_mail == true  → company_domain_key = null   (NIE łącz po domenie, NIE proponuj merge)
+is_free_mail == false → company_domain_key = domain_reg   (można proponować merge firmowy)
+```
+
+**Przypadki biznesowe:**
+
+| Scenariusz | Resolver | Merge proposal |
+|------------|----------|----------------|
+| Ten sam `email_normalized` | T1/T2 auto_link | nie dotyczy |
+| Dwa maile, ta sama `company_domain_key`, różne osoby | T3 mint ×2 (osobne leady) | **TAK** — UI: „Ta sama firma — scalić kontakty?" |
+| Dwa maile `@gmail.com` / `@wp.pl` | T3 mint ×2 | **NIE** — free mail |
+| Email vs phone → różne `id_oid` | T4 needs_review | merge proposal **nie zastępuje** T4 |
 
 **Czego NIE robimy w Sortowni paid:** automatyczny silnik merge nie-paid; probabilistyczne dopasowanie; lookup telefonu dla kanału mailowego w logice paid.
 
-**UI człowieka (T4):** przy `needs_review` handlowiec widzi 1–3 kandydatów z Stape (nie dowolny search): „To ten sam klient" → resolver dopina wskaźnik (nie merge dwóch paid); „To nowy klient" → T3 mint; „Eskaluj" → T5/admin. Każda decyzja → audyt (`who`, `when`, `tier`, `chosen_id_oid`). **Reconciliation** 1×/dobę: Twenty PII vs Stape wskaźniki → rozjazd = alert.
+**UI człowieka (T4):** przy `needs_review` handlowiec widzi 1–3 kandydatów z Stape (nie dowolny search): „To ten sam klient" → resolver dopina wskaźnik; „To nowy klient" → T3 mint; „Eskaluj" → T5/admin. **Propozycja merge firmowego** (§5.8.2): gdy istnieje inny `id_oid` z tym samym `company_domain_key`, Twenty pokazuje sugestię — handlowiec **może scalić** nowy lead z istniejącym rekordem (jeden `id_oid` / `canonical_oid`). System **nigdy** nie wykonuje tego merge sam. Każda decyzja → audyt (`who`, `when`, `tier`, `chosen_id_oid`, `merge_reason`). **Reconciliation** 1×/dobę: Twenty PII vs Stape wskaźniki → rozjazd = alert.
 
 > **Backlog kodu Sortowni (ADD-2/ADD-1/ADD-3/FIX-2/FIX-1) + kolejność wdrożenia → `runbooks/IMPLEMENTATION_PLAN.md`.** Tutaj pozostaje wskaźnik; backlog implementacji nie jest treścią tożsamości.
 
-### 5.9 Twenty — narzędzia natywne i ograniczenia (merge — 3 bramki `[D:OPEN]`)
+### 5.9 Merge — polityka v2.0 (propozycje, nie auto) `[D:CORE]`
 
-**Wykorzystujemy:** Email Sync (IMAP `mail.owocni.pl`) — hub mailowy sprzedaży; **Merge rekordów (od v1.3)** — tylko w UI T4, z ograniczeniami; Additional emails/phones na Person.
+**Zasada nadrzędna:** system **nigdy sam nie scala** tożsamości (`id_oid`). Merge = **wyłącznie ręczna** akcja handlowca/admina w Twenty (+ synchronizacja `canonical_oid` / wskaźników w Stape).
 
-**Ograniczenia (DO TESTU — bramki, NIE backlog):**
+**Co system MOŻE robić automatycznie:**
+
+- T1/T2 **auto_link** — ten sam `email_normalized` lub ten sam phone (ta sama osoba)
+- T3 **auto_mint** — brak trafienia
+- **Propozycja merge firmowego** — gdy dwa leady mają ten sam `company_domain_key` (corporate mail, §5.8.2) i **różne** emaile/osoby (np. asystent pisał, szef wpłaca)
+
+**Czego system NIGDY nie robi:**
+
+- Auto-merge po domenie firmowej
+- Propozycja merge dla free-mail (`wp.pl`, `gmail.com`, … — waterfall §5.8.2)
+- Auto-merge przy kolizji email vs phone (T4)
+- Auto-merge dwóch paid `id_oid` z sygnałem do platform (**T5** — tylko admin)
+
+**Twenty — narzędzia natywne (3 bramki techniczne `[D:OPEN]`):**
+
+**Wykorzystujemy:** Email Sync (IMAP `mail.owocni.pl`); **Merge rekordów (od v1.3)** — tylko ręcznie w UI po propozycji lub decyzji T4; Additional emails/phones na Person.
+
+**Ograniczenia (DO TESTU — bramki G8, NIE backlog):**
 1. Email podlinkowany tylko do **jednego** kontaktu — duplikat additional email → cichy routing do starszego rekordu.
-2. **Merge może być nieodwracalny** — szkolenie + reguły §11. `[D:OPEN]`
-3. **Webhook przy merge — czy payload niesie oba ID?** `[D:OPEN]` — **bramka cutoveru**.
+2. **Merge może być nieodwracalny** — szkolenie: kiedy **TAK** (ta sama firma, świadome scalenie), kiedy **NIE** (free mail, różne firmy).
+3. **Webhook przy merge — czy payload niesie oba ID?** `[D:OPEN]` — **bramka cutoveru** (przepięcie wskaźników Stape).
 
-> **Trzy bramki merge są `[D:OPEN]` i blokują bezpieczny cutover:** (a) webhook przy merge niesie oba ID? (b) nieodwracalność merge; (c) T5 `merge_review_critical` przy dwóch paid `id_oid`. Merge NIE jest opisany jako rozstrzygnięty. To trzeci, osobny wektor tożsamościowy (≠ fail-closed, ≠ backfill idOid).
+> **Trzy bramki techniczne merge pozostają `[D:OPEN]`:** (a) webhook payload; (b) nieodwracalność + SOP przepięcia `canonical_oid`; (c) T5 przy dwóch paid. **Polityka biznesowa merge v2.0 jest zamknięta (2026-06-08):** propozycje corporate OK, auto-merge zakazane, free-mail wyłączone.
 
 ### 5.10 VBB gate (sygnały reklamowe)
 
@@ -264,7 +340,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 ### 5.11 Reguły procesowe (NEGATIVE RULES — nie kod, nie skracać)
 
 1. **Generyczne maile** (`kontakt@`, `biuro@`) → powiązanie z **Company**, nie additional email osoby.
-2. **Nie merguj** różnych osób tej samej firmy (asystent ≠ szef).
+2. **Merge firmowy (asystent + szef):** dozwolona **propozycja** i **ręczne** scalenie po `company_domain_key` (§5.8.2) — jeden `id_oid` dla firmy; **nigdy** auto. **Zakaz** propozycji/merge po free-mail.
 3. **Paid telefon bez kontekstu** → akceptowany under-merge; identyfikacja później.
 4. **`campaignRejected`** — zachować semantykę Bitrix; ≠ stage LOST.
 5. **Dwa paid id_oid** → T5, ręczna korekta platform — nigdy auto.
@@ -280,7 +356,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 | INV-7 fail-closed, granica CRM↔orkiestracja | `CRM_CONSTITUTION.md` |
 | Backlog kodu Sortowni (ADD/FIX), kolejność wdrożenia, parzystość BB | `runbooks/IMPLEMENTATION_PLAN.md` |
 | Nazwa eventu webhooka Twenty (recheck) | `ops/OPS_NOTES.md` |
-| Granice systemów, diagramy in/out | `ARCHITECTURE.md` |
+| Listy free-mail + waterfall merge | `data/free_mail_domains_v1.json`, §5.8.2 |
 
 ---
 
@@ -313,6 +389,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-06-08 | Merge policy v2.0: propozycje corporate, zakaz auto-merge i free-mail; §5.8.1 normalize_email; §5.8.2 company_domain_key + PSL | Właściciel | Asystent+szef ta sama firma |
 
 ---
 
@@ -327,6 +404,8 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 | **Identity Resolver** | Handler Stape: macierz T1–T5, osobny od Sortowni paid |
 | **Sortownia Etap A** | sGTM tag — tylko paid orchestration |
 | **Profil Klienta** | Dokument Stape pod kluczem `id_oid` |
+| `company_domain_key` | eTLD+1 z corporate mail; null dla free-mail; klucz propozycji merge firmowego |
+| `merge_proposal` | Sugestia UI: ta sama firma, różne osoby — handlowiec decyduje o scaleniu |
 | **Wskaźnik** | Dokument `by_email` / `by_phone` → wskazuje na `id_oid` |
 | **T1–T5** | Poziomy pewności resolvera (§5.2) |
 | **Projekcja** | Twenty CRM — widok operacyjny, nie master tożsamości |
