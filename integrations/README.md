@@ -1,14 +1,15 @@
 # integrations/ — kod wykonawczy Sortownia + Robot (+ Twenty)
 
 **Status:** kanoniczna lokalizacja w repo `owocni-crm-github`  
-**Last updated:** 2026-06-02
+**Last updated:** 2026-06-08
 
 ## LLM START (60 sek)
 
 0. **Obowiązkowy protokół:** [`../AGENTS.md`](../AGENTS.md) — przeczytaj przed jakąkolwiek edycją.
-1. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
-2. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
-3. **Kolejność wdrożenia:** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md)
+1. **Plan wdrożenia Twenty (T1→smoke):** [`runbooks/TWENTY_ROLLOUT_MASTER.md`](runbooks/TWENTY_ROLLOUT_MASTER.md)
+2. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
+3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
+4. **Kolejność faz integrations:** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md)
 4. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
 5. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
 6. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
