@@ -9,12 +9,42 @@ last_verified: 2026-06-08
 
 # Krok T1 — Twenty sandbox: pola FROZEN + pipeline
 
-**Czas:** ~2–3 h  
-**Wykonawca:** Dawid (Twenty Cloud UI)  
+**Czas:** ~30 min (API, agent) lub ~2–3 h (tylko UI — fallback)  
+**Instancja:** [https://zany-maroon-panther.twenty.com](https://zany-maroon-panther.twenty.com)  
 **Źródło prawdy pól:** `owocni-crm/DATA_MODEL.md` §5.1–5.2  
-**Po zakończeniu:** napisz w czacie „T1 PASS" + opcjonalnie screenshot listy pól.
 
-> Twenty nie ma MCP w naszym stacku — ten runbook zastępuje automatyzację UI.
+> **Preferowana ścieżka (POC 2026-05-25):** Metadata GraphQL na `https://api.twenty.com/metadata` + API key. Agent wykonuje T1; Ty tylko dostarczasz klucz w `.env.local`.
+
+---
+
+## Ścieżka A — API (agent) — **DOMYŚLNA**
+
+### A.0 Sekrety (Ty, jednorazowo)
+
+```bash
+cp .env.example .env.local
+# Wklej TWENTY_API_KEY z Twenty → Settings → Developers → API Keys
+```
+
+### A.1 Audit
+
+```bash
+python3 integrations/tools/twenty_schema.py audit
+```
+
+### A.2 Co robi agent po audicie
+
+- `createOneField` / `updateOneField` (Metadata API) — pola z tabeli §2 poniżej
+- `stage` → wartości NEW, CONTACTED, QUALIFIED, PROPOSAL, WON, LOST
+- Eksport JSON → `owocni-crm/generated/twenty-schema.snapshot.json`
+
+**PASS:** `twenty_schema.py audit` bez brakujących pól.
+
+---
+
+## Ścieżka B — UI (fallback)
+
+Użyj tylko gdy API key niedostępny lub endpoint zwraca 403.
 
 ---
 
