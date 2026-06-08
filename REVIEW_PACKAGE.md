@@ -4,7 +4,7 @@ title: "REVIEW_PACKAGE — pakiet do weryfikacji dokumentacji SSOT"
 layer: navigator
 status: active
 owner: "Dawid"
-last_verified: 2026-06-02
+last_verified: 2026-06-08
 recheck_trigger: "zamknięcie review / zmiana blokera cutover"
 default_trust: D:CORE
 ---
@@ -50,17 +50,17 @@ Opcjonalnie głębiej: `IDENTITY_AND_INBOUND.md`, `DATA_MODEL.md`, `audits/AUDIT
 
 ---
 
-## 3. Ustalenia właściciela do potwierdzenia (2026-06-02)
+## 3. Ustalenia właściciela — **POTWIERDZONE (2026-06-08)**
 
-Źródło: `DECISION_REGISTER.md` §5.8 — prosimy o **TAK / NIE / uwagi**:
+Źródło: `DECISION_REGISTER.md` §5.8 · recenzent: **właściciel (Dawid)** · werdykt: **TAK na wszystkie**
 
-- [ ] **L-1:** `srcSystem`-SKIP usuwamy dopiero po PASS smoke #4 (manual create + backfill).  
-- [ ] **MERGE:** **nigdy auto** — system **proponuje** merge po corporate domain (`company_domain_key`); handlowiec scala ręcznie; **free-mail** (`wp.pl`, `gmail`, …) wyłączone z propozycji (`IDENTITY` §5.8.2, §5.9).
-- [ ] **Cutover:** bez daty z góry — okno po PASS G1–G8 + G-PAR.  
-- [ ] **Webhook:** nazwy/payload Twenty potwierdzamy sandboxem, nie zgadujemy z docs.  
-- [ ] **#12:** `kontakt@` poza CRM (kierunek A).  
-- [ ] **#13:** wyłączenie julia362 dopiero po testach + przejściu handlowców.  
-- [ ] **#14:** pełny cleanup `lead_won` → `purchase` w kodzie/docs przed cutover (prep w repo już jest — patrz §4).
+- [x] **L-1:** `srcSystem`-SKIP usuwamy dopiero po PASS smoke #4 (manual create + backfill).  
+- [x] **MERGE:** **nigdy auto** — system **proponuje** merge po corporate domain (`company_domain_key`); handlowiec scala ręcznie; **free-mail** wyłączone (`IDENTITY` §5.8.2, §5.9).
+- [x] **Cutover:** bez daty z góry — okno po PASS G1–G8 + G-PAR.  
+- [x] **Webhook:** nazwy/payload Twenty potwierdzamy sandboxem, nie zgadujemy z docs.  
+- [x] **#12:** `kontakt@` poza CRM (kierunek A).  
+- [x] **#13:** wyłączenie julia362 dopiero po testach + przejściu handlowców.  
+- [x] **#14:** pełny cleanup `lead_won` → `purchase` w kodzie/docs przed cutover.
 
 ---
 
@@ -77,21 +77,15 @@ Opcjonalnie głębiej: `IDENTITY_AND_INBOUND.md`, `DATA_MODEL.md`, `audits/AUDIT
 
 ## 5. Formularz wyniku review (do wypełnienia)
 
-**Recenzent:** _______________  
-**Data:** _______________
+**Recenzent:** Dawid (właściciel)  
+**Data:** 2026-06-08
 
-| Wynik | ☐ Zatwierdzam SSOT do fazy preflight/testów  ☐ Wymagane poprawki  ☐ Blokujące sprzeczności |
+| Wynik | ☑ **Zatwierdzam SSOT do fazy preflight/testów**  ☐ Wymagane poprawki  ☐ Blokujące sprzeczności |
 |-------|---|
 
-**Top 3 uwagi (obowiązkowe jeśli nie pełne TAK):**
+**Uwagi:** brak — wszystkie punkty §3 TAK. MERGE zrewidowany 2026-06-08 (propozycje corporate, nie auto).
 
-1.  
-2.  
-3.  
-
-**Blokery przed startem preflight Twenty (jeśli są):**
-
--  
+**Blokery przed startem preflight Twenty:** brak na poziomie dokumentacji. Start wdrożenia sandbox **TAK**; cutover nadal po PASS bram + zamknięciu ADR z dowodem.
 
 **Zalecana kolejność po review (dla zespołu):**
 

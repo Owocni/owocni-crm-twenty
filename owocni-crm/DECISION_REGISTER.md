@@ -132,14 +132,17 @@ Kontekst: jedno źródło podawało błędną nazwę nagłówka (`x-twenty-signa
 **ADR #14 (cleanup nazw eventów) — open, blocks cutover.**
 Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzja docelowa: wszystkie `event_name` zgodne z kanonem `EVENT_CONTRACT.md` §5.2. Wdrożenie: Dawid, przed G1 PASS.
 
-### 5.8 USTALENIA WŁAŚCICIELA (2026-06-02) — zebrane
+### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 
-- **L-1 / smoke #4:** potwierdzone podejście A — usuwanie starego `srcSystem`-SKIP dopiero po PASS smoke #4.
-- **MERGE policy (rewizja 2026-06-08):** **nigdy auto-merge**; system **proponuje** scalenie po `company_domain_key` (corporate mail, np. asystent + szef); **zakaz** propozycji na free-mail (`wp.pl`, `gmail`, …). Wykonanie = ręcznie w Twenty przez handlowca. Szczegóły: `IDENTITY_AND_INBOUND.md` §5.8.2, §5.9.
-- **Cutover date:** bez daty „z góry"; okno ustalane dopiero po pełnym PASS G1–G8 + G-PAR.
-- **Webhook naming/payload:** podejście A — potwierdzać sandboxem (nie zakładać z docs bez payloadu z instancji).
-- **Stape wydajność:** decyzja operacyjna — temat wpisany do planu preflight; realizacja później (nie teraz).
-- **Integrations parity:** po domknięciu decyzji uruchomić aktualizację `integrations/` do finalnej zgodności z SSOT i sandboxem.
+Wszystkie punkty §3 `REVIEW_PACKAGE.md` = **TAK**. SSOT zatwierdzony do **fazy preflight / wdrożenia sandbox Twenty** (nie cutover).
+
+- **L-1 / smoke #4:** TAK — usuwanie `srcSystem`-SKIP dopiero po PASS smoke #4.
+- **MERGE (2026-06-08):** TAK — nigdy auto; propozycje po `company_domain_key`; free-mail wyłączone; merge ręczny w Twenty.
+- **Cutover date:** TAK — bez daty z góry; okno po PASS G1–G8 + G-PAR.
+- **Webhook naming/payload:** TAK — potwierdzać sandboxem.
+- **#12 kontakt@:** TAK — poza CRM (kierunek A).
+- **#13 julia362:** TAK — wyłączenie po testach + przejściu handlowców.
+- **#14 lead_won→purchase:** TAK — pełny cleanup przed cutover.
 
 ### 5.6 TASKS MOVED OUT
 
