@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "updated": "2026-06-08",
+  "description": "Kanoniczne listy dla is_free_mail() — Identity Resolver merge proposals. Źródło prawdy dla kodu; algorytm waterfall w IDENTITY_AND_INBOUND.md §5.8.2.",
+  "pl_exact_domains": [
+    "wp.pl", "o2.pl", "onet.pl", "interia.pl", "gazeta.pl", "op.pl", "tlen.pl",
+    "poczta.fm", "int.pl", "prokonto.pl", "vp.pl", "autograf.pl", "onet.eu",
+    "interia.eu", "go2.pl", "vip.interia.pl", "onet.com.pl", "poczta.onet.pl",
+    "poczta.wp.pl", "tenbit.pl", "orange.pl", "neostrada.pl", "chello.pl",
+    "upcpoczta.pl", "upc.com.pl", "netia.pl", "internetia.pl", "vectra.pl",
+    "toya.net.pl", "toya.pl", "multimedia.pl", "aster.pl", "astercity.net",
+    "dialog.pl", "inea.pl", "icpnet.pl", "satfilm.pl", "spray.pl", "hoga.pl",
+    "pf.pl", "poczta.pl", "priv.pl", "1gb.pl", "home.pl", "nazwa.pl", "az.pl",
+    "plusnet.pl", "plus.pl", "t-mobile.pl", "era.pl", "amorki.pl", "buziaczek.pl",
+    "akcja.pl", "spoko.pl", "serwus.pl", "rubikon.pl", "box43.pl", "os.pl",
+    "student.pl", "sferia.pl"
+  ],
+  "global_substring_blacklist": [
+    "gmail", "googlemail", "outlook", "hotmail", "live", "msn", "yahoo", "ymail",
+    "rocketmail", "aol", "aim", "icloud", "me.com", "mac.com", "proton", "protonmail",
+    "tutanota", "tuta", "gmx", "lycos", "zoho", "yandex", "mail.ru", "inbox",
+    "fastmail", "hushmail", "tiscali", "wanadoo", "terra", "rambler"
+  ],
+  "hosting_suffix_stop": [
+    ".home.pl",
+    ".nazwa.pl"
+  ],
+  "plus_addressing_domains": [
+    "gmail.com",
+    "googlemail.com"
+  ]
+}

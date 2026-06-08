@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: content_and_structure
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-05-31
+last_verified: 2026-06-08
 recheck_trigger: "nowa decyzja / zmiana statusu decyzji / zamknięcie blokera cutoveru"
 default_trust: D:CORE
 related:
@@ -100,7 +100,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | **#13** | Email Sync + Resolver muszą działać PRZED wyłączeniem julia362 | Wyłączenie legacy bez następcy = utrata kanału leadów | G7 / G-PAR | **Kierunek zamknięty (2026-06-02):** opcja A (wyłączenie dopiero po pełnych testach + przejściu handlowców). ADR zamknąć po PASS dowodach. |
 | **#14** | Cleanup zakazanych nazw eventów (`lead_won`→`purchase`) w kodzie Robot + docs orkiestracji | Stary `event_name` w kodzie = niezgodność z kanonem SSOT | G1 event-semantics | **Kierunek zamknięty (2026-06-02):** opcja A (pełny cleanup przed cutover). Do zamknięcia ADR: commit/evidence. |
 | **L-1** (TRANSITION EXCEPTION) | Usunięcie `srcSystem`-SKIP dopiero po smoke #4 PASS | Przedwczesne usunięcie = drugi mint idOid (rozdwojenie) | G4 loop-prevention | Dawid (`EVENT_CONTRACT.md` §6.1) |
-| **MERGE** (3 bramki) | Webhook-oba-ID / nieodwracalność / T5 dwa paid | Nieznane zachowanie merge = nieodwracalne sklejenie tożsamości | G8 merge-safety | **Kierunek zamknięty (2026-06-02):** merge tylko przy pełnej zgodności tej samej osoby; zakaz łączenia różnych osób z jednej firmy (np. właściciel vs marketing). Do zamknięcia ADR: preflight + SOP admin. |
+| **MERGE** (3 bramki techn.) | Webhook-oba-ID / nieodwracalność / T5 dwa paid | Nieznane zachowanie merge = nieodwracalne sklejenie wskaźników | G8 merge-safety | **Polityka biznesowa zamknięta (2026-06-08):** propozycje merge po corporate domain; **nigdy auto**; free-mail wyłączone (waterfall §5.8.2). ADR zamknąć po preflight G8 + SOP szkolenia. |
 
 ### 5.3 OPEN NON-BLOCKING (`decision_status: open`, `blocks: none`)
 
@@ -135,7 +135,7 @@ Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzj
 ### 5.8 USTALENIA WŁAŚCICIELA (2026-06-02) — zebrane
 
 - **L-1 / smoke #4:** potwierdzone podejście A — usuwanie starego `srcSystem`-SKIP dopiero po PASS smoke #4.
-- **MERGE policy:** potwierdzone podejście A — merge wyłącznie dla tej samej osoby; zakaz łączenia różnych osób w tej samej firmie.
+- **MERGE policy (rewizja 2026-06-08):** **nigdy auto-merge**; system **proponuje** scalenie po `company_domain_key` (corporate mail, np. asystent + szef); **zakaz** propozycji na free-mail (`wp.pl`, `gmail`, …). Wykonanie = ręcznie w Twenty przez handlowca. Szczegóły: `IDENTITY_AND_INBOUND.md` §5.8.2, §5.9.
 - **Cutover date:** bez daty „z góry"; okno ustalane dopiero po pełnym PASS G1–G8 + G-PAR.
 - **Webhook naming/payload:** podejście A — potwierdzać sandboxem (nie zakładać z docs bez payloadu z instancji).
 - **Stape wydajność:** decyzja operacyjna — temat wpisany do planu preflight; realizacja później (nie teraz).
