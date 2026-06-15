@@ -40,9 +40,20 @@ function partitionTasksByEnvironment(tasks) {
 function logSandboxPlatformSkip(count) {
   if (count > 0) {
     console.log(
-      `🧪 env-guard: ${count} sandbox task(s) — SKIP Google/Meta/GA4 MP prod; dozwolony safe-sink (arkusze/log)`
+      `🧪 env-guard: ${count} sandbox task(s) — SKIP Google/Meta/GA4 MP prod; safe-sink → GOOGLE_SHEET_ID_SANDBOX`
     );
   }
+}
+
+/** Prod → GOOGLE_SHEET_ID; sandbox → GOOGLE_SHEET_ID_SANDBOX (nigdy prod arkusz). */
+function getSpreadsheetId(taskData, prodSheetId, sandboxSheetId) {
+  if (!isSandboxTask(taskData)) {
+    return prodSheetId || null;
+  }
+  if (!sandboxSheetId) {
+    return null;
+  }
+  return sandboxSheetId;
 }
 
 module.exports = {
@@ -51,4 +62,5 @@ module.exports = {
   shouldSkipProdPlatformApis,
   partitionTasksByEnvironment,
   logSandboxPlatformSkip,
+  getSpreadsheetId,
 };

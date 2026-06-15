@@ -3,6 +3,7 @@
  * Adapter Sortowni: Twenty native webhook OUT → business event → task_queue.
  *
  * Deploy: osobny tag HTTP w Stape (ścieżka /inbound/twenty_webhook).
+ * W sGTM wklej INBOUND_TWENTY_WEBHOOK.sGTM.js (ten plik = moduł/logika repo, bez data.gtmOnSuccess).
  * SSOT: EVENT_CONTRACT §5.4–5.6, ARCHITECTURE §5.4
  *
  * PRZED PROD: uzupełnij parseTwentyPayload() po preflight (webhook-captures).
@@ -19,8 +20,8 @@ const encodeUriComponent = require("encodeUriComponent");
 // --- Stałe (zsynchronizuj z shared/ssotPaths.js / TWENTY_PATHS.md) ---
 var ADAPTER_ID = "inbound:twenty_webhook";
 var COLLECTION_TASK_QUEUE = "task_queue";
-var COLLECTION_TWENTY_STATE_PREFIX = "twenty:opp:";
-var COLLECTION_PENDING_WRITE_PREFIX = "pending_write:twenty:";
+var COLLECTION_TWENTY_STATE_PREFIX = "twenty_opp_";
+var COLLECTION_PENDING_WRITE_PREFIX = "pending_write_twenty_";
 
 var REASON_SKIP_DUPLICATE_DELIVERY = "SKIP_DUPLICATE_DELIVERY";
 var REASON_SKIP_ECHO_OWN_WRITE = "SKIP_ECHO_OWN_WRITE";
@@ -45,7 +46,11 @@ function normalizeSsoEventName(name) {
 }
 
 function getRuntimeEnvironment(eventData) {
-  var raw = (eventData && eventData.environment) || "prod";
+  var raw =
+    getEventDataWithFallback("runtime_environment") ||
+    getEventDataWithFallback("environment") ||
+    (eventData && eventData.environment) ||
+    "prod";
   var n = makeString(raw).toLowerCase();
   return n === "sandbox" ? "sandbox" : "prod";
 }
@@ -59,23 +64,52 @@ function shouldRouteToProdPlatforms(env) {
 }
 
 /**
- * TODO po preflight: mapowanie rzeczywistego body webhooka Twenty.
- * eventData = obiekt z parsowanego JSON (HTTP tag).
+ * Mapowanie native webhook OUT Twenty (preflight sandbox 2026-06).
+ * Kanoniczny envelope: { event, data, timestamp } — docs.twenty.com/developers/extend/webhooks
+ * event np. opportunity.created | opportunity.updated | person.created
+ * data = pełny rekord (flat); NIE ma before/after (NR-2).
+ * OQ-E3: idOid jest na Opportunity (data.idOid), nie w zagnieżdżonym Person — pointOfContactId często null.
  */
 function parseTwentyPayload(eventData) {
   var payload = eventData || {};
   var data = payload.data || payload.record || payload;
+  if (data && data.record && typeof data.record === "object") {
+    data = data.record;
+  }
+  var eventPlatform =
+    payload.event || payload.operation || payload.type || "";
+  var objectType = "";
+  if (eventPlatform && eventPlatform.indexOf(".") > -1) {
+    objectType = eventPlatform.split(".")[0];
+  }
   return {
-    objectType: data.objectMetadata || data.__typename || payload.object || "",
+    objectType:
+      objectType ||
+      data.objectMetadata ||
+      data.__typename ||
+      payload.object ||
+      "",
     opportunityId: data.id || payload.id || "",
     stage: data.stage || null,
     campaignRejected: data.campaignRejected === true,
-    personIdOid: (data.person && data.person.idOid) || data.idOid || null,
-    eventNamePlatform: payload.event || payload.type || "",
+    personIdOid:
+      (data.person && data.person.idOid) ||
+      (data.pointOfContact && data.pointOfContact.idOid) ||
+      null,
+    opportunityIdOid: data.idOid || null,
+    eventNamePlatform: eventPlatform,
     bizValueWon: data.bizValueWon || null,
     bizProduct: data.bizProduct || null,
-    bizEmail: (data.person && data.person.email) || data.email || null,
-    bizPhone: (data.person && data.person.phone) || data.phone || null,
+    bizEmail:
+      (data.person && data.person.email) ||
+      (data.pointOfContact && data.pointOfContact.email) ||
+      data.email ||
+      null,
+    bizPhone:
+      (data.person && data.person.phone) ||
+      (data.pointOfContact && data.pointOfContact.phone) ||
+      data.phone ||
+      null,
   };
 }
 
@@ -87,20 +121,49 @@ function storeKeyPendingWrite(opportunityId) {
   return COLLECTION_PENDING_WRITE_PREFIX + opportunityId;
 }
 
+function unwrapStoreDocument(body) {
+  if (!body || typeof body !== "object") {
+    return {};
+  }
+  if (body.data && body.data.data && typeof body.data.data === "object") {
+    return body.data.data;
+  }
+  if (
+    body.last_stage !== undefined ||
+    body.last_campaignRejected !== undefined ||
+    body.active !== undefined
+  ) {
+    return body;
+  }
+  if (body.data && typeof body.data === "object") {
+    return body.data;
+  }
+  return body;
+}
+
+function deliveryFingerprint(webhookBody) {
+  var payload = webhookBody || {};
+  var record = payload.data || {};
+  var oppId = record.id || payload.id || "";
+  var ts = payload.timestamp || "";
+  var ev = payload.event || "";
+  return ev + "|" + oppId + "|" + ts;
+}
+
 function readJsonStore(documentKey, callback) {
   var url = API_BASE + "/twenty_state/documents/" + encodeUriComponent(documentKey);
   sendHttpRequest(url, { method: "GET" }, "")
     .then(function (res) {
       var body = {};
       try {
-        body = JSON.parse(res.body || "{}");
+        body = unwrapStoreDocument(JSON.parse(res.body || "{}"));
       } catch (e) {
         body = {};
       }
       callback(null, body);
     })
-    .catch(function (err) {
-      callback(err, null);
+    .catch(function () {
+      callback(null, {});
     });
 }
 
@@ -118,8 +181,12 @@ function writeJsonStore(documentKey, obj, callback) {
     });
 }
 
+function resolveIdentityOid(parsed) {
+  return parsed.personIdOid || parsed.opportunityIdOid || null;
+}
+
 function detectBusinessEvent(parsed, prev) {
-  if (!parsed.personIdOid) {
+  if (!resolveIdentityOid(parsed)) {
     return { emit: "generate_lead", manual: true };
   }
   if (prev.last_stage == null && prev.last_campaignRejected == null) {
@@ -217,7 +284,7 @@ function processTwentyWebhook(webhookBody, environment) {
 
     var eventName = normalizeSsoEventName(decision.emit);
     var timestamp = getTimestampMillis();
-    var idOid = parsed.personIdOid || "pending_mint";
+    var idOid = resolveIdentityOid(parsed) || "pending_mint";
 
     var taskPayload = {
       id_oid: idOid,

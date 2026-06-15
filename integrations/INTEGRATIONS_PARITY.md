@@ -5,7 +5,7 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid (wykonawca techniczny)"
-last_verified: 2026-06-02
+last_verified: 2026-06-15
 recheck_trigger: "zmiana integrations/*.js / zamknięcie ADR #14 / nowy adapter Stape"
 default_trust: D:CORE
 related:
@@ -36,9 +36,9 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 |---|---|---|---|
 | Sortownia paid / `generate_lead` / oid_init | **TAK** (`SORTOWNIA_V2_POPRAWIONY.js`) | Stape sGTM tag (deploy z tego pliku) | `EVENT_CONTRACT`, `IDENTITY` |
 | Robot / adaptery platform | **TAK** (`GoogleCloudRobot.js`) | GCP Cloud Function | `ARCHITECTURE`, `EVENT_CONTRACT` |
-| Adapter `inbound:twenty_webhook` | **TAK (prep)** (`INBOUND_TWENTY_WEBHOOK.js`) | Stape HTTP tag — deploy po preflight | `EVENT_CONTRACT` §5.4 |
+| Adapter `inbound:twenty_webhook` | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js`) | Stape tag — **deploy sandbox PASS** | `EVENT_CONTRACT` §5.4 |
 | Adapter `crm:twenty_create_lead` | **TAK (stub)** (`CRM_TWENTY_CREATE_LEAD.stub.js`) | Stape tag | `ARCHITECTURE` §5.3 |
-| Adapter `crm:twenty_update_person` | **TAK (stub)** (`CRM_TWENTY_UPDATE_PERSON.stub.js`) | Stape tag | `EVENT_CONTRACT` §6.1 |
+| Adapter `crm:twenty_update_person` | **TAK** (`CRM_TWENTY_UPDATE_PERSON.sGTM.js`) | Stape tag + Scheduler — **deploy sandbox PASS** | `EVENT_CONTRACT` §6.1 |
 | env-guard sandbox/prod | **TAK (prep)** | `shared/envGuard.js` + `ENV_GUARD.sGTM.js` + pole `environment` w task_queue | `ARCHITECTURE` §5.4 |
 | Identity Resolver T1–T5 | **NIE (jeszcze)** | Stape — osobny handler | `IDENTITY` §5.2 |
 
@@ -46,20 +46,20 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ---
 
-## 2. Macierz zgodności (stan 2026-06-02)
+## 2. Macierz zgodności (stan 2026-06-15)
 
 | ID | Wymaganie SSOT | Plik SSOT | Stan kodu | Status | Następny krok |
 |---|---|---|---|---|---|
-| P1 | Kanon eventów: `purchase`, `rejected_lead` (zakaz `lead_won` jako event_name) | `EVENT_CONTRACT` §5.2 | Robot: alias legacy → kanon (normalize) | **W toku** | Sandbox: task_queue z `purchase` / `rejected_lead` |
+| P1 | Kanon eventów: `purchase`, `rejected_lead` (zakaz `lead_won` jako event_name) | `EVENT_CONTRACT` §5.2 | Robot: alias legacy → kanon (normalize) | **PASS sandbox** | Evidence: smoke #1–3, S2 Robot |
 | P2 | ADR #14 cleanup nazw w Robot + docs orkiestracji | `DECISION_REGISTER` #14 | Robot zaktualizowany; Google Docs — osobno | **W toku** | Przegląd docs orkiestracji |
-| P3 | Loop-prevention: pending-write Stape, **nie** `srcSystem`-SKIP | `EVENT_CONTRACT` NR-6, INV-3 | Kod prep w `INBOUND_*` + `CRM_TWENTY_UPDATE_PERSON` | **OPEN** | Preflight TTL + smoke |
-| P4 | Manual create: `idOid IS NULL` → `generate_lead` + backfill | `EVENT_CONTRACT` §5.4, §6.1 | `INBOUND_TWENTY_WEBHOOK.js` + update_person stub | **OPEN** | Smoke #4 na sandboxie |
-| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` | `EVENT_CONTRACT` §5.4 | `INBOUND_TWENTY_WEBHOOK.js` (klucze `twenty:opp:`) | **OPEN** | Preflight payload + test |
+| P3 | Loop-prevention: pending-write Stape, **nie** `srcSystem`-SKIP | `EVENT_CONTRACT` NR-6, INV-3 | `INBOUND_*` + `CRM_TWENTY_UPDATE_PERSON.sGTM.js` | **PASS sandbox** | Smoke #4 + pending-write TTL |
+| P4 | Manual create: `idOid IS NULL` → `generate_lead` + backfill | `EVENT_CONTRACT` §5.4, §6.1 | inbound + worker Stape | **PASS sandbox** | Smoke #4 evidence |
+| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` | `EVENT_CONTRACT` §5.4 | `INBOUND_TWENTY_WEBHOOK.sGTM.js` (`twenty_opp_`) | **PASS sandbox** | Smoke #1–3, #5–#7 |
 | P6 | VBB gate: `identity_status` + `vbb_eligible` | `IDENTITY` §5.10 | Robot: częściowo (consent); pełny gate — weryfikacja | **Do testu** | Test T4/T5 bez emisji VBB |
-| P7 | `srcSystem` = raportowe, nie SKIP | `DATA_MODEL` NR-4 | Adapter Twenty **poza repo** | **OPEN** | Usunąć SKIP po L-1 + smoke #4 |
+| P7 | `srcSystem` = raportowe, nie SKIP | `DATA_MODEL` NR-4 | inbound: brak srcSystem-SKIP w kodzie | **OPEN** | L-1 krok 3 jeśli SKIP dodany później |
 | P8 | Wskaźniki `by_*` + profil pod `id_oid` | `IDENTITY` §5.8 | Sortownia: multi-key write (legacy) | **OPEN** | ADD-1/ADD-2 w `IMPLEMENTATION_PLAN` |
 | P9 | `time_occurred` epoch ms (FIX-2) | `IMPLEMENTATION_PLAN` §5.7 | Sortownia: mieszane formaty | **OPEN** | Ujednolicić w Sortowni |
-| P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Robot `envGuard` + Sortownia `environment` field | **W toku** | Test fixture sandbox bez prod API |
+| P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Robot `envGuard` + dual-sheet routing | **PASS sandbox** | S2 + smoke matrix |
 
 ---
 
@@ -81,13 +81,13 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ## 4. Checklista PASS przed cutover (integrations)
 
-- [ ] **P1** Wszystkie nowe taski w kolejce używają wyłącznie kanonicznych `event_name`.
+- [x] **P1** Wszystkie nowe taski w kolejce używają wyłącznie kanonicznych `event_name`. (sandbox smoke 2026-06-15)
 - [ ] **P2** Brak `lead_won` / `lead_rejected` w kodzie produkcyjnym (poza warstwą aliasów legacy).
-- [ ] **P3–P5** Adapter `inbound:twenty_webhook` zaimplementowany w Stape i przetestowany (smoke matrix).
-- [ ] **P4** Smoke #4 PASS (manual create + backfill, bez drugiego mint).
-- [ ] **P7** `srcSystem`-SKIP usunięty dopiero po smoke #4 (L-1).
-- [ ] **P10** Sandbox nie trafia do prod adapterów reklamowych.
-- [ ] Eksport/tag Stape dla adapterów Twenty zapisany w repo (opcjonalnie, zalecane przed cutover).
+- [x] **P3–P5** Adapter `inbound:twenty_webhook` zaimplementowany w Stape i przetestowany (smoke matrix 8/8).
+- [x] **P4** Smoke #4 PASS (manual create + backfill, bez drugiego mint).
+- [ ] **P7** `srcSystem`-SKIP — w inbound brak; monitorować przy zmianach (L-1).
+- [x] **P10** Sandbox nie trafia do prod adapterów reklamowych.
+- [x] Eksport/tag Stape dla adapterów Twenty zapisany w repo (`.sGTM.js` 2026-06-15).
 
 ---
 

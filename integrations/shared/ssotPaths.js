@@ -13,13 +13,14 @@ const ADAPTERS = {
 
 const HTTP_PATHS = {
   INBOUND_TWENTY_WEBHOOK: '/inbound/twenty_webhook',
+  CRM_TWENTY_WORKER: '/crm/twenty_worker',
 };
 
 const STAPE_COLLECTIONS = {
   TASK_QUEUE: 'task_queue',
   IDENTITY_MAP: 'identity_map',
   TWENTY_STATE_PREFIX: 'twenty:opp:', // + opportunityId → last_stage / last_campaignRejected
-  PENDING_WRITE_PREFIX: 'pending_write:twenty:', // + opportunityId, TTL w preflight
+  PENDING_WRITE_PREFIX: 'pending_write_twenty_', // + opportunityId, TTL ~45s (sync inbound/worker)
 };
 
 const CANONICAL_EVENT_NAMES = [

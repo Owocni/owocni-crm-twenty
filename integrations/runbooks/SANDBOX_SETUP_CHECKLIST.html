@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OWOCNI — Checklist sandbox Twenty + Sortownia (sGTM)</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #fff;
+      --text: #1a1d21;
+      --muted: #5c6570;
+      --border: #dde2e8;
+      --accent: #1e4d8c;
+      --done: #0d7a4a;
+      --provide: #b45309;
+      --warn: #9a3412;
+      --skip: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+      padding: 1.5rem;
+      max-width: 52rem;
+      margin-inline: auto;
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;
+      font-size: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .badge {
+      display: inline-block; padding: 0.15rem 0.45rem; border-radius: 4px;
+      font-weight: 600; font-size: 0.72rem; vertical-align: middle; margin-left: 0.35rem;
+    }
+    .badge-done { background: #d1fae5; color: var(--done); }
+    .badge-todo { background: #e0e7ff; color: var(--accent); }
+    .badge-provide { background: #ffedd5; color: var(--provide); }
+    .badge-warn { background: #fee2e2; color: var(--warn); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      font-size: 1rem;
+      margin: 0 0 0.35rem;
+      color: var(--accent);
+    }
+    .doc-ref {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .doc-ref code { font-size: 0.76rem; }
+    ul.checklist { list-style: none; padding: 0; margin: 0; }
+    ul.checklist li {
+      border-top: 1px solid var(--border);
+      padding: 0.65rem 0;
+      display: flex; gap: 0.6rem; align-items: flex-start;
+    }
+    ul.checklist li:first-child { border-top: none; }
+    ul.checklist input[type="checkbox"] {
+      margin-top: 0.25rem; width: 1rem; height: 1rem; flex-shrink: 0;
+    }
+    .item-body { flex: 1; min-width: 0; }
+    .item-title { font-weight: 600; font-size: 0.92rem; }
+    .item-desc { font-size: 0.84rem; color: var(--muted); margin-top: 0.2rem; }
+    .provide-box {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0 0;
+      font-size: 0.84rem;
+    }
+    .provide-box strong { color: var(--provide); }
+    .note {
+      font-size: 0.82rem;
+      background: #f0f4f8;
+      border-left: 3px solid var(--accent);
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .progress {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    table.fields { width: 100%; font-size: 0.82rem; border-collapse: collapse; margin-top: 0.5rem; }
+    table.fields th, table.fields td {
+      border: 1px solid var(--border); padding: 0.4rem 0.5rem; text-align: left;
+    }
+    table.fields th { background: #f0f4f8; }
+    footer { font-size: 0.75rem; color: var(--muted); margin-top: 2rem; }
+    a { color: var(--accent); }
+    .current-step {
+      background: #eff6ff;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .current-step strong { color: var(--accent); }
+    .config-box {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0 0.75rem;
+      font-size: 0.84rem;
+    }
+    .config-box dl { margin: 0; display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; }
+    .config-box dt { font-weight: 600; color: var(--muted); }
+    .config-box dd { margin: 0; font-family: ui-monospace, monospace; font-size: 0.8rem; word-break: break-all; }
+    section.done-section { opacity: 0.92; }
+    section.done-section h2 .badge-done { margin-left: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<h1>Checklist — sandbox Twenty → Sortownia (sGTM)</h1>
+<p class="subtitle">
+  Instancja Twenty: <a href="https://zany-maroon-panther.twenty.com" target="_blank" rel="noopener">zany-maroon-panther.twenty.com</a><br>
+  Kontener: <strong>GTM-5ZM8KQ5S</strong> · identifier <code>uinpcbwf</code> · EU (Germany)<br>
+  Ścieżka: <strong>Stape od razu</strong> (bez webhook.site) · <strong>environment=sandbox</strong> · safe sink → arkusze Google (Robot env-guard).
+</p>
+
+<div class="current-step" id="current-step">
+  <strong>Teraz:</strong> <span id="current-step-label">S1.2 — sGTM: Client HTTP + tag <code>inbound:twenty_webhook</code></span>
+</div>
+
+<div class="legend">
+  <span><span class="badge badge-done">GOTOWE</span> wykonane w sesji / PASS</span>
+  <span><span class="badge badge-todo">DO ZROBIENIA</span> Ty lub agent</span>
+  <span><span class="badge badge-provide">DOSTARCZ</span> podaj w kolejnym prompcie</span>
+  <span><span class="badge badge-warn">ZAKAZ</span> z SSOT — nie rób</span>
+</div>
+
+<p class="progress" id="progress">Postęp: 0 / 0</p>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-provide">
+  <h2>0. Zanim zaczniesz — dostarcz agentowi (jeśli jeszcze nie masz)</h2>
+  <p class="doc-ref">Źródło: <code>TWENTY_ROLLOUT_MASTER.md</code>, <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §5, <code>ARCHITECTURE.md</code> §5.4</p>
+  <div class="provide-box">
+    <strong>Jeszcze do podania agentowi (bez sekretów w git):</strong>
+    <ol style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
+      <li><s>URL kontenera sGTM</s> — <strong>ustalone</strong> (patrz box Kontener poniżej)</li>
+      <li>Czy <strong>Robot GCP</strong> jest wdrożony z aktualnego <code>integrations/GoogleCloudRobot.js</code>?</li>
+      <li><strong>GOOGLE_SHEET_ID</strong> arkusza safe-sink sandbox CRM (osobny od backupu formularzy — <code>ARCHITECTURE.md</code> §5.3.1)</li>
+      <li>Po T2: odpowiedzi OQ-E2 / OQ-E3 lub zanonimizowany JSON payloadu (opcjonalnie pliki w <code>fixtures/webhook-captures/</code>)</li>
+    </ol>
+  </div>
+  <div class="config-box">
+    <strong>Kontener Owocni (potwierdzone 2026-06-08)</strong>
+    <dl>
+      <dt>stape_base_url</dt>
+      <dd>https://uinpcbwf.eug.stape.io</dd>
+      <dt>Twenty webhook URL</dt>
+      <dd>https://uinpcbwf.eug.stape.io/inbound/twenty_webhook</dd>
+      <dt>GTM container ID</dt>
+      <dd>GTM-5ZM8KQ5S</dd>
+      <dt>Container identifier</dt>
+      <dd>uinpcbwf</dd>
+      <dt>Custom domain</dt>
+      <dd>https://ss.owocni.pl — <em>Verifying Error</em>; używaj subdomeny Stape do PASS T2</dd>
+      <dt>stape_store_api_key</dt>
+      <dd>Stape → Show Container API key (tylko w zmiennej sGTM, nie w repo)</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-t1">
+  <h2>T1 — Twenty: pola FROZEN + stage <span class="badge badge-done">PASS</span></h2>
+  <p class="doc-ref">
+    Runbook: <code>TWENTY_SANDBOX_STEP01_FIELDS.md</code> ·
+    PASS: <code>python3 integrations/tools/twenty_schema.py audit</code> ·
+    Snapshot: <code>owocni-crm/generated/twenty-schema.snapshot.json</code>
+  </p>
+  <ul class="checklist" data-section="t1">
+    <li>
+      <input type="checkbox" id="t1-0" checked disabled>
+      <div class="item-body">
+        <div class="item-title">T1.0 — TWENTY_API_KEY w <code>.env.local</code></div>
+        <div class="item-desc">Twenty → Settings → APIs &amp; Webhooks → API → klucz <code>main-api-key</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t1-1" checked disabled>
+      <div class="item-body">
+        <div class="item-title">T1.1–T1.6 — Audit schema vs DATA_MODEL</div>
+        <div class="item-desc">Wszystkie pola Opportunity + Person.idOid; stage NEW…LOST; label „Odrzuć leada”</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t1-8" checked disabled>
+      <div class="item-body">
+        <div class="item-title">T1.8 — Snapshot wyeksportowany</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t1-7">
+      <div class="item-body">
+        <div class="item-title">T1.7 — Kanban view (opcjonalnie UI)</div>
+        <div class="item-desc">Twenty UI: Opportunities → Kanban, kolumny = stage. Nie blokuje T2.</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t1-preflight">
+      <div class="item-body">
+        <div class="item-title">Preflight G5 — idOid unique w UI</div>
+        <div class="item-desc"><code>DATA_MODEL.md</code> §8 — zweryfikuj w Settings → Fields → idOid → Unique (API mogło nie ustawić)</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-s1-vars" class="done-section">
+  <h2>S1.1 — sGTM: Variables (Sortownia) <span class="badge badge-done">GOTOWE</span></h2>
+  <p class="doc-ref">
+    <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §5 ·
+    <code>TWENTY_ROLLOUT_MASTER.md</code> S1.1 ·
+    Kod czyta: <code>INBOUND_TWENTY_WEBHOOK.js</code>, <code>ENV_GUARD.sGTM.js</code>
+  </p>
+  <p class="note"><strong>Gdzie:</strong> edytor kontenera <strong>server-side GTM (sGTM)</strong> na Stape → <strong>Variables</strong>. Nie panel billing Stape.</p>
+  <table class="fields">
+    <thead>
+      <tr><th>Nazwa zmiennej sGTM</th><th>Wartość (sandbox)</th><th>Skąd wziąć wartość</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>stape_base_url</code></td>
+        <td><code>https://uinpcbwf.eug.stape.io</code></td>
+        <td>Typ: <strong>Constant</strong> · Subdomains w Stape UI</td>
+      </tr>
+      <tr>
+        <td><code>stape_store_api_key</code></td>
+        <td>Container API key</td>
+        <td>Typ: <strong>Constant</strong> · Stape → Show Container API key</td>
+      </tr>
+      <tr>
+        <td><code>twenty_webhook_secret</code></td>
+        <td>wygenerowany secret</td>
+        <td>Typ: <strong>Constant</strong> · ten sam w Twenty webhook · <strong>nie do git</strong></td>
+      </tr>
+      <tr>
+        <td><code>runtime_environment</code></td>
+        <td><code>sandbox</code></td>
+        <td>Typ: <strong>Constant</strong> (<code>TWENTY_SANDBOX_STEP02</code> §5)</td>
+      </tr>
+    </tbody>
+  </table>
+  <ul class="checklist" data-section="s1vars">
+    <li>
+      <input type="checkbox" id="s1-1a" checked>
+      <div class="item-body">
+        <div class="item-title">Utworzono 4 zmienne sGTM (Constant) z tabeli powyżej</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-1b" checked>
+      <div class="item-body">
+        <div class="item-title">Sekrety tylko w sGTM UI — nie w plikach repo / commicie</div>
+        <div class="item-desc"><code>LLM_ANTI_WPADKI_GO_NO_GO.md</code> · <code>PREFLIGHT_TWENTY_WEBHOOK.md</code></div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-s1-tag" style="border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent);">
+  <h2>S1.2–S1.4 — sGTM: Client + tag inbound + Store <span class="badge badge-todo">TERAZ</span></h2>
+  <p class="doc-ref">
+    <code>BUILD_INBOUND_TWENTY_WEBHOOK.md</code> ·
+    <code>TWENTY_PATHS.md</code> §1–3 ·
+    <code>INBOUND_TWENTY_WEBHOOK.js</code> ·
+    <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §0B (stub log na pierwszy strzał)
+  </p>
+  <div class="note">
+    <strong>Kolejność S1.2 (dokumentacja):</strong>
+    (1) Client <code>POST /inbound/twenty_webhook</code> →
+    (2) Tag fazowy: log surowego body (<code>§0B</code>) →
+    (3) Tag pełny: HMAC + <code>INBOUND_TWENTY_WEBHOOK.js</code> + <code>ENV_GUARD.sGTM.js</code> →
+    (4) Publish → T2 webhook w Twenty.
+  </div>
+  <ul class="checklist" data-section="s1tag">
+    <li>
+      <input type="checkbox" id="s1-2a">
+      <div class="item-body">
+        <div class="item-title">Client HTTP: ścieżka <code>POST /inbound/twenty_webhook</code></div>
+        <div class="item-desc"><code>TWENTY_PATHS.md</code> §2 — Twenty wysyła na ten endpoint</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-2b">
+      <div class="item-body">
+        <div class="item-title">Tag <code>inbound:twenty_webhook</code> — kod z <code>INBOUND_TWENTY_WEBHOOK.js</code> + <code>ENV_GUARD.sGTM.js</code></div>
+        <div class="item-desc">Trigger: client z powyższego kroku. sGTM nie używa <code>require()</code> — copy-paste (<code>shared/README.md</code>)</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-2c">
+      <div class="item-body">
+        <div class="item-title">HMAC verify przed przetwarzaniem</div>
+        <div class="item-desc">
+          Nagłówki: <code>X-Twenty-Webhook-Signature</code>, <code>X-Twenty-Webhook-Timestamp</code><br>
+          Signed string: <code>{timestamp}:{raw_body}</code> — <code>ops/OPS_NOTES.md</code> · <code>BUILD_INBOUND_TWENTY_WEBHOOK.md</code> krok 3.2
+        </div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-2d">
+      <div class="item-body">
+        <div class="item-title">Wywołanie z <code>environment</code> = sandbox</div>
+        <div class="item-desc">
+          Task w <code>task_queue</code> musi mieć pole <code>environment: sandbox</code> — <code>TWENTY_SANDBOX_STEP02</code> §6, <code>ARCHITECTURE.md</code> §5.4
+        </div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-3">
+      <div class="item-body">
+        <div class="item-title">Stape Store — kolekcje gotowe do zapisu</div>
+        <div class="item-desc"><code>task_queue</code>, dokumenty <code>twenty:opp:{id}</code> (<code>TWENTY_PATHS.md</code> §3)</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-4">
+      <div class="item-body">
+        <div class="item-title">Pending-write TTL (loop prevention) — po pierwszych testach</div>
+        <div class="item-desc"><code>BUILD_INBOUND_TWENTY_WEBHOOK.md</code> § Stape Store pending-write · NR-6 — nie przed podstawowym T2</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s1-5">
+      <div class="item-body">
+        <div class="item-title">Publish kontenera sGTM + test: Twenty → Stape (log / Store)</div>
+      </div>
+    </li>
+  </ul>
+  <p class="note"><span class="badge badge-warn">ZAKAZ</span> Workflow → HTTP action w Twenty (<code>EVENT_CONTRACT.md</code> §5.1) — tylko native Webhooks.</p>
+  <p class="note"><span class="badge badge-warn">ZAKAZ</span> Usuwać <code>srcSystem</code>-SKIP przed smoke #4 (<code>EVENT_CONTRACT.md</code> §6.1, L-1).</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-t2-twenty">
+  <h2>T2 — Twenty UI: native webhook</h2>
+  <p class="doc-ref">
+    <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §1 ·
+    <code>PREFLIGHT_TWENTY_WEBHOOK.md</code> §2.1 ·
+    Ścieżka B (Stape) — §0B
+  </p>
+  <ul class="checklist" data-section="t2twenty">
+    <li>
+      <input type="checkbox" id="t2-1">
+      <div class="item-body">
+        <div class="item-title">T2.1 — Settings → APIs &amp; Webhooks → zakładka <strong>Webhooks</strong> → + Create webhook</div>
+        <div class="item-desc">Native webhook OUT — <strong>nie</strong> Workflows</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-2">
+      <div class="item-body">
+        <div class="item-title">T2.2 — Endpoint URL</div>
+        <div class="item-desc">
+          <code>https://uinpcbwf.eug.stape.io/inbound/twenty_webhook</code><br>
+          Wymaga Publish tagu z S1.2 (min. stub log z <code>§0B</code>)
+        </div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-3">
+      <div class="item-body">
+        <div class="item-title">T2.3 — Secret (HMAC)</div>
+        <div class="item-desc">Ten sam string co zmienna sGTM <code>twenty_webhook_secret</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-4">
+      <div class="item-body">
+        <div class="item-title">T2.4 — Filters</div>
+        <div class="item-desc">
+          Dwa filtry (usuń „All Objects”):<br>
+          ① <strong>Opportunity</strong> — All (create + update)<br>
+          ② <strong>Person</strong> — All (create + update)<br>
+          <code>PREFLIGHT_TWENTY_WEBHOOK.md</code> · <code>EVENT_CONTRACT.md</code> §5.1 NR-5
+        </div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-desc">
+      <div class="item-body">
+        <div class="item-title">Description (opcjonalna notatka)</div>
+        <div class="item-desc">Np. „OWOCNI sandbox — Sortownia inbound, environment=sandbox”</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-t2-test">
+  <h2>T2 — Testy: 4 payloady + HMAC + OQ</h2>
+  <p class="doc-ref">
+    <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §2–4 ·
+    <code>PREFLIGHT_TWENTY_WEBHOOK.md</code> §2.3–2.4
+  </p>
+  <ul class="checklist" data-section="t2test">
+    <li>
+      <input type="checkbox" id="t2-hmac">
+      <div class="item-body">
+        <div class="item-title">HMAC PASS na żywym requeście</div>
+        <div class="item-desc">Request bez podpisu → odrzucony; z podpisem → przyjęty (Stape log / Store)</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-a">
+      <div class="item-body">
+        <div class="item-title">A — Nowa Opportunity ręcznie (bez idOid, srcSystem=TWENTY_UI)</div>
+        <div class="item-desc">Zapisz JSON → <code>fixtures/webhook-captures/webhook-opportunity-create.json</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-b">
+      <div class="item-body">
+        <div class="item-title">B — Stage → QUALIFIED</div>
+        <div class="item-desc"><code>webhook-stage-qualified.json</code> — brak before/after w payloadzie</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-c">
+      <div class="item-body">
+        <div class="item-title">C — Stage → WON + ustaw bizValueWon</div>
+        <div class="item-desc"><code>webhook-stage-won.json</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-d">
+      <div class="item-body">
+        <div class="item-title">D — campaignRejected false → true (osobny rekord testowy)</div>
+        <div class="item-desc"><code>webhook-campaign-rejected.json</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-oq">
+      <div class="item-body">
+        <div class="item-title">T2.6 — Odpowiedzi OQ-E2, OQ-E3</div>
+        <div class="item-desc">
+          OQ-E2: nazwa pola <code>event</code> w payloadzie<br>
+          OQ-E3: czy Opportunity niesie <code>Person.idOid</code> inline<br>
+          Wpis do <code>owocni-crm/ops/OPS_NOTES.md</code> jako <code>[D:VERIFIED]</code>
+          <span class="badge badge-provide">DOSTARCZ po teście</span>
+        </div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="t2-pass">
+      <div class="item-body">
+        <div class="item-title">Ogłoś „T2 PASS” w Cursor → agent dopasuje <code>parseTwentyPayload()</code></div>
+        <div class="item-desc"><code>TWENTY_ROLLOUT_MASTER.md</code> R0.3 · <code>BUILD_INBOUND_TWENTY_WEBHOOK.md</code> krok 3.3</div>
+      </div>
+    </li>
+  </ul>
+  <div class="provide-box">
+    <strong>Po T2 wklej agentowi (minimum):</strong>
+    <ul style="margin: 0.35rem 0 0; padding-left: 1.2rem;">
+      <li>OQ-E2: wartość pola <code>event</code> = ?</li>
+      <li>OQ-E3: Person.idOid w payloadzie Opportunity = TAK/NIE, ścieżka JSON = ?</li>
+      <li>ID Opportunity w payloadzie = które pole?</li>
+      <li>HMAC: PASS / FAIL</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-safe">
+  <h2>Safe sink — sandbox → arkusze, bez prod API</h2>
+  <p class="doc-ref">
+    <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code> §6 ·
+    <code>ARCHITECTURE.md</code> §5.4 ·
+    <code>integrations/shared/envGuard.js</code> ·
+    <code>SANDBOX_PHASE1_ROBOT_EVENTS.md</code>
+  </p>
+  <ul class="checklist" data-section="safe">
+    <li>
+      <input type="checkbox" id="safe-1">
+      <div class="item-body">
+        <div class="item-title">Każdy task z adaptera ma <code>environment: sandbox</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="safe-2">
+      <div class="item-body">
+        <div class="item-title">Robot wdrożony z repo (<code>GoogleCloudRobot.js</code> + envGuard)</div>
+        <span class="badge badge-provide">POTWIERDŹ</span>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="safe-3">
+      <div class="item-body">
+        <div class="item-title"><code>GOOGLE_SHEET_ID</code> = osobny arkusz sandbox CRM (≠ backup formularzy www)</div>
+        <span class="badge badge-provide">DOSTARCZ ID</span>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="safe-4">
+      <div class="item-body">
+        <div class="item-title">W logach Robota po sandbox task: <code>env-guard: … SKIP Google/Meta/GA4 MP prod</code></div>
+        <div class="item-desc">Dozwolony zapis do arkuszy (monitoring, GA4_Events, Meta_Events, GoogleAds_Events)</div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="safe-5">
+      <div class="item-body">
+        <div class="item-title">W logach <strong>brak</strong> wysyłki prod: Google Ads API / GA4 Measurement Protocol dla sandbox</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-s2">
+  <h2>S2 — Robot sandbox (fixtures)</h2>
+  <p class="doc-ref"><code>SANDBOX_PHASE1_ROBOT_EVENTS.md</code> · <code>TWENTY_ROLLOUT_MASTER.md</code> S2</p>
+  <ul class="checklist" data-section="s2">
+    <li>
+      <input type="checkbox" id="s2-1">
+      <div class="item-body">
+        <div class="item-title">S2.1 — Fixture <code>task-queue-purchase-canonical.json</code> → <code>task_queue</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s2-2">
+      <div class="item-body">
+        <div class="item-title">S2.2 — Legacy <code>lead_won</code> → normalizacja → <code>purchase</code></div>
+      </div>
+    </li>
+    <li>
+      <input type="checkbox" id="s2-3">
+      <div class="item-body">
+        <div class="item-title">S2.3 — <code>environment=sandbox</code> → brak prod Google/Meta API</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-sm">
+  <h2>SM — Smoke matrix (po S1 + T2 PASS)</h2>
+  <p class="doc-ref"><code>SMOKE_MATRIX_EXECUTION.md</code> · <code>EVENT_CONTRACT.md</code> §6.3 · <code>TWENTY_ROLLOUT_MASTER.md</code> SM</p>
+  <ul class="checklist" data-section="sm">
+    <li><input type="checkbox" id="sm-1"><div class="item-body"><div class="item-title">#1 QUALIFIED → qualify_lead</div></div></li>
+    <li><input type="checkbox" id="sm-2"><div class="item-body"><div class="item-title">#2 WON → purchase</div></div></li>
+    <li><input type="checkbox" id="sm-3"><div class="item-body"><div class="item-title">#3 campaignRejected → rejected_lead</div></div></li>
+    <li><input type="checkbox" id="sm-4"><div class="item-body"><div class="item-title">#4 Manual create + backfill (L-1) — dopiero potem usuń srcSystem-SKIP</div></div></li>
+    <li><input type="checkbox" id="sm-5"><div class="item-body"><div class="item-title">#5–#8 — pozostałe scenariusze z EVENT_CONTRACT §6.3</div></div></li>
+    <li><input type="checkbox" id="sm-ev"><div class="item-body"><div class="item-title">Evidence → POST_SMOKE_EVIDENCE.md + INTEGRATIONS_PARITY.md</div></div></li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sec-order">
+  <h2>Kolejność pracy (zalecana)</h2>
+  <p class="doc-ref"><code>TWENTY_ROLLOUT_MASTER.md</code> mapa faz · Twoja decyzja: Stape od razu</p>
+  <ol style="font-size: 0.88rem; margin: 0; padding-left: 1.25rem;">
+    <li><s>T1 Twenty schema</s> — PASS</li>
+    <li><s>S1.1 Variables w sGTM</s> — GOTOWE</li>
+    <li><strong>S1.2</strong> Client + tag (stub log → HMAC + adapter)</li>
+    <li><strong>T2</strong> Webhook w Twenty → URL Stape</li>
+    <li><strong>T2</strong> 4 akcje testowe + OQ-E2/E3 → agent</li>
+    <li><strong>Safe sink</strong> Robot + arkusz</li>
+    <li><strong>S2</strong> fixtures Robot</li>
+    <li><strong>SM</strong> smoke matrix 8</li>
+  </ol>
+</section>
+
+<footer>
+  Wygenerowano z SSOT: <code>integrations/runbooks/TWENTY_ROLLOUT_MASTER.md</code>,
+  <code>TWENTY_SANDBOX_STEP02_WEBHOOK.md</code>,
+  <code>BUILD_INBOUND_TWENTY_WEBHOOK.md</code>,
+  <code>PREFLIGHT_TWENTY_WEBHOOK.md</code>,
+  <code>ARCHITECTURE.md</code> §5.4.
+  Stan zapisu checkboxów: localStorage przeglądarki (klucz <code>owocni-sandbox-checklist</code>).
+</footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = "owocni-sandbox-checklist";
+  var boxes = document.querySelectorAll('input[type="checkbox"]:not([disabled])');
+
+  function load() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      boxes.forEach(function (cb) {
+        if (saved[cb.id] === true) cb.checked = true;
+      });
+    } catch (e) { /* ignore */ }
+    updateProgress();
+  }
+
+  function save() {
+    var state = {};
+    boxes.forEach(function (cb) { state[cb.id] = cb.checked; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var total = boxes.length;
+    var done = 0;
+    boxes.forEach(function (cb) { if (cb.checked) done++; });
+    document.getElementById("progress").textContent =
+      "Postęp: " + done + " / " + total + " (" + (total ? Math.round(100 * done / total) : 0) + "%)";
+  }
+
+  boxes.forEach(function (cb) {
+    cb.addEventListener("change", save);
+  });
+  load();
+})();
+</script>
+
+</body>
+</html>
