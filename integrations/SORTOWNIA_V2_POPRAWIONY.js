@@ -63,7 +63,7 @@ function getEventDataWithFallback(key) {
       "SORTOWNIA DEBUG getEventDataWithFallback fallback:",
       key,
       "=",
-      result
+      result,
     );
   }
   // ✅ Fallback: GA4 w sGTM często przekazuje parametry w event_params (nie na top level)
@@ -74,7 +74,7 @@ function getEventDataWithFallback(key) {
         "SORTOWNIA DEBUG getEventDataWithFallback event_params:",
         key,
         "=",
-        result
+        result,
       );
     }
   }
@@ -143,7 +143,7 @@ function normalizeEmail(raw) {
     "SORTOWNIA DEBUG normalizeEmail: str =",
     str,
     "typeof =",
-    typeof str
+    typeof str,
   );
   if (typeof str !== "string") {
     logToConsole("SORTOWNIA DEBUG normalizeEmail: str is not string");
@@ -184,7 +184,7 @@ function normalizeEmail(raw) {
     "SORTOWNIA DEBUG normalizeEmail: trimmed =",
     trimmed,
     "length =",
-    trimmed.length
+    trimmed.length,
   );
   if (!trimmed || trimmed.length === 0) {
     logToConsole("SORTOWNIA DEBUG normalizeEmail: trimmed is empty");
@@ -373,11 +373,11 @@ function normalizeEmail(raw) {
     "SORTOWNIA DEBUG normalizeEmail: po extractFirstEmail =",
     email,
     "length =",
-    email ? email.length : "N/A"
+    email ? email.length : "N/A",
   );
   if (!email || typeof email !== "string" || email.length === 0) {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: extractFirstEmail returned invalid"
+      "SORTOWNIA DEBUG normalizeEmail: extractFirstEmail returned invalid",
     );
     return undefined;
   }
@@ -386,7 +386,7 @@ function normalizeEmail(raw) {
   logToConsole("SORTOWNIA DEBUG normalizeEmail: po unwrapEmail =", email);
   if (!email || typeof email !== "string") {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: unwrapEmail returned invalid"
+      "SORTOWNIA DEBUG normalizeEmail: unwrapEmail returned invalid",
     );
     return undefined;
   }
@@ -395,7 +395,7 @@ function normalizeEmail(raw) {
   logToConsole("SORTOWNIA DEBUG normalizeEmail: po toLowerCase =", email);
   if (typeof email !== "string") {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: toLowerCase returned invalid"
+      "SORTOWNIA DEBUG normalizeEmail: toLowerCase returned invalid",
     );
     return undefined;
   }
@@ -403,12 +403,12 @@ function normalizeEmail(raw) {
   email = stripTrailingPunctuation(email);
   logToConsole(
     "SORTOWNIA DEBUG normalizeEmail: po stripTrailingPunctuation =",
-    email
+    email,
   );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after stripTrailingPunctuation"
+      "SORTOWNIA DEBUG normalizeEmail: email empty after stripTrailingPunctuation",
     );
     return undefined;
   }
@@ -416,12 +416,12 @@ function normalizeEmail(raw) {
   email = stripAllWhitespace(email);
   logToConsole(
     "SORTOWNIA DEBUG normalizeEmail: po stripAllWhitespace =",
-    email
+    email,
   );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after stripAllWhitespace"
+      "SORTOWNIA DEBUG normalizeEmail: email empty after stripAllWhitespace",
     );
     return undefined;
   }
@@ -437,12 +437,12 @@ function normalizeEmail(raw) {
   email = compressDoubleDots(email);
   logToConsole(
     "SORTOWNIA DEBUG normalizeEmail: po compressDoubleDots =",
-    email
+    email,
   );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
     logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after compressDoubleDots"
+      "SORTOWNIA DEBUG normalizeEmail: email empty after compressDoubleDots",
     );
     return undefined;
   }
@@ -451,7 +451,7 @@ function normalizeEmail(raw) {
   if (email.length < 6 || email.length > 254) {
     logToConsole(
       "SORTOWNIA DEBUG normalizeEmail: email length invalid =",
-      email.length
+      email.length,
     );
     return undefined;
   }
@@ -467,7 +467,7 @@ function normalizeEmail(raw) {
     "SORTOWNIA DEBUG normalizeEmail: przed Gmail rules, localPart =",
     localPart,
     "domain =",
-    domain
+    domain,
   );
 
   // ───────────────────────────────────────────────────────────────
@@ -491,12 +491,12 @@ function normalizeEmail(raw) {
     localPart = lp2;
     logToConsole(
       "SORTOWNIA DEBUG normalizeEmail: po Gmail rules, localPart =",
-      localPart
+      localPart,
     );
 
     if (localPart.length === 0) {
       logToConsole(
-        "SORTOWNIA DEBUG normalizeEmail: localPart.length === 0 po Gmail rules"
+        "SORTOWNIA DEBUG normalizeEmail: localPart.length === 0 po Gmail rules",
       );
       return undefined;
     }
@@ -506,7 +506,7 @@ function normalizeEmail(raw) {
   if (localPart.length === 0 || localPart.length > 64) {
     logToConsole(
       "SORTOWNIA DEBUG normalizeEmail: localPart.length invalid =",
-      localPart.length
+      localPart.length,
     );
     return undefined;
   }
@@ -532,7 +532,7 @@ function normalizeEmail(raw) {
   if (!hasAlphaNum) {
     logToConsole(
       "SORTOWNIA DEBUG normalizeEmail: hasAlphaNum = false, localPart =",
-      localPart
+      localPart,
     );
     return undefined;
   }
@@ -542,7 +542,7 @@ function normalizeEmail(raw) {
     logToConsole(
       "SORTOWNIA DEBUG normalizeEmail: validateDomain(",
       domain,
-      ") = false"
+      ") = false",
     );
     return undefined;
   }
@@ -734,8 +734,8 @@ function normalizeSsoEventName(name) {
 // KROK 0: Sprawdź typ eventu
 const eventName = normalizeSsoEventName(
   getEventDataWithFallback("event_name") ||
-  getEventDataWithFallback("event") ||
-  "generate_lead"
+    getEventDataWithFallback("event") ||
+    "generate_lead",
 );
 
 logToConsole("=== SORTOWNIA V2 START === event_name =", eventName);
@@ -913,7 +913,7 @@ if (eventName === "oid_init") {
       sendHttpRequest(
         saveUrl,
         { method: "PUT", headers: { "Content-Type": "application/json" } },
-        JSON.stringify(updatedData)
+        JSON.stringify(updatedData),
       )
         .then(function () {
           logToConsole("OID_INIT: ✅ Zapisano - gclid zachowany!");
@@ -959,7 +959,7 @@ if (eventName === "oid_init") {
       sendHttpRequest(
         fallbackUrl,
         { method: "PUT", headers: { "Content-Type": "application/json" } },
-        JSON.stringify(fallbackData)
+        JSON.stringify(fallbackData),
       ).then(function () {
         logToConsole("OID_INIT: ✅ Fallback - nowy profil");
 
@@ -975,7 +975,7 @@ if (eventName === "oid_init") {
 
         logToConsole(
           "OID_INIT: ✅ Cookie _oid ustawione (fallback):",
-          fallbackIdOid
+          fallbackIdOid,
         );
         logToConsole("=== OID_INIT SUKCES ===");
       });
@@ -1075,7 +1075,8 @@ function normalizeBizProductSlug(product) {
 function inferBizProductFromUrl(url) {
   if (!url) return null;
   var u = makeString(url).toLowerCase();
-  if (u.indexOf("projektowanie-logo") >= 0 || u.indexOf("/logo") >= 0) return "logo";
+  if (u.indexOf("projektowanie-logo") >= 0 || u.indexOf("/logo") >= 0)
+    return "logo";
   if (
     u.indexOf("tworzenie-stron") >= 0 ||
     u.indexOf("strony.owocni") >= 0 ||
@@ -1185,7 +1186,7 @@ logToConsole("SORTOWNIA: attr_gbraid (z Event Data lub URL) =", attrGbraid);
 logToConsole("SORTOWNIA: attr_wbraid (z Event Data lub URL) =", attrWbraid);
 logToConsole(
   "SORTOWNIA: attr_utm_source (z Event Data lub URL) =",
-  attrUtmSource || "(brak)"
+  attrUtmSource || "(brak)",
 );
 
 // ═══════════════════════════════════════════════════════════════
@@ -1201,7 +1202,7 @@ function computeOwnerFromCurrentEvent(
   gbraid,
   wbraid,
   src,
-  utmSource
+  utmSource,
 ) {
   if (src === "meta_instant_form") return "platform:meta_ads";
   if (gclid) return "platform:google_ads";
@@ -1245,7 +1246,7 @@ if (gaClientId) resolveKeys.push(gaClientId);
 
 if (resolveKeys.length === 0) {
   logToConsole(
-    "SORTOWNIA ERROR: Brak kluczy resolve (_oid/email/phone/ga_client_id) - SKIP"
+    "SORTOWNIA ERROR: Brak kluczy resolve (_oid/email/phone/ga_client_id) - SKIP",
   );
   return;
 }
@@ -1263,7 +1264,7 @@ function resolveProfile(keys, idx) {
   logToConsole(
     "SORTOWNIA: Resolve lookup key =",
     key,
-    "(" + (idx + 1) + "/" + keys.length + ")"
+    "(" + (idx + 1) + "/" + keys.length + ")",
   );
 
   getProfileByKey(
@@ -1283,14 +1284,14 @@ function resolveProfile(keys, idx) {
         "SORTOWNIA: ✅ Found profile by key =",
         key,
         "(typ:",
-        resolveKeyType + ")"
+        resolveKeyType + ")",
       );
       processExistingProfile(res);
     },
     function () {
       // Nie znaleziono - próbuj następny klucz
       resolveProfile(keys, idx + 1);
-    }
+    },
   );
 }
 
@@ -1314,7 +1315,7 @@ function processExistingProfile(lookupResponse) {
     ", existing.biz_email =",
     existing.biz_email,
     ", existing.biz_phone =",
-    existing.biz_phone
+    existing.biz_phone,
   );
 
   const idOid = existing.id_oid || generateULID();
@@ -1337,11 +1338,11 @@ function processExistingProfile(lookupResponse) {
     if (hasNewGaClientId) newKeysList.push("ga_client_id");
     logToConsole(
       "SORTOWNIA: ⭐ Nowe klucze w evencie (pierwszy raz):",
-      newKeysList
+      newKeysList,
     );
     logToConsole(
       "SORTOWNIA: ⚠️ Multi-key write będzie zapisać profil pod nowymi kluczami:",
-      newKeysList
+      newKeysList,
     );
   }
 
@@ -1394,7 +1395,7 @@ function processExistingProfile(lookupResponse) {
           daysRounded,
           " dni, AktTimestampMs =",
           aktTimestampMs,
-          ")"
+          ")",
         );
         // Zachowaj istniejący Akt (nie nadpisuj) — profil = first touch
         orderId = existing.order_id || orderId;
@@ -1412,14 +1413,14 @@ function processExistingProfile(lookupResponse) {
           attrGbraid,
           attrWbraid,
           srcSystem,
-          attrUtmSource
+          attrUtmSource,
         );
         if (taskOwner !== owner) {
           logToConsole(
             "SORTOWNIA: Task owner =",
             taskOwner,
             ", profil owner (first touch) =",
-            owner
+            owner,
           );
         }
       } else {
@@ -1429,7 +1430,7 @@ function processExistingProfile(lookupResponse) {
           daysRounded,
           " dni, AktTimestampMs =",
           aktTimestampMs,
-          ") - tworzę nowy"
+          ") - tworzę nowy",
         );
         // Akt jest starszy niż 90 dni - utwórz nowy
         var finalGclid = attrGclid || existingGclid;
@@ -1440,7 +1441,7 @@ function processExistingProfile(lookupResponse) {
           attrGbraid,
           attrWbraid,
           srcSystem,
-          attrUtmSource
+          attrUtmSource,
         );
         if (owner === "platform:google_ads" && finalGclid)
           logToConsole("SORTOWNIA: Owner = Google (gclid:", finalGclid, ")");
@@ -1454,7 +1455,7 @@ function processExistingProfile(lookupResponse) {
           "SORTOWNIA: ✅ Akt: owner =",
           owner,
           ", AktTimestampMs =",
-          aktTimestampMs
+          aktTimestampMs,
         );
       }
     } else {
@@ -1468,7 +1469,7 @@ function processExistingProfile(lookupResponse) {
         attrGbraid,
         attrWbraid,
         srcSystem,
-        attrUtmSource
+        attrUtmSource,
       );
       if (owner === "platform:google_ads" && finalGclid)
         logToConsole("SORTOWNIA: Owner = Google (gclid:", finalGclid, ")");
@@ -1482,7 +1483,7 @@ function processExistingProfile(lookupResponse) {
         "SORTOWNIA: ✅ Akt: owner =",
         owner,
         ", AktTimestampMs =",
-        aktTimestampMs
+        aktTimestampMs,
       );
     }
   } else {
@@ -1501,7 +1502,7 @@ function processExistingProfile(lookupResponse) {
     existingGclid,
     existingFbc,
     existing.ga_client_id || null,
-    existing.biz_product || null
+    existing.biz_product || null,
   );
 }
 
@@ -1531,7 +1532,7 @@ function processMergedProfile(oidInitResponse) {
     if (hasNewGaClientId) newKeysList.push("ga_client_id");
     logToConsole(
       "SORTOWNIA: ⭐ Merge z oid_init - nowe klucze w evencie:",
-      newKeysList
+      newKeysList,
     );
   }
 
@@ -1555,13 +1556,13 @@ function processMergedProfile(oidInitResponse) {
       attrGbraid,
       attrWbraid,
       srcSystem,
-      attrUtmSource
+      attrUtmSource,
     );
     if (owner === "platform:google_ads" && finalGclid)
       logToConsole(
         "SORTOWNIA: Owner = Google (gclid z oid_init:",
         finalGclid,
-        ")"
+        ")",
       );
 
     assist = null;
@@ -1573,7 +1574,7 @@ function processMergedProfile(oidInitResponse) {
       "SORTOWNIA: ✅ Akt: owner =",
       owner,
       ", AktTimestampMs =",
-      aktTimestampMs
+      aktTimestampMs,
     );
   }
 
@@ -1588,7 +1589,7 @@ function processMergedProfile(oidInitResponse) {
     existingGclid,
     existingFbc,
     oidInitData.ga_client_id || null,
-    oidInitData.biz_product || null
+    oidInitData.biz_product || null,
   );
 }
 
@@ -1610,7 +1611,7 @@ function processNewProfile() {
     ", email =",
     email,
     ", phone =",
-    phone
+    phone,
   );
 
   // ✅ Dla nowego profilu wszystkie klucze są "nowe"
@@ -1621,7 +1622,7 @@ function processNewProfile() {
   if (newKeysList.length > 0) {
     logToConsole(
       "SORTOWNIA: ⭐ Nowy profil - wszystkie klucze są nowe:",
-      newKeysList
+      newKeysList,
     );
   }
 
@@ -1640,7 +1641,7 @@ function processNewProfile() {
       attrGbraid,
       attrWbraid,
       srcSystem,
-      attrUtmSource
+      attrUtmSource,
     );
 
     assist = null;
@@ -1652,7 +1653,7 @@ function processNewProfile() {
       "SORTOWNIA: ✅ Akt: owner =",
       owner,
       ", AktTimestampMs =",
-      aktTimestampMs
+      aktTimestampMs,
     );
   }
 
@@ -1667,7 +1668,7 @@ function processNewProfile() {
     null,
     null,
     null,
-    null
+    null,
   );
 }
 
@@ -1708,7 +1709,7 @@ function saveProfileAndTask(
   existingGclid,
   existingFbc,
   existingGaClientId,
-  existingBizProduct
+  existingBizProduct,
 ) {
   // ✅ Fallback ga_client_id z profilu w identity_map.
   // Kluczowe dla zdarzeń CRM (qualify_lead/purchase/rejected_lead), które nie mają
@@ -1734,7 +1735,7 @@ function saveProfileAndTask(
     ", eventName =",
     eventName,
     ", srcSystem =",
-    srcSystem
+    srcSystem,
   );
 
   const fullProfileData = {
@@ -1786,7 +1787,7 @@ function saveProfileAndTask(
     saveKeys.length,
     "kluczy (primary:",
     saveKeys[0] + ", pozostałe:",
-    saveKeys.length - 1 + ")"
+    saveKeys.length - 1 + ")",
   );
 
   // ✅ DEBUG: Loguj które klucze są nowe (pojawiły się pierwszy raz w evencie)
@@ -1802,20 +1803,20 @@ function saveProfileAndTask(
   logToConsole(
     "SORTOWNIA: Zapisuję Identity Map (primary key:",
     primaryKey,
-    ")..."
+    ")...",
   );
 
   sendHttpRequest(
     saveIdentityUrl,
     { method: "PUT", headers: { "Content-Type": "application/json" } },
-    JSON.stringify(fullProfileData)
+    JSON.stringify(fullProfileData),
   )
     .then(function (saveIdentityResponse) {
       logToConsole(
         "SORTOWNIA: ✅ Identity saved (primary key:",
         primaryKey,
         "), status =",
-        saveIdentityResponse.statusCode
+        saveIdentityResponse.statusCode,
       );
 
       // Best-effort: zapisz pod pozostałymi kluczami (jeśli są)
@@ -1829,14 +1830,14 @@ function saveProfileAndTask(
         sendHttpRequest(
           saveNextUrl,
           { method: "PUT", headers: { "Content-Type": "application/json" } },
-          JSON.stringify(fullProfileData)
+          JSON.stringify(fullProfileData),
         )
           .then(function (response) {
             logToConsole(
               "SORTOWNIA: ✅ Identity saved (key:",
               nextKey,
               "), status =",
-              response.statusCode
+              response.statusCode,
             );
           })
           .catch(function (err) {
@@ -1845,7 +1846,7 @@ function saveProfileAndTask(
               nextKey,
               "):",
               err,
-              "(best-effort, kontynuuję)"
+              "(best-effort, kontynuuję)",
             );
           });
 
@@ -1857,7 +1858,7 @@ function saveProfileAndTask(
       const srcActionSource =
         getEventDataWithFallback("src_action_source") || "website";
       const consentAnalytics = getEventDataWithFallback(
-        "consent_analytics_storage"
+        "consent_analytics_storage",
       );
       const consentAd = getEventDataWithFallback("consent_ad_storage");
       var taskEnvironment =
@@ -1914,12 +1915,12 @@ function saveProfileAndTask(
       sendHttpRequest(
         saveTaskUrl,
         { method: "PUT", headers: { "Content-Type": "application/json" } },
-        JSON.stringify(taskData)
+        JSON.stringify(taskData),
       )
         .then(function (saveTaskResponse) {
           logToConsole(
             "SORTOWNIA: ✅ Task saved, status =",
-            saveTaskResponse.statusCode
+            saveTaskResponse.statusCode,
           );
           logToConsole("=== SORTOWNIA + AKT SUKCES ===");
           logToConsole(
@@ -1928,7 +1929,7 @@ function saveProfileAndTask(
             ", task owner =",
             taskOwner,
             ", order_id =",
-            orderId
+            orderId,
           );
         })
         .catch(function (taskError) {

@@ -1,5 +1,788 @@
 {
-  "_notice": "NOT GENERATED YET — DO NOT USE AS SOURCE OF TRUTH",
-  "_generated_at": null,
-  "_source": "Twenty GraphQL introspection pipeline (not built)"
+  "_generated_at": "2026-06-08T10:41:38.036402+00:00",
+  "_source": "integrations/tools/twenty_schema.py export",
+  "_workspace": "https://zany-maroon-panther.twenty.com",
+  "objects": {
+    "opportunity": {
+      "objectId": "7874c080-30c2-46c0-934c-905926d918e0",
+      "fields": {
+        "bizSource": {
+          "id": "e247b799-cd2e-43c2-81c4-392e6807480d",
+          "name": "bizSource",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "b1daaa7e-93c3-4b66-9324-29a1d38c812c",
+              "color": "blue",
+              "label": "Formularz",
+              "value": "FORM",
+              "position": 0
+            },
+            {
+              "id": "4ecc9b59-3d68-45cb-8611-6912631c6ac1",
+              "color": "green",
+              "label": "Polecenie",
+              "value": "POLECENIE",
+              "position": 1
+            },
+            {
+              "id": "6c785b94-8911-4c25-8ae4-46aa8e143274",
+              "color": "orange",
+              "label": "Google Ads",
+              "value": "GOOGLE_ADS",
+              "position": 2
+            },
+            {
+              "id": "c36293a9-c9a8-4c7c-b5c0-b9a0399b33e3",
+              "color": "gray",
+              "label": "Inne",
+              "value": "INNE",
+              "position": 3
+            }
+          ],
+          "label": "Zrodlo",
+          "description": "Zrodlo pozyskania leada"
+        },
+        "campaignRejected": {
+          "id": "d7f6a6df-fceb-48f5-9b6d-cce42bd1b658",
+          "name": "campaignRejected",
+          "type": "BOOLEAN",
+          "isUnique": null,
+          "options": null,
+          "label": "Odrzuć leada",
+          "description": "Informuje kanały reklamowe, że takich leadów nie szukamy. ≠ stage LOST."
+        },
+        "pointOfContact": {
+          "id": "d3bf68e5-ca97-4b8f-bf07-81dae44b7ebf",
+          "name": "pointOfContact",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Point of Contact",
+          "description": "Opportunity point of contact"
+        },
+        "id": {
+          "id": "d021f69a-4e08-416b-b9b1-27c0a1b3f0ef",
+          "name": "id",
+          "type": "UUID",
+          "isUnique": null,
+          "options": null,
+          "label": "Id",
+          "description": "Id"
+        },
+        "srcSystem": {
+          "id": "cafaa84e-b448-43b9-bee3-19c260b8ac5f",
+          "name": "srcSystem",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "d6919de6-04b9-4e24-8122-555913021f97",
+              "color": "blue",
+              "label": "Sortownia",
+              "value": "OWOCNI_SORTOWNIA",
+              "position": 0
+            },
+            {
+              "id": "68aebacb-1a5f-4ab7-be43-f58079b9a4a9",
+              "color": "green",
+              "label": "Twenty UI",
+              "value": "TWENTY_UI",
+              "position": 1
+            },
+            {
+              "id": "b9e00cac-a655-42ec-902d-9ccd47ea7518",
+              "color": "orange",
+              "label": "Better Bitrix Legacy",
+              "value": "BETTER_BITRIX_LEGACY",
+              "position": 2
+            }
+          ],
+          "label": "Src System",
+          "description": "Proweniencja: OWOCNI_SORTOWNIA / TWENTY_UI / BETTER_BITRIX_LEGACY"
+        },
+        "searchVector": {
+          "id": "cad294db-6c6b-49c3-986f-5d65db9dfcc8",
+          "name": "searchVector",
+          "type": "TS_VECTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Search vector",
+          "description": "Field used for full-text search"
+        },
+        "updatedBy": {
+          "id": "bf2a5b91-c7a4-437d-b0c7-f845516848d4",
+          "name": "updatedBy",
+          "type": "ACTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Updated by",
+          "description": "The workspace member who last updated the record"
+        },
+        "idOid": {
+          "id": "be5bf58b-131e-43ec-a106-6c67cd80ffb9",
+          "name": "idOid",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "ID OID",
+          "description": "Cross-system id_oid; mint Sortownia przy generate_lead. Puste przy ręcznym leadzie do czasu backfill."
+        },
+        "snoozeUntil": {
+          "id": "b6fbd9a4-c3dd-4d38-af70-1749d3de32cc",
+          "name": "snoozeUntil",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Odlozony do",
+          "description": "Data odlozenia leada (follow-up)"
+        },
+        "bizValueWon": {
+          "id": "b5427268-01b5-49e1-9748-74d0b2bbc79e",
+          "name": "bizValueWon",
+          "type": "CURRENCY",
+          "isUnique": null,
+          "options": null,
+          "label": "Biz Value Won",
+          "description": "Wartość wygranej — przy stage WON."
+        },
+        "timelineActivities": {
+          "id": "ae2161e8-ca35-4220-a45f-3f66ad3bea71",
+          "name": "timelineActivities",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Timeline Activities",
+          "description": "Timeline Activities linked to the opportunity."
+        },
+        "lastOrchestrationEventId": {
+          "id": "a94bdd87-0308-4e75-b2cd-4ecbc8ad4ff2",
+          "name": "lastOrchestrationEventId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "ID ostatniego eventu",
+          "description": "ID ostatniego eventu orkiestracji (ULID/UUID)"
+        },
+        "company": {
+          "id": "90cfdbb1-8f35-4c03-b7b0-9d9786fcb728",
+          "name": "company",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Company",
+          "description": "Opportunity company"
+        },
+        "isFollowUp": {
+          "id": "772a74ed-4f57-484f-be01-c0ca615d13af",
+          "name": "isFollowUp",
+          "type": "BOOLEAN",
+          "isUnique": null,
+          "options": null,
+          "label": "Follow-up",
+          "description": "Czy lead jest w trybie follow-up"
+        },
+        "updatedAt": {
+          "id": "6979dc3f-7dfd-4489-b00d-3be79d445c16",
+          "name": "updatedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Last update",
+          "description": "Last time the record was changed"
+        },
+        "name": {
+          "id": "5e707f47-3620-4eaf-8791-85d915d8ecca",
+          "name": "name",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Name",
+          "description": "The opportunity name"
+        },
+        "owner": {
+          "id": "5cda05ce-16dc-43b8-8b96-474b8ec6ccca",
+          "name": "owner",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Owner",
+          "description": "Opportunity owner"
+        },
+        "deletedAt": {
+          "id": "5b52c2e8-612d-4373-85b6-6caeca0edd6a",
+          "name": "deletedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Deleted at",
+          "description": "Date when the record was deleted"
+        },
+        "bitrixDealId": {
+          "id": "4e30927e-e8ec-420f-bb2e-a196ee7f8809",
+          "name": "bitrixDealId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Bitrix Deal ID",
+          "description": "Deal księgowy Bitrix24 po WON — ręcznie (MVP)."
+        },
+        "createdAt": {
+          "id": "3c34b4c6-deb0-42d0-8799-ec6a4cf24b22",
+          "name": "createdAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Creation date",
+          "description": "Creation date"
+        },
+        "lastOrchestrationEventAt": {
+          "id": "3b0a5080-4d40-46aa-940f-f7af0997db40",
+          "name": "lastOrchestrationEventAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Ostatni event orkiestracji",
+          "description": "Kiedy ostatnio wyslano event do orkiestracji"
+        },
+        "position": {
+          "id": "3028503c-923d-4d9b-9465-27c71f7a81ab",
+          "name": "position",
+          "type": "POSITION",
+          "isUnique": null,
+          "options": null,
+          "label": "Position",
+          "description": "Opportunity record position"
+        },
+        "noteTargets": {
+          "id": "2c4605f0-b2c4-4d1b-9e93-f67ac8bda274",
+          "name": "noteTargets",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Notes",
+          "description": "Notes tied to the opportunity"
+        },
+        "taskTargets": {
+          "id": "2b01ecb2-8b6b-46f1-8a6e-e272b153fe60",
+          "name": "taskTargets",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Tasks",
+          "description": "Tasks tied to the opportunity"
+        },
+        "closeDate": {
+          "id": "27350bf3-b1fb-4b3d-a7c1-c1c5e713ec27",
+          "name": "closeDate",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Close date",
+          "description": "Opportunity close date"
+        },
+        "lossDescription": {
+          "id": "1e3b363f-7c39-4db2-ad71-01ca73b94963",
+          "name": "lossDescription",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Opis przegranej",
+          "description": "Opis przegranej (wolne pole)"
+        },
+        "createdBy": {
+          "id": "1de67e0b-ee25-4ba5-906b-2de2d4f53b87",
+          "name": "createdBy",
+          "type": "ACTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Created by",
+          "description": "The creator of the record"
+        },
+        "rejectionReason": {
+          "id": "18f07746-b4b3-4078-b124-7a3944ac4070",
+          "name": "rejectionReason",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "bb3177a9-d3ab-4244-a927-df4dd5bd0115",
+              "color": "orange",
+              "label": "Budget",
+              "value": "BUDGET",
+              "position": 0
+            },
+            {
+              "id": "fdd25890-0c85-4574-b16e-49e65b5611f6",
+              "color": "red",
+              "label": "Not target",
+              "value": "NOT_TARGET",
+              "position": 1
+            },
+            {
+              "id": "46f73425-4395-4c25-9f16-4ef31308fab2",
+              "color": "gray",
+              "label": "Spam",
+              "value": "SPAM",
+              "position": 2
+            },
+            {
+              "id": "d33abb3c-2d6e-48c0-bfdd-50ba6c27a1a4",
+              "color": "yellow",
+              "label": "Duplicate",
+              "value": "DUPLICATE",
+              "position": 3
+            },
+            {
+              "id": "f4a1ae17-a771-4aa1-847e-eaeb06211119",
+              "color": "sky",
+              "label": "Other",
+              "value": "OTHER",
+              "position": 4
+            }
+          ],
+          "label": "Rejection Reason",
+          "description": "Powód odrzucenia kampanii (raport). Wymaga campaignRejected=true."
+        },
+        "stage": {
+          "id": "131b6ca4-c0bd-4b44-8b2e-21de452f667d",
+          "name": "stage",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "20202020-8e01-4afd-9c39-d2063097587a",
+              "color": "sky",
+              "label": "Nowy",
+              "value": "NEW",
+              "position": 0
+            },
+            {
+              "id": "20202020-e685-4671-ac32-26d304dacb6e",
+              "color": "blue",
+              "label": "Skontaktowany",
+              "value": "CONTACTED",
+              "position": 1
+            },
+            {
+              "id": "20202020-dde9-4acc-b5ca-f6531a8ecb4a",
+              "color": "purple",
+              "label": "Kwalifikowany",
+              "value": "QUALIFIED",
+              "position": 2
+            },
+            {
+              "id": "20202020-696e-4f6b-91bc-f413e9b2f654",
+              "color": "turquoise",
+              "label": "Oferta",
+              "value": "PROPOSAL",
+              "position": 3
+            },
+            {
+              "id": "20202020-0bb5-4a6f-a8b2-774bbad21104",
+              "color": "green",
+              "label": "Wygrany",
+              "value": "WON",
+              "position": 4
+            },
+            {
+              "id": "4df88783-5ced-4833-a868-8efc41f4c865",
+              "color": "red",
+              "label": "Przegrany",
+              "value": "LOST",
+              "position": 5
+            }
+          ],
+          "label": "Stage",
+          "description": "Opportunity stage"
+        },
+        "amount": {
+          "id": "0efdd506-25ed-43a0-99fb-62548621c41a",
+          "name": "amount",
+          "type": "CURRENCY",
+          "isUnique": null,
+          "options": null,
+          "label": "Amount",
+          "description": "Opportunity amount"
+        },
+        "lossCategory": {
+          "id": "0bc4211f-096c-42d6-8f80-18168569ead5",
+          "name": "lossCategory",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "06cb0b85-b8c1-4ed6-9106-a235839b3cb1",
+              "color": "gray",
+              "label": "Brak odpowiedzi",
+              "value": "BRAK_ODPOWIEDZI",
+              "position": 0
+            },
+            {
+              "id": "0aec2ad6-246f-4de1-811e-f33346df5958",
+              "color": "orange",
+              "label": "Cena",
+              "value": "CENA",
+              "position": 1
+            },
+            {
+              "id": "d1231fe5-14d3-498a-b5a2-5e8e2bf889c4",
+              "color": "red",
+              "label": "Konkurencja",
+              "value": "KONKURENCJA",
+              "position": 2
+            },
+            {
+              "id": "23e979a0-9c46-4a6d-91a2-d6915d64d8e7",
+              "color": "yellow",
+              "label": "Nie obslugiwane",
+              "value": "NIE_OBSLUGIWANE",
+              "position": 3
+            },
+            {
+              "id": "bc7eec88-c951-4404-ba5d-9518a3aa0b88",
+              "color": "gray",
+              "label": "Inne",
+              "value": "INNE",
+              "position": 4
+            }
+          ],
+          "label": "Powod przegranej",
+          "description": "Kategoria przegranej (dla wewn. analizy)"
+        },
+        "attachments": {
+          "id": "0a9ab81c-0520-44d3-8c82-e70c376f611b",
+          "name": "attachments",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Attachments",
+          "description": "Attachments linked to the opportunity"
+        },
+        "engagement": {
+          "id": "071fde5c-df37-4f58-b341-76d040717b9c",
+          "name": "engagement",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "8a997c68-b788-4d74-9101-1849a49afaac",
+              "color": "red",
+              "label": "Hot",
+              "value": "HOT",
+              "position": 0
+            },
+            {
+              "id": "edc69549-0d1d-4df0-af3a-fa8773d44852",
+              "color": "blue",
+              "label": "Cold",
+              "value": "COLD",
+              "position": 1
+            }
+          ],
+          "label": "Temperatura",
+          "description": "Temperatura leada (hot/cold)"
+        },
+        "bizProduct": {
+          "id": "02ccf6f7-f619-429d-b850-b22f44673019",
+          "name": "bizProduct",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "ed4bd5cb-c05d-4e5d-9b1c-8c7cff603c42",
+              "color": "blue",
+              "label": "Web",
+              "value": "WEB",
+              "position": 0
+            },
+            {
+              "id": "06c8f52e-4420-4f1b-a2cd-b8026ee726a6",
+              "color": "purple",
+              "label": "Logo",
+              "value": "LOGO",
+              "position": 1
+            },
+            {
+              "id": "45a1095d-cf43-4c9d-827c-efde2cc59a66",
+              "color": "turquoise",
+              "label": "Naming",
+              "value": "NAME",
+              "position": 2
+            },
+            {
+              "id": "d898eba0-37d6-4f62-82c2-67cf0015d5be",
+              "color": "green",
+              "label": "Marketing",
+              "value": "MARKETING",
+              "position": 3
+            },
+            {
+              "id": "febaa6c3-a91a-4fa2-b0ed-8a0c2ee04811",
+              "color": "yellow",
+              "label": "Copywriting",
+              "value": "COPYWRITING",
+              "position": 4
+            },
+            {
+              "id": "c765af21-ab0b-41b9-a333-0e7b5066934d",
+              "color": "orange",
+              "label": "Opakowanie",
+              "value": "OPAKOWANIE",
+              "position": 5
+            },
+            {
+              "id": "d24d5862-6fd8-442c-919c-bade1deea2e8",
+              "color": "gray",
+              "label": "Inne",
+              "value": "INNE",
+              "position": 6
+            }
+          ],
+          "label": "Produkt",
+          "description": "Produkt/usluga, ktorej dotyczy lead"
+        }
+      }
+    },
+    "person": {
+      "objectId": "91d3fff6-a05d-4c9a-9f31-8aca7b592d87",
+      "fields": {
+        "noteTargets": {
+          "id": "f364f245-7022-407e-80a9-ba704adf5916",
+          "name": "noteTargets",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Notes",
+          "description": "Notes tied to the contact"
+        },
+        "xLink": {
+          "id": "e1829c1d-9a32-40d2-8225-a117b8237a20",
+          "name": "xLink",
+          "type": "LINKS",
+          "isUnique": null,
+          "options": null,
+          "label": "X",
+          "description": "Contact's X/Twitter account"
+        },
+        "createdBy": {
+          "id": "c8165d7b-53d7-49ba-8793-9d6e0d808ac4",
+          "name": "createdBy",
+          "type": "ACTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Created by",
+          "description": "The creator of the record"
+        },
+        "updatedBy": {
+          "id": "ac020871-4ead-489c-a134-3f7ca5214882",
+          "name": "updatedBy",
+          "type": "ACTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Updated by",
+          "description": "The workspace member who last updated the record"
+        },
+        "idOid": {
+          "id": "aaa86a0b-3fba-4c01-9293-a50b956c1f3d",
+          "name": "idOid",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "ID OID",
+          "description": "Cross-system id_oid (Stape master). Backfill z Sortowni po manual create."
+        },
+        "position": {
+          "id": "9f121c78-dd1e-4c08-98d8-0e1bde3435e3",
+          "name": "position",
+          "type": "POSITION",
+          "isUnique": null,
+          "options": null,
+          "label": "Position",
+          "description": "Person record Position"
+        },
+        "company": {
+          "id": "9c433d1a-f9eb-48f8-8b1f-350f1fb7e8a6",
+          "name": "company",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Company",
+          "description": "Contact's company"
+        },
+        "pointOfContactForOpportunities": {
+          "id": "995863a5-289c-4e5e-a449-54d7b76d2e88",
+          "name": "pointOfContactForOpportunities",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Opportunities",
+          "description": "List of opportunities for which that person is the point of contact"
+        },
+        "name": {
+          "id": "9853869d-ef5c-4a1f-bd2c-572eb4ad560e",
+          "name": "name",
+          "type": "FULL_NAME",
+          "isUnique": null,
+          "options": null,
+          "label": "Name",
+          "description": "Contact's name"
+        },
+        "emails": {
+          "id": "904144c6-af16-4145-a58a-9abd00f80c2e",
+          "name": "emails",
+          "type": "EMAILS",
+          "isUnique": null,
+          "options": null,
+          "label": "Emails",
+          "description": "Contact's Emails"
+        },
+        "messageParticipants": {
+          "id": "7dad5a82-e06b-4b6a-a5ae-da85da8f8a74",
+          "name": "messageParticipants",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Message Participants",
+          "description": "Message Participants"
+        },
+        "updatedAt": {
+          "id": "79e904d7-aed9-46ea-b1cd-1165637b9443",
+          "name": "updatedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Last update",
+          "description": "Last time the record was changed"
+        },
+        "jobTitle": {
+          "id": "770fc8ee-b3df-4c04-a35c-7c757eb21788",
+          "name": "jobTitle",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Job Title",
+          "description": "Contact's job title"
+        },
+        "avatarUrl": {
+          "id": "5c0774af-8079-4aff-8f8d-e3b0c9a73582",
+          "name": "avatarUrl",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Avatar",
+          "description": "Contact's avatar"
+        },
+        "city": {
+          "id": "4fa56eed-dd81-4665-95c7-86828d7e8708",
+          "name": "city",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "City",
+          "description": "Contact's city"
+        },
+        "id": {
+          "id": "44e2b690-9a2b-446e-86ad-23c1ed6e4069",
+          "name": "id",
+          "type": "UUID",
+          "isUnique": null,
+          "options": null,
+          "label": "Id",
+          "description": "Id"
+        },
+        "avatarFile": {
+          "id": "3f8089e8-d198-486a-9995-1fe3791f1783",
+          "name": "avatarFile",
+          "type": "FILES",
+          "isUnique": null,
+          "options": null,
+          "label": "Avatar File",
+          "description": "Contact's avatar file"
+        },
+        "createdAt": {
+          "id": "394f743e-9806-4977-a16c-869ff2d6dabf",
+          "name": "createdAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Creation date",
+          "description": "Creation date"
+        },
+        "taskTargets": {
+          "id": "3793e68c-ead7-422e-84f7-b7efb3458273",
+          "name": "taskTargets",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Tasks",
+          "description": "Tasks tied to the contact"
+        },
+        "calendarEventParticipants": {
+          "id": "27bb379a-3480-4ac1-b88f-3a058e4ec1dc",
+          "name": "calendarEventParticipants",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Calendar Event Participants",
+          "description": "Calendar Event Participants"
+        },
+        "deletedAt": {
+          "id": "23a1bb09-9e26-47e9-ad3d-e62cebdd241c",
+          "name": "deletedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Deleted at",
+          "description": "Date when the record was deleted"
+        },
+        "phones": {
+          "id": "1b37fc12-58bd-417b-af7a-fa3b9fe42d08",
+          "name": "phones",
+          "type": "PHONES",
+          "isUnique": null,
+          "options": null,
+          "label": "Phones",
+          "description": "Contact's phone numbers"
+        },
+        "timelineActivities": {
+          "id": "12e57cc4-8c86-4bbf-bd01-f90347cce8e3",
+          "name": "timelineActivities",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Events",
+          "description": "Events linked to the person"
+        },
+        "searchVector": {
+          "id": "0fd1dbf7-aa32-415d-9c78-ff03e6de8cc0",
+          "name": "searchVector",
+          "type": "TS_VECTOR",
+          "isUnique": null,
+          "options": null,
+          "label": "Search vector",
+          "description": "Field used for full-text search"
+        },
+        "linkedinLink": {
+          "id": "0c8f6009-cbb8-4d0b-ae72-c36a01748c2a",
+          "name": "linkedinLink",
+          "type": "LINKS",
+          "isUnique": null,
+          "options": null,
+          "label": "Linkedin",
+          "description": "Contact's Linkedin account"
+        },
+        "attachments": {
+          "id": "083816c6-d417-449e-8f52-2c1a9c86cfba",
+          "name": "attachments",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Attachments",
+          "description": "Attachments linked to the contact."
+        }
+      }
+    }
+  }
 }

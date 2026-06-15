@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Twenty Metadata API — audyt i (docelowo) sync pól z DATA_MODEL.md.
+"""Twenty Metadata API — audyt i eksport schemy z DATA_MODEL.md.
 
 Użycie:
   export TWENTY_API_KEY=eyJ...   # lub plik .env.local w root repo
   python3 integrations/tools/twenty_schema.py audit
   python3 integrations/tools/twenty_schema.py audit --object opportunity
+  python3 integrations/tools/twenty_schema.py export
 
 Wymaga: Python 3.9+, brak zewnętrznych pakietów.
+Uwaga: Metadata API wymaga nagłówka User-Agent (Cloudflare 1010 bez niego).
 """
 from __future__ import annotations
 
@@ -18,6 +20,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 METADATA_URL = os.environ.get("TWENTY_METADATA_URL", "https://api.twenty.com/metadata")
+SNAPSHOT_PATH = REPO_ROOT / "owocni-crm" / "generated" / "twenty-schema.snapshot.json"
+USER_AGENT = "owocni-crm-twenty-schema/1.0"
 
 # Pola FROZEN z DATA_MODEL.md §5.1–5.2 (Etap 1.1)
 REQUIRED_OPPORTUNITY = {
@@ -55,6 +59,7 @@ def gql(query: str, variables: dict | None = None) -> dict:
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
+            "User-Agent": USER_AGENT,
         },
         method="POST",
     )
@@ -62,37 +67,63 @@ def gql(query: str, variables: dict | None = None) -> dict:
         return json.loads(resp.read().decode("utf-8"))
 
 
-def fetch_objects() -> list[dict]:
-    q = """
-    query Objects {
-      objects(paging: { first: 50 }) {
-        edges {
-          node {
-            id
-            nameSingular
-            fields(paging: { first: 200 }) {
-              edges {
-                node {
-                  id
-                  name
-                  type
-                  label
-                  description
-                  isUnique
-                  options
-                }
+def fetch_object_ids() -> dict[str, str]:
+    data = gql(
+        """
+        query Objects {
+          objects(paging: { first: 50 }) {
+            edges { node { id nameSingular } }
+          }
+        }
+        """
+    )
+    if data.get("errors"):
+        print(json.dumps(data["errors"], indent=2), file=sys.stderr)
+        sys.exit(1)
+    return {e["node"]["nameSingular"]: e["node"]["id"] for e in data["data"]["objects"]["edges"]}
+
+
+def fetch_fields_for_object(object_id: str) -> list[dict]:
+    data = gql(
+        """
+        query Fields($id: UUID!) {
+          fields(filter: { objectMetadataId: { eq: $id } }, paging: { first: 200 }) {
+            edges {
+              node {
+                id
+                name
+                type
+                label
+                description
+                isUnique
+                options
               }
             }
           }
         }
-      }
-    }
-    """
-    data = gql(q)
+        """,
+        {"id": object_id},
+    )
     if data.get("errors"):
         print(json.dumps(data["errors"], indent=2), file=sys.stderr)
         sys.exit(1)
-    return [e["node"] for e in data["data"]["objects"]["edges"]]
+    return [e["node"] for e in data["data"]["fields"]["edges"]]
+
+
+def fetch_objects() -> list[dict]:
+    ids = fetch_object_ids()
+    objects: list[dict] = []
+    for name in ("opportunity", "person"):
+        if name not in ids:
+            continue
+        objects.append(
+            {
+                "id": ids[name],
+                "nameSingular": name,
+                "fields": {"edges": [{"node": f} for f in fetch_fields_for_object(ids[name])]},
+            }
+        )
+    return objects
 
 
 def audit_object(obj: dict) -> int:
@@ -143,8 +174,31 @@ def cmd_audit(filter_object: str | None) -> int:
     return 0
 
 
+def cmd_export() -> int:
+    load_dotenv_local()
+    from datetime import datetime, timezone
+
+    objects = fetch_objects()
+    snapshot = {
+        "_generated_at": datetime.now(timezone.utc).isoformat(),
+        "_source": "integrations/tools/twenty_schema.py export",
+        "_workspace": os.environ.get("TWENTY_WORKSPACE_URL", ""),
+        "objects": {
+            obj["nameSingular"]: {
+                "objectId": obj["id"],
+                "fields": {f["node"]["name"]: f["node"] for f in obj["fields"]["edges"]},
+            }
+            for obj in objects
+        },
+    }
+    SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    SNAPSHOT_PATH.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Zapisano: {SNAPSHOT_PATH}")
+    return cmd_audit(None)
+
+
 def main() -> None:
-    if len(sys.argv) < 2 or sys.argv[1] not in ("audit",):
+    if len(sys.argv) < 2 or sys.argv[1] not in ("audit", "export"):
         print(__doc__)
         sys.exit(0)
     filt = None
@@ -153,6 +207,8 @@ def main() -> None:
         filt = sys.argv[idx + 1]
     if sys.argv[1] == "audit":
         sys.exit(cmd_audit(filt))
+    if sys.argv[1] == "export":
+        sys.exit(cmd_export())
 
 
 if __name__ == "__main__":

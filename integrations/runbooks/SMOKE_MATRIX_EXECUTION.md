@@ -23,14 +23,14 @@ Dla każdego wiersza: data, tester, link do logu/safe sink, PASS/FAIL.
 
 | # | Scenariusz | Kroki (skrót) | Oczekiwany `event_name` / wynik | Reason code | PASS |
 |---|------------|---------------|----------------------------------|-------------|------|
-| **1** | CONTACTED → QUALIFIED | Ustaw baseline stage, potem zmień na QUALIFIED | `qualify_lead` EMITTED | `EMITTED` | ☐ |
-| **2** | QUALIFIED → WON (+ opcj. bizValue) | Transition do WON | `purchase` EMITTED | `EMITTED` | ☐ |
-| **3** | campaignRejected false→true | Odrzuć leada w UI | `rejected_lead` EMITTED | `EMITTED` | ☐ |
-| **4** | Manual create (idOid null) → backfill | Utwórz opp bez idOid → mint → update Person | `generate_lead` raz; **brak drugiego generate_lead** | `EMITTED` + L-1 | ☐ |
-| **5** | Zmiana opisu bez stage/rejected | Edytuj pole opisowe | SKIP | `SKIP_NO_RELEVANT_TRANSITION` | ☐ |
-| **6** | campaignRejected true→true | Ponowny zapis bez zmiany | SKIP | `SKIP_DUPLICATE_BUSINESS_EVENT` | ☐ |
-| **7** | Duplicate webhook | Wyślij ten sam payload 2× | SKIP (drugi raz) | `SKIP_DUPLICATE_DELIVERY` | ☐ |
-| **8** | Import rekordu QUALIFIED | Import CSV/API historyczny | **no_emit** — zero tasków platform | cold-start / import guard | ☐ |
+| **1** | CONTACTED → QUALIFIED | Ustaw baseline stage, potem zmień na QUALIFIED | `qualify_lead` EMITTED | `EMITTED` | ✅ 2026-06-15 — `oid_smoke1_qualify`, task `qualify_lead` |
+| **2** | QUALIFIED → WON (+ opcj. bizValue) | Transition do WON | `purchase` EMITTED | `EMITTED` | ✅ 2026-06-15 — `oid_smoke2_purchase`, task `purchase` |
+| **3** | campaignRejected false→true | Odrzuć leada w UI | `rejected_lead` EMITTED | `EMITTED` | ✅ 2026-06-15 — `oid_smoke3_rejected`, task `rejected_lead` |
+| **4** | Manual create (idOid null) → backfill | Utwórz opp bez idOid → mint → update Person | `generate_lead` raz; **brak drugiego generate_lead** | `EMITTED` + L-1 | ✅ 2026-06-15 — opp `e812136a-a0a3-4c00-b348-6bba9ee9a258`, idOid `XJTZK9S1BJZPN13SGVQZ0RDYEZ`, 1 task done, echo bez duplikatu |
+| **5** | Zmiana opisu bez stage/rejected | Edytuj pole opisowe | SKIP | `SKIP_NO_RELEVANT_TRANSITION` | ✅ 2026-06-15 — opp `…000005`, 0 nowych tasków |
+| **6** | campaignRejected true→true | Ponowny zapis bez zmiany | SKIP | `SKIP_DUPLICATE_BUSINESS_EVENT` | ✅ 2026-06-15 — opp `…000006`, 0 nowych tasków |
+| **7** | Duplicate webhook | Wyślij ten sam payload 2× | SKIP (drugi raz) | `SKIP_DUPLICATE_DELIVERY` | ✅ 2026-06-15 — opp `…000007`, 0 nowych tasków |
+| **8** | Import rekordu QUALIFIED | Import CSV/API historyczny | **no_emit** — zero tasków platform | cold-start / import guard | ✅ 2026-06-15 — opp `…000008`, cold-start baseline |
 
 ---
 
@@ -66,4 +66,5 @@ G7 (Resolver T4/T5), G8 (merge), G-PAR — osobne runbooki w `IMPLEMENTATION_PLA
 
 ## Po PASS całej macierzy
 
-→ [POST_SMOKE_EVIDENCE.md](./POST_SMOKE_EVIDENCE.md)
+→ [POST_SMOKE_EVIDENCE.md](./POST_SMOKE_EVIDENCE.md)  
+→ Evidence: [SMOKE_MATRIX_EVIDENCE_2026-06-15.md](./SMOKE_MATRIX_EVIDENCE_2026-06-15.md)

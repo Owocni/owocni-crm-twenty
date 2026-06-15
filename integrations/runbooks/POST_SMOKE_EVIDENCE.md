@@ -60,7 +60,7 @@ Zmień status bram z „do testu” na **PASS** tylko z dowodem:
 
 ## Cutover — NIE startuj bez
 
-- [ ] Wszystkie 8 smoke PASS z datami
+- [x] Wszystkie 8 smoke PASS z datami (sandbox 2026-06-15 — `SMOKE_MATRIX_EVIDENCE_2026-06-15.md`)
 - [ ] G-PAR (parzystość BB) PASS
 - [ ] Szkolenie handlowców (`IMPLEMENTATION_PLAN` §5.6)
 - [ ] Snapshot schemy Twenty w git

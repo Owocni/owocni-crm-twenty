@@ -104,12 +104,12 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 
 | # | Brama | Warunek PASS | Źródło prawdy | Status |
 |---|---|---|---|---|
-| **G1** | **event-semantics** | `qualify_lead`/`purchase`/`rejected_lead` mapują się zgodnie z kanonem; zakaz `lead_won`; LOST≠rejected | `EVENT_CONTRACT.md` §4–5.3 | do testu |
-| **G2** | **webhook-truth** | Webhook = stan aktualny, BEZ before/after; detekcja przejść z Stape Store; HMAC zweryfikowany | `EVENT_CONTRACT.md` §5.1/5.4 + `ops/OPS_NOTES.md` | do testu |
-| **G3** | **manual-create** | Rozpoznanie przez `idOid IS NULL` (create LUB update); generate_lead manual; backfill | `EVENT_CONTRACT.md` §5.4 | do testu |
-| **G4** | **loop-prevention + transition-exception** | Pending-write Stape działa; `srcSystem`-SKIP usunięty DOPIERO po smoke #4 PASS (sekwencja 1-2-3) | `EVENT_CONTRACT.md` §6.1 | **OPEN (L-1)** |
-| **G5** | **data-model** | Pola FROZEN utworzone z właściwym typem/API name; `idOid` unique + null-test; opisy w Settings | `DATA_MODEL.md` §8 | do testu |
-| **G6** | **import-safety** | Import/backfill/replay → `no_emit`; brak workflow HTTP odpalającego się przy imporcie; import nie mintuje idOid | `audits/AUDIT_MIGRACJA.md` + `EVENT_CONTRACT.md` §5.4 cold-start | do testu |
+| **G1** | **event-semantics** | `qualify_lead`/`purchase`/`rejected_lead` mapują się zgodnie z kanonem; zakaz `lead_won`; LOST≠rejected | `EVENT_CONTRACT.md` §4–5.3 | **PASS sandbox** (2026-06-15, smoke #1–3) |
+| **G2** | **webhook-truth** | Webhook = stan aktualny, BEZ before/after; detekcja przejść z Stape Store; HMAC zweryfikowany | `EVENT_CONTRACT.md` §5.1/5.4 + `ops/OPS_NOTES.md` | **PASS sandbox*** (HMAC pełne verify OPEN) |
+| **G3** | **manual-create** | Rozpoznanie przez `idOid IS NULL` (create LUB update); generate_lead manual; backfill | `EVENT_CONTRACT.md` §5.4 | **PASS sandbox** (2026-06-15, smoke #4) |
+| **G4** | **loop-prevention + transition-exception** | Pending-write Stape działa; `srcSystem`-SKIP usunięty DOPIERO po smoke #4 PASS (sekwencja 1-2-3) | `EVENT_CONTRACT.md` §6.1 | **PASS sandbox*** (pending-write OK; L-1 krok 3 N/A — brak SKIP w kodzie) |
+| **G5** | **data-model** | Pola FROZEN utworzone z właściwym typem/API name; `idOid` unique + null-test; opisy w Settings | `DATA_MODEL.md` §8 | **PASS** (T1 audit 2026-06-08) |
+| **G6** | **import-safety** | Import/backfill/replay → `no_emit`; brak workflow HTTP odpalającego się przy imporcie; import nie mintuje idOid | `audits/AUDIT_MIGRACJA.md` + `EVENT_CONTRACT.md` §5.4 cold-start | **PASS sandbox** (2026-06-15, smoke #8) |
 | **G7** | **identity-safety** | Stape down → fail-closed (nie mintuj); T4/T5 nie wysyła VBB; concurrency mint-guard | `IDENTITY_AND_INBOUND.md` §5.2/5.10 | do testu |
 | **G8** | **merge-safety** | Webhook przy merge — zachowanie znane (oba ID?); merge nieodwracalny obsłużony; T5 dwa paid → admin | `IDENTITY_AND_INBOUND.md` §5.9 | **OPEN (3 bramki merge)** |
 | **G-PAR** | **parzystość Better-Bitrix** | Funkcje BB pokryte w Twenty (kanban, won/lost/rejected, rozdział `leads@`, skrzynki handlowców) | §5.2 + this | **bramka go-live** |
