@@ -57,8 +57,8 @@ flowchart TD
 | **T2** | Webhook OUT + 4 payloady + HMAC | G2 webhook-truth | 1–2 h |
 | **S1** | Tag `inbound:twenty_webhook` w Stape | G2–G4 (część) | 2–5 dni |
 | **S2** | Robot + task_queue fixtures | G1 (część) | 1–2 h |
-| **SM** | 8 scenariuszy `EVENT_CONTRACT` §6.3 | G1–G4, L-1 | 1–2 dni |
-| **E12** | Email Sync + Resolver | G7, G-PAR | osobny sprint |
+| **SM** | 8 scenariuszy `EVENT_CONTRACT` §6.3 | G1–G4, L-1 | ✅ 2026-06-15 |
+| **E12** | Email Sync + Resolver | G7, G-PAR | **→ teraz** |
 
 ---
 
@@ -150,13 +150,13 @@ flowchart TD
 
 | # | Scenariusz | Status |
 |---|------------|--------|
-| 1 | QUALIFIED → qualify_lead | ☐ |
-| 2 | WON → purchase | ☐ |
-| 3 | campaignRejected → rejected_lead | ☐ |
-| 4 | Manual create + backfill (L-1) | ☐ |
-| 5–8 | Pozostałe z §6.3 | ☐ |
+| 1 | QUALIFIED → qualify_lead | ✅ |
+| 2 | WON → purchase | ✅ |
+| 3 | campaignRejected → rejected_lead | ✅ |
+| 4 | Manual create + backfill (L-1) | ✅ |
+| 5–8 | Pozostałe z §6.3 | ✅ |
 
-**PASS SM:** wszystkie PASS + evidence → [POST_SMOKE_EVIDENCE.md](./POST_SMOKE_EVIDENCE.md).
+**PASS SM:** 2026-06-15 — [SMOKE_MATRIX_EVIDENCE_2026-06-15.md](./SMOKE_MATRIX_EVIDENCE_2026-06-15.md).
 
 ---
 
@@ -171,11 +171,34 @@ flowchart TD
 
 ---
 
-## Co robimy **teraz**
+## Co robimy **teraz** (E12 — Etap 1.2)
 
-1. **Ty (jednorazowo):** skopiuj `.env.example` → `.env.local`, wklej `TWENTY_API_KEY` z [Twenty Developers](https://zany-maroon-panther.twenty.com/settings/developers) (lub `export` w terminalu Cursor).
-2. **Agent:** `python3 integrations/tools/twenty_schema.py audit` → uzupełnienie brakujących pól przez Metadata API (jak w POC).
-3. **Ty tylko przy T2:** native webhook w UI (API webhooków bywa ograniczone) + ewentualny login w przeglądarce.
+**Etap 1.1 (rdzeń CRM webhook + worker + smoke) — zamknięty** (`c651806`, evidence 2026-06-15).
+
+### E12.1 — Email Sync w Twenty (pierwszy krok)
+
+Źródło: `IDENTITY_AND_INBOUND.md` §5.5, `IMPLEMENTATION_PLAN.md` §1.2.1.
+
+| Skrzynka | Email Sync |
+|----------|------------|
+| `leads@owocni.pl` | **TAK** |
+| `studio@owocni.pl` | **TAK** |
+| skrzynki handlowców (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | **TAK** |
+| `kontakt@owocni.pl` | **NIE** (świadomie poza zakresem) |
+
+**Ty (Twenty UI):** Settings → Email / Accounts → podłącz IMAP `mail.owocni.pl` dla pierwszej skrzynki (sugeruję zacząć od **`leads@`**).
+
+**Potem:** E12.2 Identity Resolver T1–T5 w Stape (osobny tag — jeszcze nie w repo).
+
+**NIE teraz:** wyłączenie julia362 (E12.4) — dopiero po G7 + G-PAR PASS.
+
+---
+
+## Archiwum — start Etap 1.1
+
+1. ~~Skopiuj `.env.example` → `.env.local`~~
+2. ~~Agent: `twenty_schema.py audit`~~ (T1 PASS)
+3. ~~Webhook + Stape inbound + smoke matrix~~
 
 ---
 
