@@ -1,0 +1,20 @@
+id,title,twenty_name,subject,category,twenty_category,migration_priority,export_scope,html_file
+131,Black - LOGO,[BB 131] Ogólne — Black - LOGO,Idealne logo. Za symboliczną złotówkę.,,Ogólne,NICE,needs_review,html_2026-06-16/131_black-logo.html
+133,Black - NAZWA,[BB 133] Ogólne — Black - NAZWA,Idealna nazwa. Za symboliczną złotówkę.,,Ogólne,NICE,needs_review,html_2026-06-16/133_black-nazwa.html
+135,Dane dostępowe do nowego konta pocztowego,[BB 135] Ogólne — Dane dostępowe do nowego konta pocztowego,Dane dostępowe do nowego konta pocztowego,,Ogólne,NICE,needs_review,html_2026-06-16/135_dane-dostępowe-do-nowego-konta-pocztowego.html
+38,FAKTURA - Finał pro forma,[BB 38] Sprzedaż — FAKTURA - Finał pro forma,,sales|invoice,Sprzedaż,MUST,crm,html_2026-06-16/38_faktura-finał-pro-forma.html
+42,FAKTURA - Start pro forma,[BB 42] Sprzedaż — FAKTURA - Start pro forma,,sales|invoice,Sprzedaż,MUST,crm,html_2026-06-16/42_faktura-start-pro-forma.html
+58,LOGO - oferta,[BB 58] Sprzedaż — LOGO - oferta,,sales|logo,Sprzedaż,MUST,crm,html_2026-06-16/58_logo-oferta.html
+129,NAZWA I LOGO (Pakiet),[BB 129] Ogólne — NAZWA I LOGO (Pakiet),,,Ogólne,NICE,needs_review,html_2026-06-16/129_nazwa-i-logo-pakiet.html
+130,NAZWA oferta,[BB 130] Nazwa — NAZWA oferta,,name,Nazwa,NICE,crm,html_2026-06-16/130_nazwa-oferta.html
+134,Oferta na opiekę nad stroną,[BB 134] Ogólne — Oferta na opiekę nad stroną,Owocna opieka nad stroną,,Ogólne,NICE,needs_review,html_2026-06-16/134_oferta-na-opiekę-nad-stroną.html
+137,Podłączenie systemu szybkich płatności Przelewy24 do Państwa sklepu,[BB 137] Helpdesk — Podłączenie systemu szybkich płatności Przelewy24 do Państwa sklepu,Podłączenie systemu szybkich płatności Przelewy24 do Państwa sklepu,helpdesk,Helpdesk,MUST,helpdesk,html_2026-06-16/137_podłączenie-systemu-szybkich-płatności-przelewy24-do-państwa.html
+8,Problem z uruchomieniem WordPressa,[BB 8] Helpdesk — Problem z uruchomieniem WordPressa,,helpdesk,Helpdesk,MUST,helpdesk,html_2026-06-16/8_problem-z-uruchomieniem-wordpressa.html
+138,Rozwiązanie umowy - STRONY PRO,[BB 138] Ogólne — Rozwiązanie umowy - STRONY PRO,Przedwczesne rozwiązanie umowy - STRONY PRO,,Ogólne,NICE,needs_review,html_2026-06-16/138_rozwiązanie-umowy-strony-pro.html
+128,Strona 8000,[BB 128] Ogólne — Strona 8000,,,Ogólne,NICE,needs_review,html_2026-06-16/128_strona-8000.html
+125,Strona - Ewa (Czy mają kasę?),[BB 125] Strona — Strona - Ewa (Czy mają kasę?),,website,Strona,MUST,crm,html_2026-06-16/125_strona-ewa-czy-mają-kasę.html
+126,Strona - Ewa (Mają kasę!),[BB 126] Strona — Strona - Ewa (Mają kasę!),,website,Strona,MUST,crm,html_2026-06-16/126_strona-ewa-mają-kasę.html
+124,Strona PRO ,[BB 124] Ogólne — Strona PRO,,,Ogólne,NICE,needs_review,html_2026-06-16/124_strona-pro.html
+6,Strona uruchomiana ,[BB 6] Helpdesk — Strona uruchomiana,,helpdesk,Helpdesk,MUST,helpdesk,html_2026-06-16/6_strona-uruchomiana.html
+136,Strona uruchomiana SKLEP,[BB 136] Ogólne — Strona uruchomiana SKLEP,,,Ogólne,NICE,needs_review,html_2026-06-16/136_strona-uruchomiana-sklep.html
+7,Uruchomienie strony,[BB 7] Helpdesk — Uruchomienie strony,,helpdesk,Helpdesk,MUST,helpdesk,html_2026-06-16/7_uruchomienie-strony.html

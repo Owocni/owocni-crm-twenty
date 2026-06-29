@@ -1,0 +1,139 @@
+{
+  "mapping": [
+    {
+      "bb_id": 131,
+      "twenty_id": "12b43b90-fe6d-4cae-96f4-5f91e86c48ec",
+      "name": "[BB 131] Og\u00f3lne \u2014 Black - LOGO",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 133,
+      "twenty_id": "c7658db3-7b3b-4b2b-a276-9722546af930",
+      "name": "[BB 133] Og\u00f3lne \u2014 Black - NAZWA",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 135,
+      "twenty_id": "488d366e-5641-4d78-9a01-71292b3f5a8a",
+      "name": "[BB 135] Og\u00f3lne \u2014 Dane dost\u0119powe do nowego konta pocztowego",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 38,
+      "twenty_id": "c2070bc6-1c07-4513-8bda-a4f7697926fb",
+      "name": "[BB 38] Sprzeda\u017c \u2014 FAKTURA - Fina\u0142 pro forma",
+      "category": "SALES",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 42,
+      "twenty_id": "c2474bdc-b27b-4f7b-9d51-0c77058587bd",
+      "name": "[BB 42] Sprzeda\u017c \u2014 FAKTURA - Start pro forma",
+      "category": "SALES",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 58,
+      "twenty_id": "94b0f4d2-91f9-4488-ab83-5df0c1588d3b",
+      "name": "[BB 58] Sprzeda\u017c \u2014 LOGO - oferta",
+      "category": "SALES",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 129,
+      "twenty_id": "ef71357f-0322-4b66-b2bb-49c8b3fb65b9",
+      "name": "[BB 129] Og\u00f3lne \u2014 NAZWA I LOGO (Pakiet)",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 130,
+      "twenty_id": "558f7500-0082-4f82-8f13-1caa62051901",
+      "name": "[BB 130] Nazwa \u2014 NAZWA oferta",
+      "category": "NAME",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 134,
+      "twenty_id": "ffdb6649-382d-49a1-9e90-70cabc7aea6c",
+      "name": "[BB 134] Og\u00f3lne \u2014 Oferta na opiek\u0119 nad stron\u0105",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 137,
+      "twenty_id": "c0a3b959-de96-4a1b-852b-fb2509c400e4",
+      "name": "[BB 137] Helpdesk \u2014 Pod\u0142\u0105czenie systemu szybkich p\u0142atno\u015bci Przelewy24 do Pa\u0144stwa sklepu",
+      "category": "HELPDESK",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 8,
+      "twenty_id": "64bd4681-d38a-47ec-81c7-fc4cd464e395",
+      "name": "[BB 8] Helpdesk \u2014 Problem z uruchomieniem WordPressa",
+      "category": "HELPDESK",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 138,
+      "twenty_id": "c8e6ed22-1650-41c9-9bcd-0b221aac4589",
+      "name": "[BB 138] Og\u00f3lne \u2014 Rozwi\u0105zanie umowy - STRONY PRO",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 128,
+      "twenty_id": "c150b097-6481-47f5-92b5-ae08ed4a9700",
+      "name": "[BB 128] Og\u00f3lne \u2014 Strona 8000",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 125,
+      "twenty_id": "718fbd79-93a5-447d-975e-2123cd8d762a",
+      "name": "[BB 125] Strona \u2014 Strona - Ewa (Czy maj\u0105 kas\u0119?)",
+      "category": "WEBSITE",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 126,
+      "twenty_id": "3e95a093-6e24-4ad8-8ff2-67bf077d0e2a",
+      "name": "[BB 126] Strona \u2014 Strona - Ewa (Maj\u0105 kas\u0119!)",
+      "category": "WEBSITE",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 124,
+      "twenty_id": "f10a7e9c-943b-41ad-ad34-d9f81a13e1da",
+      "name": "[BB 124] Og\u00f3lne \u2014 Strona PRO",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 6,
+      "twenty_id": "57ae1177-50c3-4cf8-9eb5-ab2c748fbf1a",
+      "name": "[BB 6] Helpdesk \u2014 Strona uruchomiana",
+      "category": "HELPDESK",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 136,
+      "twenty_id": "d0c16ea7-3fa7-4fa0-b0e7-065098dedb0a",
+      "name": "[BB 136] Og\u00f3lne \u2014 Strona uruchomiana SKLEP",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 7,
+      "twenty_id": "fa58fc53-852e-438b-93f7-84cf7b8a6693",
+      "name": "[BB 7] Helpdesk \u2014 Uruchomienie strony",
+      "category": "HELPDESK",
+      "priority": "MUST"
+    }
+  ],
+  "created": 19,
+  "skipped": 0
+}

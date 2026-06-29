@@ -20,7 +20,8 @@ const logToConsole = require("logToConsole");
 
 var PATH_PRIMARY = "/crm/twenty_worker";
 var PATH_ALIAS = "/inbound/twenty_worker";
-var EVENT_NAME = "crm_twenty_update_person";
+var EVENT_UPDATE_PERSON = "crm_twenty_update_person";
+var EVENT_CREATE_LEAD = "crm_twenty_create_lead";
 
 function normalizePath(requestPath) {
   var normalized = requestPath || "";
@@ -64,16 +65,24 @@ logToConsole("claimed OK");
 var rawBody = getRequestBody();
 logToConsole("body length:", rawBody ? rawBody.length : 0);
 
-var eventData = {
-  adapter_id: "crm:twenty_update_person",
-  event_name: EVENT_NAME,
-  "x-ga-mp2-event_name": EVENT_NAME,
-  crm_worker_raw_body: rawBody || "",
-};
+function runWorkerEvent(eventName, adapterId, onDone) {
+  var eventData = {
+    adapter_id: adapterId,
+    event_name: eventName,
+    "x-ga-mp2-event_name": eventName,
+    crm_worker_raw_body: rawBody || "",
+  };
 
-runContainer(eventData, function () {
-  logToConsole("container done");
-  setResponseStatus(200);
-  setResponseHeader("Content-Type", "application/json");
-  returnResponse('{"status":"ok"}');
+  runContainer(eventData, function () {
+    logToConsole("container done:", eventName);
+    onDone();
+  });
+}
+
+runWorkerEvent(EVENT_UPDATE_PERSON, "crm:twenty_update_person", function () {
+  runWorkerEvent(EVENT_CREATE_LEAD, "crm:twenty_create_lead", function () {
+    setResponseStatus(200);
+    setResponseHeader("Content-Type", "application/json");
+    returnResponse('{"status":"ok"}');
+  });
 });

@@ -1,0 +1,53 @@
+{
+  "_comment": "Utworzono przez Twenty MCP 2026-06-16. workflowId=5f61ffce-48a7-48b3-bffe-74ce182e3b67 ACTIVE. Zmienne trigger: trigger.properties.after.* (nie trigger.object.*).",
+  "workflowId": "e570b3de-4565-40c7-a776-dfd273b908e8",
+  "workflowVersionId": "6a33c7b2-992d-4b18-b221-4839a46e658a",
+  "name": "lead · formularz · powiadom owner (test)",
+  "description": "Powiadomienie o nowym leadzie z Sortowni. Test: email na dawidnowak@owocni.pl. Docelowo: owner Opp (Gosia/Marta).",
+  "email_setup": {
+    "from_connected_account": "leads@owocni.pl (Settings → Accounts, connectedAccountId w workflow)",
+    "to_test": "dawidnowak@owocni.pl — tylko adres odbiorcy, bez podłączania konta",
+    "to_prod": "{{trigger.properties.after.owner…}} po ROUND_ROBIN"
+  },
+  "trigger": {
+    "type": "DATABASE_EVENT",
+    "eventName": "opportunity.created",
+    "filters": [
+      { "field": "srcSystem", "operand": "is", "value": "OWOCNI_SORTOWNIA" },
+      { "field": "stage", "operand": "is", "value": "NEW" }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "type": "CREATE_RECORD",
+      "objectName": "task",
+      "name": "Task in-app",
+      "title": "Nowy lead: {{trigger.properties.after.name}}",
+      "bodyV2_markdown": "Produkt: {{trigger.properties.after.bizProduct}}\nŹródło: {{trigger.properties.after.bizSource}}",
+      "status": "TODO",
+      "assignee": "{{trigger.properties.after.owner.id}} (prod) / workspace member (test)"
+    },
+    {
+      "order": 2,
+      "type": "CREATE_RECORD",
+      "objectName": "taskTarget",
+      "name": "Powiąż task z Opp",
+      "task": "{{step_task.id}}",
+      "targetOpportunity": "{{trigger.properties.after.id}}"
+    },
+    {
+      "order": 3,
+      "type": "SEND_EMAIL",
+      "name": "Email do owner (test Dawid)",
+      "connectedAccountId": "leads@ (workspace connected account)",
+      "recipients_to": "dawidnowak@owocni.pl",
+      "subject": "Nowy lead: {{trigger.properties.after.name}}",
+      "body_html": "Treść + <a href=\"https://zany-maroon-panther.twenty.com/object/opportunity/{{trigger.properties.after.id}}\">Otwórz lead w Twenty</a>"
+    }
+  ],
+  "future_owner_routing": {
+    "option_recommended": "Dodaj krok 0 (przed emailem): UPDATE_RECORD opportunity.ownerId via PICK_RECORD ROUND_ROBIN między workspaceMember Gosia i Marta",
+    "option_sortownia": "Rozdzielanie w Sortowni (task payload owner_hint) + create_lead ustawia ownerId przy POST — osobny etap"
+  }
+}

@@ -33,9 +33,10 @@ var BASE_URL = "https://uinpcbwf.eug.stape.io";
 var API_KEY = "2d389d8d0875343a76c07c6ff388c586bbd9347duinpcbwf";
 var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 
-// Twenty — z Constants lub wpisz jawnie jeśli getEventData zwraca puste na workerze
+// Twenty — jawnie (getEventData często puste na workerze; wzorzec jak Store API)
 var TWENTY_REST_URL = "https://api.twenty.com/rest";
-var TWENTY_API_KEY = "";
+var TWENTY_API_KEY =
+  "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBiZjg2YmY5LTVhNTgtNGRmYi1iMWZhLWVmOWYzYTk2ODRhMCJ9.eyJzdWIiOiIyNTM0YjE5My01NTIzLTRlOWQtYjQ1Yy1hZTczODE4ZGM3MjQiLCJ0eXBlIjoiQVBJX0tFWSIsIndvcmtzcGFjZUlkIjoiMjUzNGIxOTMtNTUyMy00ZTlkLWI0NWMtYWU3MzgxOGRjNzI0IiwiaWF0IjoxNzgwOTE1MDYyLCJleHAiOjQ5MzQ0Mjg2NjEsImp0aSI6ImEzNGQ4NzQzLTJjMjgtNGQ1MS1iMTU5LTQ3NmMyYjZlMzg4MSJ9.WHGh70YFp7J8kARqIdHvNES2DeGchijlj5F32RHdrXBrOSgzTK9prXRkppWATorI9625JWRGCQZwi6keyR_urA";
 
 var PENDING_WRITE_TTL_MS = 45000;
 var MAX_TASKS_PER_RUN = 10;
@@ -106,15 +107,37 @@ function resolveTwentyConfig() {
   return { restUrl: restUrl, apiKey: apiKey };
 }
 
+function normalizeTaskItem(item) {
+  var key = item.key || "";
+  var raw = item.data || {};
+  if (
+    raw.data &&
+    typeof raw.data === "object" &&
+    raw.status === undefined &&
+    raw.job_type === undefined
+  ) {
+    return { key: key, data: raw.data };
+  }
+  return { key: key, data: raw };
+}
+
 function fetchPendingCrmTasks(callback) {
   var url = API_BASE + "/" + COLLECTION_TASK_QUEUE + "/documents";
+  var eqOp = "\u0024eq";
   var requestBody = {
-    filter: {},
+    filter: {
+      data: {
+        status: {},
+        job_type: {},
+      },
+    },
     pagination: {
       sort: [{ field: "created_at", order: "asc" }],
       limit: 100,
     },
   };
+  requestBody.filter.data.status[eqOp] = "pending";
+  requestBody.filter.data.job_type[eqOp] = ADAPTER_ID;
 
   sendHttpRequest(url, {
     method: "POST",
@@ -126,14 +149,14 @@ function fetchPendingCrmTasks(callback) {
       var tasks = [];
       var i = 0;
       while (i < items.length) {
-        var item = items[i];
-        var taskData = item.data || {};
+        var normalized = normalizeTaskItem(items[i]);
+        var taskData = normalized.data || {};
         if (
           taskData.status === "pending" &&
           taskData.job_type === ADAPTER_ID
         ) {
           tasks.push({
-            key: item.key,
+            key: normalized.key,
             data: taskData,
           });
         }
@@ -168,11 +191,26 @@ function setPendingWrite(opportunityId, callback) {
     });
 }
 
-function patchOpportunityIdOid(opportunityId, idOid, twentyCfg, callback) {
+function extractPatchedIdOid(collection, responseBody) {
+  if (!responseBody || typeof responseBody !== "object") {
+    return null;
+  }
+  var data = responseBody.data || {};
+  if (collection === "people") {
+    var person = data.updatePerson || data.person || {};
+    return person.idOid || null;
+  }
+  var opp = data.updateOpportunity || data.opportunity || {};
+  return opp.idOid || null;
+}
+
+function patchTwentyRecord(collection, recordId, idOid, twentyCfg, callback) {
   var url =
     twentyCfg.restUrl +
-    "/opportunities/" +
-    encodeUriComponent(opportunityId);
+    "/" +
+    collection +
+    "/" +
+    encodeUriComponent(recordId);
   var body = { idOid: idOid };
 
   sendHttpRequest(
@@ -189,16 +227,26 @@ function patchOpportunityIdOid(opportunityId, idOid, twentyCfg, callback) {
     .then(function (res) {
       logToConsole(
         ADAPTER_ID,
-        "PATCH Opportunity idOid",
-        opportunityId,
+        "PATCH",
+        collection,
+        recordId,
         "status=",
         res.statusCode,
       );
       if (res.statusCode >= 200 && res.statusCode < 300) {
+        var parsed = JSON.parse(res.body || "{}");
+        var patchedIdOid = extractPatchedIdOid(collection, parsed);
+        if (patchedIdOid && patchedIdOid !== idOid) {
+          callback(
+            "PATCH idOid mismatch expected=" + idOid + " got=" + patchedIdOid,
+            null,
+          );
+          return;
+        }
         callback(null, res);
-      } else {
-        callback("HTTP " + res.statusCode + " " + (res.body || ""), null);
+        return;
       }
+      callback("HTTP " + res.statusCode + " " + (res.body || ""), null);
     })
     .catch(function (err) {
       callback(err, null);
@@ -234,17 +282,38 @@ function updateTaskDone(taskKey, taskData, idOid, callback) {
 function processOneTask(task, twentyCfg, onComplete) {
   var taskData = task.data || {};
   var opportunityId = taskData.opportunity_id || "";
+  var personId = taskData.person_id || "";
   var idOid = taskData.id_oid || "";
 
-  if (!opportunityId) {
-    logToConsole(ADAPTER_ID, "SKIP — brak opportunity_id", task.key);
-    onComplete(null);
+  if (!opportunityId && !personId) {
+    logToConsole(ADAPTER_ID, "FAIL — brak opportunity_id i person_id", task.key);
+    onComplete("missing target id");
     return;
   }
 
+  logToConsole(
+    ADAPTER_ID,
+    "task",
+    task.key,
+    "person=",
+    personId,
+    "opp=",
+    opportunityId,
+    "id_oid=",
+    idOid,
+  );
+
   if (!idOid || idOid === "pending_mint" || idOid === "no_oid") {
     idOid = generateULID();
-    logToConsole(ADAPTER_ID, "mint idOid", idOid, "opp=", opportunityId);
+    logToConsole(
+      ADAPTER_ID,
+      "mint idOid",
+      idOid,
+      "opp=",
+      opportunityId,
+      "person=",
+      personId,
+    );
   }
 
   if (!twentyCfg.apiKey) {
@@ -253,30 +322,70 @@ function processOneTask(task, twentyCfg, onComplete) {
     return;
   }
 
-  setPendingWrite(opportunityId, function (pendingErr) {
-    if (pendingErr) {
-      logToConsole(ADAPTER_ID, "pending-write ERROR", pendingErr);
-      onComplete(pendingErr);
+  function finishTask() {
+    updateTaskDone(task.key, taskData, idOid, function (storeErr) {
+      if (storeErr) {
+        logToConsole(ADAPTER_ID, "task_queue update ERROR", storeErr);
+        onComplete(storeErr);
+        return;
+      }
+      logToConsole(ADAPTER_ID, "OK backfill", personId || opportunityId, idOid);
+      onComplete(null);
+    });
+  }
+
+  function patchPersonThen(next) {
+    if (!personId) {
+      next();
       return;
     }
-
-    patchOpportunityIdOid(opportunityId, idOid, twentyCfg, function (patchErr) {
+    logToConsole(ADAPTER_ID, "PATCH Person start", personId, idOid);
+    patchTwentyRecord("people", personId, idOid, twentyCfg, function (patchErr) {
       if (patchErr) {
-        logToConsole(ADAPTER_ID, "Twenty PATCH ERROR", patchErr);
+        logToConsole(ADAPTER_ID, "Twenty PATCH Person ERROR", patchErr);
         onComplete(patchErr);
         return;
       }
+      next();
+    });
+  }
 
-      updateTaskDone(task.key, taskData, idOid, function (storeErr) {
-        if (storeErr) {
-          logToConsole(ADAPTER_ID, "task_queue update ERROR", storeErr);
-          onComplete(storeErr);
-          return;
-        }
-        logToConsole(ADAPTER_ID, "OK backfill", opportunityId, idOid);
-        onComplete(null);
+  function patchOpportunityThen(next) {
+    if (!opportunityId) {
+      next();
+      return;
+    }
+    patchTwentyRecord("opportunities", opportunityId, idOid, twentyCfg, function (patchErr) {
+      if (patchErr) {
+        logToConsole(ADAPTER_ID, "Twenty PATCH Opportunity ERROR", patchErr);
+        onComplete(patchErr);
+        return;
+      }
+      next();
+    });
+  }
+
+  if (opportunityId) {
+    setPendingWrite(opportunityId, function (pendingErr) {
+      if (pendingErr) {
+        logToConsole(ADAPTER_ID, "pending-write ERROR", pendingErr);
+        onComplete(pendingErr);
+        return;
+      }
+      patchPersonThen(function () {
+        patchOpportunityThen(finishTask);
       });
     });
+    return;
+  }
+
+  patchPersonThen(function () {
+    if (!personId) {
+      logToConsole(ADAPTER_ID, "FAIL — person task bez person_id", task.key);
+      onComplete("person backfill missing person_id");
+      return;
+    }
+    finishTask();
   });
 }
 

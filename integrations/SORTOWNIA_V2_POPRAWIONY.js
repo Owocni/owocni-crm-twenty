@@ -9,29 +9,106 @@ const encodeUriComponent = require("encodeUriComponent");
 const setCookie = require("setCookie");
 const getCookieValues = require("getCookieValues");
 
+// Opcjonalne pola szablonu tagu (sGTM → Tag Configuration):
+// @field runtimeEnvironment string — {{runtime_environment}} (Constant, np. sandbox)
+// @field clientIp string — {{IP Address}} lub zmienna Client IP Stape
+
+function extractEventParamValue(v) {
+  if (!v || typeof v !== "object") return undefined;
+  if (v.stringValue !== undefined && v.stringValue !== null) return v.stringValue;
+  if (v.string_value !== undefined && v.string_value !== null)
+    return v.string_value;
+  if (v.intValue !== undefined && v.intValue !== null)
+    return makeString(v.intValue);
+  if (v.int_value !== undefined && v.int_value !== null)
+    return makeString(v.int_value);
+  if (v.doubleValue !== undefined && v.doubleValue !== null)
+    return makeString(v.doubleValue);
+  if (v.double_value !== undefined && v.double_value !== null)
+    return makeString(v.double_value);
+  return undefined;
+}
+
 // ✅ Odczyt wartości z event_params (GA4 w sGTM często trzyma parametry w event_params, nie na top level)
 function getEventParamFromEventParams(key) {
   var eventParams = getEventData("event_params");
   if (!eventParams) return undefined;
   // Format GA4: tablica [{key: "x", value: {stringValue: "..."}}] lub obiekt {x: "..."}
   if (typeof eventParams === "object" && eventParams[key] !== undefined) {
-    return eventParams[key];
+    var direct = eventParams[key];
+    if (direct && typeof direct === "object") {
+      return extractEventParamValue(direct);
+    }
+    return direct;
   }
   if (typeof eventParams.length === "number") {
     var i = 0;
     while (i < eventParams.length) {
       var item = eventParams[i];
       if (item && item.key === key && item.value) {
-        var v = item.value;
-        if (v.stringValue !== undefined) return v.stringValue;
-        if (v.intValue !== undefined) return v.intValue + "";
-        if (v.doubleValue !== undefined) return v.doubleValue + "";
-        return undefined;
+        return extractEventParamValue(item.value);
       }
       i = i + 1;
     }
   }
   return undefined;
+}
+
+function normalizeEmailForEnv(email) {
+  if (!email) return "";
+  return makeString(email).toLowerCase().trim();
+}
+
+// Domeny testowe → environment=sandbox (formularz www bez zmian w Web GTM)
+function isSandboxTestEmail(email) {
+  var normalized = normalizeEmailForEnv(email);
+  if (!normalized) return false;
+  var suffixes = ["@fastman.eu", "@example.com"];
+  var i = 0;
+  while (i < suffixes.length) {
+    var sfx = suffixes[i];
+    if (normalized.indexOf(sfx) === normalized.length - sfx.length) {
+      return true;
+    }
+    i = i + 1;
+  }
+  return false;
+}
+
+function resolveTaskEnvironment(bizEmail) {
+  var raw =
+    getEventDataWithFallback("environment") ||
+    getEventDataWithFallback("runtime_environment");
+  if (!raw && data && data.runtimeEnvironment) {
+    raw = data.runtimeEnvironment;
+  }
+  if (raw) {
+    var norm = makeString(raw).toLowerCase().trim();
+    return norm === "sandbox" ? "sandbox" : "prod";
+  }
+  if (isSandboxTestEmail(bizEmail)) {
+    logToConsole(
+      "SORTOWNIA: environment=sandbox (test email domain):",
+      bizEmail,
+    );
+    return "sandbox";
+  }
+  return "prod";
+}
+
+function resolveCtxIpAddress(fallbackFromProfile) {
+  var ip =
+    getEventDataWithFallback("ctx_ip_address") ||
+    getEventDataWithFallback("ip_address") ||
+    getEventDataWithFallback("client_ip") ||
+    getEventDataWithFallback("ip_override");
+  if (!ip && data && data.clientIp) {
+    ip = data.clientIp;
+  }
+  if (!ip && fallbackFromProfile) {
+    ip = fallbackFromProfile;
+  }
+  return ip || null;
 }
 
 // ✅ Odczyt wartości z user_data (GA4 Enhanced Conversions / Customer Match):
@@ -798,19 +875,6 @@ if (eventName === "oid_init") {
   const ctxUserAgent =
     getEventDataWithFallback("ctx_user_agent") ||
     getEventDataWithFallback("user_agent");
-  // ✅ POPRAWKA: Pobierz IP z Event Data
-  var ctxIpAddress = getEventDataWithFallback("ctx_ip_address");
-
-  // Fallback: inne nazwy w Event Data
-  if (!ctxIpAddress) {
-    ctxIpAddress = getEventDataWithFallback("ip_address");
-  }
-  if (!ctxIpAddress) {
-    ctxIpAddress = getEventDataWithFallback("client_ip");
-  }
-  if (!ctxIpAddress) {
-    ctxIpAddress = getEventDataWithFallback("ip_override"); // ✅ DODANO: GA4 używa ip_override
-  }
   const ctxReferrer =
     getEventDataWithFallback("ctx_referrer") ||
     getEventDataWithFallback("page_referrer") ||
@@ -888,7 +952,8 @@ if (eventName === "oid_init") {
         attr_utm_campaign: attrUtmCampaign || existingData.attr_utm_campaign,
         oid_init_page_url: ctxPageUrl,
         ctx_user_agent: ctxUserAgent || existingData.ctx_user_agent || null, // ✅ DODANO: dla Meta CAPI EMQ
-        ctx_ip_address: ctxIpAddress || existingData.ctx_ip_address || null, // ✅ DODANO: dla Meta CAPI (zalecane)
+        ctx_ip_address:
+          resolveCtxIpAddress(existingData.ctx_ip_address) || null,
         ctx_referrer: ctxReferrer || existingData.ctx_referrer || null, // ✅ DODANO: dla analizy
         oid_init_timestamp: timestamp,
         updated_at: timestamp,
@@ -1112,20 +1177,8 @@ const bizPricingKey = rawBizPricingKey || bizProduct; // Klucz cennika (np. sql_
 const ctxUserAgent =
   getEventDataWithFallback("ctx_user_agent") ||
   getEventDataWithFallback("user_agent");
-// ✅ POPRAWKA: Pobierz IP z Event Data
-var ctxIpAddress = getEventDataWithFallback("ctx_ip_address");
-
-// Fallback: inne nazwy w Event Data
-if (!ctxIpAddress) {
-  ctxIpAddress = getEventDataWithFallback("ip_address");
-}
-if (!ctxIpAddress) {
-  ctxIpAddress = getEventDataWithFallback("client_ip");
-}
-if (!ctxIpAddress) {
-  ctxIpAddress = getEventDataWithFallback("ip_override"); // ✅ DODANO: GA4 używa ip_override
-}
-const ctxReferrer =
+  var ctxIpAddress = resolveCtxIpAddress(null);
+  const ctxReferrer =
   getEventDataWithFallback("ctx_referrer") ||
   getEventDataWithFallback("page_referrer") ||
   getEventDataWithFallback("referrer");
@@ -1360,6 +1413,7 @@ function processExistingProfile(lookupResponse) {
 
   // BLOKADA 90 DNI: Sprawdź czy Akt istnieje i jest młodszy niż 90 dni
   let aktTimestampMs = null;
+  var enqueueTwentyCreateLead = false;
   if (eventName === "generate_lead") {
     const nowMs = timestamp * 1;
 
@@ -1423,6 +1477,7 @@ function processExistingProfile(lookupResponse) {
             owner,
           );
         }
+        enqueueTwentyCreateLead = false;
       } else {
         var daysRounded = (ageDays + 0.5) | 0;
         logToConsole(
@@ -1457,6 +1512,7 @@ function processExistingProfile(lookupResponse) {
           ", AktTimestampMs =",
           aktTimestampMs,
         );
+        enqueueTwentyCreateLead = true;
       }
     } else {
       // Akt nie istnieje - utwórz nowy
@@ -1485,6 +1541,7 @@ function processExistingProfile(lookupResponse) {
         ", AktTimestampMs =",
         aktTimestampMs,
       );
+      enqueueTwentyCreateLead = true;
     }
   } else {
     // qualify_lead - zachowaj istniejące wartości
@@ -1503,6 +1560,8 @@ function processExistingProfile(lookupResponse) {
     existingFbc,
     existing.ga_client_id || null,
     existing.biz_product || null,
+    existing.ctx_ip_address || null,
+    enqueueTwentyCreateLead,
   );
 }
 
@@ -1545,8 +1604,9 @@ function processMergedProfile(oidInitResponse) {
   let aktTimestamp;
   let aktTimestampMs = null;
 
+  var enqueueTwentyCreateLead = false;
   if (eventName === "generate_lead") {
-    logToConsole("SORTOWNIA: Obliczam Akt Własności...");
+    logToConsole("SORTOWNIA: Obliczam Akt Własności (merge oid_init)...");
 
     const finalGclid = attrGclid || existingGclid;
     const finalFbc = attrFbc || existingFbc;
@@ -1576,6 +1636,7 @@ function processMergedProfile(oidInitResponse) {
       ", AktTimestampMs =",
       aktTimestampMs,
     );
+    enqueueTwentyCreateLead = true;
   }
 
   saveProfileAndTask(
@@ -1590,6 +1651,8 @@ function processMergedProfile(oidInitResponse) {
     existingFbc,
     oidInitData.ga_client_id || null,
     oidInitData.biz_product || null,
+    oidInitData.ctx_ip_address || null,
+    enqueueTwentyCreateLead,
   );
 }
 
@@ -1632,6 +1695,7 @@ function processNewProfile() {
   let aktTimestamp;
   let aktTimestampMs = null;
 
+  var enqueueTwentyCreateLead = false;
   if (eventName === "generate_lead") {
     logToConsole("SORTOWNIA: Obliczam Akt Własności...");
 
@@ -1655,6 +1719,7 @@ function processNewProfile() {
       ", AktTimestampMs =",
       aktTimestampMs,
     );
+    enqueueTwentyCreateLead = true;
   }
 
   saveProfileAndTask(
@@ -1669,6 +1734,8 @@ function processNewProfile() {
     null,
     null,
     null,
+    null,
+    enqueueTwentyCreateLead,
   );
 }
 
@@ -1696,6 +1763,69 @@ function uniqKeys(arr) {
 }
 
 // ============================================
+// HELPER: Kolejka crm:twenty_create_lead (tylko nowy Akt, generate_lead)
+// ============================================
+function enqueueCrmTwentyCreateLeadTask(baseTaskData) {
+  var crmTaskId = baseTaskData.id_oid + "_" + timestamp + "_crm_twenty_create_lead";
+  var crmTaskData = {
+    id_oid: baseTaskData.id_oid,
+    id_event: timestamp + "_crm_twenty_create_lead",
+    event_name: "generate_lead",
+    job_type: "crm:twenty_create_lead",
+    status: "pending",
+    created_at: timestamp,
+    environment: baseTaskData.environment,
+    adapter: "crm:twenty_create_lead",
+    biz_email: baseTaskData.biz_email,
+    biz_phone: baseTaskData.biz_phone,
+    biz_name: baseTaskData.biz_name,
+    biz_product: baseTaskData.biz_product,
+    biz_pricing_key: baseTaskData.biz_pricing_key,
+    biz_value: baseTaskData.biz_value,
+    attr_gclid: baseTaskData.attr_gclid,
+    attr_fbc: baseTaskData.attr_fbc,
+    attr_gbraid: baseTaskData.attr_gbraid,
+    attr_wbraid: baseTaskData.attr_wbraid,
+    ctx_page_url: baseTaskData.ctx_page_url,
+    ctx_user_agent: baseTaskData.ctx_user_agent,
+    ctx_ip_address: baseTaskData.ctx_ip_address,
+    ctx_referrer: baseTaskData.ctx_referrer,
+    ctx_time_on_page_ms: baseTaskData.ctx_time_on_page_ms,
+    biz_message: baseTaskData.biz_message,
+    ga_client_id: baseTaskData.ga_client_id,
+    owner: baseTaskData.owner,
+    order_id: baseTaskData.order_id,
+    src_system: baseTaskData.src_system,
+    src_action_source: baseTaskData.src_action_source,
+    consent_analytics_storage: baseTaskData.consent_analytics_storage,
+    consent_ad_storage: baseTaskData.consent_ad_storage,
+  };
+
+  var encodedId = encodeUriComponent(crmTaskId);
+  var saveUrl = API_BASE + "/task_queue/documents/" + encodedId;
+
+  logToConsole("SORTOWNIA: Enqueue crm:twenty_create_lead", crmTaskId);
+
+  sendHttpRequest(
+    saveUrl,
+    { method: "PUT", headers: { "Content-Type": "application/json" } },
+    JSON.stringify(crmTaskData),
+  )
+    .then(function (res) {
+      logToConsole(
+        "SORTOWNIA: ✅ crm:twenty_create_lead task saved, status =",
+        res.statusCode,
+      );
+    })
+    .catch(function (err) {
+      logToConsole(
+        "SORTOWNIA: ⚠️ crm:twenty_create_lead enqueue error (best-effort):",
+        err,
+      );
+    });
+}
+
+// ============================================
 // HELPER: Zapisz profil i task
 // ============================================
 function saveProfileAndTask(
@@ -1710,6 +1840,8 @@ function saveProfileAndTask(
   existingFbc,
   existingGaClientId,
   existingBizProduct,
+  existingCtxIpAddress,
+  enqueueTwentyCreateLead,
 ) {
   // ✅ Fallback ga_client_id z profilu w identity_map.
   // Kluczowe dla zdarzeń CRM (qualify_lead/purchase/rejected_lead), które nie mają
@@ -1721,6 +1853,8 @@ function saveProfileAndTask(
     normalizeBizProductSlug(existingBizProduct) ||
     existingBizProduct ||
     null;
+  const resolvedCtxIp = resolveCtxIpAddress(existingCtxIpAddress);
+  const taskEnvironment = resolveTaskEnvironment(email);
 
   // 🔬 DIAGNOSTYKA ga_client_id fallback (do usunięcia po naprawie):
   logToConsole(
@@ -1753,6 +1887,7 @@ function saveProfileAndTask(
     order_id: orderId,
     AktTimestamp: aktTimestamp,
     AktTimestampMs: aktTimestampMs,
+    ctx_ip_address: resolvedCtxIp,
   };
 
   // ═══════════════════════════════════════════════════════════════
@@ -1861,10 +1996,6 @@ function saveProfileAndTask(
         "consent_analytics_storage",
       );
       const consentAd = getEventDataWithFallback("consent_ad_storage");
-      var taskEnvironment =
-        getEventDataWithFallback("environment") ||
-        getEventDataWithFallback("runtime_environment") ||
-        "prod";
       logToConsole("SORTOWNIA: consent_analytics_storage =", consentAnalytics);
       logToConsole("SORTOWNIA: consent_ad_storage =", consentAd);
       logToConsole("SORTOWNIA: environment =", taskEnvironment);
@@ -1888,7 +2019,7 @@ function saveProfileAndTask(
         attr_wbraid: attrWbraid || null, // ✅ Dodano: Google Wbraid
         ctx_page_url: ctxPageUrl,
         ctx_user_agent: ctxUserAgent || null, // ✅ DODANO: dla Meta CAPI EMQ (wymagane)
-        ctx_ip_address: ctxIpAddress || null, // ✅ DODANO: dla Meta CAPI + arkusz
+        ctx_ip_address: resolvedCtxIp,
         ctx_referrer: ctxReferrer || null, // ✅ DODANO: dla analizy (opcjonalne)
         ctx_time_on_page_ms:
           ctxTimeOnPageMs !== undefined && ctxTimeOnPageMs !== null
@@ -1922,6 +2053,9 @@ function saveProfileAndTask(
             "SORTOWNIA: ✅ Task saved, status =",
             saveTaskResponse.statusCode,
           );
+          if (eventName === "generate_lead" && enqueueTwentyCreateLead) {
+            enqueueCrmTwentyCreateLeadTask(taskData);
+          }
           logToConsole("=== SORTOWNIA + AKT SUKCES ===");
           logToConsole(
             "FINAL: id_oid =",

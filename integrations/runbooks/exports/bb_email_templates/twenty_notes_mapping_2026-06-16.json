@@ -1,0 +1,99 @@
+{
+  "mapping": [
+    {
+      "bb_id": 131,
+      "twenty_note_id": "dc82ecc7-81bd-49b7-ab55-04a569b2bddc",
+      "action": "created"
+    },
+    {
+      "bb_id": 133,
+      "twenty_note_id": "11a2ab7a-60ad-41b3-8857-2a846f256040",
+      "action": "created"
+    },
+    {
+      "bb_id": 135,
+      "twenty_note_id": "fdcf14b4-53dc-46b4-a51f-4edc83598813",
+      "action": "created"
+    },
+    {
+      "bb_id": 38,
+      "twenty_note_id": "bd6e32ae-a584-4f06-ba27-0db449fa4a2d",
+      "action": "created"
+    },
+    {
+      "bb_id": 42,
+      "twenty_note_id": "0641c1c9-89b6-42a2-8419-b04267604add",
+      "action": "created"
+    },
+    {
+      "bb_id": 58,
+      "twenty_note_id": "8b301d72-1bcc-4ef2-a8f1-220d65637083",
+      "action": "created"
+    },
+    {
+      "bb_id": 129,
+      "twenty_note_id": "ab1d319a-a2d3-4fb7-b43f-947a6409a0ef",
+      "action": "created"
+    },
+    {
+      "bb_id": 130,
+      "twenty_note_id": "bfab73dc-ab73-453c-9a1c-16f135b1c137",
+      "action": "created"
+    },
+    {
+      "bb_id": 134,
+      "twenty_note_id": "f5cdf9f5-f4f4-4153-8544-832864d1c936",
+      "action": "created"
+    },
+    {
+      "bb_id": 137,
+      "twenty_note_id": "29ea235a-593d-4b29-81a4-b66d606d779c",
+      "action": "created"
+    },
+    {
+      "bb_id": 8,
+      "twenty_note_id": "9a38f189-9129-4336-9ae3-3602e9b3a36e",
+      "action": "created"
+    },
+    {
+      "bb_id": 138,
+      "twenty_note_id": "2079d3e5-826e-45ff-91f4-ed2daa4a6011",
+      "action": "created"
+    },
+    {
+      "bb_id": 128,
+      "twenty_note_id": "35d874eb-63fc-46b7-8f5f-24f3dde0dbf3",
+      "action": "created"
+    },
+    {
+      "bb_id": 125,
+      "twenty_note_id": "9fb7e730-2186-499a-b1e8-76981c7b26c6",
+      "action": "updated"
+    },
+    {
+      "bb_id": 126,
+      "twenty_note_id": "9ed5dd6f-e8a7-4214-ac0e-f806d14a889e",
+      "action": "created"
+    },
+    {
+      "bb_id": 124,
+      "twenty_note_id": "a35455e2-461b-4f0a-beec-a81f5dc25cd2",
+      "action": "created"
+    },
+    {
+      "bb_id": 6,
+      "twenty_note_id": "b06898cd-3740-4a28-b4a8-5f4da869fec0",
+      "action": "created"
+    },
+    {
+      "bb_id": 136,
+      "twenty_note_id": "73148894-010e-491c-9323-50dd683efc76",
+      "action": "created"
+    },
+    {
+      "bb_id": 7,
+      "twenty_note_id": "4db8eb44-4f22-4395-8c48-b68174a3ccf2",
+      "action": "created"
+    }
+  ]
+}

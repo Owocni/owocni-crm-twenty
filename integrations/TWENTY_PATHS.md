@@ -20,7 +20,7 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 | Adapter ID | Kierunek | Plik w repo | Deploy |
 |------------|----------|-------------|--------|
 | `inbound:twenty_webhook` | Twenty → Sortownia | `INBOUND_TWENTY_WEBHOOK.js` | Stape HTTP tag |
-| `crm:twenty_create_lead` | Sortownia → Twenty | `CRM_TWENTY_CREATE_LEAD.stub.js` | Stape tag (po paid `generate_lead`) |
+| `crm:twenty_create_lead` | Sortownia → Twenty | `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Stape tag + worker (po `generate_lead`, nowy Akt) |
 | `crm:twenty_update_person` | Sortownia → Twenty | `CRM_TWENTY_UPDATE_PERSON.sGTM.js` | Stape tag + Scheduler |
 | *(platform)* | Sortownia → Robot | `GoogleCloudRobot.js` | GCP Cloud Function |
 | *(paid)* | Web GTM → Sortownia | `SORTOWNIA_V2_POPRAWIONY.js` | Stape sGTM tag |
@@ -30,7 +30,7 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 | Ścieżka | Opis |
 |---------|------|
 | `POST /inbound/twenty_webhook` | Native webhook OUT z Twenty (HMAC) |
-| `POST /crm/twenty_worker` | Worker `crm:twenty_update_person` (Scheduler / poll task_queue) |
+| `POST /crm/twenty_worker` | Worker `crm:twenty_update_person` + `crm:twenty_create_lead` (Scheduler / poll task_queue) |
 | `https://<stape-container>/...` | Kontener Sortowni — URL z Stape UI, nie hardcode w SSOT |
 
 ## 3. Stape Store (kolekcje / klucze)
@@ -38,7 +38,7 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 | Klucz / kolekcja | Zawartość |
 |------------------|-----------|
 | `task_queue` | Zadania dla Robota (`event_name`, `environment`, atrybucja, …) |
-| `identity_map` | Profil pod `id_oid` / email / phone |
+| `identity_map` | Profil pod `id_oid` / email / phone; mint-guard: `twenty_person_{personId}` |
 | `twenty_opp_{opportunityId}` | `last_stage`, `last_campaignRejected` (transition detection) |
 | `pending_write_twenty_{opportunityId}` | TTL echo loop-prevention (NR-6) |
 

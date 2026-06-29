@@ -121,6 +121,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | #7 | Manual create rozpoznawany przez brak tożsamości (`idOid IS NULL`), nie `_operation` | `EVENT_CONTRACT.md` → §5.4 | instancja (payload bez `_operation`) | 2026-05-29 |
 | #11 | Native webhook nie niesie before/after — payload = stan aktualny | `EVENT_CONTRACT.md` → §5.4 (NR-2) | docs webhooks v2.8.0 | 2026-05-29 |
 | **#16** | HMAC: `X-Twenty-Webhook-Signature` SHA256 + `X-Twenty-Webhook-Timestamp`; signed string `{timestamp}:{payload}` | `ops/OPS_NOTES.md` → Twenty Verified Facts | docs.twenty.com | 2026-05-31 |
+| **#17** | Szablony maili: SSOT Supabase BB; Faza 0 dual compose; cutover wymaga Sidecar MVP lub Twenty native | `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md` | Dawid + właściciel (pending) | 2026-06-16 |
 
 > **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
 
@@ -131,6 +132,9 @@ Kontekst: jedno źródło podawało błędną nazwę nagłówka (`x-twenty-signa
 
 **ADR #14 (cleanup nazw eventów) — open, blocks cutover.**
 Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzja docelowa: wszystkie `event_name` zgodne z kanonem `EVENT_CONTRACT.md` §5.2. Wdrożenie: Dawid, przed G1 PASS.
+
+**ADR #17 (szablony maili) — open, blocks cutover mailowy (G-PAR PAR-5).**
+Kontekst: Twenty Cloud nie ma Message Templates w UI/API (docs Mintlify nieaktualne). Spike Notes odrzucony 2026-06-16. Decyzja: (1) SSOT = `email_template` Supabase BB; (2) Faza 0 = dual compose (BB picker + Twenty lejek, sync IMAP); (3) przed cutoverem mailowym = **Owocni Template Sidecar** MVP (picker + clipboard → Twenty composer) **lub** natywne Twenty Templates jeśli platforma dostarczy. AI draft = Faza 3 Sidecar. Plan: `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md`. Zamknięcie ADR: PASS PAR-5.2 po Sidecar MVP lub Twenty native.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 
