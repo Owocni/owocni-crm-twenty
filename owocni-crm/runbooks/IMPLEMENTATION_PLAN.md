@@ -76,7 +76,7 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 | Krok | Zadanie | Owner | Zależność |
 |---|---|---|---|
 | 1.1.1 | Schema Twenty: pola krytyczne (`DATA_MODEL.md`), opisy w Settings, snapshot git | Dawid | DATA_MODEL preflight |
-| 1.1.2 | Paid inbound: adapter `crm:twenty_create_lead` (Sortownia → Twenty) | Dawid | Sortownia Etap A |
+| 1.1.2 | Paid inbound: adapter `crm:twenty_create_lead` (Sortownia → Twenty) | Dawid | Sortownia Etap A — **kod repo 2026-06-26**; deploy Stape + test → [BUILD_CRM_TWENTY_CREATE_LEAD.md](../../integrations/runbooks/BUILD_CRM_TWENTY_CREATE_LEAD.md) |
 | 1.1.3 | Native webhook OUT (HMAC, target Sortownia, obiekty Opportunity/Person) | Dawid | `ops/OPS_NOTES.md` HMAC |
 | 1.1.4 | Adapter `inbound:twenty_webhook` (mapowanie, cold-start, loop-prevention, reason codes) | Dawid | `EVENT_CONTRACT.md` |
 | 1.1.5 | Stape Store: pamięć `last_stage`/`last_campaignRejected` + pending-write | Dawid | EVENT_CONTRACT §5.6 |
@@ -110,7 +110,7 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 | **G4** | **loop-prevention + transition-exception** | Pending-write Stape działa; `srcSystem`-SKIP usunięty DOPIERO po smoke #4 PASS (sekwencja 1-2-3) | `EVENT_CONTRACT.md` §6.1 | **PASS sandbox*** (pending-write OK; L-1 krok 3 N/A — brak SKIP w kodzie) |
 | **G5** | **data-model** | Pola FROZEN utworzone z właściwym typem/API name; `idOid` unique + null-test; opisy w Settings | `DATA_MODEL.md` §8 | **PASS** (T1 audit 2026-06-08) |
 | **G6** | **import-safety** | Import/backfill/replay → `no_emit`; brak workflow HTTP odpalającego się przy imporcie; import nie mintuje idOid | `audits/AUDIT_MIGRACJA.md` + `EVENT_CONTRACT.md` §5.4 cold-start | **PASS sandbox** (2026-06-15, smoke #8) |
-| **G7** | **identity-safety** | Stape down → fail-closed (nie mintuj); T4/T5 nie wysyła VBB; concurrency mint-guard | `IDENTITY_AND_INBOUND.md` §5.2/5.10 | do testu |
+| **G7** | **identity-safety** | Stape down → fail-closed (nie mintuj); T4/T5 nie wysyła VBB; concurrency mint-guard | `IDENTITY_AND_INBOUND.md` §5.2/5.10 | **PASS sandbox*** (2026-06-16: T1/T3/T4/NR-3; fail-closed OPEN) |
 | **G8** | **merge-safety** | Webhook przy merge — zachowanie znane (oba ID?); merge nieodwracalny obsłużony; T5 dwa paid → admin | `IDENTITY_AND_INBOUND.md` §5.9 | **OPEN (3 bramki merge)** |
 | **G-PAR** | **parzystość Better-Bitrix** | Funkcje BB pokryte w Twenty (kanban, won/lost/rejected, rozdział `leads@`, skrzynki handlowców) | §5.2 + this | **bramka go-live** |
 
@@ -148,7 +148,7 @@ Plan wykonawczy migracji na Twenty (Etap 1) + brama go-live. Definiuje kolejnoś
 |---|---|---|---|
 | FIX-1 | `assist` — **Opcja A** (pierwszy pomocniczy kanał jako assist; semantyka first-touch `owner` + assist) | P0 | spójność reguł 90 dni / VBB |
 | FIX-2 | `time_occurred` — **epoch ms** (ujednolicić format znacznika czasu) | P0 | nie mieszać ISO vs epoch (IDENTITY OQ-I5) |
-| ADD-1 | concurrency mint-guard (dwa maile nadawcy → jeden id_oid) | P1 | IDENTITY NR-3 |
+| ADD-1 | concurrency mint-guard (dwa maile nadawcy → jeden id_oid) | P1 | **DONE** sandbox 2026-06-16 — `twenty_person_{personId}` |
 | ADD-2 | wskaźniki `by_email`/`by_phone`/`by_ga`/`by_crm` → migracja z multi-key write | P1 | IDENTITY §5.8 |
 | ADD-3 | reconciliation job (Twenty PII vs Stape) 1×/dobę | P2 | IDENTITY §5.8 |
 

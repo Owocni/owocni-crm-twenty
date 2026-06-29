@@ -210,9 +210,11 @@ functions.http("processTaskQueue", async (req, res) => {
       return;
     }
 
-    // KROK 3: Append tasks to Google Sheets (monitoring) - tylko dla pending
+    // KROK 3: Append tasks to Google Sheets (monitoring) - tylko dla pending, bez crm:* (worker sGTM)
     const tasksForMonitoring = tasks.filter((task) => {
       const status = (task.data || {}).status;
+      const jobType = String((task.data || {}).job_type || "");
+      if (jobType.indexOf("crm:") === 0) return false;
       return status === "pending";
     });
 
@@ -534,6 +536,14 @@ async function fetchPendingTasks() {
     if (isDone || isProcessed) {
       console.log(
         `  ⏭️ Skipping task ${taskId}: status="${status}" (already processed)`,
+      );
+      return false;
+    }
+
+    var jobType = String(taskData.job_type || "");
+    if (jobType.indexOf("crm:") === 0) {
+      console.log(
+        `  ⏭️ Skipping task ${taskId}: job_type="${jobType}" (sGTM worker /crm/twenty_worker)`,
       );
       return false;
     }

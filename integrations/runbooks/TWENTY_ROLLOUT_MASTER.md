@@ -58,7 +58,7 @@ flowchart TD
 | **S1** | Tag `inbound:twenty_webhook` w Stape | G2–G4 (część) | 2–5 dni |
 | **S2** | Robot + task_queue fixtures | G1 (część) | 1–2 h |
 | **SM** | 8 scenariuszy `EVENT_CONTRACT` §6.3 | G1–G4, L-1 | ✅ 2026-06-15 |
-| **E12** | Email Sync + Resolver | G7, G-PAR | **→ teraz** |
+| **E12** | Email Sync + Resolver | G7*, G-PAR | **E12.2 PASS** → **E12.3** |
 
 ---
 
@@ -165,30 +165,44 @@ flowchart TD
 | ID | Zadanie | Owner |
 |----|---------|-------|
 | E12.1 | Email Sync skrzynki (`IDENTITY` §5.5) | ☁️ TWENTY |
-| E12.2 | Identity Resolver T1–T5 w Stape | 📦 STAPE |
-| E12.3 | Szablony maili z BB | ☁️ TWENTY |
+| E12.2 | Identity Resolver T1–T5 w Stape | 📦 STAPE | **PASS** 2026-06-16 — [BUILD_IDENTITY_RESOLVER.md](./BUILD_IDENTITY_RESOLVER.md) |
+| E12.3 | Szablony: strategia Sidecar + Faza 0 dual | ☁️ plan — [E12_3_EMAIL_TEMPLATE_STRATEGY.md](./E12_3_EMAIL_TEMPLATE_STRATEGY.md) |
 | E12.4 | Wyłączenie julia362 | po G7 + G-PAR |
 
 ---
 
 ## Co robimy **teraz** (E12 — Etap 1.2)
 
+**E12.2 Identity Resolver — PASS sandbox (2026-06-16).** Evidence: [E12_EMAIL_SYNC_EVIDENCE.md](./E12_EMAIL_SYNC_EVIDENCE.md).
+
+### E12.3 — następny krok
+
+**Runbook wykonawczy:** [E12_3_EMAIL_TEMPLATES_AND_TRAINING.md](./E12_3_EMAIL_TEMPLATES_AND_TRAINING.md)  
+**Test plan G-PAR:** [G_PAR_BETTER_BITRIX_PARITY.md](./G_PAR_BETTER_BITRIX_PARITY.md)
+
+| ID | Zadanie |
+|----|---------|
+| E12.3 | Szablony maili z better-bitrix → Twenty |
+| E12.3b | Rozdział wątków `leads@` → owner |
+| Szkolenie | Stage, merge, T4 „Tożsamość do rozstrzygnięcia" |
+| G-PAR | Parzystość BB vs Twenty (macierz PAR-1…PAR-7) |
+
 **Etap 1.1 (rdzeń CRM webhook + worker + smoke) — zamknięty** (`c651806`, evidence 2026-06-15).
 
 ### E12.1 — Email Sync w Twenty (pierwszy krok)
 
-Źródło: `IDENTITY_AND_INBOUND.md` §5.5, `IMPLEMENTATION_PLAN.md` §1.2.1.
+**Runbook wykonawczy (krok po kroku):** [E12_EMAIL_SYNC_EXECUTION.md](./E12_EMAIL_SYNC_EXECUTION.md)
+
+Kolejność: **FAZA 0** czyszczenie Twenty + Stape → **FAZA 2** 7 skrzynek (handlowcy → `leads@` na końcu) → **E12.2** Resolver (agent).
 
 | Skrzynka | Email Sync |
 |----------|------------|
-| `leads@owocni.pl` | **TAK** |
+| `leads@owocni.pl` | **TAK** (ostatnia — równoległość z julia362) |
 | `studio@owocni.pl` | **TAK** |
-| skrzynki handlowców (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | **TAK** |
+| skrzynki handlowców (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | **TAK** (pierwsze) |
 | `kontakt@owocni.pl` | **NIE** (świadomie poza zakresem) |
 
-**Ty (Twenty UI):** Settings → Email / Accounts → podłącz IMAP `mail.owocni.pl` dla pierwszej skrzynki (sugeruję zacząć od **`leads@`**).
-
-**Potem:** E12.2 Identity Resolver T1–T5 w Stape (osobny tag — jeszcze nie w repo).
+Hasła: `better-bitrix-main/.env` (`SMTP_USER_*` / `STMP_PASSWORD_*`). IMAP: `mail.owocni.pl:993`.
 
 **NIE teraz:** wyłączenie julia362 (E12.4) — dopiero po G7 + G-PAR PASS.
 

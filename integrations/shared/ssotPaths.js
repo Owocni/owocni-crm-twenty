@@ -9,6 +9,7 @@ const ADAPTERS = {
   INBOUND_TWENTY_WEBHOOK: 'inbound:twenty_webhook',
   CRM_TWENTY_CREATE_LEAD: 'crm:twenty_create_lead',
   CRM_TWENTY_UPDATE_PERSON: 'crm:twenty_update_person',
+  IDENTITY_TWENTY_RESOLVER: 'identity:twenty_resolver',
 };
 
 const HTTP_PATHS = {
