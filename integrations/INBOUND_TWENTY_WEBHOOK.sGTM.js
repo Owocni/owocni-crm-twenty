@@ -44,6 +44,12 @@ var TWENTY_REST_URL = "https://api.twenty.com/rest";
 var TWENTY_API_KEY =
   "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBiZjg2YmY5LTVhNTgtNGRmYi1iMWZhLWVmOWYzYTk2ODRhMCJ9.eyJzdWIiOiIyNTM0YjE5My01NTIzLTRlOWQtYjQ1Yy1hZTczODE4ZGM3MjQiLCJ0eXBlIjoiQVBJX0tFWSIsIndvcmtzcGFjZUlkIjoiMjUzNGIxOTMtNTUyMy00ZTlkLWI0NWMtYWU3MzgxOGRjNzI0IiwiaWF0IjoxNzgwOTE1MDYyLCJleHAiOjQ5MzQ0Mjg2NjEsImp0aSI6ImEzNGQ4NzQzLTJjMjgtNGQ1MS1iMTU5LTQ3NmMyYjZlMzg4MSJ9.WHGh70YFp7J8kARqIdHvNES2DeGchijlj5F32RHdrXBrOSgzTK9prXRkppWATorI9625JWRGCQZwi6keyR_urA";
 
+// Opcja B — leads@ Email Sync → crm:twenty_create_lead (sandbox channel id)
+var LEADS_AT_MESSAGE_CHANNEL_ID = "32629e97-6dc2-452f-aa26-38c72eaab3a4";
+var LEADS_AT_INTERNAL_DOMAIN = "@owocni.pl";
+var COLLECTION_LEADS_AT_PREFIX = "leads_at_enqueue_";
+var CREATE_LEAD_ADAPTER = "crm:twenty_create_lead";
+
 function getEventDataWithFallback(key) {
   var result = getEventData(key);
   if (
@@ -209,6 +215,7 @@ function parseTwentyPayload(eventData) {
       record.email ||
       null,
     bizPhone: phoneRaw || record.phone || null,
+    _personRecord: isPerson ? record : null,
   };
 }
 
@@ -589,6 +596,315 @@ function resolveIdentityTier(emailOid, phoneOid) {
   return { tier: "T4", id_oid: null };
 }
 
+function buildTwentyListPath(collection, filterExpr, limit) {
+  var path = "/" + collection + "?filter=" + encodeUriComponent(filterExpr);
+  if (limit) {
+    path += "&limit=" + limit;
+  }
+  return path;
+}
+
+function parseTwentyListRecords(collection, bodyText) {
+  var parsed = JSON.parse(bodyText || "{}");
+  var data = parsed.data || {};
+  if (data[collection] && data[collection].length) {
+    return data[collection];
+  }
+  return [];
+}
+
+function twentyGet(path, callback) {
+  sendHttpRequest(
+    TWENTY_REST_URL + path,
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + TWENTY_API_KEY },
+    },
+    "",
+  )
+    .then(function (res) {
+      callback(null, res);
+    })
+    .catch(function (err) {
+      callback(err, null);
+    });
+}
+
+function isInternalOwocniEmail(email) {
+  var normalized = makeString(email).toLowerCase();
+  if (!normalized) {
+    return false;
+  }
+  var domainPos = normalized.indexOf(LEADS_AT_INTERNAL_DOMAIN);
+  if (domainPos < 0) {
+    return false;
+  }
+  return domainPos === normalized.length - LEADS_AT_INTERNAL_DOMAIN.length;
+}
+
+function buildPersonDisplayName(parsed) {
+  var record = parsed && parsed._personRecord;
+  if (record && record.name && typeof record.name === "object") {
+    var first = makeString(record.name.firstName || "").trim();
+    var last = makeString(record.name.lastName || "").trim();
+    var full = (first + " " + last).trim();
+    if (full) {
+      return full;
+    }
+  }
+  return "";
+}
+
+function leadsAtEnqueueGuardKey(personId) {
+  return COLLECTION_LEADS_AT_PREFIX + personId;
+}
+
+function readLeadsAtEnqueueGuard(personId, callback) {
+  var url =
+    API_BASE +
+    "/" +
+    COLLECTION_IDENTITY_MAP +
+    "/documents/" +
+    encodeUriComponent(leadsAtEnqueueGuardKey(personId));
+  sendHttpRequest(url, { method: "GET" }, "")
+    .then(function (res) {
+      if (res.statusCode === 200) {
+        callback(null, unwrapStoreDocument(JSON.parse(res.body || "{}")));
+        return;
+      }
+      if (res.statusCode === 404) {
+        callback(null, null);
+        return;
+      }
+      callback("HTTP " + res.statusCode, null);
+    })
+    .catch(function (err) {
+      callback(err, null);
+    });
+}
+
+function writeLeadsAtEnqueueGuard(personId, idOid, env, callback) {
+  var url =
+    API_BASE +
+    "/" +
+    COLLECTION_IDENTITY_MAP +
+    "/documents/" +
+    encodeUriComponent(leadsAtEnqueueGuardKey(personId));
+  sendHttpRequest(
+    url,
+    { method: "PUT", headers: { "Content-Type": "application/json" } },
+    JSON.stringify({
+      id_oid: idOid,
+      person_id: personId,
+      enqueued: true,
+      environment: env,
+      updated_at: makeString(getTimestampMillis()),
+    }),
+  )
+    .then(function () {
+      callback(null);
+    })
+    .catch(function (err) {
+      callback(err);
+    });
+}
+
+function checkParticipantMessagesForLeads(parts, index, callback) {
+  if (index >= parts.length || index >= 8) {
+    callback(null, false);
+    return;
+  }
+  var part = parts[index] || {};
+  if (part.role && part.role !== "FROM") {
+    checkParticipantMessagesForLeads(parts, index + 1, callback);
+    return;
+  }
+  var msgId = part.messageId;
+  if (!msgId) {
+    checkParticipantMessagesForLeads(parts, index + 1, callback);
+    return;
+  }
+  var path = buildTwentyListPath(
+    "messageChannelMessageAssociations",
+    "messageId[eq]:" + msgId,
+    5,
+  );
+  twentyGet(path, function (err, res) {
+    if (err || !res || res.statusCode < 200 || res.statusCode >= 300) {
+      callback(err || "assoc HTTP " + (res && res.statusCode), false);
+      return;
+    }
+    var assocs = parseTwentyListRecords(
+      "messageChannelMessageAssociations",
+      res.body,
+    );
+    var j = 0;
+    while (j < assocs.length) {
+      var assoc = assocs[j] || {};
+      if (
+        assoc.messageChannelId === LEADS_AT_MESSAGE_CHANNEL_ID &&
+        assoc.direction === "INCOMING"
+      ) {
+        callback(null, true);
+        return;
+      }
+      j = j + 1;
+    }
+    checkParticipantMessagesForLeads(parts, index + 1, callback);
+  });
+}
+
+function personHasLeadsAtIncoming(personId, email, callback) {
+  function finishFromParts(parts, nextStep) {
+    if (!parts.length) {
+      nextStep();
+      return;
+    }
+    checkParticipantMessagesForLeads(parts, 0, function (matchErr, matched) {
+      if (matchErr) {
+        callback(matchErr, false);
+        return;
+      }
+      if (matched) {
+        callback(null, true);
+        return;
+      }
+      nextStep();
+    });
+  }
+
+  function lookupByEmail() {
+    var normalizedEmail = normalizeResolverEmail(email);
+    if (!normalizedEmail) {
+      callback(null, false);
+      return;
+    }
+    var emailPath = buildTwentyListPath(
+      "messageParticipants",
+      "handle[eq]:" + normalizedEmail,
+      15,
+    );
+    twentyGet(emailPath, function (emailErr, emailRes) {
+      if (emailErr || !emailRes || emailRes.statusCode < 200 || emailRes.statusCode >= 300) {
+        callback(emailErr || "participants email HTTP " + (emailRes && emailRes.statusCode), false);
+        return;
+      }
+      var emailParts = parseTwentyListRecords("messageParticipants", emailRes.body);
+      finishFromParts(emailParts, function () {
+        callback(null, false);
+      });
+    });
+  }
+
+  if (!personId) {
+    lookupByEmail();
+    return;
+  }
+
+  var path = buildTwentyListPath(
+    "messageParticipants",
+    "personId[eq]:" + personId,
+    15,
+  );
+  twentyGet(path, function (err, res) {
+    if (err || !res || res.statusCode < 200 || res.statusCode >= 300) {
+      callback(err || "participants HTTP " + (res && res.statusCode), false);
+      return;
+    }
+    var parts = parseTwentyListRecords("messageParticipants", res.body);
+    finishFromParts(parts, lookupByEmail);
+  });
+}
+
+function enqueueLeadsAtCreateLeadTask(parsed, idOid, env, callback) {
+  var timestamp = getTimestampMillis();
+  var email = normalizeResolverEmail(parsed.bizEmail);
+  var phone = normalizeResolverPhone(parsed.bizPhone);
+  var taskId = idOid + "_" + timestamp + "_crm_twenty_create_lead";
+  var url =
+    API_BASE +
+    "/" +
+    COLLECTION_TASK_QUEUE +
+    "/documents/" +
+    encodeUriComponent(taskId);
+  var payload = {
+    id_oid: idOid,
+    id_event: timestamp + "_leads_at_create_lead",
+    event_name: "generate_lead",
+    job_type: CREATE_LEAD_ADAPTER,
+    status: "pending",
+    created_at: timestamp,
+    environment: env,
+    adapter: CREATE_LEAD_ADAPTER,
+    inbound_channel: "leads_at",
+    src_system: "TWENTY_EMAIL",
+    src_action_source: "leads_at_email_sync",
+    existing_person_id: parsed.personId,
+    person_id: parsed.personId,
+    biz_email: email || null,
+    biz_phone: phone || null,
+    biz_name: buildPersonDisplayName(parsed) || null,
+    biz_product: "web",
+  };
+  sendHttpRequest(
+    url,
+    { method: "PUT", headers: { "Content-Type": "application/json" } },
+    JSON.stringify(payload),
+  )
+    .then(function (res) {
+      logToConsole("LEADS_AT_CREATE: task saved", taskId, res.statusCode);
+      writeLeadsAtEnqueueGuard(parsed.personId, idOid, env, function () {
+        callback(null, taskId);
+      });
+    })
+    .catch(function (err) {
+      callback(err, null);
+    });
+}
+
+function maybeEnqueueLeadsAtCreateLead(parsed, idOid, env, onComplete) {
+  var email = normalizeResolverEmail(parsed.bizEmail);
+  if (email && isInternalOwocniEmail(email)) {
+    logToConsole("LEADS_AT_CREATE: SKIP_INTERNAL", email);
+    onComplete(null);
+    return;
+  }
+  if (!parsed.personId || !idOid) {
+    onComplete(null);
+    return;
+  }
+  personHasLeadsAtIncoming(parsed.personId, email, function (checkErr, hasLeads) {
+    if (checkErr) {
+      logToConsole("LEADS_AT_CREATE: CHECK_FAIL", checkErr);
+      onComplete(null);
+      return;
+    }
+    if (!hasLeads) {
+      logToConsole("LEADS_AT_CREATE: SKIP_NO_LEADS_AT");
+      onComplete(null);
+      return;
+    }
+    readLeadsAtEnqueueGuard(parsed.personId, function (guardErr, guard) {
+      if (guardErr) {
+        logToConsole("LEADS_AT_CREATE: GUARD_READ_FAIL", guardErr);
+        onComplete(null);
+        return;
+      }
+      if (guard && guard.enqueued === true && guard.id_oid === idOid) {
+        logToConsole("LEADS_AT_CREATE: SKIP_ALREADY_ENQUEUED");
+        onComplete(null);
+        return;
+      }
+      enqueueLeadsAtCreateLeadTask(parsed, idOid, env, function (qErr) {
+        if (qErr) {
+          logToConsole("LEADS_AT_CREATE: ENQUEUE_FAIL", qErr);
+        }
+        onComplete(null);
+      });
+    });
+  });
+}
+
 function enqueueIdentityBackfill(idOid, personId, tier, env, email, phone, callback) {
   var timestamp = getTimestampMillis();
   var taskId = personIdentityBackfillTaskKey(personId);
@@ -656,6 +972,7 @@ function fetchTwentyPersonPii(personId, callback) {
         email: emails.primaryEmail || person.email || null,
         phone: phoneRaw || person.phone || null,
         idOid: person.idOid || null,
+        name: person.name || null,
       });
     })
     .catch(function (err) {
@@ -685,7 +1002,12 @@ function processPersonIdentityFromWebhook(parsed, env, onComplete) {
         env,
         function () {
           logToConsole("INBOUND_IDENTITY: SKIP_ALREADY_HAS_IDOID");
-          onComplete(null);
+          maybeEnqueueLeadsAtCreateLead(
+            parsed,
+            parsed.personIdOid,
+            env,
+            onComplete,
+          );
         },
       );
       return;
@@ -758,7 +1080,7 @@ function processPersonIdentityFromWebhook(parsed, env, onComplete) {
                   return;
                 }
                 logToConsole("INBOUND_IDENTITY: RESOLVED", idOid);
-                onComplete(null);
+                maybeEnqueueLeadsAtCreateLead(parsed, idOid, env, onComplete);
               },
             );
           });
@@ -791,6 +1113,9 @@ function processPersonIdentityFromWebhook(parsed, env, onComplete) {
       }
       if (pii.idOid) {
         parsed.personIdOid = pii.idOid;
+      }
+      if (pii.name) {
+        parsed._personRecord = { name: pii.name };
       }
       runResolver();
     });

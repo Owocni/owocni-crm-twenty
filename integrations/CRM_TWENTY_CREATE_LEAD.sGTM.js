@@ -34,7 +34,7 @@ var STATE_PREFIX = "create_lead_id_oid_";
 // Faza B (sandbox): zapis Person+Opp w Twenty. Ustaw false tylko na test kolejki bez API.
 var CREATE_LEAD_WRITE_ENABLED = true;
 // Marker w Storage/audit — zmień przy publish, żeby potwierdzić wersję w CSV
-var CREATE_LEAD_BUILD_ID = "2026-06-29-write-v4-filter-fix";
+var CREATE_LEAD_BUILD_ID = "2026-06-30-leads-at-option-b";
 
 var PENDING_WRITE_TTL_MS = 45000;
 var MAX_TASKS_PER_RUN = 5;
@@ -238,7 +238,49 @@ function splitFullName(full) {
   };
 }
 
+function resolveInboundChannel(taskData) {
+  var channel = makeString(taskData.inbound_channel || "").trim();
+  if (channel) {
+    return channel;
+  }
+  if (makeString(taskData.src_system || "").trim() === "TWENTY_EMAIL") {
+    return "leads_at";
+  }
+  return "";
+}
+
+function resolveSrcSystem(taskData) {
+  if (resolveInboundChannel(taskData) === "leads_at") {
+    return "TWENTY_EMAIL";
+  }
+  return "OWOCNI_SORTOWNIA";
+}
+
+function resolveBizSourceForTask(taskData) {
+  if (resolveSrcSystem(taskData) === "TWENTY_EMAIL") {
+    return "INNE";
+  }
+  return mapBizSource(taskData);
+}
+
 function buildOpportunityName(taskData) {
+  if (resolveSrcSystem(taskData) === "TWENTY_EMAIL") {
+    var subject = makeString(
+      taskData.biz_subject || taskData.inbound_subject || "",
+    ).trim();
+    var mailName = makeString(taskData.biz_name || "").trim();
+    var mailEmail = makeString(taskData.biz_email || "").trim();
+    if (subject) {
+      return subject + " — mail leads@";
+    }
+    if (mailName) {
+      return mailName + " — mail leads@";
+    }
+    if (mailEmail) {
+      return mailEmail + " — mail leads@";
+    }
+    return "Lead mail leads@";
+  }
   var name = makeString(taskData.biz_name || "").trim();
   var product = mapBizProductToTwenty(taskData.biz_product);
   if (name) {
@@ -565,8 +607,8 @@ function createOpportunityRecord(taskData, idOid, personId, twentyCfg, callback)
     name: buildOpportunityName(taskData),
     stage: "NEW",
     idOid: idOid,
-    srcSystem: "OWOCNI_SORTOWNIA",
-    bizSource: mapBizSource(taskData),
+    srcSystem: resolveSrcSystem(taskData),
+    bizSource: resolveBizSourceForTask(taskData),
     bizProduct: mapBizProductToTwenty(taskData.biz_product),
     pointOfContactId: personId,
   };
@@ -593,10 +635,68 @@ function createOpportunityRecord(taskData, idOid, personId, twentyCfg, callback)
   });
 }
 
-function resolveOrCreatePerson(taskData, idOid, twentyCfg, callback) {
-  var email = makeString(taskData.biz_email || "").trim();
+function resolveExistingPersonId(taskData, idOid, twentyCfg, callback) {
+  var existingPersonId = makeString(
+    taskData.existing_person_id || taskData.person_id || "",
+  ).trim();
+  if (!existingPersonId) {
+    callback(null, null);
+    return;
+  }
+  twentyRequest(
+    "GET",
+    "/people/" + encodeUriComponent(existingPersonId),
+    null,
+    twentyCfg,
+    function (err, res) {
+      if (err || !res || res.statusCode < 200 || res.statusCode >= 300) {
+        callback(err || "GET person HTTP " + (res && res.statusCode), null);
+        return;
+      }
+      var body = JSON.parse(res.body || "{}");
+      var person = (body.data && body.data.person) || {};
+      if (!person.id) {
+        callback("existing person not found", null);
+        return;
+      }
+      var existingOid = makeString(person.idOid || "").trim();
+      if (existingOid && existingOid !== idOid) {
+        callback(
+          "Person idOid conflict existing=" + existingOid + " new=" + idOid,
+          null,
+        );
+        return;
+      }
+      if (!existingOid) {
+        patchPersonIdOid(person.id, idOid, twentyCfg, function (patchErr) {
+          if (patchErr) {
+            callback(patchErr, null);
+            return;
+          }
+          logToConsole(ADAPTER_ID, "reuse Person (email sync)", person.id);
+          callback(null, person.id);
+        });
+        return;
+      }
+      logToConsole(ADAPTER_ID, "reuse Person (email sync)", person.id);
+      callback(null, person.id);
+    },
+  );
+}
 
-  findPersonByEmail(email, twentyCfg, function (findErr, existingPerson) {
+function resolveOrCreatePerson(taskData, idOid, twentyCfg, callback) {
+  resolveExistingPersonId(taskData, idOid, twentyCfg, function (existingErr, existingId) {
+    if (existingErr) {
+      callback(existingErr, null);
+      return;
+    }
+    if (existingId) {
+      callback(null, existingId);
+      return;
+    }
+    var email = makeString(taskData.biz_email || "").trim();
+
+    findPersonByEmail(email, twentyCfg, function (findErr, existingPerson) {
     if (findErr) {
       callback(findErr, null);
       return;
@@ -625,6 +725,7 @@ function resolveOrCreatePerson(taskData, idOid, twentyCfg, callback) {
       return;
     }
     createPersonRecord(taskData, idOid, twentyCfg, callback);
+    });
   });
 }
 

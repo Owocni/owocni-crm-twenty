@@ -4,7 +4,7 @@ title: "Formularz → Twenty — adapter crm:twenty_create_lead"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-26
+last_verified: 2026-06-30
 related:
   - ../CRM_TWENTY_CREATE_LEAD.sGTM.js
   - ../SORTOWNIA_V2_POPRAWIONY.js
@@ -16,7 +16,7 @@ related:
 
 **Cel:** po `generate_lead` w Sortowni (nowy Akt) utworzyć **Person + Opportunity** w Twenty sandbox, **równolegle** do BB/julia362 — bez wyłązania legacy.
 
-**Stan repo (2026-06-26):** kod gotowy; **deploy w kontenerze sGTM** + test wymagany (nic jeszcze nie wdrożone).
+**Stan (2026-06-30):** **PASS sandbox** — deploy sGTM, Faza B write, Person+Opp, workflow powiadomień z FILTER Sortownia. Evidence: §9 + `INTEGRATIONS_PARITY.md`.
 
 **Kontener:** `GTM-5ZM8KQ5S` · host `https://uinpcbwf.eug.stape.io`
 
@@ -341,8 +341,11 @@ Slug → enum: `strony`→WEB, `logo`→LOGO, `nazwa`→NAME, `copywriting`→CO
 **Docelowo:** powiadomienie do **Owner** Opportunity (rozdzielanie Gosia / Marta).
 
 Szablon / ID: `integrations/tools/twenty_workflow_lead_notify_owner.json`  
-**Sandbox (MCP):** workflow `lead · formularz · powiadom owner v3` — **ACTIVE**, id `e570b3de-4565-40c7-a776-dfd273b908e8`.  
-Kroki: **Task** → **taskTarget** (link do Opp) → **Email** (z linkiem do rekordu).
+**Sandbox (MCP):** workflow `lead · formularz · powiadom owner v3` — **ACTIVE**, id `e570b3de-4565-40c7-a776-dfd273b908e8`, wersja `aa0f64e2-9c24-45fa-80a3-7d644b9303e7`.  
+Kroki: **FILTER** (`srcSystem=OWOCNI_SORTOWNIA`, `stage=NEW`) → **Task** → **taskTarget** → **Email** (link do Opp).
+
+Plan rozdzielania Gosia/Marta: [LEAD_OWNER_ROUTING_PLAN.md](./LEAD_OWNER_ROUTING_PLAN.md).  
+Test kanału mail `leads@`: [LEADS_AT_INBOUND_TEST.md](./LEADS_AT_INBOUND_TEST.md).
 
 ### 8.1 Workflow w Twenty UI (jeśli tworzysz ręcznie)
 
@@ -395,9 +398,11 @@ Make.com ze strony www **zostaje** jako backup mailowy równolegle.
 
 ## 9. PASS criteria (sandbox)
 
-- [ ] Faza A log-only na prawdziwym submit formularza
-- [ ] Faza B Person+Opp w Twenty z poprawnym `idOid`
-- [ ] Brak duplikatu `generate_lead` z inbound (pending-write)
-- [ ] Workflow powiadomień aktywny (Task lub mail na `dawidnowak@owocni.pl`)
-- [ ] BB nadal tworzy lead równolegle (do cutover)
-- [ ] Evidence w `INTEGRATIONS_PARITY.md`
+- [x] Faza A log-only na prawdziwym submit formularza (2026-06-29)
+- [x] Faza B Person+Opp w Twenty z poprawnym `idOid` (testy v4, strony.owocni.pl, `test120gagafg@fastman.eu`)
+- [x] Brak duplikatu Opp przy powtórnym submit < 90 dni (Sortownia SKIP)
+- [x] Brak duplikatu `generate_lead` z inbound (pending-write — smoke #4)
+- [x] Workflow powiadomień: Task + taskTarget + mail `dawidnowak@owocni.pl` (leads@ nadawca)
+- [x] Workflow FILTER: tylko `srcSystem=OWOCNI_SORTOWNIA` + `stage=NEW` (2026-06-30, wersja `aa0f64e2…`)
+- [x] BB/julia362 nadal tworzy lead równolegle (do cutover E12.4)
+- [x] Evidence w `INTEGRATIONS_PARITY.md` (2026-06-30)
