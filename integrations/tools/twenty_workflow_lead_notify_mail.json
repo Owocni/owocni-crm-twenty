@@ -1,0 +1,36 @@
+{
+  "_comment": "2026-06-30 ACTIVE v10 (ecf9b469). FILTER krok via MCP nie działa — warunek srcSystem=TWENTY_EMAIL ustaw w Twenty UI na triggerze (Record created → Opportunities). Form workflow DEACTIVATED do czasu UI filter.",
+  "workflowId": "43406ab0-4259-45c5-b9fd-2268a7663152",
+  "workflowVersionId": "ecf9b469-b340-40c0-986a-f439ad99ac56",
+  "name": "lead · mail · powiadom owner v1",
+  "trigger": {
+    "type": "DATABASE_EVENT",
+    "eventName": "opportunity.created",
+    "ui_filter_required": [
+      { "field": "srcSystem", "operand": "is", "value": "TWENTY_EMAIL" },
+      { "field": "stage", "operand": "is", "value": "NEW" }
+    ]
+  },
+  "steps": [
+    {
+      "order": 0,
+      "note": "FILTER step omitted — configure on trigger in Twenty UI instead"
+    },
+      "order": 1,
+      "type": "CREATE_RECORD",
+      "objectName": "task",
+      "assignee": "2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d"
+    },
+    {
+      "order": 2,
+      "type": "CREATE_RECORD",
+      "objectName": "taskTarget"
+    },
+    {
+      "order": 3,
+      "type": "SEND_EMAIL",
+      "to_test": "dawidnowak@owocni.pl",
+      "connectedAccountId": "798c0b3b-c990-469a-b444-0e039d65b828"
+    }
+  ]
+}

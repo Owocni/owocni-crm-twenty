@@ -5,7 +5,7 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid (wykonawca techniczny)"
-last_verified: 2026-06-16
+last_verified: 2026-06-30
 recheck_trigger: "zmiana integrations/*.js / zamknięcie ADR #14 / nowy adapter Stape"
 default_trust: D:CORE
 related:
@@ -37,7 +37,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | Sortownia paid / `generate_lead` / oid_init | **TAK** (`SORTOWNIA_V2_POPRAWIONY.js`) | Stape sGTM tag (deploy z tego pliku) | `EVENT_CONTRACT`, `IDENTITY` |
 | Robot / adaptery platform | **TAK** (`GoogleCloudRobot.js`) | GCP Cloud Function | `ARCHITECTURE`, `EVENT_CONTRACT` |
 | Adapter `inbound:twenty_webhook` | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js`) | Stape tag — **deploy sandbox PASS** | `EVENT_CONTRACT` §5.4 |
-| Adapter `crm:twenty_create_lead` | **TAK** (`CRM_TWENTY_CREATE_LEAD.sGTM.js`) | Stape tag + worker | `ARCHITECTURE` §5.3 | **PREP repo** — deploy + test OPEN |
+| Adapter `crm:twenty_create_lead` | **TAK** (`CRM_TWENTY_CREATE_LEAD.sGTM.js`) | Stape tag + worker | `ARCHITECTURE` §5.3 | **PASS sandbox** (2026-06-30) |
 | Adapter `crm:twenty_update_person` | **TAK** (`CRM_TWENTY_UPDATE_PERSON.sGTM.js`) | Stape tag + Scheduler — **deploy sandbox PASS** | `EVENT_CONTRACT` §6.1 |
 | env-guard sandbox/prod | **TAK (prep)** | `shared/envGuard.js` + `ENV_GUARD.sGTM.js` + pole `environment` w task_queue | `ARCHITECTURE` §5.4 |
 | Identity Resolver T1–T5 | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js` inline) | Stape tag `inbound_twenty_webhook` — **deploy sandbox PASS** | `IDENTITY` §5.2 |
@@ -46,7 +46,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ---
 
-## 2. Macierz zgodności (stan 2026-06-16)
+## 2. Macierz zgodności (stan 2026-06-30)
 
 | ID | Wymaganie SSOT | Plik SSOT | Stan kodu | Status | Następny krok |
 |---|---|---|---|---|---|
@@ -60,6 +60,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | P8 | Wskaźniki `by_*` + profil pod `id_oid` | `IDENTITY` §5.8 | multi-key `identity_map` + `twenty_person_{id}` guard | **PASS sandbox*** | Osobne kolekcje `by_*` = backlog ADD-2 |
 | P9 | `time_occurred` epoch ms (FIX-2) | `IMPLEMENTATION_PLAN` §5.7 | Sortownia: mieszane formaty | **OPEN** | Ujednolicić w Sortowni |
 | P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Robot `envGuard` + dual-sheet routing | **PASS sandbox** | S2 + smoke matrix |
+| P11 | Formularz → Twenty Person+Opp (`crm:twenty_create_lead`) | `BUILD_CRM_TWENTY_CREATE_LEAD` | Sortownia enqueue + worker write | **PASS sandbox** | Runbook §9; idempotencja email OK |
 
 ---
 
@@ -89,7 +90,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 - [ ] **P7** `srcSystem`-SKIP — w inbound brak; monitorować przy zmianach (L-1).
 - [x] **P10** Sandbox nie trafia do prod adapterów reklamowych.
 - [x] Eksport/tag Stape dla adapterów Twenty zapisany w repo (`.sGTM.js` 2026-06-15).
-- [ ] **`crm:twenty_create_lead`** — deploy Stape + Faza A log-only + Faza B sandbox (runbook `BUILD_CRM_TWENTY_CREATE_LEAD.md`).
+- [x] **`crm:twenty_create_lead`** — deploy Stape + Faza B sandbox PASS (`BUILD_CRM_TWENTY_CREATE_LEAD.md` §9, 2026-06-30).
 
 ---
 

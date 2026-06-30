@@ -1,53 +1,57 @@
 {
-  "_comment": "Utworzono przez Twenty MCP 2026-06-16. workflowId=5f61ffce-48a7-48b3-bffe-74ce182e3b67 ACTIVE. Zmienne trigger: trigger.properties.after.* (nie trigger.object.*).",
+  "_comment": "Twenty MCP 2026-06-30. workflowId=e570b3de… ACTIVE. Zmienne: trigger.properties.after.*",
   "workflowId": "e570b3de-4565-40c7-a776-dfd273b908e8",
-  "workflowVersionId": "6a33c7b2-992d-4b18-b221-4839a46e658a",
-  "name": "lead · formularz · powiadom owner (test)",
-  "description": "Powiadomienie o nowym leadzie z Sortowni. Test: email na dawidnowak@owocni.pl. Docelowo: owner Opp (Gosia/Marta).",
+  "workflowVersionId": "aa0f64e2-9c24-45fa-80a3-7d644b9303e7",
+  "name": "lead · formularz · powiadom owner v3",
+  "description": "Powiadomienie o nowym leadzie z Sortowni. FILTER: tylko OWOCNI_SORTOWNIA + NEW. Test: dawidnowak@owocni.pl.",
   "email_setup": {
-    "from_connected_account": "leads@owocni.pl (Settings → Accounts, connectedAccountId w workflow)",
-    "to_test": "dawidnowak@owocni.pl — tylko adres odbiorcy, bez podłączania konta",
-    "to_prod": "{{trigger.properties.after.owner…}} po ROUND_ROBIN"
+    "from_connected_account": "leads@owocni.pl (connectedAccountId 798c0b3b-c990-469a-b444-0e039d65b828)",
+    "to_test": "dawidnowak@owocni.pl",
+    "to_prod": "{{owner.userEmail}} po ROUND_ROBIN — patrz LEAD_OWNER_ROUTING_PLAN.md"
   },
   "trigger": {
     "type": "DATABASE_EVENT",
-    "eventName": "opportunity.created",
-    "filters": [
-      { "field": "srcSystem", "operand": "is", "value": "OWOCNI_SORTOWNIA" },
-      { "field": "stage", "operand": "is", "value": "NEW" }
-    ]
+    "eventName": "opportunity.created"
   },
   "steps": [
     {
+      "order": 0,
+      "id": "60d36fe2-3aef-413d-9cdf-41f4b52758f0",
+      "type": "FILTER",
+      "name": "Tylko Sortownia NEW",
+      "filters": [
+        { "field": "srcSystem", "fieldMetadataId": "cafaa84e-b448-43b9-bee3-19c260b8ac5f", "operand": "is", "value": "OWOCNI_SORTOWNIA", "stepOutputKey": "properties.after.srcSystem" },
+        { "field": "stage", "fieldMetadataId": "131b6ca4-c0bd-4b44-8b2e-21de452f667d", "operand": "is", "value": "NEW", "stepOutputKey": "properties.after.stage" }
+      ]
+    },
+    {
       "order": 1,
+      "id": "b2c3d4e5-f6a7-4890-b234-567890abcdef",
       "type": "CREATE_RECORD",
       "objectName": "task",
       "name": "Task in-app",
       "title": "Nowy lead: {{trigger.properties.after.name}}",
-      "bodyV2_markdown": "Produkt: {{trigger.properties.after.bizProduct}}\nŹródło: {{trigger.properties.after.bizSource}}",
-      "status": "TODO",
-      "assignee": "{{trigger.properties.after.owner.id}} (prod) / workspace member (test)"
+      "assignee": "2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d (Mariusz test)"
     },
     {
       "order": 2,
+      "id": "e3f4a5b6-c7d8-4a01-8234-567890abcdef",
       "type": "CREATE_RECORD",
       "objectName": "taskTarget",
       "name": "Powiąż task z Opp",
-      "task": "{{step_task.id}}",
+      "task": "{{b2c3d4e5-f6a7-4890-b234-567890abcdef.id}}",
       "targetOpportunity": "{{trigger.properties.after.id}}"
     },
     {
       "order": 3,
+      "id": "a1b2c3d4-e5f6-4789-a234-567890abcdef",
       "type": "SEND_EMAIL",
       "name": "Email do owner (test Dawid)",
-      "connectedAccountId": "leads@ (workspace connected account)",
+      "connectedAccountId": "798c0b3b-c990-469a-b444-0e039d65b828",
       "recipients_to": "dawidnowak@owocni.pl",
       "subject": "Nowy lead: {{trigger.properties.after.name}}",
-      "body_html": "Treść + <a href=\"https://zany-maroon-panther.twenty.com/object/opportunity/{{trigger.properties.after.id}}\">Otwórz lead w Twenty</a>"
+      "body_html": "Link: https://zany-maroon-panther.twenty.com/object/opportunity/{{trigger.properties.after.id}}"
     }
   ],
-  "future_owner_routing": {
-    "option_recommended": "Dodaj krok 0 (przed emailem): UPDATE_RECORD opportunity.ownerId via PICK_RECORD ROUND_ROBIN między workspaceMember Gosia i Marta",
-    "option_sortownia": "Rozdzielanie w Sortowni (task payload owner_hint) + create_lead ustawia ownerId przy POST — osobny etap"
-  }
+  "future_owner_routing": "LEAD_OWNER_ROUTING_PLAN.md — PICK_RECORD ROUND_ROBIN Gosia/Marta przed Task"
 }
