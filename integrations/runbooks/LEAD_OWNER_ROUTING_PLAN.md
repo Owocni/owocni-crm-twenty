@@ -16,7 +16,7 @@ related:
 
 **Cel:** po utworzeniu Opportunity handlowiec dostaje Task + email, a rekord ma ustawionego **Opportunity owner** (Gosia lub Marta).
 
-**Stan (2026-06-30):** powiadomienia form + mail PASS na sandbox (filtry UI). Rozdzielanie ROUND_ROBIN **nie wdrożone**. R1 — zaproszenia członków zespołu (patrz §4.0).
+**Stan (2026-07-03):** przydzielanie ownerów **wdrożone** w obu workflow (form v7, mail v12). COPYWRITING → Maciej; reszta → losowo Marta/Gosia.
 
 ---
 
@@ -89,13 +89,13 @@ Szczegóły testu: [LEADS_AT_INBOUND_TEST.md](./LEADS_AT_INBOUND_TEST.md).
 
 ### 4.0 Zespół — Workspace Members (R1)
 
-| Osoba | Email | Rola w CRM | ROUND_ROBIN leadów | Stan zaproszenia (sandbox) |
-|-------|-------|------------|--------------------|---------------------------|
-| Mariusz Słowik | `owocni@gmail.com` | dev / test | — | **ACTIVE** `2d65d0e6-…` |
-| Marta Słowik | `marta@owocni.pl` | handlowiec | **tak** | **PENDING** (zaproszenie wysłane) |
-| Gosia Zielińska | `gosia@owocni.pl` | handlowiec | **tak** | do zaproszenia |
-| Maciej Wysocki | `maciej@owocni.pl` | zespół | na razie nie | do zaproszenia |
-| Maja Srugała | `maja@owocni.pl` | zespół | na razie nie | do zaproszenia |
+| Osoba | Email | `workspaceMemberId` | Przydział leadów |
+|-------|-------|---------------------|------------------|
+| Mariusz Słowik | `owocni@gmail.com` | `2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d` | dev / test (poza routingiem) |
+| Marta Słowik | `marta@owocni.pl` | `4704e0c0-8d77-4640-ad1e-1875294294df` | **losowo** (z Gosią) |
+| Gosia Zielińska | `gosia@owocni.pl` | `ccac533d-a34b-4cfc-a036-9e75ee3f8910` | **losowo** (z Martą) |
+| Maciej Wysocki | `maciej@owocni.pl` | `7fddba1d-e443-47d4-97b7-a3a829efd8c1` | **zawsze** gdy `bizProduct=COPYWRITING` |
+| Maja Srugała | `maja@owocni.pl` | `a42a37b4-b73a-4c86-aadf-7fa6bdb8ac13` | brak (dostęp CRM) |
 
 **Zaproszenia:** Settings → Members → **+ Invite** → email → rola **Member** (nie Admin).
 
@@ -109,25 +109,21 @@ Po **Accept** każdej osoby: uzupełnij kolumnę `workspaceMemberId` w tabeli (f
 
 | # | Zadanie | Bloker |
 |---|---------|--------|
-| **R1** | Zaprosić zespół (tabela §4.0); poczekać na Accept | UI Twenty |
-| **R2** | Zapisać `workspaceMemberId` Gosia + Marta (ROUND_ROBIN) | R1 |
-| **R3** | W workflow formularzowym: nowy krok **0** `PICK_RECORD` ROUND_ROBIN między ID z R2 | R2 |
-| **R4** | Krok **UPDATE_RECORD** Opportunity → `ownerId` = wynik PICK | R3 |
-| **R5** | Email **To:** `{{trigger.properties.after.owner.userEmail}}` (po UPDATE użyć step output) | R4 |
-| **R6** | Task **assignee** = ten sam owner | R4 |
-| **R7** | Test: 4+ formularze → ~50/50 Gosia/Marta, brak maila na Dawida | R6 |
+| **R1** | Zespół w Twenty (tabela §4.0) | ☑ 2026-07-03 |
+| **R2** | `workspaceMemberId` zapisane | ☑ |
+| **R3** | Workflow: gałąź COPYWRITING → Maciej; gałąź inne → `PICK_RECORD` RANDOM Marta/Gosia | ☑ v7 + v12 |
+| **R4** | `UPDATE_RECORD` → `ownerId` | ☑ |
+| **R5** | Email → owner (`maciej@` / `{{pick.userEmail}}`) | ☑ |
+| **R6** | Task assignee = owner | ☑ |
+| **R7** | Test: COPYWRITING→Maciej, LOGO→Marta/Gosia (sandbox 2026-07-03) | ☑ częściowy |
 | **R8** | Cutover: osobny workflow lub FILTER dla kanału mail (`srcSystem` / brak idOid) — E12.3b | Email Sync PASS |
 
 ### Kolejność kroków workflow (docelowo)
 
 ```
-Trigger opportunity.created
-  → FILTER (Sortownia NEW)          ← już wdrożone 2026-06-30
-  → PICK_RECORD (Gosia|Marta RR)
-  → UPDATE_RECORD (ownerId)
-  → CREATE task
-  → CREATE taskTarget
-  → SEND_EMAIL (to owner)
+Trigger opportunity.created (filtr na triggerze: srcSystem + NEW)
+  ├─ FILTER bizProduct=COPYWRITING → UPDATE owner Maciej → task → email maciej@
+  └─ FILTER bizProduct≠COPYWRITING → PICK RANDOM Marta/Gosia → UPDATE → task → email owner
 ```
 
 ---
@@ -175,9 +171,9 @@ Do cutoveru: **B1a + szkolenie**, potem **B1b** gdy Email Sync stabilny.
 | Zasób | ID |
 |-------|-----|
 | Workflow formularz | `e570b3de-4565-40c7-a776-dfd273b908e8` |
-| Workflow formularz (aktywna wersja UI filter) | `b73869ce-d3e3-49d5-bb82-20ba95c9ac5f` |
+| Workflow formularz (aktywna v7 routing) | `a67b7266-4994-4efe-90bb-ae8d65dcd6f2` |
 | Workflow mail | `43406ab0-4259-45c5-b9fd-2268a7663152` |
-| Workflow mail (aktywna wersja UI filter) | `6585690f-8320-40fd-bd8d-65625924a5ff` |
+| Workflow mail (aktywna v12 routing) | `968a5b34-be35-4efc-a78c-f5a0afaaac8c` |
 | leads@ connected account | `798c0b3b-c990-469a-b444-0e039d65b828` |
 | Mariusz (test assignee) | `2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d` |
 | Rola Member (zaproszenia) | `c2d403d6-cb17-422b-9f15-79827a8d4834` |
