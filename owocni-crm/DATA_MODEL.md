@@ -68,7 +68,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 ## 4. CANONICAL DEFINITIONS
 
 - **FROZEN** = zamrożone: **typ + API name + (dla SELECT) wartości mapujące się na eventy/logikę**; zmiana wymaga ADR. **UI label NIE jest zamrożony domyślnie** (zmiana wyświetlanej nazwy jest tania, nie rusza API ani typu) — wyjątek: label niosący znaczenie operacyjne uzgodnione z handlowcami (np. „Odrzuć leada") wymaga uzgodnienia zespołowego, ale to nie ADR techniczny.
-- **Wartości stage (enum `stage`):** `NEW / CONTACTED / QUALIFIED / PROPOSAL / WON / LOST`.
+- **Wartości stage (enum `stage`):** `NEW / CONTACTED / QUALIFIED / PROPOSAL / CONTRACT_SENT / PAYING / WON / LOST` (etykiety UI od 2026-07-06 — patrz runbook kanban).
 - **Pole→event** vs **pole CRM-only:** pole→event zasila payload SSOT lub wyzwala business event (semantyka → `EVENT_CONTRACT.md`); pole CRM-only służy wyłącznie analizie wewnętrznej w Twenty i NIGDY nie idzie do payloadu.
 
 ---
@@ -80,7 +80,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | Field (API) | Type | Unique | Owner | Empty | Used by | Freeze? | Description (Twenty UI) |
 |---|---|---|---|---|---|---|---|
 | `idOid` | TEXT | YES | Sortownia (mint) | null przy manual | Wszystkie SSOT eventy; upsert ingress | **FROZEN** | Cross-system id_oid; mint Sortownia przy generate_lead |
-| `stage` | SELECT | NO | Handlowiec | default NEW | qualify_lead, purchase | **FROZEN** | NEW / CONTACTED / QUALIFIED / PROPOSAL / WON / LOST |
+| `stage` | SELECT | NO | Handlowiec | default NEW | qualify_lead (→QUALIFIED), purchase (→WON) | **FROZEN** | Etykiety UI: Nowy / Rozeznanie / Przyjęty SQL / Wysłano ofertę / Wysłano umowę / Wpłaca / Wygrany / Przegrany. Wartości API: NEW, CONTACTED, QUALIFIED, PROPOSAL, CONTRACT_SENT, PAYING, WON, LOST |
 | `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | **UI label:** „Odrzuć leada". **Opis:** Informuje kanały reklamowe, że takich leadów nie szukamy. To nie to samo co stage LOST („przegrany deal"). API name: `campaignRejected`. |
 | `rejectionReason` | SELECT | NO | Handlowiec | null | rejected_lead (raport) | **FROZEN** | Powód odrzucenia kampanii — raportowo. Sprzężony z `campaignRejected`. |
 | `bizProduct` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | **FROZEN** | Produkt (web, logo, …) |
@@ -90,6 +90,20 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `lastOrchestrationEventAt` | DATETIME | NO | Workflow/adapter | null | audit | OPEN | Ostatni event do Sortowni. Jedyny ślad audytowy emisji po stronie Twenty (brak audit logu na Pro). |
 | `lastOrchestrationEventId` | TEXT | NO | Workflow/adapter | null | audit | OPEN | id_event ostatniego eventu. Ślad audytowy emisji (j.w.). |
 | `bitrixDealId` | TEXT | NO | Handlowiec (manual SOP) | null | handoff Bitrix24 | OPEN | Deal księgowy po WON — MVP manual. Most handoff WON→Bitrix24 (CONSTITUTION Prawo 9). |
+
+#### Kanban card (OPEN — od 2026-07-06)
+
+| Field (API) | Type | Owner | Used by | Freeze? | Description |
+|---|---|---|---|---|---|
+| `lastContactAt` | DATETIME | Adapter / workflow | Kanban, follow-up | OPEN | Ostatni kontakt (lead lub odpowiedź klienta) |
+| `bizLastContactLabel` | TEXT | Adapter / workflow | Kanban kafelek | OPEN | `Godzin: N` / `Dni: N` |
+| `bizProjectType` | SELECT | Formularz | Nazwa leada, raport | OPEN | NEW / REDESIGN |
+| `bizIntent` | SELECT | Formularz | Nazwa leada, raport | OPEN | CENNIK / EKSPERT |
+| `bizValueMin` / `bizValueMax` | CURRENCY | Formularz | Widełki, raport | OPEN | Dolna/górna widełka PLN |
+| `bizValueDisplay` | TEXT | Adapter / handlowiec | Kanban kafelek | OPEN | Tekst wartości na kafelku |
+| `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę |
+
+Specyfikacja widoku → `integrations/runbooks/KANBAN_CARD_SPEC.md`.
 
 #### Stage LOST
 - **Nie emituje** eventu SSOT do platform (semantyka → `EVENT_CONTRACT.md`).

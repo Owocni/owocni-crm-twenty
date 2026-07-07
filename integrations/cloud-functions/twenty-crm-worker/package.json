@@ -1,0 +1,16 @@
+{
+  "name": "twenty-crm-worker",
+  "version": "1.0.0",
+  "description": "GCP worker: crm:twenty_create_lead + crm:twenty_update_person (migrated from sGTM)",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "functions-framework --target=processTwentyCrmWorker --port=8080",
+    "deploy": "bash deploy.sh"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0"
+  }
+}

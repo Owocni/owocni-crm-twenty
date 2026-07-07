@@ -624,6 +624,33 @@ async function appendToGoogleSheets(tasks) {
   return totalRows;
 }
 
+function extractPhoneFromBizMessage(raw) {
+  const s = String(raw || "");
+  if (!s) return "";
+  const lower = s.toLowerCase();
+  const marker = "telefon:";
+  let idx = lower.indexOf(marker);
+  let fragment = "";
+  if (idx >= 0) {
+    fragment = s.substring(idx + marker.length, idx + marker.length + 32);
+  } else {
+    idx = lower.indexOf("telefon");
+    if (idx < 0) return "";
+    fragment = s.substring(idx, idx + 40);
+  }
+  const digits = fragment.replace(/\D/g, "");
+  if (digits.length === 9) return "+48" + digits;
+  if (digits.length === 11 && digits.startsWith("48")) return "+" + digits;
+  if (digits.length >= 10 && digits.length <= 15) return "+" + digits;
+  return "";
+}
+
+function resolveMonitoringPhone(taskData) {
+  const direct = String(taskData.biz_phone || "").trim();
+  if (direct) return direct;
+  return extractPhoneFromBizMessage(taskData.biz_message || "");
+}
+
 async function appendToGoogleSheetsForId(tasks, spreadsheetId) {
   // Authorize with Service Account
   const auth = new google.auth.GoogleAuth({
@@ -644,7 +671,7 @@ async function appendToGoogleSheetsForId(tasks, spreadsheetId) {
       taskData.owner || "", // (E) - ISTNIEJĄCE
       taskData.order_id || "", // (F) - ISTNIEJĄCE
       taskData.biz_email || "", // (G) - ISTNIEJĄCE
-      taskData.biz_phone || "", // (H) - ISTNIEJĄCE
+      resolveMonitoringPhone(taskData), // (H) - ISTNIEJĄCE
       taskData.biz_pricing_key || taskData.biz_product || "", // (I) - ISTNIEJĄCE
       taskData.biz_value || "", // (J) - ISTNIEJĄCE
       taskData.status || "", // (K) - ISTNIEJĄCE

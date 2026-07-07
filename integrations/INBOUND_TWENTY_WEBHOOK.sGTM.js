@@ -25,11 +25,14 @@ var COLLECTION_IDENTITY_MAP = "identity_map";
 var COLLECTION_PERSON_MINT_PREFIX = "twenty_person_";
 var COLLECTION_TWENTY_STATE_PREFIX = "twenty_opp_";
 var COLLECTION_PENDING_WRITE_PREFIX = "pending_write_twenty_";
+var PENDING_WRITE_TTL_MS = 45000;
 
 var REASON_SKIP_DUPLICATE_DELIVERY = "SKIP_DUPLICATE_DELIVERY";
 var REASON_SKIP_ECHO_OWN_WRITE = "SKIP_ECHO_OWN_WRITE";
 var REASON_SKIP_COLD_START_BASELINE = "SKIP_COLD_START_BASELINE";
 var REASON_SKIP_NO_RELEVANT_TRANSITION = "SKIP_NO_RELEVANT_TRANSITION";
+var REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM =
+  "SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM";
 var REASON_SKIP_DUPLICATE_BUSINESS_EVENT = "SKIP_DUPLICATE_BUSINESS_EVENT";
 var REASON_SKIP_UNSUPPORTED_OBJECT = "SKIP_UNSUPPORTED_OBJECT";
 var REASON_EMITTED = "EMITTED";
@@ -202,12 +205,14 @@ function parseTwentyPayload(eventData) {
     personId: isPerson ? record.id || "" : record.pointOfContactId || "",
     pointOfContactId: record.pointOfContactId || null,
     stage: record.stage || null,
+    bizSqlConfirmed: record.bizSqlConfirmed === true,
+    bizLastNonSqlStage: record.bizLastNonSqlStage || null,
     campaignRejected: record.campaignRejected === true,
-    personIdOid: record.idOid || null,
-    opportunityIdOid: isPerson ? null : record.idOid || null,
+    personIdOid: sanitizeWebhookField(record.idOid),
+    opportunityIdOid: isPerson ? null : sanitizeWebhookField(record.idOid),
     eventNamePlatform: eventPlatform,
     bizValueWon: record.bizValueWon || null,
-    bizProduct: record.bizProduct || null,
+    bizProduct: sanitizeWebhookField(record.bizProduct) || null,
     bizEmail:
       emails.primaryEmail ||
       (record.person && record.person.email) ||
@@ -286,8 +291,20 @@ function writeJsonStore(documentKey, obj, callback) {
     });
 }
 
+function sanitizeWebhookField(value) {
+  var s = makeString(value).trim();
+  if (!s || s === "undefined" || s === "null") {
+    return null;
+  }
+  return s;
+}
+
 function resolveIdentityOid(parsed) {
-  return parsed.opportunityIdOid || parsed.personIdOid || null;
+  return (
+    sanitizeWebhookField(parsed.opportunityIdOid) ||
+    sanitizeWebhookField(parsed.personIdOid) ||
+    null
+  );
 }
 
 function detectBusinessEvent(parsed, prev) {
@@ -295,10 +312,25 @@ function detectBusinessEvent(parsed, prev) {
     return { emit: "generate_lead", manual: true };
   }
   if (prev.last_stage == null && prev.last_campaignRejected == null) {
+    if (parsed.stage === "QUALIFIED") {
+      if (parsed.bizSqlConfirmed === true) {
+        return { emit: "qualify_lead" };
+      }
+      return { skip: REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM };
+    }
+    if (parsed.stage === "WON") {
+      return { emit: "purchase" };
+    }
+    if (parsed.campaignRejected === true) {
+      return { emit: "rejected_lead" };
+    }
     return { skip: REASON_SKIP_COLD_START_BASELINE };
   }
   if (prev.last_stage !== parsed.stage && parsed.stage === "QUALIFIED") {
-    return { emit: "qualify_lead" };
+    if (parsed.bizSqlConfirmed === true) {
+      return { emit: "qualify_lead" };
+    }
+    return { skip: REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM };
   }
   if (prev.last_stage !== parsed.stage && parsed.stage === "WON") {
     return { emit: "purchase" };
@@ -630,6 +662,70 @@ function twentyGet(path, callback) {
     });
 }
 
+function setPendingWrite(opportunityId, callback) {
+  var docKey = storeKeyPendingWrite(opportunityId);
+  var doc = {
+    active: true,
+    adapter: "inbound:sql_guard_revert",
+    expires_at: getTimestampMillis() + PENDING_WRITE_TTL_MS,
+  };
+  writeJsonStore(docKey, doc, callback || function () {});
+}
+
+function twentyPatchOpportunity(opportunityId, bodyObj, callback) {
+  sendHttpRequest(
+    TWENTY_REST_URL + "/opportunities/" + encodeUriComponent(opportunityId),
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + TWENTY_API_KEY,
+        "Content-Type": "application/json",
+      },
+    },
+    JSON.stringify(bodyObj || {}),
+  )
+    .then(function (res) {
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        callback(null, res);
+        return;
+      }
+      callback("HTTP " + res.statusCode + " " + (res.body || ""), null);
+    })
+    .catch(function (err) {
+      callback(err, null);
+    });
+}
+
+function revertUnconfirmedSqlStage(parsed, prev, onComplete) {
+  var revertStage =
+    (prev && prev.last_stage) ||
+    parsed.bizLastNonSqlStage ||
+    "NEW";
+  if (!parsed.opportunityId || !revertStage || revertStage === "QUALIFIED") {
+    onComplete(null);
+    return;
+  }
+  setPendingWrite(parsed.opportunityId, function () {
+    twentyPatchOpportunity(
+      parsed.opportunityId,
+      { stage: revertStage },
+      function (err) {
+        if (err) {
+          logToConsole("INBOUND_TWENTY: REVERT_UNCONFIRMED_SQL_FAIL", err);
+        } else {
+          logToConsole(
+            "INBOUND_TWENTY: REVERT_UNCONFIRMED_SQL",
+            parsed.opportunityId,
+            "->",
+            revertStage,
+          );
+        }
+        onComplete(err);
+      },
+    );
+  });
+}
+
 function isInternalOwocniEmail(email) {
   var normalized = makeString(email).toLowerCase();
   if (!normalized) {
@@ -942,6 +1038,115 @@ function enqueueIdentityBackfill(idOid, personId, tier, env, email, phone, callb
     });
 }
 
+function enrichFromIdentityMap(idOid, enriched, callback) {
+  if (!idOid) {
+    callback(null, enriched);
+    return;
+  }
+  var url =
+    API_BASE +
+    "/" +
+    COLLECTION_IDENTITY_MAP +
+    "/documents/" +
+    encodeUriComponent(idOid);
+  sendHttpRequest(url, { method: "GET" }, "")
+    .then(function (res) {
+      if (res.statusCode === 200) {
+        var doc = unwrapStoreDocument(JSON.parse(res.body || "{}"));
+        var fields = [
+          "biz_email",
+          "biz_phone",
+          "biz_name",
+          "biz_product",
+          "order_id",
+          "attr_gclid",
+          "ctx_page_url",
+          "ga_client_id",
+          "client_id",
+          "consent_analytics_storage",
+          "consent_ad_storage",
+          "ctx_ip_address",
+          "ctx_time_on_page_ms",
+          "biz_message",
+          "owner",
+        ];
+        var i = 0;
+        while (i < fields.length) {
+          var fieldName = fields[i];
+          var current = enriched[fieldName];
+          if (
+            (current === null || current === undefined || current === "") &&
+            doc[fieldName]
+          ) {
+            enriched[fieldName] = doc[fieldName];
+          }
+          i = i + 1;
+        }
+      }
+      callback(null, enriched);
+    })
+    .catch(function () {
+      callback(null, enriched);
+    });
+}
+
+function enrichInboundTaskFromTwenty(taskPayload, parsed, callback) {
+  var enriched = JSON.parse(JSON.stringify(taskPayload));
+  if (!parsed.opportunityId) {
+    enrichFromIdentityMap(enriched.id_oid, enriched, callback);
+    return;
+  }
+  function finishEnrich(result) {
+    enrichFromIdentityMap(result.id_oid || parsed.opportunityIdOid, result, callback);
+  }
+  twentyGet(
+    "/opportunities/" + encodeUriComponent(parsed.opportunityId),
+    function (oppErr, oppRes) {
+      if (!oppErr && oppRes && oppRes.statusCode >= 200 && oppRes.statusCode < 300) {
+        var oppBody = JSON.parse(oppRes.body || "{}");
+        var opp = (oppBody.data && oppBody.data.opportunity) || {};
+        if (!enriched.id_oid && opp.idOid) {
+          enriched.id_oid = sanitizeWebhookField(opp.idOid);
+        }
+        if (!enriched.biz_email && opp.bizCardEmail) {
+          enriched.biz_email = opp.bizCardEmail;
+        }
+        if (!enriched.biz_phone && opp.bizCardPhone) {
+          enriched.biz_phone = opp.bizCardPhone;
+        }
+        if (!enriched.biz_name && opp.name) {
+          enriched.biz_name = opp.name;
+        }
+        if (!enriched.biz_product && opp.bizProduct) {
+          enriched.biz_product = opp.bizProduct;
+        }
+        if (!parsed.pointOfContactId && opp.pointOfContactId) {
+          parsed.pointOfContactId = opp.pointOfContactId;
+        }
+      }
+      var personId = parsed.pointOfContactId;
+      if ((!enriched.biz_email || !enriched.biz_phone) && personId) {
+        fetchTwentyPersonPii(personId, function (pErr, pii) {
+          if (pii) {
+            if (!enriched.biz_email && pii.email) {
+              enriched.biz_email = pii.email;
+            }
+            if (!enriched.biz_phone && pii.phone) {
+              enriched.biz_phone = pii.phone;
+            }
+            if (!enriched.biz_name && pii.name) {
+              enriched.biz_name = pii.name;
+            }
+          }
+          finishEnrich(enriched);
+        });
+        return;
+      }
+      finishEnrich(enriched);
+    },
+  );
+}
+
 function fetchTwentyPersonPii(personId, callback) {
   var url =
     TWENTY_REST_URL + "/people/" + encodeUriComponent(personId);
@@ -1169,9 +1374,18 @@ function processTwentyWebhook(webhookBody, onComplete) {
 
   readJsonStore(pendingKey, function (pErr, pendingDoc) {
     if (pendingDoc && pendingDoc.active === true) {
-      logToConsole("INBOUND_TWENTY:", REASON_SKIP_ECHO_OWN_WRITE);
-      onComplete(null);
-      return;
+      var pendingExpiresAt = pendingDoc.expires_at;
+      var pendingStillActive =
+        !pendingExpiresAt || pendingExpiresAt > getTimestampMillis();
+      if (pendingStillActive) {
+        logToConsole("INBOUND_TWENTY:", REASON_SKIP_ECHO_OWN_WRITE);
+        onComplete(null);
+        return;
+      }
+      logToConsole(
+        "INBOUND_TWENTY: pending_write expired — continue",
+        pendingKey,
+      );
     }
 
     readJsonStore(stateKey, function (err, prev) {
@@ -1185,6 +1399,27 @@ function processTwentyWebhook(webhookBody, onComplete) {
       }
 
       var decision = detectBusinessEvent(parsed, prev);
+
+      if (decision.skip === REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM) {
+        logToConsole("INBOUND_TWENTY:", decision.skip);
+        revertUnconfirmedSqlStage(parsed, prev, function () {
+          writeJsonStore(
+            stateKey,
+            {
+              last_stage:
+                (prev && prev.last_stage) ||
+                parsed.bizLastNonSqlStage ||
+                parsed.stage,
+              last_campaignRejected: parsed.campaignRejected,
+              last_delivery_fingerprint: fp,
+              updated_at: getTimestampMillis(),
+            },
+            function () {},
+          );
+          onComplete(null);
+        });
+        return;
+      }
 
       writeJsonStore(
         stateKey,
@@ -1234,14 +1469,16 @@ function processTwentyWebhook(webhookBody, onComplete) {
         }
       }
 
-      enqueueTaskQueue(taskPayload, function (qErr, taskId) {
-        if (qErr) {
-          logToConsole("INBOUND_TWENTY: task_queue ERROR", qErr);
-          onComplete(qErr);
-          return;
-        }
-        logToConsole("INBOUND_TWENTY:", REASON_EMITTED, eventName, "taskId=", taskId);
-        onComplete(null);
+      enrichInboundTaskFromTwenty(taskPayload, parsed, function (enrichErr, finalPayload) {
+        enqueueTaskQueue(finalPayload, function (qErr, taskId) {
+          if (qErr) {
+            logToConsole("INBOUND_TWENTY: task_queue ERROR", qErr);
+            onComplete(qErr);
+            return;
+          }
+          logToConsole("INBOUND_TWENTY:", REASON_EMITTED, eventName, "taskId=", taskId);
+          onComplete(null);
+        });
       });
     });
   });

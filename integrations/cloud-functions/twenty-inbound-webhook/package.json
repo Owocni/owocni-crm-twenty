@@ -1,0 +1,16 @@
+{
+  "name": "twenty-inbound-webhook",
+  "version": "1.0.0",
+  "description": "GCP handler: Twenty CRM inbound webhook (migrated from sGTM)",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "functions-framework --target=processTwentyInboundWebhook --port=8080",
+    "deploy": "bash deploy.sh"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0"
+  }
+}
