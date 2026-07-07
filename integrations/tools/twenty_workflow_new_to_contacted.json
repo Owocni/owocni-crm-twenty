@@ -1,0 +1,29 @@
+{
+  "_comment": "2026-07-07. Automatyzacja NEW→CONTACTED wdrożona w GCP twenty-crm-worker (advanceNewToContacted). Ten plik = spec referencyjny dla ewentualnej migracji na natywny workflow Twenty UI.",
+  "workflowId": "030773a7-8e41-4625-b98c-46fd76a9cc67",
+  "workflowVersionId": "04c0ac83-57b7-491e-a35d-a5d10299d9cd",
+  "name": "lead · mail OUTGOING · NEW→Rozeznanie v1",
+  "status": "DRAFT — trigger OUTGOING ustawiony; kroki w UI lub GCP worker",
+  "gcpImplementation": {
+    "worker": "integrations/cloud-functions/twenty-crm-worker/workers/advanceNewToContacted.js",
+    "build": "2026-07-07-gcp-v5",
+    "scheduler": "istniejący GCP Scheduler → twenty-crm-worker-sandbox",
+    "env": {
+      "ADVANCE_NEW_TO_CONTACTED_ENABLED": "true",
+      "OUTGOING_CONTACT_LOOKBACK_MINUTES": "45"
+    }
+  },
+  "trigger": {
+    "type": "DATABASE_EVENT",
+    "eventName": "messageChannelMessageAssociation.created",
+    "filter": "direction = OUTGOING"
+  },
+  "steps_ui_reference": [
+    "FIND message by trigger.messageId",
+    "FILTER subject DOES NOT CONTAIN 'Nowy lead:'",
+    "FIND messageParticipant TO + personId not null",
+    "FILTER handle DOES NOT CONTAIN '@owocni.pl'",
+    "FIND opportunity pointOfContact + stage NEW (newest)",
+    "UPDATE opportunity stage = CONTACTED"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "workflowVersionId": "21800e92-82f3-430f-9fe3-280495011239",
+  "step": {
+    "id": "822cd38f-0d7e-4a57-8277-c79b1c6be6bc",
+    "name": "Ocen drag SQL",
+    "type": "CODE",
+    "valid": true,
+    "nextStepIds": ["74ff3686-4097-44c0-b5bc-5b43103df15a"],
+    "settings": {
+      "input": {
+        "logicFunctionId": "a3fae903-2084-4219-bdea-b663041dfd8b",
+        "logicFunctionInput": {
+          "afterStage": "{{trigger.properties.after.stage}}",
+          "bizLastNonSqlStage": "{{trigger.properties.after.bizLastNonSqlStage}}",
+          "bizSqlConfirmed": "{{trigger.properties.after.bizSqlConfirmed}}",
+          "opportunityId": "{{trigger.properties.after.id}}"
+        }
+      },
+      "outputSchema": {
+        "opportunityId": { "type": "string" },
+        "revertStage": { "type": "string" }
+      },
+      "expectedOutputSchema": {
+        "opportunityId": "",
+        "revertStage": "CONTACTED"
+      },
+      "errorHandlingOptions": {
+        "retryOnFailure": { "value": false },
+        "continueOnFailure": { "value": false }
+      }
+    }
+  }
+}

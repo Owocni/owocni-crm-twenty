@@ -30,7 +30,10 @@ REQUIRED_OPPORTUNITY = {
     "lastOrchestrationEventAt", "lastOrchestrationEventId", "bitrixDealId",
 }
 REQUIRED_PERSON = {"idOid"}
-STAGE_VALUES = {"NEW", "CONTACTED", "QUALIFIED", "PROPOSAL", "WON", "LOST"}
+STAGE_VALUES = {
+    "NEW", "CONTACTED", "QUALIFIED", "PROPOSAL",
+    "CONTRACT_SENT", "PAYING", "WON", "LOST",
+}
 
 
 def load_dotenv_local() -> None:

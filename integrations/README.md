@@ -23,9 +23,9 @@
 | `SORTOWNIA_V2_POPRAWIONY.js` | Paid: oid_init, generate_lead, identity_map, task_queue | Stape sGTM |
 | `GoogleCloudRobot.js` | task_queue → platformy + env-guard | GCP Node |
 | `INBOUND_TWENTY_WEBHOOK.js` | Twenty webhook → business event → task_queue | Stape HTTP tag |
-| `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Sortownia → Twenty (create lead) | Stape tag + worker |
-| `CRM_TWENTY_CREATE_LEAD.stub.js` | Deprecated pointer | — |
-| `CRM_TWENTY_UPDATE_PERSON.stub.js` | Backfill idOid + pending-write | Stape tag |
+| `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Sortownia → Twenty (create lead) | Stape tag + worker → **migracja:** `cloud-functions/twenty-crm-worker/` |
+| `CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js` | Stub po migracji GCP (~435 B) | Stape |
+| `cloud-functions/twenty-crm-worker/` | create_lead + update_person worker | GCP Cloud Function |
 | `ENV_GUARD.sGTM.js` | Fragment env sandbox/prod (copy-paste) | Stape |
 | `shared/envGuard.js` | env-guard dla Robota | Node |
 | `shared/ssotPaths.js` | Stałe adapterów/kolekcji | Node (+ ref) |

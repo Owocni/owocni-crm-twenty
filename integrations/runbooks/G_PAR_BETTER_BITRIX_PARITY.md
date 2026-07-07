@@ -26,11 +26,14 @@ related:
 
 | Better-Bitrix | Twenty | Uwaga |
 |---------------|--------|--------|
-| `stage_name: unsorted` | `NEW` | Nowy lead |
-| `inquiry` | `CONTACTED` | Pierwszy kontakt |
-| `negotiations` | `PROPOSAL` | Oferta / negocjacje |
-| `lead_won` | `WON` + event `purchase` | Stage ≠ event_name |
-| `lead_lost` | `LOST` | **Brak** eventu platform |
+| `stage_name: unsorted` | `NEW` (Nowy) | Nowy lead |
+| `inquiry` | `CONTACTED` (Rozeznanie) | Po pierwszej odpowiedzi do klienta |
+| — | `QUALIFIED` (Przyjęty SQL) | `qualify_lead` |
+| `negotiations` | `PROPOSAL` (Wysłano ofertę) | Oferta |
+| — | `CONTRACT_SENT` (Wysłano umowę) | Nowy etap 2026-07 |
+| — | `PAYING` (Wpłaca) | Nowy etap 2026-07 |
+| `lead_won` | `WON` (Wygrany) + event `purchase` | Stage ≠ event_name |
+| `lead_lost` | `LOST` (Przegrany) | **Brak** eventu platform |
 | Odrzucenie kampanii | `campaignRejected=true` → `rejected_lead` | ≠ LOST |
 | `assigned_user_id` | Opportunity **Owner** | |
 | `email_template` | Twenty Message templates | E12.3 |
@@ -47,7 +50,7 @@ Dla każdego wiersza: **data**, **tester**, **ID rekordu**, **PASS/FAIL**, **lin
 
 | ID | Scenariusz | BB (oczekiwane) | Twenty (test) | PASS |
 |----|------------|-----------------|---------------|------|
-| PAR-1.1 | Widok lejka | Kolumny stage widoczne | Pipeline Opportunities: NEW…LOST | ☐ |
+| PAR-1.1 | Widok lejka | Kolumny stage widoczne | Pipeline Opportunities: NEW…LOST; kafelek wg `KANBAN_CARD_SPEC.md` | ☐ |
 | PAR-1.2 | Przeciągnięcie karty | Zmiana `stage_name` | Drag stage w UI | ☐ |
 | PAR-1.3 | Filtr „moje leady” | Po `assigned_user` | Filtr po Owner | ☐ |
 | PAR-1.4 | Nowy lead ręczny | Utworzenie karty | Opp + Person, `idOid` null → backfill (smoke #4) | ☐ |

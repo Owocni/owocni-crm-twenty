@@ -1,3 +1,4 @@
+// SORTOWNIA V2 — Stape (slim: bez komentarzy/DEBUG, limit 200KB). Pełna wersja w git history.
 const sendHttpRequest = require("sendHttpRequest");
 const JSON = require("JSON");
 const generateRandom = require("generateRandom");
@@ -9,13 +10,10 @@ const encodeUriComponent = require("encodeUriComponent");
 const setCookie = require("setCookie");
 const getCookieValues = require("getCookieValues");
 
-// Opcjonalne pola szablonu tagu (sGTM → Tag Configuration):
-// @field runtimeEnvironment string — {{runtime_environment}} (Constant, np. sandbox)
-// @field clientIp string — {{IP Address}} lub zmienna Client IP Stape
-
 function extractEventParamValue(v) {
   if (!v || typeof v !== "object") return undefined;
-  if (v.stringValue !== undefined && v.stringValue !== null) return v.stringValue;
+  if (v.stringValue !== undefined && v.stringValue !== null)
+    return v.stringValue;
   if (v.string_value !== undefined && v.string_value !== null)
     return v.string_value;
   if (v.intValue !== undefined && v.intValue !== null)
@@ -29,11 +27,9 @@ function extractEventParamValue(v) {
   return undefined;
 }
 
-// ✅ Odczyt wartości z event_params (GA4 w sGTM często trzyma parametry w event_params, nie na top level)
 function getEventParamFromEventParams(key) {
   var eventParams = getEventData("event_params");
   if (!eventParams) return undefined;
-  // Format GA4: tablica [{key: "x", value: {stringValue: "..."}}] lub obiekt {x: "..."}
   if (typeof eventParams === "object" && eventParams[key] !== undefined) {
     var direct = eventParams[key];
     if (direct && typeof direct === "object") {
@@ -59,7 +55,6 @@ function normalizeEmailForEnv(email) {
   return makeString(email).toLowerCase().trim();
 }
 
-// Domeny testowe → environment=sandbox (formularz www bez zmian w Web GTM)
 function isSandboxTestEmail(email) {
   var normalized = normalizeEmailForEnv(email);
   if (!normalized) return false;
@@ -111,11 +106,6 @@ function resolveCtxIpAddress(fallbackFromProfile) {
   return ip || null;
 }
 
-// ✅ Odczyt wartości z user_data (GA4 Enhanced Conversions / Customer Match):
-// Web GTM tag GA4 zwykle przekazuje email/phone/etc. w obiekcie user_data,
-// nie na top-level event_data. Bez tego Sortownia nie widzi email/phone z formularza
-// przy generate_lead → profil w identity_map jest zapisany tylko pod id_oid + ga_client_id,
-// więc późniejszy CRM event (qualify_lead/purchase) lookuje po email/phone i dostaje 404.
 function getUserDataParam(key) {
   var ud = getEventData("user_data");
   if (!ud || typeof ud !== "object") return undefined;
@@ -124,11 +114,8 @@ function getUserDataParam(key) {
   return v;
 }
 
-// ✅ POPRAWKA: Helper dla test environment - fallback do data.eventData i event_params
 function getEventDataWithFallback(key) {
   var result = getEventData(key);
-  logToConsole("SORTOWNIA DEBUG getEventDataWithFallback:", key, "=", result);
-  // Jeśli getEventData zwraca null/undefined i jesteśmy w test environment (data.eventData istnieje)
   if (
     (result === null || result === undefined) &&
     data &&
@@ -136,37 +123,26 @@ function getEventDataWithFallback(key) {
     typeof data.eventData === "object"
   ) {
     result = data.eventData[key];
-    logToConsole(
-      "SORTOWNIA DEBUG getEventDataWithFallback fallback:",
-      key,
-      "=",
-      result,
-    );
   }
-  // ✅ Fallback: GA4 w sGTM często przekazuje parametry w event_params (nie na top level)
   if (result === null || result === undefined) {
     result = getEventParamFromEventParams(key);
     if (result !== undefined) {
-      logToConsole(
-        "SORTOWNIA DEBUG getEventDataWithFallback event_params:",
-        key,
-        "=",
-        result,
-      );
     }
   }
   return result;
 }
 
+function getEventDataNonempty(key) {
+  var result = getEventDataWithFallback(key);
+  if (result === null || result === undefined) return null;
+  if (typeof result === "string" && !makeString(result).trim()) return null;
+  return result;
+}
+
 data.gtmOnSuccess();
 
-// ============================================
-// HELPER: Parsuj parametry URL z ctx_page_url
-// ============================================
 function parseUrlParams(url) {
   if (!url) return {};
-  // ✅ POPRAWKA: Usunięto try/catch (nie jest obsługiwane w sGTM)
-  // Ręczne parsowanie query string (bez new URL() - może nie być dostępne w sGTM)
   const params = {};
   const queryIndex = url.indexOf("?");
   if (queryIndex === -1) return params;
@@ -179,8 +155,6 @@ function parseUrlParams(url) {
     const pair = pairs[i];
     const equalIndex = pair.indexOf("=");
     if (equalIndex !== -1) {
-      // ✅ POPRAWKA: Nie używamy decodeURIComponent (nie jest dostępne w sGTM)
-      // Parametry URL są zwykle już zdekodowane w query string
       const key = pair.substring(0, equalIndex);
       const value = pair.substring(equalIndex + 1);
       params[key] = value;
@@ -191,43 +165,19 @@ function parseUrlParams(url) {
   return params;
 }
 
-// ============================================
-// FUNKCJE NORMALIZACJI PII
-// ============================================
-
-// ✅ POPRAWKA: charAt() może nie być dostępne w sGTM, użyj substring()
 function getCharAt(s, idx) {
   if (!s || typeof s !== "string" || idx < 0 || idx >= s.length) return "";
   return s.substring(idx, idx + 1);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// normalizeEmail(raw) — v2.3.1
-// ═══════════════════════════════════════════════════════════════
-// Input:  string (surowy email) lub null/undefined
-// Output: string (czysty email) lub undefined
-//
-// Strategia: zachowujemy kropki i +suffix (normalizacja pod Metę)
-// Google sam sobie matchuje warianty, Meta wymaga dokładnego matcha
-// ═══════════════════════════════════════════════════════════════
-
 function normalizeEmail(raw) {
   if (raw === null || raw === undefined) return undefined;
 
-  // ✅ POPRAWKA: String() nie jest dostępne w sGTM, użyj konkatenacji
   var str = typeof raw === "string" ? raw : raw + "";
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: str =",
-    str,
-    "typeof =",
-    typeof str,
-  );
   if (typeof str !== "string") {
-    logToConsole("SORTOWNIA DEBUG normalizeEmail: str is not string");
     return undefined;
   }
 
-  // ✅ POPRAWKA: trim() nie jest dostępne w sGTM, użyj własnej implementacji
   function trimString(s) {
     if (!s || typeof s !== "string") return "";
     var start = 0;
@@ -257,21 +207,12 @@ function normalizeEmail(raw) {
   }
 
   var trimmed = trimString(str);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: trimmed =",
-    trimmed,
-    "length =",
-    trimmed.length,
-  );
   if (!trimmed || trimmed.length === 0) {
-    logToConsole("SORTOWNIA DEBUG normalizeEmail: trimmed is empty");
     return undefined;
   }
 
-  // Helper: wyciągnij pierwszy email z listy
   var extractFirstEmail = function (s) {
     if (!s || typeof s !== "string") return "";
-    // ✅ POPRAWKA: W sGTM stringi mają indexOf i substring, nie sprawdzamy typeof
     var separators = [";", ",", "|"];
     var result = s;
     var i = 0;
@@ -289,10 +230,8 @@ function normalizeEmail(raw) {
     return trimString(result);
   };
 
-  // Helper: unwrap mailto:, <...>, "Name <email>"
   var unwrapEmail = function (s) {
     if (!s || typeof s !== "string") return "";
-    // ✅ POPRAWKA: W sGTM stringi mają substring i indexOf, nie sprawdzamy typeof
     var e = trimString(s);
     if (e.length < 7) return e;
     if (e.substring(0, 7).toLowerCase() === "mailto:") {
@@ -306,7 +245,6 @@ function normalizeEmail(raw) {
     return trimString(e);
   };
 
-  // Helper: usuń trailing punctuation
   var stripTrailingPunctuation = function (s) {
     if (!s || typeof s !== "string") return s;
     var punctuation = ".,;:!?)]}>\"'`";
@@ -331,7 +269,6 @@ function normalizeEmail(raw) {
     return result;
   };
 
-  // Helper: usuń whitespace i control characters
   var stripAllWhitespace = function (s) {
     if (s === null || s === undefined) return "";
     if (typeof s !== "string") {
@@ -357,7 +294,6 @@ function normalizeEmail(raw) {
     return result;
   };
 
-  // Helper: zamień przecinki na kropki (mobile keyboard fix)
   var fixCommas = function (s) {
     if (!s || typeof s !== "string") return "";
     var result = "";
@@ -370,7 +306,6 @@ function normalizeEmail(raw) {
     return result;
   };
 
-  // Helper: kompresuj podwójne kropki
   var compressDoubleDots = function (s) {
     if (!s || typeof s !== "string") return "";
     var result = s;
@@ -394,7 +329,6 @@ function normalizeEmail(raw) {
     return result;
   };
 
-  // Helper: walidacja domeny
   var validateDomain = function (domain) {
     if (domain.length < 4) return false;
 
@@ -428,7 +362,6 @@ function normalizeEmail(raw) {
     var tld = domain.substring(lastDotIndex + 1);
     if (tld.length < 2) return false;
 
-    // TLD: a-z, 0-9, - (dla punycode xn--...)
     var j = 0;
     while (j < tld.length) {
       var tc = getCharAt(tld, j);
@@ -443,113 +376,55 @@ function normalizeEmail(raw) {
     return true;
   };
 
-  // ─── PIPELINE NORMALIZACJI ───
-
   var email = extractFirstEmail(trimmed);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: po extractFirstEmail =",
-    email,
-    "length =",
-    email ? email.length : "N/A",
-  );
   if (!email || typeof email !== "string" || email.length === 0) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: extractFirstEmail returned invalid",
-    );
     return undefined;
   }
 
   email = unwrapEmail(email);
-  logToConsole("SORTOWNIA DEBUG normalizeEmail: po unwrapEmail =", email);
   if (!email || typeof email !== "string") {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: unwrapEmail returned invalid",
-    );
     return undefined;
   }
 
   email = email.toLowerCase();
-  logToConsole("SORTOWNIA DEBUG normalizeEmail: po toLowerCase =", email);
   if (typeof email !== "string") {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: toLowerCase returned invalid",
-    );
     return undefined;
   }
 
   email = stripTrailingPunctuation(email);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: po stripTrailingPunctuation =",
-    email,
-  );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after stripTrailingPunctuation",
-    );
     return undefined;
   }
 
   email = stripAllWhitespace(email);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: po stripAllWhitespace =",
-    email,
-  );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after stripAllWhitespace",
-    );
     return undefined;
   }
 
   email = fixCommas(email);
-  logToConsole("SORTOWNIA DEBUG normalizeEmail: po fixCommas =", email);
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
-    logToConsole("SORTOWNIA DEBUG normalizeEmail: email empty after fixCommas");
     return undefined;
   }
 
   email = compressDoubleDots(email);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: po compressDoubleDots =",
-    email,
-  );
   if (typeof email !== "string") return undefined;
   if (email.length === 0) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email empty after compressDoubleDots",
-    );
     return undefined;
   }
 
-  // Walidacja długości
   if (email.length < 6 || email.length > 254) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: email length invalid =",
-      email.length,
-    );
     return undefined;
   }
 
-  // Walidacja struktury
   var atIndex = email.indexOf("@");
   if (atIndex === -1) return undefined;
   if (email.indexOf("@", atIndex + 1) !== -1) return undefined;
 
   var localPart = email.substring(0, atIndex);
   var domain = email.substring(atIndex + 1);
-  logToConsole(
-    "SORTOWNIA DEBUG normalizeEmail: przed Gmail rules, localPart =",
-    localPart,
-    "domain =",
-    domain,
-  );
-
-  // ───────────────────────────────────────────────────────────────
-  // GMAIL RULES (KANONICZNE) — v2.4.0
-  // ───────────────────────────────────────────────────────────────
   if (domain === "gmail.com" || domain === "googlemail.com") {
     domain = "gmail.com";
 
@@ -566,37 +441,21 @@ function normalizeEmail(raw) {
       g = g + 1;
     }
     localPart = lp2;
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: po Gmail rules, localPart =",
-      localPart,
-    );
-
     if (localPart.length === 0) {
-      logToConsole(
-        "SORTOWNIA DEBUG normalizeEmail: localPart.length === 0 po Gmail rules",
-      );
       return undefined;
     }
   }
 
-  // Walidacja local part (JUŻ PO Gmail rules)
   if (localPart.length === 0 || localPart.length > 64) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: localPart.length invalid =",
-      localPart.length,
-    );
     return undefined;
   }
   if (getCharAt(localPart, 0) === ".") {
-    logToConsole("SORTOWNIA DEBUG normalizeEmail: localPart starts with dot");
     return undefined;
   }
   if (getCharAt(localPart, localPart.length - 1) === ".") {
-    logToConsole("SORTOWNIA DEBUG normalizeEmail: localPart ends with dot");
     return undefined;
   }
 
-  // Local part musi mieć co najmniej jeden alfanumeryczny znak
   var hasAlphaNum = false;
   var k = 0;
   while (k < localPart.length && !hasAlphaNum) {
@@ -607,44 +466,70 @@ function normalizeEmail(raw) {
     k = k + 1;
   }
   if (!hasAlphaNum) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: hasAlphaNum = false, localPart =",
-      localPart,
-    );
     return undefined;
   }
 
   var domainValid = validateDomain(domain);
   if (!domainValid) {
-    logToConsole(
-      "SORTOWNIA DEBUG normalizeEmail: validateDomain(",
-      domain,
-      ") = false",
-    );
     return undefined;
   }
 
   var finalEmail = localPart + "@" + domain;
-  logToConsole("SORTOWNIA DEBUG normalizeEmail: finalEmail =", finalEmail);
   return finalEmail;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// normalizePhone(raw) — v2.3.1
-// ═══════════════════════════════════════════════════════════════
-// Input:  string lub number (surowy telefon) lub null/undefined
-// Output: string w formacie E.164 (+48123456789) lub undefined
-//
-// Warstwy:
-// 1. + lub 00 prefix → zaufaj i użyj
-// 2. Polski (9 cyfr, 10 z 0, zaczyna od 48)
-// 3. 10-15 cyfr bez wiodącego 0 → +digits (ratunek)
-// ═══════════════════════════════════════════════════════════════
+function decodeLoosePercentEncoding(s) {
+  var out = makeString(s);
+  out = out.split("%253A").join(":");
+  out = out.split("%253a").join(":");
+  out = out.split("%3A").join(":");
+  out = out.split("%3a").join(":");
+  out = out.split("%2520").join(" ");
+  out = out.split("%20").join(" ");
+  out = out.split("<br>").join("\n");
+  out = out.split("<BR>").join("\n");
+  out = out.split("<br/>").join("\n");
+  out = out.split("<BR/>").join("\n");
+  return out;
+}
+
+function extractDigitsFromFragment(fragment) {
+  var digits = "";
+  var i = 0;
+  while (i < fragment.length) {
+    var c = getCharAt(fragment, i);
+    if (c >= "0" && c <= "9") {
+      digits = digits + c;
+    }
+    i = i + 1;
+  }
+  if (digits.length < 7 || digits.length > 15) {
+    return undefined;
+  }
+  return digits;
+}
+
+function extractPhoneFromBizMessage(raw) {
+  var s = decodeLoosePercentEncoding(raw);
+  if (!s) {
+    return undefined;
+  }
+  var lower = s.toLowerCase();
+  var marker = "telefon:";
+  var idx = lower.indexOf(marker);
+  if (idx < 0) {
+    idx = lower.indexOf("telefon");
+    if (idx < 0) {
+      return undefined;
+    }
+    return extractDigitsFromFragment(s.substring(idx));
+  }
+  return extractDigitsFromFragment(s.substring(idx + marker.length));
+}
 
 function normalizePhone(raw) {
   if (raw === null || raw === undefined) return undefined;
 
-  // ✅ POPRAWKA: trim() nie jest dostępne w sGTM, użyj własnej implementacji
   function trimString(s) {
     if (!s || typeof s !== "string") return "";
     var start = 0;
@@ -675,21 +560,13 @@ function normalizePhone(raw) {
 
   var DEFAULT_COUNTRY_CODE = "48";
 
-  // Konwersja number → string
   var str;
   if (typeof raw === "string") {
     str = trimString(raw);
   } else if (typeof raw === "number") {
-    // ✅ POPRAWKA: isFinite(), Infinity, Math nie są dostępne w sGTM
-    // Sprawdź czy to nie jest NaN (raw !== raw)
-    // Sprawdź podstawowe warunki (dodatnia, całkowita, w bezpiecznym zakresie)
-    // Sprawdź czy jest całkowita: raw % 1 === 0 (reszta z dzielenia przez 1)
     if (raw !== raw || raw <= 0 || raw % 1 !== 0) return undefined;
-    // Sprawdź czy nie jest za duża (wychwyci też Infinity, jeśli by było)
     if (raw > 9007199254740991) return undefined;
-    // ✅ POPRAWKA: toString() może nie być dostępne w sGTM, użyj konkatenacji
     str = raw + "";
-    // Sprawdź czy nie ma notacji wykładniczej (e/E) - indexOf jest dostępne dla stringów
     if (str.indexOf("e") !== -1 || str.indexOf("E") !== -1) return undefined;
   } else {
     return undefined;
@@ -697,7 +574,6 @@ function normalizePhone(raw) {
 
   if (str.length === 0) return undefined;
 
-  // Helper: usuń rozszerzenie (wew., ext., x, #)
   var stripExtension = function (ph) {
     var p = ph.toLowerCase();
     var markers = ["wew.", "wew ", "ext.", "ext ", " x ", " x", "#"];
@@ -712,7 +588,6 @@ function normalizePhone(raw) {
     return ph;
   };
 
-  // Helper: wyciągnij pierwszy numer z listy
   var extractFirstPhone = function (s) {
     var separators = ["/", ";", "|"];
     var result = s;
@@ -727,8 +602,6 @@ function normalizePhone(raw) {
     return trimString(result);
   };
 
-  // ─── PREPROCESSING ───
-
   var phone = extractFirstPhone(str);
   phone = stripExtension(phone);
 
@@ -738,7 +611,6 @@ function normalizePhone(raw) {
     getCharAt(phone, 0) === "0" &&
     getCharAt(phone, 1) === "0";
 
-  // Wyciągnij tylko cyfry
   var digits = "";
   var i = 0;
   while (i < phone.length) {
@@ -751,16 +623,12 @@ function normalizePhone(raw) {
 
   if (digits.length === 0) return undefined;
 
-  // ─── WARSTWY NORMALIZACJI ───
-
-  // WARSTWA 1a: + prefix (Trust the Plus)
   if (hadPlusPrefix) {
     if (digits.length >= 7 && digits.length <= 15) {
       return "+" + digits;
     }
   }
 
-  // WARSTWA 1b: 00 prefix
   if (hadDoubleZeroPrefix) {
     var digitsWithout00 = digits.substring(2);
     if (digitsWithout00.length >= 7 && digitsWithout00.length <= 15) {
@@ -768,17 +636,14 @@ function normalizePhone(raw) {
     }
   }
 
-  // WARSTWA 2a: 9 cyfr = polski
   if (digits.length === 9) {
     return "+" + DEFAULT_COUNTRY_CODE + digits;
   }
 
-  // WARSTWA 2b: 10 cyfr z 0 = stary polski format
   if (digits.length === 10 && getCharAt(digits, 0) === "0") {
     return "+" + DEFAULT_COUNTRY_CODE + digits.substring(1);
   }
 
-  // WARSTWA 2c: Zaczyna od 48 (polski bez +)
   if (
     digits.substring(0, 2) === "48" &&
     digits.length >= 10 &&
@@ -787,7 +652,6 @@ function normalizePhone(raw) {
     return "+" + digits;
   }
 
-  // WARSTWA 3: Ratunek (10-15 cyfr, nie zaczyna od 0)
   if (
     digits.length >= 10 &&
     digits.length <= 15 &&
@@ -796,11 +660,9 @@ function normalizePhone(raw) {
     return "+" + digits;
   }
 
-  // WARSTWA 4: nie udało się znormalizować
   return undefined;
 }
 
-// SSOT event names (owocni-crm/EVENT_CONTRACT.md §5.2) — legacy aliasy na wejściu
 function normalizeSsoEventName(name) {
   if (!name) return name;
   if (name === "lead_won" || name === "closed_won") return "purchase";
@@ -808,7 +670,6 @@ function normalizeSsoEventName(name) {
   return name;
 }
 
-// KROK 0: Sprawdź typ eventu
 const eventName = normalizeSsoEventName(
   getEventDataWithFallback("event_name") ||
     getEventDataWithFallback("event") ||
@@ -834,17 +695,11 @@ function generateULID() {
   return result;
 }
 
-// ============================================
-// HELPER: Odczyt cookie _oid
-// ============================================
 function getFirstCookie(name) {
-  // ✅ W trybie "run code" cookie może być niedostępne (to normalne)
-  // W Preview Mode / Production cookie będzie dostępne
   const vals = getCookieValues(name);
   return vals && vals.length ? vals[0] : null;
 }
 
-// Wyciąga GA4 client_id z cookie _ga (GA1.1.1234567890.1234567890 -> 1234567890.1234567890)
 function extractGaClientIdFromGaCookie() {
   const gaRaw = getFirstCookie("_ga");
   if (!gaRaw) return null;
@@ -857,9 +712,6 @@ function extractGaClientIdFromGaCookie() {
   return null;
 }
 
-// ============================================
-// OBSŁUGA OID_INIT (zdarzenie techniczne)
-// ============================================
 if (eventName === "oid_init") {
   logToConsole("=== OID_INIT START ===");
 
@@ -880,7 +732,6 @@ if (eventName === "oid_init") {
     getEventDataWithFallback("page_referrer") ||
     getEventDataWithFallback("referrer");
 
-  // ✅ POPRAWKA: Parsuj parametry URL z ctx_page_url jako fallback
   const urlParams = parseUrlParams(ctxPageUrl);
   const attrGclid =
     getEventDataWithFallback("attr_gclid") ||
@@ -959,7 +810,6 @@ if (eventName === "oid_init") {
         updated_at: timestamp,
       };
 
-      // Zachowaj istniejące dane (tylko jeśli są)
       if (existingData.biz_email)
         updatedData.biz_email = existingData.biz_email;
       if (existingData.biz_phone)
@@ -983,8 +833,6 @@ if (eventName === "oid_init") {
         .then(function () {
           logToConsole("OID_INIT: ✅ Zapisano - gclid zachowany!");
 
-          // Ustaw cookie _oid server-side (zgodnie z SSOT)
-          // Cookie _oid: HttpOnly, Secure, Path=/, Max-Age=90 dni
           setCookie("_oid", idOid, {
             "max-age": 7776000, // 90 dni w sekundach (90 * 24 * 60 * 60)
             path: "/",
@@ -1028,8 +876,6 @@ if (eventName === "oid_init") {
       ).then(function () {
         logToConsole("OID_INIT: ✅ Fallback - nowy profil");
 
-        // Ustaw cookie _oid server-side (zgodnie z SSOT)
-        // Cookie _oid: HttpOnly, Secure, Path=/, Max-Age=90 dni
         setCookie("_oid", fallbackIdOid, {
           "max-age": 7776000, // 90 dni w sekundach (90 * 24 * 60 * 60)
           path: "/",
@@ -1049,9 +895,6 @@ if (eventName === "oid_init") {
   return; // oid_init kończy się tutaj!
 }
 
-// ============================================
-// HELPER: GET profilu po kluczu
-// ============================================
 function getProfileByKey(key, cbOk, cbFail) {
   const encoded = encodeUriComponent(key);
   const url = API_BASE + "/identity_map/documents/" + encoded;
@@ -1069,45 +912,97 @@ function getProfileByKey(key, cbOk, cbFail) {
     });
 }
 
-// ============================================
-// OBSŁUGA GENERATE_LEAD / QUALIFY_LEAD
-// ============================================
 logToConsole("=== SORTOWNIA + AKT START ===");
 
-// ═══════════════════════════════════════════════════════════════
-// ODCZYT I NORMALIZACJA PII (jedno miejsce)
-// ═══════════════════════════════════════════════════════════════
-// ✅ Email/phone czytane z 3 źródeł (kolejność priorytetów):
-// 1) top-level event_data (biz_email/biz_phone — własna konwencja SSOT)
-// 2) top-level event_data (email/phone — alias)
-// 3) user_data.* (GA4 standard Enhanced Conversions / Customer Match — to tu Web GTM
-//    tag GA4 przekazuje email/phone z formularza przy generate_lead).
-// UWAGA: NIE używamy sha256_email_address / sha256_phone_number — zhashowana
-// wartość nie nadaje się jako klucz indeksu w identity_map.
 const rawEmail =
   getEventDataWithFallback("biz_email") ||
   getEventDataWithFallback("email") ||
   getUserDataParam("email") ||
   getUserDataParam("email_address");
+var earlyBizMessage =
+  getEventDataWithFallback("biz_message") ||
+  getEventDataWithFallback("message") ||
+  null;
+function pickPhoneFromAnswers(obj) {
+  if (!obj || typeof obj !== "object") {
+    return null;
+  }
+  var keys = ["phone", "tel", "telefon", "phone_number", "mobile", "numer_telefonu"];
+  var i = 0;
+  while (i < keys.length) {
+    var v = obj[keys[i]];
+    if (v !== null && v !== undefined && makeString(v).trim()) {
+      return makeString(v).trim();
+    }
+    i = i + 1;
+  }
+  return null;
+}
+
+function parseAnswersContactObject(raw) {
+  if (!raw) {
+    return null;
+  }
+  if (typeof raw === "object") {
+    return raw;
+  }
+  var s = makeString(raw).trim();
+  if (s.length < 2) {
+    return null;
+  }
+  if (s.charAt(0) === '"') {
+    s = JSON.parse(s);
+  }
+  if (typeof s === "string" && s.charAt(0) === "{") {
+    var parsed = JSON.parse(s);
+    if (parsed && typeof parsed === "object") {
+      return parsed;
+    }
+  }
+  if (typeof s === "object" && s) {
+    return s;
+  }
+  return null;
+}
+
+var answersForContact =
+  getEventDataWithFallback("answers") ||
+  getEventDataWithFallback("biz_form_answers") ||
+  null;
+var answersContactObj = parseAnswersContactObject(answersForContact);
+var phoneFromAnswers = pickPhoneFromAnswers(answersContactObj);
 const rawPhone =
-  getEventDataWithFallback("biz_phone") ||
-  getEventDataWithFallback("phone") ||
+  getEventDataNonempty("biz_phone") ||
+  getEventDataNonempty("phone") ||
+  getEventDataNonempty("telefon") ||
+  getEventDataNonempty("tel") ||
+  getEventDataNonempty("phone_number") ||
   getUserDataParam("phone_number") ||
-  getUserDataParam("phone");
+  getUserDataParam("phone") ||
+  phoneFromAnswers ||
+  extractPhoneFromBizMessage(earlyBizMessage);
 
 logToConsole("SORTOWNIA: rawEmail (przed normalizeEmail) =", rawEmail);
 logToConsole("SORTOWNIA: rawPhone (przed normalizePhone) =", rawPhone);
 
 const email = normalizeEmail(rawEmail);
 logToConsole("SORTOWNIA: email (po normalizeEmail) =", email);
-const phone = normalizePhone(rawPhone);
+var phone = normalizePhone(rawPhone);
 logToConsole("SORTOWNIA: phone (po normalizePhone) =", phone);
+if (phone && !getEventDataWithFallback("biz_phone") && earlyBizMessage) {
+  logToConsole(
+    "SORTOWNIA: phone wyciągnięty z biz_message (brak ep.biz_phone w evencie)",
+    phone,
+  );
+}
 
-// ═══════════════════════════════════════════════════════════════
-// OD TEGO MIEJSCA: używasz TYLKO email i phone (już znormalizowane)
-// ═══════════════════════════════════════════════════════════════
 const name =
-  getEventDataWithFallback("biz_name") || getEventDataWithFallback("name");
+  getEventDataWithFallback("biz_name") ||
+  getEventDataWithFallback("name") ||
+  getUserDataParam("first_name") ||
+  (answersForContact && typeof answersForContact === "object"
+    ? answersForContact.name
+    : null);
 const gaClientId =
   getEventDataWithFallback("ga_client_id") ||
   extractGaClientIdFromGaCookie() ||
@@ -1117,7 +1012,6 @@ const rawBizProduct =
   getEventDataWithFallback("biz_product") ||
   getEventDataWithFallback("form_type");
 const rawBizPricingKey = getEventDataWithFallback("biz_pricing_key");
-// Fallback dla eventów SQL/WON: gdy nie ma biz_product, spróbuj wyciągnąć go z pricing_key (lead_/sql_/rejected_*)
 function pricingKeyToProduct(pricingKey) {
   if (!pricingKey) return null;
   if (pricingKey.indexOf("lead_") === 0) return pricingKey.slice(5);
@@ -1127,7 +1021,6 @@ function pricingKeyToProduct(pricingKey) {
   return pricingKey;
 }
 
-// Mapowanie slugów CRM / formularza na nazwy usług w arkuszu i cenniku
 function normalizeBizProductSlug(product) {
   if (!product) return null;
   var s = makeString(product).toLowerCase().trim();
@@ -1136,7 +1029,6 @@ function normalizeBizProductSlug(product) {
   return s;
 }
 
-// Gdy formularz wysyła biz_product=kontakt (strona /kontakt), spróbuj wywnioskować usługę z URL
 function inferBizProductFromUrl(url) {
   if (!url) return null;
   var u = makeString(url).toLowerCase();
@@ -1163,7 +1055,6 @@ const bizValue = getEventDataWithFallback("biz_value"); // Rzeczywista wartość
 const ctxPageUrl =
   getEventDataWithFallback("ctx_page_url") ||
   getEventDataWithFallback("page_location");
-// ✅ Strona wejścia (z gclid) – fallback gdy użytkownik przeszedł na /kontakt bez parametrów
 const ctxLandingPageUrl =
   getEventDataWithFallback("ctx_landing_page_url") || ctxPageUrl;
 if (!bizProduct || rawBizProduct === "kontakt" || rawBizProduct === "main") {
@@ -1177,26 +1068,59 @@ const bizPricingKey = rawBizPricingKey || bizProduct; // Klucz cennika (np. sql_
 const ctxUserAgent =
   getEventDataWithFallback("ctx_user_agent") ||
   getEventDataWithFallback("user_agent");
-  var ctxIpAddress = resolveCtxIpAddress(null);
-  const ctxReferrer =
+var ctxIpAddress = resolveCtxIpAddress(null);
+const ctxReferrer =
   getEventDataWithFallback("ctx_referrer") ||
   getEventDataWithFallback("page_referrer") ||
   getEventDataWithFallback("referrer");
 const srcSystem = getEventDataWithFallback("src_system") || "web";
 const timeOccurredIso = getEventDataWithFallback("time_occurred_iso_utc");
-// ✅ Czas na stronie (ms) i treść wiadomości — do arkusza (jak w mailu)
 var ctxTimeOnPageMs =
   getEventDataWithFallback("ctx_time_on_page_ms") ||
   getEventDataWithFallback("time_on_page_ms") ||
   getEventDataWithFallback("time_on_page") ||
   null;
 var bizMessage =
-  getEventDataWithFallback("biz_message") ||
-  getEventDataWithFallback("message") ||
-  getEventDataWithFallback("description") ||
+  earlyBizMessage || getEventDataWithFallback("description") || null;
+
+var rawFormAnswers =
+  getEventDataWithFallback("answers") ||
+  getEventDataWithFallback("biz_form_answers") ||
+  null;
+var bizFormAnswers = null;
+if (rawFormAnswers) {
+  if (typeof rawFormAnswers === "object") {
+    bizFormAnswers = JSON.stringify(rawFormAnswers);
+  } else {
+    bizFormAnswers = makeString(rawFormAnswers);
+  }
+}
+var bizFormProduct =
+  getEventDataWithFallback("product") ||
+  getEventDataWithFallback("biz_form_product") ||
   null;
 
-// ✅ POPRAWKA: Parsuj parametry URL z ctx_page_url i ctx_landing_page_url (strona wejścia z gclid)
+if (!phone) {
+  var phoneFromFormAnswers = pickPhoneFromAnswers(
+    parseAnswersContactObject(rawFormAnswers),
+  );
+  if (!phoneFromFormAnswers && bizFormAnswers) {
+    phoneFromFormAnswers = pickPhoneFromAnswers(
+      parseAnswersContactObject(bizFormAnswers),
+    );
+  }
+  if (!phoneFromFormAnswers && bizMessage) {
+    phoneFromFormAnswers = extractPhoneFromBizMessage(bizMessage);
+  }
+  if (phoneFromFormAnswers) {
+    phone = normalizePhone(phoneFromFormAnswers);
+    logToConsole(
+      "SORTOWNIA: phone fallback z answers/biz_form_answers/message =",
+      phone,
+    );
+  }
+}
+
 const urlParams = parseUrlParams(ctxPageUrl);
 const landingUrlParams = parseUrlParams(ctxLandingPageUrl);
 const attrGclid =
@@ -1215,13 +1139,11 @@ const attrWbraid =
   urlParams.wbraid ||
   landingUrlParams.wbraid ||
   "";
-// attr_fbc może być w cookie _fbc lub w URL jako fbclid
 const attrFbc =
   getEventDataWithFallback("attr_fbc") ||
   urlParams.fbclid ||
   landingUrlParams.fbclid ||
   "";
-// utm_source z URL lub Event Data (fallback gdy brak gclid/fbc)
 const attrUtmSource = (
   getEventDataWithFallback("attr_utm_source") ||
   urlParams.utm_source ||
@@ -1242,13 +1164,6 @@ logToConsole(
   attrUtmSource || "(brak)",
 );
 
-// ═══════════════════════════════════════════════════════════════
-// HELPER: Oblicz platformę (owner) z BIEŻĄCEGO zdarzenia
-// Używane: przy nowym Akcie ORAZ przy SKIP (dla taska = "last click")
-// Fallback: utm_source z URL gdy brak click-id (np. parametry zgubione przy submit)
-// Kolejność jak SSOT2: twardy click Google (gclid / gbraid / wbraid) PRZED fbc — inaczej
-// merge profilu (stary attr_fbc + świeży gclid z Google Ads) błędnie dawał platform:meta_ads.
-// ═══════════════════════════════════════════════════════════════
 function computeOwnerFromCurrentEvent(
   gclid,
   fbc,
@@ -1280,17 +1195,9 @@ logToConsole("SORTOWNIA: ga_client_id =", gaClientId);
 
 const timestamp = makeString(getTimestampMillis());
 
-// ═══════════════════════════════════════════════════════════════
-// ODCZYT COOKIE _OID (KROK 1)
-// ═══════════════════════════════════════════════════════════════
 const oidCookie = getFirstCookie("_oid");
 logToConsole("SORTOWNIA: _oid cookie =", oidCookie);
 
-// ═══════════════════════════════════════════════════════════════
-// KROK 2: WATERFALL RESOLVE (_oid → email → phone → ga_client_id)
-// ═══════════════════════════════════════════════════════════════
-
-// Zbuduj listę kluczy resolve (kolejność ma znaczenie!)
 const resolveKeys = [];
 if (oidCookie) resolveKeys.push(oidCookie);
 if (email) resolveKeys.push(email);
@@ -1304,10 +1211,8 @@ if (resolveKeys.length === 0) {
   return;
 }
 
-// Funkcja do sekwencyjnego resolve po kluczach
 function resolveProfile(keys, idx) {
   if (idx >= keys.length) {
-    // Nic nie znaleziono - nowy profil
     logToConsole("SORTOWNIA: Wszystkie klucze 404 - nowy profil");
     processNewProfile();
     return;
@@ -1323,10 +1228,6 @@ function resolveProfile(keys, idx) {
   getProfileByKey(
     key,
     function (res) {
-      // ✅ REGUŁA: ga_client_id może wskazać profil TYLKO jeśli nie ma _oid/email/phone w evencie.
-      // Jeśli ga_client_id wskazał profil, ale w evencie jest email/phone, to te klucze są "nowe"
-      // i muszą być dodane do multi-key write. Od tej pory ga_client_id jest tylko indeksem
-      // do tego samego profilu (nie może wskazać innego profilu).
       var resolveKeyType = "unknown";
       if (key === oidCookie) resolveKeyType = "_oid";
       else if (key === email) resolveKeyType = "email";
@@ -1342,44 +1243,20 @@ function resolveProfile(keys, idx) {
       processExistingProfile(res);
     },
     function () {
-      // Nie znaleziono - próbuj następny klucz
       resolveProfile(keys, idx + 1);
     },
   );
 }
 
-// Start resolve od pierwszego klucza
 resolveProfile(resolveKeys, 0);
 
-// ============================================
-// HELPER: Przetwórz istniejący profil
-// ============================================
 function processExistingProfile(lookupResponse) {
   const profileBody = JSON.parse(lookupResponse.body);
   const existing =
     profileBody.data && profileBody.data.data ? profileBody.data.data : {};
 
-  // 🔬 DIAGNOSTYKA ga_client_id fallback (do usunięcia po naprawie):
-  logToConsole(
-    "SORTOWNIA DEBUG: existing.ga_client_id =",
-    existing.ga_client_id,
-    ", existing.id_oid =",
-    existing.id_oid,
-    ", existing.biz_email =",
-    existing.biz_email,
-    ", existing.biz_phone =",
-    existing.biz_phone,
-  );
-
   const idOid = existing.id_oid || generateULID();
 
-  // ✅ REGUŁA BEZPIECZEŃSTWA DEVICE ID:
-  // ga_client_id może wskazać profil TYLKO jeśli nie ma _oid/email/phone w evencie.
-  // Jeśli ga_client_id wskazał profil, ale w evencie jest email/phone, to te klucze są "nowe"
-  // i muszą być dodane do multi-key write. Od tej pory ga_client_id jest tylko indeksem
-  // do tego samego profilu (nie może wskazać innego profilu).
-
-  // Sprawdź, które klucze są nowe (pojawiły się pierwszy raz w evencie)
   var hasNewEmail = email && !existing.biz_email;
   var hasNewPhone = phone && !existing.biz_phone;
   var hasNewGaClientId = gaClientId && !existing.ga_client_id;
@@ -1411,17 +1288,14 @@ function processExistingProfile(lookupResponse) {
   logToConsole("SORTOWNIA: owner =", owner, ", order_id =", orderId);
   logToConsole("SORTOWNIA: gclid z profilu =", existingGclid);
 
-  // BLOKADA 90 DNI: Sprawdź czy Akt istnieje i jest młodszy niż 90 dni
   let aktTimestampMs = null;
   var enqueueTwentyCreateLead = false;
   if (eventName === "generate_lead") {
     const nowMs = timestamp * 1;
 
     if (existing.AktTimestampMs) {
-      // ✅ Użyj AktTimestampMs (number) - precyzyjne
       aktTimestampMs = existing.AktTimestampMs * 1;
     } else if (existing.AktTimestamp) {
-      // Fallback: parsuj AktTimestamp (kompatybilność wsteczna)
       var parsedMs;
       if (
         existing.AktTimestamp.endsWith &&
@@ -1451,14 +1325,11 @@ function processExistingProfile(lookupResponse) {
           aktTimestampMs,
           ")",
         );
-        // Zachowaj istniejący Akt (nie nadpisuj) — profil = first touch
         orderId = existing.order_id || orderId;
         aktTimestamp = existing.AktTimestamp;
         aktTimestampMs = existing.AktTimestampMs || aktTimestampMs;
         owner = existing.owner || owner;
         assist = existing.assist !== undefined ? existing.assist : assist;
-        // ✅ Task dostaje platformę z: bieżące zdarzenie LUB profil (tak jak zapisujemy attr_* w tasku)
-        // Dzięki temu jeśli formularz nie przekazał fbclid/gclid, a profil ma attr_fbc → owner = meta
         var mergedGclid = attrGclid || existingGclid;
         var mergedFbc = attrFbc || existingFbc;
         var taskOwner = computeOwnerFromCurrentEvent(
@@ -1487,7 +1358,6 @@ function processExistingProfile(lookupResponse) {
           aktTimestampMs,
           ") - tworzę nowy",
         );
-        // Akt jest starszy niż 90 dni - utwórz nowy
         var finalGclid = attrGclid || existingGclid;
         var finalFbc = attrFbc || existingFbc;
         owner = computeOwnerFromCurrentEvent(
@@ -1515,7 +1385,6 @@ function processExistingProfile(lookupResponse) {
         enqueueTwentyCreateLead = true;
       }
     } else {
-      // Akt nie istnieje - utwórz nowy
       logToConsole("SORTOWNIA: ✨ Brak Akt - tworzę nowy");
       var finalGclid = attrGclid || existingGclid;
       var finalFbc = attrFbc || existingFbc;
@@ -1544,8 +1413,14 @@ function processExistingProfile(lookupResponse) {
       enqueueTwentyCreateLead = true;
     }
   } else {
-    // qualify_lead - zachowaj istniejące wartości
     aktTimestampMs = existing.AktTimestampMs || null;
+  }
+
+  if (eventName === "generate_lead" && email) {
+    enqueueTwentyCreateLead = true;
+    logToConsole(
+      "SORTOWNIA: crm:twenty_create_lead enabled (generate_lead + email)",
+    );
   }
 
   saveProfileAndTask(
@@ -1565,9 +1440,6 @@ function processExistingProfile(lookupResponse) {
   );
 }
 
-// ============================================
-// HELPER: Przetwórz profil z oid_init (merge)
-// ============================================
 function processMergedProfile(oidInitResponse) {
   const oidInitBody = JSON.parse(oidInitResponse.body);
   const oidInitData =
@@ -1579,7 +1451,6 @@ function processMergedProfile(oidInitResponse) {
 
   logToConsole("SORTOWNIA: ✨ Merge z oid_init - id_oid =", idOid);
 
-  // ✅ Sprawdź, które klucze są nowe (pojawiły się pierwszy raz w evencie)
   var hasNewEmail = email && !oidInitData.biz_email;
   var hasNewPhone = phone && !oidInitData.biz_phone;
   var hasNewGaClientId = gaClientId && !oidInitData.ga_client_id;
@@ -1597,7 +1468,6 @@ function processMergedProfile(oidInitResponse) {
 
   logToConsole("SORTOWNIA: gclid z oid_init =", existingGclid);
 
-  // Oblicz Akt (nowy profil)
   let owner = "platform:none";
   let assist = null;
   let orderId;
@@ -1656,28 +1526,10 @@ function processMergedProfile(oidInitResponse) {
   );
 }
 
-// ============================================
-// HELPER: Przetwórz nowy profil (bez oid_init)
-// ============================================
 function processNewProfile() {
   const idOid = generateULID();
 
   logToConsole("SORTOWNIA: ✨ Nowy id_oid =", idOid);
-  // 🔬 DIAGNOSTYKA: jeśli tu trafia event CRM (qualify_lead/purchase), to znaczy że
-  // Waterfall Resolve nie znalazł profilu po email/phone — fallback ga_client_id z profilu
-  // nie zadziała, bo profilu po prostu nie ma (lub jest pod innym kluczem).
-  logToConsole(
-    "SORTOWNIA DEBUG processNewProfile: eventName =",
-    eventName,
-    ", srcSystem =",
-    srcSystem,
-    ", email =",
-    email,
-    ", phone =",
-    phone,
-  );
-
-  // ✅ Dla nowego profilu wszystkie klucze są "nowe"
   var newKeysList = [];
   if (email) newKeysList.push("email");
   if (phone) newKeysList.push("phone");
@@ -1739,9 +1591,6 @@ function processNewProfile() {
   );
 }
 
-// ============================================
-// HELPER: Usuń duplikaty z tablicy kluczy
-// ============================================
 function uniqKeys(arr) {
   const out = [];
   let i = 0;
@@ -1762,11 +1611,9 @@ function uniqKeys(arr) {
   return out;
 }
 
-// ============================================
-// HELPER: Kolejka crm:twenty_create_lead (tylko nowy Akt, generate_lead)
-// ============================================
 function enqueueCrmTwentyCreateLeadTask(baseTaskData) {
-  var crmTaskId = baseTaskData.id_oid + "_" + timestamp + "_crm_twenty_create_lead";
+  var crmTaskId =
+    baseTaskData.id_oid + "_" + timestamp + "_crm_twenty_create_lead";
   var crmTaskData = {
     id_oid: baseTaskData.id_oid,
     id_event: timestamp + "_crm_twenty_create_lead",
@@ -1792,6 +1639,8 @@ function enqueueCrmTwentyCreateLeadTask(baseTaskData) {
     ctx_referrer: baseTaskData.ctx_referrer,
     ctx_time_on_page_ms: baseTaskData.ctx_time_on_page_ms,
     biz_message: baseTaskData.biz_message,
+    biz_form_answers: baseTaskData.biz_form_answers,
+    biz_form_product: baseTaskData.biz_form_product,
     ga_client_id: baseTaskData.ga_client_id,
     owner: baseTaskData.owner,
     order_id: baseTaskData.order_id,
@@ -1799,6 +1648,7 @@ function enqueueCrmTwentyCreateLeadTask(baseTaskData) {
     src_action_source: baseTaskData.src_action_source,
     consent_analytics_storage: baseTaskData.consent_analytics_storage,
     consent_ad_storage: baseTaskData.consent_ad_storage,
+    time_occurred_iso_utc: baseTaskData.time_occurred_iso_utc,
   };
 
   var encodedId = encodeUriComponent(crmTaskId);
@@ -1825,9 +1675,6 @@ function enqueueCrmTwentyCreateLeadTask(baseTaskData) {
     });
 }
 
-// ============================================
-// HELPER: Zapisz profil i task
-// ============================================
 function saveProfileAndTask(
   idOid,
   profileOwner,
@@ -1843,10 +1690,6 @@ function saveProfileAndTask(
   existingCtxIpAddress,
   enqueueTwentyCreateLead,
 ) {
-  // ✅ Fallback ga_client_id z profilu w identity_map.
-  // Kluczowe dla zdarzeń CRM (qualify_lead/purchase/rejected_lead), które nie mają
-  // dostępu do cookie _ga przeglądarki — bez tego robot wysyłałby do GA4 MP
-  // client_id = id_oid (ULID) i lejek nie sklejałby się z generate_lead z Web GTM.
   const resolvedGaClientId = gaClientId || existingGaClientId || null;
   const resolvedBizProduct =
     bizProduct ||
@@ -1855,22 +1698,6 @@ function saveProfileAndTask(
     null;
   const resolvedCtxIp = resolveCtxIpAddress(existingCtxIpAddress);
   const taskEnvironment = resolveTaskEnvironment(email);
-
-  // 🔬 DIAGNOSTYKA ga_client_id fallback (do usunięcia po naprawie):
-  logToConsole(
-    "SORTOWNIA DEBUG saveProfileAndTask: gaClientId(event) =",
-    gaClientId,
-    ", existingGaClientId(profil) =",
-    existingGaClientId,
-    ", resolvedGaClientId(final) =",
-    resolvedGaClientId,
-    ", idOid =",
-    idOid,
-    ", eventName =",
-    eventName,
-    ", srcSystem =",
-    srcSystem,
-  );
 
   const fullProfileData = {
     id_oid: idOid,
@@ -1890,28 +1717,10 @@ function saveProfileAndTask(
     ctx_ip_address: resolvedCtxIp,
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // MULTI-KEY WRITE: zapis profilu pod wszystkimi kluczami
-  // ═══════════════════════════════════════════════════════════════
-  // ✅ REGUŁA: Zapisujemy profil pod WSZYSTKIMI znanymi kluczami:
-  // - id_oid (zawsze, primary key)
-  // - email (jeśli jest w evencie)
-  // - phone (jeśli jest w evencie)
-  // - ga_client_id (jeśli jest w evencie)
-  //
-  // ✅ REGUŁA: Jeśli w evencie pojawił się nowy klucz (np. pierwszy raz mamy email/phone/ga_client_id),
-  // to profil zapisujemy pod tym nowym kluczem również. To jest kluczowe, bo bez merge post-hoc
-  // to jedyny moment, gdy "świat się dowiaduje", że te klucze należą do tego samego profilu.
-  //
-  // ✅ KIEDY: Multi-key write jest wykonywane ZAWSZE po resolve (zarówno dla istniejącego profilu,
-  // jak i nowego), po każdym evencie, gdy pojawi się nowy klucz, i aktualizujemy WSZYSTKIE znane klucze.
-  // ═══════════════════════════════════════════════════════════════
   const keys = [];
   keys.push(idOid);
   if (email) keys.push(email);
   if (phone) keys.push(phone);
-  // ✅ Indeksuj profil również po ga_client_id z profilu (jeśli event nie przyniósł własnego),
-  // żeby zachować zgodność klucz indeksu z polem profilu po fallbacku.
   if (resolvedGaClientId) keys.push(resolvedGaClientId);
 
   const saveKeys = uniqKeys(keys);
@@ -1925,11 +1734,6 @@ function saveProfileAndTask(
     saveKeys.length - 1 + ")",
   );
 
-  // ✅ DEBUG: Loguj które klucze są nowe (pojawiły się pierwszy raz w evencie)
-  // Sprawdź w existing (jeśli istnieje) - dla processExistingProfile
-  // Dla processNewProfile wszystkie klucze są nowe (już zalogowane wyżej)
-
-  // Zapisz pod pierwszym kluczem (idOid - najważniejszy)
   const primaryKey = saveKeys[0];
   const encodedPrimaryKey = encodeUriComponent(primaryKey);
   const saveIdentityUrl =
@@ -1954,7 +1758,6 @@ function saveProfileAndTask(
         saveIdentityResponse.statusCode,
       );
 
-      // Best-effort: zapisz pod pozostałymi kluczami (jeśli są)
       let keyIdx = 1;
       while (keyIdx < saveKeys.length) {
         const nextKey = saveKeys[keyIdx];
@@ -1988,7 +1791,6 @@ function saveProfileAndTask(
         keyIdx = keyIdx + 1;
       }
 
-      // KROK 3: Zapisz task_queue
       const taskId = idOid + "_" + timestamp + "_" + eventName;
       const srcActionSource =
         getEventDataWithFallback("src_action_source") || "website";
@@ -2026,9 +1828,8 @@ function saveProfileAndTask(
             ? makeString(ctxTimeOnPageMs)
             : null, // ✅ Czas na stronie (jak w mailu)
         biz_message: bizMessage || null, // ✅ Treść wiadomości (jak w mailu)
-        // ✅ Używamy resolvedGaClientId (event ?? profil) — kluczowe dla CRM (qualify_lead/purchase),
-        // które nie znają cookie _ga, ale chcemy aby robot wysłał do GA4 MP ten sam client_id
-        // co Web GTM dla generate_lead (sklejanie lejka w GA4).
+        biz_form_answers: bizFormAnswers || null,
+        biz_form_product: bizFormProduct || null,
         ga_client_id: resolvedGaClientId,
         owner: taskOwner, // last click (przy SKIP) lub first touch (nowy Akt)
         order_id: orderId,
@@ -2036,6 +1837,7 @@ function saveProfileAndTask(
         src_action_source: srcActionSource, // ✅ Dodano zgodnie z SSOT
         consent_analytics_storage: consentAnalytics || null, // ✅ Consent Gate dla GA4
         consent_ad_storage: consentAd || null, // ✅ Consent Gate dla Google/Meta Ads
+        time_occurred_iso_utc: timeOccurredIso || null,
       };
 
       const encodedTaskId = encodeUriComponent(taskId);
