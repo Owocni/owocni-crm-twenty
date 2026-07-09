@@ -61,14 +61,14 @@ Pełna tabela kombinacji → `owocni-staging-standalone/docs/kombinacje-formular
 
 ## Ostatni kontakt
 
-- **`lastContactAt`** — przy utworzeniu = czas leada; aktualizacja przy **odpowiedzi klienta** (mail przychodzący w Email Sync).
+- **`lastContactAt`** — przy utworzeniu = czas leada; aktualizacja przy **mailu w obie strony** (GCP worker `email_contact_sync`, CRON co ~5 min).
 - **`bizLastContactLabel`** — przeliczane przy zapisie (`crm:twenty_create_lead`, docelowo workflow na `message.created` INCOMING).
 
 **TODO (faza 2):** workflow Twenty — patrz sekcja **Workflow odpowiedzi mailowej** poniżej.
 
 ## Workflow odpowiedzi mailowej (faza 2 — do zrobienia)
 
-**Cel:** po **przychodzącym** mailu klienta zaktualizować powiązane Opportunity: `lastContactAt` + `bizLastContactLabel` (`Godzin:` / `Dni:`).
+**Cel:** po **mailu klienta lub naszej odpowiedzi** zaktualizować powiązane Opportunity: `lastContactAt` + `bizLastContactLabel` (`Godzin: 0` przy zdarzeniu).
 
 ### Dlaczego nie w Stape?
 
@@ -144,5 +144,5 @@ Formularz V2 (answers JSON)
 - [x] `SORTOWNIA_V2_POPRAWIONY.js` — `biz_form_answers` w task CRM
 - [ ] Publish tagów Stape (create_lead + Sortownia)
 - [ ] Test E2E: formularz strony → kanban
-- [ ] Workflow aktualizacji `lastContactAt` po mailu klienta
+- [x] GCP worker `email_contact_sync` — `lastContactAt` + `bizLastContactLabel` po INCOMING/OUTGOING (build `gcp-v6`)
 - [ ] Uzupełnić widełki w CSV + mapowanie OW-xxx w Sortownii/GTM
