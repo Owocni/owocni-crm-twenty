@@ -367,10 +367,47 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid) {
 }
 
 function mapBizSource(taskData) {
-  if (taskData.attr_gclid) return "GOOGLE_ADS";
+  if (isLeadsAtEmailTask(taskData)) return "DIRECT_EMAIL";
+
+  const utmSource = String(taskData.attr_utm_source || "").toLowerCase();
+  const utmMedium = String(taskData.attr_utm_medium || "").toLowerCase();
+
+  if (
+    taskData.attr_gclid ||
+    utmSource.includes("google") ||
+    utmSource.includes("gclid")
+  ) {
+    return "GOOGLE";
+  }
+  if (
+    taskData.attr_fbclid ||
+    utmSource.includes("facebook") ||
+    utmSource.includes("fb") ||
+    utmSource.includes("meta") ||
+    utmMedium.includes("facebook")
+  ) {
+    return "FACEBOOK";
+  }
+
   const src = String(taskData.src_action_source || "").toLowerCase();
-  if (src === "referral" || src === "polecenie") return "POLECENIE";
-  return "FORM";
+  if (src === "referral" || src === "polecenie") return "REFERRAL";
+
+  if (String(taskData.src_system || "").trim() === "TWENTY_UI") {
+    return "MANUAL";
+  }
+
+  if (
+    hasFormKanbanContext(taskData) ||
+    String(taskData.event_name || "").trim() === "generate_lead"
+  ) {
+    return "ORGANIC";
+  }
+
+  if (utmSource || utmMedium || taskData.attr_gclid || taskData.attr_fbclid) {
+    return "OTHER";
+  }
+
+  return "UNKNOWN";
 }
 
 function splitFullName(full) {
@@ -460,7 +497,6 @@ function resolveSrcSystem(taskData) {
 }
 
 function resolveBizSourceForTask(taskData) {
-  if (resolveSrcSystem(taskData) === "TWENTY_EMAIL") return "INNE";
   return mapBizSource(taskData);
 }
 
@@ -1056,4 +1092,4 @@ async function runCreateLeadWorker() {
   return stats;
 }
 
-module.exports = { runCreateLeadWorker, ADAPTER_ID };
+module.exports = { runCreateLeadWorker, ADAPTER_ID, mapBizSource, isLeadsAtEmailTask };

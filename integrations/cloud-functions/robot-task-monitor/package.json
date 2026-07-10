@@ -1,0 +1,16 @@
+{
+  "name": "robot-task-monitor",
+  "version": "1.0.0",
+  "description": "GCP Robot: task_queue → Sheets + platformy",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "functions-framework --target=processTaskQueue --port=8080"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0",
+    "googleapis": "^144.0.0"
+  }
+}

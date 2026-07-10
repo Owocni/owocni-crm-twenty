@@ -4,22 +4,23 @@ title: "Plan wdrożenia Twenty — krok po kroku (Etap 1.1 → 1.2)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-08
-recheck_trigger: "zamknięcie kroku / PASS bramy / zmiana zakresu"
+last_verified: 2026-07-10
+recheck_trigger: "zamknięcie kroku / PASS bramy / zmiana zakresu / deploy GCP inbound"
 default_trust: D:CORE
 related:
   - TWENTY_SANDBOX_STEP01_FIELDS
   - TWENTY_SANDBOX_STEP02_WEBHOOK
   - PREFLIGHT_TWENTY_WEBHOOK
-  - NEXT_STEPS
+  - TWENTY_WORKFLOWS_REJECT_AND_GUARD
+  - MIGRATE_TWENTY_CRM_TO_GCP
   - ../../owocni-crm/runbooks/IMPLEMENTATION_PLAN.md
 ---
 
 # Plan wdrożenia Twenty — master checklist
 
-**Review SSOT:** PASS 2026-06-08 (`REVIEW_PACKAGE.md` §3).  
+**Review SSOT:** PASS 2026-07-10 (dokumentacja zsynchronizowana z GCP inbound `gcp-v5`, workflowy SQL/odrzucenie).  
 **Cutover:** nadal po PASS G1–G8 + G-PAR + zamknięciu ADR z dowodem.  
-**Ten dokument:** kolejność prac **teraz** — sandbox Twenty + integracje zewnętrzne.
+**Ten dokument:** kolejność prac — sandbox Twenty + integracje (Stape edge + GCP).
 
 ## Legenda wykonawcy
 
@@ -29,7 +30,7 @@ related:
 | **🔌 TWENTY-API** | **Agent (preferowane)** | Metadata GraphQL `https://api.twenty.com/metadata` + skrypt `integrations/tools/twenty_schema.py` — **tak jak POC 2026-05-25** |
 | **☁️ TWENTY-UI** | Dawid tylko gdy API nie wystarczy | [zany-maroon-panther.twenty.com](https://zany-maroon-panther.twenty.com) — webhooks, Email Sync, kanban |
 | **📦 STAPE** | Dawid | Stape UI — tagi, zmienne, Store |
-| **☁️ GCP** | Dawid | Google Cloud Function Robot — deploy z repo |
+| **☁️ GCP** | Dawid / agent | Cloud Functions (`twenty-crm-worker`, `twenty-inbound-webhook`) + Cloud Run (`robot-task-monitor`) — deploy z repo |
 
 **Instancja:** `https://zany-maroon-panther.twenty.com` (workspace Owocni).  
 **Sekrety:** `.env.local` w root repo (wzór `.env.example`) — **nigdy do git**.
@@ -44,21 +45,24 @@ related:
 flowchart TD
   R0[R0 Repo hygiene] --> T1[T1 Pola Twenty sandbox]
   T1 --> T2[T2 Webhook + payload capture]
-  T2 --> S1[S1 Stape inbound adapter]
+  T2 --> S1[S1 Stape edge + GCP inbound]
   S1 --> S2[S2 Robot sandbox test]
-  S2 --> SM[Smoke matrix 8]
-  SM --> E12[Etap 1.2 Email Sync]
+  S2 --> SM[Smoke matrix 8+]
+  SM --> WF[Workflowy SQL + odrzucenie]
+  WF --> E12[Etap 1.2 Email Sync + statystyki]
 ```
 
-| Faza | Cel | Bramy | Szacunek |
-|------|-----|-------|----------|
-| **R0** | Repo gotowe, bez sekretów w kodzie | — | 1 h |
-| **T1** | Pola FROZEN + stage + pipeline w Twenty | przygotowanie G2/G-PAR | 2–3 h |
-| **T2** | Webhook OUT + 4 payloady + HMAC | G2 webhook-truth | 1–2 h |
-| **S1** | Tag `inbound:twenty_webhook` w Stape | G2–G4 (część) | 2–5 dni |
-| **S2** | Robot + task_queue fixtures | G1 (część) | 1–2 h |
-| **SM** | 8 scenariuszy `EVENT_CONTRACT` §6.3 | G1–G4, L-1 | ✅ 2026-06-15 |
-| **E12** | Email Sync + Resolver | G7*, G-PAR | **E12.2 PASS** → **E12.3** |
+| Faza | Cel | Bramy | Status |
+|------|-----|-------|--------|
+| **R0** | Repo gotowe, bez sekretów w kodzie | — | w toku |
+| **T1** | Pola FROZEN + stage + pipeline w Twenty | G2/G-PAR | **PASS** (pola + kanban 2026-07) |
+| **T2** | Webhook OUT + payloady + HMAC | G2 webhook-truth | **PASS** (native webhook live) |
+| **S1** | Stape proxy + **GCP** `twenty-inbound-webhook` | G2–G4 | **PASS sandbox** (`gcp-v5`) |
+| **S1b** | GCP `twenty-crm-worker` + stuby CRM | G3 | **PASS sandbox** (`gcp-v7`) |
+| **S2** | Robot + task_queue + `enrichPurchaseBizValues` | G1 | **PASS** (`robot-task-monitor`) |
+| **SM** | Scenariusze `EVENT_CONTRACT` §6.3 | G1–G4, L-1 | ✅ 2026-06-15 + rozszerzenia 2026-07 |
+| **WF** | SQL confirm, odrzucenie, guard, biz_value | operacyjne | ✅ 2026-07-10 |
+| **E12** | Email Sync + Resolver + dashboardy | G7*, ADR #18 | **E12.2 PASS** → statystyki ✅ |
 
 ---
 
@@ -68,9 +72,9 @@ flowchart TD
 |----|---------|--------|-------|
 | R0.1 | Plan master (ten plik) + runbooki T1/T2 | ☑ | commit |
 | R0.2 | Usunąć hardcoded Stape API key z `INBOUND_TWENTY_WEBHOOK.js` | ☑ | commit |
-| R0.3 | `parseTwentyPayload()` — TODO do uzupełnienia po T2 | ☐ | po T2 |
-| R0.4 | Eksport schemy Twenty → `generated/twenty-schema.snapshot.json` | ☐ | po T1 |
-| R0.5 | Zaktualizować `INTEGRATIONS_PARITY.md` po każdej fazie | ☐ | ciągłe |
+| R0.3 | `parseTwentyPayload()` w GCP inbound CF | ☑ | `twenty-inbound-webhook/handlers/processWebhook.js` |
+| R0.4 | Eksport schemy Twenty → `generated/twenty-schema.snapshot.json` | ☑ | snapshot 2026-07 |
+| R0.5 | Zaktualizować `INTEGRATIONS_PARITY.md` po każdej fazie | ☑ | 2026-07-10 |
 
 ---
 
@@ -81,15 +85,15 @@ flowchart TD
 
 | ID | Zadanie | Status | Dowód |
 |----|---------|--------|-------|
-| T1.0 | `TWENTY_API_KEY` w `.env.local` (Settings → Developers) | ☐ | audit bez 403 |
-| T1.1 | Audit schema vs `DATA_MODEL.md` | ☐ | `twenty_schema.py audit` |
-| T1.2 | Opportunity: custom fields (agent: Metadata API) | ☐ | audit PASS |
-| T1.3 | Person: `idOid` unique | ☐ | audit PASS |
-| T1.4 | `stage` = NEW…LOST (updateOneField) | ☐ | audit stage |
-| T1.5 | `campaignRejected` label „Odrzuć leada" | ☐ | API / UI |
-| T1.6 | `srcSystem` SELECT opcje | ☐ | audit |
-| T1.7 | Kanban view (opcjonalnie UI) | ☐ | |
-| T1.8 | Snapshot → `generated/twenty-schema.snapshot.json` | ☐ | commit |
+| T1.0 | `TWENTY_API_KEY` w `.env.local` (Settings → Developers) | ☑ | audit |
+| T1.1 | Audit schema vs `DATA_MODEL.md` | ☑ | MCP + `twenty_schema.py` |
+| T1.2 | Opportunity: custom fields (agent: Metadata API) | ☑ | kanban + metryki |
+| T1.3 | Person: `idOid` unique | ☑ | |
+| T1.4 | `stage` = NEW…LOST (+ CONTRACT_SENT, PAYING) | ☑ | KANBAN_CARD_SPEC |
+| T1.5 | `campaignRejected` label „Odrzuć leada" | ☑ | workflow MANUAL |
+| T1.6 | `srcSystem` SELECT opcje | ☑ | |
+| T1.7 | Kanban view By Stage | ☑ | |
+| T1.8 | Snapshot → `generated/twenty-schema.snapshot.json` | ☑ | |
 
 **PASS T1:** `twenty_schema.py audit` = 0 brakujących pól + stage zgodny.
 
@@ -103,32 +107,45 @@ flowchart TD
 
 | ID | Zadanie | Status | Dowód |
 |----|---------|--------|-------|
-| T2.1 | Native webhook OUT (nie Workflow HTTP) | ☐ | |
-| T2.2 | URL → endpoint Stape `/inbound/twenty_webhook` (lub webhook.site na pierwszy test) | ☐ | |
-| T2.3 | Secret HMAC → zmienna Stape `twenty_webhook_secret` | ☐ | |
-| T2.4 | Obiekty: Opportunity + Person, create + update | ☐ | |
-| T2.5 | Przechwyć 4 payloady (A–D z PREFLIGHT) | ☐ | `fixtures/webhook-captures/` |
-| T2.6 | Odpowiedz na OQ-E2, OQ-E3 w `OPS_NOTES.md` | ☐ | `[D:VERIFIED]` |
+| T2.1 | Native webhook OUT (nie Workflow HTTP) | ☑ | |
+| T2.2 | URL → Stape `/inbound/twenty_webhook` (Client → GCP stub → CF) | ☑ | `MIGRATE_TWENTY_CRM_TO_GCP` §P2 |
+| T2.3 | Secret HMAC → zmienna Stape `twenty_webhook_secret` | ☑ | |
+| T2.4 | Obiekty: Opportunity + Person, create + update | ☑ | |
+| T2.5 | Przechwyć payloady (A–D z PREFLIGHT) | ☑ | `fixtures/webhook-captures/` |
+| T2.6 | Odpowiedz na OQ-E2, OQ-E3 w `OPS_NOTES.md` | ☑ | `[D:VERIFIED]` |
 
-**PASS T2:** HMAC OK + ≥4 JSON + wiemy gdzie są `stage`, `campaignRejected`, `idOid`.
-
-**Po PASS:** 🤖 REPO — dopasuj `parseTwentyPayload()` w `INBOUND_TWENTY_WEBHOOK.js`.
+**Po PASS:** logika w `cloud-functions/twenty-inbound-webhook/handlers/processWebhook.js` (nie tylko `INBOUND_TWENTY_WEBHOOK.js`).
 
 ---
 
-## S1 — Stape: adapter inbound (📦 STAPE + 🤖 REPO)
+## S1 — Stape edge + GCP inbound (📦 STAPE + ☁️ GCP + 🤖 REPO)
 
-**Runbook:** [BUILD_INBOUND_TWENTY_WEBHOOK.md](./BUILD_INBOUND_TWENTY_WEBHOOK.md)
+**Runbooki:** [MIGRATE_TWENTY_CRM_TO_GCP.md](./MIGRATE_TWENTY_CRM_TO_GCP.md) § Faza 2 · [BUILD_INBOUND_TWENTY_WEBHOOK.md](./BUILD_INBOUND_TWENTY_WEBHOOK.md) (logika SSOT)
+
+**Architektura sandbox:** Twenty → Stape Client → stub `INBOUND_TWENTY_WEBHOOK.gcp-stub.sGTM.js` → **GCP** `twenty-inbound-webhook-sandbox` (`build_id: 2026-07-10-gcp-v5`) → Stape Store `task_queue`.
 
 | ID | Zadanie | Status | Dowód |
 |----|---------|--------|-------|
-| S1.1 | Zmienne kontenera: `stape_base_url`, `stape_store_api_key`, `twenty_webhook_secret`, `environment=sandbox` | ☐ | Stape UI |
-| S1.2 | HTTP tag z kodem `INBOUND_TWENTY_WEBHOOK.js` | ☐ | |
-| S1.3 | Stape Store: klucze `twenty:opp:{id}:last_stage` itd. | ☐ | |
-| S1.4 | Pending-write TTL (loop prevention) | ☐ | |
-| S1.5 | Eksport działającego tagu → commit repo | ☐ | git |
+| S1.1 | Zmienne: `stape_base_url`, `stape_store_api_key`, `twenty_webhook_secret`, `GCP_INBOUND_WEBHOOK_URL` | ☑ | Stape UI |
+| S1.2 | Stape: Client + **stub** (nie pełny tag w sandbox) | ☑ | publish |
+| S1.3 | GCP deploy `twenty-inbound-webhook-sandbox` | ☑ | `gcp-v5` |
+| S1.4 | Stape Store: shadow-state + `last_delivery_fingerprint` | ☑ | |
+| S1.5 | Pending-write TTL (loop prevention) | ☑ | |
+| S1.6 | Kod adaptera w repo → testy `detectBusinessEvent.test.js` | ☑ | npm test |
+
+**Prod rollback:** przywróć `INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js` w tagu inbound.
 
 **NIE przed smoke #4:** usuwać `srcSystem`-SKIP na backfill (L-1).
+
+### S1b — GCP CRM worker (create_lead)
+
+**Runbook:** [MIGRATE_TWENTY_CRM_TO_GCP.md](./MIGRATE_TWENTY_CRM_TO_GCP.md) § Faza 1
+
+| ID | Zadanie | Status |
+|----|---------|--------|
+| S1b.1 | Deploy `twenty-crm-worker-sandbox` | ☑ |
+| S1b.2 | Stuby `CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js` | ☑ |
+| S1b.3 | Scheduler / poll `task_queue` | ☑ |
 
 ---
 
@@ -138,9 +155,10 @@ flowchart TD
 
 | ID | Zadanie | Status | Dowód |
 |----|---------|--------|-------|
-| S2.1 | Wstaw fixture `task-queue-purchase-canonical.json` do `task_queue` | ☐ | log Robot |
-| S2.2 | Legacy `lead_won` → normalizacja → `purchase` | ☐ | log |
-| S2.3 | `environment=sandbox` → brak prod Google/Meta API | ☐ | log SKIP |
+| S2.1 | Fixture `purchase` / `rejected_lead` w `task_queue` | ☑ | log Robot |
+| S2.2 | Legacy `lead_won` → normalizacja → `purchase` | ☑ | |
+| S2.3 | `environment=sandbox` → brak prod Google/Meta API | ☑ | |
+| S2.4 | `enrichPurchaseBizValues` + łańcuch `biz_value` | ☑ | `gcp-v5` + Robot `00065` |
 
 ---
 
@@ -150,11 +168,22 @@ flowchart TD
 
 | # | Scenariusz | Status |
 |---|------------|--------|
-| 1 | QUALIFIED → qualify_lead | ✅ |
-| 2 | WON → purchase | ✅ |
-| 3 | campaignRejected → rejected_lead | ✅ |
+| 1 | QUALIFIED + `bizSqlConfirmed` → qualify_lead | ✅ |
+| 2 | WON → purchase (+ `biz_value` §5.7) | ✅ |
+| 3 | Workflow „Odrzuć leada" → rejected_lead | ✅ |
+| 3b | SQL/WON na `campaignRejected` → guard + SKIP | ✅ |
 | 4 | Manual create + backfill (L-1) | ✅ |
 | 5–8 | Pozostałe z §6.3 | ✅ |
+
+### WF — Workflowy operacyjne (2026-07-10)
+
+**Runbook:** [TWENTY_WORKFLOWS_REJECT_AND_GUARD.md](./TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
+
+| Workflow | Status |
+|----------|--------|
+| Przyjmij jako SQL (`bizSqlConfirmed`) | ✅ |
+| Odrzuć leada (`campaignRejected`) | ✅ |
+| Guard odrzucony (cofnięcie QUALIFIED/WON) | ✅ |
 
 **PASS SM:** 2026-06-15 — [SMOKE_MATRIX_EVIDENCE_2026-06-15.md](./SMOKE_MATRIX_EVIDENCE_2026-06-15.md).
 
@@ -171,23 +200,20 @@ flowchart TD
 
 ---
 
-## Co robimy **teraz** (E12 — Etap 1.2)
+## Co robimy **teraz** (lipiec 2026)
 
-**E12.2 Identity Resolver — PASS sandbox (2026-06-16).** Evidence: [E12_EMAIL_SYNC_EVIDENCE.md](./E12_EMAIL_SYNC_EVIDENCE.md).
+**Etap 1.1 (rdzeń CRM webhook + worker + smoke + workflowy) — zamknięty.**
 
-### E12.3 — następny krok
+**Etap 1.2 — w toku / częściowo zamknięty:**
+- E12.2 Identity Resolver — **PASS** (2026-06-16)
+- ADR #18 metryki + dashboardy — **PASS** (2026-07-09)
+- E12.3 szablony maili + szkolenie handlowców — **backlog**
+- G-PAR pełna parzystość BB — **backlog**
+- E12.4 wyłączenie julia362 — po G7 + G-PAR
 
-**Runbook wykonawczy:** [E12_3_EMAIL_TEMPLATES_AND_TRAINING.md](./E12_3_EMAIL_TEMPLATES_AND_TRAINING.md)  
-**Test plan G-PAR:** [G_PAR_BETTER_BITRIX_PARITY.md](./G_PAR_BETTER_BITRIX_PARITY.md)
+**Operacyjnie:** utrzymanie sandbox GCP (`gcp-v5` inbound, `gcp-v7` worker).
 
-| ID | Zadanie |
-|----|---------|
-| E12.3 | Szablony maili z better-bitrix → Twenty |
-| E12.3b | Rozdział wątków `leads@` → owner |
-| Szkolenie | Stage, merge, T4 „Tożsamość do rozstrzygnięcia" |
-| G-PAR | Parzystość BB vs Twenty (macierz PAR-1…PAR-7) |
-
-**Etap 1.1 (rdzeń CRM webhook + worker + smoke) — zamknięty** (`c651806`, evidence 2026-06-15).
+**Następny gate cutover:** [G_PAR_BETTER_BITRIX_PARITY.md](./G_PAR_BETTER_BITRIX_PARITY.md) → [NEXT_STEPS.md](./NEXT_STEPS.md).
 
 ### E12.1 — Email Sync w Twenty (pierwszy krok)
 
@@ -224,4 +250,6 @@ Hasła: `better-bitrix-main/.env` (`SMTP_USER_*` / `STMP_PASSWORD_*`). IMAP: `ma
 | 8 testów | `owocni-crm/EVENT_CONTRACT.md` §6.3 |
 | Bramy G1–G8 | `owocni-crm/runbooks/IMPLEMENTATION_PLAN.md` §5.4 |
 | Macierz parity | `integrations/INTEGRATIONS_PARITY.md` |
+| Migracja GCP | `integrations/runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md` |
+| Workflowy SQL/odrzucenie | `integrations/runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` |
 | Anti-wpadki | `LLM_ANTI_WPADKI_GO_NO_GO.md` |

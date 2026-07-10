@@ -1,7 +1,7 @@
 # integrations/ — kod wykonawczy Sortownia + Robot (+ Twenty)
 
 **Status:** kanoniczna lokalizacja w repo `owocni-crm-github`  
-**Last updated:** 2026-06-08
+**Last updated:** 2026-07-10
 
 ## LLM START (60 sek)
 
@@ -9,10 +9,12 @@
 1. **Plan wdrożenia Twenty (T1→smoke):** [`runbooks/TWENTY_ROLLOUT_MASTER.md`](runbooks/TWENTY_ROLLOUT_MASTER.md)
 2. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
 3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
-4. **Kolejność faz integrations:** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md)
-4. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
-5. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
-6. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
+4. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR**
+5. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
+6. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
+7. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
+7. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
+8. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
 
 **NIE czytaj jako SSOT:** `archive/**`
 
@@ -21,21 +23,29 @@
 | Plik | Rola | Runtime |
 |------|------|---------|
 | `SORTOWNIA_V2_POPRAWIONY.js` | Paid: oid_init, generate_lead, identity_map, task_queue | Stape sGTM |
-| `GoogleCloudRobot.js` | task_queue → platformy + env-guard | GCP Node |
-| `INBOUND_TWENTY_WEBHOOK.js` | Twenty webhook → business event → task_queue | Stape HTTP tag |
-| `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Sortownia → Twenty (create lead) | Stape tag + worker → **migracja:** `cloud-functions/twenty-crm-worker/` |
+| `GoogleCloudRobot.js` | task_queue → platformy + env-guard + `enrichPurchaseBizValues` | GCP Cloud Run `robot-task-monitor` |
+| `INBOUND_TWENTY_WEBHOOK_CLIENT.sGTM.js` | Proxy: odbiór webhooka Twenty, forward do GCP | Stape Client |
+| `INBOUND_TWENTY_WEBHOOK.gcp-stub.sGTM.js` | Stub: forward body do GCP inbound URL | Stape HTTP tag |
+| `INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js` | Pełna logika inbound (rollback / prod legacy) | Stape HTTP tag |
+| `INBOUND_TWENTY_WEBHOOK.js` | Skrócona wersja / referencja | Stape (legacy) |
+| `cloud-functions/twenty-inbound-webhook/` | Adapter Twenty → business event → `task_queue` | GCP Cloud Function (sandbox: **gcp-v5**) |
+| `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Sortownia → Twenty (create lead) | Stape stub → `cloud-functions/twenty-crm-worker/` |
 | `CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js` | Stub po migracji GCP (~435 B) | Stape |
-| `cloud-functions/twenty-crm-worker/` | create_lead + update_person worker | GCP Cloud Function |
+| `cloud-functions/twenty-crm-worker/` | create_lead, update_person, email_contact_sync | GCP Cloud Function |
+| `cloud-functions/robot-task-monitor/` | Deploy wrapper dla `GoogleCloudRobot.js` | GCP Cloud Run |
 | `ENV_GUARD.sGTM.js` | Fragment env sandbox/prod (copy-paste) | Stape |
 | `shared/envGuard.js` | env-guard dla Robota | Node |
 | `shared/ssotPaths.js` | Stałe adapterów/kolekcji | Node (+ ref) |
 
-## SSOT alignment (2026-06-02)
+## SSOT alignment (2026-07-10)
 
 - Kanoniczne `event_name`: `generate_lead`, `qualify_lead`, `purchase`, `rejected_lead`, `consent_update`, `oid_init`.
 - Legacy `lead_won` / `lead_rejected` → normalizacja na wejściu (Robot + Sortownia + inbound).
+- `qualify_lead` wymaga `bizSqlConfirmed=true` (workflow „Przyjmij jako SQL").
+- `campaignRejected=true` blokuje SQL/purchase (`SKIP_CAMPAIGN_REJECTED`); odrzucenie = workflow MANUAL „Odrzuć leada".
+- `biz_value` dla `purchase`: łańcuch pól Twenty + fallback cennika — `EVENT_CONTRACT.md` §5.7.
 - `environment: sandbox` → Robot **nie** wysyła prod Google Ads / GA4 MP; arkusze debug OK.
-- Adaptery Twenty są **w repo jako kod przygotowawczy** — deploy Stape wymaga preflight payloadów (bez zgadywania JSON).
+- **Sandbox inbound:** GCP `twenty-inbound-webhook` (build `2026-07-10-gcp-v5`); Stape = edge proxy tylko.
 
 ## Mirror w repo `owocni strona/owocni/`
 

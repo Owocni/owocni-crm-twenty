@@ -4,8 +4,8 @@ title: "G-PAR — parzystość Better-Bitrix vs Twenty (test plan)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-16
-related:
+last_verified: 2026-07-10
+recheck_trigger: "PASS G-PAR / nowy test PAR / cutover"
   - ../../owocni-crm/runbooks/IMPLEMENTATION_PLAN.md
   - E12_3_EMAIL_TEMPLATES_AND_TRAINING.md
   - SMOKE_MATRIX_EXECUTION.md
@@ -50,7 +50,7 @@ Dla każdego wiersza: **data**, **tester**, **ID rekordu**, **PASS/FAIL**, **lin
 
 | ID | Scenariusz | BB (oczekiwane) | Twenty (test) | PASS |
 |----|------------|-----------------|---------------|------|
-| PAR-1.1 | Widok lejka | Kolumny stage widoczne | Pipeline Opportunities: NEW…LOST; kafelek wg `KANBAN_CARD_SPEC.md` | ☐ |
+| PAR-1.1 | Widok lejka | Kolumny stage widoczne | Pipeline Opportunities: NEW…LOST (+ CONTRACT_SENT, PAYING); kafelek wg `KANBAN_CARD_SPEC.md` | ☐ |
 | PAR-1.2 | Przeciągnięcie karty | Zmiana `stage_name` | Drag stage w UI | ☐ |
 | PAR-1.3 | Filtr „moje leady” | Po `assigned_user` | Filtr po Owner | ☐ |
 | PAR-1.4 | Nowy lead ręczny | Utworzenie karty | Opp + Person, `idOid` null → backfill (smoke #4) | ☐ |
@@ -59,13 +59,13 @@ Dla każdego wiersza: **data**, **tester**, **ID rekordu**, **PASS/FAIL**, **lin
 
 | ID | Scenariusz | BB / analytics | Twenty + inbound | Event SSOT | PASS |
 |----|------------|----------------|------------------|------------|------|
-| PAR-2.1 | Kwalifikacja | `qualify_lead` | `CONTACTED`→`QUALIFIED` | `qualify_lead` | ☐ (smoke #1 ✅) |
-| PAR-2.2 | Wygrana | `lead_won` / won | → `WON` + amount | `purchase` | ☐ (smoke #2 ✅) |
-| PAR-2.3 | Odrzucenie kampanii | `lead_rejected` | `campaignRejected` true | `rejected_lead` | ☐ (smoke #3 ✅) |
-| PAR-2.4 | Przegrana | `lead_lost` | → `LOST` | **brak eventu** | ☐ |
-| PAR-2.5 | Edycja opisu | Brak eventu | Pole opisowe | `SKIP_NO_RELEVANT_TRANSITION` | ☐ (smoke #5 ✅) |
+| PAR-2.1 | Kwalifikacja | `qualify_lead` | `CONTACTED`→`QUALIFIED` + `bizSqlConfirmed` | `qualify_lead` | ✅ smoke #1 + WF SQL 2026-07 |
+| PAR-2.2 | Wygrana | `lead_won` / won | → `WON` + `biz_value` | `purchase` | ✅ smoke #2 + `gcp-v5` 2026-07 |
+| PAR-2.3 | Odrzucenie kampanii | `lead_rejected` | `campaignRejected` true (workflow) | `rejected_lead` | ✅ smoke #3 + WF 2026-07-10 |
+| PAR-2.4 | Przegrana | `lead_lost` | → `LOST` | **brak eventu** | ✅ kod (`SKIP_NO_RELEVANT_TRANSITION`); UI test: opp `548e9bc6` LOST 2026-07-10 |
+| PAR-2.5 | Edycja opisu | Brak eventu | Pole opisowe | `SKIP_NO_RELEVANT_TRANSITION` | ✅ smoke #5 |
 
-**Uwaga:** PAR-2.1–2.3 i 2.5 mają dowód ze smoke matrix 2026-06-15. **PAR-2.4** wymaga jednego świeżego testu w UI Twenty (LOST → sprawdź brak taska `purchase`/`rejected_lead`).
+**Uwaga:** PAR-2.1–2.5 mają dowód ze smoke matrix 2026-06-15 + rozszerzenia lipiec 2026 (SQL gate, odrzucenie, `biz_value`). **PAR-2.4** — inbound nigdy nie emituje eventu na `LOST`; potwierdź brak nowego taska w Stape Store po drag na LOST (jednorazowo w UI).
 
 ### PAR-3 — Maile i timeline
 
@@ -95,9 +95,9 @@ Szczegóły procedury: `E12_3_EMAIL_TEMPLATES_AND_TRAINING.md` §FAZA B.
 | ID | Scenariusz | PASS |
 |----|------------|------|
 | PAR-5.0 | Plan zastępczy zatwierdzony | ☑ `E12_3_EMAIL_TEMPLATE_STRATEGY.md` |
-| PAR-5.1 | 19 szablonów w Sidecar (lub Twenty native) | ☐ |
-| PAR-5.2 | Wyślij z Twenty używając pickera (nie copy z Notes) | ☐ |
-| PAR-5.3 | Mapowanie + evidence | ☐ |
+| PAR-5.1 | 19 szablonów w Sidecar (lub Twenty native) | ✅ `seed_mail_templates_to_twenty.py` |
+| PAR-5.2 | Wyślij z Twenty używając pickera (nie copy z Notes) | ✅ 2026-06-16 evidence |
+| PAR-5.3 | Mapowanie + evidence + szkolenie | ☐ SOP OPEN |
 
 **Faza przejściowa (PARTIAL):** PAR-5 może mieć **PARTIAL** gdy Faza 0 dual działa (BB picker → sync Twenty) — udokumentowany SOP. **Cutover mailowy** wymaga PAR-5.2 PASS (Sidecar MVP).
 
@@ -105,10 +105,10 @@ Szczegóły procedury: `E12_3_EMAIL_TEMPLATES_AND_TRAINING.md` §FAZA B.
 
 | ID | Scenariusz | PASS |
 |----|------------|------|
-| PAR-6.1 | Nowy nadawca → `idOid` w Person | ☐ (E12.2 ✅) |
-| PAR-6.2 | Parity mapa ↔ Person | ☐ (E12.2 ✅) |
-| PAR-6.3 | T4 kolizja — brak auto-merge | ☐ (G7 ✅) |
-| PAR-6.4 | Pola FROZEN (`idOid`, `campaignRejected`, …) | ☐ (G5 ✅) |
+| PAR-6.1 | Nowy nadawca → `idOid` w Person | ✅ E12.2 |
+| PAR-6.2 | Parity mapa ↔ Person | ✅ E12.2 |
+| PAR-6.3 | T4 kolizja — brak auto-merge | ✅ G7 2026-06-16 |
+| PAR-6.4 | Pola FROZEN (`idOid`, `campaignRejected`, `bizSqlConfirmed`, …) | ✅ T1 + WF 2026-07 |
 
 ### PAR-7 — Rzeczy świadomie poza parzystością (NIE FAIL)
 
@@ -125,10 +125,10 @@ Szczegóły procedury: `E12_3_EMAIL_TEMPLATES_AND_TRAINING.md` §FAZA B.
 ## Procedura wykonania (kolejność)
 
 ```
-1. PAR-6 (już PASS) — tylko potwierdzenie w evidence
-2. PAR-2 — dokończ PAR-2.4 (LOST)
-3. PAR-3 — każda skrzynka (checklist 7 wierszy)
-4. PAR-4 + PAR-5 — razem z E12.3 runbookiem
+1. PAR-6 — PASS (tylko potwierdzenie w evidence) ✅
+2. PAR-2 — PASS sandbox (PAR-2.4: opcjonalny UI double-check Stape Store)
+3. PAR-3 — każda skrzynka (checklist 7 wierszy) ← **TERAZ**
+4. PAR-4 + PAR-5.3 — razem z E12.3 runbookiem
 5. PAR-1 — demo z handlowcem na sandbox
 6. Podsumowanie → G-PAR PASS lub lista FAIL
 ```

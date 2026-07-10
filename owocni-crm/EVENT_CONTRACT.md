@@ -5,8 +5,8 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-05-31
-recheck_trigger: "Twenty release / zmiana kanonu eventów / zmiana adaptera Sortowni / preflight webhook payload"
+last_verified: 2026-07-10
+recheck_trigger: "Twenty release / zmiana kanonu eventów / zmiana adaptera inbound (GCP/Stape) / preflight webhook payload"
 default_trust: D:CORE
 related:
   - DATA_MODEL
@@ -21,7 +21,7 @@ supersedes:
 
 ## 0. LLM QUICK ENTRY
 
-**Ten plik decyduje o:** mapowaniu zmian w Twenty → nazwy business eventów SSOT (`qualify_lead`, `purchase`, `rejected_lead`, `generate_lead`); rozróżnieniu LOST ≠ rejected_lead; zakazie `lead_won` jako event_name; mechanice adaptera Sortowni (transition detection, cold-start, loop-prevention, idempotency); transporcie (native webhook OUT); rozpoznaniu manual-create (`idOid IS NULL`). Wchłania STAGE_MAPPING (WON=stage, purchase=event, SQL≡QUALIFIED).
+**Ten plik decyduje o:** mapowaniu zmian w Twenty → nazwy business eventów SSOT (`qualify_lead`, `purchase`, `rejected_lead`, `generate_lead`); rozróżnieniu LOST ≠ rejected_lead; zakazie `lead_won` jako event_name; mechanice adaptera inbound (transition detection, cold-start, loop-prevention, idempotency); transporcie (native webhook OUT → Stape edge → GCP w sandboxie); rozpoznaniu manual-create (`idOid IS NULL`); regułach `bizSqlConfirmed` i `campaignRejected`; rozwiązywaniu `biz_value` dla `purchase`. Wchłania STAGE_MAPPING (WON=stage, purchase=event, SQL≡QUALIFIED).
 
 **Ten plik NIE decyduje o:** pełnych definicjach SSOT orkiestracji (→ dokumentacja orkiestracji, poza tym repo); JSON schema (→ `generated/`, future); Pricing Key / Robot / Adapterach platform (→ SSOT Sortowni); typach pól (→ `DATA_MODEL.md`); tożsamości/kanałach (→ `IDENTITY_AND_INBOUND.md`); konkretnych nazwach nagłówków HMAC (→ `ops/OPS_NOTES.md`).
 
@@ -63,6 +63,9 @@ Definiuje, jak techniczna zmiana w Twenty staje się business eventem SSOT, jak 
 - Mapowanie zmian w Twenty → nazwy eventów SSOT (`qualify_lead`, `purchase`, `rejected_lead`, `generate_lead` manual).
 - Konfigurację Twenty native webhook OUT (transport).
 - Reguły adaptera `inbound:twenty_webhook` (transition, cold-start, loop-prevention, idempotency, filtr obiektu).
+- Runtime adaptera: **sandbox** = GCP Cloud Function `twenty-inbound-webhook`; **Stape** = edge proxy (`POST /inbound/twenty_webhook`); **prod** = legacy pełny tag Stape lub przyszły prod CF (patrz `integrations/runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`).
+- `qualify_lead` wymaga `bizSqlConfirmed=true`; blokada SQL/purchase na `campaignRejected=true`.
+- `biz_value` dla `purchase` — łańcuch pól + fallback cennika (§5.7).
 - LOST vs rejected_lead; SQL ≡ QUALIFIED; zakazane nazwy eventów; smoke testy.
 
 ### Nie pokrywa
@@ -96,8 +99,12 @@ Definiuje, jak techniczna zmiana w Twenty staje się business eventem SSOT, jak 
 |---|---|
 | Auth | HMAC SHA256 — **konkretne nazwy nagłówków + signed-string → `ops/OPS_NOTES.md` § Twenty Verified Facts** (`[D:VERIFIED]`, dom faktu platformowego) |
 | Koszt credits | native webhook nie zużywa workflow credits — szczegół + status epistemiczny → `ops/OPS_NOTES.md` |
-| Target | `https://<sortownia>/inbound/twenty_webhook` |
+| Target (URL) | `https://<sortownia>/inbound/twenty_webhook` |
 | Obiekty | Opportunity, Person (create + update) — adapter filtruje typ (NR-5) |
+
+**Runtime sandbox (od 2026-07-07):** Twenty native webhook → **Stape Client** (`INBOUND_TWENTY_WEBHOOK_CLIENT.sGTM.js`, `POST /inbound/twenty_webhook`) → **Stape stub** (`INBOUND_TWENTY_WEBHOOK.gcp-stub.sGTM.js`) → **GCP** `integrations/cloud-functions/twenty-inbound-webhook/` → zapis do Stape Store (`task_queue`, shadow-state) → **Robot** (`GoogleCloudRobot.js`). Build ID w logach: `2026-07-10-gcp-v5` (patrz `shared/config.js` w CF).
+
+**Runtime prod (stan lipiec 2026):** pełna logika nadal może być w Stape (`INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js`) lub docelowo osobny deploy `twenty-inbound-webhook-prod`. Stub prod = no-op do czasu cutoveru.
 
 **NIE używać w produkcji:** Twenty Workflow → HTTP Request do Sortowni (limit Pro workflow credits — patrz `ops/OPS_NOTES.md`; przy ~150 leadach/mc całością ruchu × 3 eventy ≈ 5400/rok native webhook jest jedyną opcją).
 
@@ -111,9 +118,9 @@ Definiuje, jak techniczna zmiana w Twenty staje się business eventem SSOT, jak 
 | event_name | Powstaje gdy | Uwaga |
 |---|---|---|
 | `generate_lead` | Formularz owocni.pl (przez Sortownię) **lub** manual create (`idOid IS NULL`) | Lead z polecenia / telefonu rozpoznany przez brak tożsamości |
-| `qualify_lead` | przejście stage **do** QUALIFIED | Tylko transition do QUALIFIED |
-| `purchase` | przejście stage **do** WON | NIE `lead_won` |
-| `rejected_lead` | `campaignRejected` false → true | NIE zależy od stage LOST |
+| `qualify_lead` | przejście stage **do** QUALIFIED **oraz** `bizSqlConfirmed=true` | Sam drag na QUALIFIED bez potwierdzenia SQL → `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` (workflow guard cofa etap) |
+| `purchase` | przejście stage **do** WON | NIE `lead_won`; `biz_value` → §5.7 |
+| `rejected_lead` | `campaignRejected` false → true | NIE zależy od stage LOST; etap **nie zmienia się** (workflow MANUAL „Odrzuć leada") |
 | `consent_update` | aktualizacja zgody (kanał SSOT) | Zachowany z katalogu — nie usuwać jako „nieznany" |
 
 > `oid_init` (jeśli występuje w katalogu Sortowni) — zachować, nie usuwać. „Nie rozpoznaję" ≠ „do usunięcia"; usunięcie eventu z katalogu = potencjalna luka w routingu.
@@ -122,9 +129,10 @@ Definiuje, jak techniczna zmiana w Twenty staje się business eventem SSOT, jak 
 
 | Zmiana w Twenty | Event SSOT | Uwagi |
 |---|---|---|
-| `stage` → QUALIFIED | `qualify_lead` | Tylko przejście **do** QUALIFIED |
-| `stage` → WON | `purchase` | NIE `lead_won` — zgodność z SSOT orkiestracji |
-| `campaignRejected` false → true | `rejected_lead` | NIE zależy od stage LOST |
+| `stage` → QUALIFIED | `qualify_lead` | Tylko przejście **do** QUALIFIED **+** `bizSqlConfirmed=true` |
+| `stage` → WON | `purchase` | NIE `lead_won` — zgodność z SSOT orkiestracji; `biz_value` → §5.7 |
+| `campaignRejected` false → true | `rejected_lead` | NIE zależy od stage LOST; workflow MANUAL, stage bez zmiany |
+| `stage` → QUALIFIED lub WON przy `campaignRejected=true` | **brak eventu** | Adapter: `SKIP_CAMPAIGN_REJECTED`; workflow guard cofa etap w Twenty |
 | `stage` → LOST | **brak eventu** | Analiza tylko w CRM; brak sygnału do platform |
 | `Person.idOid` null (przy create LUB update) | `generate_lead` (manual) | Detekcja przez brak tożsamości, NIE typ operacji — manual może przyjść jako update (R-18) |
 | Formularz owocni.pl | `generate_lead` | Przez Sortownię — nie z Twenty |
@@ -151,23 +159,26 @@ Definiuje, jak techniczna zmiana w Twenty staje się business eventem SSOT, jak 
 | `stage=LOST`, `campaignRejected=true` | TAK | Triggerem jest `campaignRejected`, nie LOST |
 | `lostReason`/`lossDescription` uzupełniony | NIE (samo z siebie) | Pole analityczne CRM-only |
 
-### 5.4 Transition detection + adapter Sortowni (`inbound:twenty_webhook`)
+### 5.4 Transition detection + adapter inbound (`inbound:twenty_webhook`)
+
+**Kod (sandbox):** `integrations/cloud-functions/twenty-inbound-webhook/handlers/processWebhook.js`  
+**Kod (legacy prod Stape):** `integrations/INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js` (parity logic)
 
 1. **Weryfikacja HMAC** (nazwy nagłówków + signed-string → `ops/OPS_NOTES.md`).
 2. **Filtr typu obiektu/zdarzenia** PRZED mapowaniem (NR-5) — webhook odbiera wszystkie obiekty; obce → SKIP_UNSUPPORTED_OBJECT.
 3. **Loop prevention:** SKIP gdy operacja jest echem własnego zapisu Sortowni — przez **efemeryczny pending-write w Stape** (NR-6), NIE przez `srcSystem`.
-4. **Wykrycie przejścia:** payload NIE niesie diffu (`data` = stan aktualny — NR-2). Detekcja przejść WYŁĄCZNIE z pamięci Stape Store: `last_stage`, `last_campaignRejected` per `opportunity_id`.
-5. **Emit do Inteligentnego Routingu lub SKIP** (z reason code — §5.6).
+4. **Dedup dostawy:** fingerprint `event|oppId|stage|prevStage|updatedAt` w Stape Store (`last_delivery_fingerprint`) — kolejne etapy (np. QUALIFIED→WON) nie są traktowane jako duplikat tego samego webhooka.
+5. **Wykrycie przejścia:** payload native webhook **nie niesie diffu** (`data` = stan aktualny — NR-2). Detekcja przejść WYŁĄCZNIE z pamięci Stape Store: `last_stage`, `last_campaignRejected` per `opportunity_id`. Workflow HTTP POST do Stape może nadać `previousRecord` w body (np. reject lead) — używane tylko do fingerprintu i rejected_lead, nie jako główne źródło przejść stage.
+6. **Emit do `task_queue` lub SKIP** (z reason code — §5.6).
 
 **Pseudologika mapowania:**
 
 ```
-# Manual create może dotrzeć jako create LUB update (R-18: "manual create →
-# trigger Created or Updated, nie Created only"). NIE warunkujemy generate_lead
-# na czystym create — rozpoznajemy manual przez brak tożsamości (idOid IS NULL),
-# nie przez typ webhooka. Pole _operation NIE istnieje w payloadzie Twenty.
-if (create OR update) AND person.idOid IS NULL → generate_lead (manual)   # mint idOid; NIE event przejścia
-elif stage → QUALIFIED (transition) → qualify_lead
+# Manual create może dotrzeć jako create LUB update (R-18). Rozpoznanie przez idOid IS NULL.
+if (create OR update) AND person.idOid IS NULL → generate_lead (manual)
+elif campaignRejected AND stage → QUALIFIED|WON (transition) → SKIP_CAMPAIGN_REJECTED
+elif stage → QUALIFIED (transition) AND bizSqlConfirmed → qualify_lead
+elif stage → QUALIFIED (transition) AND NOT bizSqlConfirmed → SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM
 elif stage → WON (transition) → purchase
 elif campaignRejected false→true → rejected_lead
 else → SKIP
@@ -206,7 +217,29 @@ Formularz → Sortownia `generate_lead` → adapter `crm:twenty_create_lead` →
 | `SKIP_NO_RELEVANT_TRANSITION` | Zmiana bez przejścia istotnego dla eventu |
 | `SKIP_DUPLICATE_BUSINESS_EVENT` | Stan się nie zmienił (np. campaignRejected true→true) |
 | `SKIP_UNSUPPORTED_OBJECT` | Zdarzenie obiektu spoza zakresu (filtr typu, NR-5) |
-| `EMITTED` | Event wyemitowany do Inteligentnego Routingu |
+| `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` | Przejście do QUALIFIED bez `bizSqlConfirmed=true` (drag bez „Przyjmij jako SQL") |
+| `SKIP_CAMPAIGN_REJECTED` | Próba SQL/WON na leadzie z `campaignRejected=true` |
+| `EMITTED` | Event wyemitowany do `task_queue` (Inteligentny Routing / Robot) |
+
+### 5.7 Purchase value (`biz_value` w payloadzie `purchase`)
+
+Pole `biz_value` w tasku `purchase` zasila kolumnę J arkusza GCS i wartości konwersji platform. **Źródło prawdy:** pola Opportunity w Twenty, nie sam tekst na kafelku — z fallbackiem gdy waluta pusta.
+
+**Kolejność rozwiązywania** (`resolveOpportunityBizValue` w inbound CF + Robot):
+
+| Krok | Pole Twenty | Uwaga |
+|---|---|---|
+| 1 | `bizValueWon` | Pole walutowe przy wygranej — **preferowane** |
+| 2 | `amount` | Natywne pole Twenty (currency) |
+| 3 | `bizValueMax` | Widełki górne |
+| 4 | `bizValueMin` | Widełki dolne |
+| 5 | `bizValueDisplay` | Tekst kafelka (np. `1222 PLN`) — parser wyciąga liczbę |
+
+**Reguła zera:** wartość `0` lub pusta **nie liczy się** jako meaningful (`isMeaningfulBizValue`) — adapter przechodzi do następnego kroku. Typowy błąd: wpis tylko w `bizValueDisplay` przy `amount=0` — od lipca 2026 obsłużony przez krok 5.
+
+**Fallback cennika (Robot):** gdy po łańcuchu `biz_value` nadal puste, Robot (`enrichPurchaseBizValues`) uzupełnia z Pricing Key: `purchase_{bizProduct}` → `sql_{bizProduct}` → `Other` (sandbox/prod osobno).
+
+**Kanban vs raport:** `bizValueDisplay` = UI kafelka; `bizValueWon` = raportowanie/purchase. Szczegóły pól → `DATA_MODEL.md` §5.1.
 
 ### 6.1 TRANSITION EXCEPTION — backfill idOid (`[D:OPEN]`)
 
@@ -228,9 +261,11 @@ Minimum scenariuszy przed cutoverem (PASS wymagany):
 
 | # | Scenariusz | Oczekiwany wynik |
 |---|---|---|
-| 1 | CONTACTED → QUALIFIED | `qualify_lead` (EMITTED) |
-| 2 | QUALIFIED → WON (+ opcjonalnie bizValueWon) | `purchase` (EMITTED) |
-| 3 | campaignRejected false → true | `rejected_lead` (EMITTED) |
+| 1 | CONTACTED → QUALIFIED + `bizSqlConfirmed=true` (workflow „Przyjmij jako SQL") | `qualify_lead` (EMITTED) |
+| 1b | Drag → QUALIFIED bez SQL confirm | SKIP (`SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM`) + guard cofa etap |
+| 2 | QUALIFIED → WON (+ opcjonalnie `bizValueWon` lub `bizValueDisplay`) | `purchase` (EMITTED); `biz_value` wg §5.7 |
+| 3 | Workflow „Odrzuć leada" (`campaignRejected` false → true, stage bez zmiany) | `rejected_lead` (EMITTED) |
+| 3b | Drag → QUALIFIED/WON na `campaignRejected=true` | SKIP (`SKIP_CAMPAIGN_REJECTED`) + guard cofa etap |
 | 4 | Manual create Opportunity (idOid null) → backfill | `generate_lead` + backfill; **brak drugiego `generate_lead`** (brama L-1/§6.1) |
 | 5 | Zmiana opisu bez stage/rejected | SKIP (`SKIP_NO_RELEVANT_TRANSITION`) |
 | 6 | campaignRejected true → true | SKIP (`SKIP_DUPLICATE_BUSINESS_EVENT`) |
@@ -251,7 +286,9 @@ Minimum scenariuszy przed cutoverem (PASS wymagany):
 | Konkretne nazwy nagłówków HMAC + signed-string; credits; event-name webhooka | `ops/OPS_NOTES.md` |
 | Zasada „jedna jawna ścieżka", granica CRM↔orkiestracja, INV-3/4/5/6 | `CRM_CONSTITUTION.md` |
 | Inbound spoza Sortowni, kanały, Resolver T1–T5 | `IDENTITY_AND_INBOUND.md` |
-| Granice systemów, diagramy in/out, backup Sheets | `ARCHITECTURE.md` |
+| Granice systemów, diagramy in/out, backup Sheets, GCP inbound | `ARCHITECTURE.md` |
+| Workflowy MANUAL: SQL, odrzucenie, guard | `integrations/runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` |
+| Migracja GCP (worker, inbound, build IDs) | `integrations/runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md` |
 | Import ≠ event (side-effect guard) | `audits/AUDIT_MIGRACJA.md` |
 | STAGE_MAPPING (wchłonięty) | `archive/STAGE_MAPPING.md` (stub — deprecated) |
 
@@ -282,6 +319,7 @@ Minimum scenariuszy przed cutoverem (PASS wymagany):
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-10 | §5.1 runtime GCP sandbox; §5.4 fingerprint + GCP adapter; §5.7 `biz_value`; reason codes `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM`, `SKIP_CAMPAIGN_REJECTED`; `bizSqlConfirmed` dla qualify_lead; test matrix 1b/3b | Dawid / agent | Wdrożenie inbound gcp-v5, workflow odrzucenia/guard, fix purchase value |
 
 ---
 

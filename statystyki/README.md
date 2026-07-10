@@ -1,11 +1,12 @@
 # Statystyki sprzedażowe — paczka robocza
 
 > Moduł KPI dashboardów w **Twenty CRM** (produkt × handlowiec × czas).  
-> **Dla wdrożenia:** zacznij od **[QUICKSTART-DAWID.md](./QUICKSTART-DAWID.md)**.
+> **Wdrożenie w toku (ADR #18 open):** [`IMPLEMENTATION-STATUS.md`](./IMPLEMENTATION-STATUS.md)  
+> **Checklist:** [QUICKSTART-DAWID.md](./QUICKSTART-DAWID.md)
 
 | | |
 |---|---|
-| **Status** | Plan roboczy — nie SSOT |
+| **Status** | Wdrożenie `in_progress` (ADR #18 open) |
 | **Blokuje cutover CRM?** | Nie |
 | **Kto wdraża** | Dawid (technicznie) + akceptacja właściciela |
 
@@ -16,13 +17,15 @@
 | Chcę… | Otwórz |
 |-------|--------|
 | **Wysłać właścicielowi do akceptacji planu** | [REVIEW-DLA-WLASCICIELA.md](./REVIEW-DLA-WLASCICIELA.md) |
-| **Wiedzieć co robić po akceptacji (wdrożenie)** | [QUICKSTART-DAWID.md](./QUICKSTART-DAWID.md) |
+| **Postęp wdrożenia (odhaczaj)** | [IMPLEMENTATION-STATUS.md](./IMPLEMENTATION-STATUS.md) |
+| **Pola SELECT w Twenty (PF-9)** | [PF-9-bizProduct-list.md](./PF-9-bizProduct-list.md) |
+| **Checklist wdrożenia** | [QUICKSTART-DAWID.md](./QUICKSTART-DAWID.md) |
 | **Skonfigurować widgety w Twenty** | [DASHBOARD-WIDGETY-SPEC.md](./DASHBOARD-WIDGETY-SPEC.md) |
 | **Sprawdzić formułę metryki** | [METRICS.md](./METRICS.md) |
 | **Ustawić kanały (Google, direct-email…)** | [BIZSOURCE-MAP.md](./BIZSOURCE-MAP.md) |
 | **Zrozumieć decyzje biznesowe** | [PLAN-MODUL-STATYSTYK.md](./PLAN-MODUL-STATYSTYK.md) |
 | **Fakty o Twenty + preflight PF-0…9** | [WYTYCZNE-DASHBOARDY-SPRZEDAZ.md](./WYTYCZNE-DASHBOARDY-SPRZEDAZ.md) |
-| **Workflow czasu w stage** | [track-stage-time.contract (1).md](./track-stage-time.contract%20(1).md) |
+| **Workflow czasu w stage** | [`../workflows/track-stage-time.contract.md`](../workflows/track-stage-time.contract.md) |
 
 ---
 

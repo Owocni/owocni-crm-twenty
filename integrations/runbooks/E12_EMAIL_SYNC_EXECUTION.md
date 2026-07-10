@@ -4,8 +4,8 @@ title: "E12 — Etap 1.2: czyszczenie Twenty + Email Sync (krok po kroku)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-08
-recheck_trigger: "podłączenie skrzynki / PASS G7 / zmiana zakresu maili"
+last_verified: 2026-07-10
+recheck_trigger: "podłączenie skrzynki / PASS G7 / PASS G-PAR / zmiana zakresu maili"
 default_trust: D:CORE
 related:
   - TWENTY_ROLLOUT_MASTER
@@ -154,7 +154,7 @@ Dla każdej skrzynki z tabeli:
 - [ ] **3.** **Test connection** → musi być OK
 - [ ] **4.** Save → poczekaj 5–15 min na pierwszy sync
 - [ ] **5.** Sprawdź w Twenty: pojawiają się wątki / nowe People lub Opportunity
-- [ ] **6.** Sprawdź logi Stape: webhook `inbound_twenty_webhook` (create Person/Opp) — `environment=sandbox`
+- [ ] **6.** Sprawdź logi: webhook `inbound_twenty_webhook` → GCP stub → `build_id: 2026-07-10-gcp-v5` → `task_queue` (`environment=sandbox`)
 - [ ] **7.** Potwierdź w better-bitrix: **prod nadal działa** (julia362 log / nowy mail testowy na `leads@` tylko przy #7)
 - [ ] **8.** Zaznacz skrzynkę jako DONE w tabeli poniżej
 

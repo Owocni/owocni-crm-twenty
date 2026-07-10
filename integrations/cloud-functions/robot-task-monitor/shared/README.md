@@ -8,10 +8,3 @@ Wspólne stałe i helpery **dla dokumentacji LLM** oraz runtime **Node (Robot)**
 | `envGuard.js` | Node (`GoogleCloudRobot.js`) | `sandbox` → bez prod Ads/Meta/GA4 MP |
 
 **Stape (sGTM):** tagi nie używają `require()` — skopiuj logikę z `../ENV_GUARD.sGTM.js` i stałe z `ssotPaths.js` (lub `TWENTY_PATHS.md`).
-
-**GCP Cloud Functions:** przy deploy kopiowane są do:
-- `cloud-functions/robot-task-monitor/shared/` (z tego katalogu + `GoogleCloudRobot.js`)
-- `cloud-functions/twenty-inbound-webhook/shared/` (config, twentyRest, stapeStore — osobna kopia)
-- `cloud-functions/twenty-crm-worker/shared/`
-
-Zmiana stałych SSOT → zaktualizuj źródło tutaj i prze-deployuj odpowiedni CF.

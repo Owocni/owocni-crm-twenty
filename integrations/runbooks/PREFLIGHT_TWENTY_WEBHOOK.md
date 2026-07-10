@@ -4,7 +4,7 @@ title: "Faza 2 — preflight webhook Twenty (payload + HMAC)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-02
+last_verified: 2026-07-10
 related:
   - ../../owocni-crm/ops/OPS_NOTES.md
   - ../../owocni-crm/EVENT_CONTRACT.md
@@ -12,7 +12,7 @@ related:
 
 # Faza 2 — preflight Twenty webhook
 
-**Cel:** rozstrzygnąć **OQ-E2**, **OQ-E3** i fakty HMAC z instancji — bez tego adapter w Stape będzie zgadywał strukturę payloadu.
+**Cel:** rozstrzygnąć **OQ-E2**, **OQ-E3** i fakty HMAC z instancji — oraz zweryfikować **GCP inbound** w sandboxie (build `2026-07-10-gcp-v5`).
 
 **Bramy:** przygotowanie **G2** (webhook-truth).
 
@@ -23,7 +23,7 @@ related:
 ### 2.1 Konfiguracja webhooka w Twenty (sandbox)
 
 - [ ] Native webhook OUT (nie Workflow HTTP — `EVENT_CONTRACT` §5.1).
-- [ ] Target URL: `https://<twoja-sortownia>/inbound/twenty_webhook` (ścieżka zgodna z Stape).
+- [ ] Target URL: `https://<sortownia>/inbound/twenty_webhook` — Stape Client forwarduje do GCP (`MIGRATE_TWENTY_CRM_TO_GCP.md` § Faza 2).
 - [ ] Obiekty: **Opportunity**, **Person** — create + update.
 - [ ] Secret HMAC skopiowany do zmiennej Stape (nie do repo).
 
@@ -60,6 +60,12 @@ Wypełnij tabelę (skopiuj do `OPS_NOTES.md` lub notatki PR):
 
 - [ ] `environment=sandbox` w routingu → **tylko** arkusz safe sink / log (nie Google Ads API prod).
 - [ ] Potwierdź z `ARCHITECTURE.md` §5.4 — osobny arkusz niż backup formularzy.
+
+### 2.6 Weryfikacja GCP inbound (sandbox, po deploy)
+
+- [ ] `curl POST` do `twenty-inbound-webhook-sandbox` → `build_id: 2026-07-10-gcp-v5`
+- [ ] Zmiana stage bez istotnej zmiany (np. tylko metryki) → `SKIP_NO_RELEVANT_TRANSITION`
+- [ ] Workflow „Odrzuć leada" → `rejected_lead` w `task_queue` (patrz `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`)
 
 ---
 
