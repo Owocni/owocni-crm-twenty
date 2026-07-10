@@ -9,9 +9,9 @@
 
 | | |
 |---|---|
-| **Gotowe do przeglądu** | Tak — można czytać i komentować |
-| **Gotowe do wdrożenia** | Nie — po Twojej akceptacji planu + formalny start (ADR #18) |
-| **Gdzie leży** | Folder [`statystyki/`](../statystyki/) w repo (nie SSOT — świadomie) |
+| **Plan zaakceptowany** | 2026-07-09 |
+| **ADR #18** | Open — wdrożenie w toku |
+| **Następny krok** | [`IMPLEMENTATION-STATUS.md`](./IMPLEMENTATION-STATUS.md) |
 
 ---
 

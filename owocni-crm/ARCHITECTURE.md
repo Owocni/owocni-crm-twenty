@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-05-31
+last_verified: 2026-07-10
 recheck_trigger: "zmiana granic systemów / nowy system w przepływie / zmiana backup path"
 default_trust: D:CORE
 related:
@@ -84,7 +84,7 @@ Opisuje **stan** (granice systemów i przepływy danych), nie aspirację. Jedna 
 |---|---|
 | **Twenty** | Pipeline operacyjny (Opportunity = lead) |
 | **Inbound** | Sortownia `generate_lead` → `crm:twenty_create_lead` → Twenty |
-| **Outbound** | Twenty native webhook OUT → Sortownia `inbound:twenty_webhook` |
+| **Outbound** | Twenty native webhook OUT → Stape edge (`/inbound/twenty_webhook`) → **GCP inbound CF** (sandbox) lub pełny tag Stape (prod legacy) → `task_queue` → Robot |
 | **julia362** | Wyłączony w cutover (data w `runbooks/IMPLEMENTATION_PLAN.md`) |
 | **Helpdesk** | **Poza MVP** |
 
@@ -143,21 +143,32 @@ Formularz owocni.pl (submit)
 ### 5.4 Diagram outbound
 
 ```
-Handlowiec: zmiana stage / campaignRejected w Twenty UI
+Handlowiec: zmiana stage / campaignRejected / workflow MANUAL w Twenty UI
        │
        ▼
 Twenty native webhook OUT (HMAC, native — nie zużywa workflow credits)
        │
        ▼
-Sortownia inbound:twenty_webhook
-       │ mapowanie + env-guard (sandbox/prod)
-       │ sandbox → safe sink (np. Google Sheets), prod → routing reklamowy
-       │ mapowanie → qualify_lead | purchase | rejected_lead
-       ▼
-Inteligentny Routing → Lista Zadań → Robot → Adaptery (Google/Meta/GA4)
+Stape Client: POST /inbound/twenty_webhook  (INBOUND_TWENTY_WEBHOOK_CLIENT.sGTM.js)
+       │
+       ├── sandbox ──► Stape stub ──► GCP twenty-inbound-webhook (build gcp-v5)
+       │                      │ mapowanie + transition + fingerprint dedup
+       │                      ▼
+       └── prod (legacy) ──► pełny tag INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js
+                              │ (docelowo: twenty-inbound-webhook-prod)
+                              ▼
+                    Stape Store: task_queue + shadow-state (last_stage, …)
+                              │ env-guard (sandbox/prod)
+                              │ mapowanie → qualify_lead | purchase | rejected_lead
+                              ▼
+                    Robot (GoogleCloudRobot.js) → arkusze debug / platformy reklamowe
 ```
 
-**NIE:** Twenty Workflow HTTP Request (limit workflow credits — `ops/OPS_NOTES.md`). Mapowanie zdarzenie→event, transition detection, loop-prevention → `EVENT_CONTRACT.md` (NR-1, nie dublować tu).
+**Workflow MANUAL (nie webhook OUT):** „Przyjmij jako SQL", „Odrzuć leada" — mogą wysłać syntetyczny POST do `/inbound/twenty_webhook` po UPDATE rekordu (patrz `integrations/runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`).
+
+**NIE:** Twenty Workflow HTTP Request jako **docelowy** transport outbound (limit workflow credits — `ops/OPS_NOTES.md`). Wyjątek: jednorazowy POST po akcji MANUAL (odrzucenie) — nie zastępuje native webhook dla zmian stage.
+
+Mapowanie zdarzenie→event, transition detection, loop-prevention, `biz_value` → `EVENT_CONTRACT.md` (NR-1, nie dublować tu).
 
 **Zasada środowiskowa (anti-chaos):** nie duplikujemy pełnego GTM/GCP dla testów CRM. Preferowany model: jedna orkiestracja z rozdzieleniem ruchu po `environment` (`sandbox`/`prod`) i twardymi guardami przed wysyłką sandboxu do produkcyjnych adapterów.
 

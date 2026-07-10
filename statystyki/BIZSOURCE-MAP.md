@@ -16,7 +16,7 @@ decision: "D-15 zamknięte 2026-07-09"
 | Pole | Co oznacza | Przykład |
 |------|------------|----------|
 | **`bizProduct`** | **Co sprzedajemy** (Pricing Key) | `strony`, `logo`, `nazwa` |
-| **`bizSource`** | **Skąd przyszedł lead** (atrybucja) | `google`, `direct-email` |
+| **`bizSource`** | **Skąd przyszedł lead** (atrybucja) | `GOOGLE`, `DIRECT_EMAIL` |
 
 **Błąd do naprawienia:** adapter Leads@ ustawiał `biz_product: "web"` — to sugeruje **produkt „web"**, nie kanał. Lead z maila na skrzynkę to kanał **`direct-email`**; produkt nadal wynika z formularza / rozmowy / PF-9 (może być pusty do czasu kwalifikacji).
 
@@ -24,20 +24,22 @@ decision: "D-15 zamknięte 2026-07-09"
 
 ## 1. Enum `bizSource` (SELECT w Twenty)
 
-Wartości API (małe litery, myślnik) — **zamknięta lista D-15:**
+Wartości API (**UPPER_SNAKE_CASE** — wymóg Twenty SELECT) — **zamknięta lista D-15:**
 
 | API value | Etykieta UI (PL) | Znaczenie |
 |-----------|------------------|-----------|
-| `google` | Google Ads | Paid/search Google (utm, gclid) |
-| `facebook` | Facebook / Meta | Paid social Meta |
-| `organic` | Organic / strona | Ruch z witryny bez paid UTM (SEO, direct URL) |
-| `referral` | Polecenie | Referral / partner / znany referrer |
-| `direct-email` | Mail bezpośredni | Lead na skrzynkę (Leads@, Email Sync) — **nie mylić z „web"** |
-| `manual` | Ręcznie / telefon | Handlowiec wpisał, telefon, spotkanie |
-| `other` | Inne | Rozpoznane, ale bez dedykowanej kategorii |
-| `unknown` | Nieznane | Brak danych atrybucyjnych |
+| `GOOGLE` | Google Ads | Paid/search Google (utm, gclid) |
+| `FACEBOOK` | Facebook / Meta | Paid social Meta |
+| `ORGANIC` | Organic / strona | Ruch z witryny bez paid UTM (SEO, direct URL) |
+| `REFERRAL` | Polecenie | Referral / partner / znany referrer |
+| `DIRECT_EMAIL` | Mail bezpośredni | Lead na skrzynkę (Leads@, Email Sync) — **nie mylić z produktem „web"** |
+| `MANUAL` | Ręcznie / telefon | Handlowiec wpisał, telefon, spotkanie |
+| `OTHER` | Inne | Rozpoznane, ale bez dedykowanej kategorii |
+| `UNKNOWN` | Nieznane | Brak danych atrybucyjnych |
 
-**Nie używamy:** `web` jako kanału · `email` jako ogólnego (zastąpione przez `direct-email`).
+**Legacy (zachowane w enum):** `FORM`, `POLECENIE`, `GOOGLE_ADS`, `INNE`.
+
+**Nie używamy:** `web` jako kanału · `email` jako ogólnego (zastąpione przez `DIRECT_EMAIL`).
 
 ---
 
@@ -47,22 +49,22 @@ Kolejność ma znaczenie — **pierwsze dopasowanie wygrywa.**
 
 | Priorytet | Warunek wejścia | `bizSource` |
 |-----------|-----------------|-------------|
-| 1 | `inbound_channel = leads_at` LUB `src_action_source` zawiera `email_sync` LUB `src_system = TWENTY_EMAIL` przy create z maila | **`direct-email`** |
-| 2 | `src_system = TWENTY_UI` i brak UTM (handlowiec) | `manual` |
-| 3 | `attr_utm_source` / URL: google, gclid | `google` |
-| 4 | facebook, fb, meta, fbclid | `facebook` |
-| 5 | referral w UTM / znany partner | `referral` |
-| 6 | Formularz ze strony, brak paid UTM | `organic` |
-| 7 | Dane są, ale nie pasuje | `other` |
-| 8 | Brak jakichkolwiek sygnałów | `unknown` |
+| 1 | `inbound_channel = leads_at` LUB `src_action_source` zawiera `email_sync` LUB `src_system = TWENTY_EMAIL` przy create z maila | **`DIRECT_EMAIL`** |
+| 2 | `src_system = TWENTY_UI` i brak UTM (handlowiec) | `MANUAL` |
+| 3 | `attr_utm_source` / URL: google, gclid | `GOOGLE` |
+| 4 | facebook, fb, meta, fbclid | `FACEBOOK` |
+| 5 | referral w UTM / znany partner | `REFERRAL` |
+| 6 | Formularz ze strony, brak paid UTM | `ORGANIC` |
+| 7 | Dane są, ale nie pasuje | `OTHER` |
+| 8 | Brak jakichkolwiek sygnałów | `UNKNOWN` |
 
 ### 2.1 `organic` vs `direct-email`
 
 | Sytuacja | Kanał |
 |----------|-------|
-| Klient wypełnił formularz na owocni.pl | `organic` (lub `google`/`facebook` jeśli UTM paid) |
-| Klient napisał **bezpośrednio na adres mailowy** firmy (Leads@) | **`direct-email`** |
-| Handlowiec dodał kartę po rozmowie telefonicznej | `manual` |
+| Klient wypełnił formularz na owocni.pl | `ORGANIC` (lub `GOOGLE`/`FACEBOOK` jeśli UTM paid) |
+| Klient napisał **bezpośrednio na adres mailowy** firmy (Leads@) | **`DIRECT_EMAIL`** |
+| Handlowiec dodał kartę po rozmowie telefonicznej | `MANUAL` |
 
 ---
 

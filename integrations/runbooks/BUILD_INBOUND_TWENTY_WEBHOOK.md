@@ -4,7 +4,7 @@ title: "Faza 3 — budowa adaptera inbound:twenty_webhook (Stape)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-02
+last_verified: 2026-07-10
 related:
   - ../INBOUND_TWENTY_WEBHOOK.stub.js
   - ../../owocni-crm/EVENT_CONTRACT.md
@@ -12,7 +12,9 @@ related:
 
 # Faza 3 — build `inbound:twenty_webhook`
 
-**Cel:** tag Stape implementujący SSOT z `EVENT_CONTRACT` §5.4–5.6, zapisany w repo po review.
+> **Sandbox (lipiec 2026):** pełna logika adaptera jest w **GCP** `cloud-functions/twenty-inbound-webhook/` (build `2026-07-10-gcp-v5`). Stape = edge proxy (`CLIENT` + `gcp-stub`). Ten runbook opisuje **logikę SSOT** wspólną dla GCP i legacy tagu Stape (`INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js`). Deploy sandbox → `MIGRATE_TWENTY_CRM_TO_GCP.md` § Faza 2.
+
+**Cel:** implementacja zgodna z `EVENT_CONTRACT` §5.4–5.7, zapisana w repo po review.
 
 **Parity:** P3, P4, P5, P7, P10 | **Bramy:** G2, G3, G4 (część).
 
@@ -26,7 +28,7 @@ Twenty webhook OUT
         → HMAC verify
         → filter object type (NR-5)
         → loop: pending-write check (NR-6) — NIE srcSystem-SKIP*
-        → read/write Stape Store: last_stage, last_campaignRejected
+        → read/write Stape Store: last_stage, last_campaignRejected, last_delivery_fingerprint
         → map transition → business event_name (kanon)
         → Inteligentny Routing / task_queue
         → reason code log

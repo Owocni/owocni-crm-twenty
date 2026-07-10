@@ -4,10 +4,10 @@ title: "Kafelek kanban Opportunity — specyfikacja PAR-1"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-07-06
+last_verified: 2026-07-10
 related:
   - G_PAR_BETTER_BITRIX_PARITY.md
-  - BUILD_CRM_TWENTY_CREATE_LEAD.md
+  - TWENTY_WORKFLOWS_REJECT_AND_GUARD.md
   - ../../owocni-crm/DATA_MODEL.md
 ---
 
@@ -48,7 +48,10 @@ Maile `leads@`: bez zmian — temat / nadawca + `— mail leads@`.
 | Nowy lead | `0 PLN` | 0 PLN | puste lub z formularza |
 | Widełki (strona wizytówka) | `4 000 PLN – 10 000 PLN` | 0 | min/max z `strona_cena` |
 | Nie znam stawek | `Do ustalenia` | 0 | puste |
-| Oferta handlowca | kwota z `amount` | wpisane w UI | widełki zostają w tle |
+| Oferta handlowca | kwota z `amount` lub tekst | wpisane w UI | widełki zostają w tle |
+| Wygrana (`WON`) | `1222 PLN` (tekst kafelka) | **`bizValueWon`** preferowane | adapter: fallback `bizValueDisplay` → `biz_value` |
+
+**Ważne:** `bizValueDisplay` = **tylko UI kafelka**. Event `purchase` bierze `biz_value` z `bizValueWon` → `amount` → widełki → parser `bizValueDisplay` (patrz `EVENT_CONTRACT.md` §5.7). Wartość `0 PLN` w `amount` **nie blokuje** fallbacku z display.
 
 Mapowanie `strona_cena`:
 
@@ -104,14 +107,17 @@ Email Sync zapisuje wiadomość w Twenty **zanim** webhook trafi do Stape. Adapt
 |---|-------------|-------------|------------|---------------|
 | 1 | Nowy | `NEW` | `generate_lead` (przy utworzeniu) | Sortownia → create_lead |
 | 2 | Rozeznanie | `CONTACTED` | — | **GCP worker** `advanceNewToContacted` po OUTGOING mailu do klienta (scheduler); opcjonalnie workflow Twenty UI |
-| 3 | Przyjęty SQL | `QUALIFIED` | `qualify_lead` | Ręcznie; modal potwierdzenia — **nie** ma go przy drag&drop w Twenty |
+| 3 | Przyjęty SQL | `QUALIFIED` | `qualify_lead` | Workflow MANUAL **„Przyjmij jako SQL"** (`bizSqlConfirmed=true`). Drag bez workflow → guard cofa etap |
 | 4 | Wysłano ofertę | `PROPOSAL` | — | Ręcznie |
 | 5 | Wysłano umowę | `CONTRACT_SENT` | — | Ręcznie |
 | 6 | Wpłaca | `PAYING` | — | Ręcznie |
-| 7 | Wygrany | `WON` | `purchase` | Ręcznie + `bizValueWon` |
+| 7 | Wygrany | `WON` | `purchase` | Ręcznie; **`bizValueWon`** (waluta) lub fallback z `bizValueDisplay` |
 | 8 | Przegrany | `LOST` | — (brak eventu) | Ręcznie |
+| — | *(akcja, nie stage)* | — | `rejected_lead` | Workflow MANUAL **„Odrzuć leada"** — `campaignRejected=true`, etap bez zmiany |
 
-**SQL — modal:** Twenty nie pokazuje natywnego „Czy na pewno?” przy przeciągnięciu karty. Opcje: (A) szkolenie + świadome przeciągnięcie, (B) workflow **MANUAL** „Oznacz jako SQL” z krokiem FORM przed UPDATE `stage=QUALIFIED`.
+**SQL — modal:** Zamiast polegać na drag&drop używaj workflow **„Przyjmij jako SQL"** (pinned). Bez `bizSqlConfirmed` inbound zwraca `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM`.
+
+**Odrzucenie:** workflow **„Odrzuć leada"** — patrz `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`. Na odrzuconym leadzie guard blokuje SQL/WON.
 
 **Rozeznanie — auto:** workflow `message.created` + filtr OUTGOING → jeśli powiązane Opp `stage=NEW` → `stage=CONTACTED`. Wymaga potwierdzenia pola kierunku w Email Sync (faza 2).
 
@@ -134,6 +140,8 @@ Formularz V2 (answers JSON)
 | `bizIntent` | SELECT: CENNIK, EKSPERT |
 | `bizValueMin` / `bizValueMax` | CURRENCY |
 | `bizValueDisplay` | TEXT |
+| `bizSqlConfirmed` | BOOLEAN |
+| `bizLastNonSqlStage` | TEXT |
 | `bizCardEmail` / `bizCardPhone` | TEXT |
 
 ## Deploy checklist

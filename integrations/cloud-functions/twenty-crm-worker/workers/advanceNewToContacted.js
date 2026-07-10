@@ -34,6 +34,23 @@ function buildContactLabelFresh() {
   return "Godzin: 0";
 }
 
+function computeHoursToFirstResponse(createdAt, outboundIso) {
+  const created = Date.parse(createdAt || "");
+  const outbound = Date.parse(outboundIso || "");
+  if (!Number.isFinite(created) || !Number.isFinite(outbound)) return null;
+  let hours = Math.round(((outbound - created) / 3_600_000) * 100) / 100;
+  if (hours < 0) hours = 0;
+  return hours;
+}
+
+function hasFirstResponseMetrics(opp) {
+  return (
+    opp?.hoursToFirstResponse !== null &&
+    opp?.hoursToFirstResponse !== undefined &&
+    opp?.hoursToFirstResponse !== ""
+  );
+}
+
 function messageContactIso(message, association) {
   return (
     message?.receivedAt ||
@@ -133,13 +150,22 @@ async function markProcessed(associationId, opportunityId, messageId, meta) {
   });
 }
 
-async function touchContactFields(opp, contactIso) {
-  await setPendingWrite(opp.id, "gcp:email_contact_sync", PENDING_WRITE_TTL_MS);
-  await patchTwentyRecord("opportunities", opp.id, {
+async function touchContactFields(opp, contactIso, outboundIso) {
+  const patch = {
     lastContactAt: contactIso,
     bizLastContactLabel: buildContactLabelFresh(),
-  });
+  };
+  if (!hasFirstResponseMetrics(opp) && outboundIso) {
+    const hours = computeHoursToFirstResponse(opp.createdAt, outboundIso);
+    if (hours !== null) {
+      patch.firstResponseAt = outboundIso;
+      patch.hoursToFirstResponse = hours;
+    }
+  }
+  await setPendingWrite(opp.id, "gcp:email_contact_sync", PENDING_WRITE_TTL_MS);
+  await patchTwentyRecord("opportunities", opp.id, patch);
   await clearPendingWrite(opp.id, "gcp:email_contact_sync");
+  return Boolean(patch.firstResponseAt);
 }
 
 async function processOutgoingAssociation(assoc) {
@@ -175,7 +201,7 @@ async function processOutgoingAssociation(assoc) {
   }
 
   const contactIso = messageContactIso(message, assoc);
-  await touchContactFields(opp, contactIso);
+  const m2Written = await touchContactFields(opp, contactIso, contactIso);
 
   let advanced = false;
   if (String(opp.stage || "").toUpperCase() === "NEW") {
@@ -192,6 +218,7 @@ async function processOutgoingAssociation(assoc) {
   await markProcessed(associationId, opp.id, messageId, {
     direction: "OUTGOING",
     advanced,
+    m2Written,
   });
 
   console.log(
@@ -203,10 +230,12 @@ async function processOutgoingAssociation(assoc) {
     "msg=",
     messageId,
     advanced ? "advanced=CONTACTED" : "contact_only",
+    m2Written ? "m2=written" : "m2=skip",
   );
   return {
     direction: "OUTGOING",
     contactUpdated: true,
+    m2Written,
     advanced,
     opportunityId: opp.id,
     opportunityName: opp.name,

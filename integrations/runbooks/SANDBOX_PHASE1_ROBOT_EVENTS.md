@@ -4,7 +4,7 @@ title: "Faza 1 — sandbox: kanoniczne event_name + Robot"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-06-02
+last_verified: 2026-07-10
 related:
   - ../fixtures/README.md
   - ../INTEGRATIONS_PARITY.md
@@ -64,6 +64,18 @@ related:
 1. W GTM Preview wyślij event testowy z `event_name: lead_won`.
 2. W logach Sortownii: `event_name = purchase` po `normalizeSsoEventName`.
 3. Task zapisany w `task_queue` powinien mieć **`event_name: purchase`** (nie `lead_won`).
+
+### 1.6 Task `purchase` z pustym `biz_value` — pricing fallback
+
+1. Task `purchase` z `biz_value` pustym lub `0`, z `biz_product: WEB`.
+2. Uruchom Robot (`robot-task-monitor`, build z `enrichPurchaseBizValues`).
+3. **Oczekiwane:** `biz_value` uzupełnione z cennika (`purchase_WEB` → `sql_WEB` → `Other`) przed zapisem do arkusza.
+
+### 1.7 Inbound `biz_value` — łańcuch pól Twenty
+
+1. Opportunity WON z `bizValueDisplay: "1222 PLN"`, `amount: 0`, puste `bizValueWon`.
+2. Webhook → GCP inbound (`gcp-v5`) → task `purchase`.
+3. **Oczekiwane:** `biz_value: 1222` (parser display). Test jednostkowy: `handlers/normalizeBizValue.test.js`.
 
 ---
 

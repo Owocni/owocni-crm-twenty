@@ -4,14 +4,14 @@ title: "Migracja crm:twenty_* ze sGTM do Cloud Function"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-07-07
+last_verified: 2026-07-10
 related:
   - ../cloud-functions/twenty-crm-worker/index.js
   - ../cloud-functions/twenty-inbound-webhook/index.js
   - ../CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js
   - ../CRM_TWENTY_UPDATE_PERSON.gcp-stub.sGTM.js
   - ../INBOUND_TWENTY_WEBHOOK.gcp-stub.sGTM.js
-  - BUILD_CRM_TWENTY_CREATE_LEAD.md
+  - TWENTY_WORKFLOWS_REJECT_AND_GUARD.md
 ---
 
 # Migracja Twenty CRM worker → GCP
@@ -89,7 +89,7 @@ Oczekiwane:
 ```json
 {
   "ok": true,
-  "build_id": "2026-07-07-gcp-v1",
+  "build_id": "2026-07-10-gcp-v7",
   "update_person": { "processed": 0, "failed": 0 },
   "create_lead": { "processed": 0, "failed": 0 }
 }
@@ -112,7 +112,7 @@ Logi: GCP Console → Cloud Functions → `twenty-crm-worker-sandbox` → Logs.
 1. Wyślij testowy formularz (sandbox email `@fastman.eu`)
 2. Stape Store → `task_queue` → dokument `…_crm_twenty_create_lead`, `status: pending`
 3. Poczekaj ~2 min (scheduler)
-4. Task → `status: done`, `create_lead_runtime: gcp`, `create_lead_build_id: 2026-07-07-gcp-v1`
+4. Task → `status: done`, `create_lead_runtime: gcp`, `create_lead_build_id: 2026-07-10-gcp-v7`
 5. Twenty → nowy Person + Opportunity
 
 **Rollback Schedulera:** przywróć URL `/crm/twenty_worker` i pełne tagi sGTM z repo.
@@ -167,13 +167,13 @@ Po publish sprawdź rozmiar kontenera — powinno spaść ~60 KB.
 
 | # | Krok | Kto | ✓ |
 |---|------|-----|---|
-| 1 | Deploy `twenty-crm-worker-sandbox` | GCP | ☐ |
-| 2 | `curl POST` → HTTP 200 | GCP | ☐ |
-| 3 | Stuby w obu tagach CRM | Stape | ☐ |
-| 4 | Publish sGTM | Stape | ☐ |
-| 5 | Scheduler → URL Cloud Function | GCP | ☐ |
-| 6 | Test formularz → Opp w Twenty | E2E | ☐ |
-| 7 | Log GCP: `build_id: 2026-07-07-gcp-v1` | GCP | ☐ |
+| 1 | Deploy `twenty-crm-worker-sandbox` | GCP | ☑ |
+| 2 | `curl POST` → HTTP 200 | GCP | ☑ |
+| 3 | Stuby w obu tagach CRM | Stape | ☑ |
+| 4 | Publish sGTM | Stape | ☑ |
+| 5 | Scheduler → URL Cloud Function | GCP | ☑ |
+| 6 | Test formularz → Opp w Twenty | E2E | ☑ |
+| 7 | Log GCP: `build_id: 2026-07-10-gcp-v7` | GCP | ☑ |
 
 ---
 
@@ -251,7 +251,7 @@ Oczekiwane:
 ```json
 {
   "ok": true,
-  "build_id": "2026-07-07-gcp-v1",
+  "build_id": "2026-07-10-gcp-v5",
   "result": { "status": "skipped", "reason": "..." }
 }
 ```
@@ -282,11 +282,11 @@ Nie zmieniaj URL webhooka w Twenty — zmienia się tylko tag w sGTM.
 
 | # | Krok | ✓ |
 |---|------|---|
-| 1 | Zmiana stage Opp w Twenty (sandbox) | ☐ |
-| 2 | Stape log: `INBOUND_TWENTY_STUB: GCP 200` | ☐ |
-| 3 | GCP log: `build_id: 2026-07-07-gcp-v1` | ☐ |
-| 4 | Stape Store `task_queue` — nowy task `analytics:ga4_mp` lub `crm:twenty_update_person` | ☐ |
-| 5 | Person webhook → identity_map + opcjonalnie `leads@` create_lead task | ☐ |
+| 1 | Zmiana stage Opp w Twenty (sandbox) | ☑ |
+| 2 | Stape log: `INBOUND_TWENTY_STUB: GCP 200` | ☑ |
+| 3 | GCP log: `build_id: 2026-07-10-gcp-v5` | ☑ |
+| 4 | Stape Store `task_queue` — task `purchase` / `qualify_lead` / `rejected_lead` | ☑ |
+| 5 | Person webhook → identity_map + opcjonalnie `leads@` create_lead task | ☑ |
 
 **Rollback:** przywróć pełny tag z `INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js` (z Constant Variables na klucze).
 
@@ -294,10 +294,20 @@ Nie zmieniaj URL webhooka w Twenty — zmienia się tylko tag w sGTM.
 
 | # | Krok | Kto | ✓ |
 |---|------|-----|---|
-| 1 | Deploy `twenty-inbound-webhook-sandbox` | GCP | ☐ |
-| 2 | `curl POST` → HTTP 200 + `build_id` | GCP | ☐ |
-| 3 | Constant `GCP_INBOUND_WEBHOOK_URL` | Stape | ☐ |
-| 4 | Stub w tagu inbound | Stape | ☐ |
-| 5 | Publish sGTM | Stape | ☐ |
-| 6 | Test Opp stage → task_queue | E2E | ☐ |
-| 7 | Test Person → identity resolver | E2E | ☐ |
+| 1 | Deploy `twenty-inbound-webhook-sandbox` | GCP | ☑ |
+| 2 | `curl POST` → HTTP 200 + `build_id: 2026-07-10-gcp-v5` | GCP | ☑ |
+| 3 | Constant `GCP_INBOUND_WEBHOOK_URL` | Stape | ☑ |
+| 4 | Stub w tagu inbound | Stape | ☑ |
+| 5 | Publish sGTM | Stape | ☑ |
+| 6 | Test Opp stage → task_queue | E2E | ☑ |
+| 7 | Test Person → identity resolver | E2E | ☑ |
+
+## P2.10. Funkcje po gcp-v5 (lipiec 2026)
+
+| Funkcja | Build / komponent | Dokumentacja |
+|---------|-------------------|--------------|
+| Fingerprint dedup (`stage\|prevStage\|updatedAt`) | inbound `gcp-v4+` | `EVENT_CONTRACT` §5.4 |
+| `biz_value` łańcuch + parser `bizValueDisplay` | inbound `gcp-v5`, Robot `00065+` | `EVENT_CONTRACT` §5.7 |
+| `SKIP_CAMPAIGN_REJECTED` / guard workflow | inbound + Twenty workflow | `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` |
+| `bizSqlConfirmed` gate dla `qualify_lead` | inbound + workflow SQL | `DATA_MODEL.md` |
+| Robot `enrichPurchaseBizValues` | `robot-task-monitor` | `SANDBOX_PHASE1_ROBOT_EVENTS.md` §1.6 |

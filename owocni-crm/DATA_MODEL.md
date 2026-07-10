@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-05-31
+last_verified: 2026-07-10
 recheck_trigger: "Twenty release / zmiana schematu pól / powstanie generatora schemy"
 default_trust: D:VERIFIED
 related:
@@ -19,7 +19,7 @@ unfreeze_authority: "Właściciel + ADR (dla pól FROZEN)"
 
 ## 0. LLM QUICK ENTRY
 
-**Ten plik decyduje o:** semantyce i ownership pól krytycznych Opportunity/Person; polityce FROZEN (3 warstwy: typ / API name / wartości SELECT); prefiksach (`id*`/`biz*`/`src*`); 6 pytaniach przed nowym polem; wartościach stage (NEW/CONTACTED/QUALIFIED/PROPOSAL/WON/LOST); rozróżnieniu „pole→event" vs „pole CRM-only".
+**Ten plik decyduje o:** semantyce i ownership pól krytycznych Opportunity/Person; polityce FROZEN (3 warstwy: typ / API name / wartości SELECT); prefiksach (`id*`/`biz*`/`src*`); 6 pytaniach przed nowym polem; wartościach stage (NEW/CONTACTED/QUALIFIED/PROPOSAL/WON/LOST); rozróżnieniu „pole→event" vs „pole CRM-only"; polach metryk analytics (§5.1.1, formuły → `METRICS.md`).
 
 **Ten plik NIE decyduje o:** standardowych polach Twenty (firstName, email → MCP/Settings); mapowaniu pól na eventy (→ `EVENT_CONTRACT.md`); pełnym eksporcie schematu (→ `generated/`, gdy pipeline istnieje); tożsamości (→ `IDENTITY_AND_INBOUND.md`).
 
@@ -85,7 +85,8 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `rejectionReason` | SELECT | NO | Handlowiec | null | rejected_lead (raport) | **FROZEN** | Powód odrzucenia kampanii — raportowo. Sprzężony z `campaignRejected`. |
 | `bizProduct` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | **FROZEN** | Produkt (web, logo, …) |
 | `bizSource` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | OPEN | Źródło leada |
-| `bizValueWon` | CURRENCY | NO | Handlowiec przy WON | null | purchase (raport GCS) | **FROZEN** | Wartość wygranej — raportowo; VBB/VBO z Pricing Key |
+| `bizValueWon` | CURRENCY | NO | Handlowiec przy WON | null | purchase (`biz_value` w payloadzie) | **FROZEN** | Wartość wygranej — **źródło raportowe** dla `purchase`; preferowane nad `bizValueDisplay`. Łańcuch fallback → `EVENT_CONTRACT.md` §5.7 |
+| `amount` | CURRENCY | NO | Twenty / handlowiec | 0 PLN default | purchase (fallback `biz_value`) | OPEN | Natywne pole Twenty; **0 PLN nie liczy się** jako wartość wygranej — adapter przechodzi dalej w łańcuchu §5.7 |
 | `srcSystem` | SELECT | NO | Adapter / UI | TWENTY_UI | proweniencja / raportowo | **FROZEN** | OWOCNI_SORTOWNIA / TWENTY_UI / BETTER_BITRIX_LEGACY. Pole raportowe (skąd lead) — NIE mechanizm loop-prevention (patrz NR-4). |
 | `lastOrchestrationEventAt` | DATETIME | NO | Workflow/adapter | null | audit | OPEN | Ostatni event do Sortowni. Jedyny ślad audytowy emisji po stronie Twenty (brak audit logu na Pro). |
 | `lastOrchestrationEventId` | TEXT | NO | Workflow/adapter | null | audit | OPEN | id_event ostatniego eventu. Ślad audytowy emisji (j.w.). |
@@ -100,10 +101,38 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizProjectType` | SELECT | Formularz | Nazwa leada, raport | OPEN | NEW / REDESIGN |
 | `bizIntent` | SELECT | Formularz | Nazwa leada, raport | OPEN | CENNIK / EKSPERT |
 | `bizValueMin` / `bizValueMax` | CURRENCY | Formularz | Widełki, raport | OPEN | Dolna/górna widełka PLN |
-| `bizValueDisplay` | TEXT | Adapter / handlowiec | Kanban kafelek | OPEN | Tekst wartości na kafelku |
+| `bizValueDisplay` | TEXT | Adapter / handlowiec | Kanban kafelek | OPEN | Tekst wartości na kafelku (np. `1222 PLN`, `0 PLN`, widełki). **UI-only** — adapter używa jako **ostatni fallback** `biz_value` dla `purchase` (parser liczby). Nie zastępuje `bizValueWon` w raportowaniu |
+| `bizSqlConfirmed` | BOOLEAN | Workflow „Przyjmij jako SQL" | false / null | qualify_lead (gate) | OPEN | `true` po potwierdzeniu SQL w workflow MANUAL. Bez tego przejście do QUALIFIED → `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` |
+| `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
+| `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
 | `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę |
 
 Specyfikacja widoku → `integrations/runbooks/KANBAN_CARD_SPEC.md`.
+
+#### Wartość wygranej vs kafelek (kotwica operacyjna)
+
+| Pole | Warstwa | Kiedy wypełniać | Wpływ na `purchase` |
+|---|---|---|---|
+| `bizValueDisplay` | UI kanban | Przy tworzeniu leada (adapter), ręcznie na karcie | Fallback (krok 5) — parser `1222 PLN` → `1222` |
+| `bizValueWon` | Raport / integracja | Przy wygranej (pole walutowe lub workflow) | Preferowane źródło `biz_value` |
+| `amount` | Twenty native | Opcjonalnie | Fallback (krok 2); `0` ignorowane |
+
+Pełny łańcuch → `EVENT_CONTRACT.md` §5.7.
+
+#### Analytics — pola metryk (CRM-only, ADR #18)
+
+Pola **CRM-only** (NR-5 w `METRICS.md`) — wypełnia workflow / GCP worker; zapis read-only dla ról handlowców (Roles → See Field). **NIGDY do payloadów eventów.**
+
+| Field (API) | Type | Owner | Empty | Used by | Freeze? | Description (Twenty UI) |
+|---|---|---|---|---|---|---|
+| `qualifiedAt` | DATETIME | Workflow Track Stage Time v3 | null | M3, M7 | OPEN | Pierwsze wejście w QUALIFIED (SQL od) |
+| `hoursToQualified` | NUMBER | Workflow Track Stage Time v3 | null | M3 | OPEN | Godziny od `createdAt` do SQL (2 dec.) |
+| `stageClosedAt` | DATETIME | Workflow Track Stage Time v3 | null | M1, M4, M8 odpływ | OPEN | Faktyczne zamknięcie WON/LOST — ≠ natywne `closeDate` |
+| `daysToClose` | NUMBER | Workflow Track Stage Time v3 | null | M1 | OPEN | Dni od `createdAt` do zamknięcia (2 dec.) |
+| `firstResponseAt` | DATETIME | GCP `advanceNewToContacted.js` | null | M2 | OPEN | Timestamp pierwszego maila wychodzącego |
+| `hoursToFirstResponse` | NUMBER | GCP `advanceNewToContacted.js` | null | M2 | OPEN | Godziny do pierwszej odpowiedzi (2 dec.) |
+
+Kanon formuł → `METRICS.md`. Kontrakty → `../workflows/track-stage-time.contract.md`, `../workflows/first-outbound-response.contract.md`.
 
 #### Stage LOST
 - **Nie emituje** eventu SSOT do platform (semantyka → `EVENT_CONTRACT.md`).
@@ -178,9 +207,11 @@ Brak custom fields w Etapie 1 MVP.
 
 | Temat | Gdzie jest prawda |
 |---|---|
+| Formuły metryk M1–M9 (pola §5.1.1) | `METRICS.md` |
 | Które pole wyzwala który event; LOST vs rejected_lead | `EVENT_CONTRACT.md` |
 | Zasada granicy CRM↔orkiestracja (prefiksy), Prawa 3/4/6 | `CRM_CONSTITUTION.md` |
 | Loop-prevention (dlaczego srcSystem ≠ SKIP) | `EVENT_CONTRACT.md` (pending-write Stape) |
+| Workflowy SQL / odrzucenie / guard | `integrations/runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` |
 | Fakt „custom fields nie-required" (recheck) | `ops/OPS_NOTES.md` |
 | Pełny eksport schematu (future) | `generated/` (gdy pipeline) |
 
@@ -210,6 +241,7 @@ Brak custom fields w Etapie 1 MVP.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-10 | `bizSqlConfirmed`, `bizSqlConfirmedAt`, `bizLastNonSqlStage`; `amount` w łańcuchu purchase; rozróżnienie `bizValueDisplay` vs `bizValueWon`; § wartość wygranej | Dawid / agent | Workflow SQL/odrzucenie/guard + fix biz_value |
 
 ---
 

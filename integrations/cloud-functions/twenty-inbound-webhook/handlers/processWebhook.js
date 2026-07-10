@@ -38,6 +38,7 @@ const REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM =
   "SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM";
 const REASON_SKIP_DUPLICATE_BUSINESS_EVENT = "SKIP_DUPLICATE_BUSINESS_EVENT";
 const REASON_SKIP_UNSUPPORTED_OBJECT = "SKIP_UNSUPPORTED_OBJECT";
+const REASON_SKIP_CAMPAIGN_REJECTED = "SKIP_CAMPAIGN_REJECTED";
 const REASON_EMITTED = "EMITTED";
 
 function makeString(value) {
@@ -204,13 +205,88 @@ function storeKeyPendingWrite(opportunityId) {
   return COLLECTION_PENDING_WRITE_PREFIX + opportunityId;
 }
 
+function extractWebhookRecord(payload) {
+  let record = payload?.data || payload?.record || payload || {};
+  if (record && record.record && typeof record.record === "object") {
+    record = record.record;
+  }
+  return record;
+}
+
+function normalizeBizValueForTask(value) {
+  if (value === null || value === undefined || value === "") return "";
+  if (typeof value === "number") return value;
+  if (typeof value === "string") {
+    const s = value.trim();
+    if (!s || s === "null" || s === "undefined") return "";
+    const n = Number(s);
+    return Number.isFinite(n) ? n : s;
+  }
+  if (typeof value === "object") {
+    const micros = value.amountMicros;
+    if (micros === null || micros === undefined) return "";
+    const n = Number(micros);
+    if (!Number.isFinite(n)) return "";
+    return n / 1_000_000;
+  }
+  return "";
+}
+
+function isMeaningfulBizValue(value) {
+  return (
+    value !== "" &&
+    value !== null &&
+    value !== undefined &&
+    Number(value) > 0
+  );
+}
+
+function parseBizValueDisplay(display) {
+  if (!display || typeof display !== "string") return "";
+  const s = display.trim();
+  if (!s || s === "0 PLN" || s === "Do ustalenia") return "";
+  const matches = s.match(/\d[\d\s]*/g);
+  if (!matches || !matches.length) return "";
+  const numbers = matches
+    .map((part) => Number(part.replace(/\s/g, "")))
+    .filter((n) => Number.isFinite(n) && n > 0);
+  if (!numbers.length) return "";
+  return Math.max(...numbers);
+}
+
+function resolveOpportunityBizValue(opp) {
+  if (!opp || typeof opp !== "object") return "";
+  const candidates = [
+    opp.bizValueWon,
+    opp.amount,
+    opp.bizValueMax,
+    opp.bizValueMin,
+    parseBizValueDisplay(opp.bizValueDisplay),
+  ];
+  for (const candidate of candidates) {
+    const normalized = normalizeBizValueForTask(candidate);
+    if (isMeaningfulBizValue(normalized)) {
+      return normalized;
+    }
+  }
+  return "";
+}
+
 function deliveryFingerprint(webhookBody) {
   const payload = webhookBody || {};
-  const record = payload.data || {};
+  const record = extractWebhookRecord(payload);
+  const previous = payload.previousRecord || {};
   const oppId = record.id || payload.id || "";
-  const ts = payload.timestamp || "";
-  const ev = payload.event || "";
-  return ev + "|" + oppId + "|" + ts;
+  const ev =
+    payload.event ||
+    payload.operation ||
+    payload.type ||
+    payload.name ||
+    "";
+  const stage = record.stage || "";
+  const prevStage = previous.stage || "";
+  const ts = payload.timestamp || record.updatedAt || "";
+  return [ev, oppId, stage, prevStage, ts].join("|");
 }
 
 function resolveIdentityOid(parsed) {
@@ -224,6 +300,13 @@ function resolveIdentityOid(parsed) {
 function detectBusinessEvent(parsed, prev) {
   if (!resolveIdentityOid(parsed)) {
     return { emit: "generate_lead", manual: true };
+  }
+  if (
+    parsed.campaignRejected === true &&
+    prev.last_stage !== parsed.stage &&
+    (parsed.stage === "QUALIFIED" || parsed.stage === "WON")
+  ) {
+    return { skip: REASON_SKIP_CAMPAIGN_REJECTED };
   }
   if (prev.last_stage == null && prev.last_campaignRejected == null) {
     if (parsed.stage === "QUALIFIED") {
@@ -556,7 +639,6 @@ async function enqueueLeadsAtCreateLeadTask(parsed, idOid, env) {
     biz_email: email || null,
     biz_phone: phone || null,
     biz_name: buildPersonDisplayName(parsed) || null,
-    biz_product: "web",
   };
   await putTaskDocument(taskId, payload);
   console.log("LEADS_AT_CREATE: task saved", taskId);
@@ -703,6 +785,11 @@ async function enrichInboundTaskFromTwenty(taskPayload, parsed) {
     }
     if (!enriched.biz_product && opp.bizProduct) {
       enriched.biz_product = opp.bizProduct;
+    }
+    if (enriched.biz_value === undefined || enriched.biz_value === null || enriched.biz_value === "") {
+      enriched.biz_value = resolveOpportunityBizValue(opp);
+    } else {
+      enriched.biz_value = normalizeBizValueForTask(enriched.biz_value);
     }
     if (!parsed.pointOfContactId && opp.pointOfContactId) {
       parsed.pointOfContactId = opp.pointOfContactId;
@@ -969,7 +1056,7 @@ async function processTwentyWebhook(webhookBody, options = {}) {
     biz_email: parsed.bizEmail,
     biz_phone: parsed.bizPhone,
     biz_product: parsed.bizProduct,
-    biz_value: parsed.bizValueWon,
+    biz_value: normalizeBizValueForTask(parsed.bizValueWon) || "",
     src_system: "TWENTY_UI",
     src_action_source: decision.manual ? "manual_create" : "crm_webhook",
     adapter: ADAPTER_ID,
@@ -1000,8 +1087,13 @@ async function processTwentyWebhook(webhookBody, options = {}) {
 module.exports = {
   parseTwentyPayload,
   detectBusinessEvent,
+  deliveryFingerprint,
+  normalizeBizValueForTask,
+  parseBizValueDisplay,
+  resolveOpportunityBizValue,
   processTwentyWebhook,
   processPersonIdentityFromWebhook,
   REASON_EMITTED,
   REASON_SKIP_UNSUPPORTED_OBJECT,
+  REASON_SKIP_CAMPAIGN_REJECTED,
 };

@@ -1,0 +1,8 @@
+{
+  "workflowId": "afe9f0a9-6891-4e1e-b226-0107140859be",
+  "workflowVersionId": "03e2ab56-e376-4ad7-81b3-0f08acc88933",
+  "name": "First Outbound Response",
+  "status": "ACTIVE",
+  "logicFunctionId": "0331ac7b-df64-4224-aed7-c1c1bd817f42",
+  "trigger": "messageChannelMessageAssociation.created OUTGOING"
+}

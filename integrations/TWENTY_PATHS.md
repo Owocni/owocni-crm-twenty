@@ -4,7 +4,7 @@ title: "TWENTY_PATHS — mapa ścieżek Twenty ↔ Sortownia ↔ Robot"
 layer: reference
 status: active
 owner: "Dawid"
-last_verified: 2026-06-02
+last_verified: 2026-07-10
 related:
   - ../owocni-crm/ARCHITECTURE.md
   - ../owocni-crm/EVENT_CONTRACT.md
@@ -17,12 +17,13 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 
 ## 1. Adaptery (nazwy kanoniczne)
 
-| Adapter ID | Kierunek | Plik w repo | Deploy |
-|------------|----------|-------------|--------|
-| `inbound:twenty_webhook` | Twenty → Sortownia | `INBOUND_TWENTY_WEBHOOK.js` | Stape HTTP tag |
-| `crm:twenty_create_lead` | Sortownia → Twenty | `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Stape tag + worker (po `generate_lead`, nowy Akt) |
-| `crm:twenty_update_person` | Sortownia → Twenty | `CRM_TWENTY_UPDATE_PERSON.sGTM.js` | Stape tag + Scheduler |
-| *(platform)* | Sortownia → Robot | `GoogleCloudRobot.js` | GCP Cloud Function |
+| Adapter ID | Kierunek | Plik w repo | Deploy (sandbox lipiec 2026) |
+|------------|----------|-------------|------------------------------|
+| `inbound:twenty_webhook` | Twenty → task_queue | `cloud-functions/twenty-inbound-webhook/` | Stape Client + stub → **GCP CF** (`gcp-v5`) |
+| `inbound:twenty_webhook` (legacy) | Twenty → task_queue | `INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js` | Stape HTTP tag (prod rollback) |
+| `crm:twenty_create_lead` | Sortownia → Twenty | `cloud-functions/twenty-crm-worker/` | Stape stub → **GCP CF** |
+| `crm:twenty_update_person` | Sortownia → Twenty | `CRM_TWENTY_UPDATE_PERSON.sGTM.js` + worker | Stape + GCP worker |
+| *(platform)* | task_queue → platformy | `GoogleCloudRobot.js` | GCP Cloud Run `robot-task-monitor` |
 | *(paid)* | Web GTM → Sortownia | `SORTOWNIA_V2_POPRAWIONY.js` | Stape sGTM tag |
 
 ## 2. HTTP / endpointy
@@ -39,7 +40,7 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 |------------------|-----------|
 | `task_queue` | Zadania dla Robota (`event_name`, `environment`, atrybucja, …) |
 | `identity_map` | Profil pod `id_oid` / email / phone; mint-guard: `twenty_person_{personId}` |
-| `twenty_opp_{opportunityId}` | `last_stage`, `last_campaignRejected` (transition detection) |
+| `twenty_opp_{opportunityId}` | `last_stage`, `last_campaignRejected`, `last_delivery_fingerprint` (dedup) |
 | `pending_write_twenty_{opportunityId}` | TTL echo loop-prevention (NR-6) |
 
 ## 4. Przepływy (skrót)
@@ -53,8 +54,12 @@ Web GTM → Sortownia (oid_init → generate_lead) → crm:twenty_create_lead �
 ### 4.2 Outbound CRM → platformy
 
 ```
-Twenty webhook OUT → inbound:twenty_webhook → task_queue → Robot → Google/Meta/GA4
+Twenty webhook OUT → Stape POST /inbound/twenty_webhook
+  → (sandbox) GCP twenty-inbound-webhook → task_queue
+  → Robot → arkusze sandbox / platformy prod
 ```
+
+Workflow MANUAL („Przyjmij jako SQL", „Odrzuć leada") → patrz `runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`.
 
 ### 4.3 Manual create + backfill
 

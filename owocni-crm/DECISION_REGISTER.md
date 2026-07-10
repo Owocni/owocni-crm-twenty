@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: content_and_structure
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-06-08
+last_verified: 2026-07-09
 recheck_trigger: "nowa decyzja / zmiana statusu decyzji / zamknięcie blokera cutoveru"
 default_trust: D:CORE
 related:
@@ -122,6 +122,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | #11 | Native webhook nie niesie before/after — payload = stan aktualny | `EVENT_CONTRACT.md` → §5.4 (NR-2) | docs webhooks v2.8.0 | 2026-05-29 |
 | **#16** | HMAC: `X-Twenty-Webhook-Signature` SHA256 + `X-Twenty-Webhook-Timestamp`; signed string `{timestamp}:{payload}` | `ops/OPS_NOTES.md` → Twenty Verified Facts | docs.twenty.com | 2026-05-31 |
 | **#17** | Szablony maili: SSOT Supabase BB; Faza 0 dual compose; cutover wymaga Sidecar MVP lub Twenty native | `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md` | Dawid + właściciel (pending) | 2026-06-16 |
+| **#18** | Analytics: metryki M1–M9 + pola CRM-only + dashboardy KPI (sandbox D2) | `owocni-crm/METRICS.md` → §5; `statystyki/IMPLEMENTATION-STATUS.md` → Zamknięcie ADR #18 | Dawid + właściciel | 2026-07-09 |
 
 > **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
 
@@ -135,6 +136,12 @@ Kontekst: kod Robot / docs orkiestracji mogą zawierać stare `lead_won`. Decyzj
 
 **ADR #17 (szablony maili) — open, blocks cutover mailowy (G-PAR PAR-5).**
 Kontekst: Twenty Cloud nie ma Message Templates w UI/API (docs Mintlify nieaktualne). Spike Notes odrzucony 2026-06-16. Decyzja: (1) SSOT = `email_template` Supabase BB; (2) Faza 0 = dual compose (BB picker + Twenty lejek, sync IMAP); (3) przed cutoverem mailowym = **Owocni Template Sidecar** MVP (picker + clipboard → Twenty composer) **lub** natywne Twenty Templates jeśli platforma dostarczy. AI draft = Faza 3 Sidecar. Plan: `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md`. Zamknięcie ADR: PASS PAR-5.2 po Sidecar MVP lub Twenty native.
+
+**ADR #18 (Analytics — metryki sprzedażowe) — closed 2026-07-09, `blocks: none`, `implementation_status: done` (sandbox D2).**
+Kontekst: tablica KPI per produkt × handlowiec × czas (M1–M9); plan zaakceptowany przez właściciela 2026-07-09 (`statystyki/REVIEW-DLA-WLASCICIELA.md`).
+Decyzja (3 warstwy): (1) pola CRM-only na Opportunity + `bizProduct` / `bizSource`; (2) Track Stage Time v3 (Twenty) + M2 w GCP `advanceNewToContacted.js`; (3) dashboardy EA „Sprzedaż — Oceny" + „Sprzedaż — Zespół". Kanon formuł = `owocni-crm/METRICS.md`.
+Evidence: pola w Twenty + `DATA_MODEL.md` §5.1.1; workflow v3 ACTIVE; PF-4/5 PASS; smoke Leads@ `DIRECT_EMAIL`; funnel test7858; dashboardy zaakceptowane wstępnie przez właściciela 2026-07-09. Backlog poza ADR: PF-7 legacy import, PF-6 kredyty, pełna próba M4 ≥20 rekordów po imporcie.
+Status wdrożenia: `statystyki/IMPLEMENTATION-STATUS.md`.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 
@@ -190,6 +197,8 @@ Gdy liczba decyzji wymagających pełnego ADR (kontekst / opcje / konsekwencje) 
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-09 | **#18 Analytics → closed** (sandbox D2, `owocni-crm/METRICS.md` SSOT) | Dawid + właściciel | dashboardy + testy PASS |
+| 2026-07-09 | #18 Analytics (metryki + dashboardy) → open, `blocks: none`, wdrożenie `in_progress` | właściciel + Dawid | akceptacja planu `statystyki/` |
 | 2026-05-31 | #16 (HMAC) → closed z evidence (docs.twenty.com) | właściciel | błąd źródła rozstrzygnięty docs |
 
 ---

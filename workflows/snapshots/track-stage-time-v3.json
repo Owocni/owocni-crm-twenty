@@ -1,0 +1,8 @@
+{
+  "workflowId": "23b2a240-a769-4629-8d6f-1804859eb305",
+  "workflowVersionId": "c9c7f6e0-ceac-48cb-897c-6544a693ad5e",
+  "name": "Track Stage Time v3",
+  "status": "ACTIVE",
+  "logicFunctionId": "c88d0267-8cf2-46f0-b2cf-1786cd64f34c",
+  "chain": "Trigger(stage) -> CODE -> UPDATE"
+}

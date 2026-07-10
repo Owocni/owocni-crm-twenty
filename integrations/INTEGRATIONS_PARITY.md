@@ -5,8 +5,8 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid (wykonawca techniczny)"
-last_verified: 2026-06-30
-recheck_trigger: "zmiana integrations/*.js / zamknięcie ADR #14 / nowy adapter Stape"
+last_verified: 2026-07-10
+recheck_trigger: "zmiana integrations/*.js / cloud-functions/* / zamknięcie ADR #14 / nowy adapter Stape lub GCP"
 default_trust: D:CORE
 related:
   - README.md
@@ -36,8 +36,8 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 |---|---|---|---|
 | Sortownia paid / `generate_lead` / oid_init | **TAK** (`SORTOWNIA_V2_POPRAWIONY.js`) | Stape sGTM tag (deploy z tego pliku) | `EVENT_CONTRACT`, `IDENTITY` |
 | Robot / adaptery platform | **TAK** (`GoogleCloudRobot.js`) | GCP Cloud Function | `ARCHITECTURE`, `EVENT_CONTRACT` |
-| Adapter `inbound:twenty_webhook` | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js`) | Stape tag — **deploy sandbox PASS** | `EVENT_CONTRACT` §5.4 |
-| Adapter `crm:twenty_create_lead` | **TAK** (`CRM_TWENTY_CREATE_LEAD.sGTM.js`) | Stape tag + worker | `ARCHITECTURE` §5.3 | **PASS sandbox** (2026-06-30) |
+| Adapter `inbound:twenty_webhook` | **TAK** (`cloud-functions/twenty-inbound-webhook/` + legacy Stape) | **Sandbox:** GCP CF via Stape stub; **prod:** legacy full tag lub przyszły prod CF | `EVENT_CONTRACT` §5.4 |
+| Adapter `crm:twenty_create_lead` | **TAK** (`cloud-functions/twenty-crm-worker/`) | GCP CF via Stape stub | `ARCHITECTURE` §5.3 | **PASS sandbox** |
 | Adapter `crm:twenty_update_person` | **TAK** (`CRM_TWENTY_UPDATE_PERSON.sGTM.js`) | Stape tag + Scheduler — **deploy sandbox PASS** | `EVENT_CONTRACT` §6.1 |
 | env-guard sandbox/prod | **TAK (prep)** | `shared/envGuard.js` + `ENV_GUARD.sGTM.js` + pole `environment` w task_queue | `ARCHITECTURE` §5.4 |
 | Identity Resolver T1–T5 | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js` inline) | Stape tag `inbound_twenty_webhook` — **deploy sandbox PASS** | `IDENTITY` §5.2 |
@@ -46,7 +46,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ---
 
-## 2. Macierz zgodności (stan 2026-06-30)
+## 2. Macierz zgodności (stan 2026-07-10)
 
 | ID | Wymaganie SSOT | Plik SSOT | Stan kodu | Status | Następny krok |
 |---|---|---|---|---|---|
@@ -54,7 +54,11 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | P2 | ADR #14 cleanup nazw w Robot + docs orkiestracji | `DECISION_REGISTER` #14 | Robot zaktualizowany; Google Docs — osobno | **W toku** | Przegląd docs orkiestracji |
 | P3 | Loop-prevention: pending-write Stape, **nie** `srcSystem`-SKIP | `EVENT_CONTRACT` NR-6, INV-3 | `INBOUND_*` + `CRM_TWENTY_UPDATE_PERSON.sGTM.js` | **PASS sandbox** | Smoke #4 + pending-write TTL |
 | P4 | Manual create: `idOid IS NULL` → `generate_lead` + backfill | `EVENT_CONTRACT` §5.4, §6.1 | inbound + worker Stape | **PASS sandbox** | Smoke #4 evidence |
-| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` | `EVENT_CONTRACT` §5.4 | `INBOUND_TWENTY_WEBHOOK.sGTM.js` (`twenty_opp_`) | **PASS sandbox** | Smoke #1–3, #5–#7 |
+| P5 | Transition detection: Stape Store `last_stage` / `last_campaignRejected` + fingerprint | `EVENT_CONTRACT` §5.4 | GCP `processWebhook.js` | **PASS sandbox** | Smoke #1–3, #5–#7 |
+| P12 | GCP inbound CF (`twenty-inbound-webhook`, build `gcp-v5`) | `MIGRATE_TWENTY_CRM_TO_GCP` § Faza 2 | `cloud-functions/twenty-inbound-webhook/` | **PASS sandbox** | Log `build_id: 2026-07-10-gcp-v5` |
+| P13 | `qualify_lead` gate: `bizSqlConfirmed` + `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` | `EVENT_CONTRACT` §5.3 | inbound CF + workflow SQL | **PASS sandbox** | Workflow „Przyjmij jako SQL" |
+| P14 | `campaignRejected` guard: `SKIP_CAMPAIGN_REJECTED` + workflow revert | `EVENT_CONTRACT` §5.3 | inbound CF + guard workflow | **PASS sandbox** | `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` |
+| P15 | `biz_value` purchase: łańcuch pól + `enrichPurchaseBizValues` | `EVENT_CONTRACT` §5.7 | inbound CF + `GoogleCloudRobot.js` | **PASS sandbox** | `normalizeBizValue.test.js` |
 | P6 | VBB gate: `identity_status` + `vbb_eligible` | `IDENTITY` §5.10 | Resolver: T3 `vbb_eligible=false`; Robot pełny gate — do testu prod | **Częściowy PASS** | T3 w evidence E12.2; Robot przed cutover |
 | P7 | `srcSystem` = raportowe, nie SKIP | `DATA_MODEL` NR-4 | inbound: brak srcSystem-SKIP w kodzie | **OPEN** | L-1 krok 3 jeśli SKIP dodany później |
 | P8 | Wskaźniki `by_*` + profil pod `id_oid` | `IDENTITY` §5.8 | multi-key `identity_map` + `twenty_person_{id}` guard | **PASS sandbox*** | Osobne kolekcje `by_*` = backlog ADD-2 |
@@ -64,7 +68,14 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ---
 
-## 3. Co zrobiono w tej iteracji (2026-06-02)
+## 3. Co zrobiono w tej iteracji (2026-07-10)
+
+1. **Dokumentacja SSOT** zsynchronizowana z runtime GCP: `EVENT_CONTRACT`, `DATA_MODEL`, `ARCHITECTURE`, `integrations/README`, `TWENTY_PATHS`, `INTEGRATIONS_PARITY` (P12–P15).
+2. **Nowy runbook:** `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` (SQL, odrzucenie, guard).
+3. **Runbooki operacyjne:** `MIGRATE_TWENTY_CRM_TO_GCP` (gcp-v5/v7), `KANBAN_CARD_SPEC`, `SANDBOX_PHASE1`, `PREFLIGHT`, `BUILD_INBOUND` — GCP path + `biz_value`.
+4. **`META-PODLACZENIE.md`** — dopisek zakresu (Meta ≠ Twenty pipeline).
+
+## 3b. Co zrobiono w iteracji (2026-06-02)
 
 1. **Archiwum:** `integrations/archive/pre-ssot-alignment-2026-06-02/` — snapshot przed zmianami.
 2. **Robot (`GoogleCloudRobot.js`):**
