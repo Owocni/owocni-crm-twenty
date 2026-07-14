@@ -38,6 +38,9 @@ function extractCreatedId(collection, responseBody) {
     "create" + collection.charAt(0).toUpperCase() + collection.slice(1, -1);
   if (collection === "people") createKey = "createPerson";
   if (collection === "opportunities") createKey = "createOpportunity";
+  if (collection === "messageThreads") createKey = "createMessageThread";
+  if (collection === "messages") createKey = "createMessage";
+  if (collection === "messageParticipants") createKey = "createMessageParticipant";
   const record =
     data[createKey] ||
     data[collection.slice(0, -1)] ||

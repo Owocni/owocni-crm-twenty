@@ -64,7 +64,7 @@
 |-------|------------|-------|
 | Track Stage Time v3 | `23b2a240-a769-4629-8d6f-1804859eb305` | Trigger: `stage` only → CODE → UPDATE |
 | First Outbound / M2 | GCP `advanceNewToContacted.js` | OUTGOING mail → `firstResponseAt` + `hoursToFirstResponse` |
-| Przyjmij jako SQL | `207207b6-487b-4d66-bf47-81d1c65f90a2` | `bizSqlConfirmed` gate |
+| Przyjmij jako SQL v5 | `f6a43e81-21b6-4ad4-a118-9cd334ec46e4` | atomowy `qualifiedAt` + `bizSqlConfirmedAt`; WON/LOST bez zmiany stage |
 | Odrzuć leada | `8a742a9f-8bcb-4792-9934-35a0fbba560a` | `rejected_lead`, stage bez zmiany |
 | Guard odrzucony | `f5f1fb34-0a6f-4c6f-bb8f-f602d5f30a95` | Cofa QUALIFIED/WON |
 
