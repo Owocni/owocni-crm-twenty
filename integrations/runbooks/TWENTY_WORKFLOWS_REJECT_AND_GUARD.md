@@ -20,7 +20,7 @@ Runbook operacyjny dla akcji MANUAL i guardów DATABASE_EVENT na Opportunity. Se
 
 | Workflow | Trigger | Efekt w CRM | Event SSOT |
 |----------|---------|-------------|------------|
-| **Przyjmij jako SQL** | MANUAL (pinned) | `stage=QUALIFIED`, `bizSqlConfirmed=true` | `qualify_lead` (przez native webhook lub syntetyczny POST) |
+| **Przyjmij jako SQL** | MANUAL (pinned) | `bizSqlConfirmed=true`, `bizSqlConfirmedAt`, `qualifiedAt`, `hoursToQualified`; `stage=QUALIFIED` tylko gdy deal otwarty (WON/LOST bez zmiany etapu) | `qualify_lead` (syntetyczny POST) |
 | **Odrzuć leada** | MANUAL (pinned, IconBan) | `campaignRejected=true`, `rejectionReason`; **stage bez zmiany** | `rejected_lead` |
 | **Guard odrzucony** | DATABASE_EVENT `opportunity.updated` | Cofa QUALIFIED/WON → `bizLastNonSqlStage` gdy `campaignRejected=true` | brak (cofnięcie etapu) |
 | **Guard SQL (drag)** | DATABASE_EVENT | Cofa QUALIFIED bez `bizSqlConfirmed` | `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` w inbound |
@@ -29,10 +29,12 @@ Inbound adapter (`twenty-inbound-webhook`) dodatkowo blokuje emisję `qualify_le
 
 ## 2. „Przyjmij jako SQL"
 
-- **Pola:** `bizSqlConfirmed=true`, przejście na `QUALIFIED`
+- **Pola (atomowo w jednym UPDATE):** `bizSqlConfirmed=true`, `bizSqlConfirmedAt`, `qualifiedAt` (first-entry), `hoursToQualified`
+- **Etap kanbanu:** otwarty deal → `QUALIFIED`; **WON/LOST → etap bez zmiany** (SQL dla reklam bez cofania wygranej)
 - **Bez workflow:** sam drag na kolumnę SQL → guard cofa etap; inbound → `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM`
-- **Workflow ID (referencja):** `207207b6-487b-4d66-bf47-81d1c65f90a2` (nazwa w UI: „Przyjmij jako SQL")
-- **Deploy:** istniejący workflow w Twenty (wdrożony wcześniej); nie wymaga skryptu w tym runbooku
+- **Workflow ID (sandbox 2026-07-10):** `f6a43e81-21b6-4ad4-a118-9cd334ec46e4` (UI: „Opp · Przyjmij jako SQL v5")
+- **Deploy:** `integrations/tools/deploy_workflow_sql_v5.py` (GraphQL 403 na kluczu API — preferuj MCP); backfill: `backfill_sql_qualified_at.py`
+- **Root cause v4:** SQL na już zamkniętym deale wymuszał QUALIFIED; `qualifiedAt` zapisywał osobno Track Stage Time — przy szybkim powrocie na WON timestamp ginął mimo `bizSqlConfirmed=true`
 
 ### Test
 

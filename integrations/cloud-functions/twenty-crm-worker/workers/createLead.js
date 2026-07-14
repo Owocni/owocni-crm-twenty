@@ -871,6 +871,74 @@ async function createPersonRecord(taskData, idOid) {
   return personId;
 }
 
+function shouldSeedFormInquiryEmail(taskData) {
+  return resolveSrcSystem(taskData) !== "TWENTY_EMAIL";
+}
+
+function normalizeFormMessageText(taskData) {
+  let s = String(taskData.biz_message || taskData.description || "");
+  s = s
+    .split("<br>")
+    .join("\n")
+    .split("<br/>")
+    .join("\n")
+    .split("<br />")
+    .join("\n")
+    .split("<BR>")
+    .join("\n")
+    .split("&nbsp;")
+    .join(" ");
+  s = stripHtmlTags(s);
+  s = collapseWhitespace(s);
+  return s.trim();
+}
+
+async function createFormInquiryEmailThread(taskData, personId) {
+  if (!shouldSeedFormInquiryEmail(taskData)) return null;
+  const contact = resolveTaskContactFields(taskData);
+  if (!contact.email) return null;
+
+  const threadRes = await twentyRequest("POST", "/messageThreads", {});
+  if (threadRes.statusCode < 200 || threadRes.statusCode >= 300) {
+    throw new Error(
+      `POST messageThreads HTTP ${threadRes.statusCode} ${threadRes.rawBody}`,
+    );
+  }
+  const threadId = extractCreatedId("messageThreads", threadRes.body);
+  if (!threadId) throw new Error("POST messageThreads — brak id");
+
+  const answers = parseFormAnswers(taskData);
+  const text =
+    normalizeFormMessageText(taskData) ||
+    `Nowe zapytanie z formularza (${contact.email}).`;
+  const messageRes = await twentyRequest("POST", "/messages", {
+    subject: "Zapytanie z formularza owocni.pl",
+    text,
+    receivedAt: resolveLastContactIso(taskData),
+    messageThreadId: threadId,
+  });
+  if (messageRes.statusCode < 200 || messageRes.statusCode >= 300) {
+    throw new Error(`POST messages HTTP ${messageRes.statusCode} ${messageRes.rawBody}`);
+  }
+  const messageId = extractCreatedId("messages", messageRes.body);
+  if (!messageId) throw new Error("POST messages — brak id");
+
+  const displayName = resolveContactLabel(taskData, answers);
+  const partRes = await twentyRequest("POST", "/messageParticipants", {
+    role: "FROM",
+    handle: contact.email,
+    displayName,
+    messageId,
+    personId,
+  });
+  if (partRes.statusCode < 200 || partRes.statusCode >= 300) {
+    throw new Error(
+      `POST messageParticipants HTTP ${partRes.statusCode} ${partRes.rawBody}`,
+    );
+  }
+  return messageId;
+}
+
 async function createOpportunityRecord(taskData, idOid, personId) {
   const answers = parseFormAnswers(taskData);
   const bizProductTwenty = resolveTwentyBizProduct(taskData, answers);
@@ -1041,6 +1109,14 @@ async function processOneTask(task, audit, allPending) {
 
   const personId = await resolveOrCreatePerson(taskData, idOid);
   const oppId = await createOpportunityRecord(taskData, idOid, personId);
+  try {
+    const messageId = await createFormInquiryEmailThread(taskData, personId);
+    if (messageId) {
+      console.log("form inquiry email thread", messageId, "person=", personId);
+    }
+  } catch (err) {
+    console.warn("form inquiry email thread warn", err.message);
+  }
   await setPendingWrite(oppId, ADAPTER_ID, PENDING_WRITE_TTL_MS);
   await updateTaskDone(
     task.key,
@@ -1092,4 +1168,11 @@ async function runCreateLeadWorker() {
   return stats;
 }
 
-module.exports = { runCreateLeadWorker, ADAPTER_ID, mapBizSource, isLeadsAtEmailTask };
+module.exports = {
+  runCreateLeadWorker,
+  ADAPTER_ID,
+  mapBizSource,
+  isLeadsAtEmailTask,
+  shouldSeedFormInquiryEmail,
+  normalizeFormMessageText,
+};

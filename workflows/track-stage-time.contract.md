@@ -38,6 +38,6 @@
 |---------|-------|
 | NEW → WON | `stageClosedAt`, `daysToClose` ✅ |
 | WON → LOST | terminal odświeżony ✅ |
-| NEW → QUALIFIED (+ bizSqlConfirmed) | `qualifiedAt`, `hoursToQualified` ✅ |
+| NEW → QUALIFIED (+ bizSqlConfirmed) | `qualifiedAt`, `hoursToQualified` ✅ (primary: workflow SQL v5 zapisuje atomowo; Track Stage Time = backup przy samym dragu) |
 
 Snapshot: `workflows/snapshots/track-stage-time-v3.json`

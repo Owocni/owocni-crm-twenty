@@ -13,7 +13,7 @@ default_trust: D:CORE
 
 **Cel review:** potwierdzić spójność dokumentacji SSOT i kierunków decyzyjnych, wskazać sprzeczności i luki — **bez** oczekiwania gotowości cutover ani działającego deployu integracji.
 
-**Repo:** https://github.com/FastManPL/owocni-crm-twenty.git · branch `main`  
+**Repo:** https://github.com/Owocni/owocni-crm-twenty.git · branch `main`  
 **Ostatni istotny commit integracji/prep:** `be6f57c` (Twenty paths, env-guard, adaptery prep)
 
 ---
