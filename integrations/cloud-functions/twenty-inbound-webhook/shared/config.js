@@ -1,6 +1,6 @@
 "use strict";
 
-const INBOUND_BUILD_ID = "2026-07-10-gcp-v5";
+const INBOUND_BUILD_ID = "2026-07-16-gcp-v6-freemail";
 
 function requireEnv(name) {
   const value = process.env[name];

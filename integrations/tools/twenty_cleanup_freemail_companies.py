@@ -10,7 +10,7 @@ Tryby:
   safe  (domyślny) — usuń gdy name == domain i is_free_mail (np. onet.pl / onet.pl)
   broad — usuń każdą firmę z domeną free-mail (ryzyko: Orange Polska @ orange.pl)
 
-SSOT listy: owocni-crm/data/free_mail_domains_v1.json
+SSOT listy: owocni-crm/data/free_mail_domains_v1.json (exact match — BEZ substring)
 """
 from __future__ import annotations
 
@@ -20,11 +20,17 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-FREE_MAIL_JSON = REPO_ROOT / "owocni-crm" / "data" / "free_mail_domains_v1.json"
+sys.path.insert(0, str(REPO_ROOT / "integrations" / "shared"))
+from is_free_mail import is_free_mail as is_free_mail_ssot  # noqa: E402
+
+FREE_MAIL_JSON = REPO_ROOT / "integrations" / "shared" / "data" / "free_mail_domains_v1.json"
+if not FREE_MAIL_JSON.exists():
+    FREE_MAIL_JSON = REPO_ROOT / "owocni-crm" / "data" / "free_mail_domains_v1.json"
 USER_AGENT = "owocni-crm-twenty-freemail-cleanup/1.0"
 
 
@@ -40,23 +46,9 @@ def load_dotenv_local() -> None:
         os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
 
 
-def load_free_mail_rules() -> dict:
-    return json.loads(FREE_MAIL_JSON.read_text(encoding="utf-8"))
-
-
-def is_free_mail(domain_reg: str, rules: dict) -> bool:
-    if not domain_reg:
-        return False
-    d = domain_reg.lower().strip()
-    if d in rules.get("pl_exact_domains", []):
-        return True
-    for sub in rules.get("global_substring_blacklist", []):
-        if sub in d:
-            return True
-    for suf in rules.get("hosting_suffix_stop", []):
-        if d.endswith(suf):
-            return True
-    return False
+def is_free_mail(domain_reg: str, rules: dict | None = None) -> bool:
+    """Exact match SSOT v1 — never substring."""
+    return is_free_mail_ssot(domain_reg, json_path=str(FREE_MAIL_JSON))
 
 
 def domain_from_company(company: dict) -> str:
@@ -70,9 +62,9 @@ def domain_from_company(company: dict) -> str:
     return ""
 
 
-def company_matches(company: dict, rules: dict, mode: str) -> tuple[bool, str]:
+def company_matches(company: dict, mode: str) -> tuple[bool, str]:
     domain = domain_from_company(company)
-    if not domain or not is_free_mail(domain, rules):
+    if not domain or not is_free_mail(domain):
         return False, domain
     name = (company.get("name") or "").strip().lower()
     if mode == "broad":
@@ -98,16 +90,35 @@ def api_headers() -> dict[str, str]:
     }
 
 
+def http_json(method: str, url: str, body: dict | None = None, retries: int = 10) -> dict:
+    data = None if body is None else json.dumps(body).encode("utf-8")
+    last_err: Exception | None = None
+    for attempt in range(retries):
+        req = urllib.request.Request(url, data=data, headers=api_headers(), method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                raw = resp.read().decode("utf-8")
+                return json.loads(raw) if raw else {}
+        except urllib.error.HTTPError as e:
+            last_err = e
+            if e.code in (429, 502, 503) and attempt + 1 < retries:
+                wait = min(90, 5 * (attempt + 1))
+                print(f"  retry {method} {e.code} wait={wait}s (attempt {attempt+1})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            raise
+    assert last_err is not None
+    raise last_err
+
+
 def fetch_all_companies() -> list[dict]:
     items: list[dict] = []
     cursor: str | None = None
     while True:
-        url = f"{rest_base()}/companies?limit=60"
+        url = f"{rest_base()}/companies?limit=20"
         if cursor:
             url += f"&starting_after={cursor}"
-        req = urllib.request.Request(url, headers=api_headers(), method="GET")
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
+        payload = http_json("GET", url)
         items.extend(payload.get("data", {}).get("companies", []))
         page = payload.get("pageInfo") or {}
         if not page.get("hasNextPage"):
@@ -115,19 +126,47 @@ def fetch_all_companies() -> list[dict]:
         cursor = page.get("endCursor")
         if not cursor:
             break
+        time.sleep(1.5)
     return items
+
+
+def list_people_for_company(company_id: str) -> list[dict]:
+    filt = f"companyId[eq]:{company_id}"
+    url = f"{rest_base()}/people?filter={urllib.parse.quote(filt)}&limit=60"
+    payload = http_json("GET", url)
+    return payload.get("data", {}).get("people", []) or []
+
+
+def unlink_person(person_id: str) -> bool:
+    url = f"{rest_base()}/people/{person_id}"
+    try:
+        http_json("PATCH", url, {"companyId": None})
+        return True
+    except urllib.error.HTTPError as e:
+        err = e.read().decode("utf-8", errors="replace")[:200]
+        print(f"  FAIL UNLINK person {person_id}: {e.code} {err}", file=sys.stderr)
+        return False
 
 
 def delete_company(company_id: str) -> bool:
     url = f"{rest_base()}/companies/{company_id}"
-    req = urllib.request.Request(url, headers=api_headers(), method="DELETE")
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            return 200 <= resp.status < 300
+        http_json("DELETE", url)
+        return True
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", errors="replace")[:300]
         print(f"  FAIL DELETE {company_id}: {e.code} {body}", file=sys.stderr)
         return False
+
+
+def purge_company(company: dict) -> bool:
+    company_id = company["id"]
+    people = list_people_for_company(company_id)
+    for person in people:
+        pid = person.get("id")
+        if pid:
+            unlink_person(pid)
+    return delete_company(company_id)
 
 
 def main() -> None:
@@ -146,11 +185,10 @@ def main() -> None:
         print("Podaj --dry-run lub --apply", file=sys.stderr)
         sys.exit(1)
 
-    rules = load_free_mail_rules()
     companies = fetch_all_companies()
     targets: list[tuple[dict, str]] = []
     for company in companies:
-        ok, domain = company_matches(company, rules, mode)
+        ok, domain = company_matches(company, mode)
         if ok:
             targets.append((company, domain))
 
@@ -158,6 +196,7 @@ def main() -> None:
         f"Twenty free-mail companies cleanup ({'APPLY' if apply else 'DRY-RUN'}) "
         f"mode={mode} @ {rest_base()}"
     )
+    print(f"SSOT: {FREE_MAIL_JSON.name} (exact match, no substring)")
     print(f"Companies total: {len(companies)}")
     print(f"To delete: {len(targets)}")
     print()
@@ -180,7 +219,7 @@ def main() -> None:
     deleted = 0
     failed = 0
     for i, (company, _domain) in enumerate(targets, 1):
-        if delete_company(company["id"]):
+        if purge_company(company):
             deleted += 1
         else:
             failed += 1
@@ -189,7 +228,10 @@ def main() -> None:
 
     print(f"\nUsunięto: {deleted}, błędy: {failed}")
     if failed:
-        print("Twenty może blokować DELETE gdy są powiązane People/Opp — odłącz w UI i powtórz.")
+        print(
+            "Twenty może blokować DELETE gdy są otwarte Opportunity — "
+            "odłącz w UI i powtórz."
+        )
 
 
 if __name__ == "__main__":

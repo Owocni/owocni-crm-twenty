@@ -100,10 +100,12 @@ async function putIdentityMapDocument(key, doc) {
 }
 
 async function writeIdentityMapProfile(idOid, email, phone, tier, env, identityAdapterId) {
+  const { companyDomainKey } = require("./isFreeMail");
   const profile = {
     id_oid: idOid,
     biz_email: email || null,
     biz_phone: phone || null,
+    company_domain_key: email ? companyDomainKey(email) : null,
     identity_status: tier === "T4" ? "needs_review" : "verified",
     vbb_eligible: false,
     identity_tier: tier,
