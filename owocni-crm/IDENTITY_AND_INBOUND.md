@@ -259,16 +259,18 @@ Przykłady:
 - `mail.firma.pl` → `firma.pl`
 - `firma.co.uk` → `firma.co.uk` (nie `co.uk`)
 
-**Krok B — waterfall `is_free_mail(domain_reg)`** (kolejność obowiązkowa):
+**Krok B — `is_free_mail(domain_reg)`** (SSOT v1.0.0 — **bez substring**):
 
 | Krok | Warunek | Wynik |
 |------|---------|--------|
-| **1 (PL)** | `domain_reg` **dokładnie** na liście PL | **STOP** — free mail, `is_free_mail=true` |
-| **2 (Global)** | część po `@` (lub `domain_reg`) **zawiera** frazę z blacklisty globalnej (substring) | **STOP** — free mail |
-| **3 (Hosting suffix)** | domena **kończy się** na `.home.pl` lub `.nazwa.pl` (subdomeny hostingowe) | **STOP** — free mail |
-| **Wynik** | wszystkie pozostałe (np. `jan@stocznia-gdynia.pl`) | **corporate** — możliwy merge proposal |
+| **0** | `domain_reg` ∈ `never_block` (`orange.com`, `telekom.de`, …) | **corporate** — nigdy nie blokuj |
+| **1** | `domain_reg` **dokładnie** w `domains` JSON (918 pozycji) | **STOP** — free mail |
+| **2 (opcjonalnie)** | `patterns_enabled` ∧ wzorzec zakotwiczony `^…$` (np. Microsoft ccTLD) | **STOP** — free mail |
+| **Wynik** | pozostałe (np. `jan@stocznia-gdynia.pl`, `livechat.com`) | **corporate** — możliwy merge proposal |
 
-Listy kanoniczne: `data/free_mail_domains_v1.json` (PL exact + global substring + hosting suffix + plus-addressing domains).
+**🔴 ZAKAZ:** reguła „domena **zawiera** ciąg” (`gmail`, `live`, `me.com`, `terra`, …) — false-positive na `acme.com`, `livechat.com`, `terravita.pl`, `claims.com`. Usunięta w v1 (2026-07-15).
+
+Listy kanoniczne: `data/free_mail_domains_v1.json` · runtime: `integrations/shared/isFreeMail.js` · generator: `integrations/tools/gen_free_mail.py` · pełny SSOT: `data/SSOT_free-mail-domains_v1.md`.
 
 **Krok C — `company_domain_key`:**
 
@@ -356,7 +358,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 | INV-7 fail-closed, granica CRM↔orkiestracja | `CRM_CONSTITUTION.md` |
 | Backlog kodu Sortowni (ADD/FIX), kolejność wdrożenia, parzystość BB | `runbooks/IMPLEMENTATION_PLAN.md` |
 | Nazwa eventu webhooka Twenty (recheck) | `ops/OPS_NOTES.md` |
-| Listy free-mail + waterfall merge | `data/free_mail_domains_v1.json`, §5.8.2 |
+| Listy free-mail + exact match (v1) | `data/free_mail_domains_v1.json`, `shared/isFreeMail.js`, §5.8.2 |
 
 ---
 
@@ -389,6 +391,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-15 | Free-mail v1: exact match 918 domen; **KILL substring**; zakotwiczone patterns (opt-in); `never_block`; canary | Właściciel | livechat.com / acme.com / terravita.pl |
 | 2026-06-08 | Merge policy v2.0: propozycje corporate, zakaz auto-merge i free-mail; §5.8.1 normalize_email; §5.8.2 company_domain_key + PSL | Właściciel | Asystent+szef ta sama firma |
 
 ---

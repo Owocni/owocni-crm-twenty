@@ -20,6 +20,9 @@ const {
   buildTwentyListPath,
   patchOpportunity,
 } = require("../shared/twentyRest");
+const {
+  processFreemailCompanyStrip,
+} = require("./stripFreemailCompany");
 
 const ADAPTER_ID = "inbound:twenty_webhook";
 const IDENTITY_ADAPTER_ID = "identity:twenty_resolver";
@@ -121,6 +124,14 @@ function inferObjectTypeFromRecord(record, previous) {
   if (r.jobTitle !== undefined || p.jobTitle !== undefined) {
     return "person";
   }
+  if (
+    r.domainName !== undefined ||
+    p.domainName !== undefined ||
+    (typeof r.name === "string" &&
+      (r.employees !== undefined || r.idealCustomerProfile !== undefined))
+  ) {
+    return "company";
+  }
   return "";
 }
 
@@ -172,9 +183,17 @@ function parseTwentyPayload(eventData) {
       (phones.primaryPhoneCallingCode || "") + (phones.primaryPhoneNumber || "");
   }
   const isPerson = objectType === "person";
+  const isCompany = objectType === "company";
+  const personCompanyId =
+    isPerson && (record.companyId || (record.company && record.company.id))
+      ? makeString(record.companyId || record.company.id)
+      : "";
   return {
     objectType: objectType || "",
-    opportunityId: isPerson ? "" : record.id || payload.id || "",
+    opportunityId:
+      isPerson || isCompany ? "" : record.id || payload.id || "",
+    companyId: isCompany ? record.id || payload.id || "" : "",
+    personCompanyId,
     personId: isPerson ? record.id || "" : record.pointOfContactId || "",
     pointOfContactId: record.pointOfContactId || null,
     stage: record.stage || null,
@@ -182,7 +201,8 @@ function parseTwentyPayload(eventData) {
     bizLastNonSqlStage: record.bizLastNonSqlStage || null,
     campaignRejected: record.campaignRejected === true,
     personIdOid: sanitizeWebhookField(record.idOid),
-    opportunityIdOid: isPerson ? null : sanitizeWebhookField(record.idOid),
+    opportunityIdOid:
+      isPerson || isCompany ? null : sanitizeWebhookField(record.idOid),
     eventNamePlatform: eventPlatform,
     bizValueWon: record.bizValueWon || null,
     bizProduct: sanitizeWebhookField(record.bizProduct) || null,
@@ -194,6 +214,7 @@ function parseTwentyPayload(eventData) {
       null,
     bizPhone: phoneRaw || record.phone || null,
     _personRecord: isPerson ? record : null,
+    _companyRecord: isCompany ? record : null,
   };
 }
 
@@ -954,7 +975,7 @@ async function processPersonIdentityFromWebhook(parsed, env) {
 async function processTwentyWebhook(webhookBody, options = {}) {
   const env = options.runtimeEnvironment || "sandbox";
   const parsed = parseTwentyPayload(webhookBody);
-  const allowedTypes = ["opportunity", "person"];
+  const allowedTypes = ["opportunity", "person", "company"];
 
   console.log("=== INBOUND_TWENTY_WEBHOOK ===", ADAPTER_ID, "env=", env);
   console.log(
@@ -966,6 +987,8 @@ async function processTwentyWebhook(webhookBody, options = {}) {
     parsed.opportunityId,
     "personId:",
     parsed.personId,
+    "companyId:",
+    parsed.companyId || parsed.personCompanyId || "",
     "stage:",
     parsed.stage,
   );
@@ -978,9 +1001,26 @@ async function processTwentyWebhook(webhookBody, options = {}) {
     return { status: "skipped", reason: REASON_SKIP_UNSUPPORTED_OBJECT };
   }
 
+  if (parsed.objectType === "company") {
+    const stripResult = await processFreemailCompanyStrip(parsed, { env });
+    return { status: "ok", path: "company_freemail_strip", ...stripResult };
+  }
+
   if (parsed.objectType === "person") {
     const identityResult = await processPersonIdentityFromWebhook(parsed, env);
-    return { status: "ok", path: "person", ...identityResult };
+    let stripResult = { status: "skipped", reason: "person_no_company" };
+    try {
+      stripResult = await processFreemailCompanyStrip(parsed, { env });
+    } catch (stripErr) {
+      console.log("FREEMAIL_STRIP: PERSON_PATH_FAIL", stripErr.message);
+      stripResult = { status: "error", error: stripErr.message };
+    }
+    return {
+      status: "ok",
+      path: "person",
+      ...identityResult,
+      freemail_strip: stripResult,
+    };
   }
 
   if (!parsed.opportunityId) {

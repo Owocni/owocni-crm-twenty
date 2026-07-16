@@ -33,6 +33,14 @@ fi
 
 echo "Deploying ${FUNCTION_NAME} to ${GCP_PROJECT} (${GCP_REGION})..."
 
+# Bundle free-mail SSOT into CF source (isFreeMail + JSON next to shared/)
+SHARED_SRC="$(cd "$SCRIPT_DIR/../../shared" && pwd)"
+mkdir -p "$SCRIPT_DIR/shared/data"
+cp "$SHARED_SRC/isFreeMail.js" "$SCRIPT_DIR/shared/isFreeMail.js"
+cp "$SHARED_SRC/data/free_mail_domains_v1.json" \
+  "$SCRIPT_DIR/shared/data/free_mail_domains_v1.json"
+echo "Bundled free-mail SSOT → shared/data/free_mail_domains_v1.json"
+
 gcloud config set project "$GCP_PROJECT" >/dev/null
 
 gcloud services enable cloudfunctions.googleapis.com run.googleapis.com \
