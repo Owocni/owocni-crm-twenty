@@ -15,8 +15,14 @@ var FREE_MAIL_EXACT = {"10g.pl":1,"126.com":1,"150mail.com":1,"150ml.com":1,"163
 var FREE_MAIL_NEVER_BLOCK = {"apple.com":1,"bt.com":1,"google.com":1,"microsoft.com":1,"orange.com":1,"proximus.com":1,"sfr.com":1,"t-mobile.com":1,"telefonica.com":1,"telekom.de":1,"vodafone.com":1};
 function freeMailRegistrableDomain(domain) {
   if (!domain) return null;
-  var d = String(domain).toLowerCase().trim();
-  var parts = d.split(".").filter(Boolean);
+  var d = makeString(domain).toLowerCase().trim();
+  var rawParts = d.split(".");
+  var parts = [];
+  var pi = 0;
+  while (pi < rawParts.length) {
+    if (rawParts[pi]) parts.push(rawParts[pi]);
+    pi = pi + 1;
+  }
   if (parts.length < 2) return d;
   var multi = {
     "co.uk": 1, "com.au": 1, "com.br": 1, "com.pl": 1, "net.pl": 1,
@@ -30,9 +36,20 @@ function freeMailRegistrableDomain(domain) {
   if (multi[last2] && parts.length >= 3) return parts.slice(-3).join(".");
   return last2;
 }
+function stripAllWhitespaceStape(raw) {
+  var out = "";
+  var i = 0;
+  var str = makeString(raw || "");
+  while (i < str.length) {
+    var ch = str.charAt(i);
+    if (ch !== " " && ch !== "\t" && ch !== "\n" && ch !== "\r") out = out + ch;
+    i = i + 1;
+  }
+  return out;
+}
 function companyDomainKeyFromEmail(rawEmail) {
   if (!rawEmail) return null;
-  var s = String(rawEmail).trim().toLowerCase().replace(/\s+/g, "");
+  var s = stripAllWhitespaceStape(makeString(rawEmail).trim().toLowerCase());
   var at = s.lastIndexOf("@");
   if (at < 1 || s.indexOf("@") !== at) return null;
   var domain = s.substring(at + 1);

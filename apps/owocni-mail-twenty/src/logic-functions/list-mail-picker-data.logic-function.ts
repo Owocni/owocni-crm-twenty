@@ -2,6 +2,16 @@ import { CoreApiClient } from 'twenty-client-sdk/core';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
+import {
+  resolveMailContext,
+  type PersonContext,
+} from 'src/utils/personContext';
+import {
+  findSuggestedReply,
+  type RecentRecipient,
+  type SuggestedReply,
+} from 'src/utils/suggestedReply';
+
 type MailTemplateSummary = {
   id: string;
   name: string;
@@ -10,19 +20,16 @@ type MailTemplateSummary = {
   subjectTemplate: string;
 };
 
-type PersonRecord = {
-  firstName: string;
-  lastName: string;
-  clientName: string;
-  email: string;
-  companyName: string;
-};
-
 const handler = async (event: RoutePayload) => {
   const recordId =
     typeof event.queryStringParameters?.recordId === 'string'
       ? event.queryStringParameters.recordId
       : null;
+  const email =
+    typeof event.queryStringParameters?.email === 'string'
+      ? event.queryStringParameters.email
+      : null;
+  const skipRecent = event.queryStringParameters?.skipRecent === '1';
 
   const coreClient = new CoreApiClient();
 
@@ -64,41 +71,71 @@ const handler = async (event: RoutePayload) => {
       return a.name.localeCompare(b.name, 'pl');
     });
 
-  let person: PersonRecord | null = null;
+  let person: PersonContext | null = null;
+  let replySubject: string | null = null;
+  let contextKind: string | null = null;
+  let resolveError: string | null = null;
 
-  if (recordId) {
-    const personResult = await coreClient.query({
-      person: {
-        __args: {
-          filter: { id: { eq: recordId } },
-        },
-        name: { firstName: true, lastName: true },
-        emails: { primaryEmail: true },
-        company: { name: true },
-      },
-    });
-
-    const row = personResult.person;
-    const firstName = row?.name?.firstName ?? '';
-    const lastName = row?.name?.lastName ?? '';
-
-    person = {
-      firstName,
-      lastName,
-      clientName: [firstName, lastName].filter(Boolean).join(' '),
-      email: row?.emails?.primaryEmail ?? '',
-      companyName: row?.company?.name ?? '',
-    };
+  try {
+    const resolved = await resolveMailContext(coreClient, { recordId, email });
+    person = resolved.person;
+    replySubject = resolved.replySubject;
+    contextKind = resolved.contextKind;
+  } catch (personError) {
+    resolveError =
+      personError instanceof Error ? personError.message : String(personError);
   }
 
-  return { templates, person };
+  // Mailbox "latest" is NEVER merged into person/replySubject — that filled
+  // unrelated leads (e.g. patrycjabierka) when recordId was missing.
+  let recentRecipients: RecentRecipient[] = [];
+  let suggestedReply: SuggestedReply | null = null;
+  let recentDebug: Record<string, unknown> = { skipped: skipRecent };
+
+  if (!skipRecent) {
+    const recent = await findSuggestedReply(coreClient);
+    recentRecipients = recent.recipients;
+    suggestedReply = recent.suggestedReply;
+    recentDebug = recent.debug;
+
+    // Subject from mailbox only when it matches the already-resolved person.
+    if (
+      person?.email &&
+      !replySubject &&
+      suggestedReply?.email === person.email &&
+      suggestedReply.subject
+    ) {
+      replySubject = suggestedReply.subject;
+    }
+  }
+
+  return {
+    templates,
+    person,
+    replySubject,
+    contextKind,
+    contextRecordId: recordId,
+    recentRecipients,
+    suggestedReply,
+    debug: {
+      recordId,
+      emailParam: email,
+      resolveError,
+      personEmail: person?.email ?? null,
+      replySubject,
+      contextKind,
+      recent: recentDebug,
+      suggestedReply,
+      note: 'suggestedReply not applied as person fallback',
+    },
+  };
 };
 
 export default defineLogicFunction({
   universalIdentifier: '7182f1e9-c895-4663-828a-9b73d3beac22',
   name: 'list-mail-picker-data',
   description: 'Returns mail templates and optional person context for the picker',
-  timeoutSeconds: 30,
+  timeoutSeconds: 45,
   handler,
   httpRouteTriggerSettings: {
     path: '/mail/picker-data',

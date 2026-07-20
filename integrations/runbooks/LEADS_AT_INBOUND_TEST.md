@@ -81,15 +81,15 @@ Mail zewnętrzny → leads@ (INBOX)
 | **Włączone** | Email Sync **nie tworzy Person** z @gmail.com / @outlook.com — wątek może być w CRM, ale bez kontaktu |
 | **Wyłączone** | Person powstaje też z Gmail; Twenty **może** auto-utworzyć Company z domeny |
 
-**Nasza reguła biznesowa:** Person + Lead (Opportunity) **tak**, auto-Company z freemail **nie**.
+**Nasza reguła biznesowa (SSOT v1):** Person + Lead **tak**, auto-Company z freemail **nie**. Gate: exact match w `data/free_mail_domains_v1.json` (`isFreeMail.js`) — **zakaz substring**. Disposable (temp-mail) = osobna warstwa ([disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains)).
 
 | Kanał | Person | Company | Opportunity |
 |-------|--------|---------|-------------|
 | Domena firmowa (np. `mail@fastman.eu`) | Email Sync ✓ | Twenty może utworzyć z domeny | Adapter ✓ |
 | Gmail/Outlook z **Exclude ON** | ✗ (Twenty blokuje) | ✗ | Adapter **nie odpali** (brak webhook Person) — **faza 2:** trigger na `message.created` |
-| Gmail z **Exclude OFF** | ✓ | Ryzyko auto-Company — ręcznie usuń / nie linkuj | Adapter ✓ |
+| Gmail z **Exclude OFF** | ✓ | Ryzyko auto-Company — czyść `twenty_cleanup_freemail_companies.py` | Adapter ✓ |
 
-**Rekomendacja na teraz:** zostaw **Exclude OFF** dla obsługi leadów z Gmail; Company z freemail usuń ręcznie lub zostaw puste. Adapter **nie tworzy Company**.
+**Rekomendacja na teraz:** Exclude **OFF** (Gmail → Person); firmy-widmo freemail usuń skryptem cleanup. Adapter **nie tworzy Company**. Twenty native `isWorkEmail` **nie zna** PL (`wp.pl`, `interia.pl`) — stąd nasza lista 918 domen.
 
 ### Reguły Resolvera (skrót)
 

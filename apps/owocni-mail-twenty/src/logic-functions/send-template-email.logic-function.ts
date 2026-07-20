@@ -7,7 +7,16 @@ import {
   findSendableEmailAccount,
   mapSendEmailError,
 } from 'src/utils/findSendableEmailAccount';
-import { parseRouteBody, readStringField } from 'src/utils/parseRouteBody';
+import {
+  parseRouteBody,
+  payloadHasClientBody,
+  readClientHtmlBody,
+  readStringField,
+} from 'src/utils/parseRouteBody';
+import {
+  personVars,
+  resolvePersonContext,
+} from 'src/utils/personContext';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -44,22 +53,25 @@ const handler = async (event: RoutePayload) => {
     const templateId = readStringField(payload, 'templateId');
     const recordId = readStringField(payload, 'recordId');
     const customSubject = readStringField(payload, 'subject');
-    const customBody = readStringField(
-      payload,
-      'htmlBody',
-      'composedBody',
-      'body',
-      'messageHtml',
-    );
+    const customBody = readClientHtmlBody(payload);
     const customTo = readStringField(payload, 'to');
     const requestedAccountId = readStringField(payload, 'connectedAccountId');
+    const clientSentBody = payloadHasClientBody(payload);
 
-    if (!recordId) {
-      return { ok: false, error: 'recordId is required' };
+    if (!recordId && !customTo) {
+      return { ok: false, error: 'recordId or to is required' };
     }
 
     if (!customBody && !templateId) {
       return { ok: false, error: 'templateId or body is required' };
+    }
+
+    if (clientSentBody && !customBody) {
+      return {
+        ok: false,
+        error:
+          'Treść z edytora nie dotarła (pusta). Spróbuj przełączyć na „Kod HTML”, sprawdź treść i wyślij ponownie.',
+      };
     }
 
     const coreClient = new CoreApiClient();
@@ -69,25 +81,18 @@ const handler = async (event: RoutePayload) => {
     let htmlBody = '';
     let templateName = 'Własna treść';
 
-    const personResult = await coreClient.query({
-      person: {
-        __args: {
-          filter: { id: { eq: recordId } },
-        },
-        name: { firstName: true, lastName: true },
-        emails: { primaryEmail: true },
-        company: { name: true },
-      },
+    const person = await resolvePersonContext(coreClient, {
+      recordId,
+      email: customTo,
     });
-
-    const person = personResult.person;
-    const email = customTo || person?.emails?.primaryEmail?.trim();
+    const email = customTo || person?.email?.trim();
 
     if (!email) {
       return { ok: false, error: 'Person has no primary email' };
     }
 
-    if (customBody) {
+    // Client-composed body always wins — never reload template from DB when htmlBody was sent.
+    if (clientSentBody || customBody) {
       htmlBody = customBody;
       subject = customSubject ?? subject;
 
@@ -138,15 +143,7 @@ const handler = async (event: RoutePayload) => {
         return { ok: false, error: 'Template not found' };
       }
 
-      const firstName = person?.name?.firstName ?? '';
-      const lastName = person?.name?.lastName ?? '';
-      const vars = {
-        firstName,
-        lastName,
-        client_name: [firstName, lastName].filter(Boolean).join(' '),
-        companyName: person?.company?.name ?? '',
-        email,
-      };
+      const vars = personVars(person);
 
       templateName = template.name;
       subject =
@@ -226,7 +223,7 @@ const handler = async (event: RoutePayload) => {
       subject,
       templateName,
       from: connectedAccount.handle,
-      bodySource: customBody ? 'client' : 'template',
+      bodySource: clientSentBody || customBody ? 'client' : 'template',
       bodyLength: htmlBody.length,
     };
   } catch (unexpectedError) {

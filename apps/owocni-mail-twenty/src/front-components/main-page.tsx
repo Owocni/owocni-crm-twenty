@@ -6,9 +6,10 @@ import {
 } from 'src/constants/universal-identifiers';
 
 const STEPS = [
-  'Otwórz kartę klienta (Person) z uzupełnionym polem Email.',
+  'Otwórz kartę klienta (Person) lub wątek maila z jego adresem.',
   'Naciśnij ⌘K / Ctrl+K i wybierz „Szablony maili”.',
-  'Wybierz szablon, edytuj temat i treść, kliknij „Wyślij email”.',
+  'Wybierz szablon z listy — treść pojawi się od razu w edytorze HTML.',
+  'Popraw temat i treść, potem kliknij „Wyślij email”.',
 ];
 
 const MainPage = () => {
