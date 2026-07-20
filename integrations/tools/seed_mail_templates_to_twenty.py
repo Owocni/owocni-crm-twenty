@@ -53,28 +53,38 @@ def category_from_row(row: dict) -> str:
     return "GENERAL"
 
 
-def rest(method: str, path: str, payload: dict | None = None) -> dict:
+def rest(method: str, path: str, payload: dict | None = None, retries: int = 10) -> dict:
     api_key = os.environ["TWENTY_API_KEY"]
     base = os.environ.get("TWENTY_REST_URL", "https://api.twenty.com/rest").rstrip("/")
-    request = urllib.request.Request(
-        f"{base}{path}",
-        data=json.dumps(payload).encode("utf-8") if payload else None,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "User-Agent": "owocni-seed-mail-templates/1.0",
-        },
-        method=method,
-    )
+    last_error: Exception | None = None
 
-    try:
-        with urllib.request.urlopen(request, timeout=120) as response:
-            body = response.read()
-            return json.loads(body) if body else {}
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")[:500]
-        raise RuntimeError(f"{method} {path} -> HTTP {exc.code}: {detail}") from exc
+    for attempt in range(retries):
+        request = urllib.request.Request(
+            f"{base}{path}",
+            data=json.dumps(payload).encode("utf-8") if payload else None,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "User-Agent": "owocni-seed-mail-templates/1.0",
+            },
+            method=method,
+        )
 
+        try:
+            with urllib.request.urlopen(request, timeout=120) as response:
+                body = response.read()
+                return json.loads(body) if body else {}
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:500]
+            last_error = RuntimeError(f"{method} {path} -> HTTP {exc.code}: {detail}")
+            if exc.code in (429, 502, 503) and attempt < retries - 1:
+                wait = min(90, 5 * (2**attempt))
+                print(f"  retry {attempt + 1}/{retries} after {wait}s (HTTP {exc.code})")
+                time.sleep(wait)
+                continue
+            raise last_error from exc
+
+    raise last_error or RuntimeError(f"{method} {path} failed")
 
 def list_existing_legacy_ids() -> set[int]:
     try:
@@ -154,7 +164,7 @@ def main() -> None:
         except RuntimeError as exc:
             print(f"  ERR  bb={bb_id}: {exc}")
 
-        time.sleep(0.25)
+        time.sleep(2.0)
 
     MAPPING_FILE.write_text(
         json.dumps({"mapping": mapping, "created": created, "skipped": skipped}, indent=2),

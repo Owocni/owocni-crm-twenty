@@ -31,10 +31,9 @@ export function parseRouteBody(event: RoutePayload): Record<string, unknown> {
   return {};
 }
 
-export function readStringField(
+function payloadObjects(
   payload: Record<string, unknown>,
-  ...keys: string[]
-): string {
+): Record<string, unknown>[] {
   const objects: Record<string, unknown>[] = [payload];
 
   for (const nestedKey of ['data', 'payload', 'input']) {
@@ -45,7 +44,14 @@ export function readStringField(
     }
   }
 
-  for (const object of objects) {
+  return objects;
+}
+
+export function readStringField(
+  payload: Record<string, unknown>,
+  ...keys: string[]
+): string {
+  for (const object of payloadObjects(payload)) {
     for (const key of keys) {
       const value = object[key];
 
@@ -56,4 +62,48 @@ export function readStringField(
   }
 
   return '';
+}
+
+function decodeBase64Utf8(value: string): string {
+  try {
+    return Buffer.from(value, 'base64').toString('utf8');
+  } catch {
+    return '';
+  }
+}
+
+/** Prefer htmlBodyBase64 (avoids host stripping large/HTML bodies), then plain fields. */
+export function readClientHtmlBody(payload: Record<string, unknown>): string {
+  const encoded = readStringField(payload, 'htmlBodyBase64', 'composedBodyBase64');
+
+  if (encoded) {
+    const decoded = decodeBase64Utf8(encoded).trim();
+
+    if (decoded) {
+      return decoded;
+    }
+  }
+
+  return readStringField(
+    payload,
+    'htmlBody',
+    'composedBody',
+    'body',
+    'messageHtml',
+  );
+}
+
+/** True when the client explicitly sent a composed-body field (even if empty). */
+export function payloadHasClientBody(payload: Record<string, unknown>): boolean {
+  const keys = [
+    'htmlBody',
+    'htmlBodyBase64',
+    'composedBody',
+    'composedBodyBase64',
+    'messageHtml',
+  ];
+
+  return payloadObjects(payload).some((object) =>
+    keys.some((key) => Object.prototype.hasOwnProperty.call(object, key)),
+  );
 }

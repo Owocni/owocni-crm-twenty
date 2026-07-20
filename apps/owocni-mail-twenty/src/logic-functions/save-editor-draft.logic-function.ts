@@ -9,6 +9,10 @@ import { parseRouteBody, readStringField } from 'src/utils/parseRouteBody';
 
 const MAX_HTML_LENGTH = 512_000;
 
+/**
+ * Single POST endpoint for visual-editor drafts (save + action:read).
+ * Memory + best-effort DB.
+ */
 const handler = async (event: RoutePayload) => {
   const payload = parseRouteBody(event);
   const sessionId = readStringField(payload, 'sessionId');
@@ -19,16 +23,39 @@ const handler = async (event: RoutePayload) => {
   }
 
   if (action === 'read') {
-    const html = getEditorDraft(sessionId);
+    try {
+      const html = await getEditorDraft(sessionId);
 
-    return {
-      ok: true,
-      found: html !== null,
-      html: html ?? '',
-    };
+      return {
+        ok: true,
+        found: html !== null,
+        html: html ?? '',
+        length: html?.length ?? 0,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        found: false,
+        html: '',
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
   }
 
-  const html = readStringField(payload, 'html', 'htmlBody', 'body');
+  const encoded = readStringField(payload, 'htmlBase64', 'htmlBodyBase64');
+  let html = '';
+
+  if (encoded) {
+    try {
+      html = Buffer.from(encoded, 'base64').toString('utf8').trim();
+    } catch {
+      html = '';
+    }
+  }
+
+  if (!html) {
+    html = readStringField(payload, 'html', 'htmlBody', 'body');
+  }
 
   if (!html) {
     return { ok: false, error: 'html is required' };
@@ -38,9 +65,22 @@ const handler = async (event: RoutePayload) => {
     return { ok: false, error: 'html is too large' };
   }
 
-  saveEditorDraft(sessionId, html);
+  try {
+    const result = await saveEditorDraft(sessionId, html);
 
-  return { ok: true, length: html.length };
+    return {
+      ok: true,
+      length: html.length,
+      memory: result.memory,
+      db: result.db,
+      dbError: result.dbError,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 };
 
 export default defineLogicFunction({

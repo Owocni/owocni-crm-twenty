@@ -3,6 +3,10 @@ import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
 import { prepareHtmlForPicker } from 'src/utils/prepareHtmlForPicker';
+import {
+  personVars,
+  resolvePersonContext,
+} from 'src/utils/personContext';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -32,6 +36,7 @@ function resolveSubject(
 const handler = async (event: RoutePayload) => {
   const templateId = event.queryStringParameters?.templateId?.trim();
   const recordId = event.queryStringParameters?.recordId?.trim();
+  const email = event.queryStringParameters?.email?.trim();
 
   if (!templateId) {
     return { error: 'templateId is required' };
@@ -64,39 +69,15 @@ const handler = async (event: RoutePayload) => {
     return { error: 'Template not found' };
   }
 
-  let vars: Record<string, string> = {
-    firstName: '',
-    lastName: '',
-    client_name: '',
-    companyName: '',
-    email: '',
-  };
+  let person = null;
 
-  if (recordId) {
-    const personResult = await coreClient.query({
-      person: {
-        __args: {
-          filter: { id: { eq: recordId } },
-        },
-        name: { firstName: true, lastName: true },
-        emails: { primaryEmail: true },
-        company: { name: true },
-      },
-    });
-
-    const row = personResult.person;
-    const firstName = row?.name?.firstName ?? '';
-    const lastName = row?.name?.lastName ?? '';
-
-    vars = {
-      firstName,
-      lastName,
-      client_name: [firstName, lastName].filter(Boolean).join(' '),
-      companyName: row?.company?.name ?? '',
-      email: row?.emails?.primaryEmail ?? '',
-    };
+  try {
+    person = await resolvePersonContext(coreClient, { recordId, email });
+  } catch (personError) {
+    console.log('MAIL_TEMPLATE_PERSON_FAIL', personError);
   }
 
+  const vars = personVars(person);
   const subjectTemplate = String(template.subjectTemplate ?? '');
   const bodyMarkdown =
     typeof template.bodyHtmlTemplate === 'object' &&
