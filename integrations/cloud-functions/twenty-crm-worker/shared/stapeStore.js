@@ -80,6 +80,31 @@ async function putTwentyStateDocument(docKey, doc) {
   });
 }
 
+async function putIdentityMapDocument(docKey, doc) {
+  const url = `${collectionsBase()}/identity_map/documents/${encodeURIComponent(docKey)}`;
+  await stapeFetch(url, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(doc),
+  });
+}
+
+async function readIdentityMapDocument(docKey) {
+  const url = `${collectionsBase()}/identity_map/documents/${encodeURIComponent(docKey)}`;
+  try {
+    const parsed = await stapeFetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return parsed?.data?.data || parsed?.data || null;
+  } catch (err) {
+    if (String(err.message || "").includes("404")) {
+      return null;
+    }
+    throw err;
+  }
+}
+
 async function readTwentyStateDocument(docKey) {
   const url = `${collectionsBase()}/twenty_state/documents/${encodeURIComponent(docKey)}`;
   try {
@@ -119,6 +144,8 @@ module.exports = {
   putTaskDocument,
   putTwentyStateDocument,
   readTwentyStateDocument,
+  putIdentityMapDocument,
+  readIdentityMapDocument,
   setPendingWrite,
   clearPendingWrite,
 };

@@ -5,8 +5,8 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-06-08
-recheck_trigger: "Twenty release (merge/email sync) / zmiana resolvera / preflight Stape"
+last_verified: 2026-07-21
+recheck_trigger: "Twenty release (merge/email sync) / zmiana resolvera / preflight Stape / merge_leads MVP"
 default_trust: D:CORE
 related:
   - DATA_MODEL
@@ -297,6 +297,8 @@ is_free_mail == false → company_domain_key = domain_reg   (można proponować 
 ### 5.9 Merge — polityka v2.0 (propozycje, nie auto) `[D:CORE]`
 
 **Zasada nadrzędna:** system **nigdy sam nie scala** tożsamości (`id_oid`). Merge = **wyłącznie ręczna** akcja handlowca/admina w Twenty (+ synchronizacja `canonical_oid` / wskaźników w Stape).
+
+**Operacyjny runbook (MVP 2026-07-21):** [`../integrations/runbooks/MERGE_LEADS.md`](../integrations/runbooks/MERGE_LEADS.md) — workflow **Opp · Scal z leadem v2**, worker `merge_leads` (CallTranscript + MessageParticipant + Person contacts + Stape alias; loser → LOST/DUPLICATE).
 
 **Co system MOŻE robić automatycznie:**
 

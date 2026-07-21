@@ -39,6 +39,25 @@ function getOwnerIds() {
   };
 }
 
+/** Map firmowych numerów Play PBX → workspaceMemberId handlowca. */
+function getPhoneOwnerMap() {
+  const owners = getOwnerIds();
+  const defaults = {
+    48660970980: owners.marta,
+    48570704470: owners.gosia,
+  };
+  const raw = process.env.PHONE_OWNER_MAP;
+  if (!raw) return defaults;
+
+  const map = { ...defaults };
+  for (const entry of raw.split(",")) {
+    const [phone, ownerId] = entry.split(":").map((part) => part.trim());
+    const digits = phone?.replace(/\D/g, "");
+    if (digits && ownerId) map[digits] = ownerId;
+  }
+  return map;
+}
+
 function isCreateLeadWriteEnabled() {
   const flag = process.env.CREATE_LEAD_WRITE_ENABLED;
   if (flag === undefined || flag === "") {
@@ -52,9 +71,11 @@ module.exports = {
   getStapeConfig,
   getTwentyConfig,
   getOwnerIds,
+  getPhoneOwnerMap,
   isCreateLeadWriteEnabled,
   MAX_CREATE_LEAD_TASKS: Number(process.env.MAX_CREATE_LEAD_TASKS || 5),
   MAX_UPDATE_PERSON_TASKS: Number(process.env.MAX_UPDATE_PERSON_TASKS || 10),
+  MAX_CALL_TRANSCRIPT_TASKS: Number(process.env.MAX_CALL_TRANSCRIPT_TASKS || 5),
   PENDING_WRITE_TTL_MS: 45000,
   COLLECTION_TASK_QUEUE: "task_queue",
   PENDING_WRITE_PREFIX: "pending_write_twenty_",

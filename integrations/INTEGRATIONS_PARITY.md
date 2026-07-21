@@ -5,8 +5,8 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid (wykonawca techniczny)"
-last_verified: 2026-07-10
-recheck_trigger: "zmiana integrations/*.js / cloud-functions/* / zamknięcie ADR #14 / nowy adapter Stape lub GCP"
+last_verified: 2026-07-21
+recheck_trigger: "zmiana integrations/*.js / cloud-functions/* / zamknięcie ADR #14 / nowy adapter Stape lub GCP / call / merge"
 default_trust: D:CORE
 related:
   - README.md
@@ -39,6 +39,8 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | Adapter `inbound:twenty_webhook` | **TAK** (`cloud-functions/twenty-inbound-webhook/` + legacy Stape) | **Sandbox:** GCP CF via Stape stub; **prod:** legacy full tag lub przyszły prod CF | `EVENT_CONTRACT` §5.4 |
 | Adapter `crm:twenty_create_lead` | **TAK** (`cloud-functions/twenty-crm-worker/`) | GCP CF via Stape stub | `ARCHITECTURE` §5.3 | **PASS sandbox** |
 | Adapter `crm:twenty_update_person` | **TAK** (`CRM_TWENTY_UPDATE_PERSON.sGTM.js`) | Stape tag + Scheduler — **deploy sandbox PASS** | `EVENT_CONTRACT` §6.1 |
+| CallTranscript ingest / link / create_from_call | **TAK** (`workers/callTranscript*.js`) | GCP CF + n8n + Play (`telefony/` poza repo) | `CALL_INGEST_N8N.contract` |
+| Merge leadów (`merge_leads`) | **TAK** (`workers/mergeLeads.js`) | GCP CF + Twenty MANUAL workflow | `MERGE_LEADS` · IDENTITY §5.9 |
 | env-guard sandbox/prod | **TAK (prep)** | `shared/envGuard.js` + `ENV_GUARD.sGTM.js` + pole `environment` w task_queue | `ARCHITECTURE` §5.4 |
 | Identity Resolver T1–T5 | **TAK** (`INBOUND_TWENTY_WEBHOOK.sGTM.js` inline) | Stape tag `inbound_twenty_webhook` — **deploy sandbox PASS** | `IDENTITY` §5.2 |
 
@@ -46,7 +48,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 
 ---
 
-## 2. Macierz zgodności (stan 2026-07-10)
+## 2. Macierz zgodności (stan 2026-07-21)
 
 | ID | Wymaganie SSOT | Plik SSOT | Stan kodu | Status | Następny krok |
 |---|---|---|---|---|---|
@@ -65,6 +67,8 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | P9 | `time_occurred` epoch ms (FIX-2) | `IMPLEMENTATION_PLAN` §5.7 | Sortownia: mieszane formaty | **OPEN** | Ujednolicić w Sortowni |
 | P10 | env-guard sandbox/prod | `ARCHITECTURE` §5.4 | Robot `envGuard` + dual-sheet routing | **PASS sandbox** | S2 + smoke matrix |
 | P11 | Formularz → Twenty Person+Opp (`crm:twenty_create_lead`) | `BUILD_CRM_TWENTY_CREATE_LEAD` | Sortownia enqueue + worker write | **PASS sandbox** | Runbook §9; idempotencja email OK |
+| P16 | Play PBX → CallTranscript (+ parking / link / create lead) | `CALL_INGEST_N8N.contract` · `BUILD_CALL_TRANSCRIPT_*` | `callTranscriptIngest.js` + `callTranscriptLink.js` + n8n | **PASS MVP sandbox** | E2E prawdziwe rozmowy Play |
+| P17 | Ręczne scalanie leadów (NR-5, nie auto) | `MERGE_LEADS` · IDENTITY §5.9 | `mergeLeads.js` + workflow RECORD picker | **PASS MVP sandbox** | Sortownia czyta `canonical_oid` (backlog) |
 
 ---
 
@@ -74,6 +78,14 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 2. **Nowy runbook:** `TWENTY_WORKFLOWS_REJECT_AND_GUARD.md` (SQL, odrzucenie, guard).
 3. **Runbooki operacyjne:** `MIGRATE_TWENTY_CRM_TO_GCP` (gcp-v5/v7), `KANBAN_CARD_SPEC`, `SANDBOX_PHASE1`, `PREFLIGHT`, `BUILD_INBOUND` — GCP path + `biz_value`.
 4. **`META-PODLACZENIE.md`** — dopisek zakresu (Meta ≠ Twenty pipeline).
+
+## 3a. Co zrobiono w iteracji (2026-07-21) — telefon + merge
+
+1. **Worker:** `callTranscriptIngest.js`, `callTranscriptLink.js`, `mergeLeads.js` + routing w `index.js`.
+2. **Runbooki:** `CALL_INGEST_N8N.contract.md`, `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`, `MERGE_LEADS.md`.
+3. **Hub docs:** `README.md`, `TWENTY_PATHS.md`, `NEXT_STEPS.md`, IDENTITY §5.9 → MERGE_LEADS; macierz P16/P17.
+4. **Twenty:** webhook `callTranscript.updated`; workflowy „Utwórz lead z rozmowy” / „Scal z leadem v2”.
+5. **Poza repo:** Play `telefony/` → n8n `Play PBX → GCP CallTranscript`.
 
 ## 3b. Co zrobiono w iteracji (2026-06-02)
 
@@ -102,6 +114,8 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 - [x] **P10** Sandbox nie trafia do prod adapterów reklamowych.
 - [x] Eksport/tag Stape dla adapterów Twenty zapisany w repo (`.sGTM.js` 2026-06-15).
 - [x] **`crm:twenty_create_lead`** — deploy Stape + Faza B sandbox PASS (`BUILD_CRM_TWENTY_CREATE_LEAD.md` §9, 2026-06-30).
+- [x] **P16** CallTranscript MVP sandbox (ingest + parking view + link/create) — 2026-07-21.
+- [x] **P17** Merge leadów MVP sandbox (MessageParticipant + CallTranscript + Stape alias) — 2026-07-21.
 
 ---
 
@@ -122,3 +136,5 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | MUST-PASS gates | `../owocni-crm/runbooks/IMPLEMENTATION_PLAN.md` §5.4 |
 | Event catalog | `../owocni-crm/EVENT_CONTRACT.md` §5.2 |
 | Archiwum kodu (NIE SSOT) | `archive/README.md` |
+| Telefon Play → Twenty | `runbooks/CALL_INGEST_N8N.contract.md` |
+| Merge leadów | `runbooks/MERGE_LEADS.md` |
