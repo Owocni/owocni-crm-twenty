@@ -9,6 +9,7 @@ const {
   buildTwentyListPath,
   extractCreatedId,
 } = require("../shared/twentyRest");
+const { resolveForwardLastContactAt } = require("../shared/lastContact");
 
 const ADAPTER_ID = "crm:call_transcript_link";
 
@@ -121,10 +122,12 @@ function findClientParticipant(participants, direction) {
 }
 
 async function touchOpportunity(opp, startedAtIso, direction) {
-  const patch = {
-    lastContactAt: startedAtIso,
-    bizLastContactLabel: buildContactLabelFresh(),
-  };
+  const patch = {};
+  const forward = resolveForwardLastContactAt(opp.lastContactAt, startedAtIso);
+  if (forward.advanced && forward.lastContactAt) {
+    patch.lastContactAt = forward.lastContactAt;
+    patch.bizLastContactLabel = buildContactLabelFresh();
+  }
   let advanced = false;
   let m2Written = false;
 
@@ -149,8 +152,16 @@ async function touchOpportunity(opp, startedAtIso, direction) {
     advanced = true;
   }
 
+  if (!Object.keys(patch).length) {
+    return { advanced: false, m2Written: false, lastContactAdvanced: false };
+  }
+
   await patchTwentyRecord("opportunities", opp.id, patch);
-  return { advanced, m2Written };
+  return {
+    advanced,
+    m2Written,
+    lastContactAdvanced: Boolean(forward.advanced),
+  };
 }
 
 async function ensurePersonPhone(personId, clientPhone) {
