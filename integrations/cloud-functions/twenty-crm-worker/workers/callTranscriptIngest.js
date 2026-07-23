@@ -20,6 +20,7 @@ const {
   patchTwentyRecord,
   buildTwentyListPath,
 } = require("../shared/twentyRest");
+const { resolveForwardLastContactAt } = require("../shared/lastContact");
 
 const ADAPTER_ID = "crm:call_transcript_ingest";
 const CLOSED_STAGES = new Set(["WON", "LOST"]);
@@ -315,10 +316,12 @@ async function createParkingTask(taskData, clientHandle, transcriptId) {
 }
 
 async function touchOpportunity(opp, startedAtIso, direction) {
-  const patch = {
-    lastContactAt: startedAtIso,
-    bizLastContactLabel: buildContactLabelFresh(),
-  };
+  const patch = {};
+  const forward = resolveForwardLastContactAt(opp.lastContactAt, startedAtIso);
+  if (forward.advanced && forward.lastContactAt) {
+    patch.lastContactAt = forward.lastContactAt;
+    patch.bizLastContactLabel = buildContactLabelFresh();
+  }
   let advanced = false;
   let m2Written = false;
 
@@ -335,14 +338,23 @@ async function touchOpportunity(opp, startedAtIso, direction) {
     }
   }
 
-  await setPendingWrite(opp.id, ADAPTER_ID, PENDING_WRITE_TTL_MS);
   if (String(opp.stage || "").toUpperCase() === "NEW" && direction === "OUTBOUND") {
     patch.stage = "CONTACTED";
     advanced = true;
   }
+
+  if (!Object.keys(patch).length) {
+    return { advanced: false, m2Written: false, lastContactAdvanced: false };
+  }
+
+  await setPendingWrite(opp.id, ADAPTER_ID, PENDING_WRITE_TTL_MS);
   await patchTwentyRecord("opportunities", opp.id, patch);
   await clearPendingWrite(opp.id, ADAPTER_ID);
-  return { advanced, m2Written };
+  return {
+    advanced,
+    m2Written,
+    lastContactAdvanced: Boolean(forward.advanced),
+  };
 }
 
 async function resolvePersonId(clientHandle) {

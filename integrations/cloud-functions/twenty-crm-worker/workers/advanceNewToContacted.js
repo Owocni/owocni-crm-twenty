@@ -13,6 +13,7 @@ const {
   patchTwentyRecord,
   buildTwentyListPath,
 } = require("../shared/twentyRest");
+const { resolveForwardLastContactAt } = require("../shared/lastContact");
 
 const PROCESSED_PREFIX = "email_contact_processed_";
 const INTERNAL_DOMAIN = "@owocni.pl";
@@ -151,16 +152,21 @@ async function markProcessed(associationId, opportunityId, messageId, meta) {
 }
 
 async function touchContactFields(opp, contactIso, outboundIso) {
-  const patch = {
-    lastContactAt: contactIso,
-    bizLastContactLabel: buildContactLabelFresh(),
-  };
+  const patch = {};
+  const forward = resolveForwardLastContactAt(opp.lastContactAt, contactIso);
+  if (forward.advanced && forward.lastContactAt) {
+    patch.lastContactAt = forward.lastContactAt;
+    patch.bizLastContactLabel = buildContactLabelFresh();
+  }
   if (!hasFirstResponseMetrics(opp) && outboundIso) {
     const hours = computeHoursToFirstResponse(opp.createdAt, outboundIso);
     if (hours !== null) {
       patch.firstResponseAt = outboundIso;
       patch.hoursToFirstResponse = hours;
     }
+  }
+  if (!Object.keys(patch).length) {
+    return false;
   }
   await setPendingWrite(opp.id, "gcp:email_contact_sync", PENDING_WRITE_TTL_MS);
   await patchTwentyRecord("opportunities", opp.id, patch);

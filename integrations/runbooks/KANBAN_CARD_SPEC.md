@@ -71,7 +71,8 @@ Pełna tabela kombinacji → `owocni-staging-standalone/docs/kombinacje-formular
 
 ## Workflow odpowiedzi mailowej (faza 2 — do zrobienia)
 
-**Cel:** po **mailu klienta lub naszej odpowiedzi** zaktualizować powiązane Opportunity: `lastContactAt` + `bizLastContactLabel` (`Godzin: 0` przy zdarzeniu).
+**Cel:** po **mailu klienta lub naszej odpowiedzi** zaktualizować powiązane Opportunity: `lastContactAt` + `bizLastContactLabel` (`Godzin: 0` przy zdarzeniu).  
+**Reguła (2026-07-23):** `lastContactAt` **tylko do przodu** (`max` z istniejącym) — opóźniony mail nie może cofnąć czasu po nowszej rozmowie (i odwrotnie).
 
 ### Dlaczego nie w Stape?
 

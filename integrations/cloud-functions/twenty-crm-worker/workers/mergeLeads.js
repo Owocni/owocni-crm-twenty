@@ -15,6 +15,7 @@ const {
   patchTwentyRecord,
   buildTwentyListPath,
 } = require("../shared/twentyRest");
+const { maxIso } = require("../shared/lastContact");
 
 const ADAPTER_ID = "crm:merge_leads";
 const PAID_SRC = new Set(["OWOCNI_SORTOWNIA"]);
@@ -258,15 +259,6 @@ async function relinkCallTranscripts(loserOppId, survivorOppId, survivorPersonId
   }
 
   return { moved, participantsPatched };
-}
-
-function maxIso(a, b) {
-  const ta = Date.parse(a || "");
-  const tb = Date.parse(b || "");
-  if (!Number.isFinite(ta) && !Number.isFinite(tb)) return null;
-  if (!Number.isFinite(ta)) return b;
-  if (!Number.isFinite(tb)) return a;
-  return ta >= tb ? a : b;
 }
 
 async function aliasStapeIdentity({
