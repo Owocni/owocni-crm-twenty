@@ -41,6 +41,7 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 
 ### Na karcie Opportunity
 - Sekcja powiązanych `CallTranscript`, sort DESC po `startedAt` (PF-B2)
+- Po MATCH: **Notatka + wpis Timeline** (`linked-callTranscript.created`) z linkiem do Rozmowy / nagrania — tworzy worker (`shared/callTimeline.js`)
 
 ## 4. Ręczne przypięcie (handlowiec) — prosty UX
 

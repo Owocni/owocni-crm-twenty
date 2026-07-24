@@ -10,6 +10,7 @@ const {
   extractCreatedId,
 } = require("../shared/twentyRest");
 const { resolveForwardLastContactAt } = require("../shared/lastContact");
+const { postCallTimelineOnLead } = require("../shared/callTimeline");
 
 const ADAPTER_ID = "crm:call_transcript_link";
 
@@ -206,6 +207,14 @@ async function linkCallTranscriptToOpportunity(transcriptId, opportunityId) {
     transcript.startedAt || transcript.createdAt,
     transcript.direction,
   );
+  const timeline = await postCallTimelineOnLead({
+    transcript,
+    opportunityId,
+    personId,
+  }).catch((err) => {
+    console.warn("call timeline post failed:", err.message);
+    return { error: err.message };
+  });
 
   return {
     transcriptId,
@@ -214,6 +223,7 @@ async function linkCallTranscriptToOpportunity(transcriptId, opportunityId) {
     participantId: clientPart?.id || null,
     phonePatched,
     contact,
+    timeline,
   };
 }
 
