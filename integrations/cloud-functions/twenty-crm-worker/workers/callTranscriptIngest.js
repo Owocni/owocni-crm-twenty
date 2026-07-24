@@ -21,6 +21,7 @@ const {
   buildTwentyListPath,
 } = require("../shared/twentyRest");
 const { resolveForwardLastContactAt } = require("../shared/lastContact");
+const { postCallTimelineOnLead } = require("../shared/callTimeline");
 
 const ADAPTER_ID = "crm:call_transcript_ingest";
 const CLOSED_STAGES = new Set(["WON", "LOST"]);
@@ -447,8 +448,30 @@ async function processOneTask(task) {
   }
 
   let contact = null;
+  let timeline = null;
   if (opportunity?.id) {
     contact = await touchOpportunity(opportunity, startedAtIso, direction);
+    timeline = await postCallTimelineOnLead({
+      transcript: {
+        id: transcriptId,
+        title: buildTitle(taskData, clientHandle),
+        name: clientHandle,
+        clientPhone: clientHandle,
+        ourPhone: ourHandle,
+        direction,
+        startedAt: startedAtIso,
+        createdAt: startedAtIso,
+        summary: { markdown: summary },
+        recording: taskData.recordingWebUrl
+          ? { primaryLinkUrl: taskData.recordingWebUrl }
+          : null,
+      },
+      opportunityId: opportunity.id,
+      personId: personMatch.personId || null,
+    }).catch((err) => {
+      console.warn("call timeline post failed:", err.message);
+      return { error: err.message };
+    });
   }
 
   await putTwentyStateDocument(`call_transcript_processed_${externalCallId}`, {
@@ -457,6 +480,7 @@ async function processOneTask(task) {
     person_id: personMatch.personId || null,
     opportunity_id: opportunity?.id || null,
     parking_task_id: parkingTaskId,
+    timeline_note_id: timeline?.noteId || null,
     updated_at: Date.now(),
   });
   await updateTaskDone(task.key, taskData, "created");
@@ -467,6 +491,7 @@ async function processOneTask(task) {
     opportunityId: opportunity?.id || null,
     parkingTaskId,
     contact,
+    timeline,
     matchSource: personMatch.source,
     conflict: Boolean(personMatch.conflict),
   };

@@ -41,11 +41,23 @@ function extractCreatedId(collection, responseBody) {
   if (collection === "messageThreads") createKey = "createMessageThread";
   if (collection === "messages") createKey = "createMessage";
   if (collection === "messageParticipants") createKey = "createMessageParticipant";
+  if (collection === "notes") createKey = "createNote";
+  if (collection === "noteTargets") createKey = "createNoteTarget";
+  if (collection === "timelineActivities") createKey = "createTimelineActivity";
+  const singularGuess = collection.endsWith("ies")
+    ? collection.slice(0, -3) + "y"
+    : collection.endsWith("s")
+      ? collection.slice(0, -1)
+      : collection;
   const record =
     data[createKey] ||
+    data[singularGuess] ||
     data[collection.slice(0, -1)] ||
     data.person ||
     data.opportunity ||
+    data.note ||
+    data.noteTarget ||
+    data.timelineActivity ||
     {};
   return record.id || null;
 }

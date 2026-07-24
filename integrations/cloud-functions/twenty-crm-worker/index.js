@@ -9,6 +9,10 @@ const {
   runCallTranscriptIngestWorker,
 } = require("./workers/callTranscriptIngest");
 const {
+  enqueueMissedCallTask,
+  runMissedCallIngestWorker,
+} = require("./workers/missedCallIngest");
+const {
   linkCallTranscriptToOpportunity,
   createLeadFromCallTranscript,
   processCallTranscriptWebhook,
@@ -136,10 +140,29 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       return;
     }
 
+    if (
+      req.method === "POST" &&
+      (body.action === "enqueue_missed_call" ||
+        body.job_type === "crm:missed_call_ingest_enqueue")
+    ) {
+      const enqueue = await enqueueMissedCallTask(
+        body.data || body,
+        body.environment,
+      );
+      res.status(200).json({
+        ok: true,
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "missed_call_enqueue",
+        enqueue,
+      });
+      return;
+    }
+
     const updatePerson = await runUpdatePersonWorker();
     const createLead = await runCreateLeadWorker();
     const advanceContacted = await runAdvanceNewToContactedWorker();
     const callTranscript = await runCallTranscriptIngestWorker();
+    const missedCall = await runMissedCallIngestWorker();
     res.status(200).json({
       ok: true,
       build_id: CREATE_LEAD_BUILD_ID,
@@ -147,6 +170,7 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       create_lead: createLead,
       advance_new_to_contacted: advanceContacted,
       call_transcript_ingest: callTranscript,
+      missed_call_ingest: missedCall,
     });
   } catch (err) {
     console.error("twenty-crm-worker ERROR", err);

@@ -11,12 +11,13 @@
 3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
 4. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR** + kanał telefon + merge
 5. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
-6. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
-7. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
-8. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
-9. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
-10. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
-11. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
+6. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
+7. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
+8. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
+9. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
+10. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
+11. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
+12. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
 
 **NIE czytaj jako SSOT:** `archive/**`
 
