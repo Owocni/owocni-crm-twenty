@@ -23,6 +23,7 @@ Po merge:
 - **Maile:** `MessageParticipant.personId` Person B → Person A (timeline na survivorze)
 - Email/telefon Person B → additional na Person A (gdy brak)
 - Stape: wskaźniki email/phone/id_oid X2 → `canonical_oid=X1` (profil X2 **nie** kasujemy)
+- **2026-07-24:** operacje Stape (pending write / alias / audit) są **soft-fail** — awaria Store nie blokuje merge w Twenty (ostrzeżenie w odpowiedzi `stapeWarnings`)
 
 ## 3. Worker GCP
 

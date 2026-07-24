@@ -1,6 +1,6 @@
 # MISSED calls (Play getCallHistory) → Twenty Opportunity counter
 
-Status: **MVP 2026-07-23**
+Status: **MVP 2026-07-23** · near-realtime GCP **2026-07-24**
 
 ## Zasada
 
@@ -10,43 +10,41 @@ Status: **MVP 2026-07-23**
 ## Flow
 
 ```
-telefony/run.js (hosting)
-  → getCallHistory (MISSED)
+Cloud Scheduler */5
+  → Cloud Run Job telefony-play-poller (hoursBack=2, state=GCS)
+  → getCallHistory (MISSED) + kursor GCS
   → POST GCP action=enqueue_missed_call
   → task_queue crm:missed_call_ingest
-  → Scheduler poll worker
+  → Scheduler */5 poll worker
   → match Person by phone → open Opportunity
   → increment counter + note
 ```
 
-Transkrypty nadal: nagranie → STT → n8n → `enqueue_call_transcript`.
+Transkrypty nadal: nagranie → STT → n8n (tylko nowe) → `enqueue_call_transcript`.
+
+**Uwaga implementacji:** w dokumencie taska kolejki pole kolejki to `status: "pending"`; status CDR Play to `callStatus: "MISSED"` (nie nadpisywać `status`).
 
 ## Deploy
 
 ### 1. GCP worker (sandbox)
-Deploy `twenty-crm-worker` (zawiera `missedCallIngest.js`).
+Deploy `twenty-crm-worker` (zawiera `missedCallIngest.js`). Scheduler poll: **`*/5`**.
 
-### 2. Hosting telefony (cron STT)
-Wgraj katalog `telefony/` i ustaw w `.env` (obok istniejących kluczy Play):
-
-```
-GCP_WORKER_URL=https://twenty-crm-worker-sandbox-hsxlhvflrq-lm.a.run.app
-MISSED_CALLS_ENABLED=true
-```
-
-Potem jak zwykle: `node run.js` / cron.
+### 2. Telefony (Cloud Run Job)
+Sibling `telefony/` — `./deploy_gcp.sh` (Job + Scheduler + bucket `owocni-robot-telefony`).  
+Env: `GCP_WORKER_URL`, `MISSED_CALLS_ENABLED=true`, `STATE_BACKEND=gcs`.  
+Szczegóły: `telefony/docs/GCP_NEAR_REALTIME.md`.
 
 **n8n nie trzeba zmieniać** — MISSED omija filtr transkryptów.
 
 ## Twenty UI
 
-Dodaj na layout Opportunity pola:
+Pola na Opportunity:
 - **Nieodebrane** (`bizMissedCallsCount`)
 - **Ostatnie nieodebrane** (`bizLastMissedCallAt`)
 
 ## Idempotencja
 
-Stape `twenty_state/missed_call_processed_{callSessionId}`.
+Stape `twenty_state/missed_call_processed_{callSessionId}` + kursor GCS `telefony/state/missed/*`.
 
 ## Poza MVP
 

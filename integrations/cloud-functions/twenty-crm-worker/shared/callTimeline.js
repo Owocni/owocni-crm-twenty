@@ -152,15 +152,22 @@ async function postCallTimelineOnLead({
       transcript.title || transcript.name || title,
   });
 
-  await putTwentyStateDocument(stateKey, {
-    posted: true,
-    transcript_id: transcript.id,
-    opportunity_id: opportunityId,
-    person_id: personId || null,
-    note_id: noteId,
-    timeline_activity_id: timelineActivityId || null,
-    updated_at: Date.now(),
-  });
+  try {
+    await putTwentyStateDocument(stateKey, {
+      posted: true,
+      transcript_id: transcript.id,
+      opportunity_id: opportunityId,
+      person_id: personId || null,
+      note_id: noteId,
+      timeline_activity_id: timelineActivityId || null,
+      updated_at: Date.now(),
+    });
+  } catch (err) {
+    console.warn(
+      "call timeline Stape state skipped:",
+      String(err?.message || err),
+    );
+  }
 
   return { noteId, timelineActivityId, posted: true };
 }

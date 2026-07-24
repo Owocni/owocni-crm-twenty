@@ -6,7 +6,9 @@ Status: **MVP aktywny (2026-07-21)** · Play wysyła surowy transkrypt · n8n fi
 
 ## 1. Wejście z Play (webhook n8n)
 
-Play (`run.js`, cron co 1h) POST na webhook n8n:
+Play (`run.js` / Cloud Run Job co **5 min**, `hoursBack=2`) POST na webhook n8n **tylko gdy jest nowy transkrypt**:
+
+Near-realtime GCP: sibling `telefony/docs/GCP_NEAR_REALTIME.md`.
 
 ```json
 {

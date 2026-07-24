@@ -1,7 +1,7 @@
 # integrations/ — kod wykonawczy Sortownia + Robot (+ Twenty)
 
 **Status:** kanoniczna lokalizacja w repo `owocni-crm-github`  
-**Last updated:** 2026-07-21
+**Last updated:** 2026-07-24
 
 ## LLM START (60 sek)
 
@@ -34,15 +34,16 @@
 | `cloud-functions/twenty-inbound-webhook/` | Adapter Twenty → business event → `task_queue` | GCP Cloud Function (sandbox: **gcp-v5**) |
 | `CRM_TWENTY_CREATE_LEAD.sGTM.js` | Sortownia → Twenty (create lead) | Stape stub → `cloud-functions/twenty-crm-worker/` |
 | `CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js` | Stub po migracji GCP (~435 B) | Stape |
-| `cloud-functions/twenty-crm-worker/` | create_lead, update_person, email_contact_sync, **call_transcript_ingest / link / create_lead_from_call**, **merge_leads** | GCP Cloud Function (sandbox) |
-| `cloud-functions/robot-task-monitor/` | Deploy wrapper dla `GoogleCloudRobot.js` | GCP Cloud Run |
+| `cloud-functions/twenty-crm-worker/` | create_lead, update_person, email_contact_sync, **call_transcript_ingest / link / create_lead_from_call**, **missed_call_ingest**, **merge_leads** | GCP Cloud Function (sandbox); Scheduler **`*/5`** |
+| `cloud-functions/robot-task-monitor/` | Deploy wrapper dla `GoogleCloudRobot.js` | GCP Cloud Run; Scheduler **`*/5`** |
 | `ENV_GUARD.sGTM.js` | Fragment env sandbox/prod (copy-paste) | Stape |
 | `shared/envGuard.js` | env-guard dla Robota | Node |
 | `shared/ssotPaths.js` | Stałe adapterów/kolekcji | Node (+ ref) |
 | `tools/deploy_workflow_create_lead_from_call.py` | Spec workflow MANUAL „Utwórz lead z rozmowy” | Twenty MCP |
+| `tools/deploy_workflow_link_call_to_lead.py` | Spec workflow MANUAL „Przypnij do leada” | Twenty MCP |
 | `tools/deploy_workflow_merge_leads.py` | Spec workflow MANUAL „Scal z leadem” (RECORD picker) | Twenty MCP |
 
-**Play PBX (poza tym repo):** katalog `telefony/` obok — cron `run.js` → STT → webhook n8n `Play PBX → GCP CallTranscript`. Kontrakt: `runbooks/CALL_INGEST_N8N.contract.md`.
+**Play PBX (poza tym repo):** sibling `telefony/` — **Cloud Run Job** `telefony-play-poller` + Scheduler **`*/5`** (GCS state) → STT → n8n tylko przy nowym transkrypcie → GCP. Hostline cron wycofany. Kontrakt: `runbooks/CALL_INGEST_N8N.contract.md` · near-realtime: `telefony/docs/GCP_NEAR_REALTIME.md` (sibling).
 
 ## SSOT alignment (2026-07-21)
 
@@ -53,8 +54,10 @@
 - `biz_value` dla `purchase`: łańcuch pól Twenty + fallback cennika — `EVENT_CONTRACT.md` §5.7.
 - `environment: sandbox` → Robot **nie** wysyła prod Google Ads / GA4 MP; arkusze debug OK.
 - **Sandbox inbound:** GCP `twenty-inbound-webhook` (build `2026-07-10-gcp-v5`); Stape = edge proxy tylko.
-- **Kanał telefon (MVP 2026-07-21):** Play → n8n → `enqueue_call_transcript` → worker → `CallTranscript`; parking **Rozmowy → Do przypięcia**; UX: wybór Szansy (webhook) / „Utwórz lead z rozmowy”.
-- **Merge leadów (MVP 2026-07-21):** workflow „Scal z leadem” → `merge_leads` (Opportunity LOST/DUPLICATE, CallTranscript + MessageParticipant + Stape `canonical_oid`).
+- **Kanał telefon (MVP → near-realtime 2026-07-24):** Play → Cloud Run Job `telefony-play-poller` (`*/5`) → STT → n8n (tylko nowe) → `enqueue_call_transcript` → worker → `CallTranscript`; parking **Rozmowy → Do przypięcia**; UX: **Przypnij do leada** / **Utwórz lead z rozmowy**.
+- **Nieodebrane:** `enqueue_missed_call` → `bizMissedCallsCount` (MISSED ≠ kontakt).
+- **Merge leadów (MVP 2026-07-21):** workflow „Scal z leadem” → `merge_leads` (Opportunity LOST/DUPLICATE; Stape soft-fail — Twenty merge nie zależy od Store).
+- **Stape usage (2026-07-24):** CRM worker + Robot Scheduler **`*/5`** (było co 1 min); worker: 1 list-pending / cykl + circuit breaker przy paused kontenerze. sGTM strony nadal na tym samym kontenerze — osobny limit/plan zalecany.
 
 ## Mirror w repo `owocni strona/owocni/`
 

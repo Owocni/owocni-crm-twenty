@@ -48,13 +48,16 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 **Jedno pole na karcie rozmowy: `Opportunity` (Szansa / Lead).** Reszta synchronizuje się automatycznie (worker).
 
 ### Istniejący lead
-1. **Rozmowy → Do przypięcia** → otwórz rozmowę
-2. W polu **Szansa** wybierz istniejący lead z listy
-3. Zapisz — **webhook** `callTranscript.updated` → GCP worker:
+1. **Rozmowy → Do przypięcia** → zaznacz rozmowę
+2. Akcja **„Przypnij do leada”** (workflow MANUAL pinned) → wybierz lead z pickera
+3. Worker (`link_call_transcript`):
    - przypina osobę do uczestnika rozmowy,
    - ustawia `matchStatus = MATCHED`,
    - uzupełnia telefon na Person (jeśli brak),
-   - aktualizuje `lastContactAt` (+ NEW→CONTACTED przy OUTBOUND)
+   - aktualizuje `lastContactAt` (+ NEW→CONTACTED przy OUTBOUND),
+   - dodaje notatkę / wpis na timeline
+
+Alternatywa: na karcie rozmowy pole **Lead (szansa)** → zapis → webhook `callTranscript.updated`.
 
 ### Nowy lead
 1. Otwórz rozmowę z widoku **Do przypięcia**
@@ -67,6 +70,7 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 |---|---|
 | Webhook | `80bbd89d-853d-42b2-a673-001ac54bb3fa` → `callTranscript.updated` → GCP worker |
 | Workflow | **Rozmowa · Utwórz lead v2** (`92e72492-10c3-48aa-babc-68d662271093`) |
+| Workflow | **Rozmowa · Przypnij do leada v1** (`cb93c9be-1e8b-47cd-b977-602d7373d100`) — picker Opportunity → `link_call_transcript` |
 | Worker actions | `link_call_transcript`, `create_lead_from_call` |
 
 ### Layout karty (Settings → Objects → Rozmowa)

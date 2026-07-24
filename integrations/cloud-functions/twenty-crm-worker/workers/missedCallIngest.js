@@ -318,7 +318,7 @@ async function enqueueMissedCallTask(payload, environment) {
     direction: payload.direction,
     callingNumber: payload.callingNumber,
     calledNumber: payload.calledNumber,
-    status: "MISSED",
+    callStatus: "MISSED",
     duration: payload.duration ?? 0,
   });
   return { taskId, enqueued: true };
