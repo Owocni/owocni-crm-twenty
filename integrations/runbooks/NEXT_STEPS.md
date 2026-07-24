@@ -5,8 +5,8 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid"
-last_verified: 2026-07-21
-recheck_trigger: "PASS G-PAR / cutover / nowy deploy GCP inbound / call channel / merge"
+last_verified: 2026-07-24
+recheck_trigger: "PASS G-PAR / cutover / nowy deploy GCP inbound / call channel / merge / Stape plan"
 default_trust: D:CORE
 related:
   - TWENTY_ROLLOUT_MASTER
@@ -22,6 +22,7 @@ related:
 
 **Stan:** Etap **1.1 zamknięty** (T1→WF, GCP `gcp-v5` inbound, worker + smoke + workflowy SQL/odrzucenie).  
 **Nowe (2026-07-21):** kanał telefon (CallTranscript) + merge leadów — MVP na sandbox.  
+**Nowe (2026-07-24):** telefony → Cloud Run Job `*/5` + GCS; Stape poll CRM/Robot `*/5`; workflow **Przypnij do leada**; merge soft-Stape.  
 **Cutover:** nadal **NIE** — brama **G-PAR** otwarta + szkolenie PAR-5.3 + E12.3b `leads@`.
 
 **Master plan:** [TWENTY_ROLLOUT_MASTER.md](./TWENTY_ROLLOUT_MASTER.md)

@@ -20,6 +20,17 @@ const { maxIso } = require("../shared/lastContact");
 const ADAPTER_ID = "crm:merge_leads";
 const PAID_SRC = new Set(["OWOCNI_SORTOWNIA"]);
 
+/** Stape Store may be down — never block Twenty merge on it. */
+async function softStape(label, fn) {
+  try {
+    return { ok: true, value: await fn() };
+  } catch (err) {
+    const message = String(err?.message || err);
+    console.warn(`merge_leads Stape ${label} skipped:`, message);
+    return { ok: false, error: message };
+  }
+}
+
 function transcriptCollection() {
   return process.env.CALL_TRANSCRIPT_OBJECT || "callTranscripts";
 }
@@ -340,7 +351,10 @@ async function mergeLeads(input) {
     input.relinkEmails === "true";
 
   const auditKey = mergeAuditKey(loserId, survivorId);
-  const existingAudit = await readTwentyStateDocument(auditKey);
+  const auditRead = await softStape("read_audit", () =>
+    readTwentyStateDocument(auditKey),
+  );
+  const existingAudit = auditRead.ok ? auditRead.value : null;
   if (existingAudit?.merged === true && !forceRelink) {
     return {
       skipped: "already_merged",
@@ -355,12 +369,18 @@ async function mergeLeads(input) {
   if (!survivor?.id) throw new Error("survivor opportunity not found");
   if (!loser?.id) throw new Error("loser opportunity not found");
 
+  // Already LOST/DUPLICATE in Twenty = merge applied even if Stape audit missing
+  const loserAlreadyClosed =
+    String(loser.stage || "").toUpperCase() === "LOST" &&
+    String(loser.rejectionReason || "").toUpperCase() === "DUPLICATE" &&
+    String(loser.lossDescription || "").includes(survivorId);
+
   // Repair path: only re-link emails/calls on an already-merged pair
-  if (existingAudit?.merged === true && forceRelink) {
+  if ((existingAudit?.merged === true || loserAlreadyClosed) && forceRelink) {
     const survivorPersonId =
-      existingAudit.survivor_person_id || survivor.pointOfContactId || null;
+      existingAudit?.survivor_person_id || survivor.pointOfContactId || null;
     const loserPersonId =
-      existingAudit.loser_person_id || loser.pointOfContactId || null;
+      existingAudit?.loser_person_id || loser.pointOfContactId || null;
     const emails = await relinkMessageParticipants(
       loserPersonId,
       survivorPersonId,
@@ -370,16 +390,18 @@ async function mergeLeads(input) {
       survivorId,
       survivorPersonId,
     );
-    await putTwentyStateDocument(auditKey, {
-      ...existingAudit,
-      emails_moved: (existingAudit.emails_moved || 0) + emails.moved,
-      transcripts_moved:
-        (existingAudit.transcripts_moved || 0) + transcripts.moved,
-      participants_patched:
-        (existingAudit.participants_patched || 0) +
-        transcripts.participantsPatched,
-      relinked_at: Date.now(),
-    });
+    await softStape("write_audit_repair", () =>
+      putTwentyStateDocument(auditKey, {
+        ...(existingAudit || { merged: true }),
+        emails_moved: (existingAudit?.emails_moved || 0) + emails.moved,
+        transcripts_moved:
+          (existingAudit?.transcripts_moved || 0) + transcripts.moved,
+        participants_patched:
+          (existingAudit?.participants_patched || 0) +
+          transcripts.participantsPatched,
+        relinked_at: Date.now(),
+      }),
+    );
     return {
       ok: true,
       repaired: true,
@@ -389,6 +411,16 @@ async function mergeLeads(input) {
       transcriptsMoved: transcripts.moved,
       participantsPatched: transcripts.participantsPatched,
       auditKey,
+    };
+  }
+
+  if (loserAlreadyClosed && !forceRelink) {
+    return {
+      skipped: "already_merged",
+      survivorOpportunityId: survivorId,
+      loserOpportunityId: loserId,
+      auditKey,
+      source: "twenty_loser_stage",
     };
   }
 
@@ -428,8 +460,15 @@ async function mergeLeads(input) {
   const finalSurvivorPersonId =
     survivorPerson?.id || survivorPersonId || loserPersonId || null;
 
-  await setPendingWrite(survivorId, ADAPTER_ID, PENDING_WRITE_TTL_MS);
-  await setPendingWrite(loserId, ADAPTER_ID, PENDING_WRITE_TTL_MS);
+  const stapeWarnings = [];
+  const pendingSurvivor = await softStape("pending_survivor", () =>
+    setPendingWrite(survivorId, ADAPTER_ID, PENDING_WRITE_TTL_MS),
+  );
+  if (!pendingSurvivor.ok) stapeWarnings.push(pendingSurvivor.error);
+  const pendingLoser = await softStape("pending_loser", () =>
+    setPendingWrite(loserId, ADAPTER_ID, PENDING_WRITE_TTL_MS),
+  );
+  if (!pendingLoser.ok) stapeWarnings.push(pendingLoser.error);
 
   const transcripts = await relinkCallTranscripts(
     loserId,
@@ -475,43 +514,57 @@ async function mergeLeads(input) {
     await patchTwentyRecord("opportunities", survivorId, survivorPatch);
   }
 
-  const stape = await aliasStapeIdentity({
-    survivorOid: survivorOid || null,
-    loserOid: loserOid || null,
-    loserEmail:
-      personPrimaryEmail(loserPerson) || normalizeEmail(loser.bizCardEmail),
-    loserPhone:
-      loser.bizCardPhone ||
-      (loserPerson?.phones?.primaryPhoneNumber
-        ? `${loserPerson.phones.primaryPhoneCallingCode || ""}${loserPerson.phones.primaryPhoneNumber}`
-        : ""),
-    survivorOppId: survivorId,
-    loserOppId: loserId,
-    reason,
-  });
+  const stapeAlias = await softStape("alias_identity", () =>
+    aliasStapeIdentity({
+      survivorOid: survivorOid || null,
+      loserOid: loserOid || null,
+      loserEmail:
+        personPrimaryEmail(loserPerson) || normalizeEmail(loser.bizCardEmail),
+      loserPhone:
+        loser.bizCardPhone ||
+        (loserPerson?.phones?.primaryPhoneNumber
+          ? `${loserPerson.phones.primaryPhoneCallingCode || ""}${loserPerson.phones.primaryPhoneNumber}`
+          : ""),
+      survivorOppId: survivorId,
+      loserOppId: loserId,
+      reason,
+    }),
+  );
+  if (!stapeAlias.ok) stapeWarnings.push(stapeAlias.error);
+  const stape = stapeAlias.ok
+    ? stapeAlias.value
+    : { aliasedKeys: [], mergedAt: Date.now(), skipped: stapeAlias.error };
 
-  await putTwentyStateDocument(auditKey, {
-    merged: true,
-    adapter: ADAPTER_ID,
-    survivor_opportunity_id: survivorId,
-    loser_opportunity_id: loserId,
-    survivor_id_oid: survivorOid || null,
-    loser_id_oid: loserOid || null,
-    survivor_person_id: finalSurvivorPersonId,
-    loser_person_id: loserPersonId,
-    transcripts_moved: transcripts.moved,
-    participants_patched: transcripts.participantsPatched,
-    emails_moved: emails.moved,
-    contact_merge: contactMerge,
-    stape_aliased_keys: stape.aliasedKeys,
-    reason: reason || null,
-    actor: input.actor || null,
-    admin_confirmed: adminConfirmed,
-    merged_at: stape.mergedAt,
-  });
+  const auditWrite = await softStape("write_audit", () =>
+    putTwentyStateDocument(auditKey, {
+      merged: true,
+      adapter: ADAPTER_ID,
+      survivor_opportunity_id: survivorId,
+      loser_opportunity_id: loserId,
+      survivor_id_oid: survivorOid || null,
+      loser_id_oid: loserOid || null,
+      survivor_person_id: finalSurvivorPersonId,
+      loser_person_id: loserPersonId,
+      transcripts_moved: transcripts.moved,
+      participants_patched: transcripts.participantsPatched,
+      emails_moved: emails.moved,
+      contact_merge: contactMerge,
+      stape_aliased_keys: stape.aliasedKeys,
+      reason: reason || null,
+      actor: input.actor || null,
+      admin_confirmed: adminConfirmed,
+      merged_at: stape.mergedAt,
+      stape_warnings: stapeWarnings.length ? stapeWarnings : null,
+    }),
+  );
+  if (!auditWrite.ok) stapeWarnings.push(auditWrite.error);
 
-  await clearPendingWrite(survivorId, ADAPTER_ID);
-  await clearPendingWrite(loserId, ADAPTER_ID);
+  await softStape("clear_pending_survivor", () =>
+    clearPendingWrite(survivorId, ADAPTER_ID),
+  );
+  await softStape("clear_pending_loser", () =>
+    clearPendingWrite(loserId, ADAPTER_ID),
+  );
 
   return {
     ok: true,
@@ -525,6 +578,7 @@ async function mergeLeads(input) {
     emailsMoved: emails.moved,
     contactMerge,
     stape,
+    stapeWarnings: stapeWarnings.length ? stapeWarnings : undefined,
     auditKey,
   };
 }

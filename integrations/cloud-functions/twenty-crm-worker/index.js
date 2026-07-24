@@ -19,6 +19,7 @@ const {
 } = require("./workers/callTranscriptLink");
 const { mergeLeads } = require("./workers/mergeLeads");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
+const { withPendingTasksCache } = require("./shared/stapeStore");
 
 functions.http("processTwentyCrmWorker", async (req, res) => {
   if (req.method !== "POST" && req.method !== "GET") {
@@ -158,19 +159,24 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       return;
     }
 
-    const updatePerson = await runUpdatePersonWorker();
-    const createLead = await runCreateLeadWorker();
-    const advanceContacted = await runAdvanceNewToContactedWorker();
-    const callTranscript = await runCallTranscriptIngestWorker();
-    const missedCall = await runMissedCallIngestWorker();
+    const poll = await withPendingTasksCache(async () => {
+      const updatePerson = await runUpdatePersonWorker();
+      const createLead = await runCreateLeadWorker();
+      const advanceContacted = await runAdvanceNewToContactedWorker();
+      const callTranscript = await runCallTranscriptIngestWorker();
+      const missedCall = await runMissedCallIngestWorker();
+      return {
+        update_person: updatePerson,
+        create_lead: createLead,
+        advance_new_to_contacted: advanceContacted,
+        call_transcript_ingest: callTranscript,
+        missed_call_ingest: missedCall,
+      };
+    });
     res.status(200).json({
       ok: true,
       build_id: CREATE_LEAD_BUILD_ID,
-      update_person: updatePerson,
-      create_lead: createLead,
-      advance_new_to_contacted: advanceContacted,
-      call_transcript_ingest: callTranscript,
-      missed_call_ingest: missedCall,
+      ...poll,
     });
   } catch (err) {
     console.error("twenty-crm-worker ERROR", err);

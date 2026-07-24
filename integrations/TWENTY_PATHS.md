@@ -36,7 +36,8 @@ Jedna tabela „co gdzie żyje” — **bez zgadywania** ze starego CRM / archiw
 | Ścieżka | Opis |
 |---------|------|
 | `POST /inbound/twenty_webhook` | Native webhook OUT z Twenty (HMAC) → Stape |
-| GCP `twenty-crm-worker-sandbox` (HTTP) | Poll workers **or** actions: `enqueue_call_transcript`, `link_call_transcript`, `create_lead_from_call`, `merge_leads`; webhooks `messageChannelMessageAssociation.*`, `callTranscript.updated` |
+| GCP `twenty-crm-worker-sandbox` (HTTP) | Poll workers **or** actions: `enqueue_call_transcript`, `link_call_transcript`, `create_lead_from_call`, `merge_leads`; webhooks `messageChannelMessageAssociation.*`, `callTranscript.updated`. Scheduler: **`*/5`** (Stape usage; było co 1 min). |
+| GCP `robot-task-monitor` | Poll `task_queue` → platformy. Scheduler: **`*/5`**. |
 | `POST /crm/twenty_worker` | Legacy client Stape → ten sam worker |
 | n8n `Play PBX → GCP CallTranscript` | Webhook `play-pbx-ingest` → filtr → enqueue GCP |
 
@@ -80,14 +81,17 @@ Twenty (idOid null) → inbound → generate_lead (manual) → mint idOid → cr
 ### 4.4 Telefon (Play PBX) → Twenty
 
 ```
-Play cron (telefony/run.js) → STT → n8n (filtr poczty) → enqueue_call_transcript
-  → task_queue → worker ingest → CallTranscript (+ Participant)
+Cloud Scheduler */5 → Cloud Run Job telefony-play-poller (GCS cursor, hoursBack=2)
+  → MISSED → enqueue_missed_call (bez n8n)
+  → nowe nagranie → STT → n8n (tylko wtedy) → enqueue_call_transcript
+  → task_queue → worker (poll */5) → CallTranscript (+ Participant)
   → match Person/Opportunity LUB parking „Do przypięcia”
 ```
 
-- Dopisz do leada: pole **Szansa** → webhook `callTranscript.updated` → `link_call_transcript`
+- Dopisz do leada: workflow **Rozmowa · Przypnij do leada v1** → `link_call_transcript` (albo pole **Lead (szansa)** → webhook)
 - Nowy lead: workflow **Rozmowa · Utwórz lead v2** → `create_lead_from_call`
-- Runbooki: `CALL_INGEST_N8N.contract.md`, `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`
+- Runbooki: `CALL_INGEST_N8N.contract.md`, `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`, `MISSED_CALLS_PLAY.contract.md`
+- Kod pollera: sibling `telefony/` (poza tym repo) · `docs/GCP_NEAR_REALTIME.md`
 
 ### 4.5 Scalanie leadów
 
