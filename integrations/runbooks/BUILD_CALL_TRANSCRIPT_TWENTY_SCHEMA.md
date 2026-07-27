@@ -2,6 +2,8 @@
 
 Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 
+**Architektura kanału (STT, n8n, LLM, UX):** [`CALL_CHANNEL_ARCHITECTURE.md`](./CALL_CHANNEL_ARCHITECTURE.md).
+
 ## 1. Obiekt `CallTranscript` (etykieta: Rozmowa)
 
 | Pole API | Typ | Unique | Uwagi |

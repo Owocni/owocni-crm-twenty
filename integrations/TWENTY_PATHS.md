@@ -90,7 +90,7 @@ Cloud Scheduler */5 → Cloud Run Job telefony-play-poller (GCS cursor, hoursBac
 
 - Dopisz do leada: workflow **Rozmowa · Przypnij do leada v1** → `link_call_transcript` (albo pole **Lead (szansa)** → webhook)
 - Nowy lead: workflow **Rozmowa · Utwórz lead v2** → `create_lead_from_call`
-- Runbooki: `CALL_INGEST_N8N.contract.md`, `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`, `MISSED_CALLS_PLAY.contract.md`
+- Runbooki: `CALL_CHANNEL_ARCHITECTURE.md`, `CALL_INGEST_N8N.contract.md`, `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`, `MISSED_CALLS_PLAY.contract.md`
 - Kod pollera: sibling `telefony/` (poza tym repo) · `docs/GCP_NEAR_REALTIME.md`
 
 ### 4.5 Scalanie leadów

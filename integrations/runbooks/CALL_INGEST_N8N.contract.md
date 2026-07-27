@@ -2,7 +2,7 @@
 
 Status: **MVP aktywny (2026-07-21)** · Play wysyła surowy transkrypt · n8n filtruje i forwarduje · worker zapisuje do Twenty.
 
-**Powiązane:** schema/UX [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](./BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md) · mapa [`../TWENTY_PATHS.md`](../TWENTY_PATHS.md) §4.4 · kod Play: sibling `telefony/` (poza tym repo).
+**Powiązane:** architektura [`CALL_CHANNEL_ARCHITECTURE.md`](./CALL_CHANNEL_ARCHITECTURE.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](./BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md) · mapa [`../TWENTY_PATHS.md`](../TWENTY_PATHS.md) §4.4 · kod Play: sibling `telefony/` (poza tym repo).
 
 ## 1. Wejście z Play (webhook n8n)
 
