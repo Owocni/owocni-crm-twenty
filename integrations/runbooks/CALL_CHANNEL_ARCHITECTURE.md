@@ -126,23 +126,16 @@ Backlog operacyjny: [`NEXT_STEPS.md`](./NEXT_STEPS.md) (wiersz „Call: summary 
 
 ## 7. UX na leadzie (Opportunity) — stan i kierunek
 
-### Stan MVP (2026-07-24)
+### Stan (2026-07-27)
 
-- Po dopasowaniu rozmowy worker tworzy **Note** + wpis timeline (`linked-callTranscript.created`).
-- Relacja `CallTranscript.opportunity` istnieje w schema.
-- Ręczne: workflow **Przypnij do leada** / pole **Lead (szansa)**.
+- Zakładka **„Rozmowy”** na karcie Opportunity — relacja `callTranscripts` (FIELD + TABLE), deploy: `deploy_opportunity_rozmowy_tab.py`
+- Po MATCH: tylko wpis timeline (`linked-callTranscript.created`); **Notes nie są tworzone** dla rozmów
+- Relacja `CallTranscript.opportunity` + odwrotna `Opportunity.callTranscripts`
+- Ręczne: workflow **Przypnij do leada** / pole **Lead (szansa)**
 
-### Kierunek (backlog — następny krok produktowy)
+### Kierunek (backlog)
 
-**Cel:** na karcie leada **zakładka „Rozmowy”** — lista `CallTranscript` powiązanych z tym Opportunity, **bez** mieszania z ogólnymi Notatkami.
-
-| Opcja | Opis |
-|---|---|
-| A | Twenty **Record Page** — widget relacji `callTranscripts` (jeśli dostępny w UI) |
-| B | Custom view / filtered relation panel na Opportunity |
-| C | Timeline tylko jako skrót; pełna treść w zakładce Rozmowy |
-
-**Nie zmieniać:** D-15, tor ingest, obiekt `CallTranscript` — tylko layout + ewentualnie mniej redundantnych Notes po MATCH (osobna decyzja).
+**LLM summary** w polu `CallTranscript.summary` (n8n) · opcjonalnie wyczyścić historyczne Notes z rozmów (jednorazowo)
 
 ---
 

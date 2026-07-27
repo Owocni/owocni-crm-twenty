@@ -98,7 +98,8 @@ async function createRecord(collection, body) {
 }
 
 /**
- * Note + linked timeline entry on Opportunity (and Person) after a matched call.
+ * Timeline entry on Opportunity (and Person) after a matched call.
+ * Full call content lives on the Rozmowy tab (callTranscripts relation), not in Notes.
  * Idempotent via Stape twenty_state/call_timeline_{transcriptId}.
  */
 async function postCallTimelineOnLead({
@@ -115,32 +116,13 @@ async function postCallTimelineOnLead({
   if (existing?.posted === true) {
     return {
       skipped: "already_posted",
-      noteId: existing.note_id || null,
       timelineActivityId: existing.timeline_activity_id || null,
     };
   }
 
   const title = buildNoteTitle(transcript);
-  const markdown = buildNoteMarkdown(transcript);
   const happensAt =
     transcript.startedAt || transcript.createdAt || new Date().toISOString();
-
-  const noteId = await createRecord("notes", {
-    title,
-    bodyV2: { markdown },
-  });
-  if (!noteId) throw new Error("POST notes — brak id");
-
-  await createRecord("noteTargets", {
-    noteId,
-    opportunityId,
-  });
-  if (personId) {
-    await createRecord("noteTargets", {
-      noteId,
-      personId,
-    }).catch(() => null);
-  }
 
   const timelineActivityId = await createRecord("timelineActivities", {
     name: "linked-callTranscript.created",
@@ -158,7 +140,6 @@ async function postCallTimelineOnLead({
       transcript_id: transcript.id,
       opportunity_id: opportunityId,
       person_id: personId || null,
-      note_id: noteId,
       timeline_activity_id: timelineActivityId || null,
       updated_at: Date.now(),
     });
@@ -169,7 +150,7 @@ async function postCallTimelineOnLead({
     );
   }
 
-  return { noteId, timelineActivityId, posted: true };
+  return { timelineActivityId, posted: true };
 }
 
 module.exports = {
