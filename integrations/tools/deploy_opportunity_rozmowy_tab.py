@@ -23,7 +23,9 @@ USER_AGENT = "owocni-crm-deploy-rozmowy-tab/1.0"
 
 OPPORTUNITY_OBJECT_ID = "7874c080-30c2-46c0-934c-905926d918e0"
 CALL_TRANSCRIPTS_FIELD_ID = "047184ce-e269-4459-b268-119c1b5a9cd8"
-CALL_TRANSCRIPT_INDEX_VIEW_ID = "060b449e-328d-4ae6-ac01-f5f0814929ec"
+# Relation widgets on record pages must use CARD + viewId=null
+# (same as Company→People / CalendarEvent→CallRecordings). TABLE + INDEX view
+# breaks parent-record scoping and shows empty.
 TAB_TITLE = "Rozmowy"
 TAB_POSITION = 1.5
 TAB_ICON = "IconPhone"
@@ -162,13 +164,34 @@ def create_widget(tab_id: str) -> str:
                 "configuration": {
                     "configurationType": "FIELD",
                     "fieldMetadataId": CALL_TRANSCRIPTS_FIELD_ID,
-                    "fieldDisplayMode": "TABLE",
-                    "viewId": CALL_TRANSCRIPT_INDEX_VIEW_ID,
+                    "fieldDisplayMode": "CARD",
+                    "viewId": None,
                 },
             }
         },
     )
     return data["data"]["createPageLayoutWidget"]["id"]
+
+
+def fix_widget(widget_id: str) -> None:
+    gql(
+        """
+        mutation UpdateWidget($id: String!, $input: UpdatePageLayoutWidgetInput!) {
+          updatePageLayoutWidget(id: $id, input: $input) { id }
+        }
+        """,
+        {
+            "id": widget_id,
+            "input": {
+                "configuration": {
+                    "configurationType": "FIELD",
+                    "fieldMetadataId": CALL_TRANSCRIPTS_FIELD_ID,
+                    "fieldDisplayMode": "CARD",
+                    "viewId": None,
+                }
+            },
+        },
+    )
 
 
 def main() -> None:
@@ -177,18 +200,24 @@ def main() -> None:
     layout = found["layout"]
     existing = found["existing_tab"]
     if existing:
-        has_field_widget = any(
-            w.get("type") == "FIELD"
+        widgets = [
+            w
+            for w in existing.get("widgets") or []
+            if w.get("type") == "FIELD"
             and (w.get("configuration") or {}).get("fieldMetadataId")
             == CALL_TRANSCRIPTS_FIELD_ID
-            for w in existing.get("widgets") or []
-        )
-        print(
-            f"OK — zakładka „{TAB_TITLE}” już istnieje (tab={existing['id']}, widget={'tak' if has_field_widget else 'brak'})"
-        )
-        if not has_field_widget:
+        ]
+        if not widgets:
             widget_id = create_widget(existing["id"])
             print(f"Utworzono widget relacji: {widget_id}")
+            return
+        for w in widgets:
+            cfg = w.get("configuration") or {}
+            if cfg.get("fieldDisplayMode") != "CARD" or cfg.get("viewId"):
+                fix_widget(w["id"])
+                print(f"Naprawiono widget {w['id']} → CARD + viewId=null")
+            else:
+                print(f"OK — zakładka „{TAB_TITLE}” (tab={existing['id']}, widget={w['id']})")
         return
 
     tab_id = create_tab(layout["id"])
