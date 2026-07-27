@@ -42,8 +42,9 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 - **Nie** Taski — kolejka kontroli jest na obiekcie Rozmowy
 
 ### Na karcie Opportunity
-- Sekcja powiązanych `CallTranscript`, sort DESC po `startedAt` (PF-B2)
-- Po MATCH: **Notatka + wpis Timeline** (`linked-callTranscript.created`) z linkiem do Rozmowy / nagrania — tworzy worker (`shared/callTimeline.js`)
+- Zakładka **„Rozmowy”** — relacja `callTranscripts` (tabela, sort po `startedAt` DESC w UI)
+- Deploy (Metadata API, idempotentny): `integrations/tools/deploy_opportunity_rozmowy_tab.py`
+- Po MATCH: **wpis Timeline** (`linked-callTranscript.created`) — skrót z linkiem; **bez** duplikowania treści w Notes (`shared/callTimeline.js`)
 
 ## 4. Ręczne przypięcie (handlowiec) — prosty UX
 

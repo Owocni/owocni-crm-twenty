@@ -56,7 +56,7 @@ flowchart LR
 | PAR-5.3 szkolenie handlowców | OPEN | `E12_4_P4_CUTOVER_INSTRUCTIONS` |
 | E12.4 wyłączenie julia362 | po G-PAR | `E12_4_OWOCNI_MAIL_RESET_PLAN` |
 | Call: summary LLM + archiwum dropów GCS | backlog | `CALL_CHANNEL_ARCHITECTURE` §6 · `CALL_INGEST_N8N.contract` |
-| **Opportunity: zakładka Rozmowy (relacja, nie Notes)** | **NEXT** | `CALL_CHANNEL_ARCHITECTURE` §7 |
+| **Opportunity: zakładka Rozmowy (relacja, nie Notes)** | ✅ sandbox 2026-07-27 | `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA` · `deploy_opportunity_rozmowy_tab.py` |
 | Merge: propozycje `company_domain_key` | backlog | IDENTITY §5.8.2 |
 
 ---
