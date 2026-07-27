@@ -10,7 +10,7 @@
 2. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
 3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
 4. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR** + kanał telefon + merge
-5. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
+5. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_CHANNEL_ARCHITECTURE.md`](runbooks/CALL_CHANNEL_ARCHITECTURE.md) · kontrakt [`CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
 6. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
 7. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
 8. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
