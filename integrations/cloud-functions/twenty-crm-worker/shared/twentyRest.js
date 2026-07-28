@@ -122,6 +122,26 @@ async function findOpportunityByIdOid(idOid) {
   return opp;
 }
 
+async function findOpportunityByMetaLeadgenId(leadgenId) {
+  const id = String(leadgenId || "").trim();
+  if (!id) return null;
+  const path = buildTwentyListPath(
+    "opportunities",
+    `metaLeadgenId[eq]:${id}`,
+    1,
+  );
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`find opp by leadgen HTTP ${res.statusCode} ${res.rawBody}`);
+  }
+  const opps = parseTwentyListRecords("opportunities", res.body);
+  let opp = opps.length ? opps[0] : null;
+  if (opp && String(opp.metaLeadgenId || "").trim() !== id) {
+    opp = null;
+  }
+  return opp;
+}
+
 async function patchTwentyRecord(collection, recordId, patchBody) {
   const res = await twentyRequest(
     "PATCH",
@@ -144,5 +164,6 @@ module.exports = {
   buildTwentyListPath,
   findPersonByEmail,
   findOpportunityByIdOid,
+  findOpportunityByMetaLeadgenId,
   patchTwentyRecord,
 };

@@ -26,12 +26,17 @@ describe("mapBizSource — Leads@ smoke", () => {
     assert.equal(mapBizSource(task), "ORGANIC");
   });
 
-  it("does not map web product to bizSource", () => {
+  it("returns FACEBOOK for meta_instant_form", () => {
     const task = {
-      inbound_channel: "leads_at",
-      biz_product: "web",
-      src_system: "TWENTY_EMAIL",
+      src_action_source: "meta_instant_form",
+      lead_id: "1234567890",
+      event_name: "generate_lead",
     };
-    assert.equal(mapBizSource(task), "DIRECT_EMAIL");
+    assert.equal(mapBizSource(task), "FACEBOOK");
+  });
+
+  it("returns FACEBOOK for meta_leadgen_id without utm", () => {
+    const task = { meta_leadgen_id: "998877" };
+    assert.equal(mapBizSource(task), "FACEBOOK");
   });
 });
