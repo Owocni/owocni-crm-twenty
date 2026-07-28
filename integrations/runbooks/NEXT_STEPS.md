@@ -48,6 +48,7 @@ flowchart LR
 | T1–WF (schema, webhook, GCP, smoke, workflowy) | ✅ 2026-07-10 | `TWENTY_ROLLOUT_MASTER` |
 | E12.1 Email Sync (7 skrzynek) | ✅ | `E12_EMAIL_SYNC_EVIDENCE` |
 | E12.2 Identity Resolver | ✅ | `BUILD_IDENTITY_RESOLVER` |
+| E12.5 Mail direction views (📥/📤 backstop) | ✅ sandbox | `E12_5_MAIL_DIRECTION_VIEWS` (OQ-7/10 na Dawida) |
 | Owocni Mail PAR-5.2 | ✅ sandbox | `E12_EMAIL_SYNC_EVIDENCE` §G-PAR |
 | **Kanał telefon Play → Twenty** | ✅ MVP sandbox 2026-07-21 · near-realtime GCP 2026-07-24 | `CALL_CHANNEL_ARCHITECTURE` · `CALL_INGEST_N8N.contract` · `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA` |
 | **Merge leadów (ręczne)** | ✅ MVP sandbox 2026-07-21 | `MERGE_LEADS` · IDENTITY §5.9 |

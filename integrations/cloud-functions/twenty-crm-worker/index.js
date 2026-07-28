@@ -5,6 +5,10 @@ const { runUpdatePersonWorker } = require("./workers/updatePerson");
 const { runCreateLeadWorker } = require("./workers/createLead");
 const { runAdvanceNewToContactedWorker, processEmailContactWebhook } = require("./workers/advanceNewToContacted");
 const {
+  runMessageDirectionEnrichWorker,
+  enrichFromMcmaWebhook,
+} = require("./workers/messageDirectionEnrich");
+const {
   enqueueCallTranscriptTask,
   runCallTranscriptIngestWorker,
 } = require("./workers/callTranscriptIngest");
@@ -18,6 +22,7 @@ const {
   processCallTranscriptWebhook,
 } = require("./workers/callTranscriptLink");
 const { mergeLeads } = require("./workers/mergeLeads");
+const { ingestMetaLead } = require("./workers/metaLeadIngest");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
 const { withPendingTasksCache } = require("./shared/stapeStore");
 
@@ -38,13 +43,17 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       req.method === "POST" &&
       eventName.startsWith("messageChannelMessageAssociation.")
     ) {
-      const emailContact = await processEmailContactWebhook(body);
+      const [emailContact, directionEnrich] = await Promise.all([
+        processEmailContactWebhook(body),
+        enrichFromMcmaWebhook(body),
+      ]);
       res.status(200).json({
         ok: true,
         build_id: CREATE_LEAD_BUILD_ID,
         mode: "email_contact_webhook",
         event: eventName,
         email_contact: emailContact,
+        message_direction_enrich: directionEnrich,
       });
       return;
     }
@@ -159,16 +168,33 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       return;
     }
 
+    if (
+      req.method === "POST" &&
+      (body.action === "ingest_meta_lead" ||
+        body.job_type === "crm:meta_lead_ingest")
+    ) {
+      const ingested = await ingestMetaLead(body.data || body);
+      res.status(200).json({
+        ok: true,
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "meta_lead_ingest",
+        ...ingested,
+      });
+      return;
+    }
+
     const poll = await withPendingTasksCache(async () => {
       const updatePerson = await runUpdatePersonWorker();
       const createLead = await runCreateLeadWorker();
       const advanceContacted = await runAdvanceNewToContactedWorker();
+      const messageDirection = await runMessageDirectionEnrichWorker();
       const callTranscript = await runCallTranscriptIngestWorker();
       const missedCall = await runMissedCallIngestWorker();
       return {
         update_person: updatePerson,
         create_lead: createLead,
         advance_new_to_contacted: advanceContacted,
+        message_direction_enrich: messageDirection,
         call_transcript_ingest: callTranscript,
         missed_call_ingest: missedCall,
       };

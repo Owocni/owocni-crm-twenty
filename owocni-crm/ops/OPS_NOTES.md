@@ -94,6 +94,15 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | **API key — Workflow Code secrets** | Code Action wymaga kluczy w function body — nie secure runtime; secrets poza Twenty (Sortownia/n8n); wyjątek: Apps Framework `secret:true` | `verified_fact` | docs (Apps Framework) | 2026-05-31 | Twenty release |
 | **Merge rekordów** | Dostępny od v1.3 (UI); zachowanie webhooka przy merge (oba ID?) → recheck | `platform_recheck_needed` | docs + IDENTITY §5.9 | 2026-05-31 | preflight |
 | **Dashboards** | Beta / Early Access — nie fundament MVP | `verified_fact` | docs | 2026-05-31 | Twenty release |
+| **Kierunek maila** | Żyje na `MCMA.direction`, nie na Message. Dedup Message po `headerMessageId` → 1 mail = N asocjacji. Materializacja firmowa = `Message.direction` (ADR #19) | `verified_fact` | kod + E12.5 @ sandbox 2026-07-28 | 2026-07-28 | Twenty messaging release |
+| **Filtr po relacji** | Tylko MANY_TO_ONE; ONE_TO_MANY niewidoczne na liście filtrów; sort po relacji nie istnieje | `verified_fact` | `getFilterFilterableFieldMetadataItems.ts` | 2026-07-28 | Twenty release |
+| **Wyszukiwarka Message** | `searchVector` = wyłącznie `subject`; treść tylko przez filtr `Text → Contains` (podciąg, case-insensitive) | `verified_fact` | kod + instancja E12.5 | 2026-07-28 | Twenty search-vector rework |
+| **Message Visibility** | Per skrzynka: Metadata Only / Subject and Metadata / All Email Content — determinuje czy `text` istnieje | `verified_fact` | docs calendar-emails | 2026-07-28 | zmiana visibility skrzynki |
+| **Message bez strony rekordu** | Z listy Messages nie da się otworzyć maila; pełna treść = chip Message Thread | `verified_fact` | instancja | 2026-07-28 | Twenty release |
+| **updateMany cap** | `MUTATION_MAXIMUM_AFFECTED_RECORDS = 100`; skraca czas, nie liczbę zdarzeń webhooka | `verified_fact` | kod + backfill E12.5 | 2026-07-28 | Twenty release |
+| **API key rate limit (Cloud)** | Long window **100 req/min** wiążący (OQ-3 zmierzony 2026-07-28 — LIMIT_REACHED przy szybszym tempie) | `verified_fact` | backfill E12.5 | 2026-07-28 | Twenty rate-limit change |
+| **connectedAccount / messageChannel** | Poza Core API — perspektywa użytkownika dla kierunku niewykonalna | `verified_fact` | Core object list + E12.5 | 2026-07-28 | Twenty API surface |
+| **Webhook OUT (sandbox)** | REST webhooks tylko `opportunity.*` / `person.*` / `company.*` — **nie** `message.*` → backfill Message = `no_emit` względem Sortowni | `verified_fact` | preflight E12.5 2026-07-28 | 2026-07-28 | zmiana webhooków OUT |
 
 > **Dom faktu HMAC = ten wiersz (#16).** `CRM_CONSTITUTION.md` Prawo 7g i `EVENT_CONTRACT.md` §5.1 robią cross-ref TUTAJ, nie powielają nazwy nagłówka. Zamknięte z docs — bez wiersza „recheck na instancji" dla samej nazwy/signed-string (recheck_trigger = Twenty release, standardowo).
 
@@ -107,6 +116,9 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 
 | Data | Operacja | Zakres | `no_emit` | Wykonał | Wynik |
 |---|---|---|---|---|---|
+| 2026-07-28 | E12.5b soft filter `Message.ourMailboxes` (MULTI_SELECT z uczestników) + widoki 📥/📤 Marta·Gosia·Mariusz | living Message; źródło participant handles | **TAK** | Composer | Soft filter, nie ACL. Widoki w folderze Poczta. |
+| 2026-07-28 | E12.5 live path: workflow → GCP (Message nieedytowalny przez automation) | 2 maile w 🔧 naprawione ręcznie; workflowy direction+ourMailboxes DEACTIVATED; enrich w twenty-crm-worker | **TAK** | Composer | Błąd: `Object cannot be updated by automation`. REST PATCH Message OK. 🔧 MA BYĆ 0. |
+| 2026-07-28 | E12.5 backfill `Message.direction` (`updateMessages` ×100) | 26 970 update-ops na ID z MCMA; żywe Message po: OUT 3 554 + IN 20 044; empty 91 (bez MCMA); total 23 689 | **TAK** | Composer | Preflight: webhook OUT bez `message.*`. OQ-2 PASS. Konflikty both-dir = 0. `errors=0`. 🔧 ≈ 91. |
 | (pusto — uzupełniać przy każdej operacji masowej; każdy wiersz MUSI mieć wartość `no_emit`: TAK/NIE) | — | — | — | — | — |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
@@ -154,6 +166,7 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-28 | Fakty E12.5 (kierunek/MCMA, filtr relacji, searchVector, visibility, updateMany, rate 100/min, webhook OUT) + bulk log backfill | Composer | wdrożenie E12.5 sandbox |
 | 2026-05-31 | HMAC (#16) wpisany jako `verified_fact` (nazwy + signed-string) | Dawid | rozstrzygnięcie docs.twenty.com |
 
 ---

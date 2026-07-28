@@ -123,6 +123,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | **#16** | HMAC: `X-Twenty-Webhook-Signature` SHA256 + `X-Twenty-Webhook-Timestamp`; signed string `{timestamp}:{payload}` | `ops/OPS_NOTES.md` → Twenty Verified Facts | docs.twenty.com | 2026-05-31 |
 | **#17** | Szablony maili: SSOT Supabase BB; Faza 0 dual compose; cutover wymaga Sidecar MVP lub Twenty native | `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md` | Dawid + właściciel (pending) | 2026-06-16 |
 | **#18** | Analytics: metryki M1–M9 + pola CRM-only + dashboardy KPI (sandbox D2) | `owocni-crm/METRICS.md` → §5; `statystyki/IMPLEMENTATION-STATUS.md` → Zamknięcie ADR #18 | Dawid + właściciel | 2026-07-09 |
+| **#19** | Message.direction = perspektywa firmy (OUTGOING jeśli jakakolwiek MCMA OUTGOING) | `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md` → §5.2; `DATA_MODEL.md` → Message | właściciel (2026-07-16) + wdrożenie 2026-07-28 | 2026-07-28 |
 
 > **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
 
@@ -142,6 +143,12 @@ Kontekst: tablica KPI per produkt × handlowiec × czas (M1–M9); plan zaakcept
 Decyzja (3 warstwy): (1) pola CRM-only na Opportunity + `bizProduct` / `bizSource`; (2) Track Stage Time v3 (Twenty) + M2 w GCP `advanceNewToContacted.js`; (3) dashboardy EA „Sprzedaż — Oceny" + „Sprzedaż — Zespół". Kanon formuł = `owocni-crm/METRICS.md`.
 Evidence: pola w Twenty + `DATA_MODEL.md` §5.1.1; workflow v3 ACTIVE; PF-4/5 PASS; smoke Leads@ `DIRECT_EMAIL`; funnel test7858; dashboardy zaakceptowane wstępnie przez właściciela 2026-07-09. Backlog poza ADR: PF-7 legacy import, PF-6 kredyty, pełna próba M4 ≥20 rekordów po imporcie.
 Status wdrożenia: `statystyki/IMPLEMENTATION-STATUS.md`.
+
+**ADR #19 (Message.direction — perspektywa firmy) — closed 2026-07-28, `blocks: none`, `implementation_status: done` (sandbox).**
+Kontekst: kierunek żyje na `MessageChannelMessageAssociation` (per kanał); widoki Messages nie filtrują ONE_TO_MANY → trzeba zmaterializować jedno pole na Message. Wariant „perspektywa użytkownika" niewykonalny (`connectedAccount` poza Core API).
+Decyzja właściciela 2026-07-16: `OUTGOING` jeśli **jakakolwiek** MCMA ma `OUTGOING`, inaczej `INCOMING`. Cel = backstop Kanbana (Z1/Z2), nie klient poczty; Z3 = natywny `Text → Contains`.
+Evidence: pole + backfill + widoki 📥/📤/🔧 + folder Poczta; live = GCP `messageDirectionEnrich` (workflowy DEACTIVATED — Message nieedytowalny przez automation); runbook `E12_5_MAIL_DIRECTION_VIEWS.md`; `DATA_MODEL.md` Message.direction; `OPS_NOTES` §5.1/§5.3.
+Otwarte operacyjnie (nie blokują ADR): OQ-7 visibility/Sent per skrzynka; OQ-10 właściciel czujki 🔧.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 
@@ -197,6 +204,7 @@ Gdy liczba decyzji wymagających pełnego ADR (kontekst / opcje / konsekwencje) 
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-28 | **#19 Message.direction (perspektywa firmy) → closed** + wdrożenie sandbox E12.5 | właściciel + Composer | backstop poczty / widoki Otrzymane·Wysłane |
 | 2026-07-09 | **#18 Analytics → closed** (sandbox D2, `owocni-crm/METRICS.md` SSOT) | Dawid + właściciel | dashboardy + testy PASS |
 | 2026-07-09 | #18 Analytics (metryki + dashboardy) → open, `blocks: none`, wdrożenie `in_progress` | właściciel + Dawid | akceptacja planu `statystyki/` |
 | 2026-05-31 | #16 (HMAC) → closed z evidence (docs.twenty.com) | właściciel | błąd źródła rozstrzygnięty docs |

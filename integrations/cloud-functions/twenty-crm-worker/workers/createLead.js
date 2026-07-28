@@ -19,6 +19,7 @@ const {
   extractCreatedId,
   findPersonByEmail,
   findOpportunityByIdOid,
+  findOpportunityByMetaLeadgenId,
   patchTwentyRecord,
 } = require("../shared/twentyRest");
 
@@ -357,8 +358,12 @@ function resolveTwentyBizProduct(taskData, answers) {
   return mapBizProductToTwenty(resolveEffectiveBizProductSlug(taskData, answers));
 }
 
-function resolveOpportunityOwnerId(bizProductTwenty, idOid) {
+function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
   const owners = getOwnerIds();
+  // Leady z FB (Instant Form / fbclid / utm) → zawsze Robert Mańk
+  if (taskData && mapBizSource(taskData) === "FACEBOOK") {
+    return owners.robert;
+  }
   if (bizProductTwenty === "COPYWRITING") return owners.maciej;
   let hash = 0;
   const s = String(idOid);
@@ -368,6 +373,16 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid) {
 
 function mapBizSource(taskData) {
   if (isLeadsAtEmailTask(taskData)) return "DIRECT_EMAIL";
+
+  const srcAction = String(taskData.src_action_source || "").toLowerCase();
+  if (
+    srcAction === "meta_instant_form" ||
+    taskData.lead_id ||
+    taskData.meta_leadgen_id ||
+    taskData.metaLeadgenId
+  ) {
+    return "FACEBOOK";
+  }
 
   const utmSource = String(taskData.attr_utm_source || "").toLowerCase();
   const utmMedium = String(taskData.attr_utm_medium || "").toLowerCase();
@@ -943,6 +958,16 @@ async function createOpportunityRecord(taskData, idOid, personId) {
   const answers = parseFormAnswers(taskData);
   const bizProductTwenty = resolveTwentyBizProduct(taskData, answers);
   const kanbanFields = buildOpportunityKanbanFields(taskData);
+  const metaLeadgenId = String(
+    taskData.meta_leadgen_id || taskData.lead_id || taskData.metaLeadgenId || "",
+  ).trim();
+  const metaAdId = String(
+    taskData.meta_ad_id || taskData.ad_id || taskData.metaAdId || "",
+  ).trim();
+  const metaAdgroupId = String(
+    taskData.meta_adgroup_id || taskData.adgroup_id || taskData.metaAdgroupId || "",
+  ).trim();
+
   const body = {
     name: buildOpportunityName(taskData),
     stage: "NEW",
@@ -950,7 +975,7 @@ async function createOpportunityRecord(taskData, idOid, personId) {
     srcSystem: resolveSrcSystem(taskData),
     bizSource: resolveBizSourceForTask(taskData),
     bizProduct: bizProductTwenty,
-    ownerId: resolveOpportunityOwnerId(bizProductTwenty, idOid),
+    ownerId: resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData),
     pointOfContactId: personId,
     lastContactAt: kanbanFields.lastContactAt,
     bizLastContactLabel: kanbanFields.bizLastContactLabel,
@@ -959,6 +984,9 @@ async function createOpportunityRecord(taskData, idOid, personId) {
     bizCardEmail: kanbanFields.bizCardEmail,
     bizCardPhone: kanbanFields.bizCardPhone,
   };
+  if (metaLeadgenId) body.metaLeadgenId = metaLeadgenId;
+  if (metaAdId) body.metaAdId = metaAdId;
+  if (metaAdgroupId) body.metaAdgroupId = metaAdgroupId;
   for (const key of [
     "bizProjectType",
     "bizIntent",
@@ -1105,6 +1133,18 @@ async function processOneTask(task, audit, allPending) {
     console.log("SKIP — Opportunity exists", existingOpp.id);
     await updateTaskDone(task.key, taskData, "already_exists", audit);
     return;
+  }
+
+  const leadgenId = String(
+    taskData.meta_leadgen_id || taskData.lead_id || taskData.metaLeadgenId || "",
+  ).trim();
+  if (leadgenId) {
+    const byLeadgen = await findOpportunityByMetaLeadgenId(leadgenId);
+    if (byLeadgen?.id) {
+      console.log("SKIP — Opportunity exists for leadgen", byLeadgen.id);
+      await updateTaskDone(task.key, taskData, "already_exists_leadgen", audit);
+      return;
+    }
   }
 
   const personId = await resolveOrCreatePerson(taskData, idOid);

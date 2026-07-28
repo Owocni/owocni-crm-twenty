@@ -1,6 +1,6 @@
 "use strict";
 
-const CREATE_LEAD_BUILD_ID = "2026-07-14-gcp-v8";
+const CREATE_LEAD_BUILD_ID = "2026-07-28-gcp-v10-msg-dir";
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -36,6 +36,8 @@ function getOwnerIds() {
     maciej: process.env.TWENTY_OWNER_MACIEJ || "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
     marta: process.env.TWENTY_OWNER_MARTA || "4704e0c0-8d77-4640-ad1e-1875294294df",
     gosia: process.env.TWENTY_OWNER_GOSIA || "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    // Meta Instant Form / FACEBOOK → zawsze Robert Mańk (nie Marta/Gosia RR)
+    robert: process.env.TWENTY_OWNER_ROBERT || "23ac9976-0232-4097-b056-5dc391bf7c34",
   };
 }
 

@@ -106,6 +106,9 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
 | `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
 | `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę |
+| `metaLeadgenId` | TEXT | Meta Lead webhook | null | CAPI SQL (`lead_id`), idempotencja inbound | OPEN | `leadgen_id` z Meta Instant Form — unikalny |
+| `metaAdId` | TEXT | Meta Lead webhook | null | raport M5 / atrybucja reklamy | OPEN | `ad_id` z webhooka Lead Ads |
+| `metaAdgroupId` | TEXT | Meta Lead webhook | null | raport zestawu reklam | OPEN | `adgroup_id` tylko z webhooka (nie z retrieval) |
 
 Specyfikacja widoku → `integrations/runbooks/KANBAN_CARD_SPEC.md`.
 
@@ -133,6 +136,17 @@ Pola **CRM-only** (NR-5 w `METRICS.md`) — wypełnia workflow / GCP worker; zap
 | `hoursToFirstResponse` | NUMBER | GCP `advanceNewToContacted.js` | null | M2 | OPEN | Godziny do pierwszej odpowiedzi (2 dec.) |
 
 Kanon formuł → `METRICS.md`. Kontrakty → `../workflows/track-stage-time.contract.md`, `../workflows/first-outbound-response.contract.md`.
+
+#### Message — kierunek (CRM-only, ADR #19 / E12.5)
+
+Pole **CRM-only** na obiekcie systemowym Message — materializacja reguły firmy z `MCMA.direction`. **NIGDY do payloadów eventów.** Bez prefiksu (`biz*`/`id*`/`src*` = kontrakt integracyjny).
+
+| Field (API) | Type | Owner | Empty | Used by | Freeze? | Description (Twenty UI) |
+|---|---|---|---|---|---|---|
+| `direction` | SELECT | Writer backfill + GCP `messageDirectionEnrich` (MCMA webhook/poll) | null (maile bez MCMA) | Widoki 📥/📤/🔧 | OPEN (wartości 1:1 z enumem platformy) | **UI:** Kierunek. Wartości API: `INCOMING` → „Przychodzący", `OUTGOING` → „Wychodzący". Reguła: OUTGOING jeśli **jakakolwiek** asocjacja ma OUTGOING, inaczej INCOMING. Workflow UPDATE Message = zablokowany (`Object cannot be updated by automation`). |
+| `ourMailboxes` | MULTI_SELECT | Writer backfill + GCP `messageDirectionEnrich` | [] | Widoki 📥/📤 Marta·Gosia·Mariusz (soft filter) | OPEN | **UI:** Nasze skrzynki. Wartości: MARTA/GOSIA/MARIUSZ/STUDIO/LEADS/COPYWRITING/POMOC/OBSLUGA. Źródło: `MessageParticipant.handle` ∈ naszych adresów. **Nie ACL** — filtr widoku, da się zdjąć. |
+
+Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECISION_REGISTER.md` #19.
 
 #### Stage LOST
 - **Nie emituje** eventu SSOT do platform (semantyka → `EVENT_CONTRACT.md`).
