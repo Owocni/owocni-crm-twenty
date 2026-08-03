@@ -26,6 +26,8 @@ Widok **By Stage** (Opportunities, KANBAN) w Twenty sandbox.
 | 4 | `bizCardEmail` | Email | Denormalizacja z formularza / leads@ |
 | 5 | `bizCardPhone` | Telefon | Denormalizacja z formularza / leads@ |
 
+**Nie na kafelku:** `bizMissedCallsCount` (nieodebrane) — dane zostają w rekordzie / Timeline, bez ikony na kanbanie.
+
 **Uwaga Twenty:** pole `name` musi być na pozycji 0 (label identifier). Na kafelku wyświetlamy **wyłącznie** tekst `Godzin:` / `Dni:` — pole `lastContactAt` zostaje w rekordzie (dane), ale **nie** na widoku kanban (inaczej widać datę + etykietę).
 
 ## Składanie `name` (formularz)

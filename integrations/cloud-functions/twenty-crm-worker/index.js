@@ -17,7 +17,7 @@ const {
   runMissedCallIngestWorker,
 } = require("./workers/missedCallIngest");
 const {
-  linkCallTranscriptToOpportunity,
+  linkCallTranscript,
   createLeadFromCallTranscript,
   processCallTranscriptWebhook,
 } = require("./workers/callTranscriptLink");
@@ -60,9 +60,16 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
 
     if (req.method === "POST" && body.action === "link_call_transcript") {
       const data = body.data || body;
-      const linked = await linkCallTranscriptToOpportunity(
+      const linked = await linkCallTranscript(
         data.transcriptId || data.callTranscriptId,
-        data.opportunityId,
+        {
+          opportunityId:
+            data.opportunityId && String(data.opportunityId).trim()
+              ? String(data.opportunityId).trim()
+              : null,
+          email: data.email || data.targetEmail || data.leadEmail || null,
+          personId: data.personId || data.targetPersonId || null,
+        },
       );
       res.status(200).json({
         ok: true,

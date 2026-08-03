@@ -52,13 +52,13 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 
 ### Istniejący lead
 1. **Rozmowy → Do przypięcia** → zaznacz rozmowę
-2. Akcja **„Przypnij do leada”** (workflow MANUAL pinned) → wybierz lead z pickera
+2. Akcja **„Przypnij do leada”** → **jedno z dwóch**:
+   - wpisz **email leada**, albo
+   - wyszukaj **lead po nazwie**
 3. Worker (`link_call_transcript`):
-   - przypina osobę do uczestnika rozmowy,
-   - ustawia `matchStatus = MATCHED`,
-   - uzupełnia telefon na Person (jeśli brak),
-   - aktualizuje `lastContactAt` (+ NEW→CONTACTED przy OUTBOUND),
-   - dodaje notatkę / wpis na timeline
+   - przy nazwie: używa wybranej szansy,
+   - przy mailu: szuka otwartego leada (`bizCardEmail` / email Person),
+   - ustawia `matchStatus = MATCHED`, uzupełnia telefon, timeline
 
 Alternatywa: na karcie rozmowy pole **Lead (szansa)** → zapis → webhook `callTranscript.updated`.
 
@@ -68,13 +68,13 @@ Alternatywa: na karcie rozmowy pole **Lead (szansa)** → zapis → webhook `cal
    - opcjonalnie podaj imię/nazwę; numer bierze z `clientPhone`
 3. Worker zakłada Person + Opportunity, przypina rozmowę i mintuje `idOid`
 
-### Live (sandbox 2026-07-21)
+### Live (sandbox 2026-07-28)
 | Element | ID / URL |
 |---|---|
 | Webhook | `80bbd89d-853d-42b2-a673-001ac54bb3fa` → `callTranscript.updated` → GCP worker |
 | Workflow | **Rozmowa · Utwórz lead v2** (`92e72492-10c3-48aa-babc-68d662271093`) |
-| Workflow | **Rozmowa · Przypnij do leada v1** (`cb93c9be-1e8b-47cd-b977-602d7373d100`) — picker Opportunity → `link_call_transcript` |
-| Worker actions | `link_call_transcript`, `create_lead_from_call` |
+| Workflow | **Rozmowa · Przypnij do leada v3** (`371933d7-f3da-4bb0-b1ce-aaff754b97ec`) — email **lub** nazwa leada → `link_call_transcript` |
+| Worker actions | `link_call_transcript` (`email` lub `opportunityId`), `create_lead_from_call` |
 
 ### Layout karty (Settings → Objects → Rozmowa)
 - Na górze: **clientPhone**, **Szansa (Opportunity)**, **owner**, **direction**, **startedAt**

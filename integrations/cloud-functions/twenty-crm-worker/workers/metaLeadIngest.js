@@ -49,9 +49,17 @@ function pickPhone(fields) {
 }
 
 function pickFullName(fields) {
-  if (fields.full_name) return fields.full_name;
-  const first = fields.first_name || fields.firstname || "";
-  const last = fields.last_name || fields.lastname || "";
+  // Meta Instant Forms często zwracają "full name" (ze spacją), nie "full_name"
+  const direct =
+    fields.full_name ||
+    fields["full name"] ||
+    fields.fullname ||
+    fields.imie_i_nazwisko ||
+    "";
+  if (direct) return String(direct).trim();
+  const first =
+    fields.first_name || fields.firstname || fields["first name"] || "";
+  const last = fields.last_name || fields.lastname || fields["last name"] || "";
   return `${first} ${last}`.trim();
 }
 
@@ -117,6 +125,7 @@ function buildCreateLeadTaskData(payload) {
               "phone_number",
               "phone",
               "full_name",
+              "full name",
               "first_name",
               "last_name",
               "work_email",

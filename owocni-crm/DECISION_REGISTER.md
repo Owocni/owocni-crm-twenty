@@ -124,6 +124,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | **#17** | Szablony maili: SSOT Supabase BB; Faza 0 dual compose; cutover wymaga Sidecar MVP lub Twenty native | `integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md` | Dawid + właściciel (pending) | 2026-06-16 |
 | **#18** | Analytics: metryki M1–M9 + pola CRM-only + dashboardy KPI (sandbox D2) | `owocni-crm/METRICS.md` → §5; `statystyki/IMPLEMENTATION-STATUS.md` → Zamknięcie ADR #18 | Dawid + właściciel | 2026-07-09 |
 | **#19** | Message.direction = perspektywa firmy (OUTGOING jeśli jakakolwiek MCMA OUTGOING) | `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md` → §5.2; `DATA_MODEL.md` → Message | właściciel (2026-07-16) + wdrożenie 2026-07-28 | 2026-07-28 |
+| **#20** | Migracja Pipedrive: `srcSystem+=PIPEDRIVE_LEGACY`, `bizSource+=PIPEDRIVE_IMPORT`, `pipedriveId` ×3, legacy fields | `DATA_MODEL.md` → §5.1–5.3; `integrations/runbooks/PIPEDRIVE_MIGRATION_CHECKLIST.md` | właściciel 2026-07-31 + Metadata deploy | 2026-07-31 |
 
 > **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
 
@@ -149,6 +150,11 @@ Kontekst: kierunek żyje na `MessageChannelMessageAssociation` (per kanał); wid
 Decyzja właściciela 2026-07-16: `OUTGOING` jeśli **jakakolwiek** MCMA ma `OUTGOING`, inaczej `INCOMING`. Cel = backstop Kanbana (Z1/Z2), nie klient poczty; Z3 = natywny `Text → Contains`.
 Evidence: pole + backfill + widoki 📥/📤/🔧 + folder Poczta; live = GCP `messageDirectionEnrich` (workflowy DEACTIVATED — Message nieedytowalny przez automation); runbook `E12_5_MAIL_DIRECTION_VIEWS.md`; `DATA_MODEL.md` Message.direction; `OPS_NOTES` §5.1/§5.3.
 Otwarte operacyjnie (nie blokują ADR): OQ-7 visibility/Sent per skrzynka; OQ-10 właściciel czujki 🔧.
+
+**ADR #20 (Pipedrive → Twenty migracja pól) — closed 2026-07-31, `blocks: none`, `implementation_status: in_progress` (Metadata done; load później).**
+Kontekst: import handlowców z Pipedrive wymaga proweniencji na FROZEN `srcSystem`, kluczy rollback oraz stałego `bizSource`. Decyzje biznesowe: `integrations/runbooks/PIPEDRIVE_MIGRATION_CHECKLIST.md`.
+Decyzja: (1) `srcSystem` += `PIPEDRIVE_LEGACY`; (2) `bizSource` += `PIPEDRIVE_IMPORT`; (3) `pipedriveId` TEXT na Opportunity/Person/Company; (4) `legacyCreatedAt` + `legacyPipedriveStageName` na Opportunity; (5) metryki czasowe wykluczają `PIPEDRIVE_LEGACY` (patch `verify_metrics_pf5.py` — osobny krok); (6) rollback = DELETE po `pipedriveId` / `srcSystem=PIPEDRIVE_LEGACY` **przed** IMAP.
+Evidence: akceptacja właściciela 2026-07-31; deploy Metadata `integrations/tools/deploy_pipedrive_migration_fields.py`; `DATA_MODEL.md` §5.1–5.3.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 
@@ -204,6 +210,7 @@ Gdy liczba decyzji wymagających pełnego ADR (kontekst / opcje / konsekwencje) 
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-07-31 | **#20 Pipedrive migracja pól → closed** (Metadata deployed; load później) | właściciel + Composer | import PD → Twenty |
 | 2026-07-28 | **#19 Message.direction (perspektywa firmy) → closed** + wdrożenie sandbox E12.5 | właściciel + Composer | backstop poczty / widoki Otrzymane·Wysłane |
 | 2026-07-09 | **#18 Analytics → closed** (sandbox D2, `owocni-crm/METRICS.md` SSOT) | Dawid + właściciel | dashboardy + testy PASS |
 | 2026-07-09 | #18 Analytics (metryki + dashboardy) → open, `blocks: none`, wdrożenie `in_progress` | właściciel + Dawid | akceptacja planu `statystyki/` |
