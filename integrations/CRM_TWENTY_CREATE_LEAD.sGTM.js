@@ -14,6 +14,7 @@ var CREATE_LEAD_BUILD_ID="2026-07-07-v17";
 var OWNER_MACIEJ = "7fddba1d-e443-47d4-97b7-a3a829efd8c1";
 var OWNER_MARTA = "4704e0c0-8d77-4640-ad1e-1875294294df";
 var OWNER_GOSIA = "ccac533d-a34b-4cfc-a036-9e75ee3f8910";
+var OWNER_ROBERT = "23ac9976-0232-4097-b056-5dc391bf7c34";
 var PENDING_WRITE_TTL_MS = 45000;
 var MAX_TASKS_PER_RUN = 5;
 var BASE_URL = "https://uinpcbwf.eug.stape.io";
@@ -346,7 +347,14 @@ function resolveEffectiveBizProductSlug(taskData, answers) {
 function resolveTwentyBizProduct(taskData, answers) {
   return mapBizProductToTwenty(resolveEffectiveBizProductSlug(taskData, answers));
 }
-function resolveOpportunityOwnerId(bizProductTwenty, idOid) {
+function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
+  // Leady z FB → zawsze Robert Mańk (nie Marta/Gosia)
+  if (taskData && mapBizSource(taskData) === "FACEBOOK") {
+    return OWNER_ROBERT;
+  }
+  if (bizProductTwenty === "MARKETING") {
+    return OWNER_ROBERT;
+  }
   if (bizProductTwenty === "COPYWRITING") {
     return OWNER_MACIEJ;
   }
@@ -1433,7 +1441,7 @@ function createOpportunityRecord(taskData, idOid, personId, twentyCfg, callback)
     srcSystem: resolveSrcSystem(taskData),
     bizSource: resolveBizSourceForTask(taskData),
     bizProduct: bizProductTwenty,
-    ownerId: resolveOpportunityOwnerId(bizProductTwenty, idOid),
+    ownerId: resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData),
     pointOfContactId: personId,
     lastContactAt: kanbanFields.lastContactAt,
     bizLastContactLabel: kanbanFields.bizLastContactLabel,

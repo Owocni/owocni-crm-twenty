@@ -84,10 +84,13 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `campaignRejected` | BOOLEAN | NO | Handlowiec (przycisk/akcja) | false | rejected_lead | **FROZEN** | **UI label:** „Odrzuć leada". **Opis:** Informuje kanały reklamowe, że takich leadów nie szukamy. To nie to samo co stage LOST („przegrany deal"). API name: `campaignRejected`. |
 | `rejectionReason` | SELECT | NO | Handlowiec | null | rejected_lead (raport) | **FROZEN** | Powód odrzucenia kampanii — raportowo. Sprzężony z `campaignRejected`. |
 | `bizProduct` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | **FROZEN** | Produkt (web, logo, …) |
-| `bizSource` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | OPEN | Źródło leada |
+| `bizSource` | SELECT/TEXT | NO | Formularz/adapter | null | payload SSOT | OPEN | Źródło leada. Import PD: stała **`PIPEDRIVE_IMPORT`** (ADR #20). |
 | `bizValueWon` | CURRENCY | NO | Handlowiec przy WON | null | purchase (`biz_value` w payloadzie) | **FROZEN** | Wartość wygranej — **źródło raportowe** dla `purchase`; preferowane nad `bizValueDisplay`. Łańcuch fallback → `EVENT_CONTRACT.md` §5.7 |
 | `amount` | CURRENCY | NO | Twenty / handlowiec | 0 PLN default | purchase (fallback `biz_value`) | OPEN | Natywne pole Twenty; **0 PLN nie liczy się** jako wartość wygranej — adapter przechodzi dalej w łańcuchu §5.7 |
-| `srcSystem` | SELECT | NO | Adapter / UI | TWENTY_UI | proweniencja / raportowo | **FROZEN** | OWOCNI_SORTOWNIA / TWENTY_UI / BETTER_BITRIX_LEGACY. Pole raportowe (skąd lead) — NIE mechanizm loop-prevention (patrz NR-4). |
+| `srcSystem` | SELECT | NO | Adapter / UI | TWENTY_UI | proweniencja / raportowo | **FROZEN** | OWOCNI_SORTOWNIA / TWENTY_UI / BETTER_BITRIX_LEGACY / TWENTY_EMAIL / **PIPEDRIVE_LEGACY** (ADR #20). Pole raportowe (skąd lead) — NIE mechanizm loop-prevention (patrz NR-4). |
+| `pipedriveId` | TEXT | NO | Import PD | null | rollback / most migracji | OPEN | System ID dealu z Pipedrive. Unikalność w stagingu/adapterze. |
+| `legacyCreatedAt` | DATETIME | NO | Import PD | null | audyt timeline | OPEN | Oryginalny `add_time` z PD (obok `createdAt=add_time`). |
+| `legacyPipedriveStageName` | TEXT | NO | Import PD | null | audyt remap stage | OPEN | Oryginalna nazwa stage PD, gdy brak 1:1 do Twenty. |
 | `lastOrchestrationEventAt` | DATETIME | NO | Workflow/adapter | null | audit | OPEN | Ostatni event do Sortowni. Jedyny ślad audytowy emisji po stronie Twenty (brak audit logu na Pro). |
 | `lastOrchestrationEventId` | TEXT | NO | Workflow/adapter | null | audit | OPEN | id_event ostatniego eventu. Ślad audytowy emisji (j.w.). |
 | `bitrixDealId` | TEXT | NO | Handlowiec (manual SOP) | null | handoff Bitrix24 | OPEN | Deal księgowy po WON — MVP manual. Most handoff WON→Bitrix24 (CONSTITUTION Prawo 9). |
@@ -157,10 +160,13 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 | Field | Type | Unique | Owner | Empty | Freeze? |
 |---|---|---|---|---|---|
 | `idOid` | TEXT | YES | Sortownia | null = manual create | **FROZEN** |
+| `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID osoby z Pipedrive (rollback). |
 
 ### 5.3 Company
 
-Brak custom fields w Etapie 1 MVP.
+| Field | Type | Unique | Owner | Empty | Freeze? |
+|---|---|---|---|---|---|
+| `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID org z Pipedrive (rollback). |
 
 ### 5.4 Reguły operacyjne
 

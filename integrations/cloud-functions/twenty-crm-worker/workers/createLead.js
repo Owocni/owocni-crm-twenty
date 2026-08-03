@@ -364,6 +364,8 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
   if (taskData && mapBizSource(taskData) === "FACEBOOK") {
     return owners.robert;
   }
+  // Marketing / strategia / konsultacje → Robert
+  if (bizProductTwenty === "MARKETING") return owners.robert;
   if (bizProductTwenty === "COPYWRITING") return owners.maciej;
   let hash = 0;
   const s = String(idOid);
@@ -904,8 +906,53 @@ function normalizeFormMessageText(taskData) {
     .split("&nbsp;")
     .join(" ");
   s = stripHtmlTags(s);
-  s = collapseWhitespace(s);
+  // Zachowaj entery między liniami — collapseWhitespace spłaszczał treść do jednej linii
+  s = String(s)
+    .split(/\r\n|\r|\n/)
+    .map((line) => line.replace(/[ \t]+/g, " ").trim())
+    .filter(Boolean)
+    .join("\n");
   return s.trim();
+}
+
+function formatFormInquiryMarkdown(taskData) {
+  const contact = resolveTaskContactFields(taskData);
+  const text = normalizeFormMessageText(taskData);
+  const lines = [
+    "**Zapytanie z formularza**",
+    "",
+    contact.email ? `- Email: ${contact.email}` : "",
+    contact.phone ? `- Telefon: ${contact.phone}` : "",
+    contact.name ? `- Imię: ${contact.name}` : "",
+    "",
+    text || "_Brak treści zapytania._",
+  ].filter((line, i, arr) => !(line === "" && arr[i - 1] === ""));
+  return lines.join("\n").trim();
+}
+
+async function createFormInquiryNote(taskData, opportunityId, personId) {
+  const markdown = formatFormInquiryMarkdown(taskData);
+  if (!markdown) return null;
+  const noteRes = await twentyRequest("POST", "/notes", {
+    title: "Zapytanie z formularza",
+    bodyV2: { markdown },
+  });
+  if (noteRes.statusCode < 200 || noteRes.statusCode >= 300) {
+    throw new Error(`POST notes HTTP ${noteRes.statusCode} ${noteRes.rawBody}`);
+  }
+  const noteId = extractCreatedId("notes", noteRes.body);
+  if (!noteId) throw new Error("POST notes — brak id");
+  await twentyRequest("POST", "/noteTargets", {
+    noteId,
+    opportunityId,
+  });
+  if (personId) {
+    await twentyRequest("POST", "/noteTargets", {
+      noteId,
+      personId,
+    }).catch(() => null);
+  }
+  return noteId;
 }
 
 async function createFormInquiryEmailThread(taskData, personId) {
@@ -1149,6 +1196,14 @@ async function processOneTask(task, audit, allPending) {
 
   const personId = await resolveOrCreatePerson(taskData, idOid);
   const oppId = await createOpportunityRecord(taskData, idOid, personId);
+  try {
+    const noteId = await createFormInquiryNote(taskData, oppId, personId);
+    if (noteId) {
+      console.log("form inquiry note", noteId, "opp=", oppId);
+    }
+  } catch (err) {
+    console.warn("form inquiry note warn", err.message);
+  }
   try {
     const messageId = await createFormInquiryEmailThread(taskData, personId);
     if (messageId) {

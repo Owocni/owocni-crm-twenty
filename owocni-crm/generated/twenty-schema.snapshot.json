@@ -1,11 +1,76 @@
 {
-  "_generated_at": "2026-06-08T10:41:38.036402+00:00",
+  "_generated_at": "2026-07-31T10:30:49.827296+00:00",
   "_source": "integrations/tools/twenty_schema.py export",
   "_workspace": "https://zany-maroon-panther.twenty.com",
   "objects": {
     "opportunity": {
       "objectId": "7874c080-30c2-46c0-934c-905926d918e0",
       "fields": {
+        "bizDeviceType": {
+          "id": "f7113c4f-7358-4e23-83f2-67b17e1d088e",
+          "name": "bizDeviceType",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f2a1a1a1-0004-4004-8004-000000000001",
+              "color": "orange",
+              "label": "Telefon",
+              "value": "MOBILE",
+              "position": 0
+            },
+            {
+              "id": "f2a1a1a1-0004-4004-8004-000000000002",
+              "color": "blue",
+              "label": "Komputer",
+              "value": "DESKTOP",
+              "position": 1
+            },
+            {
+              "id": "f2a1a1a1-0004-4004-8004-000000000003",
+              "color": "turquoise",
+              "label": "Tablet",
+              "value": "TABLET",
+              "position": 2
+            },
+            {
+              "id": "f2a1a1a1-0004-4004-8004-000000000004",
+              "color": "gray",
+              "label": "Inne",
+              "value": "OTHER",
+              "position": 3
+            }
+          ],
+          "label": "Urządzenie",
+          "description": "Urządzenie z którego wysłano formularz"
+        },
+        "metaAdId": {
+          "id": "edbdb27b-3451-46b0-9577-cb928342d272",
+          "name": "metaAdId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Meta Ad ID",
+          "description": "Meta ad_id z webhooka Lead Ads — raportowanie która reklama. CRM-only."
+        },
+        "pipedriveId": {
+          "id": "e8a93dfd-202d-4d23-b22d-9fce6820ef99",
+          "name": "pipedriveId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Pipedrive ID",
+          "description": "System ID z Pipedrive — most migracji + rollback. Unikalność egzekwowana w stagingu/adapterze."
+        },
+        "metaLeadgenId": {
+          "id": "e4408820-312b-4583-beef-eae5e922d05a",
+          "name": "metaLeadgenId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Meta Leadgen ID",
+          "description": "Meta Lead Ads leadgen_id — klucz CAPI (lead_id) przy SQL. Pisze inbound Meta webhook. CRM-only."
+        },
         "bizSource": {
           "id": "e247b799-cd2e-43c2-81c4-392e6807480d",
           "name": "bizSource",
@@ -15,34 +80,106 @@
             {
               "id": "b1daaa7e-93c3-4b66-9324-29a1d38c812c",
               "color": "blue",
-              "label": "Formularz",
+              "label": "Formularz (legacy)",
               "value": "FORM",
               "position": 0
             },
             {
               "id": "4ecc9b59-3d68-45cb-8611-6912631c6ac1",
               "color": "green",
-              "label": "Polecenie",
+              "label": "Polecenie (legacy)",
               "value": "POLECENIE",
               "position": 1
             },
             {
               "id": "6c785b94-8911-4c25-8ae4-46aa8e143274",
               "color": "orange",
-              "label": "Google Ads",
+              "label": "Google Ads (legacy)",
               "value": "GOOGLE_ADS",
               "position": 2
             },
             {
               "id": "c36293a9-c9a8-4c7c-b5c0-b9a0399b33e3",
               "color": "gray",
-              "label": "Inne",
+              "label": "Inne (legacy)",
               "value": "INNE",
               "position": 3
+            },
+            {
+              "id": "87f33675-0b76-481c-9e7d-0dd6b949a246",
+              "color": "orange",
+              "label": "Google Ads",
+              "value": "GOOGLE",
+              "position": 4
+            },
+            {
+              "id": "dbbe167a-1d02-468b-b65c-28a83ffd5518",
+              "color": "blue",
+              "label": "Facebook / Meta",
+              "value": "FACEBOOK",
+              "position": 5
+            },
+            {
+              "id": "4f5d00cf-6e8c-4f51-a197-0efc92b573e5",
+              "color": "green",
+              "label": "Organic / strona",
+              "value": "ORGANIC",
+              "position": 6
+            },
+            {
+              "id": "57651f36-9b44-4de6-ad56-7ec5c03c727b",
+              "color": "turquoise",
+              "label": "Polecenie",
+              "value": "REFERRAL",
+              "position": 7
+            },
+            {
+              "id": "c863d298-cfab-46ed-8aee-6fa6a5687510",
+              "color": "purple",
+              "label": "Mail bezpośredni",
+              "value": "DIRECT_EMAIL",
+              "position": 8
+            },
+            {
+              "id": "a84b443a-cc47-4e86-b2ff-a40843114100",
+              "color": "sky",
+              "label": "Ręcznie / telefon",
+              "value": "MANUAL",
+              "position": 9
+            },
+            {
+              "id": "cb5e518b-0ab1-4bc2-b3d6-721fe842ad12",
+              "color": "yellow",
+              "label": "Inne",
+              "value": "OTHER",
+              "position": 10
+            },
+            {
+              "id": "38a5b49e-ac51-4017-a463-dcc4787b3835",
+              "color": "gray",
+              "label": "Nieznane",
+              "value": "UNKNOWN",
+              "position": 11
+            },
+            {
+              "id": "98247519-b390-4155-9166-070cf7b16d10",
+              "color": "purple",
+              "label": "Pipedrive import",
+              "value": "PIPEDRIVE_IMPORT",
+              "position": 12
             }
           ],
           "label": "Zrodlo",
-          "description": "Zrodlo pozyskania leada"
+          "description": "Źródło pozyskania leada (atrybucja). Kanon ADR #18."
+        },
+        "bizValueMin": {
+          "id": "e0a511c1-83f6-40ac-9e0b-e1e9bc96ce2d",
+          "name": "bizValueMin",
+          "type": "CURRENCY",
+          "isUnique": null,
+          "options": null,
+          "label": "Wartość od",
+          "description": "Dolna widełka wartości z formularza (PLN)"
         },
         "campaignRejected": {
           "id": "d7f6a6df-fceb-48f5-9b6d-cce42bd1b658",
@@ -59,8 +196,17 @@
           "type": "RELATION",
           "isUnique": null,
           "options": null,
-          "label": "Point of Contact",
+          "label": "Kontakt",
           "description": "Opportunity point of contact"
+        },
+        "metaAdgroupId": {
+          "id": "d1939a19-943a-480e-a57a-b602921117f7",
+          "name": "metaAdgroupId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Meta Adgroup ID",
+          "description": "Meta adgroup_id z webhooka Lead Ads — raportowanie zestawu reklam. CRM-only."
         },
         "id": {
           "id": "d021f69a-4e08-416b-b9b1-27c0a1b3f0ef",
@@ -70,6 +216,15 @@
           "options": null,
           "label": "Id",
           "description": "Id"
+        },
+        "bizValueMax": {
+          "id": "cd30f675-c22d-4aeb-83b5-c6c5c9fce650",
+          "name": "bizValueMax",
+          "type": "CURRENCY",
+          "isUnique": null,
+          "options": null,
+          "label": "Wartość do",
+          "description": "Górna widełka wartości z formularza (PLN)"
         },
         "srcSystem": {
           "id": "cafaa84e-b448-43b9-bee3-19c260b8ac5f",
@@ -97,6 +252,20 @@
               "label": "Better Bitrix Legacy",
               "value": "BETTER_BITRIX_LEGACY",
               "position": 2
+            },
+            {
+              "id": "eb47d5db-2733-4bbe-9fcd-7fe67fedad23",
+              "color": "purple",
+              "label": "Twenty Email",
+              "value": "TWENTY_EMAIL",
+              "position": 3
+            },
+            {
+              "id": "84409795-a307-4797-8f48-7817d62bd81d",
+              "color": "red",
+              "label": "Pipedrive Legacy",
+              "value": "PIPEDRIVE_LEGACY",
+              "position": 4
             }
           ],
           "label": "Src System",
@@ -147,6 +316,15 @@
           "label": "Biz Value Won",
           "description": "Wartość wygranej — przy stage WON."
         },
+        "hoursToQualified": {
+          "id": "b39bfc0a-122b-4e3c-aad9-42e5dcdb7aa6",
+          "name": "hoursToQualified",
+          "type": "NUMBER",
+          "isUnique": null,
+          "options": null,
+          "label": "Godziny do SQL",
+          "description": "Godziny od utworzenia rekordu do pierwszego wejścia w QUALIFIED. Pisze workflow. CRM-only."
+        },
         "timelineActivities": {
           "id": "ae2161e8-ca35-4220-a45f-3f66ad3bea71",
           "name": "timelineActivities",
@@ -155,6 +333,24 @@
           "options": null,
           "label": "Timeline Activities",
           "description": "Timeline Activities linked to the opportunity."
+        },
+        "legacyPipedriveStageName": {
+          "id": "accea94c-6780-41d4-9b32-943ec98563e8",
+          "name": "legacyPipedriveStageName",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Legacy Pipedrive stage",
+          "description": "Oryginalna nazwa stage/pipeline z Pipedrive, gdy nie ma 1:1 do Twenty stage."
+        },
+        "lastContactAt": {
+          "id": "abc0239a-495a-46ea-9584-310c08fc8a2c",
+          "name": "lastContactAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Ostatni kontakt",
+          "description": "Data ostatniego kontaktu (lead lub odpowiedź klienta)"
         },
         "lastOrchestrationEventId": {
           "id": "a94bdd87-0308-4e75-b2cd-4ecbc8ad4ff2",
@@ -165,6 +361,173 @@
           "label": "ID ostatniego eventu",
           "description": "ID ostatniego eventu orkiestracji (ULID/UUID)"
         },
+        "qualifiedAt": {
+          "id": "a5c78af5-f706-4a93-a903-b2ed192c300f",
+          "name": "qualifiedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "SQL od",
+          "description": "Pierwsze wejście w stage QUALIFIED (SQL). Pisze wyłącznie workflow Track Stage Time. Nie edytować ręcznie. CRM-only."
+        },
+        "bizLastMissedCallAt": {
+          "id": "9ff74268-4d4a-4ba3-943e-1c3bb21afcb6",
+          "name": "bizLastMissedCallAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Ostatnie nieodebrane",
+          "description": "Czas ostatniego nieodebranego połączenia (Play MISSED)."
+        },
+        "daysToClose": {
+          "id": "9efc4df5-5ef7-4d98-9b43-179e6bc03398",
+          "name": "daysToClose",
+          "type": "NUMBER",
+          "isUnique": null,
+          "options": null,
+          "label": "Dni do zamknięcia",
+          "description": "Dni od utworzenia do zamknięcia (WON/LOST). Pisze workflow. CRM-only."
+        },
+        "bizSqlConfirmedAt": {
+          "id": "9e627437-8ccd-42ba-84b3-15d755cef59b",
+          "name": "bizSqlConfirmedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "SQL potwierdzone o",
+          "description": "Ustawiane przez workflow Przyjmij jako SQL — guard blokuje drag bez tego pola"
+        },
+        "bizSqlConfirmed": {
+          "id": "9b43529b-ec6f-47d4-b1ab-1a7600fb848d",
+          "name": "bizSqlConfirmed",
+          "type": "BOOLEAN",
+          "isUnique": null,
+          "options": null,
+          "label": "SQL potwierdzone",
+          "description": "true tylko po workflow Przyjmij jako SQL — guard blokuje drag"
+        },
+        "bizBusinessModel": {
+          "id": "99a36afd-233f-46c7-b582-6fb8f52a7dda",
+          "name": "bizBusinessModel",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f2a1a1a1-0003-4003-8003-000000000001",
+              "color": "blue",
+              "label": "B2B",
+              "value": "B2B",
+              "position": 0
+            },
+            {
+              "id": "f2a1a1a1-0003-4003-8003-000000000002",
+              "color": "turquoise",
+              "label": "Firma lokalna",
+              "value": "LOCAL",
+              "position": 1
+            },
+            {
+              "id": "f2a1a1a1-0003-4003-8003-000000000003",
+              "color": "purple",
+              "label": "Sklep internetowy",
+              "value": "ECOMMERCE",
+              "position": 2
+            },
+            {
+              "id": "f2a1a1a1-0003-4003-8003-000000000004",
+              "color": "sky",
+              "label": "Online (ogólnopolski)",
+              "value": "ONLINE",
+              "position": 3
+            }
+          ],
+          "label": "Typ działalności",
+          "description": "Typ działalności z formularza stron"
+        },
+        "bizLastNonSqlStage": {
+          "id": "961c9543-9825-417b-8fbc-fa7ec0bb9610",
+          "name": "bizLastNonSqlStage",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000001",
+              "color": "sky",
+              "label": "Nowy",
+              "value": "NEW",
+              "position": 0
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000002",
+              "color": "blue",
+              "label": "Rozeznanie",
+              "value": "CONTACTED",
+              "position": 1
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000003",
+              "color": "purple",
+              "label": "Przyjęty SQL",
+              "value": "QUALIFIED",
+              "position": 2
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000004",
+              "color": "turquoise",
+              "label": "Wysłano ofertę",
+              "value": "PROPOSAL",
+              "position": 3
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000005",
+              "color": "yellow",
+              "label": "Wysłano umowę",
+              "value": "CONTRACT_SENT",
+              "position": 4
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000006",
+              "color": "orange",
+              "label": "Wpłaca",
+              "value": "PAYING",
+              "position": 5
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000007",
+              "color": "green",
+              "label": "Wygrany",
+              "value": "WON",
+              "position": 6
+            },
+            {
+              "id": "f1a1a1a1-0001-4001-8001-000000000008",
+              "color": "red",
+              "label": "Przegrany",
+              "value": "LOST",
+              "position": 7
+            }
+          ],
+          "label": "Etap przed SQL",
+          "description": "Ostatni etap przed próbą SQL — do cofnięcia drag bez potwierdzenia"
+        },
+        "bizCardPhone": {
+          "id": "9563fa0a-c200-4a4b-b08c-cbf3ff3a18ea",
+          "name": "bizCardPhone",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Telefon",
+          "description": "Telefon kontaktu (denormalizacja na kafelek)"
+        },
+        "bizValueDisplay": {
+          "id": "93e47f2c-8ada-43da-b17d-9d22d2f308c0",
+          "name": "bizValueDisplay",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Wartość",
+          "description": "Tekst na kafelku: 0 PLN, widełki lub kwota oferty"
+        },
         "company": {
           "id": "90cfdbb1-8f35-4c03-b7b0-9d9786fcb728",
           "name": "company",
@@ -173,6 +536,39 @@
           "options": null,
           "label": "Company",
           "description": "Opportunity company"
+        },
+        "hoursToFirstResponse": {
+          "id": "8c8759b4-116d-452c-a59b-4864e741f390",
+          "name": "hoursToFirstResponse",
+          "type": "NUMBER",
+          "isUnique": null,
+          "options": null,
+          "label": "Godziny do 1. odpowiedzi",
+          "description": "Godziny od utworzenia do pierwszej odpowiedzi mailowej. Pisze workflow M2. CRM-only."
+        },
+        "bizIntent": {
+          "id": "88aeb981-4e17-4727-b123-e366e102cdfb",
+          "name": "bizIntent",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "d7178859-c867-410c-a5c9-d5ab4278ce10",
+              "color": "yellow",
+              "label": "Cennik",
+              "value": "CENNIK",
+              "position": 0
+            },
+            {
+              "id": "7e842446-bdf4-4cd2-81fe-afd5e4af5fe0",
+              "color": "purple",
+              "label": "Ekspert",
+              "value": "EKSPERT",
+              "position": 1
+            }
+          ],
+          "label": "Jakość",
+          "description": "Oferta z cennika vs rozmowa z ekspertem"
         },
         "isFollowUp": {
           "id": "772a74ed-4f57-484f-be01-c0ca615d13af",
@@ -219,6 +615,77 @@
           "label": "Deleted at",
           "description": "Date when the record was deleted"
         },
+        "bizMailingOptIn": {
+          "id": "592d7021-5d47-4098-9495-60b6a70711b5",
+          "name": "bizMailingOptIn",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f2a1a1a1-0005-4005-8005-000000000001",
+              "color": "yellow",
+              "label": "Oczekuje na wybór",
+              "value": "PENDING",
+              "position": 0
+            },
+            {
+              "id": "f2a1a1a1-0005-4005-8005-000000000002",
+              "color": "green",
+              "label": "Tak — dołączyć materiały",
+              "value": "YES",
+              "position": 1
+            },
+            {
+              "id": "f2a1a1a1-0005-4005-8005-000000000003",
+              "color": "red",
+              "label": "Nie",
+              "value": "NO",
+              "position": 2
+            },
+            {
+              "id": "f2a1a1a1-0005-4005-8005-000000000004",
+              "color": "gray",
+              "label": "Nie dotyczy",
+              "value": "NA",
+              "position": 3
+            }
+          ],
+          "label": "Mailing edukacyjny",
+          "description": "Zgoda na pakiet maili edukacyjnych po formularzu"
+        },
+        "bizProjectType": {
+          "id": "57274dd8-d4e5-48af-a8d6-55d128a93d88",
+          "name": "bizProjectType",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f56c3684-bf9f-4f35-a6d9-a83ee19d8877",
+              "color": "green",
+              "label": "Nowe",
+              "value": "NEW",
+              "position": 0
+            },
+            {
+              "id": "26485af5-5a86-4c70-803d-e5b310ccf10a",
+              "color": "blue",
+              "label": "Redesign",
+              "value": "REDESIGN",
+              "position": 1
+            }
+          ],
+          "label": "Typ projektu",
+          "description": "Nowa firma vs redesign / kolejny etap"
+        },
+        "bizLastContactLabel": {
+          "id": "5034f512-ee74-40e6-993d-cfed36b84f3d",
+          "name": "bizLastContactLabel",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Czas od kontaktu",
+          "description": "Wyświetlane na kafelku kanban: Godzin: N lub Dni: N"
+        },
         "bitrixDealId": {
           "id": "4e30927e-e8ec-420f-bb2e-a196ee7f8809",
           "name": "bitrixDealId",
@@ -227,6 +694,24 @@
           "options": null,
           "label": "Bitrix Deal ID",
           "description": "Deal księgowy Bitrix24 po WON — ręcznie (MVP)."
+        },
+        "bizTimeOnPageDisplay": {
+          "id": "48c307d1-4df0-4c1d-b9d9-2be41cc93c63",
+          "name": "bizTimeOnPageDisplay",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Czas na stronie",
+          "description": "Czas od otwarcia formularza do wysłania (np. 2 min 14 s)"
+        },
+        "firstResponseAt": {
+          "id": "4840b859-5532-43e6-96a3-edd91fc6337c",
+          "name": "firstResponseAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Pierwsza odpowiedź o",
+          "description": "Timestamp pierwszego maila wychodzącego powiązanego z rekordem. Pisze workflow M2. CRM-only."
         },
         "createdAt": {
           "id": "3c34b4c6-deb0-42d0-8799-ec6a4cf24b22",
@@ -245,6 +730,15 @@
           "options": null,
           "label": "Ostatni event orkiestracji",
           "description": "Kiedy ostatnio wyslano event do orkiestracji"
+        },
+        "bizCardEmail": {
+          "id": "3ab5be14-abb0-4b4e-8ce8-5e0a59424d83",
+          "name": "bizCardEmail",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Email",
+          "description": "Email kontaktu (denormalizacja na kafelek)"
         },
         "position": {
           "id": "3028503c-923d-4d9b-9465-27c71f7a81ab",
@@ -281,6 +775,15 @@
           "options": null,
           "label": "Close date",
           "description": "Opportunity close date"
+        },
+        "stageClosedAt": {
+          "id": "252e400b-0eeb-4538-9d99-7b7b2af5c2da",
+          "name": "stageClosedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Zamknięto o",
+          "description": "Faktyczne zamknięcie deala (WON/LOST). Nie mylić z closeDate (prognoza). Pisze workflow. CRM-only."
         },
         "lossDescription": {
           "id": "1e3b363f-7c39-4db2-ad71-01ca73b94963",
@@ -345,6 +848,30 @@
           "label": "Rejection Reason",
           "description": "Powód odrzucenia kampanii (raport). Wymaga campaignRejected=true."
         },
+        "bizContactRole": {
+          "id": "18c0328d-b380-4711-bb37-c0ad4f2e3b66",
+          "name": "bizContactRole",
+          "type": "SELECT",
+          "isUnique": null,
+          "options": [
+            {
+              "id": "f2a1a1a1-0002-4002-8002-000000000001",
+              "color": "sky",
+              "label": "Przekazuję do przełożonych",
+              "value": "BOARD",
+              "position": 0
+            },
+            {
+              "id": "f2a1a1a1-0002-4002-8002-000000000002",
+              "color": "green",
+              "label": "Odpowiadam za budżet",
+              "value": "OWNER",
+              "position": 1
+            }
+          ],
+          "label": "Rola w decyzji",
+          "description": "Wybór z formularza: przełożeni vs właściciel budżetu"
+        },
         "stage": {
           "id": "131b6ca4-c0bd-4b44-8b2e-21de452f667d",
           "name": "stage",
@@ -353,45 +880,59 @@
           "options": [
             {
               "id": "20202020-8e01-4afd-9c39-d2063097587a",
-              "color": "sky",
+              "color": "green",
               "label": "Nowy",
               "value": "NEW",
               "position": 0
             },
             {
               "id": "20202020-e685-4671-ac32-26d304dacb6e",
-              "color": "blue",
-              "label": "Skontaktowany",
+              "color": "gray",
+              "label": "Rozeznanie",
               "value": "CONTACTED",
               "position": 1
             },
             {
               "id": "20202020-dde9-4acc-b5ca-f6531a8ecb4a",
-              "color": "purple",
-              "label": "Kwalifikowany",
+              "color": "pink",
+              "label": "Przyjęty SQL",
               "value": "QUALIFIED",
               "position": 2
             },
             {
               "id": "20202020-696e-4f6b-91bc-f413e9b2f654",
-              "color": "turquoise",
-              "label": "Oferta",
+              "color": "gray",
+              "label": "Wysłano ofertę",
               "value": "PROPOSAL",
               "position": 3
             },
             {
-              "id": "20202020-0bb5-4a6f-a8b2-774bbad21104",
-              "color": "green",
-              "label": "Wygrany",
-              "value": "WON",
+              "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+              "color": "gray",
+              "label": "Wysłano umowę",
+              "value": "CONTRACT_SENT",
               "position": 4
             },
             {
-              "id": "4df88783-5ced-4833-a868-8efc41f4c865",
-              "color": "red",
+              "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+              "color": "gray",
+              "label": "Wpłaca",
+              "value": "PAYING",
+              "position": 5
+            },
+            {
+              "id": "c7d8e9f0-a1b2-4c3d-9e8f-7a6b5c4d3e2f",
+              "color": "gray",
+              "label": "Wygrany",
+              "value": "WON",
+              "position": 6
+            },
+            {
+              "id": "d8e9f0a1-b2c3-4d5e-9f8a-7b6c5d4e3f2a",
+              "color": "gray",
               "label": "Przegrany",
               "value": "LOST",
-              "position": 5
+              "position": 7
             }
           ],
           "label": "Stage",
@@ -484,6 +1025,15 @@
           "label": "Temperatura",
           "description": "Temperatura leada (hot/cold)"
         },
+        "callTranscripts": {
+          "id": "047184ce-e269-4459-b268-119c1b5a9cd8",
+          "name": "callTranscripts",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Call transcripts",
+          "description": "Opportunities Rozmowa"
+        },
         "bizProduct": {
           "id": "02ccf6f7-f619-429d-b850-b22f44673019",
           "name": "bizProduct",
@@ -542,6 +1092,24 @@
           ],
           "label": "Produkt",
           "description": "Produkt/usluga, ktorej dotyczy lead"
+        },
+        "legacyCreatedAt": {
+          "id": "014a252e-8a73-4d86-b4d7-7494963ad794",
+          "name": "legacyCreatedAt",
+          "type": "DATE_TIME",
+          "isUnique": null,
+          "options": null,
+          "label": "Legacy created at",
+          "description": "Oryginalny add_time z Pipedrive (audyt). Preferuj też createdAt=add_time przy imporcie."
+        },
+        "bizMissedCallsCount": {
+          "id": "00a2e2b4-7493-448a-b76c-f862c92dfa3e",
+          "name": "bizMissedCallsCount",
+          "type": "NUMBER",
+          "isUnique": null,
+          "options": null,
+          "label": "Nieodebrane",
+          "description": "Liczba nieodebranych połączeń z Play (status MISSED). Nie zmienia lastContactAt."
         }
       }
     },
@@ -665,6 +1233,15 @@
           "label": "Job Title",
           "description": "Contact's job title"
         },
+        "callParticipants": {
+          "id": "61385e2a-f4c9-41ae-9d4d-90637a7a9976",
+          "name": "callParticipants",
+          "type": "RELATION",
+          "isUnique": null,
+          "options": null,
+          "label": "Call participants",
+          "description": "People Uczestnik rozmowy"
+        },
         "avatarUrl": {
           "id": "5c0774af-8079-4aff-8f8d-e3b0c9a73582",
           "name": "avatarUrl",
@@ -745,6 +1322,15 @@
           "options": null,
           "label": "Phones",
           "description": "Contact's phone numbers"
+        },
+        "pipedriveId": {
+          "id": "13b9e4c3-d2b5-4652-b3f4-4749a9bd115c",
+          "name": "pipedriveId",
+          "type": "TEXT",
+          "isUnique": null,
+          "options": null,
+          "label": "Pipedrive ID",
+          "description": "System ID z Pipedrive — most migracji + rollback. Unikalność egzekwowana w stagingu/adapterze."
         },
         "timelineActivities": {
           "id": "12e57cc4-8c86-4bbf-bd01-f90347cce8e3",

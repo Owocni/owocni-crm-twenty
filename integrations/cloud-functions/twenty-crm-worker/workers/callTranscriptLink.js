@@ -178,6 +178,118 @@ async function ensurePersonPhone(personId, clientPhone) {
   return true;
 }
 
+const CLOSED_STAGES = new Set(["WON", "LOST", "REJECTED", "ARCHIVED"]);
+
+async function findNewestOpenOpportunity(personId) {
+  const path = buildTwentyListPath(
+    "opportunities",
+    `pointOfContactId[eq]:${personId}`,
+    20,
+  );
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`list opportunities HTTP ${res.statusCode}`);
+  }
+  const opps = parseTwentyListRecords("opportunities", res.body).filter(
+    (opp) => !CLOSED_STAGES.has(String(opp.stage || "").toUpperCase()),
+  );
+  if (!opps.length) return null;
+  opps.sort((a, b) => {
+    const ta = Date.parse(a.updatedAt || a.createdAt || 0);
+    const tb = Date.parse(b.updatedAt || b.createdAt || 0);
+    return tb - ta;
+  });
+  return opps[0];
+}
+
+function normalizeEmail(email) {
+  return String(email || "")
+    .trim()
+    .toLowerCase();
+}
+
+async function findOpenOpportunityByEmail(emailRaw) {
+  const email = normalizeEmail(emailRaw);
+  if (!email || !email.includes("@")) return null;
+
+  const byCardPath = buildTwentyListPath(
+    "opportunities",
+    `bizCardEmail[eq]:${email}`,
+    20,
+  );
+  const byCardRes = await twentyRequest("GET", byCardPath);
+  if (byCardRes.statusCode < 200 || byCardRes.statusCode >= 300) {
+    throw new Error(`find opp by email HTTP ${byCardRes.statusCode}`);
+  }
+  const byCard = parseTwentyListRecords("opportunities", byCardRes.body).filter(
+    (opp) =>
+      normalizeEmail(opp.bizCardEmail) === email &&
+      !CLOSED_STAGES.has(String(opp.stage || "").toUpperCase()),
+  );
+  if (byCard.length) {
+    byCard.sort((a, b) => {
+      const ta = Date.parse(a.updatedAt || a.createdAt || 0);
+      const tb = Date.parse(b.updatedAt || b.createdAt || 0);
+      return tb - ta;
+    });
+    return { opportunity: byCard[0], source: "bizCardEmail" };
+  }
+
+  const personPath = buildTwentyListPath(
+    "people",
+    `emails.primaryEmail[eq]:${email}`,
+    5,
+  );
+  const personRes = await twentyRequest("GET", personPath);
+  if (personRes.statusCode < 200 || personRes.statusCode >= 300) {
+    throw new Error(`find person by email HTTP ${personRes.statusCode}`);
+  }
+  const people = parseTwentyListRecords("people", personRes.body).filter(
+    (p) => normalizeEmail(p?.emails?.primaryEmail) === email,
+  );
+  if (!people.length) return null;
+  if (people.length > 1) {
+    throw new Error(
+      `Konflikt: email ${email} jest na ${people.length} osobach — wybierz lead po nazwie`,
+    );
+  }
+  const opp = await findNewestOpenOpportunity(people[0].id);
+  if (!opp) return null;
+  return { opportunity: opp, source: "personEmail" };
+}
+
+async function resolveOpportunityId({ opportunityId, email, personId }) {
+  if (opportunityId) {
+    return { opportunityId, resolvedFrom: "opportunityId" };
+  }
+
+  const emailNorm = normalizeEmail(email);
+  if (emailNorm) {
+    const found = await findOpenOpportunityByEmail(emailNorm);
+    if (!found?.opportunity?.id) {
+      throw new Error(
+        `Brak otwartego leada dla maila ${emailNorm} — sprawdź adres albo wybierz lead po nazwie`,
+      );
+    }
+    return {
+      opportunityId: found.opportunity.id,
+      resolvedFrom: found.source,
+    };
+  }
+
+  if (personId) {
+    const opp = await findNewestOpenOpportunity(personId);
+    if (!opp?.id) {
+      throw new Error(
+        "Ta osoba nie ma otwartego leada — utwórz lead albo wybierz po nazwie",
+      );
+    }
+    return { opportunityId: opp.id, resolvedFrom: "personId" };
+  }
+
+  throw new Error("Podaj email leada albo wybierz lead po nazwie");
+}
+
 async function linkCallTranscriptToOpportunity(transcriptId, opportunityId) {
   const transcript = await getRecord(transcriptCollection(), transcriptId);
   if (!transcript?.id) throw new Error("call transcript not found");
@@ -343,9 +455,29 @@ async function processCallTranscriptWebhook(webhookBody) {
   return { ok: true, mode: "webhook_link", eventName, ...linked };
 }
 
+async function linkCallTranscript(
+  transcriptId,
+  { opportunityId, email, personId } = {},
+) {
+  const resolved = await resolveOpportunityId({
+    opportunityId,
+    email,
+    personId,
+  });
+  const linked = await linkCallTranscriptToOpportunity(
+    transcriptId,
+    resolved.opportunityId,
+  );
+  return {
+    ...linked,
+    resolvedFrom: resolved.resolvedFrom,
+  };
+}
+
 module.exports = {
   ADAPTER_ID,
   linkCallTranscriptToOpportunity,
+  linkCallTranscript,
   createLeadFromCallTranscript,
   processCallTranscriptWebhook,
 };

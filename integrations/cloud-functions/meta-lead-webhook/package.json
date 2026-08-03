@@ -1,0 +1,17 @@
+{
+  "name": "meta-lead-webhook",
+  "version": "1.0.0",
+  "description": "Meta Lead Ads webhook: verify + leadgen → twenty-crm-worker ingest",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "functions-framework --target=processMetaLeadWebhook --port=8081",
+    "deploy": "bash deploy.sh",
+    "test": "node --test handlers/*.test.js"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0"
+  }
+}
