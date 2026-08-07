@@ -10,15 +10,18 @@ Metoda: `AUDIT_PIPEDRIVE_EXPORT_REDTEAM_v0.4.md` · `STRATEGY_PIPEDRIVE_IMPORT_T
 
 ### Owner-map (skrót)
 
-| Pipedrive | Twenty | Seat PD → Twenty | Okno wieku |
-|-----------|--------|------------------|------------|
-| **Robert** | Robert Mańk | osobny (już jest) | tylko ≤ **3 lata** |
-| **Krzysztof Gilowski** | **Ewa Malanowska** | bez seata dla Krzyśka | tylko ≤ **3 lata** |
-| **Kamil** (Matuszewski) | **Mariusz Słowik** | bez osobnego seata | tylko ≤ **3 lata** |
-| **Patryk Sławicki** | **Mariusz Słowik** | bez osobnego seata | tylko ≤ **3 lata** |
-| niepowiązane (E5) | **Mariusz Słowik** | — | tylko ≤ **3 lata** |
+| Pipedrive | Twenty | WorkspaceMember ID | Okno wieku |
+|-----------|--------|-------------------|------------|
+| **Robert** | Robert Mańk (`robertmank@owocni.pl`) | `23ac9976-0232-4097-b056-5dc391bf7c34` | ≤ **3 lata** |
+| **Krzysztof Gilowski** | **Ewa Malanowska** (`ewamalanowska@owocni.pl`) | `b9e2b31e-0b4a-4936-9d2a-2e5b4a3e0b16` | ≤ **3 lata** |
+| **Kamil** (Matuszewski) | **Mariusz / konto ogólne** (`owocni@gmail.com`, UI: „Owocni Owocni”) | `2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d` | ≤ **3 lata** |
+| **Patryk Sławicki** | j.w. | `2d65d0e6-…` | ≤ **3 lata** |
+| niepowiązane (E5) | j.w. | `2d65d0e6-…` | ≤ **3 lata** |
 
 Kryterium wieku (wszyscy ownerzy): `add_time` **nie starsza niż 3 lata** od cutoveru. Starsze — **poza importem**. To samo okno: maile (B2), archiwalne (E2).
+
+> **2026-08-04:** Ewa potwierdzona w Twenty (mail podpięty, sync w toku — nie blokuje owner-map).  
+> Konto docelowe Kamil/Patryk/E5 = **`owocni@gmail.com`** (`2d65d0e6-…`, UI „Owocni Owocni”) — **potwierdzone właściciel 2026-08-04** (tożsamość „ogólne konto Mariusz”).
 
 ### A1a / A3 — Krzysztof → Ewa Malanowska
 

@@ -42,7 +42,14 @@ const REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM =
 const REASON_SKIP_DUPLICATE_BUSINESS_EVENT = "SKIP_DUPLICATE_BUSINESS_EVENT";
 const REASON_SKIP_UNSUPPORTED_OBJECT = "SKIP_UNSUPPORTED_OBJECT";
 const REASON_SKIP_CAMPAIGN_REJECTED = "SKIP_CAMPAIGN_REJECTED";
+const REASON_SKIP_LEGACY_IMPORT = "SKIP_LEGACY_IMPORT";
 const REASON_EMITTED = "EMITTED";
+
+/** Import historyczny (Bitrix / Pipedrive) — INV-6 / NR-4: zero emit, zero mint idOid. */
+const LEGACY_SRC_SYSTEMS = new Set([
+  "BETTER_BITRIX_LEGACY",
+  "PIPEDRIVE_LEGACY",
+]);
 
 function makeString(value) {
   return String(value ?? "");
@@ -206,6 +213,9 @@ function parseTwentyPayload(eventData) {
     eventNamePlatform: eventPlatform,
     bizValueWon: record.bizValueWon || null,
     bizProduct: sanitizeWebhookField(record.bizProduct) || null,
+    srcSystem: sanitizeWebhookField(record.srcSystem) || null,
+    pipedriveId: sanitizeWebhookField(record.pipedriveId) || null,
+    bizSource: sanitizeWebhookField(record.bizSource) || null,
     bizEmail:
       emails.primaryEmail ||
       (record.person && record.person.email) ||
@@ -216,6 +226,13 @@ function parseTwentyPayload(eventData) {
     _personRecord: isPerson ? record : null,
     _companyRecord: isCompany ? record : null,
   };
+}
+
+function isLegacyImportRecord(parsed) {
+  if (!parsed || typeof parsed !== "object") return false;
+  if (parsed.pipedriveId) return true;
+  if (parsed.srcSystem && LEGACY_SRC_SYSTEMS.has(parsed.srcSystem)) return true;
+  return false;
 }
 
 function storeKeyOpportunityState(opportunityId) {
@@ -319,6 +336,9 @@ function resolveIdentityOid(parsed) {
 }
 
 function detectBusinessEvent(parsed, prev) {
+  if (isLegacyImportRecord(parsed)) {
+    return { skip: REASON_SKIP_LEGACY_IMPORT };
+  }
   if (!resolveIdentityOid(parsed)) {
     return { emit: "generate_lead", manual: true };
   }
@@ -1007,6 +1027,10 @@ async function processTwentyWebhook(webhookBody, options = {}) {
   }
 
   if (parsed.objectType === "person") {
+    if (isLegacyImportRecord(parsed)) {
+      console.log("INBOUND_TWENTY:", REASON_SKIP_LEGACY_IMPORT, "person");
+      return { status: "skipped", reason: REASON_SKIP_LEGACY_IMPORT };
+    }
     const identityResult = await processPersonIdentityFromWebhook(parsed, env);
     let stripResult = { status: "skipped", reason: "person_no_company" };
     try {
@@ -1127,6 +1151,7 @@ async function processTwentyWebhook(webhookBody, options = {}) {
 module.exports = {
   parseTwentyPayload,
   detectBusinessEvent,
+  isLegacyImportRecord,
   deliveryFingerprint,
   normalizeBizValueForTask,
   parseBizValueDisplay,
@@ -1136,4 +1161,5 @@ module.exports = {
   REASON_EMITTED,
   REASON_SKIP_UNSUPPORTED_OBJECT,
   REASON_SKIP_CAMPAIGN_REJECTED,
+  REASON_SKIP_LEGACY_IMPORT,
 };

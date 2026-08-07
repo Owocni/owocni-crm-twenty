@@ -167,6 +167,21 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 | Field | Type | Unique | Owner | Empty | Freeze? |
 |---|---|---|---|---|---|
 | `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID org z Pipedrive (rollback). |
+| `nip` | TEXT | **YES** | Enrichment worker (GUS) / handlowiec | null | OPEN — klucz enrichmentu + KSeF; unique od utworzenia (⛔N14). |
+| `regon` | TEXT | NO | Enrichment worker (GUS) | null | OPEN |
+| `krs` | TEXT | NO | Enrichment worker (GUS/KRS) | null | OPEN — puste dla JDG. |
+| `registrationDate` | DATE | NO | Enrichment worker (GUS raport) | null | OPEN — data założenia. |
+| `legalName` | TEXT | NO | Enrichment worker | null | OPEN — nazwa rejestrowa do faktury; `name` = display. |
+| `legalForm` | TEXT | NO | Enrichment worker | null | OPEN |
+| `pkd` | TEXT | NO | Enrichment worker | null | OPEN — TEXT nie MULTI_SELECT (okres przejściowy PKD). |
+| `shareCapital` | CURRENCY | NO | Enrichment worker (KRS) | null | OPEN — puste dla JDG = OK. |
+| `vatStatus` | SELECT {`CZYNNY`,`ZWOLNIONY`,`NIEZAREJESTROWANY`} | NO | Enrichment worker (MF) | null | OPEN — wartości UPPERCASE (kanon SELECT workspace). |
+| `registeredAddress` | ADDRESS | NO | Enrichment worker | null | OPEN — **siedziba = faktura**; nie pisać w `address`. |
+| `boardMembers` | TEXT | NO | Enrichment worker (KRS) | null | OPEN — tylko jawny odpis. |
+| `enrichedAt` | DATE_TIME | NO | Enrichment worker | null | OPEN — audyt ostatniego sukcesu. |
+| `enrichmentSource` | TEXT | NO | Enrichment worker | null | OPEN — np. `gov-direct 2026-08-06`. |
+
+Źródło decyzji pól: ENRICH_COMPANY_PL_BUTTON §3.1 · utworzone Metadata API 2026-08-06 (G1).
 
 ### 5.4 Reguły operacyjne
 

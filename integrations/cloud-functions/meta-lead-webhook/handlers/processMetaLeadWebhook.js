@@ -3,6 +3,7 @@
 const { getConfig } = require("../shared/config");
 const { fetchLeadById, fetchFormName } = require("../shared/graphApi");
 const { parseLeadgenEvents, handleVerifyGet } = require("./parseLeadgen");
+const { handlePollMetaLeads } = require("./pollMetaLeads");
 
 async function postToWorker(workerUrl, payload) {
   const res = await fetch(workerUrl, {
@@ -75,6 +76,16 @@ async function handleMetaLeadWebhook(req, res) {
 
   // Meta requires fast 200; process synchronously for sandbox volume (low-n).
   const body = req.body && typeof req.body === "object" ? req.body : {};
+
+  // Fallback poll (Cloud Scheduler) — Meta często nie pushuje leadgen.
+  if (
+    body.action === "poll_meta_leads" ||
+    body.object === "poll_meta_leads"
+  ) {
+    await handlePollMetaLeads(req, res);
+    return;
+  }
+
   const events = parseLeadgenEvents(body);
   console.log("meta-lead-webhook events", events.length);
 

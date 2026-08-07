@@ -22,7 +22,12 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 USER_AGENT = "owocni-verify-metrics-pf5/1.0"
 TERMINAL = {"WON", "LOST"}
-LEGACY = "BETTER_BITRIX_LEGACY"
+# Importy legacy — wykluczane z metryk czasowych (M1/M2/M3). Pipeline (M6/M7/M9) liczy się (P-PIPE).
+LEGACY_SRC_SYSTEMS = frozenset({"BETTER_BITRIX_LEGACY", "PIPEDRIVE_LEGACY"})
+
+
+def is_legacy(opp: dict) -> bool:
+    return (opp.get("srcSystem") or "") in LEGACY_SRC_SYSTEMS
 
 
 def load_env() -> None:
@@ -107,7 +112,13 @@ def main() -> int:
             if (dt := parse_dt(o.get("createdAt"))) and dt >= window_start
         ]
     )
-    hig = len([o for o in opps if not o.get("bizProduct")])
+    hig = len(
+        [
+            o
+            for o in opps
+            if not o.get("bizProduct") and not is_legacy(o)
+        ]
+    )
 
     won_cohort = [o for o in cohort_closed if o.get("stage") == "WON"]
     m4_wr = (
@@ -119,12 +130,13 @@ def main() -> int:
     m1_vals = [
         float(o["daysToClose"])
         for o in won_cohort
-        if o.get("daysToClose") is not None and o.get("srcSystem") != LEGACY
+        if o.get("daysToClose") is not None and not is_legacy(o)
     ]
     m2_vals = [
         float(o["hoursToFirstResponse"])
         for o in opps
         if o.get("hoursToFirstResponse") is not None
+        and not is_legacy(o)
         and (dt := parse_dt(o.get("createdAt")))
         and dt >= window_start
     ]
@@ -133,7 +145,7 @@ def main() -> int:
         for o in opps
         if o.get("qualifiedAt")
         and o.get("hoursToQualified") is not None
-        and o.get("srcSystem") != LEGACY
+        and not is_legacy(o)
         and (dt := parse_dt(o.get("qualifiedAt")))
         and dt >= window_start
     ]
