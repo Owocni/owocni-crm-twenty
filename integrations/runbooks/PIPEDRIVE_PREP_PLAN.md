@@ -1,20 +1,15 @@
 # Pipedrive → Twenty — plan przygotowań (kolejne kroki)
 
-Decyzje: `PIPEDRIVE_MIGRATION_CHECKLIST.md` (domknięte).  
-Agent robi **jeden krok na prompt** (albo zwartą paczkę bez pytania).
+Decyzje: `PIPEDRIVE_MIGRATION_CHECKLIST.md` (domknięte).
 
 ---
 
-## Odpowiedzi właściciela (2026-07-31)
+## Odpowiedzi właściciela
 
 | # | Pytanie | Odpowiedź |
 |---|---------|-----------|
-| Q1 | Prod Metadata od razu? | **TAK** |
-| Q2 | Ewa Malanowska | Zaproszenie wysłane — **dam znać gdy konto gotowe** (IMAP nie wymagany od razu) |
-| Q3 | Staging path | **`integrations/pipedrive-staging/`** (+ gitignore) |
-| Q4 | Delete-webhooki | **Pomijamy** — sam eksport |
-| Q5 | Klucz PD | Lecimy na obecnym (w `.env.local`) |
-| Q6 | ADR | Draft + OK właściciela wystarczy |
+| Q1–Q6 | Metadata / Ewa / staging / webhook / token / ADR | jak wcześniej |
+| Q7 | Kamil/Patryk/E5 → `owocni@gmail.com` | **TAK** (2026-08-04) |
 
 ---
 
@@ -22,23 +17,53 @@ Agent robi **jeden krok na prompt** (albo zwartą paczkę bez pytania).
 
 | # | Krok | Status |
 |---|------|--------|
-| **1** | ADR #20 + DATA_MODEL / DECISION_REGISTER | **DONE** 2026-07-31 |
-| **2** | `srcSystem += PIPEDRIVE_LEGACY` | **DONE** (Metadata) |
-| **3** | `bizSource += PIPEDRIVE_IMPORT` | **DONE** (Metadata) |
-| **4** | `pipedriveId` ×3 | **DONE** (Metadata) |
-| **5** | `legacyCreatedAt` + `legacyPipedriveStageName` | **DONE** (Metadata) |
-| **6** | WorkspaceMember Ewa Malanowska | **WAIT** — właściciel da znać |
-| **7** | Patch `verify_metrics_pf5.py` (+ METRICS) | **NEXT** |
-| **8** | Runbook + skrypt rollback | pending |
-| **9** | Token PD w `.env.local` | **DONE** |
-| **10** | Delete-webhooki | **SKIP** (decyzja Q4) |
-| **11** | Skrypt eksportu → staging | pending |
-| **12** | Mailbox map B1 | pending |
-| **13** | Mapa bizProduct PD→Twenty | pending |
-| **14** | Lista kolizji identity | pending |
-| **15–19** | Load / IMAP | później |
+| **1–5** | ADR + Metadata | **DONE** |
+| **6** | Ewa | **DONE** |
+| **7** | Metryki | **DONE** |
+| **8** | Rollback | **DONE** |
+| **9** | Token PD | **DONE** |
+| **10** | Delete-webhooki | **SKIP** |
+| **11** | Eksport PD → staging | **DONE** 2026-08-04 — run `20260804T065324Z` |
+| **12** | Mailbox map B1 | **DONE** 2026-08-04 — 1710/3251 deali z mailami; 9334 msgs; note drafts gotowe |
+| **13** | Mapa bizProduct | **DONE** 2026-08-04 — 463 mapped / 2788 null; HIG wyklucza PIPEDRIVE_LEGACY |
+| **14** | Kolizje identity | **DONE** — ASK domknięty (same email ⇒ link) |
+| **15** | Workflowy OFF / `no_emit` | **DONE** 2026-08-04 — inbound deployed + 8 WF OFF |
+| **16** | Sample load 10–20 | **DONE** 2026-08-04 — **23** Opp + backfill nazw/`INNE`/junk company |
+| **17** | Review próbki + GO full | **DONE** 2026-08-04 — owner GO |
+| **18** | Full load | **DONE** 2026-08-04 — **3251/3251** Opp (`…/full/`); retry 14 phone/email |
+| **19** | IMAP + WF ON | **WF ON DONE** 2026-08-06 — 8× ACTIVE; IMAP później; rollback tylko przed IMAP |
 
-Skrypt Metadata (idempotentny): `integrations/tools/deploy_pipedrive_migration_fields.py`
+### Eksport run `20260804T065324Z`
+
+Ścieżka: `integrations/pipedrive-staging/runs/20260804T065324Z/`  
+Cutoff: `add_time >= 2023-08-04`  
+Manifest sha256: `06fdd2c3b3c2633646178e73ff20c1bc1154f2ac184001ce6046e604c0d2f22c`
+
+| Encja | Total w PD | W oknie 3 lat |
+|-------|------------|---------------|
+| deals | 5864 | **3251** |
+| persons | 7019 | **4235** |
+| organizations | 3472 | **1699** |
+| activities | 24630 | **14942** |
+| notes | 15121 | **9805** |
+| mailbox→deal | — | **1710** deali / **9334** msgs |
+| deal products | 492 line-items | **463** deali z mapą bizProduct |
+
+**bizProduct (krok 13):** `products/MAPPING.md`, `products/bizproduct_map.jsonl`  
+Rozkład: MARKETING 359 · WEB 55 · LOGO 12 · COPY 10 · NAME 4 · OPAK 1 · INNE 22 · **null 2788** (brak line-itemów).  
+Polityka: null OK; HIG nie liczy `PIPEDRIVE_LEGACY`.
+
+**Identity (krok 14):** `identity/REVIEW.md`, `identity/candidates.csv` (+ jsonl)  
+Snapshot Twenty: 24 724 people / 16 853 companies.  
+Kandydaci: cross email **901** · phone **9** · company name **93** · PD internal email **964** · phone **570** (= **2537**).  
+Priorytet review: `cross_system_email` bez `role_email` (736 „osobistych”); 368 z istniejącym `idOid`.
+
+**Gate (krok 15):** `runbooks/PIPEDRIVE_IMPORT_GATE.md` + `gate/must_off.json`  
+8 workflowów MUST_OFF przed loadem (nie wyłączone na żywo — czekają na GO).  
+`no_emit`: `SKIP_LEGACY_IMPORT` w `twenty-inbound-webhook` (deploy przed sample).
+
+Artefakty B1: `mailbox/…`  
+Skrypty: `pipedrive_export_staging.py`, `pipedrive_export_mailbox_map.py`, `pipedrive_map_bizproduct.py`, `pipedrive_identity_collisions.py`, `pipedrive_workflow_gate.py`
 
 ---
 
@@ -46,4 +71,4 @@ Skrypt Metadata (idempotentny): `integrations/tools/deploy_pipedrive_migration_f
 
 1. Nic nie commitować bez prośby.  
 2. Hurtowy load dopiero po próbce + GO.  
-3. Rollback możliwy tylko przed IMAP.
+3. Rollback tylko przed IMAP.

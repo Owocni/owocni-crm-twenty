@@ -75,9 +75,9 @@ Scoringu (osobny projekt; pola M2/M3 są jego prekursorami), pól (→ DATA_MODE
 
 | ID | Metryka | Formuła | Kohorta (filtr dat) | Populacja (filtr) | Jednostka |
 |---|---|---|---|---|---|
-| **M1** | Średni czas cyklu sprzedaży | AVG(`daysToClose`) | `stageClosedAt` w oknie | `stage = WON` ∧ `srcSystem is not BETTER_BITRIX_LEGACY` (wariant „do przegranej": `stage = LOST` ∧ jw.) | dni (2 dec.) |
-| **M2** | Średni czas 1. odpowiedzi | AVG(`hoursToFirstResponse`); per rekord = pierwszy mail **wychodzący** − `createdAt` | `createdAt` w oknie | niepuste `hoursToFirstResponse` | **godziny** (2 dec.) |
-| **M3** | Średni czas do SQL | AVG(`hoursToQualified`); per rekord = pierwsze `qualifiedAt` − `createdAt` | `qualifiedAt` w oknie | niepuste `qualifiedAt` ∧ legacy ≠ | **godziny** (2 dec.) |
+| **M1** | Średni czas cyklu sprzedaży | AVG(`daysToClose`) | `stageClosedAt` w oknie | `stage = WON` ∧ `srcSystem` ∉ {`BETTER_BITRIX_LEGACY`, `PIPEDRIVE_LEGACY`} (wariant „do przegranej": `stage = LOST` ∧ jw.) | dni (2 dec.) |
+| **M2** | Średni czas 1. odpowiedzi | AVG(`hoursToFirstResponse`); per rekord = pierwszy mail **wychodzący** − `createdAt` | `createdAt` w oknie | niepuste `hoursToFirstResponse` ∧ `srcSystem` ∉ legacy | **godziny** (2 dec.) |
+| **M3** | Średni czas do SQL | AVG(`hoursToQualified`); per rekord = pierwsze `qualifiedAt` − `createdAt` | `qualifiedAt` w oknie | niepuste `qualifiedAt` ∧ `srcSystem` ∉ legacy | **godziny** (2 dec.) |
 | **M4** | Win Rate | COUNT(stage=WON) / COUNT(stage ∈ {WON, LOST}) — w Twenty: Ratio(stage→WON) na populacji zawężonej filtrem | `stageClosedAt` w oknie | `stage is any of (WON, LOST)` | % |
 | **M5** | Win Rate per kanał | M4 grupowane po `bizSource` | jak M4 | jak M4 | % |
 | **M6** | Świeże otwarte (kohorta okienkowa) | COUNT | `createdAt` w oknie | `stage is none of (WON, LOST)` — rejected zostaje (NR-2) | szt. |
@@ -90,7 +90,7 @@ Scoringu (osobny projekt; pola M2/M3 są jego prekursorami), pól (→ DATA_MODE
 2. Punkt startu cyklu = `createdAt` rekordu Opportunity (dla paid ≈ moment formularza; dla manual = moment wpisania — świadome uproszczenie).
 3. Semantyka znaczników per pole → §4 (first dla `qualifiedAt`, last dla `stageClosedAt`). Korekta błędnie ustawionego znacznika = wyłącznie rola z prawem zapisu (Dawid/admin) — pola read-only dla handlowców (Roles).
 4. Strefa czasowa prezentacji = strefa oglądającego (ograniczenie bety dashboardów Twenty; wartości na granicach dób mogą się różnić między użytkownikami — fakt → OPS_NOTES).
-5. **Legacy (D-5):** rekordy importowane z better-bitrix mają `srcSystem = BETTER_BITRIX_LEGACY`. Metryki czasowe M1/M3 wykluczają legacy filtrem po `srcSystem`. Legacy wchodzi do M4/M5 (Win Rate), jeśli zamyka się po cutoverze.
+5. **Legacy (D-5 / ADR #20):** rekordy importowane mają `srcSystem ∈ {BETTER_BITRIX_LEGACY, PIPEDRIVE_LEGACY}`. Metryki **czasowe** M1/M2/M3 wykluczają legacy filtrem po `srcSystem`. Legacy wchodzi do M4/M5 (Win Rate) oraz do pipeline M6/M7/M9 gdy otwarte (P-PIPE: PD liczy się do bieżącego pipeline). **HIG** (`bizProduct` puste) też **wyklucza** legacy — import PD często bez produktu. Skrypt: `integrations/tools/verify_metrics_pf5.py`.
 6. **Stan vs historia (D-10).** Metryki stanu: **M7**, **M9**. M6 = kohorta okienkowa. M8 = trend bez snapshotów.
 
 **Known-edge M2:** Email Sync backfill → pierwszy outbound może być starszy niż `createdAt` → clamp ≥0 (implementacja GCP `advanceNewToContacted.js`).
@@ -142,7 +142,7 @@ Scoringu (osobny projekt; pola M2/M3 są jego prekursorami), pól (→ DATA_MODE
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
 | 2026-07-09 | Promocja do SSOT `owocni-crm/`; ADR #18 closed; D2 sandbox PASS | Dawid + właściciel | akceptacja dashboardów |
-| 2026-07-09 | D-12: M3 godziny; M2 GCP; D-15 kanały | właściciel | decyzje planu |
+| 2026-08-04 | Legacy set += `PIPEDRIVE_LEGACY`; M2 też wyklucza legacy (ADR #20 / P-PIPE) | Composer | prep import PD |
 | 2026-07-08 | Kotwica M2; audyt; `stageClosedAt`; D-8/D-9 | Claude + audyt | red team przed D0 |
 
 ---

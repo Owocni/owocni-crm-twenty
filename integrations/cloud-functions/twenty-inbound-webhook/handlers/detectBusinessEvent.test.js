@@ -97,4 +97,28 @@ describe("detectBusinessEvent — PF-4 metric-only updates", () => {
     );
     assert.equal(decision.emit, "rejected_lead");
   });
+
+  it("skips Pipedrive/Bitrix legacy import (INV-6 no_emit)", () => {
+    const pd = detectBusinessEvent(
+      opp("WON", { srcSystem: "PIPEDRIVE_LEGACY", opportunityIdOid: null }),
+      prev(null),
+    );
+    assert.equal(pd.skip, "SKIP_LEGACY_IMPORT");
+
+    const pdId = detectBusinessEvent(
+      opp("QUALIFIED", {
+        pipedriveId: "12345",
+        bizSqlConfirmed: true,
+        opportunityIdOid: null,
+      }),
+      prev(null),
+    );
+    assert.equal(pdId.skip, "SKIP_LEGACY_IMPORT");
+
+    const bb = detectBusinessEvent(
+      opp("WON", { srcSystem: "BETTER_BITRIX_LEGACY" }),
+      prev(null),
+    );
+    assert.equal(bb.skip, "SKIP_LEGACY_IMPORT");
+  });
 });

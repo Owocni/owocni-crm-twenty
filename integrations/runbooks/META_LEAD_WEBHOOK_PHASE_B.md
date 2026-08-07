@@ -50,3 +50,16 @@ cd integrations/cloud-functions/meta-lead-webhook && bash deploy.sh
 - Przyczyna: app webhook subskrypcja Page miała `active=true`, ale **bez `fields=leadgen`** → Meta nie wysyłała POST-ów (0 requestów na CF).
 - Naprawa: `POST /{app-id}/subscriptions` z `fields=leadgen` + verify token. Lead dogoniony ręcznie `ingest_meta_lead`.
 - Dodatkowo: mapowanie `full name` (spacja) w `metaLeadIngest.js`.
+
+## Incydent 2026-08-04…06 (Jendrek / Barbara + seria)
+
+- Subskrypcja `leadgen` wygląda OK, CF działa (GET verify 200), page `subscribed_apps` OK — **ale nadal 0 POST-ów** na webhook od Meta.
+- Najbardziej prawdopodobne: app **Owocni Lead CRM** jest w trybie **Development** (webhooki tylko dla testerów/adminów; realne leady z reklam są w Graph, ale nie lecą push).
+- Mitigacja: ręczny backfill `ingest_meta_lead` z Graph; **wymagane: przełączenie appki na Live** w Meta Developers + ewentualny review uprawnień.
+
+## Incydent 2026-08-06…07 (Arek / Pinokio) + poll fallback
+
+- Publish appki + polityka prywatności **nie naprawiły** pushy — nadal 0 POST-ów `leadgen`.
+- Przykłady w Graph, brak push: `arek@acrofamily.pl` (`1738660847476678`), `Matketing@pinokio.pl` (`1797276394917098`) — dogonione `ingest_meta_lead`.
+- **Produkcyjny fallback:** Cloud Scheduler `meta-lead-poll-every-5min` → `POST` CF z `{action:"poll_meta_leads"}` + header `X-Meta-Poll-Secret` (= `META_WEBHOOK_VERIFY_TOKEN`). Pull z Graph (`META_FORM_IDS`, domyślnie `1073605628462622`) → worker; idempotencja po `metaLeadgenId`.
+- Webhook zostaje jako bonus; poll jest źródłem prawdy.
