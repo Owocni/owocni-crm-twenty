@@ -127,13 +127,16 @@ async function handlePollMetaLeads(req, res) {
         const already =
           workerResult?.enqueue?.skipped === "already_exists" ||
           workerResult?.create_lead?.skipped > 0;
+        const createFailed =
+          Number(workerResult?.create_lead?.failed || 0) > 0 &&
+          Number(workerResult?.create_lead?.processed || 0) === 0;
         if (already) {
           skipped += 1;
           results.push({
             leadgen_id: leadgenId,
             skipped: "already_exists",
           });
-        } else if (workerResult?.ok === false) {
+        } else if (workerResult?.ok === false || createFailed) {
           failed += 1;
           results.push({
             leadgen_id: leadgenId,

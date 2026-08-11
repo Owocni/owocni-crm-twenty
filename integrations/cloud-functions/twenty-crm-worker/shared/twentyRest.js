@@ -102,10 +102,53 @@ async function findPersonByEmail(email) {
   }
   const people = parseTwentyListRecords("people", res.body);
   let person = people.length ? people[0] : null;
-  if (person && personPrimaryEmail(person) !== normalizeEmail(email)) {
+  // List response czasem bez emails — nie odrzucaj trafienia z filtra eq.
+  const got = personPrimaryEmail(person);
+  if (person && got && got !== normalizeEmail(email)) {
     person = null;
   }
+  if (!person) {
+    // Retry lowercase (Twenty eq bywa case-sensitive)
+    const lower = normalizeEmail(email);
+    if (lower && lower !== String(email || "").trim()) {
+      const path2 = buildTwentyListPath(
+        "people",
+        `emails.primaryEmail[eq]:${lower}`,
+        1,
+      );
+      const res2 = await twentyRequest("GET", path2);
+      if (res2.statusCode >= 200 && res2.statusCode < 300) {
+        const people2 = parseTwentyListRecords("people", res2.body);
+        person = people2.length ? people2[0] : null;
+      }
+    }
+  }
   return person;
+}
+
+async function findPersonByPhone(rawPhone) {
+  const digits = String(rawPhone || "").replace(/\D/g, "");
+  if (!digits) return null;
+  const national =
+    digits.length === 11 && digits.startsWith("48")
+      ? digits.slice(2)
+      : digits.length > 9 && digits.startsWith("48")
+        ? digits.slice(-9)
+        : digits.length === 9
+          ? digits
+          : digits.slice(-9);
+  if (national.length < 9) return null;
+  const path = buildTwentyListPath(
+    "people",
+    `phones.primaryPhoneNumber[eq]:${national}`,
+    1,
+  );
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`find person by phone HTTP ${res.statusCode} ${res.rawBody}`);
+  }
+  const people = parseTwentyListRecords("people", res.body);
+  return people.length ? people[0] : null;
 }
 
 async function findOpportunityByIdOid(idOid) {
@@ -163,6 +206,7 @@ module.exports = {
   extractPatchedIdOid,
   buildTwentyListPath,
   findPersonByEmail,
+  findPersonByPhone,
   findOpportunityByIdOid,
   findOpportunityByMetaLeadgenId,
   patchTwentyRecord,

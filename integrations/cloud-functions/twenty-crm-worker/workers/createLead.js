@@ -18,6 +18,7 @@ const {
   twentyRequest,
   extractCreatedId,
   findPersonByEmail,
+  findPersonByPhone,
   findOpportunityByIdOid,
   findOpportunityByMetaLeadgenId,
   patchTwentyRecord,
@@ -1068,12 +1069,19 @@ async function resolveExistingPersonId(taskData, idOid) {
   const person = res.body?.data?.person || {};
   if (!person.id) throw new Error("existing person not found");
   const existingOid = String(person.idOid || "").trim();
-  if (existingOid && existingOid !== idOid) {
-    throw new Error(
-      `Person idOid conflict existing=${existingOid} new=${idOid}`,
+  // Person może mieć starszy idOid (wcześniejszy lead). Nowa Opportunity
+  // dostaje task idOid; kontaktu nie nadpisujemy.
+  if (!existingOid) await patchPersonIdOid(person.id, idOid);
+  else if (existingOid !== idOid) {
+    console.log(
+      "reuse person by id",
+      person.id,
+      "personOid=",
+      existingOid,
+      "taskOid=",
+      idOid,
     );
   }
-  if (!existingOid) await patchPersonIdOid(person.id, idOid);
   await patchPersonContactFields(person.id, taskData);
   return person.id;
 }
@@ -1083,19 +1091,44 @@ async function resolveOrCreatePerson(taskData, idOid) {
   if (existingId) return existingId;
 
   const email = String(taskData.biz_email || "").trim();
-  const existingPerson = await findPersonByEmail(email);
+  const phone = String(taskData.biz_phone || "").trim();
+  let existingPerson = await findPersonByEmail(email);
+  if (!existingPerson?.id && phone) {
+    existingPerson = await findPersonByPhone(phone);
+    if (existingPerson?.id) {
+      console.log("reuse person by phone", existingPerson.id, phone);
+    }
+  }
   if (existingPerson?.id) {
     const existingOid = existingPerson.idOid || "";
-    if (existingOid && existingOid !== idOid) {
-      throw new Error(
-        `Person email conflict idOid existing=${existingOid} new=${idOid}`,
+    // Ten sam email/telefon = ten sam kontakt. Meta Instant Form (i kolejne leady)
+    // dostają nowe idOid na Opportunity — Person zostaje z oryginalnym idOid.
+    if (!existingOid) await patchPersonIdOid(existingPerson.id, idOid);
+    else if (existingOid !== idOid) {
+      console.log(
+        "reuse person",
+        existingPerson.id,
+        "personOid=",
+        existingOid,
+        "taskOid=",
+        idOid,
       );
     }
-    if (!existingOid) await patchPersonIdOid(existingPerson.id, idOid);
     await patchPersonContactFields(existingPerson.id, taskData);
     return existingPerson.id;
   }
-  return createPersonRecord(taskData, idOid);
+  try {
+    return await createPersonRecord(taskData, idOid);
+  } catch (err) {
+    const msg = String(err.message || "");
+    if (!/duplicate|400/i.test(msg)) throw err;
+    let raced = await findPersonByEmail(email);
+    if (!raced?.id && phone) raced = await findPersonByPhone(phone);
+    if (!raced?.id) throw err;
+    console.log("reuse person after duplicate create", raced.id, email || phone);
+    await patchPersonContactFields(raced.id, taskData);
+    return raced.id;
+  }
 }
 
 async function updateTaskFailed(taskKey, taskData, errorMsg, audit) {

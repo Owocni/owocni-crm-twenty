@@ -6,6 +6,7 @@ import type { RoutePayload } from 'twenty-sdk/logic-function';
 import {
   findSendableEmailAccount,
   mapSendEmailError,
+  resolveContinuationHandles,
 } from 'src/utils/findSendableEmailAccount';
 import {
   parseRouteBody,
@@ -163,13 +164,26 @@ const handler = async (event: RoutePayload) => {
       return { ok: false, error: 'Email body is empty' };
     }
 
+    let continuationHandles: string[] = [];
+
+    try {
+      continuationHandles = await resolveContinuationHandles(coreClient, {
+        recordId,
+        recipientEmail: email,
+      });
+    } catch {
+      continuationHandles = [];
+    }
+
     let connectedAccount;
 
     try {
-      connectedAccount = await findSendableEmailAccount(
-        metadataClient,
-        requestedAccountId,
-      );
+      connectedAccount = await findSendableEmailAccount(metadataClient, {
+        preferredAccountId: requestedAccountId,
+        continuationHandles,
+        recordId,
+        recipientEmail: email,
+      });
     } catch (accountError) {
       return {
         ok: false,

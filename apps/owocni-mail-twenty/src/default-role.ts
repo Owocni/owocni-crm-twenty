@@ -13,4 +13,6 @@ export default defineApplicationRole({
   canUpdateAllObjectRecords: true,
   canSoftDeleteAllObjectRecords: true,
   canDestroyAllObjectRecords: false,
+  // Required for metadataClient.mutation({ sendEmail }) from logic functions.
+  canAccessAllTools: true,
 });

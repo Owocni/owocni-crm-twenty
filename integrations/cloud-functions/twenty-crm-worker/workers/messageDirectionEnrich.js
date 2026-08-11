@@ -27,6 +27,8 @@ const HANDLE_TO_VALUE = {
   "copywriting@owocni.pl": "COPYWRITING",
   "pomoc@owocni.pl": "POMOC",
   "obsluga@owocni.pl": "OBSLUGA",
+  "robertmank@owocni.pl": "ROBERT",
+  "ewamalanowska@owocni.pl": "EWA",
 };
 
 function isEnabled() {

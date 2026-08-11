@@ -5,8 +5,8 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-07-10
-recheck_trigger: "Twenty release / zmiana schematu pól / powstanie generatora schemy"
+last_verified: 2026-08-10
+recheck_trigger: "Twenty release / zmiana schematu pól / powstanie generatora schemy / wdrożenie lead claim"
 default_trust: D:VERIFIED
 related:
   - CRM_CONSTITUTION
@@ -140,6 +140,34 @@ Pola **CRM-only** (NR-5 w `METRICS.md`) — wypełnia workflow / GCP worker; zap
 
 Kanon formuł → `METRICS.md`. Kontrakty → `../workflows/track-stage-time.contract.md`, `../workflows/first-outbound-response.contract.md`.
 
+#### Lead claim / routing — planowane (TIME TO LEAD) — OPEN / NIE WDROŻONE
+
+**Źródło decyzji:** `/Volumes/Samsung_T5/Rozdzielanie-leadow-wstep.md` (v1.2, 2026-08-10).  
+**Semantyka:** CRM-only / orkiestracja — **NIGDY do payloadów eventów reklamowych** (jak NR-5).  
+**Nie mylić:** `bizIntent` (CENNIK/EKSPERT) ≠ `bizLeadIntentClass` (HOT_FIT/STANDARD/LOW_INTENT) ≠ native `engagement` (HOT/COLD).
+
+| Field (API) | Type | Owner (plan) | Empty | Used by | Freeze? | Description |
+|---|---|---|---|---|---|---|
+| `bizLeadIntentClass` | SELECT | Classifier / adapter | null | Sloty, SLA, routing | OPEN | `HOT_FIT` / `STANDARD` / `LOW_INTENT` |
+| `bizClaimState` | SELECT | Claim orchestrator | `UNASSIGNED` | Pętla T+0/3min/3h | OPEN | `UNASSIGNED` / `RESERVED` / `FIRST_ATTEMPT_VERIFIED` / `WORKING` / `REASSIGN_REQUIRED` |
+| `bizReservationId` | TEXT | Claim orchestrator | null | Atomowy claim | OPEN | Zwycięski reservation id (idempotency) |
+| `bizReservedAt` | DATETIME | Claim orchestrator | null | TTL 3 min | OPEN | Start rezerwacji |
+| `bizReservedUntil` | DATETIME | Claim orchestrator | null | TTL 3 min | OPEN | Koniec rezerwacji |
+| `bizReservedByWorkspaceMemberId` | TEXT | Claim orchestrator | null | Audyt claim | OPEN | Kto trzyma rezerwację |
+| `bizClaimPrimaryWorkspaceMemberId` | TEXT | Router | null | Primary assign | OPEN | Primary przed verified attempt |
+| `bizFirstAttemptAt` | DATETIME | Outbound / call hook | null | Wyjście z puli | OPEN | Verified first attempt = **mail lub start rozmowy** na leadzie |
+| `bizFirstAttemptChannel` | SELECT | Outbound / call hook | null | Audyt | OPEN | `EMAIL` / `CALL` |
+| `bizFailoverCount` | NUMBER | Claim orchestrator | 0 | Metryki | OPEN | Ile razy wygasła rezerwacja |
+| `bizManagerAlertedAt` | DATETIME | Claim orchestrator | null | T+3 h | OPEN | Eskalacja manager |
+| `bizRoutingRule` | SELECT lub TEXT | Router | null | Audyt | OPEN | np. `HARD_ROBERT_META` / `HARD_MACIEJ_COPY` / `POOL_MARTA_GOSIA` / `MANUAL` / `CONTINUITY` |
+
+**Capacity / urlop (Workspace Member lub obiekt `SalesCapacity` 1:1):** `bizVacationOn`, `bizInClaimPool`, `bizMaxSlotsHot` / `Standard` / `Low` (domyślnie 1/2/3), `bizLastQualifiedAssignAt`.  
+**Zajętość (zaakceptowane v1.3):** `bizRepAvailability` (`AVAILABLE` / `IN_CALL` / `BUSY_OTHER`), `bizBusyUntil` — status „rozmowa trwa” **blokuje** auto-przekazanie już wziętych leadów i **pauzuje** TTL/failover; verified attempt = mail **lub** call.  
+Ewa: `bizInClaimPool=false` (tylko ręczne). Marta/Gosia: `true`. Robert/Maciej: hard-route poza pulą ogólną.
+
+**Kolejność wdrożenia:** (1) intent class + capacity → (2) availability / „rozmowa trwa” → (3) claim state + reservation TTL → (4) verified mail|call → (5) fairness + vacation → (6) failover/manager timers → (7) UI claim.  
+**Bloker procesowy (otwarte):** overflow przy braku slotów — pytania tylko w `Rozdzielanie-leadow-wstep.md` §8.
+
 #### Message — kierunek (CRM-only, ADR #19 / E12.5)
 
 Pole **CRM-only** na obiekcie systemowym Message — materializacja reguły firmy z `MCMA.direction`. **NIGDY do payloadów eventów.** Bez prefiksu (`biz*`/`id*`/`src*` = kontrakt integracyjny).
@@ -147,7 +175,7 @@ Pole **CRM-only** na obiekcie systemowym Message — materializacja reguły firm
 | Field (API) | Type | Owner | Empty | Used by | Freeze? | Description (Twenty UI) |
 |---|---|---|---|---|---|---|
 | `direction` | SELECT | Writer backfill + GCP `messageDirectionEnrich` (MCMA webhook/poll) | null (maile bez MCMA) | Widoki 📥/📤/🔧 | OPEN (wartości 1:1 z enumem platformy) | **UI:** Kierunek. Wartości API: `INCOMING` → „Przychodzący", `OUTGOING` → „Wychodzący". Reguła: OUTGOING jeśli **jakakolwiek** asocjacja ma OUTGOING, inaczej INCOMING. Workflow UPDATE Message = zablokowany (`Object cannot be updated by automation`). |
-| `ourMailboxes` | MULTI_SELECT | Writer backfill + GCP `messageDirectionEnrich` | [] | Widoki 📥/📤 Marta·Gosia·Mariusz (soft filter) | OPEN | **UI:** Nasze skrzynki. Wartości: MARTA/GOSIA/MARIUSZ/STUDIO/LEADS/COPYWRITING/POMOC/OBSLUGA. Źródło: `MessageParticipant.handle` ∈ naszych adresów. **Nie ACL** — filtr widoku, da się zdjąć. |
+| `ourMailboxes` | MULTI_SELECT | Writer backfill + GCP `messageDirectionEnrich` | [] | Widoki 📥/📤 Marta·Gosia·Mariusz·Robert·Ewa (soft filter) | OPEN | **UI:** Nasze skrzynki. Wartości: MARTA/GOSIA/MARIUSZ/STUDIO/LEADS/COPYWRITING/POMOC/OBSLUGA/ROBERT/EWA. Źródło: `MessageParticipant.handle` ∈ naszych adresów. **Nie ACL** — filtr widoku, da się zdjąć. |
 
 Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECISION_REGISTER.md` #19.
 
@@ -182,6 +210,28 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 | `enrichmentSource` | TEXT | NO | Enrichment worker | null | OPEN — np. `gov-direct 2026-08-06`. |
 
 Źródło decyzji pól: ENRICH_COMPANY_PL_BUTTON §3.1 · utworzone Metadata API 2026-08-06 (G1).
+
+### 5.3b Faktura (custom object `faktura` / `faktury`)
+
+Lustro Fakturowni. Writer = worker GCP (`issue_invoice`). SoR dokumentów = Fakturownia.
+
+| Field | Type | Unique | Owner | Empty | Freeze? |
+|---|---|---|---|---|---|
+| `kind` | SELECT {PROFORMA,VAT,ADVANCE,FINAL,CORRECTION} | NO | Form / webhook | null | OPEN |
+| `invoiceNumber` | TEXT | NO | Fakturownia | null | OPEN |
+| `status` | SELECT {DRAFT,ISSUED,PARTIAL,PAID} | NO | Fakturownia | null | OPEN |
+| `ksefStatus` | SELECT {NONE,PROCESSING,OK,ERROR} | NO | worker / webhook | null | OPEN |
+| `issueDate` / `paymentTo` | DATE | NO | Fakturownia | null | OPEN |
+| `amountGross` | CURRENCY | NO | Fakturownia | null | OPEN — nie → biz_value |
+| `ksefNumber` | TEXT | NO | gov_id | null | OPEN |
+| `fakturowniaId` | TEXT | **YES** | Fakturownia `id` | null | OPEN — upsert key |
+| `company` | RELATION → Company | NO | worker | null | OPEN — external_id |
+| `opportunity` | RELATION → Opportunity | NO | trigger / picker | null | OPEN — puste legalne |
+| `issuedBy` | RELATION → WorkspaceMember | NO | trigger metadata | null | OPEN |
+| `fromInvoice` | RELATION → Faktura | NO | copy_invoice_from | null | OPEN |
+| `fakturowniaUrl` / `pdfUrl` / `upoUrl` / `ksefVerificationLink` | LINKS | NO | Fakturownia | null | OPEN |
+
+Utworzono Metadata API 2026-08-07 · FAKTUROWNIA_INTEGRACJA §5.
 
 ### 5.4 Reguły operacyjne
 

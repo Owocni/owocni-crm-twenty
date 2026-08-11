@@ -23,6 +23,8 @@ const {
 } = require("./workers/callTranscriptLink");
 const { mergeLeads } = require("./workers/mergeLeads");
 const { ingestMetaLead } = require("./workers/metaLeadIngest");
+const { handleEnrichCompanyPl } = require("./workers/enrichCompanyPl");
+const { handleIssueInvoice } = require("./workers/issueInvoice");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
 const { withPendingTasksCache } = require("./shared/stapeStore");
 
@@ -186,6 +188,34 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
         build_id: CREATE_LEAD_BUILD_ID,
         mode: "meta_lead_ingest",
         ...ingested,
+      });
+      return;
+    }
+
+    if (
+      req.method === "POST" &&
+      (body.action === "enrich_company_pl" ||
+        body.job_type === "crm:enrich_company_pl")
+    ) {
+      const enrich = await handleEnrichCompanyPl(req);
+      res.status(enrich.statusCode || 200).json({
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "enrich_company_pl",
+        ...enrich.body,
+      });
+      return;
+    }
+
+    if (
+      req.method === "POST" &&
+      (body.action === "issue_invoice" ||
+        body.job_type === "crm:issue_invoice")
+    ) {
+      const issued = await handleIssueInvoice(req);
+      res.status(issued.statusCode || 200).json({
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "issue_invoice",
+        ...issued.body,
       });
       return;
     }

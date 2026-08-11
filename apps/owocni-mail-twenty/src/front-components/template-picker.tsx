@@ -75,11 +75,19 @@ type TemplateDraftResponse = {
   error?: string;
 };
 
+type AllowedSendAccount = {
+  id: string;
+  handle: string;
+};
+
 type SendReadinessResponse = {
   canSend?: boolean;
   reason?: string | null;
   accountHandle?: string | null;
   connectedAccountId?: string | null;
+  allowedAccounts?: AllowedSendAccount[];
+  currentUserEmail?: string | null;
+  continuationHandles?: string[];
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -292,6 +300,9 @@ const TemplatePicker = () => {
   const [connectedAccountId, setConnectedAccountId] = useState<string | null>(
     null,
   );
+  const [allowedSendAccounts, setAllowedSendAccounts] = useState<
+    AllowedSendAccount[]
+  >([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -603,33 +614,7 @@ const TemplatePicker = () => {
       }
     };
 
-    const loadReadiness = async () => {
-      try {
-        const client = new RestApiClient();
-        const readiness = await client.get<SendReadinessResponse>(
-          '/s/mail/send-readiness',
-        );
-
-        if (cancelled) {
-          return;
-        }
-
-        setCanSendEmail(Boolean(readiness.canSend));
-        setSendBlockedReason(readiness.reason ?? null);
-        setConnectedAccountHandle(readiness.accountHandle ?? null);
-        setConnectedAccountId(readiness.connectedAccountId ?? null);
-      } catch {
-        if (!cancelled) {
-          setCanSendEmail(false);
-          setSendBlockedReason(
-            'Nie udało się sprawdzić konta email. Odśwież panel lub sprawdź Settings → Accounts.',
-          );
-        }
-      }
-    };
-
     void loadList();
-    void loadReadiness();
 
     return () => {
       cancelled = true;
@@ -640,6 +625,59 @@ const TemplatePicker = () => {
     resolvedContext.scrapedEmail,
     mergedSelectedIds.join(','),
   ]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadReadiness = async () => {
+      try {
+        const client = new RestApiClient();
+        const query: Record<string, string> = {};
+
+        if (effectiveRecordId) {
+          query.recordId = effectiveRecordId;
+        }
+
+        if (personEmail) {
+          query.email = personEmail;
+        }
+
+        const readiness = await client.get<SendReadinessResponse>(
+          '/s/mail/send-readiness',
+          Object.keys(query).length > 0 ? { query } : undefined,
+        );
+
+        if (cancelled) {
+          return;
+        }
+
+        const allowed = Array.isArray(readiness.allowedAccounts)
+          ? readiness.allowedAccounts
+          : [];
+
+        setAllowedSendAccounts(allowed);
+        setCanSendEmail(Boolean(readiness.canSend));
+        setSendBlockedReason(readiness.reason ?? null);
+        setConnectedAccountHandle(readiness.accountHandle ?? null);
+        setConnectedAccountId(readiness.connectedAccountId ?? null);
+      } catch (loadError) {
+        if (!cancelled) {
+          setCanSendEmail(false);
+          setAllowedSendAccounts([]);
+          setSendBlockedReason(
+            getApiErrorMessage(loadError) ||
+              'Nie udało się sprawdzić konta email. Odśwież panel lub sprawdź Settings → Accounts.',
+          );
+        }
+      }
+    };
+
+    void loadReadiness();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [effectiveRecordId, personEmail]);
 
   const handleSelectTemplate = async (template: MailTemplateSummary) => {
     const nextSessionId = crypto.randomUUID();
@@ -1291,12 +1329,6 @@ const TemplatePicker = () => {
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
               Do
-              {canSendEmail && connectedAccountHandle ? (
-                <span style={{ fontWeight: 400, color: '#888' }}>
-                  {' '}
-                  · z: {connectedAccountHandle}
-                </span>
-              ) : null}
             </span>
             <input
               style={{
@@ -1316,6 +1348,47 @@ const TemplatePicker = () => {
               </span>
             ) : null}
           </label>
+
+          {allowedSendAccounts.length > 0 ? (
+            <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
+                Od
+              </span>
+              <select
+                style={{
+                  padding: '6px 8px',
+                  border: '1px solid #ddd',
+                  borderRadius: 5,
+                  fontSize: 13,
+                  background: '#fff',
+                }}
+                value={connectedAccountId ?? ''}
+                onChange={(event) => {
+                  const nextId = event.target.value || null;
+                  const match = allowedSendAccounts.find(
+                    (account) => account.id === nextId,
+                  );
+
+                  setConnectedAccountId(nextId);
+                  setConnectedAccountHandle(match?.handle ?? null);
+                }}
+                disabled={sending || sendCountdown !== null}
+              >
+                {allowedSendAccounts.map((account) => (
+                  <option key={account.id} value={account.id}>
+                    {account.handle}
+                  </option>
+                ))}
+              </select>
+              <span style={{ fontSize: 11, color: '#888' }}>
+                Domyślnie: kontynuacja wątku (jeśli Twoja / studio@ / leads@), inaczej Twoja skrzynka.
+              </span>
+            </label>
+          ) : canSendEmail && connectedAccountHandle ? (
+            <span style={{ fontSize: 12, color: '#666' }}>
+              Od: {connectedAccountHandle}
+            </span>
+          ) : null}
 
           {!personEmail && recentRecipients.length > 0 ? (
             <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

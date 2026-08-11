@@ -40,6 +40,27 @@ gcloud services enable cloudfunctions.googleapis.com run.googleapis.com \
 
 ENV_VARS="STAPE_API_BASE=${STAPE_API_BASE},TWENTY_REST_URL=${TWENTY_REST_URL},CREATE_LEAD_WRITE_ENABLED=${CREATE_LEAD_WRITE_ENABLED},TWENTY_OWNER_MACIEJ=${TWENTY_OWNER_MACIEJ:-7fddba1d-e443-47d4-97b7-a3a829efd8c1},TWENTY_OWNER_MARTA=${TWENTY_OWNER_MARTA:-4704e0c0-8d77-4640-ad1e-1875294294df},TWENTY_OWNER_GOSIA=${TWENTY_OWNER_GOSIA:-ccac533d-a34b-4cfc-a036-9e75ee3f8910},TWENTY_OWNER_ROBERT=${TWENTY_OWNER_ROBERT:-23ac9976-0232-4097-b056-5dc391bf7c34}"
 
+# Optional: company enrichment (ENRICH_COMPANY_PL) + GUS when available
+if [[ -n "${ENRICH_COMPANY_PL_TOKEN:-}" ]]; then
+  ENV_VARS="${ENV_VARS},ENRICH_COMPANY_PL_TOKEN=${ENRICH_COMPANY_PL_TOKEN}"
+fi
+if [[ -n "${GUS_BIR_KEY:-}" ]]; then
+  ENV_VARS="${ENV_VARS},GUS_BIR_KEY=${GUS_BIR_KEY}"
+fi
+# Fakturownia issue invoice
+if [[ -n "${X_INVOICE_TOKEN:-}" ]]; then
+  ENV_VARS="${ENV_VARS},X_INVOICE_TOKEN=${X_INVOICE_TOKEN}"
+fi
+if [[ -n "${FAKTUROWNIA_DOMAIN:-}" ]]; then
+  ENV_VARS="${ENV_VARS},FAKTUROWNIA_DOMAIN=${FAKTUROWNIA_DOMAIN}"
+fi
+if [[ -n "${FAKTUROWNIA_API_TOKEN:-}" ]]; then
+  ENV_VARS="${ENV_VARS},FAKTUROWNIA_API_TOKEN=${FAKTUROWNIA_API_TOKEN}"
+fi
+if [[ -n "${FAKTUROWNIA_DEPARTMENT_ID:-}" ]]; then
+  ENV_VARS="${ENV_VARS},FAKTUROWNIA_DEPARTMENT_ID=${FAKTUROWNIA_DEPARTMENT_ID}"
+fi
+
 DEPLOY_ARGS=(
   --gen2
   --project="$GCP_PROJECT"
@@ -49,6 +70,7 @@ DEPLOY_ARGS=(
   --entry-point=processTwentyCrmWorker
   --trigger-http
   --allow-unauthenticated
+  --timeout=300s
 )
 
 if [[ "$USE_SECRETS" == "true" ]]; then
