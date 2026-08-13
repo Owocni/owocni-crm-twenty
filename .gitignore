@@ -1,6 +1,8 @@
 .env
 .env.local
 .env.*.local
+# Local deploy secrets (Bitwarden → copy to .env.deploy; never commit)
+**/.env.deploy
 integrations/fixtures/webhook-captures/*.json
 !integrations/fixtures/webhook-captures/.gitkeep
 integrations/pipedrive-staging/
