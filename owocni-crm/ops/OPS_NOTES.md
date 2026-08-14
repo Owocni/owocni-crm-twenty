@@ -125,6 +125,21 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-08-04 | Pipedrive **full load** DONE + retry 14 | **3251** Opp `PIPEDRIVE_LEGACY`; notes; identity link/dedup; junk phone/email skipped | **TAK** | Composer | Artefakty `…/full/`. WF nadal OFF — włączyć `--apply-on` po akceptacji. |
 | 2026-08-06 | Pipedrive gate: **ON** 8 workflowów | MCP `activate_workflow_version` ×8 z `gate/deactivated_snapshot.json` | **TAK** | Composer | Import zakończony; live leady znowu z powiadomieniami/guardami. |
 | 2026-08-06 | Pipedrive **active tasks** Robert+Krzysztof→Ewa | 93 Task (follow/email/meeting); bez call; `…/tasks/` | **TAK** | Composer | assignee Robert/Ewa; target Opp/Person po `pipedriveId`. |
+| 2026-08-13 | **Repair Faza 0+1 start** | 0.3 etykiety Company OK; 0.1 SENT + 0.2 blocklist = MANUAL (API 403 / User id); Faza 1 `ORG_REPORT.md` GATE=`DOMAIN_SPARSE` | **TAK** | Composer | Staging `…/repair/`. Org PD: WWW/NIP=0; osoby email 87.6%. Bez wipe. |
+| 2026-08-13 | **Repair Faza 0 DONE + Faza 2 OFF** | SENT+blocklist właściciel; WF×8 OFF (`gate_off_snapshot.json`); backup `…/repair/backup/20260813T121323Z/` | **TAK** | Composer | Lead notify OFF do końca faz 3–6. |
+| 2026-08-13 | **Repair Faza 3.0/3.1** | +40 Company create; +15 stamp `pipedriveId` na auto-mint po domenie; domainName patch 96 OK / 105 kolizja→Faza 4 | **TAK** | Composer | `import_missing_*`, `backfill_company_*`, `recon.json`. |
+| 2026-08-13 | **Repair Faza 4 merge domen** | 95 merge PD←automint (relink people + domain + DELETE); 10 PD↔PD odłożone | **TAK** | Composer | domain% 22.5→39.6; `merge_domain_dupes_*`, `domain_dupes.json` |
+| 2026-08-13 | **Repair Faza 5.0 osoby** | 1725 missing: 401 create + 1324 email_dedup; errors=0 | **TAK** | Composer | `import_missing_persons_apply.json` |
+| 2026-08-13 | **Repair Faza 5.0 fix bilans** | +1213 (głównie create bez maila przy kolizji); missing=0; extra=36 | **TAK** | Composer | `import_missing_persons_fix_apply.json` |
+| 2026-08-13 | **Repair Faza 5.1 link people** | opp→person 7/7; domain-match 13 propozycji (0 konfliktów) | **TAK** | Composer | `link_people_apply.json`, `link_people_domain_*.csv` |
+| 2026-08-13 | **Repair Faza 3.3 + 6 nazwy** | Company URL→label 142; Opp rename 275/275 | **TAK** | Composer | `fix_company_names_*`, `fix_opportunity_names_*` |
+| 2026-08-13 | **Repair Faza 2.4 WF ON** | MCP activate ×8 z `gate_off_snapshot.json` | **TAK** | Composer | Live notify/guardy z powrotem |
+| 2026-08-13 | **Repair Faza 8 dry-run** | 17334 firm; 16777 kandydatów DELETE (2 safe / 16775 z osobami); bez apply | **TAK** | Composer | `cleanup_automint_candidates.csv` — czeka na GO |
+| 2026-08-14 | **Repair D3 + Faza 8C** | D3=MAX 3 lata; dry-run outbound-gate → CSV `cleanup_automint_candidates_outbound.csv` | **TAK** | Composer | Apply dopiero po GO właściciela |
+| 2026-08-14 | **Repair Faza 8C APPLY start** | DELETE ~15816 firm z CSV outbound (GO właściciela); osoby nietknięte | **TAK** | Composer | Progress: `cleanup_automint_apply_outbound.json` |
+| 2026-08-14 | **Repair Faza 8C APPLY DONE** | **15816/15816** DELETE OK, err=0 (~4.6 h) | **TAK** | Composer | `cleanup_automint_apply_outbound.json` |
+| 2026-08-14 | **Repair B-5 / widoki 8.1+8.3** | Firmy 17334→1518; recon missing=0; widoki „Firmy z leadami” / „Z firmą…” / „Z leadem (POC)” | **TAK** | Composer | `SIGNOFF_B5.json` |
+| 2026-08-14 | **Repair Faza 7.2 ACCEPT** | Historia maili: bez reconnect (brak „sync od daty” w UI); D3 best effort | **TAK** | właściciel + Composer | `PHASE7_RESYNC_MANUAL.md` |
 | (pusto — uzupełniać przy każdej operacji masowej; każdy wiersz MUSI mieć wartość `no_emit`: TAK/NIE) | — | — | — | — | — |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
