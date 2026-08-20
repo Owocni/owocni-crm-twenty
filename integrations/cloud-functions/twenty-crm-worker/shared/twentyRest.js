@@ -185,6 +185,64 @@ async function findOpportunityByMetaLeadgenId(leadgenId) {
   return opp;
 }
 
+function unwrapSingleRecord(collectionSingular, responseBody) {
+  const data = responseBody?.data || {};
+  return (
+    data[collectionSingular] ||
+    data[collectionSingular + "s"]?.[0] ||
+    (data.id ? data : null) ||
+    null
+  );
+}
+
+async function getPersonById(personId) {
+  const id = String(personId || "").trim();
+  if (!id) return null;
+  const res = await twentyRequest("GET", `/people/${encodeURIComponent(id)}`);
+  if (res.statusCode === 404) return null;
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`get person HTTP ${res.statusCode} ${res.rawBody}`);
+  }
+  return unwrapSingleRecord("person", res.body);
+}
+
+async function getCompanyById(companyId) {
+  const id = String(companyId || "").trim();
+  if (!id) return null;
+  const res = await twentyRequest("GET", `/companies/${encodeURIComponent(id)}`);
+  if (res.statusCode === 404) return null;
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`get company HTTP ${res.statusCode} ${res.rawBody}`);
+  }
+  return unwrapSingleRecord("company", res.body);
+}
+
+/**
+ * Latest Opportunity for Person with bizSqlConfirmed=true (continuity fallback).
+ * Returns null when none — does not create records.
+ */
+async function findLatestSqlOpportunityByPersonId(personId) {
+  const id = String(personId || "").trim();
+  if (!id) return null;
+  const filter = `pointOfContactId[eq]:${id},bizSqlConfirmed[eq]:true`;
+  let path = buildTwentyListPath("opportunities", filter, 5);
+  path += "&order_by=bizSqlConfirmedAt[DescNullsLast]";
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(
+      `find sql opp by person HTTP ${res.statusCode} ${res.rawBody}`,
+    );
+  }
+  const opps = parseTwentyListRecords("opportunities", res.body);
+  if (!opps.length) return null;
+  const match = opps.find(
+    (opp) =>
+      String(opp.pointOfContactId || opp.pointOfContact?.id || "").trim() ===
+        id && opp.bizSqlConfirmed === true,
+  );
+  return match || opps[0] || null;
+}
+
 async function patchTwentyRecord(collection, recordId, patchBody) {
   const res = await twentyRequest(
     "PATCH",
@@ -209,5 +267,8 @@ module.exports = {
   findPersonByPhone,
   findOpportunityByIdOid,
   findOpportunityByMetaLeadgenId,
+  getPersonById,
+  getCompanyById,
+  findLatestSqlOpportunityByPersonId,
   patchTwentyRecord,
 };

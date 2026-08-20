@@ -107,6 +107,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | ADR | Decyzja | Uwaga |
 |---|---|---|
 | #15 | Email Sync: zakres podsumowań/zadań w Twenty — Etap 1 vs 2 | **Kierunek zamknięty (2026-06-02):** opcja A (zostaje w CONSTITUTION do czasu przekroczenia progu wydzielenia). Szczegóły AI-podsumowań → Etap 2 |
+| **#21** | Continuity / Account Owner przy SQL (powracający klient → sprzedawca SQL) | **Nieblokujące cutoveru.** Kill-switch `CONTINUITY_ROUTING_ENABLED` (default false). Kontrakt: `/Volumes/Samsung_T5/RULE_CONTINUITY_IMPLEMENTATION_CONTRACT.md`. Runbook: `integrations/runbooks/RULE_CONTINUITY_IMPL_CHECKLIST.md`. |
 | FIX-2 | Format `time_occurred` (ISO vs epoch ms) | Decyzja: epoch ms; wdrożenie w backlogu |
 | OQ (glosariusz) | Kanon glosariusza w CONSTITUTION vs osobny GLOSSARY.md | Próg powstania pliku (CONSTITUTION §5.6) |
 
@@ -155,6 +156,11 @@ Otwarte operacyjnie (nie blokują ADR): OQ-7 visibility/Sent per skrzynka; OQ-10
 Kontekst: import handlowców z Pipedrive wymaga proweniencji na FROZEN `srcSystem`, kluczy rollback oraz stałego `bizSource`. Decyzje biznesowe: `integrations/runbooks/PIPEDRIVE_MIGRATION_CHECKLIST.md`.
 Decyzja: (1) `srcSystem` += `PIPEDRIVE_LEGACY`; (2) `bizSource` += `PIPEDRIVE_IMPORT`; (3) `pipedriveId` TEXT na Opportunity/Person/Company; (4) `legacyCreatedAt` + `legacyPipedriveStageName` na Opportunity; (5) metryki czasowe wykluczają `PIPEDRIVE_LEGACY` (patch `verify_metrics_pf5.py` — osobny krok); (6) rollback = DELETE po `pipedriveId` / `srcSystem=PIPEDRIVE_LEGACY` **przed** IMAP.
 Evidence: akceptacja właściciela 2026-07-31; deploy Metadata `integrations/tools/deploy_pipedrive_migration_fields.py`; `DATA_MODEL.md` §5.1–5.3.
+
+**ADR #21 (Continuity / Account Owner) — open, `blocks: none`, `implementation_status: code_ready` (2026-08-20).**
+Zasada: powracający klient wraca do pracownika, który doprowadził relację do SQL. Ewa nie jest w puli continuity. Stempel: workflow „Opp · SQL → Account Owner gdy pusty” (nie nadpisuje). Routing: `resolveContinuityOwner` w GCP `createLead.js` **przed** FACEBOOK/MARKETING/COPY/hash; flaga `CONTINUITY_ROUTING_ENABLED` default false.
+Zakazy: brak auto Company / domain link / backfill / zmian Resolvera / AO=Ewa.
+Evidence (kod+unit): `shared/resolveContinuityOwner.js`, T1–T3/T5 PASS; kontrakt `RULE_CONTINUITY_IMPLEMENTATION_CONTRACT.md`; checklista `RULE_CONTINUITY_IMPL_CHECKLIST.md`. Do zamknięcia ADR: deploy CF + smoke T4 + flaga ON na pierwszym live trafieniu.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 

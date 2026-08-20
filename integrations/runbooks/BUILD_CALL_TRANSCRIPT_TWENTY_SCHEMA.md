@@ -21,6 +21,7 @@ Wykonaj **przed** pierwszym deployem workera `crm:call_transcript_ingest`.
 | `summary` | Rich text | — | |
 | `recording` | Links | — | link do nagrania Play |
 | `opportunity` | Relation → Opportunity | — | nullable |
+| `person` | Relation → Person | — | nullable, label **„Rozmówca”** — chip na liście; deploy: `integrations/tools/deploy_call_transcript_rozmowca_field.py`; backfill: `backfill_call_transcript_rozmowca.py` |
 
 ## 2. Obiekt `CallTranscriptParticipant`
 

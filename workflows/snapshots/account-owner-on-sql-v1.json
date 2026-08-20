@@ -1,0 +1,75 @@
+{
+  "name": "Opp · SQL → Account Owner gdy pusty v13",
+  "version": "account-owner-on-sql-v13",
+  "status": "ACTIVE",
+  "workflowId": "8722d7da-1284-43de-a639-d4a107601755",
+  "workflowVersionId": "a81e8259-7a9e-4611-b36e-3a4a3d5d95de",
+  "contract": "RULE_CONTINUITY_IMPLEMENTATION_CONTRACT.md §4",
+  "trigger": {
+    "type": "DATABASE_EVENT",
+    "eventName": "opportunity.updated",
+    "objectNameSingular": "opportunity",
+    "fields": ["stage", "bizSqlConfirmed", "companyId", "ownerId", "id"]
+  },
+  "steps": [
+    {
+      "type": "CODE",
+      "name": "Oceń SQL → AO",
+      "logicFunctionId": "38aa9452-c59a-4008-bb33-70532beaae95",
+      "outputs": ["shouldStamp", "companyId", "ownerId"],
+      "rule": "shouldStamp = stage===QUALIFIED && bizSqlConfirmed && companyId && ownerId"
+    },
+    {
+      "type": "FILTER",
+      "name": "Should stamp?",
+      "condition": "shouldStamp IS true"
+    },
+    {
+      "type": "FIND_RECORDS",
+      "name": "Pobierz Company",
+      "objectName": "company",
+      "limit": 1,
+      "filter": {
+        "field": "id",
+        "fieldMetadataId": "993648e6-1f67-4637-b40b-f67edb3c6fb6",
+        "operand": "IS",
+        "value": "{{code.companyId}}"
+      },
+      "note": "fieldMetadataId is required — without it FIND returns an arbitrary company (limit 1)"
+    },
+    {
+      "type": "FILTER",
+      "name": "AO pusty?",
+      "condition": "first.accountOwnerId IS_EMPTY",
+      "accountOwnerFieldMetadataId": "857001b3-0cad-401f-8ede-4bf850bc47f5"
+    },
+    {
+      "type": "UPDATE_RECORD",
+      "name": "Ustaw Account Owner",
+      "objectName": "company",
+      "objectRecordId": "{{find.first.id}}",
+      "fieldsToUpdate": ["accountOwnerId"],
+      "objectRecord": {
+        "accountOwnerId": "{{code.ownerId}}"
+      }
+    }
+  ],
+  "smoke_2026-08-20": {
+    "empty_AO_stamps_Marta": "PASS — company 66670d14… → accountOwnerId Marta",
+    "nonempty_AO_no_overwrite": "PASS — company db2ac3d9… stayed Gosia; AO filter STOPPED"
+  },
+  "guarantees": [
+    "Does not overwrite non-empty accountOwnerId",
+    "Does not change Opportunity.owner",
+    "No HTTP / business event",
+    "Never sets accountOwner to Ewa (owner is the SQL salesperson)",
+    "Can be deactivated instantly for rollback"
+  ],
+  "supersedes": [
+    "v1–v12 (DEACTIVATED) — v12 FIND lacked company.id fieldMetadataId"
+  ],
+  "env_kill_switch": {
+    "CONTINUITY_ROUTING_ENABLED": "worker routing only",
+    "workflow": "deactivate this workflow independently"
+  }
+}

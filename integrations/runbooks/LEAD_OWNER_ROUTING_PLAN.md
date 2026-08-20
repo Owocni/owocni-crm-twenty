@@ -10,6 +10,7 @@ related:
   - E12_3_EMAIL_TEMPLATES_AND_TRAINING.md
   - ../../owocni-crm/IDENTITY_AND_INBOUND.md
   - ../../owocni-crm/DATA_MODEL.md
+  - LEAD_DISPATCHER_PLAN.md
   - ../tools/twenty_workflow_lead_notify_owner.json
 ---
 
@@ -18,12 +19,11 @@ related:
 **Cel:** po utworzeniu Opportunity handlowiec dostaje Task + email, a rekord ma ustawionego **Opportunity owner** (Gosia lub Marta).
 
 **Stan (2026-07-03):** przydzielanie ownerów **wdrożone** w obu workflow (form v7, mail v12). COPYWRITING → Maciej; reszta → losowo Marta/Gosia.  
-**Worker (później):** Meta/FB + Marketing → Robert; Copywriting → Maciej; reszta hash Marta/Gosia. **Ewa nie jest w auto-puli** (tylko ręczne).
+**Worker:** Meta/FB + Marketing → Robert; Copywriting → Maciej; reszta hash Marta/Gosia. **Ewa nie jest w auto-puli** (tylko ręczne).
 
-**Docelowo (TIME TO LEAD / claim) — decyzje v1.3, jeszcze nie wdrożone:**  
-→ dokument: `/Volumes/Samsung_T5/Rozdzielanie-leadow-wstep.md`  
-→ pola SSOT: `DATA_MODEL.md` § „Lead claim / routing — planowane”  
-Skrót: continuity first → primary assign (+ mini-shark max 2) → rezerwacja 3 min zamykana **mailem lub startem rozmowy** → status „rozmowa trwa” pauzuje failover → bez conv rate; weekend = lead czeka; **overflow = otwarte pytania** (§8).
+**Docelowo (TIME TO LEAD) — model dyspozytora:**  
+→ **[LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md)** (SSOT dla zespołu + LLM).  
+Stary wariant claim/puli/slotów — **odrzucony** (za złożony); nie wdrażać.
 
 ---
 

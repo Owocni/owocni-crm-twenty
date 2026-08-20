@@ -82,6 +82,7 @@ Nie ruszaj: [lista plików / integrations].
 | Decyzja / cutover / blocker | `owocni-crm/DECISION_REGISTER.md` | `IMPLEMENTATION_PLAN.md` |
 | Plan, bramy G1–G8 | `owocni-crm/runbooks/IMPLEMENTATION_PLAN.md` | `DECISION_REGISTER.md` |
 | Fakt Twenty (HMAC, credits) | `owocni-crm/ops/OPS_NOTES.md` | — |
+| Cisza kanału / health dodatków / zakładka „Stan systemu” | `owocni-crm/ops/SYSTEM_HEALTH.md` | `OPS_NOTES.md`, `TWENTY_PATHS.md` |
 | Kod Sortownia/Robot/Twenty paths | `integrations/` + `TWENTY_PATHS.md` | `EVENT_CONTRACT.md` |
 | Import / migracja danych | `owocni-crm/audits/AUDIT_MIGRACJA.md` | `EVENT_CONTRACT.md` |
 

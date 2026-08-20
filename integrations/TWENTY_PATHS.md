@@ -126,3 +126,8 @@ Zakaz jako `event_name`: `lead_won`, `closed_won` (aliasy legacy tylko na wejśc
 - Kod Play PBX (`telefony/` — sibling workspace; kontrakt w runbookach)
 
 Patrz: `runbooks/WHY_NOT_FULL_RUNTIME_YET.md`
+
+## 8. Stan funkcjonowania (health)
+
+Inwentarz dodatków, semafory i playbook diagnostyczny LLM → [`../owocni-crm/ops/SYSTEM_HEALTH.md`](../owocni-crm/ops/SYSTEM_HEALTH.md).  
+Zakładka UI „Stan systemu” = **Faza 0 (docs only)**. Maile / probe = Faza A (`cloud-functions/system-health-check/`) — deploy osobnym GO.

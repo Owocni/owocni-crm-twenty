@@ -35,11 +35,12 @@ function isEnabled() {
 }
 
 function ourPhoneNumbers() {
-  const raw = process.env.OUR_PHONE_NUMBERS || "48660970980,48570704470";
-  return raw
+  const fromMap = Object.keys(getPhoneOwnerMap() || {});
+  const fromEnv = String(process.env.OUR_PHONE_NUMBERS || "")
     .split(",")
     .map((item) => digitsOnly(item))
     .filter(Boolean);
+  return [...new Set([...fromMap, ...fromEnv])];
 }
 
 function digitsOnly(value) {
@@ -419,6 +420,7 @@ async function processOneTask(task) {
       ? { primaryLinkUrl: taskData.recordingWebUrl }
       : undefined,
     opportunityId: opportunity?.id || null,
+    personId: personMatch.conflict ? null : personMatch.personId || null,
   });
 
   if (!transcriptId) throw new Error("CallTranscript create returned no id");

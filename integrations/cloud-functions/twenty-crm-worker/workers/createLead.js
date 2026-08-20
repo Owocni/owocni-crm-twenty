@@ -3,6 +3,8 @@
 const {
   CREATE_LEAD_BUILD_ID,
   getOwnerIds,
+  getContinuityOwnerIds,
+  isContinuityRoutingEnabled,
   isCreateLeadWriteEnabled,
   MAX_CREATE_LEAD_TASKS,
   PENDING_WRITE_TTL_MS,
@@ -21,8 +23,12 @@ const {
   findPersonByPhone,
   findOpportunityByIdOid,
   findOpportunityByMetaLeadgenId,
+  getPersonById,
+  getCompanyById,
+  findLatestSqlOpportunityByPersonId,
   patchTwentyRecord,
 } = require("../shared/twentyRest");
+const { resolveContinuityOwner } = require("../shared/resolveContinuityOwner");
 
 const ADAPTER_ID = "crm:twenty_create_lead";
 
@@ -372,6 +378,46 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
   const s = String(idOid);
   for (let i = 0; i < s.length; i++) hash += s.charCodeAt(i);
   return hash % 2 === 0 ? owners.gosia : owners.marta;
+}
+
+/**
+ * Continuity first (when enabled), else existing FACEBOOK/MARKETING/COPY/hash routing.
+ */
+async function resolveOwnerIdForNewOpportunity(
+  personId,
+  companyId,
+  bizProductTwenty,
+  idOid,
+  taskData,
+) {
+  const continuityOwnerId = await resolveContinuityOwner({
+    personId,
+    companyId,
+    enabled: isContinuityRoutingEnabled(),
+    allowedOwnerIds: getContinuityOwnerIds(),
+    getCompanyById,
+    findLatestSqlOpportunityByPersonId,
+  });
+  if (continuityOwnerId) {
+    console.log("continuity owner", continuityOwnerId, "person=", personId);
+    return continuityOwnerId;
+  }
+  return resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData);
+}
+
+async function resolvePersonCompanyId(personId) {
+  try {
+    const person = await getPersonById(personId);
+    const companyId =
+      person?.companyId || person?.company?.id || null;
+    return companyId ? String(companyId).trim() : null;
+  } catch (err) {
+    console.warn(
+      "getPersonById for companyId failed:",
+      err && err.message ? err.message : err,
+    );
+    return null;
+  }
 }
 
 function mapBizSource(taskData) {
@@ -1002,7 +1048,7 @@ async function createFormInquiryEmailThread(taskData, personId) {
   return messageId;
 }
 
-async function createOpportunityRecord(taskData, idOid, personId) {
+async function createOpportunityRecord(taskData, idOid, personId, companyId) {
   const answers = parseFormAnswers(taskData);
   const bizProductTwenty = resolveTwentyBizProduct(taskData, answers);
   const kanbanFields = buildOpportunityKanbanFields(taskData);
@@ -1016,6 +1062,14 @@ async function createOpportunityRecord(taskData, idOid, personId) {
     taskData.meta_adgroup_id || taskData.adgroup_id || taskData.metaAdgroupId || "",
   ).trim();
 
+  const ownerId = await resolveOwnerIdForNewOpportunity(
+    personId,
+    companyId || null,
+    bizProductTwenty,
+    idOid,
+    taskData,
+  );
+
   const body = {
     name: buildOpportunityName(taskData),
     stage: "NEW",
@@ -1023,7 +1077,7 @@ async function createOpportunityRecord(taskData, idOid, personId) {
     srcSystem: resolveSrcSystem(taskData),
     bizSource: resolveBizSourceForTask(taskData),
     bizProduct: bizProductTwenty,
-    ownerId: resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData),
+    ownerId,
     pointOfContactId: personId,
     lastContactAt: kanbanFields.lastContactAt,
     bizLastContactLabel: kanbanFields.bizLastContactLabel,
@@ -1032,6 +1086,7 @@ async function createOpportunityRecord(taskData, idOid, personId) {
     bizCardEmail: kanbanFields.bizCardEmail,
     bizCardPhone: kanbanFields.bizCardPhone,
   };
+  if (companyId) body.companyId = companyId;
   if (metaLeadgenId) body.metaLeadgenId = metaLeadgenId;
   if (metaAdId) body.metaAdId = metaAdId;
   if (metaAdgroupId) body.metaAdgroupId = metaAdgroupId;
@@ -1228,7 +1283,13 @@ async function processOneTask(task, audit, allPending) {
   }
 
   const personId = await resolveOrCreatePerson(taskData, idOid);
-  const oppId = await createOpportunityRecord(taskData, idOid, personId);
+  const companyId = await resolvePersonCompanyId(personId);
+  const oppId = await createOpportunityRecord(
+    taskData,
+    idOid,
+    personId,
+    companyId,
+  );
   try {
     const noteId = await createFormInquiryNote(taskData, oppId, personId);
     if (noteId) {
@@ -1303,4 +1364,6 @@ module.exports = {
   isLeadsAtEmailTask,
   shouldSeedFormInquiryEmail,
   normalizeFormMessageText,
+  resolveOpportunityOwnerId,
+  resolveOwnerIdForNewOpportunity,
 };

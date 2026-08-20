@@ -13,6 +13,7 @@ const {
   buildTwentyListPath,
   parseTwentyListRecords,
 } = require("../shared/twentyRest");
+const { fetchGusEnrichment, isSandboxKey } = require("../shared/gusBir");
 
 const NIP_WEIGHTS = [6, 5, 7, 2, 3, 4, 5, 6, 7];
 const PENDING = new Map(); // companyId+day → true (in-process idempotency)
@@ -277,18 +278,45 @@ async function enrichOne(record) {
     }
   }
 
-  // GUS — only when key configured (prod). Sandbox key must not write to CRM.
+  // GUS BIR1.1 — prod key only (sandbox must not write to CRM).
   const gusKey = process.env.GUS_BIR_KEY;
   const gusAllowSandbox = process.env.GUS_ALLOW_SANDBOX === "true";
   if (!gusKey) {
     notes.push(
-      "GUS: klucz BIR jeszcze nie skonfigurowany — wypełniono z MF/KRS. Pełne PKD i data rejestracji dojdą po kluczu GUS.",
+      "GUS: klucz BIR jeszcze nie skonfigurowany — wypełniono z MF/KRS.",
     );
-  } else if (!gusAllowSandbox && /test|sandbox/i.test(gusKey)) {
-    notes.push("GUS: klucz wygląda na sandbox — pominięto zapis (⛔N16).");
+  } else if (!gusAllowSandbox && isSandboxKey(gusKey)) {
+    notes.push("GUS: klucz sandbox — pominięto zapis (⛔N16).");
   } else {
-    notes.push("GUS: gałąź BIR podpięta w kolejnej iteracji (sesja SOAP) — klucz wykryty.");
-    // Placeholder: full SOAP chain lands with GUS key delivery (G3).
+    try {
+      const gus = await fetchGusEnrichment(
+        {
+          nip: nip || patch.nip,
+          regon: patch.regon || regon,
+          krs: patch.krs || krs,
+        },
+        gusKey,
+      );
+      if (!gus.search) {
+        notes.push("GUS: brak podmiotu dla podanego NIP/REGON/KRS.");
+      } else {
+        sources.push(`gus:${gus.typ || "ok"}`);
+        // GUS overrides MF for registry truth (name/address/regon/pkd/date/form)
+        for (const [k, v] of Object.entries(gus.fields || {})) {
+          if (v == null || v === "") continue;
+          if (k === "registeredAddress" && typeof v === "object") {
+            patch.registeredAddress = {
+              ...(patch.registeredAddress || {}),
+              ...v,
+            };
+          } else {
+            patch[k] = v;
+          }
+        }
+      }
+    } catch (err) {
+      notes.push(`GUS: ${err.message}`);
+    }
   }
 
   const day = todayYmd();

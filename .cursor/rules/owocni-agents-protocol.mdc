@@ -20,6 +20,7 @@ Użytkownik często wskazuje folder **`owocni-crm/`** — to **wejście do SSOT*
 |----------------|----------------|
 | Semantyka, prawa, eventy, model | `owocni-crm/` (navigator w README) |
 | Sortownia, Robot, Twenty paths | `integrations/` + `EVENT_CONTRACT.md` |
+| Cisza kanału / health dodatków / zakładka „Stan systemu” | `owocni-crm/ops/SYSTEM_HEALTH.md` |
 | Oba | Ta sama zmiana: SSOT + kod |
 
 **Nie czytać jako SSOT:** `integrations/archive/**`, `owocni-crm/archive/**`.

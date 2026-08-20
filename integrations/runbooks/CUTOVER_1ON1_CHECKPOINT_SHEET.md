@@ -1,0 +1,139 @@
+---
+doc_id: CUTOVER_1ON1_CHECKPOINT_SHEET
+title: "Cutover — arkusz 1:1 + checkpoint pt 21 VIII"
+layer: runbook
+status: active — living checklist
+owner: "Dawid"
+last_verified: 2026-08-20
+parent: CUTOVER_TWENTY_TEAM_PLAN.md
+---
+
+# Arkusz: 1:1 + checkpoint pt 21 VIII
+
+**Rola tego pliku:** dziennik postępu (pytania, scorecard, odhaczenia).  
+**Plan / kontekst:** [CUTOVER_TWENTY_TEAM_PLAN.md](./CUTOVER_TWENTY_TEAM_PLAN.md) — nie edytuj tam statusów smoke’ów.
+
+**Na rozmowie / w ankiecie:** te 7 pytań. Scorecard D1 = ściąga na piątek, nie skrypt dla handlowca.
+
+Czas: **20–30 min**. Cel: czy osoba już może pracować w Twenty, a jeśli nie — **jeden konkretny bloker**.
+
+Legenda statusu: 🟢 mogę pracować / 🟡 częściowo / 🔴 nie dam rady bez pomocy.
+
+---
+
+## Skrypt 1:1 — 7 pytań (mówisz to wprost)
+
+Na start (1 zdanie):  
+*„Chcemy do końca miesiąca przejść w pełni na Twenty. Te kilka pytań ma sprawdzić, czy już możesz tu normalnie pracować i czego Ci brakuje.”*
+
+| # | Pytanie (mówisz tak) | Po co pytasz | Co zanotować |
+|---|----------------------|--------------|--------------|
+| **1** | **Gdzie dziś ogarniasz leady, maile i follow-upy?** Better Bitrix, Pipedrive, Twenty, czy mieszanka? | Czy już siedzi w Twenty, czy jeszcze w starym systemie. | BB / PD / Twenty / mix |
+| **2** | **Gdybyś jutro rano miała/miał domknąć jedną sprzedaż — co dokładnie musisz zrobić?** (napisać, zadzwonić, wysłać ofertę, wystawić…) | Czy krytyczna praca dnia jest możliwa w Twenty. | 1–2 czynności „must” |
+| **3** | **Otwórz proszę Twenty — widzisz swoje otwarte sprawy / klientów, nad którymi pracujesz?** | Czy dane są na miejscu (import / przydział). | tak / nie / częściowo + przykład |
+| **4** | **Pokaż mi krótko (albo powiedz), czy umiesz:** znaleźć lead, przesunąć etap, potwierdzić SQL („to jest lead kwalifikowany”), zamknąć wygraną z kwotą. | Czy zna podstawowy flow sprzedaży w Twenty. | co umie / czego nie |
+| **5** | **Czy na Twojej skrzynce w Twenty przychodzą maile i możesz odpisać tak, że klient dostaje odpowiedź?** | Maile = najczęściej czerwone. | IN OK? OUT OK? |
+| **6** | **Co Cię najbardziej niepokoi, jak wyłączymy stary system?** | Strach = realny bloker albo potrzeba video/szkolenia. | 1 zdanie obawy |
+| **7** | **Gdybyś miała/miał jedną listę „moje sprawy na dziś” — co chcesz na niej widzieć, a czego nie chcesz oglądać?** | Widok roboczy (bez ściany pustych pól). | „chcę X / ukryć Y” |
+
+Na koniec (1 zdanie):  
+*„Dzięki. Z tego, co mówisz, status na piątek to 🟢 / 🟡 / 🔴, a największa rzecz do poprawy to: ___.”*  
+Zapisz to od razu w macierzy poniżej.
+
+**Czego nie robisz na 1:1:** nie tłumaczysz Fakturowni, PayU, dyspozytora, continuity, ani scorecardu D1-1…D1-8. To Tor techniczny / piątek.
+
+---
+
+## A. Macierz po 1:1 (wypełniasz Ty)
+
+| Osoba | Data 1:1 | Gdzie dziś (pyt. 1) | Maile (5) | Widzi sprawy (3) | Flow SQL/WON (4) | Widok (7) | Status | Bloker / next |
+|-------|----------|--------------------|-----------|------------------|------------------|-----------|--------|---------------|
+| Marta | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Gosia | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Maciej | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Robert | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Ewa | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Maja | n/a | faktury później | — | — | — | — | n/a | po cutoverze |
+
+### Kolejność rozmów
+
+1. Robert → 2. Ewa → 3. Marta → 4. Gosia → 5. Maciej
+
+---
+
+## B. Scorecard D1 — tylko na checkpoint pt 21 (Twoja ściąga)
+
+Nie czytaj tego handlowcom. To checklista „czy system jest gotowy”, uzupełniasz po 1:1 + smoke’ach.
+
+| ID | Po ludzku: co musi działać | Status | Kto naprawia | Do kiedy |
+|----|----------------------------|--------|--------------|----------|
+| D1-1 | Maile handlowców + leads@ — widać i da się odpisać | 🟢 tech · ⏳ potwierdzenie per osoba | — | z ankiety |
+| D1-2 | Lead z formularza wpada do właściwej osoby | 🟢 smoke OK 20.08 | — | — |
+| D1-3 | Lead z Facebooka wpada do Roberta | 🟢 smoke OK 20.08 | — | — |
+| D1-4 | Sprawy Ewy z Pipedrive są w Twenty | ⏳ | Dawid + Ewa | potwierdzenie |
+| D1-5 | Sprawy Roberta z Pipedrive są w Twenty | ⏳ | Dawid + Robert | potwierdzenie |
+| D1-6 | SQL / wygrana / przegrana / odrzucenie — bez kombinowania | 🟢 smoke OK · **najpierw kwota, potem WON** | — | — |
+| D1-7 | Nowe leady rozdzielają się sensownie (Marta/Gosia, copy→Maciej, FB→Robert) | 🟢 smoke OK 20.08 | — | — |
+| D1-8 | Każdy ma użyteczny widok (nie ściana pustych pól) | ⏳ | z ankiety / 1:1 | |
+
+Już załatwione (nie wraca na rozmowy): Continuity / Account Owner ✅.
+
+---
+
+## B2. Status techniczny Dawida (uzupełnij sam — nie z pytań do ludzi)
+
+To jest **Twoja** ściąga „co jest gotowe w systemie”. Nie myl z odpowiedziami handlowców.
+
+### Gotowe (możesz odhaczyć teraz)
+
+| Temat | Status | Uwaga |
+|-------|--------|--------|
+| GUS / dane rejestrowe firmy | ✅ | workflow „Uzupełnij dane (GUS/KRS)” |
+| Szablony emaili | ✅ | |
+| Scalanie leadów | ✅ | merge MVP |
+| Continuity / Account Owner | ✅ | worker ON + AO v13 |
+| create_lead (formularz → Twenty) | ✅ tech | D1-2 i tak wymaga 1 smoke’a z Martą/Gosią |
+| SQL workflow (Przyjmij jako SQL) | ✅ tech | D1-6: potwierdzenie z handlowcem |
+| Przydział hard-assign (hash / COPY / FB) | ✅ tech | D1-7: 3 scenariusze smoke |
+| Odrzucenie / guard | ✅ tech | |
+
+### Czeka na Ciebie (nie na odpowiedzi z pytań)
+
+| Temat | Co zrobić | Status |
+|-------|-----------|--------|
+| **Video V2 → V3 → V1** | 4 filmiki wysłane — dopięte (20.08) | ✅ |
+| **D1-2 smoke** | 1 lead testowy z formularza | ✅ |
+| **D1-3 smoke** | 1 lead FB → Robert | ✅ |
+| **D1-7 smoke** | 3 scenariusze: hash / COPY / FB | ✅ |
+| **D1-6 smoke** | SQL + WON z kwotą — **kolejność: najpierw kwota, potem WON** | ✅ |
+| Import PD Ewa (D1-4) | Dane w Twenty + „mogę śmigać” od Ewy | ⏳ potwierdza z Ewą |
+| Import PD Robert (D1-5) | j.w. | ⏳ potwierdza z Robertem |
+| Maile `leads@` + skrzynki (D1-1) | Tech ✅ (Dawid 20.08); IN/OUT per osoba — z odpowiedzi | ✅ tech / ⏳ ludzie |
+
+### Czeka na odpowiedzi ludzi (pytania już poszły)
+
+| Temat | Skąd wiesz | Status |
+|-------|------------|--------|
+| D1-1 maile per osoba | odpowiedzi na pyt. 5 | ⏳ |
+| D1-8 widok „używam” | odpowiedzi na pyt. 7 + 3 | ⏳ |
+| Status 🟢🟡🔴 per osoba | cała ankieta | ⏳ |
+| Bloker #1 per osoba | pyt. 6 + braki w 3–5 | ⏳ |
+
+### Świadomie później (nie uzupełniasz pod cutover)
+
+| Temat | Kiedy |
+|-------|--------|
+| Fakturownia / PayU | po cutoverze (Maja) |
+| Pełny dyspozytor („Biorę”, zegar…) | po cutoverze (opcjonalnie wcześniej) |
+| Video V6 faktury | z Mają później |
+
+---
+
+## C. Piątek 21 VIII — 30–45 min z Mariuszem
+
+1. Po osobie: status 🟢🟡🔴 + **jeden** bloker (2 min).
+2. Scorecard D1: czerwone → kto + data (max środa 26).
+3. Czy dry-run w czwartek 27 jest realny?
+4. Filmiki: **już wysłane** (Obsługa leadów, Kanban, Skrzynki, Rozmowy, Szablony) — nie blokuje.
+
+Wzór wpisu: *„Marta 🔴 — nie wie jak odpisywać z Twenty → filmik skrzynek + 15 min na żywo.”*

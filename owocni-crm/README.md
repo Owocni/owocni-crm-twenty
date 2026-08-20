@@ -28,6 +28,7 @@ Katalog kanonicznej dokumentacji migracji CRM OWOCNI.PL na **Twenty CRM** + inte
 | **Plan krok po kroku Twenty (T1 sandbox → smoke)** | `../integrations/runbooks/TWENTY_ROLLOUT_MASTER.md` | `TWENTY_SANDBOX_STEP01_FIELDS.md` |
 | Jak audytować migrację danych? | `audits/AUDIT_MIGRACJA.md` | `EVENT_CONTRACT.md` |
 | Fakt platformowy Twenty (HMAC, credits, R-18)? | `ops/OPS_NOTES.md` | — |
+| Stan dodatków Owocni / cisza kanału / maile „wszystko OK” / zakładka „Stan systemu”? | `ops/SYSTEM_HEALTH.md` | `ops/OPS_NOTES.md`, `../integrations/TWENTY_PATHS.md`, `../integrations/cloud-functions/system-health-check/` |
 | Kod Sortowni / Robot (runtime) | [`../integrations/`](../integrations/README.md) | `EVENT_CONTRACT.md`, `IDENTITY_AND_INBOUND.md` |
 
 ## Pliki kanoniczne
@@ -41,7 +42,8 @@ owocni-crm/
 ├── ARCHITECTURE.md            # granice systemów, przepływy in/out
 ├── DECISION_REGISTER.md       # status decyzji (ADR-light), brama cutoveru
 ops/
-└── OPS_NOTES.md               # fakty platformowe Twenty (dom faktu)
+├── OPS_NOTES.md               # fakty platformowe Twenty (dom faktu)
+└── SYSTEM_HEALTH.md           # stan dodatków Owocni + spec zakładki + instrukcja LLM
 runbooks/
 └── IMPLEMENTATION_PLAN.md     # plan wdrożenia, MUST-PASS gates, cutover/rollback
 audits/

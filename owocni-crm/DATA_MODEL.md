@@ -194,6 +194,7 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 
 | Field | Type | Unique | Owner | Empty | Freeze? |
 |---|---|---|---|---|---|
+| `accountOwner` / `accountOwnerId` | RELATION → WorkspaceMember (natywne Twenty) | NO | Workflow SQL → stempel; continuity routing odczyt | null | OPEN — **semantyka Owocni:** sprzedawca, który doprowadził relację do SQL. **Nie Ewa.** Ustawiane tylko gdy puste (nie nadpisujemy). Continuity: nowy lead firmy / Person wraca do tego ownera (kill-switch `CONTINUITY_ROUTING_ENABLED`). |
 | `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID org z Pipedrive (rollback). |
 | `nip` | TEXT | **YES** | Enrichment worker (GUS) / handlowiec | null | OPEN — klucz enrichmentu + KSeF; unique od utworzenia (⛔N14). |
 | `regon` | TEXT | NO | Enrichment worker (GUS) | null | OPEN |
@@ -326,6 +327,7 @@ Utworzono Metadata API 2026-08-07 · FAKTUROWNIA_INTEGRACJA §5.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-08-20 | Semantyka natywnego `Company.accountOwner` = sprzedawca SQL (continuity, nie Ewa) | Dawid / agent | ADR #21 / RULE_CONTINUITY |
 | 2026-07-10 | `bizSqlConfirmed`, `bizSqlConfirmedAt`, `bizLastNonSqlStage`; `amount` w łańcuchu purchase; rozróżnienie `bizValueDisplay` vs `bizValueWon`; § wartość wygranej | Dawid / agent | Workflow SQL/odrzucenie/guard + fix biz_value |
 
 ---

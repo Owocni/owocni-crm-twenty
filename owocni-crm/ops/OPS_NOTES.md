@@ -161,6 +161,7 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | R-18 — manual create przez `idOid IS NULL` | `EVENT_CONTRACT.md` §5.4 |
 | Custom fields required / permissions | `CRM_CONSTITUTION.md` Prawo 8 / `DATA_MODEL.md` §5.4 |
 | Reguła „fakty platformowe żyją w OPS" | `CRM_CONSTITUTION.md` Prawo 1d |
+| Stan dodatków Owocni / diagnostyka ciszy / zakładka „Stan systemu” | `ops/SYSTEM_HEALTH.md` (nie dublować łańcuchów tutaj) |
 
 ---
 

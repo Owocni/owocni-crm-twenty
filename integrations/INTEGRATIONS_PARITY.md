@@ -69,6 +69,7 @@ Checklista zgodności między kanonicznym SSOT a kodem w `integrations/`.
 | P11 | Formularz → Twenty Person+Opp (`crm:twenty_create_lead`) | `BUILD_CRM_TWENTY_CREATE_LEAD` | Sortownia enqueue + worker write | **PASS sandbox** | Runbook §9; idempotencja email OK |
 | P16 | Play PBX → CallTranscript (+ parking / link / create lead) | `CALL_INGEST_N8N.contract` · `BUILD_CALL_TRANSCRIPT_*` | `callTranscriptIngest.js` + `callTranscriptLink.js` + n8n | **PASS MVP sandbox** | E2E prawdziwe rozmowy Play |
 | P17 | Ręczne scalanie leadów (NR-5, nie auto) | `MERGE_LEADS` · IDENTITY §5.9 | `mergeLeads.js` + workflow RECORD picker | **PASS MVP sandbox** | Sortownia czyta `canonical_oid` (backlog) |
+| P18 | Continuity: powracający klient → Account Owner / ostatni SQL (bez Ewy); kill-switch | `RULE_CONTINUITY_*` · DATA_MODEL Company.accountOwner · ADR #21 | **tylko** GCP `createLead.js` + `resolveContinuityOwner.js` (nie sGTM legacy) | **CODE READY** (unit T1–T3/T5 PASS; flaga default OFF) | Deploy CF + workflow AO + smoke T4 |
 
 ---
 

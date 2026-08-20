@@ -9,15 +9,16 @@
 1. **Plan wdrożenia Twenty (T1→smoke):** [`runbooks/TWENTY_ROLLOUT_MASTER.md`](runbooks/TWENTY_ROLLOUT_MASTER.md)
 2. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
 3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
-4. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR** + kanał telefon + merge
-5. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_CHANNEL_ARCHITECTURE.md`](runbooks/CALL_CHANNEL_ARCHITECTURE.md) · kontrakt [`CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
-6. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
-7. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
-8. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
-9. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
-10. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
-11. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
-12. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
+4. **Stan dodatków / cisza kanału / maile health:** [`../owocni-crm/ops/SYSTEM_HEALTH.md`](../owocni-crm/ops/SYSTEM_HEALTH.md) — diagnostyka LLM; UI zakładki = Faza 0; probe+maile = Faza A (`cloud-functions/system-health-check/`)
+5. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR** + kanał telefon + merge
+6. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_CHANNEL_ARCHITECTURE.md`](runbooks/CALL_CHANNEL_ARCHITECTURE.md) · kontrakt [`CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
+7. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
+8. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
+9. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
+10. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
+11. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
+12. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
+13. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
 
 **NIE czytaj jako SSOT:** `archive/**`
 
@@ -36,6 +37,7 @@
 | `CRM_TWENTY_CREATE_LEAD.gcp-stub.sGTM.js` | Stub po migracji GCP (~435 B) | Stape |
 | `cloud-functions/twenty-crm-worker/` | create_lead, update_person, email_contact_sync, **call_transcript_ingest / link / create_lead_from_call**, **missed_call_ingest**, **merge_leads** | GCP Cloud Function (sandbox); Scheduler **`*/5`** |
 | `cloud-functions/robot-task-monitor/` | Deploy wrapper dla `GoogleCloudRobot.js` | GCP Cloud Run; Scheduler **`*/5`** |
+| `cloud-functions/system-health-check/` | Probe H-* + maile (digest 08:00 + pager DOWN) | GCP CF; Scheduler **`*/30` pn–pt 7–20** + daily 08:00; **nie** `*/5` |
 | `ENV_GUARD.sGTM.js` | Fragment env sandbox/prod (copy-paste) | Stape |
 | `shared/envGuard.js` | env-guard dla Robota | Node |
 | `shared/ssotPaths.js` | Stałe adapterów/kolekcji | Node (+ ref) |

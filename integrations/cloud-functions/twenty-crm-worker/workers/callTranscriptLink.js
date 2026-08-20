@@ -311,6 +311,7 @@ async function linkCallTranscriptToOpportunity(transcriptId, opportunityId) {
   await patchTwentyRecord(transcriptCollection(), transcriptId, {
     opportunityId,
     matchStatus: "MATCHED",
+    personId,
   });
 
   const phonePatched = await ensurePersonPhone(personId, transcript.clientPhone);
