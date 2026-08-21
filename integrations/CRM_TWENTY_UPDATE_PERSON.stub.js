@@ -21,7 +21,7 @@ var PENDING_WRITE_PREFIX = "pending_write:twenty:";
 
 // TODO: API_BASE ze zmiennej Stape (jak Sortownia)
 var BASE_URL = "https://uinpcbwf.eug.stape.io";
-var API_KEY = "";
+var API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 
 var PENDING_WRITE_TTL_MS = 45000; // do kalibracji w preflight

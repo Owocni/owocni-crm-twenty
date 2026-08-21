@@ -29,7 +29,7 @@ var COLLECTION_IDENTITY_MAP = "identity_map";
 var COLLECTION_PERSON_MINT_PREFIX = "twenty_person_";
 
 var BASE_URL = "https://uinpcbwf.eug.stape.io";
-var API_KEY = "";
+var API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 
 var REASON_SKIP_ALREADY_RESOLVED = "SKIP_ALREADY_HAS_IDOID";

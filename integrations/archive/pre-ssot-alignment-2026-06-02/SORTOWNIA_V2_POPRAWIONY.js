@@ -732,7 +732,7 @@ const eventName =
 logToConsole("=== SORTOWNIA V2 START === event_name =", eventName);
 
 const BASE_URL = "https://uinpcbwf.eug.stape.io";
-const API_KEY = "";
+const API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 const API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 
 function generateULID() {

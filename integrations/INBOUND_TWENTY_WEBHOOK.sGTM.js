@@ -39,13 +39,12 @@ var REASON_EMITTED = "EMITTED";
 
 // Store — jawnie (getEventData nie czyta Constant Variables; wzorzec jak SORTOWNIA_V2)
 var BASE_URL = "https://uinpcbwf.eug.stape.io";
-var API_KEY = "";
+var API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 
 // Twenty — fetch Person gdy webhook update niesie tylko zmienione pola (np. jobTitle)
 var TWENTY_REST_URL = "https://api.twenty.com/rest";
-var TWENTY_API_KEY =
-  "";
+var TWENTY_API_KEY = ""; // PLACEHOLDER: wklej klucz Twenty TYLKO w UI tagu — NIE commituj
 
 // Opcja B — leads@ Email Sync → crm:twenty_create_lead (sandbox channel id)
 var LEADS_AT_MESSAGE_CHANNEL_ID = "32629e97-6dc2-452f-aa26-38c72eaab3a4";

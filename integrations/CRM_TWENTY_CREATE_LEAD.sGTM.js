@@ -18,11 +18,10 @@ var OWNER_ROBERT = "23ac9976-0232-4097-b056-5dc391bf7c34";
 var PENDING_WRITE_TTL_MS = 45000;
 var MAX_TASKS_PER_RUN = 5;
 var BASE_URL = "https://uinpcbwf.eug.stape.io";
-var API_KEY = "";
+var API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 var API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
 var TWENTY_REST_URL = "https://api.twenty.com/rest";
-var TWENTY_API_KEY =
-  "";
+var TWENTY_API_KEY = ""; // PLACEHOLDER: wklej klucz Twenty TYLKO w UI tagu — NIE commituj
 function getEventDataWithFallback(key) {
   var result = getEventData(key);
   if (
