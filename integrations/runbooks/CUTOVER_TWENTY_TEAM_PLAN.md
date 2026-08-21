@@ -4,7 +4,7 @@ title: "Plan przesiadki na Twenty — zespół (do końca miesiąca)"
 layer: runbook
 status: active
 owner: "Dawid"
-last_verified: 2026-08-20
+last_verified: 2026-08-21
 related:
   - ../../owocni-crm/runbooks/IMPLEMENTATION_PLAN.md
   - TWENTY_ROLLOUT_MASTER.md
@@ -26,6 +26,21 @@ source_request: "Mariusz 2026-08 — działać tylko w Twenty do końca miesiąc
 **Scenariusze filmików (referencja):** [CUTOVER_VIDEO_SCRIPTS.md](./CUTOVER_VIDEO_SCRIPTS.md) — filmiki zespołu **już wysłane** (20.08).
 
 > **Dwa pliki cutoveru:** ten dokument = **plan** (cel, D1, harmonogram, role). Arkusz 1:1 = **dziennik postępu** (pytania, scorecard, co gotowe). Nie duplikuj statusów w planie — żywy stan trzymaj w arkuszu.
+
+### Stan vs harmonogram (21.08)
+
+| Kiedy (plan) | Założenie | Stan |
+|--------------|-----------|------|
+| **Cz 20** | dokument + start 1:1 + continuity | ✅ plan + arkusz; continuity DONE; ankiety wystartowały; smoke’y D1 tech ✅; filmiki wysłane |
+| **Pt 21 (dziś)** | **checkpoint** zielone/czerwone z Mariuszem | ⏳ **to jest zadanie na dziś** — nie kolejny dokument |
+| Pt 21 | dopięcie czerwonych do śr 26 | po checkpointcie: lista napraw (widoki, Ewa scope, Kanban vs taski) |
+| Pn–Śr 26 | naprawa blockerów | jeszcze nie — po pt 21 |
+| Cz 27 | dry-run ½ dnia tylko Twenty | później |
+| Pt 28 | go/no-go | później |
+| do 31 | cutover | później |
+
+**Na dziś z tego pliku zostaje tylko:** checkpoint §3 (status osób + D1 + czy dry-run 27 realny + decyzja Kanban-first). Reszta postępu = [CUTOVER_1ON1_CHECKPOINT_SHEET.md](./CUTOVER_1ON1_CHECKPOINT_SHEET.md).  
+Czekasz jeszcze na ankięty: **Marta** (+ ewentualnie **Maciej**).
 
 ### Rozdzielanie leadów vs cutover
 
@@ -152,11 +167,39 @@ Seria krótka (3–6 min / odcinek). Nagrywa Dawid; **wysłać przed 1:1 / dry-r
 
 ## 7. Tor osobny: Fakturownia + PayU (nie blokuje)
 
+### Stan 21.08 (smoke Dawida)
+
+| Element | Stan | Uwaga |
+|---------|------|--------|
+| **PayU (REST API)** | ✅ klucze wygenerowane i wpisane w Fakturowni | konto zaktualizowane ~10:18 |
+| **Autopłatności** (checkbox konta) | ✅ zaznaczone | potwierdzone UI |
+| **„Nie wyświetlaj przycisku Zapłać online”** | ✅ wyłączone (nie blokuje) | Wydruki |
+| **Przycisk „Kliknij i zapłać online” / `payment_url`** | ❌ brak na proformie i VAT | smoke API + publiczny podgląd |
+| **KSeF** | ❌ niepodpięty (decyzja wstrzymana) | **powód braku działających autopłatności** |
+
+**Dlaczego PayU „jest”, a zapłata nie działa:** konto Fakturowni Owocni założone **2026-08-04**. Od **15.04.2026** Fakturownia wymaga **działającej, zautoryzowanej integracji KSeF**, żeby Autopłatności (w tym PayU) działały na dokumentach przychodowych. Bez KSeF klucze PayU można zapisać, ale przycisk zapłaty / `payment_url` się nie pojawia.  
+Źródło: [Autopłatności — Fakturownia](https://pomoc.fakturownia.pl/107832-autoplatnosci-czym-sa-i-jak-je-skonfigurowac).  
+*(Pewność: bardzo wysoka wg oficjalnej reguły + smoke; 100% dopiero po potwierdzeniu helpdesku Fakturowni albo po włączeniu KSeF i ponownym teście.)*
+
+**Zostaje do domknięcia (po cutoverze handlowców / gdy odblokują KSeF):**
+
 | Krok | Owner | Uwaga |
 |------|--------|-------|
-| Integracja Fakturownia (Marta, Gosia, Maciej) | Maja + Dawid | Po cutoverze handlowców |
-| PayU szybka płatność | Mariusz (dostęp) → Maja | Brak dostępu PayU u Dawida = blocker zewnętrzny |
-| Minimum przed cutoverem | Dawid | Wszyscy wiedzą **ręczny** proces faktury (SOP 1 strona) |
+| **KSeF** — podpięcie + autoryzacja w Fakturowni | Mariusz / Maja | **odblokowuje PayU/Autopłatności** na tym koncie |
+| Ponowny smoke PayU (przycisk + `payment_url`) | Dawid | po KSeF — ten sam test co 21.08 |
+| **Konta użytkowników w Fakturowni** (Marta, Gosia, Maciej + Maja) | Maja / admin | osobny krok rolloutu UI |
+| Smoke wystawiania z Twenty (`issue_invoice`) per osoba | Maja + Dawid | worker jest; userzy + SOP |
+| SOP ręczny (proforma / VAT bez automatu) | Dawid | Minimum „jak coś padnie” — 1 strona |
+
+**Świadomie poza tor Day-1:** automatyczna wysyłka KSeF z Twenty (osobna decyzja produktowa).
+
+---
+
+## 7b. Monitoring — codzienny poranny check (DONE)
+
+**Co:** Cloud Function `system-health-check` + Scheduler (spec: [SYSTEM_HEALTH.md](../../owocni-crm/ops/SYSTEM_HEALTH.md)).  
+**Po co:** wiedzieć rano, czy **Owocni-dodatki** w Twenty żyją (formularz/Stape, Meta, maile/szablony, workflowy MUST_ON, n8n/rozmowy, inbound…) — zanim handlowiec zgłosi „nic nie wpada”. Cisza biznesowa ≠ awaria; DOWN = padł heartbeat (scheduler / API / workflow OFF).  
+**Jak:** co ~30 min w godzinach pracy probe czyta status (GET REST + lista istniejących Scheduler jobs + snapshot GCS); **codziennie ~08:00** mail-digest na `HEALTH_ALERT_TO` (watchdog: brak maila = padł monitoring albo SMTP). Przy zmianie na DOWN / recovery — osobny pager (nie spam co 30 min). **Nie** idzie przez n8n ani workflow Twenty (żeby awaria kanału nie uciszyła alarmu). UI zakładki w Twenty = później; maile już działają.
 
 ---
 
@@ -165,6 +208,6 @@ Seria krótka (3–6 min / odcinek). Nagrywa Dawid; **wysłać przed 1:1 / dry-r
 - [ ] Handlowcy pracują tylko w Twenty (brak SoR w BB/PD dla nowych leadów).
 - [ ] D1-1…D1-8 potwierdzone przez właścicieli.
 - [ ] Checkpoint 21.08 przeprowadzony; czerwone domknięte lub waiver.
-- [ ] Min. V1–V3 opublikowane.
+- [x] Min. V1–V3 / filmiki zespołu wysłane (20.08).
 - [ ] Fakturownia/PayU: albo live, albo jasny SOP ręczny + data kolejnego kroku.
 - [x] Continuity: PASS (DONE 2026-08-20 — flaga ON + AO v13).

@@ -40,7 +40,9 @@ Na koniec (1 zdanie):
 *„Dzięki. Z tego, co mówisz, status na piątek to 🟢 / 🟡 / 🔴, a największa rzecz do poprawy to: ___.”*  
 Zapisz to od razu w macierzy poniżej.
 
-**Czego nie robisz na 1:1:** nie tłumaczysz Fakturowni, PayU, dyspozytora, continuity, ani scorecardu D1-1…D1-8. To Tor techniczny / piątek.
+**Czego nie robisz na 1:1 / w ankiecie:** nie tłumaczysz Fakturowni, PayU, dyspozytora, continuity, ani scorecardu D1-1…D1-8.
+
+**Pyt. 4 (SQL / stage / WON):** świadomie **pominięte w ankiecie** — zespół dostał filmiki „jak to się robi”. Nie trzeba powtarzać dema 1:1 z każdym. Weryfikacja = krótki smoke przy sesji widoków / dry-run 27, nie osobne spotkanie „na SQL”.
 
 ---
 
@@ -49,15 +51,66 @@ Zapisz to od razu w macierzy poniżej.
 | Osoba | Data 1:1 | Gdzie dziś (pyt. 1) | Maile (5) | Widzi sprawy (3) | Flow SQL/WON (4) | Widok (7) | Status | Bloker / next |
 |-------|----------|--------------------|-----------|------------------|------------------|-----------|--------|---------------|
 | Marta | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
-| Gosia | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
-| Maciej | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
-| Robert | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
-| Ewa | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Gosia | 20.08 (ankieta) | **BB** | ✅ OK | 🟡 chaos (nie „moje”) | ✅ video | ✅ lista pól | **🟡** | Widok tylko moje + cleanup kanbanu |
+| Maciej | | | ☐ OK | ☐ | ✅ video | ☐ | 🟢🟡🔴 | |
+| Robert | 21.08 (ankieta) | **PD + Thunderbird** | ✅ (tylko klienci/leady) | ✅ sprawy OK | ✅ video | pola OK · chce taski | **🟡** | Decyzja: Kanban-first vs taski; Calendly później |
+| Ewa | 21.08 (ankieta) | **PD + Calendly + thecamels** | ✅ OK | 🟡 częściowo (chaos PD Krzyśka) | ✅ video | elastyczna | **🟡/🔴** | Cleanup importu + wyszukiwanie po tel. + 1:1 „co musi być w Twenty” |
 | Maja | n/a | faktury później | — | — | — | — | n/a | po cutoverze |
 
-### Kolejność rozmów
+### Notatki — Gosia (20.08)
 
-1. Robert → 2. Ewa → 3. Marta → 4. Gosia → 5. Maciej
+- **Dzień pracy:** nadal Better Bitrix.
+- **Must jutro:** odpis szablonem → po akceptacji proforma/faktura (Firmao) + ew. umowa PDF. *(Faktury = tor później; na D1 wystarczy wiedzieć, że w Twenty ma odpisać.)*
+- **Kanban:** w Nowych leady już odpisane w BB + obce; w Rozeznaniu leady Roberta; dalej testy Dawida → **prosi o wyczyszczenie / „tylko moje”**.
+- **Maile:** widzi IN/OUT ✅.
+- **Strach:** gubienie się — co odpisane vs czeka.
+- **Pola na karcie / liście:** nazwa leada, imię i nazwisko, telefon, mail, data leada, produkt.
+- **Pyt. 4 (SQL/WON):** pominięte w ankiecie — **filmiki** (OK).
+
+**Next (Dawid):** 15–30 min z Gosią — widok „Gosia — moje dziś” (owner=Gosia, bez cudzych/testów); opcjonalnie schować/archiwizować testowe Opp. SQL tylko jeśli przy okazji utknie.
+
+### Notatki — Ewa (21.08)
+
+- **Dzień pracy:** leady = **Pipedrive + Calendly**; maile = skrzynka **thecamels** (nie Thunderbird).
+- **Must jutro:** „zależy od klienta” — **nie widzi**, żeby wszystko ogarnąć skutecznie tylko w Twenty. To sygnał 🔴 na cutover „tylko Twenty” bez jasnego zakresu dla niej.
+- **Dane:** częściowo widzi swoje sprawy; **zamieszanie** — podejrzewa import z Pipedrive Krzyśka (D1-4 = nieczysty).
+- **Maile:** widzi IN/OUT ✅.
+- **Strach:** brak czasu na naukę + debug („dlaczego nie działa / co się sczytuje”).
+- **Widok:** dostosuje się do potrzeb firmy/analityki; **brakuje skutecznego wyszukiwania po numerze telefonu** (zawodzi BB, PD i Calendly — chce to w Twenty).
+- **Pyt. 4 (SQL/WON):** pominięte — filmiki (OK).
+
+**Next (Dawid):**
+1. Sesja 20–30 min: co **musi** być w Twenty D1 vs co zostaje w Calendly/PD na transition.
+2. Cleanup / filtr widoku **tylko Ewa** (bez obcych z importu Krzyśka) → odblokuje D1-4.
+3. Sprawdzić / poprawić **search po telefonie** (Person phones) — jej #1 brak.
+
+### Notatki — Robert (21.08)
+
+- **Dzień pracy:** **Pipedrive + Thunderbird** (maile jeszcze poza Twenty).
+- **Must jutro:** pisać może w Thunderbird; widzi, że w Twenty da się robić **własne szablony**.
+- **Dane (D1-5):** otwarte sprawy **wyglądają OK** ✅.
+- **Maile (D1-1):** widzi maile; brakujące po 15:47 to **prawdopodobnie wewnętrzne** (nie od klientów/leadów) — Twenty ich nie bierze pod uwagę. Robert sam to zasugerował. **Nie traktować jako sync-bug** — na D1: OK jeśli IN/OUT od klientów/leadów działa; Thunderbird zostaje na wewnętrzne.
+- **Strach / bloker #1:** utrata wygody **zadań w PD**:
+  - priorytety + typy (pierwszy telefon / FU / oferta / video),
+  - nazwa zadania + ikona typu,
+  - wszystko o kliencie na jednym ekranie zadania (bez zakładek),
+  - kalendarz: zadanie z terminem + gość + busy w paru klikach,
+  - **Calendly → auto task w PD** (bez tego ręczne przeklepywanie).
+  - Boi się więcej przeklikiwania vs seamless PD.
+- **Pola ważne:** telefon, mail, źródło, data utworzenia, produkt (+ wartość / co wziął), kontakt, stage.
+- **Pyt. 4 (SQL/WON):** pominięte — filmiki (OK).
+- **Pyt. 7:** „nie rozumiem” — ale pola wypisał (wyżej).
+
+**Komentarz Dawida (proces — do decyzji z Mariuszem):**
+- Robert jest **jedyny**, który mocno opiera dzień na **taskach** (reszta = kanban/maile).
+- W Twenty taski **już są**: powiązanie z leadem, termin, status; da się rozbudować o kategorie/typy.
+- Pytanie strategiczne: czy od sprzedawców wymagamy przede wszystkim ruchu po **Kanbanie** (etapy = potencjał sprzedaży decyduje system/proces), a nie żeby handlowiec sam „batchował” pracę w taskach jak w PD?
+- Propozycja D1: **Kanban = SoR dnia sprzedaży**; taski u Roberta = opcjonalny overlay (termin/FU), bez obiecywania pełnego PD+Calendly Day-1. Kategorie tasków = nice, nie blocker cutoveru.
+
+**Next (Dawid):**
+1. (Opcja) 1 zdanie do Roberta: maile w Twenty = klienci/leady; wewnętrzne = Thunderbird.
+2. Ustalenie z Mariuszem: Kanban-first vs task-first (wyżej) → potem krótka sesja z Robertem (jak używać tasków **obok** kanbanu, nie zamiast).
+3. Calendly→Twenty = **nie Day-1**.
 
 ---
 
@@ -67,14 +120,14 @@ Nie czytaj tego handlowcom. To checklista „czy system jest gotowy”, uzupełn
 
 | ID | Po ludzku: co musi działać | Status | Kto naprawia | Do kiedy |
 |----|----------------------------|--------|--------------|----------|
-| D1-1 | Maile handlowców + leads@ — widać i da się odpisać | 🟢 tech · ⏳ potwierdzenie per osoba | — | z ankiety |
+| D1-1 | Maile handlowców + leads@ — widać i da się odpisać | 🟢 tech · Gosia/Ewa/Robert ✅ (Robert: bez wewnętrznych) · ⏳ Marta/Maciej | — | z ankiety |
 | D1-2 | Lead z formularza wpada do właściwej osoby | 🟢 smoke OK 20.08 | — | — |
 | D1-3 | Lead z Facebooka wpada do Roberta | 🟢 smoke OK 20.08 | — | — |
-| D1-4 | Sprawy Ewy z Pipedrive są w Twenty | ⏳ | Dawid + Ewa | potwierdzenie |
-| D1-5 | Sprawy Roberta z Pipedrive są w Twenty | ⏳ | Dawid + Robert | potwierdzenie |
+| D1-4 | Sprawy Ewy z Pipedrive są w Twenty | 🟡 częściowo · chaos (import Krzyśka) | Dawid + Ewa | cleanup + 1:1 |
+| D1-5 | Sprawy Roberta z Pipedrive są w Twenty | 🟢 Robert: „wygląda OK” | — | — |
 | D1-6 | SQL / wygrana / przegrana / odrzucenie — bez kombinowania | 🟢 smoke OK · **najpierw kwota, potem WON** | — | — |
 | D1-7 | Nowe leady rozdzielają się sensownie (Marta/Gosia, copy→Maciej, FB→Robert) | 🟢 smoke OK 20.08 | — | — |
-| D1-8 | Każdy ma użyteczny widok (nie ściana pustych pól) | ⏳ | z ankiety / 1:1 | |
+| D1-8 | Każdy ma użyteczny widok (nie ściana pustych pól) | 🟡 Gosia/Ewa chaos · Robert = task vs kanban (decyzja) | Dawid (+ Mariusz) | ≤ 26.08 |
 
 Już załatwione (nie wraca na rozmowy): Continuity / Account Owner ✅.
 
@@ -92,6 +145,7 @@ To jest **Twoja** ściąga „co jest gotowe w systemie”. Nie myl z odpowiedzi
 | Szablony emaili | ✅ | |
 | Scalanie leadów | ✅ | merge MVP |
 | Continuity / Account Owner | ✅ | worker ON + AO v13 |
+| Poranny system health check | ✅ | CF `system-health-check` + digest ~08:00 — szczegóły w planie §7b |
 | create_lead (formularz → Twenty) | ✅ tech | D1-2 i tak wymaga 1 smoke’a z Martą/Gosią |
 | SQL workflow (Przyjmij jako SQL) | ✅ tech | D1-6: potwierdzenie z handlowcem |
 | Przydział hard-assign (hash / COPY / FB) | ✅ tech | D1-7: 3 scenariusze smoke |
@@ -106,8 +160,8 @@ To jest **Twoja** ściąga „co jest gotowe w systemie”. Nie myl z odpowiedzi
 | **D1-3 smoke** | 1 lead FB → Robert | ✅ |
 | **D1-7 smoke** | 3 scenariusze: hash / COPY / FB | ✅ |
 | **D1-6 smoke** | SQL + WON z kwotą — **kolejność: najpierw kwota, potem WON** | ✅ |
-| Import PD Ewa (D1-4) | Dane w Twenty + „mogę śmigać” od Ewy | ⏳ potwierdza z Ewą |
-| Import PD Robert (D1-5) | j.w. | ⏳ potwierdza z Robertem |
+| Import PD Ewa (D1-4) | Dane częściowo · chaos (Krzysiek) — cleanup + 1:1 | 🟡 |
+| Import PD Robert (D1-5) | Robert: sprawy OK | ✅ |
 | Maile `leads@` + skrzynki (D1-1) | Tech ✅ (Dawid 20.08); IN/OUT per osoba — z odpowiedzi | ✅ tech / ⏳ ludzie |
 
 ### Czeka na odpowiedzi ludzi (pytania już poszły)
@@ -123,7 +177,7 @@ To jest **Twoja** ściąga „co jest gotowe w systemie”. Nie myl z odpowiedzi
 
 | Temat | Kiedy |
 |-------|--------|
-| Fakturownia / PayU | po cutoverze (Maja) |
+| Fakturownia / PayU | **PayU ✅ skonfigurowane**; przycisk zapłaty ❌ — **brak KSeF** (wymóg Fakturowni dla kont po 15.04.2026). Dalej: KSeF + userzy. Szczegóły: plan §7 |
 | Pełny dyspozytor („Biorę”, zegar…) | po cutoverze (opcjonalnie wcześniej) |
 | Video V6 faktury | z Mają później |
 
