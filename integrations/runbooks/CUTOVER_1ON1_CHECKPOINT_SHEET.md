@@ -4,7 +4,7 @@ title: "Cutover — arkusz 1:1 + checkpoint pt 21 VIII"
 layer: runbook
 status: active — living checklist
 owner: "Dawid"
-last_verified: 2026-08-20
+last_verified: 2026-08-21
 parent: CUTOVER_TWENTY_TEAM_PLAN.md
 ---
 
@@ -50,12 +50,27 @@ Zapisz to od razu w macierzy poniżej.
 
 | Osoba | Data 1:1 | Gdzie dziś (pyt. 1) | Maile (5) | Widzi sprawy (3) | Flow SQL/WON (4) | Widok (7) | Status | Bloker / next |
 |-------|----------|--------------------|-----------|------------------|------------------|-----------|--------|---------------|
-| Marta | | | ☐ OK | ☐ | ☐ | ☐ | 🟢🟡🔴 | |
+| Marta | 21.08 (ankieta) | **BB** (PD nie używa) | ✅ OK | 🟡 chaos (obce maile + testy) | ✅ video | 1 program + search tel/mail + notka | **🟡** | Widok tylko Marta + sesja startowa (nie otwiera Twenty) |
 | Gosia | 20.08 (ankieta) | **BB** | ✅ OK | 🟡 chaos (nie „moje”) | ✅ video | ✅ lista pól | **🟡** | Widok tylko moje + cleanup kanbanu |
-| Maciej | | | ☐ OK | ☐ | ✅ video | ☐ | 🟢🟡🔴 | |
+| Maciej | 21.08 (ankieta) | **Thunderbird + Docs/Word/notatki** (BB = przeszkoda) | 🔴 brak `copywriting@` | 🟡 częściowo (UI: tekst/godzina/dropdowny) | ✅ video | ukryć ID/src/OID; „co nowe” + taski dziś | **🟡/🔴** | **Podpiąć skrzynkę copy** + widok handlowca + sesja FAQ |
 | Robert | 21.08 (ankieta) | **PD + Thunderbird** | ✅ (tylko klienci/leady) | ✅ sprawy OK | ✅ video | pola OK · chce taski | **🟡** | Decyzja: Kanban-first vs taski; Calendly później |
 | Ewa | 21.08 (ankieta) | **PD + Calendly + thecamels** | ✅ OK | 🟡 częściowo (chaos PD Krzyśka) | ✅ video | elastyczna | **🟡/🔴** | Cleanup importu + wyszukiwanie po tel. + 1:1 „co musi być w Twenty” |
 | Maja | n/a | faktury później | — | — | — | — | n/a | po cutoverze |
+
+### Notatki — Marta (21.08)
+
+- **Dzień pracy:** głównie **crm.owocni.pl (BB)**; maile czasem szuka „wszędzie” (bez Pipedrive — ten ma Robert).
+- **Must jutro:** znaleźć lead/klienta + mail/wątek (~85%) + działający OUT (~10%). **Twenty w ogóle nie otwiera** — założyła, że trwa wdrożenie i „zostawia na później”.
+- **Dane:** widzi sprawy, ale **mega chaos** — maile Roberta, Kamili, testy; rozprasza; chce tego **nie widzieć**.
+- **Maile (D1-1):** widzi IN/OUT ✅.
+- **Strach:** nigdy nie ma pewności, że widzi **wszystkie** maile/leady; dziś sprawdza w 5 programach; załączniki = „5 prób”; różnice funkcji per osoba.
+- **Widok / must na liście:** jeden program z pewnością (lead + skrzynka IN/OUT + załącznik bez walki); przy rozmowie: **szukaj po telefonie/mailu w kilka sekund** (jak Thunderbird/Firmao) → zapytanie/korespondencja → **notka z telefonu** (np. „kupi w przyszłym miesiącu”).
+- **Pyt. 4 (SQL/WON):** pominięte — filmiki (OK).
+
+**Next (Dawid):**
+1. Widok **„Marta — moje dziś”** (owner=Marta; bez cudzych leadów/testów) + wyciszenie szumu skrzynki (obce wątki).
+2. **Sesja startowa 20–30 min** — ona świadomie nie otwiera Twenty; bez tego nie wejdzie przed dry-runem.
+3. Smoke przy niej: search po **telefonie/mailu** + dodanie notatki z rozmowy + OUT z załącznikiem (jej #1 obawa).
 
 ### Notatki — Gosia (20.08)
 
@@ -68,6 +83,41 @@ Zapisz to od razu w macierzy poniżej.
 - **Pyt. 4 (SQL/WON):** pominięte w ankiecie — **filmiki** (OK).
 
 **Next (Dawid):** 15–30 min z Gosią — widok „Gosia — moje dziś” (owner=Gosia, bez cudzych/testów); opcjonalnie schować/archiwizować testowe Opp. SQL tylko jeśli przy okazji utknie.
+
+### Notatki — Maciej (21.08)
+
+- **Dzień pracy:** **Thunderbird + Google Docs / Word / notatki**. BB („LepszyBitrix”) = przeszkoda; Novedo = biurokracja. **Bez Pipedrive** (nigdy nie używał).
+- **Must jutro (oczekiwania vs Twenty):** widać co nowe w ostatnich 1–2 h vs kontynuacja; etykiety / przypominajki / statusy; dashboard „tu i teraz / najbliższe godziny”; w trakcie rozmowy — szukanie po 1 słowie kluczowym + miejsce na negocjacje/rabat. **Przekonanie:** Twenty = narzędzie dla optymalizacji firmy / marketingu / analityki, **nie dla handlowca** (mało siedział w BB; sprzedaje copy).
+- **Dane:** **częściowo** — UI frustruje: za duży tekst (nie mieści się), **brak godziny wejścia leada**, półprzezroczyste dropdowny zasłaniają treść.
+- **Maile (D1-1):** 🔴 **nie widzi** skrzynki **`copywriting@owocni.pl`** (ani swoich maili `maciej@` w poczcie). Widzi maile **innych** osób → szum. Podgląd maila po kliknięciu często nie działa / wolno (Firefox, Win11, kabel); po paru leadach podglądy znikają.
+- **Strach:** powtórka BB (koszt + spowolnienie sprzedaży procedurami); wdrożenie miesięcy bez zysku „szybciej/drożej vs Thunderbird×Excel”. Chce **zapas** = zwykły klient poczty / webmail na te same skrzynki.
+- **Widok:** **ukryć** rzeczy niehandlowe (ID, src, orkiestracja, temperatura, OID…). Chce graficznie: co się działo od wyjścia, zadania na dziś, (nice) podsumowanie stanu leada.
+- **Pyt. 4 (SQL/WON):** pominięte w ankiecie — filmiki; **sam dopytuje definicję SQL** (FAQ #1 poniżej).
+- **Propozycja rolloutu od niego:** najpierw fikcyjne leady / mniej pól → potem tylko logo → potem drogie (strony). Zasada: wywalaj, nie dokladaj.
+
+**FAQ Macieja → odpowiedzi / next (ściąga na sesję, nie Day-1 feature dump):**
+
+| # | Pytanie | Kierunek odpowiedzi / akcja |
+|---|---------|-----------------------------|
+| 1 | Kiedy SQL? | Filmik V3 + 1 zdanie reguły firmy (nie „częściej w leadach”) |
+| 2 | Co to Person? | Kontakt/osoba; w UI często „People” / rekord osoby przy Opp |
+| 3 | Dlaczego nie ma mych maili / `maciej@`? | **Bug/setup** — podpiąć `copywriting@` (+ aliasy); obce skrzynki = szum D1-8 |
+| 4 | Uczestnicy / Workflows / Tasks? | Na D1: **nie zaglądasz** (oprócz Tasks opcjonalnie); reszta admin |
+| 5 | Twenty = kampanie/AI nie sprzedaż? | **Nie** — SoR sprzedaży; marketing czyta skutki, nie odwrotnie |
+| 6 | Wolny UI / brak podglądu maila (Firefox Win) | Sprawdzić sync + przeglądarkę (Chrome smoke); nie obiecywać „jak na filmie” |
+| 7 | Wszystkie maile od/do klienta + załączniki | Timeline na Person/Opp; Thunderbird zostaje backup |
+| 8 | Numer = obsługa vs sprzedaż (statystyki rozmów) | Po cutoverze / osobny tor telefonów — nie D1 |
+| 9 | Poczta wielu osób | To samo co Marta/Gosia — **filtr tylko moje** |
+| 10 | Mac vs Win / inne przyciski | Smoke na jego Firefox; nie wymagać Maca |
+| 11 | Przekazywanie leadów / stopka / autoresponder | Owner change = tak (MVP); stopka/autoresponder = poczta Google, nie Twenty Day-1 |
+| 12 | Skórki / kolory / etykiety UX | Widoki + (opc.) taski; pełny UX poczty = Thunderbird backup |
+
+**Next (Dawid) — kolejność:**
+1. **P0:** podpiąć / naprawić sync **`copywriting@owocni.pl`** (i widoczność jego wątków, nie cudzych) — bez tego Maciej = 🔴 na D1-1.
+2. Widok **„Maciej — copy dziś”**: owner=Maciej, ukryte pola szumu (ID/src/OID/orkiestracja/temperatura), godzina utworzenia leada widoczna.
+3. Sesja 30–40 min: FAQ #1–5 + #7 (Person, SQL, poczta, gdzie nie klikać) + jasne: **Thunderbird zostaje backup** na D1.
+4. Smoke wydajności: ten sam lead + podgląd maila u niego (Firefox) vs Chrome.
+5. Nie obiecywać dashboardu „1–2 h + AI kafelek” Day-1 — to nice; must = maile + moje leady + search.
 
 ### Notatki — Ewa (21.08)
 
@@ -120,14 +170,14 @@ Nie czytaj tego handlowcom. To checklista „czy system jest gotowy”, uzupełn
 
 | ID | Po ludzku: co musi działać | Status | Kto naprawia | Do kiedy |
 |----|----------------------------|--------|--------------|----------|
-| D1-1 | Maile handlowców + leads@ — widać i da się odpisać | 🟢 tech · Gosia/Ewa/Robert ✅ (Robert: bez wewnętrznych) · ⏳ Marta/Maciej | — | z ankiety |
+| D1-1 | Maile handlowców + leads@ — widać i da się odpisać | 🟡 Marta/Gosia/Ewa/Robert ✅ · **Maciej 🔴** (`copywriting@` niepodpięte) | Dawid | ≤ 26.08 |
 | D1-2 | Lead z formularza wpada do właściwej osoby | 🟢 smoke OK 20.08 | — | — |
 | D1-3 | Lead z Facebooka wpada do Roberta | 🟢 smoke OK 20.08 | — | — |
 | D1-4 | Sprawy Ewy z Pipedrive są w Twenty | 🟡 częściowo · chaos (import Krzyśka) | Dawid + Ewa | cleanup + 1:1 |
 | D1-5 | Sprawy Roberta z Pipedrive są w Twenty | 🟢 Robert: „wygląda OK” | — | — |
 | D1-6 | SQL / wygrana / przegrana / odrzucenie — bez kombinowania | 🟢 smoke OK · **najpierw kwota, potem WON** | — | — |
 | D1-7 | Nowe leady rozdzielają się sensownie (Marta/Gosia, copy→Maciej, FB→Robert) | 🟢 smoke OK 20.08 | — | — |
-| D1-8 | Każdy ma użyteczny widok (nie ściana pustych pól) | 🟡 Gosia/Ewa chaos · Robert = task vs kanban (decyzja) | Dawid (+ Mariusz) | ≤ 26.08 |
+| D1-8 | Każdy ma użyteczny widok (nie ściana pustych pól) | 🟡 Marta/Gosia/Ewa/Maciej chaos+szum pól · Robert = task vs kanban | Dawid (+ Mariusz) | ≤ 26.08 |
 
 Już załatwione (nie wraca na rozmowy): Continuity / Account Owner ✅.
 
@@ -168,10 +218,10 @@ To jest **Twoja** ściąga „co jest gotowe w systemie”. Nie myl z odpowiedzi
 
 | Temat | Skąd wiesz | Status |
 |-------|------------|--------|
-| D1-1 maile per osoba | odpowiedzi na pyt. 5 | ⏳ |
-| D1-8 widok „używam” | odpowiedzi na pyt. 7 + 3 | ⏳ |
-| Status 🟢🟡🔴 per osoba | cała ankieta | ⏳ |
-| Bloker #1 per osoba | pyt. 6 + braki w 3–5 | ⏳ |
+| D1-1 maile per osoba | odpowiedzi na pyt. 5 | ✅ wszyscy (Maciej = 🔴 setup) |
+| D1-8 widok „używam” | odpowiedzi na pyt. 7 + 3 | ✅ odpowiedzi; widoki do zrobienia ≤26 |
+| Status 🟢🟡🔴 per osoba | cała ankieta | ✅ Marta/Gosia/Robert 🟡 · Ewa/Maciej 🟡/🔴 |
+| Bloker #1 per osoba | pyt. 6 + braki w 3–5 | ✅ w notatkach |
 
 ### Świadomie później (nie uzupełniasz pod cutover)
 

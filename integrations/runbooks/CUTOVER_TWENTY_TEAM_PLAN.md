@@ -40,7 +40,7 @@ source_request: "Mariusz 2026-08 — działać tylko w Twenty do końca miesiąc
 | do 31 | cutover | później |
 
 **Na dziś z tego pliku zostaje tylko:** checkpoint §3 (status osób + D1 + czy dry-run 27 realny + decyzja Kanban-first). Reszta postępu = [CUTOVER_1ON1_CHECKPOINT_SHEET.md](./CUTOVER_1ON1_CHECKPOINT_SHEET.md).  
-Czekasz jeszcze na ankięty: **Marta** (+ ewentualnie **Maciej**).
+Ankiety zespołu: **wszyscy odpowiedzieli** (Marta, Gosia, Maciej, Robert, Ewa).
 
 ### Rozdzielanie leadów vs cutover
 
