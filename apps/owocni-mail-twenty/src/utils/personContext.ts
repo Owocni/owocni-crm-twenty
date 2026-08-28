@@ -9,10 +9,21 @@ export type PersonContext = {
   companyName: string;
 };
 
+export type ReplyMessagePreview = {
+  messageId: string | null;
+  fromEmail: string | null;
+  fromLabel: string | null;
+  subject: string | null;
+  receivedAt: string | null;
+  text: string;
+};
+
 export type MailResolveContext = {
   person: PersonContext | null;
   /** Original thread/message subject when opened from email Reply context. */
   replySubject: string | null;
+  /** Plaintext body of the message being replied to (when available). */
+  replyMessage: ReplyMessagePreview | null;
   contextKind:
     | 'person'
     | 'opportunity'
@@ -52,8 +63,93 @@ const PARTICIPANT_FIELDS = {
   person: PERSON_FIELDS,
 } as const;
 
+const MESSAGE_PREVIEW_FIELDS = {
+  id: true,
+  subject: true,
+  text: true,
+  receivedAt: true,
+  messageParticipants: {
+    edges: {
+      node: PARTICIPANT_FIELDS,
+    },
+  },
+} as const;
+
+type MessagePreviewNode = {
+  id?: string;
+  subject?: string | null;
+  text?: string | null;
+  receivedAt?: string | null;
+  messageParticipants?: {
+    edges?: Array<{ node: ParticipantNode }>;
+  };
+};
+
 function emptyResolve(): MailResolveContext {
-  return { person: null, replySubject: null, contextKind: null };
+  return {
+    person: null,
+    replySubject: null,
+    replyMessage: null,
+    contextKind: null,
+  };
+}
+
+function participantLabel(node: ParticipantNode | null | undefined): string {
+  if (!node) {
+    return '';
+  }
+
+  const firstName = node.person?.name?.firstName ?? '';
+  const lastName = node.person?.name?.lastName ?? '';
+  const name = [firstName, lastName].filter(Boolean).join(' ').trim();
+  if (name) {
+    return name;
+  }
+
+  return node.handle?.trim() ?? '';
+}
+
+function previewFromMessage(
+  message: MessagePreviewNode | null | undefined,
+): ReplyMessagePreview | null {
+  if (!message?.id) {
+    return null;
+  }
+
+  const text = message.text?.trim() ?? '';
+  const subject = message.subject?.trim() || null;
+  if (!text && !subject) {
+    return null;
+  }
+
+  const nodes = message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
+  const fromExternal = nodes.find(
+    (node) =>
+      String(node.role ?? '') === 'FROM' &&
+      typeof node.handle === 'string' &&
+      node.handle.includes('@') &&
+      !node.workspaceMemberId &&
+      !isInternalMailbox(node.handle),
+  );
+  const anyExternal = nodes.find(
+    (node) =>
+      typeof node.handle === 'string' &&
+      node.handle.includes('@') &&
+      !node.workspaceMemberId &&
+      !isInternalMailbox(node.handle),
+  );
+  const from = fromExternal ?? anyExternal;
+  const fromEmail = from?.handle?.trim().toLowerCase() ?? null;
+  const fromLabel = participantLabel(from) || fromEmail;
+
+  return {
+    messageId: message.id,
+    fromEmail,
+    fromLabel,
+    subject,
+    receivedAt: message.receivedAt ?? null,
+    text,
+  };
 }
 
 function toPersonContext(row: PersonRow | null | undefined): PersonContext | null {
@@ -90,6 +186,15 @@ function emailOnlyContext(email: string, recordId?: string | null): PersonContex
   };
 }
 
+function isInternalMailbox(handle: string): boolean {
+  const lower = handle.trim().toLowerCase();
+  return (
+    lower.endsWith('@owocni.pl') ||
+    lower.endsWith('@copywriting.pl') ||
+    lower.endsWith('@studioowocni.pl')
+  );
+}
+
 function personFromParticipants(
   nodes: ParticipantNode[],
   recordId?: string | null,
@@ -107,14 +212,16 @@ function personFromParticipants(
       String(node.role ?? '') === 'FROM' &&
       typeof node.handle === 'string' &&
       node.handle.includes('@') &&
-      !node.workspaceMemberId,
+      !node.workspaceMemberId &&
+      !isInternalMailbox(node.handle),
   );
 
   const anyExternal = nodes.find(
     (node) =>
       typeof node.handle === 'string' &&
       node.handle.includes('@') &&
-      !node.workspaceMemberId,
+      !node.workspaceMemberId &&
+      !isInternalMailbox(node.handle),
   );
 
   const handle =
@@ -268,36 +375,28 @@ async function findPersonFromOpportunity(
 async function findPersonFromMessage(
   coreClient: CoreApiClient,
   messageId: string,
-): Promise<{ person: PersonContext | null; replySubject: string | null }> {
+): Promise<{
+  person: PersonContext | null;
+  replySubject: string | null;
+  replyMessage: ReplyMessagePreview | null;
+}> {
   try {
     const result = await coreClient.query({
       message: {
         __args: {
           filter: { id: { eq: messageId } },
         },
-        subject: true,
-        messageParticipants: {
-          edges: {
-            node: PARTICIPANT_FIELDS,
-          },
-        },
+        ...MESSAGE_PREVIEW_FIELDS,
       },
     });
 
-    const message = result.message as
-      | {
-          subject?: string | null;
-          messageParticipants?: {
-            edges?: Array<{ node: ParticipantNode }>;
-          };
-        }
-      | null
-      | undefined;
+    const message = result.message as MessagePreviewNode | null | undefined;
 
     if (!message) {
-      return { person: null, replySubject: null };
+      return { person: null, replySubject: null, replyMessage: null };
     }
 
+    const replyMessage = previewFromMessage(message);
     const nodes =
       message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
     const person = personFromParticipants(nodes, messageId);
@@ -307,15 +406,17 @@ async function findPersonFromMessage(
       return {
         person: byEmail ?? person,
         replySubject: message.subject?.trim() || null,
+        replyMessage,
       };
     }
 
     return {
       person,
       replySubject: message.subject?.trim() || null,
+      replyMessage,
     };
   } catch {
-    return { person: null, replySubject: null };
+    return { person: null, replySubject: null, replyMessage: null };
   }
 }
 
@@ -326,7 +427,11 @@ async function findPersonFromMessage(
 async function findPersonFromMessageThread(
   coreClient: CoreApiClient,
   threadId: string,
-): Promise<{ person: PersonContext | null; replySubject: string | null }> {
+): Promise<{
+  person: PersonContext | null;
+  replySubject: string | null;
+  replyMessage: ReplyMessagePreview | null;
+}> {
   try {
     const threadResult = await coreClient.query({
       messageThread: {
@@ -344,7 +449,7 @@ async function findPersonFromMessageThread(
       | undefined;
 
     if (!thread?.id) {
-      return { person: null, replySubject: null };
+      return { person: null, replySubject: null, replyMessage: null };
     }
 
     const replySubject = thread.subject?.trim() || null;
@@ -357,15 +462,7 @@ async function findPersonFromMessageThread(
           orderBy: [{ receivedAt: 'DescNullsLast' }],
         },
         edges: {
-          node: {
-            id: true,
-            subject: true,
-            messageParticipants: {
-              edges: {
-                node: PARTICIPANT_FIELDS,
-              },
-            },
-          },
+          node: MESSAGE_PREVIEW_FIELDS,
         },
       },
     });
@@ -373,17 +470,22 @@ async function findPersonFromMessageThread(
     const messageNodes =
       (
         messagesResult.messages as {
-          edges?: Array<{
-            node: {
-              id?: string;
-              subject?: string | null;
-              messageParticipants?: {
-                edges?: Array<{ node: ParticipantNode }>;
-              };
-            };
-          }>;
+          edges?: Array<{ node: MessagePreviewNode }>;
         } | null
       )?.edges?.map((edge) => edge.node) ?? [];
+
+    let replyMessage: ReplyMessagePreview | null = null;
+    for (const message of messageNodes) {
+      const preview = previewFromMessage(message);
+      if (preview?.text) {
+        replyMessage = preview;
+        break;
+      }
+    }
+
+    if (!replyMessage && messageNodes[0]) {
+      replyMessage = previewFromMessage(messageNodes[0]);
+    }
 
     for (const message of messageNodes) {
       const nodes =
@@ -396,19 +498,21 @@ async function findPersonFromMessageThread(
           return {
             person: byEmail ?? person,
             replySubject: replySubject || message.subject?.trim() || null,
+            replyMessage,
           };
         }
 
         return {
           person,
           replySubject: replySubject || message.subject?.trim() || null,
+          replyMessage,
         };
       }
     }
 
-    return { person: null, replySubject };
+    return { person: null, replySubject, replyMessage };
   } catch {
-    return { person: null, replySubject: null };
+    return { person: null, replySubject: null, replyMessage: null };
   }
 }
 
@@ -422,83 +526,170 @@ export async function resolveMailContext(
   const recordId = options.recordId?.trim() || null;
   const email = options.email?.trim().toLowerCase() || null;
 
+  let context: MailResolveContext = emptyResolve();
+
   if (email) {
     const byEmail = await findPersonByEmail(coreClient, email);
     const replySubject = await findReplySubjectByEmail(coreClient, email);
 
     if (byEmail) {
-      return {
+      context = {
         person: byEmail,
         replySubject,
+        replyMessage: null,
         contextKind: 'email',
       };
     }
   }
 
-  if (recordId) {
+  if (!context.person && recordId) {
     const asPerson = await findPersonById(coreClient, recordId);
     if (asPerson?.email) {
       const replySubject =
         (await findReplySubjectByEmail(coreClient, asPerson.email)) ?? null;
-      return {
+      context = {
         person: asPerson,
         replySubject,
+        replyMessage: null,
         contextKind: 'person',
       };
-    }
-
-    const asOpportunity = await findPersonFromOpportunity(coreClient, recordId);
-    if (asOpportunity?.email) {
-      const replySubject =
-        (await findReplySubjectByEmail(coreClient, asOpportunity.email)) ?? null;
-      return {
-        person: asOpportunity,
-        replySubject,
-        contextKind: 'opportunity',
-      };
-    }
-
-    const asMessage = await findPersonFromMessage(coreClient, recordId);
-    if (asMessage.person?.email || asMessage.replySubject) {
-      return {
-        person: asMessage.person,
-        replySubject: asMessage.replySubject,
-        contextKind: 'message',
-      };
-    }
-
-    const asThread = await findPersonFromMessageThread(coreClient, recordId);
-    if (asThread.person?.email || asThread.replySubject) {
-      return {
-        person: asThread.person,
-        replySubject: asThread.replySubject,
-        contextKind: 'messageThread',
-      };
-    }
-
-    if (asPerson) {
-      return { person: asPerson, replySubject: null, contextKind: 'person' };
-    }
-
-    if (asOpportunity) {
-      return {
-        person: asOpportunity,
-        replySubject: null,
-        contextKind: 'opportunity',
-      };
+    } else {
+      const asOpportunity = await findPersonFromOpportunity(coreClient, recordId);
+      if (asOpportunity?.email) {
+        const replySubject =
+          (await findReplySubjectByEmail(coreClient, asOpportunity.email)) ??
+          null;
+        context = {
+          person: asOpportunity,
+          replySubject,
+          replyMessage: null,
+          contextKind: 'opportunity',
+        };
+      } else {
+        const asMessage = await findPersonFromMessage(coreClient, recordId);
+        if (
+          asMessage.person?.email ||
+          asMessage.replySubject ||
+          asMessage.replyMessage
+        ) {
+          context = {
+            person: asMessage.person,
+            replySubject: asMessage.replySubject,
+            replyMessage: asMessage.replyMessage,
+            contextKind: 'message',
+          };
+        } else {
+          const asThread = await findPersonFromMessageThread(coreClient, recordId);
+          if (
+            asThread.person?.email ||
+            asThread.replySubject ||
+            asThread.replyMessage
+          ) {
+            context = {
+              person: asThread.person,
+              replySubject: asThread.replySubject,
+              replyMessage: asThread.replyMessage,
+              contextKind: 'messageThread',
+            };
+          } else if (asPerson) {
+            context = {
+              person: asPerson,
+              replySubject: null,
+              replyMessage: null,
+              contextKind: 'person',
+            };
+          } else if (asOpportunity) {
+            context = {
+              person: asOpportunity,
+              replySubject: null,
+              replyMessage: null,
+              contextKind: 'opportunity',
+            };
+          }
+        }
+      }
     }
   }
 
-  if (email) {
+  if (!context.person && email) {
     const replySubject = await findReplySubjectByEmail(coreClient, email);
-    return {
+    context = {
       person: emailOnlyContext(email, recordId),
       replySubject,
+      replyMessage: null,
       contextKind: 'email',
     };
   }
 
-  return emptyResolve();
+  return enrichReplyMessage(coreClient, context);
+}
+
+async function findReplyMessageByEmail(
+  coreClient: CoreApiClient,
+  email: string,
+): Promise<ReplyMessagePreview | null> {
+  try {
+    const result = await coreClient.query({
+      messageParticipants: {
+        __args: {
+          filter: { handle: { eq: email } },
+          first: 5,
+          orderBy: [{ createdAt: 'DescNullsLast' }],
+        },
+        edges: {
+          node: {
+            message: MESSAGE_PREVIEW_FIELDS,
+          },
+        },
+      },
+    });
+
+    const messages =
+      (
+        result.messageParticipants as {
+          edges?: Array<{ node?: { message?: MessagePreviewNode | null } }>;
+        } | null
+      )?.edges
+        ?.map((edge) => edge.node?.message)
+        .filter((message): message is MessagePreviewNode => Boolean(message?.id)) ??
+      [];
+
+    for (const message of messages) {
+      const preview = previewFromMessage(message);
+      if (preview?.text) {
+        return preview;
+      }
+    }
+
+    return messages[0] ? previewFromMessage(messages[0]) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function enrichReplyMessage(
+  coreClient: CoreApiClient,
+  context: MailResolveContext,
+): Promise<MailResolveContext> {
+  if (context.replyMessage?.text) {
+    return context;
+  }
+
+  const email = context.person?.email?.trim().toLowerCase();
+  if (!email) {
+    return context;
+  }
+
+  const preview = await findReplyMessageByEmail(coreClient, email);
+  if (!preview) {
+    return context;
+  }
+
+  return {
+    ...context,
+    replyMessage: preview,
+    replySubject: context.replySubject ?? preview.subject,
+  };
 }
 
 async function findReplySubjectByEmail(

@@ -5,6 +5,7 @@ import type { RoutePayload } from 'twenty-sdk/logic-function';
 import {
   resolveMailContext,
   type PersonContext,
+  type ReplyMessagePreview,
 } from 'src/utils/personContext';
 import {
   findSuggestedReply,
@@ -73,6 +74,7 @@ const handler = async (event: RoutePayload) => {
 
   let person: PersonContext | null = null;
   let replySubject: string | null = null;
+  let replyMessage: ReplyMessagePreview | null = null;
   let contextKind: string | null = null;
   let resolveError: string | null = null;
 
@@ -80,6 +82,7 @@ const handler = async (event: RoutePayload) => {
     const resolved = await resolveMailContext(coreClient, { recordId, email });
     person = resolved.person;
     replySubject = resolved.replySubject;
+    replyMessage = resolved.replyMessage;
     contextKind = resolved.contextKind;
   } catch (personError) {
     resolveError =
@@ -113,6 +116,7 @@ const handler = async (event: RoutePayload) => {
     templates,
     person,
     replySubject,
+    replyMessage,
     contextKind,
     contextRecordId: recordId,
     recentRecipients,
@@ -123,6 +127,8 @@ const handler = async (event: RoutePayload) => {
       resolveError,
       personEmail: person?.email ?? null,
       replySubject,
+      replyMessageId: replyMessage?.messageId ?? null,
+      replyMessageTextLen: replyMessage?.text?.length ?? 0,
       contextKind,
       recent: recentDebug,
       suggestedReply,

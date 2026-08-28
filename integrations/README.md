@@ -1,7 +1,7 @@
 # integrations/ — kod wykonawczy Sortownia + Robot (+ Twenty)
 
 **Status:** kanoniczna lokalizacja w repo `owocni-crm-github`  
-**Last updated:** 2026-07-24
+**Last updated:** 2026-08-28
 
 ## LLM START (60 sek)
 
@@ -14,6 +14,7 @@
 6. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_CHANNEL_ARCHITECTURE.md`](runbooks/CALL_CHANNEL_ARCHITECTURE.md) · kontrakt [`CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
 7. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
 8. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
+8b. **Wiele kontaktów na leadzie:** [`runbooks/OPPORTUNITY_MULTI_CONTACT.md`](runbooks/OPPORTUNITY_MULTI_CONTACT.md)
 9. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
 10. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
 11. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
@@ -44,6 +45,8 @@
 | `tools/deploy_workflow_create_lead_from_call.py` | Spec workflow MANUAL „Utwórz lead z rozmowy” | Twenty MCP |
 | `tools/deploy_workflow_link_call_to_lead.py` | Spec workflow MANUAL „Przypnij do leada” | Twenty MCP |
 | `tools/deploy_workflow_merge_leads.py` | Spec workflow MANUAL „Scal z leadem” (RECORD picker) | Twenty MCP |
+| `tools/deploy_owocni_mail_patched.py` | Deploy Owocni Mail gdy `yarn twenty apply` pada (metadata drift) | OAuth + syncApplication |
+| `tools/deploy_workflow_task_assignee_owner.py` | Spec workflow **Task · Assignee = Owner lead v2** | Twenty MCP / GraphQL |
 
 **Play PBX (poza tym repo):** sibling `telefony/` — **Cloud Run Job** `telefony-play-poller` + Scheduler **`*/5`** (GCS state) → STT → n8n tylko przy nowym transkrypcie → GCP. Hostline cron wycofany. Kontrakt: `runbooks/CALL_INGEST_N8N.contract.md` · near-realtime: `telefony/docs/GCP_NEAR_REALTIME.md` (sibling).
 
@@ -58,7 +61,8 @@
 - **Sandbox inbound:** GCP `twenty-inbound-webhook` (build `2026-07-10-gcp-v5`); Stape = edge proxy tylko.
 - **Kanał telefon (MVP → near-realtime 2026-07-24):** Play → Cloud Run Job `telefony-play-poller` (`*/5`) → STT → n8n (tylko nowe) → `enqueue_call_transcript` → worker → `CallTranscript`; parking **Rozmowy → Do przypięcia**; UX: **Przypnij do leada** / **Utwórz lead z rozmowy**.
 - **Nieodebrane:** `enqueue_missed_call` → `bizMissedCallsCount` (MISSED ≠ kontakt).
-- **Merge leadów (MVP 2026-07-21):** workflow „Scal z leadem” → `merge_leads` (Opportunity LOST/DUPLICATE; Stape soft-fail — Twenty merge nie zależy od Store).
+- **Merge leadów (MVP 2026-07-21):** workflow „Scal z leadem” → `merge_leads` (Opportunity LOST/DUPLICATE; Stape soft-fail — Twenty merge nie zależy od Store). **2026-08-28:** merge dopisuje też `bizAdditionalEmails` / `bizAdditionalPhones` na survivorze.
+- **Lead multi-contact (2026-08-28):** pola Dodatkowe emaile/telefony + Person max 5; runbook `OPPORTUNITY_MULTI_CONTACT.md`.
 - **Stape usage (2026-07-24):** CRM worker + Robot Scheduler **`*/5`** (było co 1 min); worker: 1 list-pending / cykl + circuit breaker przy paused kontenerze. sGTM strony nadal na tym samym kontenerze — osobny limit/plan zalecany.
 
 ## Mirror w repo `owocni strona/owocni/`

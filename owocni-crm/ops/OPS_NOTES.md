@@ -141,7 +141,8 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-08-14 | **Repair B-5 / widoki 8.1+8.3** | Firmy 17334→1518; recon missing=0; widoki „Firmy z leadami” / „Z firmą…” / „Z leadem (POC)” | **TAK** | Composer | `SIGNOFF_B5.json` |
 | 2026-08-14 | **Repair Faza 7.2 ACCEPT** | Historia maili: bez reconnect (brak „sync od daty” w UI); D3 best effort | **TAK** | właściciel + Composer | `PHASE7_RESYNC_MANUAL.md` |
 | 2026-08-25 | **Clear Owner Ewa × Pipedrive** (bez kasowania rekordów) | Opportunity `ownerId=Ewa` (`b9e2b31e-…0b16`) AND `srcSystem=PIPEDRIVE_LEGACY`. Próbka 2× LOST → Owner=null OK. Bulk: 130 non-PROPOSAL + 88/108/118 PROPOSAL (limit 200/call). **Przed:** 446. **Po:** 0. PIPEDRIVE_LEGACY nadal 3251 (Robert 2509 / null 446 / owocni 296). | **TAK** | Composer | Gate OFF ×3: `Opp · SQL → Account Owner gdy pusty v13`, `Opp · guard odrzucony v1`, `deal · stage QUALIFIED → Stape v14b`. Inbound: 444× `SKIP_DUPLICATE_DELIVERY`, 0 enqueue/`task_queue`. WF z powrotem ACTIVE. Jednorazówka — bez wiszącego workflow. Widok „Moje” Ewy wyczyszczony; All nadal widzi (brak RLS). |
-| (pusto — uzupełniać przy każdej operacji masowej; każdy wiersz MUSI mieć wartość `no_emit`: TAK/NIE) | — | — | — | — | — |
+| 2026-08-28 | **Opportunity multi-contact + Person max 5 email/phone** | Metadata API live: `bizAdditionalEmails`, `bizAdditionalPhones`; Record Page order; Person `maxNumberOfValues=5` | **TAK** | Composer | Runbook `OPPORTUNITY_MULTI_CONTACT.md`. Lookup po additional = backlog. |
+| 2026-08-28 | **Owocni Mail deploy 0.1.54** | `deploy_owocni_mail_patched.py` (yarn apply drift); scroll/reply preview PASS | **TAK** | Composer | Natywny Reply Twenty — scroll OPEN (SOP: używać Owocni Odpowiedz). |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
 

@@ -147,6 +147,10 @@ Formularz V2 (answers JSON)
 | `bizSqlConfirmed` | BOOLEAN |
 | `bizLastNonSqlStage` | TEXT |
 | `bizCardEmail` / `bizCardPhone` | TEXT |
+| `bizAdditionalEmails` | EMAILS (max 5) |
+| `bizAdditionalPhones` | PHONES (max 5) |
+
+Szczegóły UX + merge → `OPPORTUNITY_MULTI_CONTACT.md`.
 
 ## Deploy checklist
 

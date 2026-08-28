@@ -30,11 +30,24 @@ function buildEditorPage(
   <meta charset="utf-8">
   <base target="_blank">
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; background: #fff; }
+    html {
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff;
+    }
     body {
-      box-sizing: border-box; min-height: 100%; padding: 12px; outline: none;
-      font-family: Arial, sans-serif; font-size: 13px; line-height: 1.5; color: #222;
-      overflow-y: auto; caret-color: #222;
+      box-sizing: border-box;
+      margin: 0;
+      height: 100%;
+      max-height: 100%;
+      padding: 12px;
+      outline: none;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #222;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      caret-color: #222;
     }
     p { margin: 0 0 0.75em; }
     ul, ol { margin: 0 0 0.75em; padding-left: 1.5em; }

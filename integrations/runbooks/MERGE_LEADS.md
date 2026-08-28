@@ -22,6 +22,7 @@ Po merge:
 - CallTranscript z B → `opportunityId=A`
 - **Maile:** `MessageParticipant.personId` Person B → Person A (timeline na survivorze)
 - Email/telefon Person B → additional na Person A (gdy brak)
+- Email/telefon z leada B → **Dodatkowe emaile / Dodatkowe telefony** na Opportunity A (gdy różne od głównego Email/Telefon na karcie)
 - Stape: wskaźniki email/phone/id_oid X2 → `canonical_oid=X1` (profil X2 **nie** kasujemy)
 - **2026-07-24:** operacje Stape (pending write / alias / audit) są **soft-fail** — awaria Store nie blokuje merge w Twenty (ostrzeżenie w odpowiedzi `stapeWarnings`)
 
@@ -83,4 +84,4 @@ Smoke PASS 2026-07-21: transcriptsMoved=1, additional email/phone, LOST/DUPLICAT
 
 1. Utwórz Opp A + Person (email a@…, tel 111) i Opp B + Person (email b@…, tel 222) + CallTranscript na B
 2. POST `merge_leads`
-3. Sprawdź: B=LOST/DUPLICATE, rozmowa na A, Person A ma additional kontakt, `twenty_state` merge doc
+3. Sprawdź: B=LOST/DUPLICATE, rozmowa na A, Person A ma additional kontakt, **Opportunity A ma Dodatkowe emaile/telefony z B**, `twenty_state` merge doc

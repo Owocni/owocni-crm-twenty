@@ -181,11 +181,24 @@ function buildEditorSrcDoc(
   <meta charset="utf-8">
   <base target="_blank">
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; background: #fff; }
+    html {
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff;
+    }
     body {
-      box-sizing: border-box; min-height: 100%; padding: 12px; outline: none;
-      font-family: Arial, sans-serif; font-size: 13px; line-height: 1.5; color: #222;
-      overflow-y: auto; caret-color: #222;
+      box-sizing: border-box;
+      margin: 0;
+      height: 100%;
+      max-height: 100%;
+      padding: 12px;
+      outline: none;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #222;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      caret-color: #222;
     }
     p { margin: 0 0 0.75em; }
     ul, ol { margin: 0 0 0.75em; padding-left: 1.5em; }
@@ -249,6 +262,13 @@ function buildEditorSrcDoc(
   document.body.addEventListener('input', schedulePublish);
   document.body.addEventListener('keyup', schedulePublish);
   document.body.addEventListener('blur', publishHtml);
+  document.body.addEventListener('paste', function () {
+    setTimeout(function () {
+      try {
+        document.body.scrollTop = document.body.scrollHeight;
+      } catch (e) {}
+    }, 0);
+  });
   document.body.addEventListener('paste', schedulePublish);
 
   new MutationObserver(schedulePublish).observe(document.body, {
@@ -665,25 +685,35 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
           ) : null}
 
           {srcDoc ? (
-            <iframe
-              ref={iframeRef}
-              title="Edytor treści maila"
-              srcDoc={srcDoc}
-              onLoad={() => {
-                logEditorDiag('iframe:load');
-                requestIframeFlush();
-              }}
+            <div
               style={{
-                display: mode === 'visual' ? 'block' : 'none',
-                width: '100%',
+                display: mode === 'visual' ? 'flex' : 'none',
                 flex: 1,
-                minHeight: 0,
-                border: 'none',
-                background: '#fff',
-                opacity: disabled ? 0.65 : 1,
-                pointerEvents: disabled ? 'none' : 'auto',
+                minHeight: 200,
+                minWidth: 0,
+                overflow: 'hidden',
               }}
-            />
+            >
+              <iframe
+                ref={iframeRef}
+                title="Edytor treści maila"
+                srcDoc={srcDoc}
+                onLoad={() => {
+                  logEditorDiag('iframe:load');
+                  requestIframeFlush();
+                }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  flex: 1,
+                  minHeight: 200,
+                  border: 'none',
+                  background: '#fff',
+                  opacity: disabled ? 0.65 : 1,
+                  pointerEvents: disabled ? 'none' : 'auto',
+                }}
+              />
+            </div>
           ) : (
             <div
               style={{
@@ -712,13 +742,14 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
               aria-label="Kod HTML maila"
               style={{
                 flex: 1,
-                minHeight: 0,
+                minHeight: 200,
                 width: '100%',
                 boxSizing: 'border-box',
                 padding: 12,
                 border: 'none',
                 outline: 'none',
                 resize: 'none',
+                overflowY: 'auto',
                 fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
                 fontSize: 12,
                 lineHeight: 1.45,

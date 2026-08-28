@@ -5,7 +5,7 @@ layer: core_ssot
 status: active
 edit_scope: structure_only
 owner: "Właściciel (biznes) / Dawid (techniczny)"
-last_verified: 2026-08-10
+last_verified: 2026-08-28
 recheck_trigger: "Twenty release / zmiana schematu pól / powstanie generatora schemy / wdrożenie lead claim"
 default_trust: D:VERIFIED
 related:
@@ -108,7 +108,9 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizSqlConfirmed` | BOOLEAN | Workflow „Przyjmij jako SQL" | false / null | qualify_lead (gate) | OPEN | `true` po potwierdzeniu SQL w workflow MANUAL. Bez tego przejście do QUALIFIED → `SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM` |
 | `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
 | `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
-| `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę |
+| `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę (główny) |
+| `bizAdditionalEmails` | EMAILS | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; **nie** zastępuje `bizCardEmail`. Po `merge_leads` — kontakty z leada loser |
+| `bizAdditionalPhones` | PHONES | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; j.w. dla telefonów |
 | `metaLeadgenId` | TEXT | Meta Lead webhook | null | CAPI SQL (`lead_id`), idempotencja inbound | OPEN | `leadgen_id` z Meta Instant Form — unikalny |
 | `metaAdId` | TEXT | Meta Lead webhook | null | raport M5 / atrybucja reklamy | OPEN | `ad_id` z webhooka Lead Ads |
 | `metaAdgroupId` | TEXT | Meta Lead webhook | null | raport zestawu reklam | OPEN | `adgroup_id` tylko z webhooka (nie z retrieval) |
@@ -184,6 +186,8 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 |---|---|---|---|---|---|
 | `idOid` | TEXT | YES | Sortownia | null = manual create | **FROZEN** |
 | `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID osoby z Pipedrive (rollback). |
+
+**Natywne composite (OPEN, sandbox 2026-08-28):** `emails` / `phones` — max **5** wartości każde (`maxNumberOfValues`). Lookup integracji nadal po **primary** (→ `OPPORTUNITY_MULTI_CONTACT.md`).
 
 ### 5.3 Company
 

@@ -131,6 +131,177 @@ function personAdditionalPhones(person) {
   return raw;
 }
 
+function emailsFromEmailsField(field) {
+  if (!field) return [];
+  if (typeof field === "string") {
+    const email = normalizeEmail(field);
+    return email ? [email] : [];
+  }
+  const out = [];
+  const primary = normalizeEmail(field.primaryEmail);
+  if (primary) out.push(primary);
+  for (const item of field.additionalEmails || []) {
+    const email = normalizeEmail(typeof item === "string" ? item : item?.email);
+    if (email) out.push(email);
+  }
+  return out;
+}
+
+function phonesFromPhonesField(field) {
+  if (!field) return [];
+  if (typeof field === "string") {
+    const national = nationalNumber(field);
+    return national
+      ? [{ number: national, callingCode: "+48", national }]
+      : [];
+  }
+  const out = [];
+  if (field.primaryPhoneNumber) {
+    const national = nationalNumber(field.primaryPhoneNumber);
+    if (national) {
+      out.push({
+        number: national,
+        callingCode: field.primaryPhoneCallingCode || "+48",
+        national,
+      });
+    }
+  }
+  for (const item of field.additionalPhones || []) {
+    const national = nationalNumber(item?.number || item);
+    if (national) {
+      out.push({
+        number: national,
+        callingCode: item?.callingCode || "+48",
+        national,
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * Merge loser deal + Person contacts into survivor Opportunity additional fields.
+ * Primary bizCardEmail / bizCardPhone on the deal stay unchanged (filled separately).
+ */
+function buildMergedOpportunityContactPatch(
+  survivor,
+  loser,
+  loserPerson,
+  survivorPerson,
+) {
+  const survivorPrimaryEmail = normalizeEmail(survivor?.bizCardEmail);
+  const survivorPrimaryPhoneNat = nationalNumber(survivor?.bizCardPhone);
+  const excludedEmails = new Set(
+    [
+      survivorPrimaryEmail,
+      personPrimaryEmail(survivorPerson),
+    ].filter(Boolean),
+  );
+  const excludedPhoneNats = new Set(
+    [
+      survivorPrimaryPhoneNat,
+      personPrimaryPhoneNational(survivorPerson),
+    ].filter(Boolean),
+  );
+
+  const mergedEmails = new Set(emailsFromEmailsField(survivor?.bizAdditionalEmails));
+  for (const email of excludedEmails) mergedEmails.delete(email);
+
+  const mergedPhones = new Map();
+  for (const phone of phonesFromPhonesField(survivor?.bizAdditionalPhones)) {
+    if (!excludedPhoneNats.has(phone.national)) {
+      mergedPhones.set(phone.national, phone);
+    }
+  }
+
+  let emailsAdded = 0;
+  let phonesAdded = 0;
+
+  const emailCandidates = [
+    ...emailsFromEmailsField(loser?.bizAdditionalEmails),
+    normalizeEmail(loser?.bizCardEmail),
+    personPrimaryEmail(loserPerson),
+    ...personAdditionalEmails(loserPerson),
+  ].filter(Boolean);
+
+  for (const email of emailCandidates) {
+    if (excludedEmails.has(email) || mergedEmails.has(email)) continue;
+    mergedEmails.add(email);
+    emailsAdded++;
+  }
+
+  const phoneCandidates = [
+    ...phonesFromPhonesField(loser?.bizAdditionalPhones),
+    ...phonesFromPhonesField(loser?.bizCardPhone),
+    ...phonesFromPhonesField(
+      loserPerson?.phones?.primaryPhoneNumber
+        ? {
+            primaryPhoneNumber: loserPerson.phones.primaryPhoneNumber,
+            primaryPhoneCallingCode:
+              loserPerson.phones.primaryPhoneCallingCode || "+48",
+          }
+        : null,
+    ),
+    ...personAdditionalPhones(loserPerson).map((item) => ({
+      number: item?.number || item,
+      callingCode: item?.callingCode || "+48",
+    })),
+  ];
+
+  for (const phone of phoneCandidates) {
+    const national = phone.national || nationalNumber(phone.number || phone);
+    if (!national || excludedPhoneNats.has(national) || mergedPhones.has(national)) {
+      continue;
+    }
+    mergedPhones.set(national, {
+      number: national,
+      callingCode: phone.callingCode || "+48",
+      national,
+    });
+    phonesAdded++;
+  }
+
+  const patch = {};
+  if (emailsAdded > 0) {
+    const allEmails = [...mergedEmails];
+    const prevPrimary = normalizeEmail(survivor?.bizAdditionalEmails?.primaryEmail);
+    const primaryEmail = prevPrimary || allEmails[0] || undefined;
+    const additionalEmails = allEmails.filter((email) => email !== primaryEmail);
+    patch.bizAdditionalEmails = {
+      primaryEmail,
+      additionalEmails,
+    };
+  }
+
+  if (phonesAdded > 0) {
+    const allPhones = [...mergedPhones.values()];
+    const prevPrimaryNat = nationalNumber(
+      survivor?.bizAdditionalPhones?.primaryPhoneNumber,
+    );
+    const prevPrimary = prevPrimaryNat
+      ? mergedPhones.get(prevPrimaryNat) || {
+          number: prevPrimaryNat,
+          callingCode:
+            survivor?.bizAdditionalPhones?.primaryPhoneCallingCode || "+48",
+        }
+      : null;
+    const primary = prevPrimary || allPhones[0];
+    const additionalPhones = allPhones
+      .filter((phone) => phone.national !== primary.national)
+      .map((phone) => ({
+        number: phone.number,
+        callingCode: phone.callingCode || "+48",
+      }));
+    patch.bizAdditionalPhones = {
+      primaryPhoneCallingCode: primary.callingCode || "+48",
+      primaryPhoneNumber: primary.number,
+      additionalPhones,
+    };
+  }
+
+  return { patch, emailsAdded, phonesAdded };
+}
+
 /**
  * Merge loser Person contact fields into survivor Person (additional email/phone).
  * Does not delete loser Person.
@@ -510,6 +681,15 @@ async function mergeLeads(input) {
       `${loserPerson?.phones?.primaryPhoneCallingCode || "+48"}${loserPerson?.phones?.primaryPhoneNumber || ""}`;
     survivorPatch.bizCardPhone = phone;
   }
+
+  const oppContactMerge = buildMergedOpportunityContactPatch(
+    survivor,
+    loser,
+    loserPerson,
+    survivorPerson,
+  );
+  Object.assign(survivorPatch, oppContactMerge.patch);
+
   if (Object.keys(survivorPatch).length) {
     await patchTwentyRecord("opportunities", survivorId, survivorPatch);
   }
@@ -549,6 +729,7 @@ async function mergeLeads(input) {
       participants_patched: transcripts.participantsPatched,
       emails_moved: emails.moved,
       contact_merge: contactMerge,
+      opportunity_contact_merge: oppContactMerge,
       stape_aliased_keys: stape.aliasedKeys,
       reason: reason || null,
       actor: input.actor || null,
@@ -577,6 +758,7 @@ async function mergeLeads(input) {
     participantsPatched: transcripts.participantsPatched,
     emailsMoved: emails.moved,
     contactMerge,
+    opportunityContactMerge: oppContactMerge,
     stape,
     stapeWarnings: stapeWarnings.length ? stapeWarnings : undefined,
     auditKey,
@@ -586,4 +768,7 @@ async function mergeLeads(input) {
 module.exports = {
   ADAPTER_ID,
   mergeLeads,
+  buildMergedOpportunityContactPatch,
+  emailsFromEmailsField,
+  phonesFromPhonesField,
 };

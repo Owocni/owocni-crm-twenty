@@ -108,6 +108,7 @@ Wydruk / Notion — **obowiązkowy** przed go-live:
 - [ ] Jeśli nowy → utwórz **Opportunity** lub przypisz do istniejącej (ta sama firma)
 - [ ] Ustaw **Owner** (nie zostawiaj pustego)
 - [ ] **ADR #22:** pinned **Odpowiedz** → From = **swoja** skrzynka (nie `leads@`); native Reply/Send wyłączone
+- [ ] **Przewijanie:** odpowiedź z leada przez **Odpowiedz** (Owocni Mail, ⌘K) — **nie** natywny Reply Twenty (znany bug scroll; PASS od Owocni Mail 0.1.54)
 - [ ] **Nie** usuwaj duplikatu w BB do cutoveru — tam nadal żyje julia362
 
 ### B3. Testy E12.3b (sandbox)

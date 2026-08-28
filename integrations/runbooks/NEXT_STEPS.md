@@ -5,7 +5,7 @@ layer: runbook
 status: active
 edit_scope: content_and_structure
 owner: "Dawid"
-last_verified: 2026-07-27
+last_verified: 2026-08-28
 recheck_trigger: "PASS G-PAR / cutover / nowy deploy GCP inbound / call channel / merge / Stape plan"
 default_trust: D:CORE
 related:
@@ -24,6 +24,7 @@ related:
 **Stan:** Etap **1.1 zamknięty** (T1→WF, GCP `gcp-v5` inbound, worker + smoke + workflowy SQL/odrzucenie).  
 **Nowe (2026-07-21):** kanał telefon (CallTranscript) + merge leadów — MVP na sandbox.  
 **Nowe (2026-07-24):** telefony → Cloud Run Job `*/5` + GCS; Stape poll CRM/Robot `*/5`; workflow **Przypnij do leada**; merge soft-Stape.  
+**Nowe (2026-08-28):** Owocni Mail **0.1.54** (scroll + podgląd odpowiedzi); lead **Dodatkowe emaile/telefony** + merge dopisuje na deal; workflow **Task · Assignee = Owner lead v2**; runbook Follow-up (decyzja Mariusz).  
 **Cutover:** nadal **NIE** — brama **G-PAR** otwarta + szkolenie PAR-5.3 + E12.3b `leads@`.
 
 **Master plan:** [TWENTY_ROLLOUT_MASTER.md](./TWENTY_ROLLOUT_MASTER.md)
@@ -51,7 +52,7 @@ flowchart LR
 | E12.5 Mail direction views (📥/📤 backstop) | ✅ sandbox | `E12_5_MAIL_DIRECTION_VIEWS` (OQ-7/10 na Dawida) |
 | Owocni Mail PAR-5.2 | ✅ sandbox | `E12_EMAIL_SYNC_EVIDENCE` §G-PAR |
 | **Kanał telefon Play → Twenty** | ✅ MVP sandbox 2026-07-21 · near-realtime GCP 2026-07-24 | `CALL_CHANNEL_ARCHITECTURE` · `CALL_INGEST_N8N.contract` · `BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA` |
-| **Merge leadów (ręczne)** | ✅ MVP sandbox 2026-07-21 | `MERGE_LEADS` · IDENTITY §5.9 |
+| **Merge leadów (ręczne)** | ✅ MVP sandbox 2026-07-21 · **+ deal additional contacts 2026-08-28** | `MERGE_LEADS` · `OPPORTUNITY_MULTI_CONTACT` · IDENTITY §5.9 |
 | **G-PAR** (pełna parzystość BB) | **OPEN** | `G_PAR_BETTER_BITRIX_PARITY` |
 | E12.3b rozdział `leads@` | OPEN | `E12_3_EMAIL_TEMPLATES_AND_TRAINING` §B |
 | PAR-5.3 szkolenie handlowców | OPEN | `E12_4_P4_CUTOVER_INSTRUCTIONS` |

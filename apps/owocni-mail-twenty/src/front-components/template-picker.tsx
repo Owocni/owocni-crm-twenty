@@ -19,7 +19,7 @@ import {
   scrapeHostMailContext,
   writeCachedMailContext,
 } from 'src/utils/hostMailContext';
-import type { PersonContext } from 'src/utils/personContext';
+import type { PersonContext, ReplyMessagePreview } from 'src/utils/personContext';
 import { createId } from 'src/utils/createId';
 import { buildAttachmentPickerSrcDoc } from 'src/utils/attachmentPickerFrame';
 import {
@@ -80,6 +80,7 @@ type PickerDataResponse = {
   templates: MailTemplateSummary[];
   person: PersonContext | null;
   replySubject?: string | null;
+  replyMessage?: ReplyMessagePreview | null;
   contextKind?: string | null;
   contextRecordId?: string | null;
   recentRecipients?: RecentRecipient[];
@@ -121,6 +122,21 @@ const CATEGORY_LABELS: Record<string, string> = {
   REMINDER: 'Przypominajka',
   GENERAL: 'Ogólne',
 };
+
+function formatMessageDate(iso: string | null | undefined): string {
+  if (!iso) {
+    return '';
+  }
+
+  try {
+    return new Intl.DateTimeFormat('pl-PL', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
 
 const CATEGORY_ORDER = [
   'SALES',
@@ -350,6 +366,9 @@ const TemplatePicker = () => {
   const [draftError, setDraftError] = useState<string | null>(null);
   const [listError, setListError] = useState<string | null>(null);
   const [replyMessageId, setReplyMessageId] = useState<string | null>(null);
+  const [replyMessage, setReplyMessage] = useState<ReplyMessagePreview | null>(
+    null,
+  );
   const [attachments, setAttachments] = useState<
     Array<EmailAttachmentRef & { size?: number }>
   >([]);
@@ -357,7 +376,9 @@ const TemplatePicker = () => {
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
   const [attachmentToken, setAttachmentToken] = useState('');
 
-  const personEmail = recipientEmail.trim() || person?.email || '';
+  const personEmail = recipientEmail.trim() || person?.email?.trim() || '';
+  const displayRecipientEmail =
+    recipientEmail.trim() || person?.email?.trim() || '';
   const effectiveRecordId =
     person?.id && person.id !== 'scraped'
       ? person.id
@@ -365,6 +386,15 @@ const TemplatePicker = () => {
   const isReplyContext = Boolean(replySubject);
 
   replySubjectRef.current = replySubject;
+
+  // Keep „Do” input in sync with resolved lead / thread context (picker showed empty while send used person.email).
+  useEffect(() => {
+    const resolved = person?.email?.trim();
+    if (!resolved || recipientEmail.trim()) {
+      return;
+    }
+    setRecipientEmail(resolved);
+  }, [person?.email, recipientEmail]);
 
   const selected = useMemo(() => {
     if (selectedId === FREE_COMPOSE_TEMPLATE_ID) {
@@ -548,6 +578,7 @@ const TemplatePicker = () => {
         const applyResolvedContext = (payload: {
           personEmail?: string | null;
           replySubject?: string | null;
+          replyMessage?: ReplyMessagePreview | null;
           contextKind?: string | null;
           recentRecipients?: RecentRecipient[];
           debug?: Record<string, unknown>;
@@ -595,6 +626,13 @@ const TemplatePicker = () => {
             setReplySubject(null);
           }
 
+          if (payload.replyMessage) {
+            setReplyMessage(payload.replyMessage);
+            if (payload.replyMessage.messageId) {
+              setReplyMessageId(payload.replyMessage.messageId);
+            }
+          }
+
           setContextKind(
             payload.contextKind ||
               data.contextKind ||
@@ -630,6 +668,7 @@ const TemplatePicker = () => {
         applyResolvedContext({
           personEmail: data.person?.email,
           replySubject: data.replySubject,
+          replyMessage: data.replyMessage ?? null,
           contextKind: data.contextKind,
           debug: data.debug,
         });
@@ -648,6 +687,35 @@ const TemplatePicker = () => {
 
           if (!cancelled && suggestion.suggestedReply?.messageId) {
             setReplyMessageId(suggestion.suggestedReply.messageId);
+          }
+
+          // Thread reply: subject known but CRM person missing — use mailbox peer when subjects align.
+          if (
+            !cancelled &&
+            !recipientEmail.trim() &&
+            !data.person?.email?.trim() &&
+            suggestion.suggestedReply?.email?.trim() &&
+            (data.contextKind === 'message' ||
+              data.contextKind === 'messageThread' ||
+              Boolean(data.replySubject?.trim()))
+          ) {
+            const sr = suggestion.suggestedReply;
+            const hint = data.replySubject?.trim() || replySubjectRef.current?.trim() || '';
+            const srSubject = sr.subject?.trim() || '';
+            const subjectsAlign =
+              !hint ||
+              !srSubject ||
+              toReplySubject(srSubject) === toReplySubject(hint);
+
+            if (subjectsAlign) {
+              setRecipientEmail(sr.email.trim());
+              setEmailSource('thread');
+              if (sr.subject?.trim() && !hint) {
+                const nextSubject = toReplySubject(sr.subject);
+                setReplySubject(nextSubject);
+                replySubjectRef.current = nextSubject;
+              }
+            }
           }
         } catch {
           // optional dropdown only
@@ -757,6 +825,11 @@ const TemplatePicker = () => {
 
   const handleSelectTemplate = async (template: MailTemplateSummary) => {
     const nextSessionId = createId();
+    const knownRecipient =
+      recipientEmail.trim() || person?.email?.trim() || '';
+    if (knownRecipient && !recipientEmail.trim()) {
+      setRecipientEmail(knownRecipient);
+    }
 
     setSelectedId(template.id);
     setEditSubject('');
@@ -1237,6 +1310,8 @@ const TemplatePicker = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        minHeight: 0,
+        overflow: 'hidden',
       }}
     >
       {listError ? (
@@ -1260,6 +1335,7 @@ const TemplatePicker = () => {
           gap: 8,
           alignItems: 'center',
           flexWrap: 'wrap',
+          flexShrink: 0,
         }}
       >
         <strong>Odpowiedz</strong>
@@ -1426,7 +1502,7 @@ const TemplatePicker = () => {
               borderRadius: 5,
               fontSize: 13,
             }}
-            value={recipientEmail}
+            value={displayRecipientEmail}
             onChange={(event) => {
               setRecipientEmail(event.target.value);
               setEmailSource('manual');
@@ -1434,6 +1510,12 @@ const TemplatePicker = () => {
             placeholder="email@klienta.pl"
             disabled={sending}
           />
+          {displayRecipientEmail && person?.clientName ? (
+            <span style={{ fontSize: 11, color: '#166534' }}>
+              {person.clientName}
+              {person.companyName ? ` · ${person.companyName}` : ''}
+            </span>
+          ) : null}
           {emailSource === 'manualRecent' && personEmail ? (
             <span style={{ fontSize: 11, color: '#b45309' }}>
               Wybrane ręcznie ze skrzynki — nie z tego leada automatycznie
@@ -1613,13 +1695,126 @@ const TemplatePicker = () => {
         >
           <div
             style={{
+              flex: 1,
+              minHeight: 0,
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+          <div
+            style={{
               padding: '12px 16px 8px',
               display: 'flex',
               flexDirection: 'column',
               gap: 8,
-              flexShrink: 0,
             }}
           >
+          {displayRecipientEmail ? (
+            <div
+              style={{
+                padding: '8px 10px',
+                borderRadius: 6,
+                background: '#ecfdf5',
+                border: '1px solid #86efac',
+                fontSize: 13,
+                color: '#14532d',
+              }}
+            >
+              <strong>Odpowiedź do:</strong> {displayRecipientEmail}
+              {person?.clientName ? (
+                <span style={{ color: '#166534' }}>
+                  {' '}
+                  ({person.clientName}
+                  {person.companyName ? ` · ${person.companyName}` : ''})
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+          {replyMessage?.text || isReplyContext ? (
+            <details
+              open={false}
+              style={{
+                border: '1px solid #dbeafe',
+                borderRadius: 6,
+                background: '#f8fafc',
+                padding: '8px 10px',
+              }}
+            >
+              <summary
+                style={{
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: 12,
+                  color: '#1e3a8a',
+                }}
+              >
+                Wiadomość, na którą odpowiadasz
+                {replyMessage?.subject
+                  ? ` · ${replyMessage.subject.slice(0, 48)}`
+                  : replySubject
+                    ? ` · ${toReplySubject(replySubject).slice(0, 48)}`
+                    : ''}
+              </summary>
+              {replyMessage?.text ? (
+                <div
+                  style={{
+                    marginTop: 8,
+                    fontSize: 12,
+                    color: '#334155',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {replyMessage.fromLabel || replyMessage.fromEmail ? (
+                    <div style={{ marginBottom: 4 }}>
+                      <strong>Od:</strong>{' '}
+                      {replyMessage.fromLabel}
+                      {replyMessage.fromEmail &&
+                      replyMessage.fromEmail !== replyMessage.fromLabel
+                        ? ` (${replyMessage.fromEmail})`
+                        : ''}
+                    </div>
+                  ) : null}
+                  {replyMessage.receivedAt ? (
+                    <div style={{ marginBottom: 4 }}>
+                      <strong>Data:</strong>{' '}
+                      {formatMessageDate(replyMessage.receivedAt)}
+                    </div>
+                  ) : null}
+                  {(replyMessage.subject || replySubject) && (
+                    <div style={{ marginBottom: 8 }}>
+                      <strong>Temat:</strong>{' '}
+                      {replyMessage.subject || toReplySubject(replySubject ?? '')}
+                    </div>
+                  )}
+                  <div
+                    style={{
+                      maxHeight: 140,
+                      overflowY: 'auto',
+                      whiteSpace: 'pre-wrap',
+                      padding: '8px 10px',
+                      borderRadius: 4,
+                      background: '#fff',
+                      border: '1px solid #e2e8f0',
+                    }}
+                  >
+                    {replyMessage.text}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    marginTop: 8,
+                    fontSize: 11,
+                    color: '#64748b',
+                  }}
+                >
+                  Treść wiadomości nie jest dostępna w CRM — sprawdź wątek maili
+                  po lewej stronie.
+                </div>
+              )}
+            </details>
+          ) : null}
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
               Do
@@ -1631,7 +1826,7 @@ const TemplatePicker = () => {
                 borderRadius: 5,
                 fontSize: 13,
               }}
-              value={recipientEmail}
+              value={displayRecipientEmail}
               onChange={(event) => setRecipientEmail(event.target.value)}
               placeholder="email@klienta.pl"
               disabled={sending || sendCountdown !== null}
@@ -1771,10 +1966,9 @@ const TemplatePicker = () => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              flex: 1,
-              minHeight: 0,
-              overflow: 'hidden',
-              padding: '0 16px 8px',
+              height: 260,
+              minHeight: 220,
+              padding: '0 16px 12px',
             }}
           >
             {loadingDraft ? (
@@ -1801,6 +1995,7 @@ const TemplatePicker = () => {
                 disabled={sending || sendCountdown !== null}
               />
             )}
+          </div>
           </div>
 
           <div
