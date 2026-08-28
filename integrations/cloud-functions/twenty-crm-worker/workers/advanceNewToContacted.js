@@ -165,6 +165,10 @@ async function touchContactFields(opp, contactIso, outboundIso) {
       patch.hoursToFirstResponse = hours;
     }
   }
+  if (outboundIso && !opp.bizFirstAttemptAt) {
+    patch.bizFirstAttemptAt = outboundIso;
+    patch.bizFirstAttemptChannel = "EMAIL";
+  }
   if (!Object.keys(patch).length) {
     return false;
   }

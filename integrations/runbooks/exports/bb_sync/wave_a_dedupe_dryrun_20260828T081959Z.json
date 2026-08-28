@@ -1,0 +1,1258 @@
+{
+  "startedAt": "2026-08-28T08:19:37.724542+00:00",
+  "apply": false,
+  "wave_a": [
+    {
+      "email": "konrad.moc@gmail.com",
+      "ghost_id": "00f4ec79-0e0f-43cd-b8c3-3dffbbe6ea19",
+      "keep_id": "3836b584-2bab-4f95-8c93-361c7807f565",
+      "before_ghost": {
+        "id": "00f4ec79-0e0f-43cd-b8c3-3dffbbe6ea19",
+        "name": "Nazwa dla Marki Merchowej w Branży Furry — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "DZX3TNKRZZ2QMSNWM1M08MWDCE",
+        "pointOfContactId": "22ad3a99-0e09-4459-bb02-d0ee3b0b87da",
+        "bizCardEmail": "konrad.moc@gmail.com"
+      },
+      "before_keep": {
+        "id": "3836b584-2bab-4f95-8c93-361c7807f565",
+        "name": "konrad.moc@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9251",
+        "idOid": "DZX3TNKRZZ2QMSNWM1M08MWDCE",
+        "pointOfContactId": "22ad3a99-0e09-4459-bb02-d0ee3b0b87da",
+        "bizCardEmail": "konrad.moc@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "grzegorz.mielczarek@gmail.com",
+      "ghost_id": "04df1883-1945-48dd-adf8-cfd0b0ecdf69",
+      "keep_id": "3dbac981-8c80-4b58-9488-05dedb25dd77",
+      "before_ghost": {
+        "id": "04df1883-1945-48dd-adf8-cfd0b0ecdf69",
+        "name": "Strona: Modernizacja dla Parkingów Lotniskowych — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "4X5XPY4Z3C3BZSB8YK03ER3ZGT",
+        "pointOfContactId": "9decf157-a627-4e16-b243-9b58d12f3a5a",
+        "bizCardEmail": "grzegorz.mielczarek@gmail.com"
+      },
+      "before_keep": {
+        "id": "3dbac981-8c80-4b58-9488-05dedb25dd77",
+        "name": "grzegorz.mielczarek@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9083",
+        "idOid": "4X5XPY4Z3C3BZSB8YK03ER3ZGT",
+        "pointOfContactId": "9decf157-a627-4e16-b243-9b58d12f3a5a",
+        "bizCardEmail": "grzegorz.mielczarek@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "s.paulinaa@gmail.com",
+      "ghost_id": "05d916fc-6d4c-4f45-a859-335270bbc1c3",
+      "keep_id": "fda3b860-4b21-4f78-8959-af6ef0aa8dce",
+      "before_ghost": {
+        "id": "05d916fc-6d4c-4f45-a859-335270bbc1c3",
+        "name": "Logo dla FizjoBambino: Rozwój Biznesu Fizjoterapii Dziecięcej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "GG8RXRKAKNNVXA0452SP8BQS7X",
+        "pointOfContactId": "9f3ba75c-fa50-429d-9675-ca8f43c17367",
+        "bizCardEmail": "s.paulinaa@gmail.com"
+      },
+      "before_keep": {
+        "id": "fda3b860-4b21-4f78-8959-af6ef0aa8dce",
+        "name": "s.paulinaa@gmail.com · Logo",
+        "stage": "PAYING",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:8381",
+        "idOid": "GG8RXRKAKNNVXA0452SP8BQS7X",
+        "pointOfContactId": "9f3ba75c-fa50-429d-9675-ca8f43c17367",
+        "bizCardEmail": "s.paulinaa@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "karolinaalicja.w@gmail.com",
+      "ghost_id": "07ef6a78-9be4-4a88-bf42-8b0e727ff542",
+      "keep_id": "e900278c-16b0-4c04-ae25-a269fd2b9e7f",
+      "before_ghost": {
+        "id": "07ef6a78-9be4-4a88-bf42-8b0e727ff542",
+        "name": "Logo dla EduChomik: Rozwój Korepetycji Online — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "9DSBSJH7XCRYXHBNVJB74V8FKR",
+        "pointOfContactId": "5ae10cea-3d66-4306-aa30-ef5ef6ab2ce6",
+        "bizCardEmail": "karolinaalicja.w@gmail.com"
+      },
+      "before_keep": {
+        "id": "e900278c-16b0-4c04-ae25-a269fd2b9e7f",
+        "name": "karolinaalicja.w@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9141",
+        "idOid": "9DSBSJH7XCRYXHBNVJB74V8FKR",
+        "pointOfContactId": "5ae10cea-3d66-4306-aa30-ef5ef6ab2ce6",
+        "bizCardEmail": "karolinaalicja.w@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "baron.d2018@gmail.com",
+      "ghost_id": "0a2dc06f-139a-4271-8476-0181074ba545",
+      "keep_id": "293a5721-20e2-4905-bc4f-580d2d8728f8",
+      "before_ghost": {
+        "id": "0a2dc06f-139a-4271-8476-0181074ba545",
+        "name": "Strona: Modernizacja dla Psychologa Sądowego — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "RKBB8FKB866261HZ0GJCV9VTW0",
+        "pointOfContactId": "4a2d89d7-4221-4a11-8f75-9f026378c151",
+        "bizCardEmail": "baron.d2018@gmail.com"
+      },
+      "before_keep": {
+        "id": "293a5721-20e2-4905-bc4f-580d2d8728f8",
+        "name": "baron.d2018@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9185",
+        "idOid": "RKBB8FKB866261HZ0GJCV9VTW0",
+        "pointOfContactId": "4a2d89d7-4221-4a11-8f75-9f026378c151",
+        "bizCardEmail": "baron.d2018@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "was.dawid@gmail.com",
+      "ghost_id": "1d4b5c09-7989-4084-a934-649a290c4902",
+      "keep_id": "565d89fc-3f9e-4bee-bf0b-5ddacb8282bb",
+      "before_ghost": {
+        "id": "1d4b5c09-7989-4084-a934-649a290c4902",
+        "name": "Nazwa dla Nowej Marki Drukarni Wielkoformatowej (Marta) — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "J0T3BMYBWP9MZ4PHDHHH4TYY4V",
+        "pointOfContactId": "c8743c9a-1f38-4501-bb2c-bff7bed72ba3",
+        "bizCardEmail": "was.dawid@gmail.com"
+      },
+      "before_keep": {
+        "id": "565d89fc-3f9e-4bee-bf0b-5ddacb8282bb",
+        "name": "was.dawid@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9257",
+        "idOid": "J0T3BMYBWP9MZ4PHDHHH4TYY4V",
+        "pointOfContactId": "c8743c9a-1f38-4501-bb2c-bff7bed72ba3",
+        "bizCardEmail": "was.dawid@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "emdepack@gmail.com",
+      "ghost_id": "1edfde9a-3d45-4746-b05a-c17f4c5ce56c",
+      "keep_id": "9c8990df-aed0-41b0-8e0f-fc51f1892fe8",
+      "before_ghost": {
+        "id": "1edfde9a-3d45-4746-b05a-c17f4c5ce56c",
+        "name": "Do Ewy: Strona Internetowa: Redesign dla Firmy Opakowaniowej B2B — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "17Y0WA4HD9JG4FBB104NSEM1B8",
+        "pointOfContactId": "289d75af-60eb-45ab-a14f-dd2e8868e66a",
+        "bizCardEmail": "emdepack@gmail.com"
+      },
+      "before_keep": {
+        "id": "9c8990df-aed0-41b0-8e0f-fc51f1892fe8",
+        "name": "emdepack@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:8967",
+        "idOid": "17Y0WA4HD9JG4FBB104NSEM1B8",
+        "pointOfContactId": "289d75af-60eb-45ab-a14f-dd2e8868e66a",
+        "bizCardEmail": "emdepack@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "katarzyna.kwas94@gmail.com",
+      "ghost_id": "24bddaf8-6e0d-42ec-8bd0-c21ab2eae7b0",
+      "keep_id": "2e30e0b4-181e-4371-a4df-267b0662b583",
+      "before_ghost": {
+        "id": "24bddaf8-6e0d-42ec-8bd0-c21ab2eae7b0",
+        "name": "Logo dla Autooczy: Odświeżenie Marki w Motoryzacji — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "M8CYJB6EZVFHK96RFRB17FN1KC",
+        "pointOfContactId": "0341c946-0ed2-464f-9397-15e015499ffd",
+        "bizCardEmail": "katarzyna.kwas94@gmail.com"
+      },
+      "before_keep": {
+        "id": "2e30e0b4-181e-4371-a4df-267b0662b583",
+        "name": "katarzyna.kwas94@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9140",
+        "idOid": "M8CYJB6EZVFHK96RFRB17FN1KC",
+        "pointOfContactId": "0341c946-0ed2-464f-9397-15e015499ffd",
+        "bizCardEmail": "katarzyna.kwas94@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "mspro.lodz@gmail.com",
+      "ghost_id": "28bdca96-b78b-468c-820c-4db62b9b8db1",
+      "keep_id": "ee2d0125-30e2-4e28-a8e6-2e702f33d6a9",
+      "before_ghost": {
+        "id": "28bdca96-b78b-468c-820c-4db62b9b8db1",
+        "name": "Logo dla Msproschody.pl: Odświeżenie Marki Schodów Półkowych — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "6AXG1657EQZWMRNYP1Q0NVNYWS",
+        "pointOfContactId": "82574347-4865-4e5f-a831-299a5d43c889",
+        "bizCardEmail": "mspro.lodz@gmail.com"
+      },
+      "before_keep": {
+        "id": "ee2d0125-30e2-4e28-a8e6-2e702f33d6a9",
+        "name": "mspro.lodz@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9263",
+        "idOid": "6AXG1657EQZWMRNYP1Q0NVNYWS",
+        "pointOfContactId": "82574347-4865-4e5f-a831-299a5d43c889",
+        "bizCardEmail": "mspro.lodz@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "dominica.marek@gmail.com",
+      "ghost_id": "2a081d5d-61e9-4aa8-9ac8-9f21989405f1",
+      "keep_id": "51de1c2c-6160-42e6-9ecd-562f8bf2248a",
+      "before_ghost": {
+        "id": "2a081d5d-61e9-4aa8-9ac8-9f21989405f1",
+        "name": "Nazwa: Tworzenie Nazwy dla Campów dla Kobiet 40+ — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "GPBBKBXE9K4F6GM5MHWSKCXXSK",
+        "pointOfContactId": "f1da308a-0ffe-4723-8712-70177e0ad47a",
+        "bizCardEmail": "dominica.marek@gmail.com"
+      },
+      "before_keep": {
+        "id": "51de1c2c-6160-42e6-9ecd-562f8bf2248a",
+        "name": "dominica.marek@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9087",
+        "idOid": "GPBBKBXE9K4F6GM5MHWSKCXXSK",
+        "pointOfContactId": "f1da308a-0ffe-4723-8712-70177e0ad47a",
+        "bizCardEmail": "dominica.marek@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "dietalight.czest@gmail.com",
+      "ghost_id": "35d92132-d71d-4999-8359-1648e5f6ae3d",
+      "keep_id": "dee6e63d-b334-4ffb-8092-6e2e7a50666a",
+      "before_ghost": {
+        "id": "35d92132-d71d-4999-8359-1648e5f6ae3d",
+        "name": "Nazwa: Chwytliwa Nazwa Restauracji w Częstochowie — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "TPYEWG9PQW47AF5WPDSW8M53AJ",
+        "pointOfContactId": "856bf8b8-ef0a-42d6-aeeb-01d4e63cff8b",
+        "bizCardEmail": "dietalight.czest@gmail.com"
+      },
+      "before_keep": {
+        "id": "dee6e63d-b334-4ffb-8092-6e2e7a50666a",
+        "name": "dietalight.czest@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9127",
+        "idOid": "TPYEWG9PQW47AF5WPDSW8M53AJ",
+        "pointOfContactId": "856bf8b8-ef0a-42d6-aeeb-01d4e63cff8b",
+        "bizCardEmail": "dietalight.czest@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "natalia.chrostowska66@gmail.com",
+      "ghost_id": "4255d7e0-67f4-4e6d-952f-c9d7ff15a846",
+      "keep_id": "971a3061-7b89-4591-a1af-4cd70c4d8060",
+      "before_ghost": {
+        "id": "4255d7e0-67f4-4e6d-952f-c9d7ff15a846",
+        "name": "Logo dla Nowego Salonu Kosmetycznego — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "XR5E2Q5R82V73WQ2AFCAEQ3EJD",
+        "pointOfContactId": "c27abfda-6569-4394-9318-054a0fb0eff1",
+        "bizCardEmail": "natalia.chrostowska66@gmail.com"
+      },
+      "before_keep": {
+        "id": "971a3061-7b89-4591-a1af-4cd70c4d8060",
+        "name": "natalia.chrostowska66@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9146",
+        "idOid": "XR5E2Q5R82V73WQ2AFCAEQ3EJD",
+        "pointOfContactId": "c27abfda-6569-4394-9318-054a0fb0eff1",
+        "bizCardEmail": "natalia.chrostowska66@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "krzysztof.mielniczek11@gmail.com",
+      "ghost_id": "510d7013-cfe9-41b1-be49-09d67e1282f9",
+      "keep_id": "97e94fe6-7769-4f56-8620-c3b154aa1f9e",
+      "before_ghost": {
+        "id": "510d7013-cfe9-41b1-be49-09d67e1282f9",
+        "name": "Logo dla Legal Tech: Automatyzacja Aktów Notarialnych — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3CBHG3736X3QC64BRVX94WBNSB",
+        "pointOfContactId": "de4e14af-f80e-4f71-b4cd-08fd35afa9ad",
+        "bizCardEmail": "krzysztof.mielniczek11@gmail.com"
+      },
+      "before_keep": {
+        "id": "97e94fe6-7769-4f56-8620-c3b154aa1f9e",
+        "name": "krzysztof.mielniczek11@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9255",
+        "idOid": "3CBHG3736X3QC64BRVX94WBNSB",
+        "pointOfContactId": "de4e14af-f80e-4f71-b4cd-08fd35afa9ad",
+        "bizCardEmail": "krzysztof.mielniczek11@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "grzegorz.w.stankiewicz@gmail.com",
+      "ghost_id": "5d73515e-c07d-48f5-a53f-6507a669ce8f",
+      "keep_id": "f4c28969-7665-476a-bb79-e94b160d91a8",
+      "before_ghost": {
+        "id": "5d73515e-c07d-48f5-a53f-6507a669ce8f",
+        "name": "Logo dla Agencji Nieruchomości - Identyfikacja Wizualna — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "YGQH7MFJ9V335TWBP4A0N45F73",
+        "pointOfContactId": "f3370379-b974-400b-a926-54569a0f4e95",
+        "bizCardEmail": "grzegorz.w.stankiewicz@gmail.com"
+      },
+      "before_keep": {
+        "id": "f4c28969-7665-476a-bb79-e94b160d91a8",
+        "name": "grzegorz.w.stankiewicz@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9090",
+        "idOid": "YGQH7MFJ9V335TWBP4A0N45F73",
+        "pointOfContactId": "f3370379-b974-400b-a926-54569a0f4e95",
+        "bizCardEmail": "grzegorz.w.stankiewicz@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "rogalska.sylwia@gmail.com",
+      "ghost_id": "6c471f4f-0792-4def-ad45-f33f28213b30",
+      "keep_id": "3daf3a4b-3ec6-4f7e-8325-d0682083ea7f",
+      "before_ghost": {
+        "id": "6c471f4f-0792-4def-ad45-f33f28213b30",
+        "name": "Logo dla Nowej Marki w Branży HR — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "YR53ZGT5JTDY11TXGT7EVHE7GP",
+        "pointOfContactId": "8267fc11-ad8a-4353-a3c1-5ff0320a8084",
+        "bizCardEmail": "rogalska.sylwia@gmail.com"
+      },
+      "before_keep": {
+        "id": "3daf3a4b-3ec6-4f7e-8325-d0682083ea7f",
+        "name": "rogalska.sylwia@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9154",
+        "idOid": "YR53ZGT5JTDY11TXGT7EVHE7GP",
+        "pointOfContactId": "8267fc11-ad8a-4353-a3c1-5ff0320a8084",
+        "bizCardEmail": "rogalska.sylwia@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "lukasz.sambor@gmail.com",
+      "ghost_id": "7372be91-2c87-4110-b46c-0a3983ddf532",
+      "keep_id": "430a50b6-2d70-4cfa-a774-3ef467e8df90",
+      "before_ghost": {
+        "id": "7372be91-2c87-4110-b46c-0a3983ddf532",
+        "name": "Logo dla Trenera Personalnego - Budowa Marki — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "S3YMHTANQJX20WF4JYFNHWVFMM",
+        "pointOfContactId": "fc7baba0-c011-4957-9a13-2f6c92eaf498",
+        "bizCardEmail": "lukasz.sambor@gmail.com"
+      },
+      "before_keep": {
+        "id": "430a50b6-2d70-4cfa-a774-3ef467e8df90",
+        "name": "lukasz.sambor@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9265",
+        "idOid": "S3YMHTANQJX20WF4JYFNHWVFMM",
+        "pointOfContactId": "fc7baba0-c011-4957-9a13-2f6c92eaf498",
+        "bizCardEmail": "lukasz.sambor@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "proaura.tychy@gmail.com",
+      "ghost_id": "8181a192-d3b5-4386-969d-bb20f2cff17a",
+      "keep_id": "81a5d096-4970-45c5-a1b4-3a6f5103e936",
+      "before_ghost": {
+        "id": "8181a192-d3b5-4386-969d-bb20f2cff17a",
+        "name": "Logo dla Ośrodka Szkolenia Spawaczy — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "NGCQ9ZGE6K4CMM6YDGDPPJ31WM",
+        "pointOfContactId": "3f9d988d-655b-4f7a-859c-b03070151d30",
+        "bizCardEmail": "proaura.tychy@gmail.com"
+      },
+      "before_keep": {
+        "id": "81a5d096-4970-45c5-a1b4-3a6f5103e936",
+        "name": "proaura.tychy@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9268",
+        "idOid": "NGCQ9ZGE6K4CMM6YDGDPPJ31WM",
+        "pointOfContactId": "3f9d988d-655b-4f7a-859c-b03070151d30",
+        "bizCardEmail": "proaura.tychy@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "ewa.ewadr@gmail.com",
+      "ghost_id": "822717cc-be78-4b96-9ea6-c782da37bd3e",
+      "keep_id": "05899a75-cc4b-49c2-9a8a-24825ad44b51",
+      "before_ghost": {
+        "id": "822717cc-be78-4b96-9ea6-c782da37bd3e",
+        "name": "Logo dla Gabinetu Psychologicznego - Nowa Marka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "E271QJY98WEDZSR0HM61KTSDF4",
+        "pointOfContactId": "09f1788e-4c10-4e1e-9e51-3cf369dbd62b",
+        "bizCardEmail": "ewa.ewadr@gmail.com"
+      },
+      "before_keep": {
+        "id": "05899a75-cc4b-49c2-9a8a-24825ad44b51",
+        "name": "ewa.ewadr@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9177",
+        "idOid": "E271QJY98WEDZSR0HM61KTSDF4",
+        "pointOfContactId": "09f1788e-4c10-4e1e-9e51-3cf369dbd62b",
+        "bizCardEmail": "ewa.ewadr@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "jaro.wypych@gmail.com",
+      "ghost_id": "84ba372d-1251-4978-bf4a-eeea5049e9e9",
+      "keep_id": "ac1f9be9-9f6b-400f-ae6b-77f2f92e6530",
+      "before_ghost": {
+        "id": "84ba372d-1251-4978-bf4a-eeea5049e9e9",
+        "name": "Strona Internetowa dla Agencji Nieruchomości w Karpatach — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "5J88MX2CVVCQ2RVAW4KGER61BD",
+        "pointOfContactId": "32759549-8222-4c5c-815c-ac7ef013864b",
+        "bizCardEmail": "jaro.wypych@gmail.com"
+      },
+      "before_keep": {
+        "id": "ac1f9be9-9f6b-400f-ae6b-77f2f92e6530",
+        "name": "jaro.wypych@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9078",
+        "idOid": "5J88MX2CVVCQ2RVAW4KGER61BD",
+        "pointOfContactId": "32759549-8222-4c5c-815c-ac7ef013864b",
+        "bizCardEmail": "jaro.wypych@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "jezyk.z.klasa@gmail.com",
+      "ghost_id": "8a2aa85e-7c52-4435-8c1e-c97892a8d983",
+      "keep_id": "bf143da7-f28d-4399-99cd-b53583ab97e9",
+      "before_ghost": {
+        "id": "8a2aa85e-7c52-4435-8c1e-c97892a8d983",
+        "name": "Strona Internetowa: Modernizacja dla Branży Językowej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "8DAVQGW5P92NWJDABRJ49EG97P",
+        "pointOfContactId": "6bdba230-9ac3-4a23-8813-f0166b645797",
+        "bizCardEmail": "jezyk.z.klasa@gmail.com"
+      },
+      "before_keep": {
+        "id": "bf143da7-f28d-4399-99cd-b53583ab97e9",
+        "name": "jezyk.z.klasa@gmail.com · Strona",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9103",
+        "idOid": "8DAVQGW5P92NWJDABRJ49EG97P",
+        "pointOfContactId": "6bdba230-9ac3-4a23-8813-f0166b645797",
+        "bizCardEmail": "jezyk.z.klasa@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "hanna.goldyn@gmail.com",
+      "ghost_id": "8a65c4e1-8cfb-4c64-8598-6736335d9e10",
+      "keep_id": "2f7a5fb7-623f-47eb-8d9c-102840b4bef9",
+      "before_ghost": {
+        "id": "8a65c4e1-8cfb-4c64-8598-6736335d9e10",
+        "name": "Logo dla Centrum Zdrowia - Nowa Marka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "G3X8S9BKCZ112T8WRSBNS4WGWA",
+        "pointOfContactId": "c09fae98-0a25-4836-921b-25223991781d",
+        "bizCardEmail": "hanna.goldyn@gmail.com"
+      },
+      "before_keep": {
+        "id": "2f7a5fb7-623f-47eb-8d9c-102840b4bef9",
+        "name": "hanna.goldyn@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9115",
+        "idOid": "G3X8S9BKCZ112T8WRSBNS4WGWA",
+        "pointOfContactId": "c09fae98-0a25-4836-921b-25223991781d",
+        "bizCardEmail": "hanna.goldyn@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "karolina.sobotkiewicz@gmail.com",
+      "ghost_id": "8cc6d56b-9c2f-4ca6-b9f8-eb30a4101258",
+      "keep_id": "57b58cfa-f0b3-40a8-9a27-0469c29f7801",
+      "before_ghost": {
+        "id": "8cc6d56b-9c2f-4ca6-b9f8-eb30a4101258",
+        "name": "Nazwa dla Personalizowanego Planera Podróży w Polsce — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "GT46G2QYV38HRNGAY0FVE5KVS0",
+        "pointOfContactId": "81770fde-406e-48ae-8282-904d708a048e",
+        "bizCardEmail": "karolina.sobotkiewicz@gmail.com"
+      },
+      "before_keep": {
+        "id": "57b58cfa-f0b3-40a8-9a27-0469c29f7801",
+        "name": "karolina.sobotkiewicz@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9224",
+        "idOid": "GT46G2QYV38HRNGAY0FVE5KVS0",
+        "pointOfContactId": "81770fde-406e-48ae-8282-904d708a048e",
+        "bizCardEmail": "karolina.sobotkiewicz@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "piotr.jan.sliwa@gmail.com",
+      "ghost_id": "9060ae71-41a8-44b1-ac88-bf2326dae320",
+      "keep_id": "6322fae2-5a04-4c75-9ce0-3a34d37b480c",
+      "before_ghost": {
+        "id": "9060ae71-41a8-44b1-ac88-bf2326dae320",
+        "name": "Strona Wizytówka dla Firmy Oświetleniowej i Automatyki — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "7JZJBJYTVM48R2AP0REJYVMRDH",
+        "pointOfContactId": "326c78c0-92b8-472f-b38a-852717392bb8",
+        "bizCardEmail": "piotr.jan.sliwa@gmail.com"
+      },
+      "before_keep": {
+        "id": "6322fae2-5a04-4c75-9ce0-3a34d37b480c",
+        "name": "piotr.jan.sliwa@gmail.com · Strona",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9155",
+        "idOid": "7JZJBJYTVM48R2AP0REJYVMRDH",
+        "pointOfContactId": "326c78c0-92b8-472f-b38a-852717392bb8",
+        "bizCardEmail": "piotr.jan.sliwa@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "katarzyna.nwska@gmail.com",
+      "ghost_id": "92b36162-2064-4991-a7ef-6b0bca2c8c81",
+      "keep_id": "f51b979a-0d79-4e4b-9233-b313f9544c2a",
+      "before_ghost": {
+        "id": "92b36162-2064-4991-a7ef-6b0bca2c8c81",
+        "name": "Strona Wizytówka dla Nowej Praktyki Stomatologicznej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "CX36M18X93C61VR8SQ3D6DWYYC",
+        "pointOfContactId": "453e173d-ff08-43cf-8ee7-848731418069",
+        "bizCardEmail": "katarzyna.nwska@gmail.com"
+      },
+      "before_keep": {
+        "id": "f51b979a-0d79-4e4b-9233-b313f9544c2a",
+        "name": "katarzyna.nwska@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9261",
+        "idOid": "CX36M18X93C61VR8SQ3D6DWYYC",
+        "pointOfContactId": "453e173d-ff08-43cf-8ee7-848731418069",
+        "bizCardEmail": "katarzyna.nwska@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "vet.walczak@gmail.com",
+      "ghost_id": "9b209641-c093-4451-9475-a77fb437aaa5",
+      "keep_id": "1e95ed6f-d6fa-4524-a191-f15b3021e3d3",
+      "before_ghost": {
+        "id": "9b209641-c093-4451-9475-a77fb437aaa5",
+        "name": "Strona Internetowa dla Apartamentu Premium na Mazurach — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3GDVV4EGXP0PWMG57XAG1MYGAK",
+        "pointOfContactId": "4fb471d4-ab8e-4c43-ab7d-a37bc65dffbc",
+        "bizCardEmail": "vet.walczak@gmail.com"
+      },
+      "before_keep": {
+        "id": "1e95ed6f-d6fa-4524-a191-f15b3021e3d3",
+        "name": "vet.walczak@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:8955",
+        "idOid": "3GDVV4EGXP0PWMG57XAG1MYGAK",
+        "pointOfContactId": "4fb471d4-ab8e-4c43-ab7d-a37bc65dffbc",
+        "bizCardEmail": "vet.walczak@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "praca.beatapanasz@gmail.com",
+      "ghost_id": "9e017602-4c2a-4de5-bafa-1f6a85c99814",
+      "keep_id": "4ef576b1-b1d1-4b1a-bf45-f2e11e9fd373",
+      "before_ghost": {
+        "id": "9e017602-4c2a-4de5-bafa-1f6a85c99814",
+        "name": "Strona Wizytówka dla Poradni Psychologicznej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "XGACEM241B1TYF7VHRFR2CXXX3",
+        "pointOfContactId": "cd6594a0-0d09-4c90-b7a2-68fca7042113",
+        "bizCardEmail": "praca.beatapanasz@gmail.com"
+      },
+      "before_keep": {
+        "id": "4ef576b1-b1d1-4b1a-bf45-f2e11e9fd373",
+        "name": "praca.beatapanasz@gmail.com · Strona",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9135",
+        "idOid": "XGACEM241B1TYF7VHRFR2CXXX3",
+        "pointOfContactId": "cd6594a0-0d09-4c90-b7a2-68fca7042113",
+        "bizCardEmail": "praca.beatapanasz@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "pawel.rzepka.pr@gmail.com",
+      "ghost_id": "a2deaa92-c8d6-439d-bce9-e86506993562",
+      "keep_id": "37a3f7ee-2aaa-41a3-abae-a863fa9f91e9",
+      "before_ghost": {
+        "id": "a2deaa92-c8d6-439d-bce9-e86506993562",
+        "name": "Logo dla Nowej Firmy Dekarskiej Hydroizolacje — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "N9DYBKMZHVVJDKKE84JDGVMX25",
+        "pointOfContactId": "316532ef-b4f1-4d3d-840b-143ebb788f87",
+        "bizCardEmail": "pawel.rzepka.pr@gmail.com"
+      },
+      "before_keep": {
+        "id": "37a3f7ee-2aaa-41a3-abae-a863fa9f91e9",
+        "name": "pawel.rzepka.pr@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9266",
+        "idOid": "N9DYBKMZHVVJDKKE84JDGVMX25",
+        "pointOfContactId": "316532ef-b4f1-4d3d-840b-143ebb788f87",
+        "bizCardEmail": "pawel.rzepka.pr@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "sartek.bkomski@gmail.com",
+      "ghost_id": "ac0c77f4-ecbd-44c0-ac3e-dacad50a172b",
+      "keep_id": "6a0af315-7d69-49df-9a69-ac2f4c10936c",
+      "before_ghost": {
+        "id": "ac0c77f4-ecbd-44c0-ac3e-dacad50a172b",
+        "name": "Strona internetowa dla e-commerce chemii gospodarczej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "Z72F4XESFW0V6RGV72NCZFV7Q6",
+        "pointOfContactId": "a4d0b30b-41f5-405a-aa98-df8183105ddd",
+        "bizCardEmail": "sartek.bkomski@gmail.com"
+      },
+      "before_keep": {
+        "id": "6a0af315-7d69-49df-9a69-ac2f4c10936c",
+        "name": "sartek.bkomski@gmail.com · Strona",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9223",
+        "idOid": "Z72F4XESFW0V6RGV72NCZFV7Q6",
+        "pointOfContactId": "a4d0b30b-41f5-405a-aa98-df8183105ddd",
+        "bizCardEmail": "sartek.bkomski@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "kontakt.nieruchomosciexpert@gmail.com",
+      "ghost_id": "b9ab5487-6f26-4d95-9d5b-9702848c8404",
+      "keep_id": "ba6b43b8-7f11-45e7-8468-5615466969f0",
+      "before_ghost": {
+        "id": "b9ab5487-6f26-4d95-9d5b-9702848c8404",
+        "name": "Strona Wizytówka dla Biura Nieruchomości — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "M1CEWJ2C9FC7FGX1DPWPVC82PP",
+        "pointOfContactId": "b9904cc6-e1f0-4aac-9479-baf65846b1e9",
+        "bizCardEmail": "kontakt.nieruchomosciexpert@gmail.com"
+      },
+      "before_keep": {
+        "id": "ba6b43b8-7f11-45e7-8468-5615466969f0",
+        "name": "kontakt.nieruchomosciexpert@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:8932",
+        "idOid": "M1CEWJ2C9FC7FGX1DPWPVC82PP",
+        "pointOfContactId": "b9904cc6-e1f0-4aac-9479-baf65846b1e9",
+        "bizCardEmail": "kontakt.nieruchomosciexpert@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "mb.florczak@gmail.com",
+      "ghost_id": "bcd2b288-d208-4c78-8435-cdbae467b16b",
+      "keep_id": "1498a50e-085a-4111-ba55-968f2533c927",
+      "before_ghost": {
+        "id": "bcd2b288-d208-4c78-8435-cdbae467b16b",
+        "name": "Strona Internetowa dla Mobilnego Detailingu Samochodowego — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "0GSPX7YBVQASEQSXAV7MH8RF4Z",
+        "pointOfContactId": "1a48cd20-4fd9-44f5-92fe-32a847d325ec",
+        "bizCardEmail": "mb.florczak@gmail.com"
+      },
+      "before_keep": {
+        "id": "1498a50e-085a-4111-ba55-968f2533c927",
+        "name": "mb.florczak@gmail.com · Strona",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9134",
+        "idOid": "0GSPX7YBVQASEQSXAV7MH8RF4Z",
+        "pointOfContactId": "1a48cd20-4fd9-44f5-92fe-32a847d325ec",
+        "bizCardEmail": "mb.florczak@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "stanislaw.razniewski@gmail.com",
+      "ghost_id": "c273489a-7382-4d12-919c-19a9cfcfd1c4",
+      "keep_id": "448d07b8-9c5d-4aed-8a6a-2ca96373fa01",
+      "before_ghost": {
+        "id": "c273489a-7382-4d12-919c-19a9cfcfd1c4",
+        "name": "Strona Internetowa: Redesign dla Branży Architektonicznej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "CHF6JRRSF9G15ERQB2Q4GBJ61Y",
+        "pointOfContactId": "e529c008-1c97-4386-8645-fafd5abde659",
+        "bizCardEmail": "stanislaw.razniewski@gmail.com"
+      },
+      "before_keep": {
+        "id": "448d07b8-9c5d-4aed-8a6a-2ca96373fa01",
+        "name": "stanislaw.razniewski@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9225",
+        "idOid": "CHF6JRRSF9G15ERQB2Q4GBJ61Y",
+        "pointOfContactId": "e529c008-1c97-4386-8645-fafd5abde659",
+        "bizCardEmail": "stanislaw.razniewski@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "m4ti04.98@gmail.com",
+      "ghost_id": "c2cc782f-2b94-4258-baf0-470956583b00",
+      "keep_id": "35e639f2-ae57-451f-80d0-d956a911f71b",
+      "before_ghost": {
+        "id": "c2cc782f-2b94-4258-baf0-470956583b00",
+        "name": "Logo dla Szkoły Tańca KM Dance Studio — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "12DSEWK5PQBKMJDTZ8177NGPG0",
+        "pointOfContactId": "d9545c99-9153-4d59-8ee5-61a405888cd0",
+        "bizCardEmail": "m4ti04.98@gmail.com"
+      },
+      "before_keep": {
+        "id": "35e639f2-ae57-451f-80d0-d956a911f71b",
+        "name": "m4ti04.98@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9183",
+        "idOid": "12DSEWK5PQBKMJDTZ8177NGPG0",
+        "pointOfContactId": "d9545c99-9153-4d59-8ee5-61a405888cd0",
+        "bizCardEmail": "m4ti04.98@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "odnova.instytut@gmail.com",
+      "ghost_id": "caa2c8aa-76e8-471a-8222-8d1525a1eb0d",
+      "keep_id": "ab0083c8-f56a-49c9-8a78-91fbe092d314",
+      "before_ghost": {
+        "id": "caa2c8aa-76e8-471a-8222-8d1525a1eb0d",
+        "name": "Logo dla nowego gabinetu kosmetycznego — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "M4M8SJ1VJVTPK7KF81Z6VCFP7G",
+        "pointOfContactId": "3a9e6401-4617-4bb8-8374-821d9ca43a4c",
+        "bizCardEmail": "odnova.instytut@gmail.com"
+      },
+      "before_keep": {
+        "id": "ab0083c8-f56a-49c9-8a78-91fbe092d314",
+        "name": "odnova.instytut@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9081",
+        "idOid": "M4M8SJ1VJVTPK7KF81Z6VCFP7G",
+        "pointOfContactId": "3a9e6401-4617-4bb8-8374-821d9ca43a4c",
+        "bizCardEmail": "odnova.instytut@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "magdalna.siejek@gmail.com",
+      "ghost_id": "cd632148-3306-4d51-9397-abcd3eec690e",
+      "keep_id": "7bfc74cb-5dab-4e02-ab01-3ed84c51d62b",
+      "before_ghost": {
+        "id": "cd632148-3306-4d51-9397-abcd3eec690e",
+        "name": "Strona Wizytówka dla Pośrednika Nieruchomości w Poznaniu — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QSMVD9ZCSN2J38E708ZQK7S06K",
+        "pointOfContactId": "72a361e7-7d3f-4687-a032-66bc22e45945",
+        "bizCardEmail": "magdalna.siejek@gmail.com"
+      },
+      "before_keep": {
+        "id": "7bfc74cb-5dab-4e02-ab01-3ed84c51d62b",
+        "name": "magdalna.siejek@gmail.com · Strona",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9184",
+        "idOid": "QSMVD9ZCSN2J38E708ZQK7S06K",
+        "pointOfContactId": "72a361e7-7d3f-4687-a032-66bc22e45945",
+        "bizCardEmail": "magdalna.siejek@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "kasia.k.majkowska@gmail.com",
+      "ghost_id": "d4bcdd8b-b226-4d39-a51c-8147be30a4b7",
+      "keep_id": "756bcc47-eaed-4fd3-bb70-7886a2ce932c",
+      "before_ghost": {
+        "id": "d4bcdd8b-b226-4d39-a51c-8147be30a4b7",
+        "name": "Nazwa dla Nowej Firmy Architektonicznej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SAT9NMPJBB2RQN9Z0WRD569YYW",
+        "pointOfContactId": "823c703a-e8d9-4edb-a0e6-b50e930487d6",
+        "bizCardEmail": "kasia.k.majkowska@gmail.com"
+      },
+      "before_keep": {
+        "id": "756bcc47-eaed-4fd3-bb70-7886a2ce932c",
+        "name": "kasia.k.majkowska@gmail.com · Naming",
+        "stage": "PROPOSAL",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:7521",
+        "idOid": "SAT9NMPJBB2RQN9Z0WRD569YYW",
+        "pointOfContactId": "823c703a-e8d9-4edb-a0e6-b50e930487d6",
+        "bizCardEmail": "kasia.k.majkowska@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "info.verdearoma.pl@gmail.com",
+      "ghost_id": "e1f4307c-48eb-49e8-a8e9-8c06bb483d58",
+      "keep_id": "522601c7-0571-45d2-88a1-75be0e0626b0",
+      "before_ghost": {
+        "id": "e1f4307c-48eb-49e8-a8e9-8c06bb483d58",
+        "name": "Logo dla Nowej Marki Przypraw w Polsce — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "8J4HSTGPBXZSHRJ2495DBHNR45",
+        "pointOfContactId": "b33e1bfd-d5a4-4b30-ab65-bcb41e65fec2",
+        "bizCardEmail": "info.verdearoma.pl@gmail.com"
+      },
+      "before_keep": {
+        "id": "522601c7-0571-45d2-88a1-75be0e0626b0",
+        "name": "info.verdearoma.pl@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9098",
+        "idOid": "8J4HSTGPBXZSHRJ2495DBHNR45",
+        "pointOfContactId": "b33e1bfd-d5a4-4b30-ab65-bcb41e65fec2",
+        "bizCardEmail": "info.verdearoma.pl@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "kamilbialowolski@gmail.com",
+      "ghost_id": "f43aca3c-2972-4483-b15e-31d55cdde5a4",
+      "keep_id": "7150a20d-2363-4d18-bfce-d971f3502806",
+      "before_ghost": {
+        "id": "f43aca3c-2972-4483-b15e-31d55cdde5a4",
+        "name": "Logo dla Nowej Marki Glazurniczej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SRKJDGCD8BQEK5EX0YYTPW2WTA",
+        "pointOfContactId": "3874d83f-0476-43d5-996e-ebac7a27d07f",
+        "bizCardEmail": "kamilbialowolski@gmail.com"
+      },
+      "before_keep": {
+        "id": "7150a20d-2363-4d18-bfce-d971f3502806",
+        "name": "kamilbialowolski@gmail.com · Logo",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9018",
+        "idOid": "SRKJDGCD8BQEK5EX0YYTPW2WTA",
+        "pointOfContactId": "3874d83f-0476-43d5-996e-ebac7a27d07f",
+        "bizCardEmail": "kamilbialowolski@gmail.com"
+      },
+      "guard": "ok"
+    },
+    {
+      "email": "filip.mitoraj@gmail.com",
+      "ghost_id": "f87bab79-1b0a-4ff5-8c34-a3f3e8cec384",
+      "keep_id": "00c29da9-c044-4e6f-b5c2-207665654dd2",
+      "before_ghost": {
+        "id": "f87bab79-1b0a-4ff5-8c34-a3f3e8cec384",
+        "name": "Logo dla Nowej Marki w Branży Remontowej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "AMVXB9FG6CDN298FVD7BAFVKCS",
+        "pointOfContactId": "66268512-f8e3-43cf-a887-190482920b98",
+        "bizCardEmail": "filip.mitoraj@gmail.com"
+      },
+      "before_keep": {
+        "id": "00c29da9-c044-4e6f-b5c2-207665654dd2",
+        "name": "filip.mitoraj@gmail.com · Logo",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9187",
+        "idOid": "AMVXB9FG6CDN298FVD7BAFVKCS",
+        "pointOfContactId": "66268512-f8e3-43cf-a887-190482920b98",
+        "bizCardEmail": "filip.mitoraj@gmail.com"
+      },
+      "guard": "ok"
+    }
+  ],
+  "tests": [
+    {
+      "opp_id": "0eb70c8e-b544-4f44-bf0e-cca6e698f9e4",
+      "skip": "not_test",
+      "snap": {
+        "id": "0eb70c8e-b544-4f44-bf0e-cca6e698f9e4",
+        "name": "Strona internetowa dla małej firmy - test — mail leads@",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "MTGVTQ6QXRW1GXG9RK81MJF3H1",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "1ad6954f-49cb-4b9b-bb4b-066fc1998e89",
+      "skip": "not_test",
+      "snap": {
+        "id": "1ad6954f-49cb-4b9b-bb4b-066fc1998e89",
+        "name": "test strona internetowa — mail leads@",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "W05C4TSQ256BW622ARVF53PRAZ",
+        "pointOfContactId": "ee1535d0-8a01-4fcf-bd7f-cbd63fca1fb3",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "1ced3e54-46f9-45e5-b6bc-cbf344a7ffdd",
+      "skip": "not_test",
+      "snap": {
+        "id": "1ced3e54-46f9-45e5-b6bc-cbf344a7ffdd",
+        "name": "lead · mail · wf test 8 (no filter v7)",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "VZ11JCKRPTX5NAFT6CB96E98ZE",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "2621b306-8870-439d-a0fb-45d2cc2b4f91",
+      "skip": "not_test",
+      "snap": {
+        "id": "2621b306-8870-439d-a0fb-45d2cc2b4f91",
+        "name": "lead · mail · wf test 7 (short keys)",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "4CGPAHFCQ4TGT6E59ETB0D7E2P",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "2a7dc0e9-821e-4b56-9039-f1b1db50fb46",
+      "skip": "not_test",
+      "snap": {
+        "id": "2a7dc0e9-821e-4b56-9039-f1b1db50fb46",
+        "name": "lead · mail · wf test 2",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "BSXVT729MXR8A4RG4MVX7PW5ET",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "30bdbdd8-36cd-40ec-9b2e-9cbc27d75702",
+      "skip": "not_test",
+      "snap": {
+        "id": "30bdbdd8-36cd-40ec-9b2e-9cbc27d75702",
+        "name": "filter test · mail v9 TWENTY_EMAIL",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "0M0ZFHWC5YS0B9WA9CXCY4RK01",
+        "pointOfContactId": "0c29e42c-157d-430f-8e2d-b95e1636614f",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "398a7a47-f6ce-44e3-9ad5-c44837a49893",
+      "skip": "not_test",
+      "snap": {
+        "id": "398a7a47-f6ce-44e3-9ad5-c44837a49893",
+        "name": "filter test · mail TWENTY_EMAIL",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "T7FHPCVNAHDA1Z9TDGSVS204RP",
+        "pointOfContactId": "0c29e42c-157d-430f-8e2d-b95e1636614f",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "6a97b14f-ceeb-48ed-804f-c9a62177c056",
+      "skip": "not_test",
+      "snap": {
+        "id": "6a97b14f-ceeb-48ed-804f-c9a62177c056",
+        "name": "lead · mail · wf test 3 (po fix)",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "KRMJNRFRCEMBS4QTDP7B5DPDG0",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "87a54e8b-ea4c-47e9-95c0-2ae2bde98ab8",
+      "before": {
+        "id": "87a54e8b-ea4c-47e9-95c0-2ae2bde98ab8",
+        "name": "Dawid Nowak | LiderBudowlany.pl — mail leads@",
+        "stage": "QUALIFIED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "BFM51KJRP4NDCVQEHATEQW0534",
+        "pointOfContactId": "e5d4790a-b9ce-4ebd-8c57-8a88f96d076c",
+        "bizCardEmail": "d.nowak@liderbudowlany.pl"
+      }
+    },
+    {
+      "opp_id": "ab107457-6486-4ea7-8c64-0f1c5da3e060",
+      "skip": "not_test",
+      "snap": {
+        "id": "ab107457-6486-4ea7-8c64-0f1c5da3e060",
+        "name": "lead · mail · test wf trigger",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "EXEXXGMJREGS7SBS9ZW18W0ENS",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "bf918917-8d2d-4459-93de-5e01340452ed",
+      "skip": "not_test",
+      "snap": {
+        "id": "bf918917-8d2d-4459-93de-5e01340452ed",
+        "name": "lead · mail · wf test 5 (no filter)",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "41N4P1881T0KK5G51KHQMGG5EG",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "opp_id": "f42a6336-7cae-43b8-8d80-3cecd1fcc96e",
+      "skip": "not_test",
+      "snap": {
+        "id": "f42a6336-7cae-43b8-8d80-3cecd1fcc96e",
+        "name": "lead · mail · wf test 4 (trigger filter)",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "EK30D13ZMJVFHXA5D19B4Z2WTB",
+        "pointOfContactId": "97ba8a53-6a2c-4cfa-b20d-7727d2c54c9b",
+        "bizCardEmail": ""
+      }
+    }
+  ],
+  "skipped": [],
+  "finishedAt": "2026-08-28T08:19:59.728075+00:00",
+  "counts": {
+    "wave_a_deleted": 38,
+    "skipped": 0,
+    "tests": 1
+  }
+}

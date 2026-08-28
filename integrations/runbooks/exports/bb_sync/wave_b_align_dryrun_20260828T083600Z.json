@@ -1,0 +1,2241 @@
+{
+  "startedAt": "2026-08-28T08:35:39.197452+00:00",
+  "apply": false,
+  "aligned": [
+    {
+      "email": "marzena@emka5.pl",
+      "opp_id": "0129fe10-33dc-402b-bc0a-73d7bb4c9118",
+      "bb_id": 5879,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "0129fe10-33dc-402b-bc0a-73d7bb4c9118",
+        "name": "Marzena Frąszczak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "1FXCSJ1AMGZ4S2N71Y57RAG5S1",
+        "bizProduct": "INNE",
+        "bizCardEmail": "marzena@emka5.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5879",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "1FXCSJ1AMGZ4S2N71Y57RAG5S1"
+      }
+    },
+    {
+      "email": "info@szkodawniemczech.pl",
+      "opp_id": "017fe400-458d-47e2-9dcc-49140b53b5f4",
+      "bb_id": 9169,
+      "bb_stage": "analysis",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "017fe400-458d-47e2-9dcc-49140b53b5f4",
+        "name": "Adam — mail leads@",
+        "stage": "PROPOSAL",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "bb:9169",
+        "idOid": "AW22YDF2ATQTVJQCN0915DT3PN",
+        "bizProduct": "INNE",
+        "bizCardEmail": "info@szkodawniemczech.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:9169",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "AW22YDF2ATQTVJQCN0915DT3PN"
+      }
+    },
+    {
+      "email": "mariusz@inoba.pl",
+      "opp_id": "031eb5bb-858e-4c9e-a86f-680035bebbdc",
+      "bb_id": 5427,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "031eb5bb-858e-4c9e-a86f-680035bebbdc",
+        "name": "Mariusz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "0FWT4A4TRWPWAVAH5ZWW211W0P",
+        "bizProduct": "INNE",
+        "bizCardEmail": "mariusz@inoba.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5427",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "0FWT4A4TRWPWAVAH5ZWW211W0P"
+      }
+    },
+    {
+      "email": "roboczy@lemanskalegal.pl",
+      "opp_id": "0794c55c-4b15-45fa-a778-f25111b884fc",
+      "bb_id": 7753,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "0794c55c-4b15-45fa-a778-f25111b884fc",
+        "name": "Roboczy — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "WPK4TJV9618YD8Y1N5Z3NJ8JNE",
+        "bizProduct": "INNE",
+        "bizCardEmail": "roboczy@lemanskalegal.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7753",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "WPK4TJV9618YD8Y1N5Z3NJ8JNE"
+      }
+    },
+    {
+      "email": "dominik.markowski@parasol.wroclaw.pl",
+      "opp_id": "079fe188-b36d-4a42-86b7-8b999035ef5b",
+      "bb_id": 6294,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "079fe188-b36d-4a42-86b7-8b999035ef5b",
+        "name": "Dominik Markowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "N9V5V7SGSRCS7QF2X46CD1F4R1",
+        "bizProduct": "INNE",
+        "bizCardEmail": "dominik.markowski@parasol.wroclaw.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6294",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "N9V5V7SGSRCS7QF2X46CD1F4R1"
+      }
+    },
+    {
+      "email": "akarwacka@relativo.pl",
+      "opp_id": "0ae1ab85-59b7-4a9d-83b9-1d764ec1fc3e",
+      "bb_id": 4910,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "0ae1ab85-59b7-4a9d-83b9-1d764ec1fc3e",
+        "name": "Akarwacka Karwacka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "DKS5NNG7CM1JCYGZPBRPT59K0G",
+        "bizProduct": "INNE",
+        "bizCardEmail": "akarwacka@relativo.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "DKS5NNG7CM1JCYGZPBRPT59K0G"
+      }
+    },
+    {
+      "email": "lew.kubaczka@cloutive.com",
+      "opp_id": "0c08ee39-9d17-440e-a462-905270683201",
+      "bb_id": 4867,
+      "bb_stage": "analysis",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "0c08ee39-9d17-440e-a462-905270683201",
+        "name": "Lew Kubaczka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SKF46PJ7BFAZJDQG03HMVRH4NF",
+        "bizProduct": "INNE",
+        "bizCardEmail": "lew.kubaczka@cloutive.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4867",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "SKF46PJ7BFAZJDQG03HMVRH4NF"
+      }
+    },
+    {
+      "email": "info@holidaypolen.de",
+      "opp_id": "0f1f19f9-85a3-4893-a28f-f6998d0e1e8f",
+      "bb_id": 5675,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "0f1f19f9-85a3-4893-a28f-f6998d0e1e8f",
+        "name": "HolidayPolen - Familienurlaub — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "VKSTJ3RVCFS4N38P6S88BGXXSC",
+        "bizProduct": "INNE",
+        "bizCardEmail": "info@holidaypolen.de"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5675",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "VKSTJ3RVCFS4N38P6S88BGXXSC"
+      }
+    },
+    {
+      "email": "arleta@good4wall.com",
+      "opp_id": "117cd6a6-a50c-47d7-997e-0e5a6d266045",
+      "bb_id": 5185,
+      "bb_stage": "analysis",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "117cd6a6-a50c-47d7-997e-0e5a6d266045",
+        "name": "Arleta — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "DDPDT7GSBCA2YB6ABBPKT8ZW9Z",
+        "bizProduct": "INNE",
+        "bizCardEmail": "arleta@good4wall.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5185",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "DDPDT7GSBCA2YB6ABBPKT8ZW9Z"
+      }
+    },
+    {
+      "email": "biuro@fenstertech.pl",
+      "opp_id": "15dd5777-81fb-4ed5-a995-4a6a10fe8afc",
+      "bb_id": 8637,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "15dd5777-81fb-4ed5-a995-4a6a10fe8afc",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "E1Z3Q7CP855C9P87BHKYA12KDD",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@fenstertech.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8637",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "E1Z3Q7CP855C9P87BHKYA12KDD"
+      }
+    },
+    {
+      "email": "r.ciesielski@agregaty.pl",
+      "opp_id": "17a782e2-649c-48dd-a301-d30e44d82f79",
+      "bb_id": 5226,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "17a782e2-649c-48dd-a301-d30e44d82f79",
+        "name": "R Ciesielski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "XK0083D4JTBENDQK3M0QS617MA",
+        "bizProduct": "INNE",
+        "bizCardEmail": "r.ciesielski@agregaty.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5226",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "XK0083D4JTBENDQK3M0QS617MA"
+      }
+    },
+    {
+      "email": "n.czarnecki@thaimaliwan.pl",
+      "opp_id": "1ec9a007-b450-4c31-a71f-464a8efe4188",
+      "bb_id": 5405,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "1ec9a007-b450-4c31-a71f-464a8efe4188",
+        "name": "N Czarnecki — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "4SP2HKWJSP3DHYYSMDW1546PJ4",
+        "bizProduct": "INNE",
+        "bizCardEmail": "n.czarnecki@thaimaliwan.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5405",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "4SP2HKWJSP3DHYYSMDW1546PJ4"
+      }
+    },
+    {
+      "email": "biuro@thermo-pack.com.pl",
+      "opp_id": "209c32cc-f84f-4719-b59b-d67d237558af",
+      "bb_id": 8414,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "209c32cc-f84f-4719-b59b-d67d237558af",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "WAEACY0X7WH5C6NBRZPH1H0J7K",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@thermo-pack.com.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8414",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "WAEACY0X7WH5C6NBRZPH1H0J7K"
+      }
+    },
+    {
+      "email": "t.swiderski@feel-it.pl",
+      "opp_id": "23a6888a-700d-4a28-aba9-05900f3b579f",
+      "bb_id": 6387,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "23a6888a-700d-4a28-aba9-05900f3b579f",
+        "name": "T Swiderski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "H6JB82SX6ZC55XB2F9PJNNPHJH",
+        "bizProduct": "INNE",
+        "bizCardEmail": "t.swiderski@feel-it.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6387",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "H6JB82SX6ZC55XB2F9PJNNPHJH"
+      }
+    },
+    {
+      "email": "info@prof.edu.pl",
+      "opp_id": "240da565-328b-4467-b09a-d72dec930843",
+      "bb_id": 7000,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "240da565-328b-4467-b09a-d72dec930843",
+        "name": "Robert — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "45YHV9K0HSPDRE09KND35KD8FC",
+        "bizProduct": "WEB",
+        "bizCardEmail": ""
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:7000",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "45YHV9K0HSPDRE09KND35KD8FC"
+      }
+    },
+    {
+      "email": "office@twelvegrains.co.uk",
+      "opp_id": "24c18ef3-ff5f-4af0-9747-8da8fb89d0fb",
+      "bb_id": 7449,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "24c18ef3-ff5f-4af0-9747-8da8fb89d0fb",
+        "name": "Office — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "719QHS6V7Y264X415X672HV3GT",
+        "bizProduct": "INNE",
+        "bizCardEmail": "office@twelvegrains.co.uk"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7449",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "719QHS6V7Y264X415X672HV3GT"
+      }
+    },
+    {
+      "email": "a.tobiasz@tactica.pl",
+      "opp_id": "280caeb7-ab92-4d95-967b-bb981ddbd33b",
+      "bb_id": 8639,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "280caeb7-ab92-4d95-967b-bb981ddbd33b",
+        "name": "Agnieszka Tobiasz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "61P4C4MKKY7204FMTRZZGJRWG5",
+        "bizProduct": "INNE",
+        "bizCardEmail": "a.tobiasz@tactica.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8639",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "61P4C4MKKY7204FMTRZZGJRWG5"
+      }
+    },
+    {
+      "email": "malgorzata@lemontreecoaching.com",
+      "opp_id": "2adc59a5-c4bb-44f2-90ad-c8051359158f",
+      "bb_id": 7665,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "2adc59a5-c4bb-44f2-90ad-c8051359158f",
+        "name": "Malgorzata — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "8TYWKWZ6X2GFQVCMCC90WBEQ4B",
+        "bizProduct": "INNE",
+        "bizCardEmail": "malgorzata@lemontreecoaching.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:7665",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "8TYWKWZ6X2GFQVCMCC90WBEQ4B"
+      }
+    },
+    {
+      "email": "alicja.kurowska@ziarenko24.pl",
+      "opp_id": "2c9fe11b-4919-40af-85ad-71e34ad27c28",
+      "bb_id": 9005,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "2c9fe11b-4919-40af-85ad-71e34ad27c28",
+        "name": "Alicja Kurowska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "T86J8JE8XSM98XH34B3JHTRKRD",
+        "bizProduct": "INNE",
+        "bizCardEmail": "alicja.kurowska@ziarenko24.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:9005",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "T86J8JE8XSM98XH34B3JHTRKRD"
+      }
+    },
+    {
+      "email": "jan@sapala.pl",
+      "opp_id": "302974a8-588d-40bd-8e6e-0e789861e797",
+      "bb_id": 8468,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "302974a8-588d-40bd-8e6e-0e789861e797",
+        "name": "Jan — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "5WXCBX7CCJ93MCBWPBJBGK5ZCN",
+        "bizProduct": "INNE",
+        "bizCardEmail": "jan@sapala.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8468",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "5WXCBX7CCJ93MCBWPBJBGK5ZCN"
+      }
+    },
+    {
+      "email": "m.romanow@laverna.pl",
+      "opp_id": "31c904ac-9c72-4f23-832f-005eb0b100ab",
+      "bb_id": 4671,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "31c904ac-9c72-4f23-832f-005eb0b100ab",
+        "name": "M Romanow — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "562T9Y998D9E56TF8K2F227MTW",
+        "bizProduct": "INNE",
+        "bizCardEmail": "m.romanow@laverna.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4671",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "562T9Y998D9E56TF8K2F227MTW"
+      }
+    },
+    {
+      "email": "szymon.makyla@viamedica.pl",
+      "opp_id": "34bcd745-4dc0-44e6-8f42-e9d3121f86e3",
+      "bb_id": 5093,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "34bcd745-4dc0-44e6-8f42-e9d3121f86e3",
+        "name": "Szymon Makyla — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3XVFSZ5SX897WBH9GHNR7XDHHH",
+        "bizProduct": "INNE",
+        "bizCardEmail": "szymon.makyla@viamedica.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5093",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "3XVFSZ5SX897WBH9GHNR7XDHHH"
+      }
+    },
+    {
+      "email": "agnieszkakrowiak@pavisorte.com",
+      "opp_id": "3a10ebe6-a606-4d46-9caa-a9de6e146fca",
+      "bb_id": 7784,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "3a10ebe6-a606-4d46-9caa-a9de6e146fca",
+        "name": "Agnieszkakrowiak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "505W03DGS8CP8KMYJH2PR1TTA4",
+        "bizProduct": "INNE",
+        "bizCardEmail": "agnieszkakrowiak@pavisorte.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7784",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "505W03DGS8CP8KMYJH2PR1TTA4"
+      }
+    },
+    {
+      "email": "daniel.witkowski@radom.leclerc",
+      "opp_id": "3b737f61-e6ef-4f4e-baf9-75c81a38659c",
+      "bb_id": 7184,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "3b737f61-e6ef-4f4e-baf9-75c81a38659c",
+        "name": "Daniel Witkowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3AA24YVMMTCZ3ACHPMASXBME78",
+        "bizProduct": "INNE",
+        "bizCardEmail": "daniel.witkowski@radom.leclerc"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7184",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "3AA24YVMMTCZ3ACHPMASXBME78"
+      }
+    },
+    {
+      "email": "paulinawrobel@klinikakwiatek.pl",
+      "opp_id": "41de2d70-a725-4578-b74e-ed02379d7b7d",
+      "bb_id": 8043,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "41de2d70-a725-4578-b74e-ed02379d7b7d",
+        "name": "Paulinawrobel — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "M9C1F6T44V0PGPDBE8Q32VXGYB",
+        "bizProduct": "INNE",
+        "bizCardEmail": "paulinawrobel@klinikakwiatek.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8043",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "M9C1F6T44V0PGPDBE8Q32VXGYB"
+      }
+    },
+    {
+      "email": "aleksander.durlej@didactix.pl",
+      "opp_id": "43b87946-84f2-4bf5-99a4-f297cc6b2330",
+      "bb_id": 8409,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "43b87946-84f2-4bf5-99a4-f297cc6b2330",
+        "name": "Aleksander Durlej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "R0JPS101ZGXSW9D30NC998PTAJ",
+        "bizProduct": "INNE",
+        "bizCardEmail": "aleksander.durlej@didactix.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8409",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "R0JPS101ZGXSW9D30NC998PTAJ"
+      }
+    },
+    {
+      "email": "mateusz.krawczyk@dt-trans.com",
+      "opp_id": "44e1f170-831b-4da0-a92d-947850a31ddb",
+      "bb_id": 7254,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "44e1f170-831b-4da0-a92d-947850a31ddb",
+        "name": "Mateusz Krawczyk — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QJZPR3GJ36059GQ2N6ZKZR144B",
+        "bizProduct": "INNE",
+        "bizCardEmail": "mateusz.krawczyk@dt-trans.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7254",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "QJZPR3GJ36059GQ2N6ZKZR144B"
+      }
+    },
+    {
+      "email": "tomasz.makowski@subra.pl",
+      "opp_id": "45c7bc34-7c13-4c58-b2c6-6bcd434c9e82",
+      "bb_id": 5674,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "45c7bc34-7c13-4c58-b2c6-6bcd434c9e82",
+        "name": "Tomasz Makowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "N17H0KN9HYQFV1NTD771AESXYV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "tomasz.makowski@subra.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5674",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "N17H0KN9HYQFV1NTD771AESXYV"
+      }
+    },
+    {
+      "email": "juliusz.dabrowski@vince.design",
+      "opp_id": "462394e7-1921-4c1c-bceb-d66b4ac0b644",
+      "bb_id": 5200,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "462394e7-1921-4c1c-bceb-d66b4ac0b644",
+        "name": "Juliusz Dabrowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "STFZF38HZTJT68743V8G4E88JZ",
+        "bizProduct": "INNE",
+        "bizCardEmail": "juliusz.dabrowski@vince.design"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5200",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "STFZF38HZTJT68743V8G4E88JZ"
+      }
+    },
+    {
+      "email": "wlastowska@delfarma.pl",
+      "opp_id": "4cfde1af-ab6a-4a9a-8063-8109e67a183f",
+      "bb_id": 5978,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "4cfde1af-ab6a-4a9a-8063-8109e67a183f",
+        "name": "Aleksandra Włastowska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "6P7PF8K23Z2NACTJN9WZ32P16T",
+        "bizProduct": "INNE",
+        "bizCardEmail": "wlastowska@delfarma.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5978",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "6P7PF8K23Z2NACTJN9WZ32P16T"
+      }
+    },
+    {
+      "email": "rezerwacje@apartamentywolatower.pl",
+      "opp_id": "4dccf37d-62bf-4efd-b70e-6f7798073cf6",
+      "bb_id": 5271,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "4dccf37d-62bf-4efd-b70e-6f7798073cf6",
+        "name": "Rezerwacje — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3Q70WM73Y3KM5N5K02NK5PDD3T",
+        "bizProduct": "INNE",
+        "bizCardEmail": "rezerwacje@apartamentywolatower.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5271",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "3Q70WM73Y3KM5N5K02NK5PDD3T"
+      }
+    },
+    {
+      "email": "kontakt@teslomag.pl",
+      "opp_id": "51f5cd74-3a72-4f57-bbc1-89da98ec791d",
+      "bb_id": 6719,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "51f5cd74-3a72-4f57-bbc1-89da98ec791d",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "4XGNKTHG1TPJY60H195S1M1VRS",
+        "bizProduct": "INNE",
+        "bizCardEmail": "kontakt@teslomag.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:6719",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "4XGNKTHG1TPJY60H195S1M1VRS"
+      }
+    },
+    {
+      "email": "biuro@sob-drew.pl",
+      "opp_id": "589d9aab-1e75-4a88-a2d5-398c6e0ecda0",
+      "bb_id": 6312,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "589d9aab-1e75-4a88-a2d5-398c6e0ecda0",
+        "name": "Biuro — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3RWWDSBESV1XRSC3BTJPRZ39YS",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@sob-drew.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6312",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "3RWWDSBESV1XRSC3BTJPRZ39YS"
+      }
+    },
+    {
+      "email": "mariusz@metalteres.com.pl",
+      "opp_id": "5bd799d8-cf22-431c-af17-63a33c5894a3",
+      "bb_id": 8083,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "5bd799d8-cf22-431c-af17-63a33c5894a3",
+        "name": "Mariusz Rybczyński - METALTERES — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "FXJKTRWN9CWHGMDVYV5NFG2158",
+        "bizProduct": "INNE",
+        "bizCardEmail": "mariusz@metalteres.com.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8083",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "FXJKTRWN9CWHGMDVYV5NFG2158"
+      }
+    },
+    {
+      "email": "kontakt@akmusic.pl",
+      "opp_id": "608e6488-75f7-4695-81b1-446789d4bded",
+      "bb_id": 8098,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "608e6488-75f7-4695-81b1-446789d4bded",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "VASD3CBVA9E20HAR5SMVVDY4QG",
+        "bizProduct": "INNE",
+        "bizCardEmail": "kontakt@akmusic.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8098",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "VASD3CBVA9E20HAR5SMVVDY4QG"
+      }
+    },
+    {
+      "email": "k.drelichowski@invest-park.com.pl",
+      "opp_id": "740da117-9964-4623-926d-a9db4cb704e1",
+      "bb_id": 36939,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "740da117-9964-4623-926d-a9db4cb704e1",
+        "name": "K Drelichowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "9DSQKAZ8VPA36Y60QZJNNNH73G",
+        "bizProduct": "INNE",
+        "bizCardEmail": "k.drelichowski@invest-park.com.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:36939",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "9DSQKAZ8VPA36Y60QZJNNNH73G"
+      }
+    },
+    {
+      "email": "biuro@monocar.pl",
+      "opp_id": "740e15fb-aae6-4ba2-a8f2-0e03f901c84e",
+      "bb_id": 7635,
+      "bb_stage": "inquiry",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "740e15fb-aae6-4ba2-a8f2-0e03f901c84e",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "JF8VG3TBECP6BGXE6H0S7QMHBX",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@monocar.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:7635",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "JF8VG3TBECP6BGXE6H0S7QMHBX"
+      }
+    },
+    {
+      "email": "jarek.gryla@passion.pl",
+      "opp_id": "755bec09-c0f6-45ee-9d57-1f797ddb95d5",
+      "bb_id": 5501,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "755bec09-c0f6-45ee-9d57-1f797ddb95d5",
+        "name": "Jarosław Gryla — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "6YPB55R80EWVK5GG7QMZDSZRB7",
+        "bizProduct": "INNE",
+        "bizCardEmail": "jarek.gryla@passion.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5501",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "6YPB55R80EWVK5GG7QMZDSZRB7"
+      }
+    },
+    {
+      "email": "robert.maciejowski@macpol.pl",
+      "opp_id": "756c19f6-dc9e-4fc4-a255-6f4889f2dc14",
+      "bb_id": 6518,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "756c19f6-dc9e-4fc4-a255-6f4889f2dc14",
+        "name": "Robert Maciejowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "781YYBP0ME2QTE2DGNZJ0K3EZ1",
+        "bizProduct": "INNE",
+        "bizCardEmail": "robert.maciejowski@macpol.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6518",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "781YYBP0ME2QTE2DGNZJ0K3EZ1"
+      }
+    },
+    {
+      "email": "tomasz.makowski@subra.pl",
+      "opp_id": "783c9d3f-4019-46c1-af98-aee42ffd5b68",
+      "bb_id": 5674,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "783c9d3f-4019-46c1-af98-aee42ffd5b68",
+        "name": "Tomasz Makowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "N17H0KN9HYQFV1NTD771AESXYV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "tomasz.makowski@subra.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5674",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "N17H0KN9HYQFV1NTD771AESXYV"
+      }
+    },
+    {
+      "email": "biuro@derucki.com",
+      "opp_id": "7a50b398-b855-4841-8e6d-6cf349a0af9e",
+      "bb_id": 8012,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "7a50b398-b855-4841-8e6d-6cf349a0af9e",
+        "name": "DERUCKI COM — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "1KAQP25KGM8JDR0XB72VBC25D0",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@derucki.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8012",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "1KAQP25KGM8JDR0XB72VBC25D0"
+      }
+    },
+    {
+      "email": "gw@hicopy.gdansk.pl",
+      "opp_id": "7ff2afd5-983e-4099-88d6-7e7f117dc323",
+      "bb_id": 4484,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "7ff2afd5-983e-4099-88d6-7e7f117dc323",
+        "name": "Gw Wojtkiewicz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "MXPDVYGBJZRP9QX0MM4H4YC3QK",
+        "bizProduct": "INNE",
+        "bizCardEmail": "gw@hicopy.gdansk.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4484",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "MXPDVYGBJZRP9QX0MM4H4YC3QK"
+      }
+    },
+    {
+      "email": "pawel.janczyk@mv-center.com",
+      "opp_id": "804a0a1b-1a0f-493f-a3d1-e8d17ced86e2",
+      "bb_id": 8127,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "804a0a1b-1a0f-493f-a3d1-e8d17ced86e2",
+        "name": "Paweł Janczyk — mail leads@",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "bb:8127",
+        "idOid": "ZK01YZW88KSQARWXG1K0H7N4SR",
+        "bizProduct": "INNE",
+        "bizCardEmail": "pawel.janczyk@mv-center.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8127",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "ZK01YZW88KSQARWXG1K0H7N4SR"
+      }
+    },
+    {
+      "email": "adam@malecha.eu",
+      "opp_id": "82db120a-d2f7-48ca-8458-c0e4ee4f1b1f",
+      "bb_id": 6376,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "82db120a-d2f7-48ca-8458-c0e4ee4f1b1f",
+        "name": "Adam Malecha — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "7SH634JN2A4JA4584JSRQHTBVR",
+        "bizProduct": "INNE",
+        "bizCardEmail": "adam@malecha.eu"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6376",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "7SH634JN2A4JA4584JSRQHTBVR"
+      }
+    },
+    {
+      "email": "filip.malawa@polmark.pro",
+      "opp_id": "834f7d74-4e9f-4d49-80da-4d07b76d73a6",
+      "bb_id": 5702,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "834f7d74-4e9f-4d49-80da-4d07b76d73a6",
+        "name": "Filip Malawa — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "1YZF40C8N6H53F710783GS4QP3",
+        "bizProduct": "INNE",
+        "bizCardEmail": "filip.malawa@polmark.pro"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5702",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "1YZF40C8N6H53F710783GS4QP3"
+      }
+    },
+    {
+      "email": "dariusz.maron@servcomp.pl",
+      "opp_id": "844e9b96-ec7e-4184-813d-458be6208c2f",
+      "bb_id": 36889,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "844e9b96-ec7e-4184-813d-458be6208c2f",
+        "name": "Dariusz Maroń — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "1W0306E9ZEC5NGR4JRS8BBYGQH",
+        "bizProduct": "INNE",
+        "bizCardEmail": "dariusz.maron@servcomp.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:36889",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "1W0306E9ZEC5NGR4JRS8BBYGQH"
+      }
+    },
+    {
+      "email": "agnieszka.guzowska@adiuta.pl",
+      "opp_id": "859c0a0d-1e19-4764-a326-a258e0240928",
+      "bb_id": 5485,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "859c0a0d-1e19-4764-a326-a258e0240928",
+        "name": "Agnieszka Guzowska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "2K9J2VX8FNETNAENNHJPJ34AMV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "agnieszka.guzowska@adiuta.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:5485",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "2K9J2VX8FNETNAENNHJPJ34AMV"
+      }
+    },
+    {
+      "email": "kontakt@centrumintus.pl",
+      "opp_id": "888fea24-8763-4ee1-8ef6-a55a5d19b425",
+      "bb_id": 8582,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "888fea24-8763-4ee1-8ef6-a55a5d19b425",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "1WQYX4TEK7BPHRDQVBH5VXP04Y",
+        "bizProduct": "INNE",
+        "bizCardEmail": "kontakt@centrumintus.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8582",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "1WQYX4TEK7BPHRDQVBH5VXP04Y"
+      }
+    },
+    {
+      "email": "orzechsoft@wir.pl",
+      "opp_id": "88ce09c3-d16d-4843-90a1-7583894169f1",
+      "bb_id": 7928,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "88ce09c3-d16d-4843-90a1-7583894169f1",
+        "name": "Orzechsoft — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "68Y5PT7XXP7S1MVZ5YQZHBSDNB",
+        "bizProduct": "INNE",
+        "bizCardEmail": "orzechsoft@wir.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:7928",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "68Y5PT7XXP7S1MVZ5YQZHBSDNB"
+      }
+    },
+    {
+      "email": "joanna@adlove.pl",
+      "opp_id": "8a473399-28cb-4bdd-b642-0057e89597e4",
+      "bb_id": 6012,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "8a473399-28cb-4bdd-b642-0057e89597e4",
+        "name": "Joanna — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "FQR336504FHVF8C4Q1Q28DKS5W",
+        "bizProduct": "INNE",
+        "bizCardEmail": "joanna@adlove.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6012",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "FQR336504FHVF8C4Q1Q28DKS5W"
+      }
+    },
+    {
+      "email": "mikolaj@sfilmujemy.pl",
+      "opp_id": "8f04a34f-1444-4b80-bf8a-fb26f91378da",
+      "bb_id": 5916,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "8f04a34f-1444-4b80-bf8a-fb26f91378da",
+        "name": "Mikolaj — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "VPH9XHW72QFMRZ6W8C3YT3R9S4",
+        "bizProduct": "INNE",
+        "bizCardEmail": "mikolaj@sfilmujemy.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:5916",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "VPH9XHW72QFMRZ6W8C3YT3R9S4"
+      }
+    },
+    {
+      "email": "d.rymarz@komatz.pl",
+      "opp_id": "91eea6a7-64e5-4af2-a24e-062a31703e3c",
+      "bb_id": 7574,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "91eea6a7-64e5-4af2-a24e-062a31703e3c",
+        "name": "D Rymarz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "BYTBG4R8MG436CRMS064JC5Y42",
+        "bizProduct": "INNE",
+        "bizCardEmail": "d.rymarz@komatz.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:7574",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "BYTBG4R8MG436CRMS064JC5Y42"
+      }
+    },
+    {
+      "email": "marketing@adnaturalnie.pl",
+      "opp_id": "99a1f486-92f4-42d7-bea8-9cd2d06e2af4",
+      "bb_id": 7691,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "99a1f486-92f4-42d7-bea8-9cd2d06e2af4",
+        "name": "Marketing — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "K6ED3G2GF8CK4RYWDY4D7251T3",
+        "bizProduct": "INNE",
+        "bizCardEmail": "marketing@adnaturalnie.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7691",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "K6ED3G2GF8CK4RYWDY4D7251T3"
+      }
+    },
+    {
+      "email": "anita@leantransformer.pl",
+      "opp_id": "9ca618b5-28a8-4e13-ac4e-fbd16c965709",
+      "bb_id": 5121,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "9ca618b5-28a8-4e13-ac4e-fbd16c965709",
+        "name": "Anita — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "WRVDC5QSM1HGC89WEDRSBXQCS5",
+        "bizProduct": "INNE",
+        "bizCardEmail": "anita@leantransformer.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:5121",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "WRVDC5QSM1HGC89WEDRSBXQCS5"
+      }
+    },
+    {
+      "email": "admin@heatpex.net",
+      "opp_id": "9e4536e7-a85a-4bec-ac71-bc49c05037fe",
+      "bb_id": 6705,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "9e4536e7-a85a-4bec-ac71-bc49c05037fe",
+        "name": "Admin — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SAGBM2T2D4A94S7Y329W8Q7KS9",
+        "bizProduct": "INNE",
+        "bizCardEmail": "admin@heatpex.net"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6705",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "SAGBM2T2D4A94S7Y329W8Q7KS9"
+      }
+    },
+    {
+      "email": "biuro@wpfinanse.pl",
+      "opp_id": "9f264ff3-1525-4b59-9cef-c570420e9e92",
+      "bb_id": 6084,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "9f264ff3-1525-4b59-9cef-c570420e9e92",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "NRAEWKHQXNHG8SVF8CQXCWA7JV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@wpfinanse.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6084",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "NRAEWKHQXNHG8SVF8CQXCWA7JV"
+      }
+    },
+    {
+      "email": "biuro@wpfinanse.pl",
+      "opp_id": "a22c7272-8489-4523-bb0c-376775a19d92",
+      "bb_id": 6084,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "a22c7272-8489-4523-bb0c-376775a19d92",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "NRAEWKHQXNHG8SVF8CQXCWA7JV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@wpfinanse.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6084",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "NRAEWKHQXNHG8SVF8CQXCWA7JV"
+      }
+    },
+    {
+      "email": "pawel@woodenworld.eu",
+      "opp_id": "a3fa6b4c-f855-4cf6-a0d9-d3feb7de9114",
+      "bb_id": 5021,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "a3fa6b4c-f855-4cf6-a0d9-d3feb7de9114",
+        "name": "Pawel — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "K0KDH6DR8EDWV6WPBBMET6M32B",
+        "bizProduct": "INNE",
+        "bizCardEmail": "pawel@woodenworld.eu"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5021",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "K0KDH6DR8EDWV6WPBBMET6M32B"
+      }
+    },
+    {
+      "email": "biuro@financialmatter.com.pl",
+      "opp_id": "a831c4a9-5d15-4d10-95ad-3f8d03fd5caa",
+      "bb_id": 6082,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "a831c4a9-5d15-4d10-95ad-3f8d03fd5caa",
+        "name": "Financialmatter — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "2WR6R9TX989AVDWESAKPY56S4E",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@financialmatter.com.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6082",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "2WR6R9TX989AVDWESAKPY56S4E"
+      }
+    },
+    {
+      "email": "b.mossakowski@siatkowka.torun.pl",
+      "opp_id": "b28eefc8-12d1-40d1-ba53-d5b714deb648",
+      "bb_id": 7033,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "b28eefc8-12d1-40d1-ba53-d5b714deb648",
+        "name": "Bogdan Mossakowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SFAV228Q7Z717D818HCDC7EFHB",
+        "bizProduct": "INNE",
+        "bizCardEmail": "b.mossakowski@siatkowka.torun.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7033",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "SFAV228Q7Z717D818HCDC7EFHB"
+      }
+    },
+    {
+      "email": "w.andruszko@web.de",
+      "opp_id": "ba7c9b3a-af23-4795-814a-af079f66a079",
+      "bb_id": 4665,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "ba7c9b3a-af23-4795-814a-af079f66a079",
+        "name": "W Andruszko — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "6GZZSWVMVY8TG3H84GCRV8Y3RH",
+        "bizProduct": "INNE",
+        "bizCardEmail": "w.andruszko@web.de"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4665",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "6GZZSWVMVY8TG3H84GCRV8Y3RH"
+      }
+    },
+    {
+      "email": "krzysztof.nykiel@pmcnet.eu",
+      "opp_id": "bb982086-220c-46d7-a0ad-30ef56754701",
+      "bb_id": 8782,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "bb982086-220c-46d7-a0ad-30ef56754701",
+        "name": "Krzysztof Nykiel — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "FQ4ANE65DDQBS5G8FWTMAA3YAB",
+        "bizProduct": "INNE",
+        "bizCardEmail": "krzysztof.nykiel@pmcnet.eu"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8782",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "FQ4ANE65DDQBS5G8FWTMAA3YAB"
+      }
+    },
+    {
+      "email": "mariusz.chojnacki@bch-service.pl",
+      "opp_id": "bbd5cf7b-7c89-4db5-9dc7-057cc37329f1",
+      "bb_id": 6085,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "bbd5cf7b-7c89-4db5-9dc7-057cc37329f1",
+        "name": "Mariusz Chojnacki — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "DS29XEQ8PKAG5QN1YBAYKX1Y96",
+        "bizProduct": "INNE",
+        "bizCardEmail": "mariusz.chojnacki@bch-service.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6085",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "DS29XEQ8PKAG5QN1YBAYKX1Y96"
+      }
+    },
+    {
+      "email": "office@komatz.pl",
+      "opp_id": "bf5bf776-3f5f-4418-9243-cfca8a06e959",
+      "bb_id": 8440,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "bf5bf776-3f5f-4418-9243-cfca8a06e959",
+        "name": "Office — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "889Q7G5CA52FGEKD8284S2HKCY",
+        "bizProduct": "INNE",
+        "bizCardEmail": "office@komatz.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:8440",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "889Q7G5CA52FGEKD8284S2HKCY"
+      }
+    },
+    {
+      "email": "tomek@kosmiczneranczo.pl",
+      "opp_id": "bfee8063-ac09-4d32-a5f9-30975b64d92f",
+      "bb_id": 9215,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "bfee8063-ac09-4d32-a5f9-30975b64d92f",
+        "name": "Tomek — mail leads@",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "bb:9215",
+        "idOid": "H45N8QDRD8QEKKWW0S4QRNH8KT",
+        "bizProduct": "INNE",
+        "bizCardEmail": "tomek@kosmiczneranczo.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:9215",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "H45N8QDRD8QEKKWW0S4QRNH8KT"
+      }
+    },
+    {
+      "email": "a.gaca@zychar.pl",
+      "opp_id": "c94d04cb-54e1-4694-928d-218603bee7dc",
+      "bb_id": 5400,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "c94d04cb-54e1-4694-928d-218603bee7dc",
+        "name": "Anna Gaca ZYCHAR — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "SYRKW54VH9D84A0TQ639X1CDNC",
+        "bizProduct": "INNE",
+        "bizCardEmail": "a.gaca@zychar.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:5400",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "SYRKW54VH9D84A0TQ639X1CDNC"
+      }
+    },
+    {
+      "email": "i.szczepanska@tulea.pl",
+      "opp_id": "d47c4240-1285-46b5-90ad-6eba68169f41",
+      "bb_id": 4506,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "d47c4240-1285-46b5-90ad-6eba68169f41",
+        "name": "I Szczepanska — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "RD4NSVWR61CHRQYTKH5JRZZ0RZ",
+        "bizProduct": "INNE",
+        "bizCardEmail": "i.szczepanska@tulea.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4506",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "RD4NSVWR61CHRQYTKH5JRZZ0RZ"
+      }
+    },
+    {
+      "email": "j.karczewski@horizonacademy.pl",
+      "opp_id": "d4d00335-5e54-4681-bfd8-bb939797dc18",
+      "bb_id": 8340,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "d4d00335-5e54-4681-bfd8-bb939797dc18",
+        "name": "Jędrzej Karczewski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "V72RZRZ6T9BVYNWM05R9P70MR0",
+        "bizProduct": "INNE",
+        "bizCardEmail": "j.karczewski@horizonacademy.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:8340",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "V72RZRZ6T9BVYNWM05R9P70MR0"
+      }
+    },
+    {
+      "email": "fundacja@pokazmidroge.org.pl",
+      "opp_id": "e13933fa-f149-4a56-a70b-0941e72d64f9",
+      "bb_id": 9059,
+      "bb_stage": "negotiations",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "e13933fa-f149-4a56-a70b-0941e72d64f9",
+        "name": "Katarzyna Grabowska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "RGKZTNEC2M5BGF9HSMDS4NHRQE",
+        "bizProduct": "INNE",
+        "bizCardEmail": "fundacja@pokazmidroge.org.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:9059",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "RGKZTNEC2M5BGF9HSMDS4NHRQE"
+      }
+    },
+    {
+      "email": "biuro@fwt.com.pl",
+      "opp_id": "e3597e6b-82b4-4d5c-908d-e7ba8f9fbf1a",
+      "bb_id": 7940,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "e3597e6b-82b4-4d5c-908d-e7ba8f9fbf1a",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QDWVFVWV2Y3837F6Y3632Z4J5K",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@fwt.com.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7940",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "QDWVFVWV2Y3837F6Y3632Z4J5K"
+      }
+    },
+    {
+      "email": "adam.rydlewicz@galeon.pl",
+      "opp_id": "e48ce4d9-955c-4eff-a5cd-faf7977a159c",
+      "bb_id": 36407,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "e48ce4d9-955c-4eff-a5cd-faf7977a159c",
+        "name": "Adam Rydlewicz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "ZM2Q84NW9RNX4M2SDTGQYH5NYS",
+        "bizProduct": "INNE",
+        "bizCardEmail": "adam.rydlewicz@galeon.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:36407",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "ZM2Q84NW9RNX4M2SDTGQYH5NYS"
+      }
+    },
+    {
+      "email": "natalia@go4hrlogistyka.pl",
+      "opp_id": "ee5948bb-fd69-467b-b400-2ead55683c2f",
+      "bb_id": 8738,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "ee5948bb-fd69-467b-b400-2ead55683c2f",
+        "name": "Natalia — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "MH6GQQM40BM5XV7JYT7RD8H4X8",
+        "bizProduct": "INNE",
+        "bizCardEmail": "natalia@go4hrlogistyka.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8738",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "MH6GQQM40BM5XV7JYT7RD8H4X8"
+      }
+    },
+    {
+      "email": "biuro@designfactory-lodz.pl",
+      "opp_id": "ee92124c-7b46-46e6-b48d-01885ae4ee01",
+      "bb_id": 6708,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "ee92124c-7b46-46e6-b48d-01885ae4ee01",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "JYWH9ZND6JNR7AFJXVY9VTFMEV",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@designfactory-lodz.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:6708",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "JYWH9ZND6JNR7AFJXVY9VTFMEV"
+      }
+    },
+    {
+      "email": "tomek@itohub.com",
+      "opp_id": "efdea98c-09d8-49ef-bb9c-1ab7652c03bc",
+      "bb_id": 5659,
+      "bb_stage": "analysis",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "efdea98c-09d8-49ef-bb9c-1ab7652c03bc",
+        "name": "Tomek Garbowski (ITOhub Loxone Gold Partner) — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "3R97ECAHZ1GG5V8DXY3NCC7KQ8",
+        "bizProduct": "INNE",
+        "bizCardEmail": "tomek@itohub.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:5659",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "3R97ECAHZ1GG5V8DXY3NCC7KQ8"
+      }
+    },
+    {
+      "email": "biuro@mjmintegral.com",
+      "opp_id": "f2525b1e-71ea-44e7-963a-c6839fa530ea",
+      "bb_id": 7270,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "f2525b1e-71ea-44e7-963a-c6839fa530ea",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QG48S4ZCC81TAE1QV83VKC177A",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@mjmintegral.com"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7270",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "QG48S4ZCC81TAE1QV83VKC177A"
+      }
+    },
+    {
+      "email": "biuro@fabryka-bhp.pl",
+      "opp_id": "f54fdf48-d029-4332-98e4-e153303f1a97",
+      "bb_id": 8281,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "f54fdf48-d029-4332-98e4-e153303f1a97",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "PJACT4X4CAZ7M92613RH363RTP",
+        "bizProduct": "INNE",
+        "bizCardEmail": "biuro@fabryka-bhp.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:8281",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "PJACT4X4CAZ7M92613RH363RTP"
+      }
+    },
+    {
+      "email": "g.idziak@kruczek.partners",
+      "opp_id": "f89c0a7a-54f2-4e1c-a2b2-e7318e0217d2",
+      "bb_id": 5340,
+      "bb_stage": "inquiry",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "f89c0a7a-54f2-4e1c-a2b2-e7318e0217d2",
+        "name": "Gwidon P. Idziak | Kruczek+Partnerzy Kancelaria Prawna — mail leads@",
+        "stage": "CONTACTED",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QBBVWH7Q136WPQV3Z8VF8V7M48",
+        "bizProduct": "INNE",
+        "bizCardEmail": "g.idziak@kruczek.partners"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "CONTACTED",
+        "bitrixDealId": "bb:5340",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "QBBVWH7Q136WPQV3Z8VF8V7M48"
+      }
+    },
+    {
+      "email": "krzysztof.jurzysta@wargamer.pl",
+      "opp_id": "fbe2cabc-c545-4970-9190-c352b389ccce",
+      "bb_id": 4883,
+      "bb_stage": "negotiations",
+      "bb_owner": "Gosia",
+      "before": {
+        "id": "fbe2cabc-c545-4970-9190-c352b389ccce",
+        "name": "Krzysztof Jurzysta — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "V711A6H23GRB9PW8Y1PBBFG59S",
+        "bizProduct": "INNE",
+        "bizCardEmail": "krzysztof.jurzysta@wargamer.pl"
+      },
+      "decision": "align",
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4883",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizSource": "MANUAL",
+        "campaignRejected": false,
+        "idOid": "V711A6H23GRB9PW8Y1PBBFG59S"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "email": "n.m.kurek@gmail.com",
+      "opp_id": "63ae979f-a23d-4972-bc5c-15ab720b269f",
+      "bb_id": 8761,
+      "bb_stage": "service",
+      "bb_owner": "Marta",
+      "before": {
+        "id": "63ae979f-a23d-4972-bc5c-15ab720b269f",
+        "name": "n.m.kurek@gmail.com — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "RPDEB2ZMVMWAQP2EWN34RMN35Z",
+        "bizProduct": "INNE",
+        "bizCardEmail": "n.m.kurek@gmail.com"
+      },
+      "decision": "skip_bb_stage_service",
+      "patch": null
+    },
+    {
+      "email": "lucjan@vip.pl",
+      "opp_id": "d4748b13-104f-4ac2-afb0-6ce4e7abf909",
+      "bb_id": 8966,
+      "bb_stage": "inquiry",
+      "bb_owner": 294,
+      "before": {
+        "id": "d4748b13-104f-4ac2-afb0-6ce4e7abf909",
+        "name": "Lucjan — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "QKMK16Y8PHHYXSDJHEEHSTVNG6",
+        "bizProduct": "INNE",
+        "bizCardEmail": "lucjan@vip.pl"
+      },
+      "decision": "skip_bb_owner_294",
+      "patch": null
+    }
+  ],
+  "failed": [],
+  "finishedAt": "2026-08-28T08:36:00.436268+00:00",
+  "counts": {
+    "candidates": 80,
+    "aligned": 78,
+    "skipped": 2,
+    "failed": 0,
+    "align_ok": 0
+  }
+}

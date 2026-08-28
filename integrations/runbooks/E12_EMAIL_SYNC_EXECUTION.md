@@ -123,6 +123,24 @@ Z `better-bitrix-main/app/api/company/fetchEmailById.ts` (ten sam serwer co juli
 
 Po pierwszym udanym teście skopiuj ten sam szablon na kolejne skrzynki.
 
+### Cutover Day-1 — skrzynka **per użytkownik** + **ADR #22 OUT ze swojej**
+
+**Twarda reguła:** IN może być na `leads@` / `studio@` / inną ogólną. **OUT handlowca zawsze z jego skrzynki** (`marta@`, `gosia@`, …). Nie odpisywać „z ogólnej”.
+
+Skrzynki tylko na koncie głównym = podgląd OK, send u handlowca NIE. Osobiste skrzynki: **przenieś** na konto handlowca (bez duplikatu IMAP). Wspólne (`leads@`, `studio@`, `pomoc@`) zostają na koncie operacyjnym.
+
+| Krok | Kto | Co |
+|------|-----|-----|
+| 1 | Handlowiec | Loguje się **swoim** kontem Twenty (login = adres skrzynki, np. `marta@`) |
+| 2 | Handlowiec | Settings → **Accounts** → Add → IMAP/SMTP (parametry FAZA 1 + hasło z `.env`) |
+| 3 | Handlowiec | Visibility = **All Email Content**; foldery **Inbox** + **Sent** |
+| 4 | Admin | Odłącz tę samą skrzynkę z konta głównego (jeśli była) |
+| 5 | Smoke **ADR #22** | Lead z formularza / wątek `leads@` → pinned **Odpowiedz** (Owocni Mail; native Reply/Send wyłączone) → From = własna → klient dostaje z `marta@` / … |
+
+**Override:** natywne Reply/Send Email w command menu są wyłączone w sandboxie. **Odpowiedz** = Owocni Mail (From = własna skrzynka). Native Reply wiązał send z kanałem odbioru (`leads@`) — stąd był martwy u handlowca.
+
+Mapowanie: Marta→`marta@`, Gosia→`gosia@`, Maciej→`copywriting@`, Mariusz→`mariusz@`.
+
 ---
 
 ## FAZA 2 — Podłączenie skrzynek (E12.1)

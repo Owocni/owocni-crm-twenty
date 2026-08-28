@@ -107,7 +107,7 @@ Wydruk / Notion — **obowiązkowy** przed go-live:
 - [ ] Sprawdź czy **Person** już istnieje (email nadawcy)
 - [ ] Jeśli nowy → utwórz **Opportunity** lub przypisz do istniejącej (ta sama firma)
 - [ ] Ustaw **Owner** (nie zostawiaj pustego)
-- [ ] Odpowiedz z Twenty (nie z osobistego klienta mail, jeśli wątek jest wspólny)
+- [ ] **ADR #22:** pinned **Odpowiedz** → From = **swoja** skrzynka (nie `leads@`); native Reply/Send wyłączone
 - [ ] **Nie** usuwaj duplikatu w BB do cutoveru — tam nadal żyje julia362
 
 ### B3. Testy E12.3b (sandbox)

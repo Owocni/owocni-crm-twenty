@@ -20,10 +20,22 @@ import {
   writeCachedMailContext,
 } from 'src/utils/hostMailContext';
 import type { PersonContext } from 'src/utils/personContext';
+import { createId } from 'src/utils/createId';
+import { buildAttachmentPickerSrcDoc } from 'src/utils/attachmentPickerFrame';
+import {
+  ATTACHMENT_UPLOAD_PATH,
+  formatFileSize,
+  MAX_EMAIL_ATTACHMENTS,
+  type EmailAttachmentRef,
+} from 'src/utils/emailAttachmentShared';
+import { resolveAccessToken } from 'src/utils/resolveAccessToken';
 import { toReplySubject } from 'src/utils/replySubject';
 
 export const TEMPLATE_PICKER_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER =
   '2d49aa61-2a83-485b-856d-c3d26885cae5';
+
+/** Synthetic selection — free reply / compose (ADR #22), not a DB template. */
+export const FREE_COMPOSE_TEMPLATE_ID = '__owocni_free_compose__';
 
 type MailTemplateSummary = {
   id: string;
@@ -31,6 +43,14 @@ type MailTemplateSummary = {
   category: string;
   priority: string;
   subjectTemplate: string;
+};
+
+const FREE_COMPOSE_SUMMARY: MailTemplateSummary = {
+  id: FREE_COMPOSE_TEMPLATE_ID,
+  name: 'Odpowiedź (bez szablonu)',
+  category: 'FREE',
+  priority: 'MUST',
+  subjectTemplate: '',
 };
 
 type RecentRecipient = {
@@ -303,12 +323,15 @@ const TemplatePicker = () => {
   const [allowedSendAccounts, setAllowedSendAccounts] = useState<
     AllowedSendAccount[]
   >([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // ADR #22: open straight into free reply — templates only via „Wstaw szablon”.
+  const [selectedId, setSelectedId] = useState<string | null>(
+    FREE_COMPOSE_TEMPLATE_ID,
+  );
   const [query, setQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [editSubject, setEditSubject] = useState('');
-  const [editBodyHtml, setEditBodyHtml] = useState('');
-  const [editorSessionId, setEditorSessionId] = useState(() => crypto.randomUUID());
+  const [editBodyHtml, setEditBodyHtml] = useState('<p><br></p>');
+  const [editorSessionId, setEditorSessionId] = useState(() => createId());
   const editorRef = useRef<MailBodyEditorHandle>(null);
   const replySubjectRef = useRef<string | null>(null);
   const [recentRecipients, setRecentRecipients] = useState<RecentRecipient[]>([]);
@@ -316,7 +339,7 @@ const TemplatePicker = () => {
   const [leadSearchHits, setLeadSearchHits] = useState<RecipientSearchHit[]>([]);
   const [leadSearchLoading, setLeadSearchLoading] = useState(false);
   const [resolvedRecordId, setResolvedRecordId] = useState<string | null>(null);
-  const [subjectFromTemplate, setSubjectFromTemplate] = useState(true);
+  const [subjectFromTemplate, setSubjectFromTemplate] = useState(false);
   const [loadingList, setLoadingList] = useState(true);
   const [loadingDraft, setLoadingDraft] = useState(false);
   const [sending, setSending] = useState(false);
@@ -326,6 +349,13 @@ const TemplatePicker = () => {
   );
   const [draftError, setDraftError] = useState<string | null>(null);
   const [listError, setListError] = useState<string | null>(null);
+  const [replyMessageId, setReplyMessageId] = useState<string | null>(null);
+  const [attachments, setAttachments] = useState<
+    Array<EmailAttachmentRef & { size?: number }>
+  >([]);
+  const [uploadingAttachments, setUploadingAttachments] = useState(false);
+  const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
+  const [attachmentToken, setAttachmentToken] = useState('');
 
   const personEmail = recipientEmail.trim() || person?.email || '';
   const effectiveRecordId =
@@ -336,10 +366,29 @@ const TemplatePicker = () => {
 
   replySubjectRef.current = replySubject;
 
-  const selected = useMemo(
-    () => templates.find((template) => template.id === selectedId) ?? null,
-    [templates, selectedId],
-  );
+  const selected = useMemo(() => {
+    if (selectedId === FREE_COMPOSE_TEMPLATE_ID) {
+      return FREE_COMPOSE_SUMMARY;
+    }
+
+    return templates.find((template) => template.id === selectedId) ?? null;
+  }, [templates, selectedId]);
+
+  const enterFreeCompose = (subjectHint?: string | null) => {
+    setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
+    setEditBodyHtml('<p><br></p>');
+    setEditorSessionId(createId());
+    setLoadingDraft(false);
+    setDraftError(null);
+    setAttachments([]);
+    const subj = subjectHint?.trim() || replySubjectRef.current?.trim() || null;
+    if (subj) {
+      setEditSubject(toReplySubject(subj));
+    } else {
+      setEditSubject('');
+    }
+    setSubjectFromTemplate(false);
+  };
 
   // When Reply context arrives after template was already opened, force Re: subject.
   useEffect(() => {
@@ -596,8 +645,29 @@ const TemplatePicker = () => {
           if (!cancelled && suggestion.recentRecipients?.length) {
             setRecentRecipients(suggestion.recentRecipients);
           }
+
+          if (!cancelled && suggestion.suggestedReply?.messageId) {
+            setReplyMessageId(suggestion.suggestedReply.messageId);
+          }
         } catch {
           // optional dropdown only
+        }
+
+        // ADR #22: default = free reply from own mailbox (not template picker).
+        if (!cancelled) {
+          const replyHint =
+            data.replySubject?.trim() ||
+            resolvedContext.scrapedSubject?.trim() ||
+            null;
+          setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
+          setEditBodyHtml('<p><br></p>');
+          setEditorSessionId(createId());
+          setLoadingDraft(false);
+          setDraftError(null);
+          setSubjectFromTemplate(false);
+          if (replyHint) {
+            setEditSubject(toReplySubject(replyHint));
+          }
         }
       } catch (loadError) {
         if (cancelled) {
@@ -606,6 +676,12 @@ const TemplatePicker = () => {
 
         setListError(
           loadError instanceof Error ? loadError.message : String(loadError),
+        );
+        // Still keep free compose so Reply is usable without templates.
+        enterFreeCompose(
+          resolvedContext.scrapedSubject?.trim() ||
+            replySubjectRef.current ||
+            null,
         );
       } finally {
         if (!cancelled) {
@@ -680,13 +756,14 @@ const TemplatePicker = () => {
   }, [effectiveRecordId, personEmail]);
 
   const handleSelectTemplate = async (template: MailTemplateSummary) => {
-    const nextSessionId = crypto.randomUUID();
+    const nextSessionId = createId();
 
     setSelectedId(template.id);
     setEditSubject('');
     setEditBodyHtml('');
     setEditorSessionId(nextSessionId);
     setDraftError(null);
+    setAttachments([]);
     setLoadingDraft(true);
 
     try {
@@ -907,14 +984,18 @@ const TemplatePicker = () => {
         to?: string;
         bodySource?: string;
         bodyLength?: number;
+        from?: string;
       }>('/s/mail/send-template', {
         recordId: effectiveRecordId ?? undefined,
         to: personEmail,
         subject,
         htmlBody: bodyHtml,
         htmlBodyBase64: encodeHtmlBodyBase64(bodyHtml),
-        templateId: selected.id,
+        templateId:
+          selected.id === FREE_COMPOSE_TEMPLATE_ID ? undefined : selected.id,
         connectedAccountId: connectedAccountId ?? undefined,
+        inReplyToMessageId: replyMessageId ?? undefined,
+        files: attachments.map(({ id, name }) => ({ id, name })),
       });
 
       if (!result.ok) {
@@ -944,8 +1025,149 @@ const TemplatePicker = () => {
 
   const SEND_COUNTDOWN_SECONDS = 15;
 
+  const removeAttachment = (id: string) => {
+    setAttachments((prev) => prev.filter((entry) => entry.id !== id));
+  };
+
+  const attachmentPickerDisabled =
+    sending ||
+    loadingDraft ||
+    uploadingAttachments ||
+    attachments.length >= MAX_EMAIL_ATTACHMENTS ||
+    sendCountdown !== null;
+
+  useEffect(() => {
+    if (!selected) {
+      setAttachmentPickerSrcDoc('');
+      return;
+    }
+
+    let cancelled = false;
+
+    const refresh = async () => {
+      try {
+        const token = await resolveAccessToken();
+        if (cancelled) {
+          return;
+        }
+        setAttachmentToken(token);
+        setAttachmentPickerSrcDoc(
+          buildAttachmentPickerSrcDoc({
+            sessionId: editorSessionId,
+            accessToken: token,
+            disabled: attachmentPickerDisabled,
+          }),
+        );
+      } catch {
+        if (!cancelled) {
+          setAttachmentPickerSrcDoc(
+            buildAttachmentPickerSrcDoc({
+              sessionId: editorSessionId,
+              accessToken: attachmentToken,
+              disabled: true,
+            }),
+          );
+        }
+      }
+    };
+
+    void refresh();
+
+    return () => {
+      cancelled = true;
+    };
+    // Rebuild when session/disabled flips; token refresh is best-effort.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, editorSessionId, attachmentPickerDisabled]);
+
+  useEffect(() => {
+    if (!selected || !editorSessionId) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const poll = async () => {
+      try {
+        const client = new RestApiClient();
+        const data = await client.post<{
+          ok?: boolean;
+          files?: Array<EmailAttachmentRef & { size?: number }>;
+          uploading?: number;
+        }>(ATTACHMENT_UPLOAD_PATH, {
+          action: 'list',
+          sessionId: editorSessionId,
+        });
+
+        if (cancelled) {
+          return;
+        }
+
+        setUploadingAttachments((data.uploading ?? 0) > 0);
+
+        const incoming = Array.isArray(data.files) ? data.files : [];
+
+        if (incoming.length === 0) {
+          return;
+        }
+
+        const acceptedIds: string[] = [];
+
+        setAttachments((prev) => {
+          const next = [...prev];
+
+          for (const file of incoming) {
+            if (!file?.id || !file?.name) {
+              continue;
+            }
+
+            acceptedIds.push(file.id);
+
+            if (next.some((entry) => entry.id === file.id)) {
+              continue;
+            }
+
+            next.push({
+              id: file.id,
+              name: file.name,
+              size: file.size,
+            });
+          }
+
+          return next.slice(0, MAX_EMAIL_ATTACHMENTS);
+        });
+
+        if (acceptedIds.length > 0) {
+          await client.post(ATTACHMENT_UPLOAD_PATH, {
+            action: 'ack',
+            sessionId: editorSessionId,
+            ids: acceptedIds,
+          });
+        }
+      } catch {
+        // ignore transient poll errors
+      }
+    };
+
+    void poll();
+    const timer = setInterval(() => {
+      void poll();
+    }, 1000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [selected, editorSessionId]);
+
   const startSendCountdown = () => {
-    if (!selected || !personEmail || sending || sendCountdown !== null) {
+    if (
+      !selected ||
+      !personEmail ||
+      sending ||
+      sendCountdown !== null ||
+      uploadingAttachments
+    ) {
       return;
     }
 
@@ -1007,22 +1229,6 @@ const TemplatePicker = () => {
     templates.some((template) => template.category === category),
   );
 
-  if (loadingList) {
-    return (
-      <div style={{ padding: 20, fontFamily: 'sans-serif' }}>
-        Ładowanie szablonów…
-      </div>
-    );
-  }
-
-  if (listError) {
-    return (
-      <div style={{ padding: 20, fontFamily: 'sans-serif', color: '#b00020' }}>
-        Błąd ładowania: {listError}
-      </div>
-    );
-  }
-
   return (
     <div
       style={{
@@ -1033,6 +1239,19 @@ const TemplatePicker = () => {
         height: '100%',
       }}
     >
+      {listError ? (
+        <div
+          style={{
+            padding: '8px 16px',
+            background: '#fef2f2',
+            color: '#b00020',
+            fontSize: 12,
+            borderBottom: '1px solid #fecaca',
+          }}
+        >
+          Szablony niedostępne ({listError}). Możesz pisać od zera.
+        </div>
+      ) : null}
       <div
         style={{
           padding: '12px 16px',
@@ -1043,7 +1262,20 @@ const TemplatePicker = () => {
           flexWrap: 'wrap',
         }}
       >
-        <strong>Szablony maili</strong>
+        <strong>Odpowiedz</strong>
+        {connectedAccountHandle ? (
+          <span
+            style={{
+              fontSize: 11,
+              color: '#166534',
+              background: '#dcfce7',
+              padding: '2px 8px',
+              borderRadius: 999,
+            }}
+          >
+            From: {connectedAccountHandle}
+          </span>
+        ) : null}
         {isReplyContext ? (
           <span
             style={{
@@ -1066,12 +1298,50 @@ const TemplatePicker = () => {
           </span>
         ) : !contextRecordId && !resolvedRecordId ? (
           <span style={{ fontSize: 11, color: '#b45309', maxWidth: 480 }}>
-            Zamknij natywny Reply i użyj <strong>Szablon</strong> albo zakładki
-            Szablony na leadzie.
+            Brak kontekstu leada — wpisz email odbiorcy albo zamknij natywny Reply
+            i otwórz <strong>Odpowiedz</strong> z karty leada.
           </span>
+        ) : null}
+        {selected?.id === FREE_COMPOSE_TEMPLATE_ID ? (
+          <button
+            type="button"
+            style={{
+              marginLeft: 'auto',
+              fontSize: 12,
+              padding: '4px 10px',
+              border: '1px solid #ddd',
+              borderRadius: 6,
+              background: '#fff',
+              cursor: 'pointer',
+            }}
+            disabled={sending}
+            onClick={() => {
+              setSelectedId(null);
+            }}
+          >
+            Wstaw szablon
+          </button>
+        ) : selected ? (
+          <button
+            type="button"
+            style={{
+              marginLeft: 'auto',
+              fontSize: 12,
+              padding: '4px 10px',
+              border: '1px solid #ddd',
+              borderRadius: 6,
+              background: '#fff',
+              cursor: 'pointer',
+            }}
+            disabled={sending}
+            onClick={() => enterFreeCompose(replySubject)}
+          >
+            Bez szablonu
+          </button>
         ) : null}
       </div>
 
+      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID ? (
       <div
         style={{
           display: 'flex',
@@ -1113,6 +1383,7 @@ const TemplatePicker = () => {
           ))}
         </select>
       </div>
+      ) : null}
 
       {!selected ? (
       <div
@@ -1125,6 +1396,25 @@ const TemplatePicker = () => {
           background: personEmail ? '#fafafa' : '#fff7ed',
         }}
       >
+        <button
+          type="button"
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            background: '#166534',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 6,
+            cursor: 'pointer',
+            fontWeight: 600,
+            fontSize: 14,
+            marginBottom: 4,
+          }}
+          disabled={sending}
+          onClick={() => enterFreeCompose(replySubject)}
+        >
+          Pisz od zera (ze swojej skrzynki)
+        </button>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>Do</span>
           <input
@@ -1254,6 +1544,7 @@ const TemplatePicker = () => {
       </div>
       ) : null}
 
+      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID ? (
       <div
         style={{
           overflowY: 'auto',
@@ -1262,7 +1553,9 @@ const TemplatePicker = () => {
           minHeight: 0,
         }}
       >
-        {visibleTemplates.length === 0 ? (
+        {loadingList ? (
+          <div style={{ padding: 20, color: '#999' }}>Ładuję szablony…</div>
+        ) : visibleTemplates.length === 0 ? (
           <div style={{ padding: 20, color: '#999' }}>Brak wyników.</div>
         ) : (
           visibleTemplates.map((template) => (
@@ -1305,6 +1598,7 @@ const TemplatePicker = () => {
           ))
         )}
       </div>
+      ) : null}
 
       {selected && (
         <div
@@ -1518,8 +1812,74 @@ const TemplatePicker = () => {
               position: 'relative',
               zIndex: 5,
               boxShadow: '0 -4px 12px rgba(0,0,0,0.06)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
             }}
           >
+          {attachments.length > 0 ? (
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 6,
+              }}
+            >
+              {attachments.map((file) => (
+                <span
+                  key={file.id}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    maxWidth: '100%',
+                    padding: '4px 8px',
+                    borderRadius: 999,
+                    background: '#f3f4f6',
+                    border: '1px solid #e5e7eb',
+                    fontSize: 12,
+                    color: '#374151',
+                  }}
+                >
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      maxWidth: 220,
+                    }}
+                    title={file.name}
+                  >
+                    {file.name}
+                    {typeof file.size === 'number'
+                      ? ` (${formatFileSize(file.size)})`
+                      : ''}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={`Usuń ${file.name}`}
+                    style={{
+                      border: 'none',
+                      background: 'transparent',
+                      cursor:
+                        sending || sendCountdown !== null
+                          ? 'not-allowed'
+                          : 'pointer',
+                      color: '#6b7280',
+                      padding: 0,
+                      fontSize: 14,
+                      lineHeight: 1,
+                    }}
+                    disabled={sending || sendCountdown !== null}
+                    onClick={() => removeAttachment(file.id)}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          ) : null}
+
           {sendCountdown !== null ? (
             <div
               style={{
@@ -1575,30 +1935,95 @@ const TemplatePicker = () => {
               </div>
             </div>
           ) : (
-            <button
-              type="button"
-              style={{
-                width: '100%',
-                padding: '10px 12px',
-                background:
-                  sending || !canSendEmail || loadingDraft || !personEmail
-                    ? '#999'
-                    : '#4f46e5',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 6,
-                cursor:
-                  sending || !canSendEmail || loadingDraft || !personEmail
-                    ? 'not-allowed'
-                    : 'pointer',
-                fontWeight: 600,
-                fontSize: 14,
-              }}
-              disabled={sending || !canSendEmail || loadingDraft || !personEmail}
-              onClick={startSendCountdown}
-            >
-              {sending ? 'Wysyłanie…' : 'Wyślij email'}
-            </button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
+              <div
+                title="Dodaj załącznik"
+                aria-label="Dodaj załącznik"
+                style={{
+                  width: 44,
+                  flexShrink: 0,
+                  border: '1px solid #d1d5db',
+                  borderRadius: 6,
+                  overflow: 'hidden',
+                  background: '#fff',
+                  opacity: attachmentPickerDisabled ? 0.55 : 1,
+                }}
+              >
+                {attachmentPickerSrcDoc ? (
+                  <iframe
+                    title="Dodaj załącznik"
+                    srcDoc={attachmentPickerSrcDoc}
+                    style={{
+                      width: 44,
+                      height: 42,
+                      border: 'none',
+                      display: 'block',
+                      pointerEvents: attachmentPickerDisabled
+                        ? 'none'
+                        : 'auto',
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: 44,
+                      height: 42,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#9ca3af',
+                      fontSize: 12,
+                    }}
+                  >
+                    …
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                style={{
+                  flex: 1,
+                  padding: '10px 12px',
+                  background:
+                    sending ||
+                    !canSendEmail ||
+                    loadingDraft ||
+                    !personEmail ||
+                    uploadingAttachments
+                      ? '#999'
+                      : '#4f46e5',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 6,
+                  cursor:
+                    sending ||
+                    !canSendEmail ||
+                    loadingDraft ||
+                    !personEmail ||
+                    uploadingAttachments
+                      ? 'not-allowed'
+                      : 'pointer',
+                  fontWeight: 600,
+                  fontSize: 14,
+                }}
+                disabled={
+                  sending ||
+                  !canSendEmail ||
+                  loadingDraft ||
+                  !personEmail ||
+                  uploadingAttachments
+                }
+                onClick={startSendCountdown}
+              >
+                {uploadingAttachments
+                  ? 'Dodaję plik…'
+                  : sending
+                    ? 'Wysyłanie…'
+                    : attachments.length > 0
+                      ? `Wyślij email (${attachments.length})`
+                      : 'Wyślij email'}
+              </button>
+            </div>
           )}
           </div>
         </div>

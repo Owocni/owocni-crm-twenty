@@ -6,6 +6,7 @@ Wspólne stałe i helpery **dla dokumentacji LLM** oraz runtime **Node (Robot)**
 |------|---------|------|
 | `ssotPaths.js` | Node (+ kopia const w tagach Stape) | Nazwy adapterów, kolekcje Stape Store, kanon eventów |
 | `envGuard.js` | Node (`GoogleCloudRobot.js`) | `sandbox` → bez prod Ads/Meta/GA4 MP |
+| `pricingProductAliases.js` | Node (`GoogleCloudRobot.js`) | Aliasy produktu Pricing_Config: Twenty `WEB` ↔ Sortownia `strony`/`strona`, analogicznie LOGO/NAME/… |
 | `isFreeMail.js` / `is_free_mail.py` | Node / Python | `company_domain_key` gate — exact match SSOT v1 (bez substring) |
 
 **Free-mail SSOT:** kanon `../../owocni-crm/data/free_mail_domains_v1.json` · runtime bundle `data/free_mail_domains_v1.json` (obok `isFreeMail.js`) · docs: `SSOT_free-mail-domains_v1.md` · generator: `../tools/gen_free_mail.py` (pisze kanon + runtime + CF inbound).

@@ -1,292 +1,362 @@
 ---
 doc_id: LEAD_DISPATCHER_PLAN
-title: "Rozdzielanie leadów — model dyspozytora (TIME TO LEAD)"
+title: "Rozdzielanie leadów — v2.0 model dyspozytora (TIME TO LEAD)"
 layer: runbook
-status: draft
+status: approved_for_impl
 owner: "Mariusz (biznes) / Dawid (wdrożenie)"
-last_verified: 2026-08-20
+last_verified: 2026-08-25
 related:
   - LEAD_OWNER_ROUTING_PLAN.md
   - CUTOVER_TWENTY_TEAM_PLAN.md
   - ../../owocni-crm/IDENTITY_AND_INBOUND.md
   - ../../owocni-crm/DATA_MODEL.md
+  - ../../owocni-crm/CRM_CONSTITUTION.md
   - RULE_CONTINUITY_IMPL_CHECKLIST.md
 supersedes:
-  - "/Volumes/Samsung_T5/Rozdzielanie-leadow-wstep.md (v1.3 claim/puli — ODRZUCONE)"
+  - "Rozdzielanie-leadow-wstep.md v1.3 (claim/puli — ODRZUCONE)"
+  - "LEAD_DISPATCHER_PLAN draft 2026-08-20 (skrót zespołowy — scalony tu)"
 audience: "zespół handlowy + LLM / agent wdrożeniowy"
+source: "v2.0 Red Team 2026-08-12 + decyzje właściciela 2026-08-12…25"
 ---
 
-# Rozdzielanie leadów — model dyspozytora
+# Rozdzielanie leadów — v2.0 (model dyspozytora)
 
 ## 0. LLM QUICK ENTRY
 
-**Ten plik decyduje o:** jak system przydziela leady, kiedy tyka zegar przekazania, co robi przycisk „Biorę”, kiedy lead jest „obsłużony”, kiedy leci alert do managera, jak działają weekend/święta/urlop/limit 3.
+**Ten plik = SSOT dyspozytora.** Decyduje o: przydziale ownera, klasyfikacji HOT/STANDARD/LOW, zegarze failover/eskalacji, przycisku „Biorę”, limicie 3, urlopie, weekendzie/świętach, alertach do managera, polach Twenty, wykonawcy (worker GCP).
 
-**Ten plik NIE decyduje o:** cutoverze na Twenty (→ `CUTOVER_TWENTY_TEAM_PLAN.md`); szczegółach matchingu tożsamości poza regułą email/telefon (→ `IDENTITY_AND_INBOUND.md`); Fakturownia/PayU.
+**Ten plik NIE decyduje o:** cutoverze D1 (→ `CUTOVER_TWENTY_TEAM_PLAN.md`); szczegółach identity poza RULE-CONTINUITY (→ `IDENTITY_AND_INBOUND.md`).
 
-**Cel biznesowy:** TIME TO LEAD — jak najszybszy pierwszy kontakt, wspierany automatyzacjami (np. prewypełnione oferty).
+**Model:** dyspozytor — system przydziela twardo. Brak puli claim / rezerwacji / mini-shark / slotów per klasa.
 
-**Model:** prosty **dyspozytor**. System sam przypisuje ownera. Nikt nie ściga się na kliknięcia w puli. Jedyny ręczny bezpiecznik przed przekazaniem = „Biorę”.
+**Zasada:** reguły **kaskadowo od góry** — pierwsza pasująca wygrywa. Nie domykaj otwartych TODO wartościami „z głowy” (INV-2), **z wyjątkiem** jawnych interim poniżej (Meta = cały FB→Robert do listy Piotra).
 
-**Zasada dla LLM:** przy konflikcie reguł zawsze stosuj **kaskadę od góry do dołu** (§2) — pierwsza pasująca wygrywa. Nie wdrażaj odrzuconego modelu claim/puli/slotów (§11).
+**Cutover:** do wdrożenia dyspozytora obowiązuje dotychczasowy assign (hash Marta/Gosia, COPY→Maciej, FB→Robert). **15 min TIME TO LEAD = cel systemu**, nie automat — dopóki nie ma zegara + „Biorę” + limitu. Pełny dyspozytor = **zaraz po cutoverze** (lub wcześniej, jeśli czas).
 
-**Względem cutoveru:** obecny hard-assign (D1-7) wystarczy na start. Ten plan = większe reguły; domyślnie po cutoverze, ale wolno wcześniej, jeśli jest czas. Nie blokuje D1.
+**Blokada wdrożenia (stan 2026-08-25):**
 
----
-
-## 1. Jak to działa w 7 zdaniach (dla zespołu)
-
-1. Lead pojawia się u Ciebie jako Twój — system sam przydziela.
-2. Od przydziału tyka **zegar**. Jeśli nic nie zrobisz, lead przechodzi do drugiej osoby.
-3. Zanim zaczniesz pisać lub dzwonić — kliknij **„Biorę”**. Zegar staje.
-4. „Biorę” to Twoje **poświadczenie**, że zajmujesz się leadem — nie jest to jeszcze potwierdzony kontakt.
-5. Po pierwszym kontakcie (mail / dalszy etap / odrzucenie) lead jest Twój i **już nie przechodzi** automatycznie.
-6. Zegar chodzi tylko **pn–pt 8:00–18:00**. Wieczór, weekend i święta — nic nie przechodzi.
-7. Max **3 leady bez pierwszego kontaktu** na osobę. Na urlopie nic nie dostajesz.
+| # | Temat | Status |
+|---|---|---|
+| 1 | Tabela klasyfikacji HOT/STANDARD/LOW | **DOMKNIĘTE** §4 |
+| 2 | `MANAGER_EMAIL` | **DOMKNIĘTE** — `maciej@owocni.pl` |
+| 3 | Lista Meta→Robert (Piotr) | **DOMKNIĘTE** §3.1 — 8 campaign_id |
 
 ---
 
-## 2. Kto dostaje leada (kaskada)
+## 0.1 Dla zespołu — 7 zdań
 
-**Reguły działają od góry do dołu. Pierwsza pasująca wygrywa.**
-
-| # | Warunek | Owner |
-|---|---------|--------|
-| 1 | Stały klient / ktoś, z kim już rozmawialiście — **ten sam email lub telefon** | Ta osoba (ostatni/znany owner) |
-| 2 | Mail bezpośrednio na skrzynkę imienną handlowca | Ta osoba |
-| 3 | Meta / Facebook / Instant Form **lub** marketing Strategii | **Robert** |
-| 4 | Copywriting | **Maciej** |
-| 5 | Reszta (formularz, `leads@`, …) | **Marta lub Gosia** — kto ma **mniej nieobsłużonych** (bez pierwszego kontaktu) |
-| 6 | Ewa | **Tylko ręczne** przypisanie — zero auto |
-
-### 2.1 Przykład konfliktu
-
-Stały klient Marty pyta o copywriting → wygrywa **#1 Marta**, nie Maciej.  
-Maciej może dostać info / wsparcie, ale **nie przejmuje** leada automatycznie.
-
-### 2.2 Co znaczy „stały klient” (v1 — decyzja)
-
-- **Automatycznie** uznajemy za istniejącego klienta / kontynuację **tylko** gdy jest wspólny **email** albo **telefon**.
-- Brak wspólnego emaila i telefonu → **zawsze domyślnie nowy klient** (nawet ta sama firma / domena / NIP).
-- Dopisywanie / łączenie leadów (np. wspólnik z innego maila) = **ręczne** — to już jest w procesie; system tego nie zgaduje.
+1. Lead pojawia się u Ciebie — system sam przydziela.  
+2. Tyka **zegar**; bez reakcji lead idzie do drugiej osoby.  
+3. Zanim piszesz/dzwonisz — kliknij **„Biorę”** (zegar failover staje).  
+4. „Biorę” ≠ kontakt — to deklaracja; bez kontaktu i tak może pójść alert do Macieja.  
+5. Po first contact (mail / stage poza NEW / odrzuć) lead jest Twój — nie wraca do pętli.  
+6. Zegar tylko **pn–pt 8:00–18:00** (+ święta jak weekend).  
+7. Max **3** leady bez kontaktu (także z „Biorę”); na urlopie nic nie dostajesz.
 
 ---
 
-## 3. Zegar przekazania
+## 1. Decyzje zamknięte
 
-Od momentu przydziału (w oknie pracy) tyka zegar. Bez „Biorę” i bez pierwszego kontaktu lead przechodzi do drugiej osoby:
-
-| Klasa | Czas do przekazania |
-|-------|---------------------|
-| **HOT DEAL** | **15 min** |
-| **STANDARD** | **30 min** |
-| **LOW** | **2 godz.** |
-
-Klasę nadaje **system automatycznie** (produkt + widełki z formularza) — handlowiec tego nie ocenia ręcznie.
-
-### 3.1 TODO — spisać reguły klasyfikacji HOT / STANDARD / LOW
-
-**Status: OTWARTE — musi być w tym dokumencie przed pełnym wdrożeniem zegara.**
-
-Do uzupełnienia (właściciel biznesowy):
-
-- [ ] Jakie produkty / intencje → HOT
-- [ ] Jakie widełki wartości (PLN) → HOT / STANDARD / LOW
-- [ ] Co z niepełnymi danymi / samym materiałem → LOW?
-- [ ] Co z Meta / Instant Form — zawsze HOT, czy zależnie od odpowiedzi?
-- [ ] Domyślna klasa, gdy brak widełek
-
-Do czasu spisania progów: **nie wdrażać automatycznego przekazania po klasie** albo używać jednej bezpiecznej klasy tymczasowej (decyzja wdrożeniowa — oznaczyć w commit/ADR).
+| # | Temat | Decyzja | Zastępuje w v1.3 |
+|---|---|---|---|
+| 1 | Model | **Dyspozytor** — twardy przydział | primary + mini-shark |
+| 2 | Claim / rezerwacja | **Wycięte** | § claim/TTL 3 min |
+| 3 | „Biorę” | `bizAckAt` — wyłącza **failover**; eskalacja dalej liczy | rezerwacja |
+| 4 | First contact | Mail OUT **lub** stage poza NEW → `bizFirstAttemptAt` | osobny log telefonu |
+| 5 | Klasy | HOT / STANDARD / LOW — tylko zegary, **bez slotów** | limity 1/2/3 |
+| 6 | Default class | Brak formularza → **STANDARD** | — |
+| 7 | Failover | Neutralny — licznik na leadzie, nie kara człowieka | „niewykonanie” |
+| 8 | „Rozmowa trwa” | Wycięte z v1 — chroni „Biorę” | §3A |
+| 9 | Overflow wsparcie | Wycięte — mail do managera | §8 OPEN |
+| 10 | Okno | pn–pt 8–18; **kontynuacja minut roboczych** (nie reset po weekendzie) | „od zera w poniedziałek” (odrzucone) |
+| 11 | Alerty handlowca v1 | Brak SMS — widok Opp; architektura SMS-ready | „możliwość przejęcia” |
+| 12 | Eskalacja manager | Mail do **Macieja** (`maciej@owocni.pl`) | — |
+| 13 | Wykonawca | **Worker GCP** + sweep; Twenty = stan + UI + 1 przycisk | WF v7/v12 jako assign |
+| 14 | TTL metryka | `bizFirstAttemptAt` (mail lub MANUAL/telefon); M2 mail-only = pomocnicza | — |
+| 15 | Continuity | **Tylko wspólny email lub telefon**; reszta = nowy + ręczne scalanie | szerokie „strategiczne” |
+| 16 | Limit 3 a „Biorę” | Lead z Ack **bez** first contact **liczy się** do MAX_OPEN | — |
+| 17 | Meta | Lista Piotra §3.1 → `RULE-META-R01`; spoza listy → pula | — |
+| 18 | Cold | = **LOW** (`LOW_INTENT`) | — |
 
 ---
 
-## 4. Przycisk „Biorę”
+## 2. Przebieg leada (kanoniczny)
 
-- Jeden klik na leadzie = **„Zajmuję się tym”**.
-- Zegar przekazania **staje**.
-- Możesz spokojnie pisać ofertę / dzwonić.
-- Nawyk: **zanim** zaczniesz pisać lub dzwonić — kliknij „Biorę”.
+```
+Lead wchodzi (Opportunity NEW)
+  ├─ 1. CONTINUITY: ten sam email LUB telefon → dotychczasowy owner. KONIEC.
+  ├─ 2. KLASYFIKACJA: §4 → bizLeadIntentClass (+ zapis czasu na stronie jeśli jest)
+  ├─ 3. ROUTING: §3 → hard-route albo pula DEFAULT
+  ├─ 4. WYBÓR Z PULI: vacation=false, inClaimPool=true, poniżej MAX_OPEN
+  │     → least-loaded (najmniej bez first contact); remis → dawniej dostała
+  │     └─ nikt dostępny → bez ownera + mail managerowi
+  └─ 5. PRZYDZIAŁ: ownerId + bizAssignedAt + bizRoutingRule. v1: bez SMS.
 
-**Ważne:** „Biorę” **nie** jest potwierdzeniem kontaktu. To deklaracja handlowca.  
-Dlatego obowiązkowe są **alerty managera** o leadach wziętych bez kontaktu (§7).
+SWEEP (GCP, co 5 min, tylko w WORK_WINDOW, z wyłączeniem świąt):
+  ├─ brak Ack i brak firstAttempt przez FAILOVER(klasa) min roboczych
+  │     → druga osoba w puli (jeśli dostępna), failoverCount+1, assignedAt=now
+  │     → jeśli druga niedostępna (limit/urlop) → zostaje + mail managerowi
+  ├─ brak firstAttempt przez ESCALATE(klasa) (Ack obojętny)
+  │     → mail managerowi, bizManagerAlertedAt (raz)
+  └─ bez ownera > UNASSIGNED_ALERT → mail managerowi
 
----
+WYJŚCIE Z PĘTLI (zegary OFF na zawsze):
+  • bizFirstAttemptAt (mail OUT lub stage ≠ NEW)
+  • campaignRejected = true („Odrzuć leada”)
+```
 
-## 5. Pierwszy kontakt kończy temat przekazania
+### Tabela przejść
 
-Po pierwszym kontakcie lead jest Twój — **już nigdzie nie przechodzi automatycznie**.
-
-| Akcja | Skutek |
-|-------|--------|
-| Wysłany mail | System widzi sam → first contact |
-| Po telefonie | Wyślij mail z podsumowaniem **albo** przesuń dalej (np. Rozeznanie / Przyjmij jako SQL) — jak dotychczas |
-| Lead śmieciowy | „Odrzuć leada” — jak dotychczas |
-
-Żadnych dodatkowych klikań poza istniejącym flow.  
-Ręczne przekazanie między handlowcami **zawsze możliwe** — automat tego nie blokuje.
-
----
-
-## 6. Przekazanie to nie kara
-
-Jeśli lead przeszedł do koleżanki, bo byłaś na rozmowie — w porządku: klient dostał szybszy kontakt.  
-Nikt tego nie liczy nikomu na minus.
-
----
-
-## 7. Alerty do managera (obowiązkowe)
-
-### 7.1 Kiedy alert
-
-| Sytuacja | Cel |
-|----------|-----|
-| Lead **wzięty („Biorę”)** ale **długo bez kontaktu** (brak maila / braku przejścia etapu / braku odrzucenia) | Nie zostawiać „zamrożonych” leadów po kliknięciu |
-| Lead **u nikogo bez kontaktu** dłużej (od ~1 h do kilku h — **zależnie od klasy**) | Eskalacja, gdy zegar/przekazania nie wystarczyły |
-
-### 7.2 TODO — doprecyzować
-
-- [ ] **Kto jest managerem** do alertów (osoba / rota) — **do ustalenia**
-- [ ] Dokładne progi czasu per klasa dla alertu „wzięty bez kontaktu”
-- [ ] Dokładne progi dla alertu „u nikogo bez kontaktu”
-- [ ] Kanał alertu (mail / SMS / Twenty task)
-
-**Bez §7 nie wdrażać samego „Biorę” zatrzymującego zegar** — inaczej łatwo kliknąć i odłożyć temat bez konsekwencji.
+| Stan | Zdarzenie | Efekt |
+|---|---|---|
+| bez ownera | przydział | owner + `bizAssignedAt` |
+| bez ownera > UNASSIGNED_ALERT | sweep | mail → Maciej |
+| przydzielony, bez Ack, bez kontaktu | „Biorę” | `bizAckAt` — failover OFF; eskalacja ON |
+| j.w., minęło FAILOVER | sweep | owner→druga / lub zostaje + mail jeśli druga pełna |
+| przydzielony (Ack OK), bez kontaktu, ESCALATE | sweep | mail → Maciej |
+| dowolny | mail OUT / stage poza NEW | `bizFirstAttemptAt` + kanał — pętla OFF |
+| dowolny | Odrzuć leada | `campaignRejected` — pętla OFF |
+| dowolny | ręczna zmiana ownera | respektuj; `bizAssignedAt` = teraz |
+| przydzielony | urlop ownera | leady **bez** first contact → failover; z kontaktem zostają |
 
 ---
 
-## 8. Godziny, weekend, święta
+## 3. Reguły routingu (dane, nie kod)
 
-| Okres | Zegar / przekazanie / eskalacja |
-|-------|----------------------------------|
-| **Pn–pt 8:00–18:00** | Zegar chodzi |
-| Wieczór (po 18) | Stój — lead czeka |
-| **Weekend** | Stój — lead czeka |
-| **Święta** | **Jak weekend** — stój |
+Pierwszy pasujący wygrywa. `bizRoutingRule` = ID reguły (TEXT). Nazwiska tylko w kolumnie celu.
 
-### 8.1 Poniedziałek / pierwszy dzień po weekendzie lub święcie
+| ID | Priorytet | Warunek | Akcja | Cel |
+|---|---|---|---|---|
+| `RULE-CONTINUITY` | 0 | ten sam **email** lub **telefon** → znany owner | ASSIGN_OWNER | dotychczasowy owner |
+| `RULE-META-INTERIM` | 10 | `bizSource=FACEBOOK` — **tylko gdy pusta lista kampanii** (kill-switch) | ASSIGN_MEMBER | Robert |
+| `RULE-META-R01` | 10 | Meta z kampanii Roberta (lista Piotra, `campaign_id`) — §3.1 | ASSIGN_MEMBER | Robert |
+| `RULE-MKTG-01` | 20 | produkt = marketing / strategia (**nie** Meta — Meta tylko R01) | ASSIGN_MEMBER | Robert |
+| `RULE-COPY-01` | 30 | produkt = copywriting | ASSIGN_MEMBER | Maciej |
+| `RULE-MAILBOX-*` | 40 | mail na skrzynkę imienną | ASSIGN_MEMBER | właściciel skrzynki |
+| `RULE-POOL-DEFAULT` | 99 | reszta (formularz, `leads@`, `studio@`, **Meta spoza listy Piotra**) | ASSIGN_POOL | Marta, Gosia |
 
-- Zegar **rusza o 8:00 od zera**.
-- Nikt nie zaczyna dnia ze „spalonym” terminem.
-- Lead weekendowy o 8:00 jest traktowany jakby zegar dopiero wtedy wystartował (np. HOT = do 8:15).
+- Ewa: `bizInClaimPool=false` — tylko ręcznie.  
+- Lista Piotra **aktywna** (2026-08-25): env `LEAD_DISPATCH_META_ROBERT_IDS` = §3.1 → **wyłączony** interim; Meta spoza listy → pula (strony/logo itd.).  
+- Zmiana kampanii = edycja §3.1 / env — nie przebudowa kodu.
 
-### 8.2 Kolejność na liście
+**Konflikt przykład:** stały klient Marty + copy → **RULE-CONTINUITY (Marta)** wygrywa z COPY.
 
-- **Osobnego priorytetu systemowego nie ma.**
-- W praktyce naturalny porządek: leady weekendowe są **najstarsze**, siedzą u góry listy, ich terminy przekazania dojrzewają pierwsze → brać **od góry**.
+### 3.1 Lista kampanii Meta → Robert (Piotr, 2026-08-25)
 
-### 8.3 TODO — lista świąt
+Marketing / strategia. Match: `campaign_id` z Graph (przez `ad_id`). Env: `LEAD_DISPATCH_META_ROBERT_IDS` (CSV).
 
-- [ ] Spisać listę świąt PL (kalendarz systemu) na rok roboczy
-- [ ] Gdzie trzymana (config / SSOT) i kto aktualizuje
+| campaign_id |
+|---|
+| `120250072847080433` |
+| `120250072846850433` |
+| `120250072722520433` |
+| `120250072471360433` |
+| `120250072471350433` |
+| `120250072471300433` |
+| `120250068162040433` |
+| `120245791885450433` |
 
----
-
-## 9. Urlop i limit nieobsłużonych
-
-| Reguła | Opis |
-|--------|------|
-| **Urlop ON/OFF** | Na urlopie nic nie dostajesz; Twoje leady **bez kontaktu** przechodzą do drugiej osoby |
-| **Limit 3** | Max **3 leady bez pierwszego kontaktu** na osobę; masz trzy → nowe idą do koleżanki |
-| Ręczne przekazanie | Zawsze dozwolone |
-
-**Uwaga operacyjna (nie zmienia reguły):** limit 3 jest prosty i „płaski” — nie rozróżnia lekkich vs ciężkich leadów. Na start akceptujemy; kalibracja później, jeśli będzie boleć.
-
-**Nieobsłużony** = bez first contact (§5), niezależnie od tego czy kliknięto „Biorę” (do doprecyzowania przy wdrożeniu licznika: czy „Biorę” liczy się do limitu 3 — **rekomendacja LLM:** tak, liczy się do limitu, bo to nadal lead bez kontaktu; potwierdzić z Mariuszem przy implementacji).
+**Cała reszta kampanii Meta** = inne produkty (strony, logo, …) → `RULE-POOL-DEFAULT` (Marta/Gosia), ewentualnie COPY jeśli produkt = copywriting.
 
 ---
 
-## 10. Powiadomienia
+## 4. Klasyfikacja HOT / STANDARD / LOW
 
-| Teraz | Docelowo |
-|-------|----------|
-| Lead pojawia się u Ciebie (bez wymogu SMS) | SMS powiadomienie **8:00–16:00** |
+Worker przy wejściu, raz, deterministycznie. **AND** w wierszu. Pierwszy pasujący wygrywa.  
+**Cold (język biznesu) = LOW** (`LOW_INTENT`).
 
-SMS nie blokuje wdrożenia zegara / „Biorę”.
+| # | Warunek | Klasa |
+|---|---|---|
+| 1 | Strony **oraz** redesign **oraz** premium **oraz** czas na stronie **> 6 min** | **HOT** |
+| 2a | Strony, ale nie cały wiersz 1 | **STANDARD** |
+| 2b | Inny produkt **oraz** właściciel firmy **oraz** premium **oraz** **> 6 min** | **STANDARD** |
+| 3 | Pozostałe produkty / reszta z formularza | **LOW** |
+| 99 | Brak danych formularza (goły mail) | **STANDARD** |
+
+| Warunek | Dane |
+|---|---|
+| Strony | `bizProduct` = WEB / strony |
+| Redesign | `bizProjectType` = `REDESIGN` |
+| Premium | `bizIntent`=EKSPERT / `*_jaka=premium` |
+| Właściciel firmy | `bizContactRole` = `OWNER` (form `recipient` — **nie** Opportunity owner) |
+| > 6 min | `ctx_time_on_page_ms` > 360000 → zapisać też na Opp (`bizTimeOnPageMs`) |
+
+**Brak czasu na stronie** (mail bezpośredni, Meta, brak sygnału): nie HOT, nie 2b; default **STANDARD** (lub LOW jeśli widać „pozostały produkt” bez sygnałów — przy braku danych: STANDARD).
 
 ---
 
-## 11. Z czego rezygnujemy (odrzucony wariant v1.3)
+## 5. Parametry (jedyne miejsce z liczbami)
 
-Nie wdrażać:
+| Parametr | Wartość | Uwagi |
+|---|---|---|
+| `FAILOVER_HOT` | **15 min** roboczych | |
+| `FAILOVER_STANDARD` | **30 min** roboczych | |
+| `FAILOVER_LOW` | **2 h** robocze | |
+| `ESCALATE_HOT` | **1 h** robocza | także po „Biorę” |
+| `ESCALATE_STANDARD` | **2 h** robocze | |
+| `ESCALATE_LOW` | **4 h** robocze | |
+| `MANAGER_EMAIL` | **maciej@owocni.pl** | Maciej Wysocki |
+| `WORK_WINDOW` | pn–pt 8:00–18:00 | + święta z listy = poza oknem |
+| `MAX_OPEN` | **3** bez first contact / osobę | **w tym** z `bizAckAt` bez kontaktu; obie na limicie → bez ownera + mail |
+| `UNASSIGNED_ALERT` | 30 min roboczych | |
+| `SWEEP_INTERVAL` | 5 min | Cloud Scheduler |
+| `DEFAULT_CLASS` | STANDARD | |
+| `NOTIFY_CHANNELS` | `[]` → później `[SMS]` | |
+| `TIME_ON_PAGE_HOT_MS` | 360000 | 6 min |
 
-- puli „możliwość przejęcia” / ścigania na kliknięcia  
-- rezerwacji 3 min / atomowego claim  
-- mini-shark / broadcast  
-- slotów 1 HOT / 2 STANDARD / 3 LOW (max 5)  
-- osobnego statusu „rozmowa trwa” + pauzy SLA  
-- overflow „wsparcie sprzedażowe”  
-- wag conv / close rate w przydziale  
-
-Zastąpione przez: auto-przydział + zegar + „Biorę” + limit 3 + alerty managera.
+Czas roboczy = wyłącznie w `WORK_WINDOW` minus święta. Przykład: pt 17:50 → +10 min; pn 8:00 kontynuacja (HOT: zostaje 5 min), **nie** reset do 15.
 
 ---
 
-## 12. Stan vs cutover
+## 6. Gesty handlowca
+
+| Gest | Mechanizm | Efekt |
+|---|---|---|
+| **„Biorę”** | manual WF → `bizAckAt` | failover OFF; eskalacja ON |
+| Mail wychodzący | M2 / worker → `bizFirstAttemptAt` + EMAIL | pętla OFF |
+| Stage poza NEW | webhook → `bizFirstAttemptAt` + MANUAL | pętla OFF (telefon bez nowego UI) |
+| Odrzuć leada | `campaignRejected` | pętla OFF |
+| Urlop | `bizVacationOn` | poza pulą; bezkontakowe odpływają |
+
+---
+
+## 7. Powiadomienia
+
+- **v1 handlowiec:** brak SMS — widok „Moje nowe” po `bizAssignedAt`.  
+- **v1 manager:** mail na `MANAGER_EMAIL` (eskalacje, unassigned, failover zablokowany limitem).  
+- **Docelowo:** SMS 8–16 przy przydziale/failoverze (hook `notify` w workerze).  
+- Świadomie: bez SMS HOT 15 min może padać na failover „bo nikt nie patrzył” — akceptowalne (failover neutralny).
+
+---
+
+## 8. Wykonanie i granice
+
+| Element | Właściciel |
+|---|---|
+| Klasyfikacja + routing + przydział | Worker GCP |
+| Sweep | Worker GCP + Scheduler |
+| Stan | Pola Opp / capacity w Twenty |
+| „Biorę” | 1 manual workflow |
+| Mail manager / SMS | Worker GCP |
+
+**Jedna ścieżka assignu:** przy go-live dyspozytora createLead **nie** może równolegle losować ownera „na boku”. Albo dyspozytor jest jedynym SSOT reguł, albo createLead woła tę samą funkcję routingu. Idempotencja: nie „skip jeśli ownerId jest” w sposób, który zostawia stary hash bez `bizAssignedAt` / klasy.
+
+Przy wdrożeniu: wyłączyć assign z WF v7/v12 (zostaje co najwyżej powiadomienie do czasu SMS) albo zastąpić je workerem.
+
+**Governance przy wdrożeniu:**
+- boundary matrix `ARCHITECTURE.md`
+- kontrakt `workflows/lead-dispatch.contract.md`
+- pola §9 → `DATA_MODEL.md` (zastąpić „Lead claim — planowane”)
+- ADR v1.3 → v2.0 w `DECISION_REGISTER.md`
+
+---
+
+## 9. Pola (CRM-only — NIGDY do payloadów reklamowych)
+
+### Opportunity
+
+| Pole | Typ | Kto | Po co |
+|---|---|---|---|
+| `bizLeadIntentClass` | SELECT HOT_FIT / STANDARD / LOW_INTENT | worker | zegary |
+| `bizAssignedAt` | DATETIME | worker | start failover |
+| `bizAckAt` | DATETIME | „Biorę” | stop failover |
+| `bizFirstAttemptAt` | DATETIME | M2 / stage hook | wyjście z pętli; **metryka TTL** |
+| `bizFirstAttemptChannel` | EMAIL / MANUAL | j.w. | audyt |
+| `bizFailoverCount` | NUMBER | sweep | kalibracja |
+| `bizManagerAlertedAt` | DATETIME | sweep | eskalacja raz |
+| `bizRoutingRule` | TEXT | worker | audyt reguły |
+| `bizTimeOnPageMs` | NUMBER | create_lead | próg >6 min (surowy ms) |
+
+### Osoba / SalesCapacity
+
+| Pole | Typ | Po co |
+|---|---|---|
+| `bizVacationOn` | BOOLEAN | urlop |
+| `bizInClaimPool` | BOOLEAN | Marta/Gosia true; Ewa false |
+
+**Nie tworzyć** (v1.3 claim): reservation_*, claim state, rep availability, sloty per klasa, lastQualifiedAssignAt (fairness z COUNT + `bizAssignedAt`).
+
+---
+
+## 10. Święta
+
+- Jak weekend: zegar stój.  
+- [ ] Wstępna lista PL ~12 mies. + podgląd w ustawieniach Twenty/CRM.  
+- [ ] Owner aktualizacji listy na kolejny rok.
+
+---
+
+## 11. Cutover vs dyspozytor
 
 | Warstwa | Co |
-|---------|-----|
-| **Dziś / D1 cutover** | Hard-assign: Meta/Marketing→Robert, COPY→Maciej, reszta hash Marta/Gosia, Ewa ręcznie (`LEAD_OWNER_ROUTING_PLAN.md`, D1-7) |
-| **Ten plan (dyspozytor)** | Zegar, klasy, „Biorę”, limit 3, godziny, święta, alerty managera, kaskada §2 |
-| **Kiedy** | Domyślnie po cutoverze; **wolno wcześniej**, jeśli jest czas — nie must-have D1 |
+|---|---|
+| **Dziś / D1** | Hash Marta/Gosia, COPY→Maciej, FB→Robert; **15 min = cel**, nie automat |
+| **Po cutoverze** | Pełny ten dokument (pola → worker → sweep → „Biorę” → maile do Macieja) |
+| **Później** | Lista Meta Piotra; SMS; lista świąt w UI |
 
 ---
 
-## 13. Checklist wdrożenia (dla LLM / Dawida)
+## 12. Czego NIE budujemy w v1
 
-### 13.1 Przed kodem — domknięte biznesowo
+| Wycięte | Cena |
+|---|---|
+| Claim / blind claim | System dyktuje ownera; ręczne przepisanie OK |
+| „Rozmowa trwa” | Chroni „Biorę”; bez klika możliwy failover w trakcie rozmowy |
+| Sloty per klasa | Priorytet robią zegary |
+| Overflow „wsparcie” | Decyduje Maciej po mailu |
+| SMS v1 | Failover „bo nie patrzył” do czasu bramki |
 
-- [x] Kaskada reguł (§2) — potwierdzone: działa od góry
-- [x] Stały klient = tylko wspólny email/telefon; inaczej nowy; merge ręczne
-- [x] Święta = weekend; zegar od zera od 8:00 po przerwie
-- [x] Alerty managera o wziętych bez kontaktu — obowiązkowe
-- [ ] **TODO:** progi HOT / STANDARD / LOW (§3.1)
-- [ ] **TODO:** kto jest managerem + progi czasu alertów (§7.2)
-- [ ] **TODO:** lista świąt (§8.3)
-- [ ] Potwierdzić: czy lead z „Biorę” bez kontaktu liczy się do limitu 3 (§9)
-
-### 13.2 Pola / orkiestracja (szkic SSOT — CRM-only)
-
-Nie dublować zbędnie z `DATA_MODEL` claim v1.3. Minimalny zestaw pod dyspozytor:
-
-| Potrzeba | Propozycja |
-|----------|------------|
-| Klasa | `bizLeadIntentClass`: HOT / STANDARD / LOW |
-| Stan zegara | np. `bizDispatchState`: `TICKING` / `HELD_BIORĘ` / `FIRST_CONTACT` / `TRANSFERRED` |
-| „Biorę” | `bizHeldAt`, `bizHeldByWorkspaceMemberId` |
-| Deadline przekazania | `bizTransferDueAt` (liczony w minutach roboczych 8–18) |
-| First contact | reuse `firstResponseAt` / stage / reject |
-| Urlop | `bizVacationOn` na profilu / capacity |
-| Licznik nieobsłużonych | wyliczany lub cache |
-
-### 13.3 Kolejność techniczna (rekomendacja)
-
-1. Utrwalić kaskadę §2 w `resolveOpportunityOwnerId` (dziś brak #1 continuity email/phone→owner).  
-2. Limit 3 + „mniej nieobsłużonych” zamiast samego hash.  
-3. Urlop ON/OFF.  
-4. „Biorę” + `HELD`.  
-5. Zegar w oknie 8–18 + lista świąt.  
-6. Auto-transfer po deadline.  
-7. Alerty managera (§7) — **razem z „Biorę”**, nie później.  
-8. SMS 8–16.
+**Tripwire powrotu złożoności:** pula ≥4; stale >3 open; telefonia auto; custom appki Twenty; zmiana Meta musi być edycją §3.
 
 ---
 
-## 14. Słownik
+## 13. Otwarte / TODO (nie blokują startu kodu klas+zegar+Biorę)
+
+| Co | Kto | Blokuje? | Status |
+|---|---|---|---|
+| Lista form/kampanii Meta → Robert | Piotr / Mariusz | **Nie** | **DOMKNIĘTE** §3.1 (2026-08-25) |
+| Lista świąt + UI | Operacje / Dawid | Nie | TODO |
+| `bizTimeOnPageMs` na Opp | Dawid | Tech — tak dla HOT | część wdrożenia |
+| WM vs SalesCapacity | Dawid | Nie | preflight |
+| `metaFormId` jeśli lista po form_id | Dawid | Nie | **N/A** — lista = campaign_id |
+
+---
+
+## 14. Checklist wdrożenia (kolejność)
+
+**One-shot:** `./integrations/tools/start_lead_dispatcher.sh go` — szczegóły w `LEAD_DISPATCHER_START.md`.
+
+1. Pola §9 w Twenty + `DATA_MODEL`  
+2. Klasyfikacja §4 w workerze (+ `bizTimeOnPageMs`)  
+3. Routing §3 jako **jedyna** funkcja assignu (continuity email/telefon, interim Meta, least-loaded, MAX_OPEN)  
+4. Urlop + pool flags  
+5. Przycisk „Biorę” → `bizAckAt`  
+6. Sweep: failover / escalate → `maciej@` / unassigned  
+7. First attempt: mail + stage hook  
+8. Wyłączyć sprzeczny assign w WF v7/v12  
+9. Kontrakt + ADR + boundary  
+10. Później: lista Meta Piotra, SMS, święta UI  
+
+---
+
+## 15. Słownik
 
 | Termin | Znaczenie |
-|--------|-----------|
-| Nieobsłużony | Lead bez pierwszego kontaktu (§5) |
-| „Biorę” | Deklaracja „zajmuję się” — stoper zegara, nie kontakt |
-| First contact | Mail wychodzący / dalszy stage / odrzucenie |
-| Przekazanie | Auto zmiana ownera po deadline bez „Biorę”/kontaktu |
-| Okno pracy | Pn–pt 8:00–18:00, bez świąt z listy |
+|---|---|
+| Nieobsłużony | Bez `bizFirstAttemptAt` (także z „Biorę”) |
+| „Biorę” | Ack — stop failover, nie kontakt |
+| First contact | Mail OUT lub stage ≠ NEW lub odrzucenie |
+| Minuty robocze | W WORK_WINDOW, bez weekendów/świąt |
+| LOW | Cold |
 
 ---
 
-## 15. Historia decyzji
+## 16. Historia
 
 | Data | Decyzja |
-|------|---------|
-| 2026-08 | Mariusz: uproszczenie — dyspozytor zamiast claim/puli |
-| 2026-08-20 | Kaskada od góry; stały klient = email/telefon; święta=weekend; zegar od zera po przerwie; alerty managera obowiązkowe; progi HOT/STANDARD/LOW = TODO; limit 3 zapisany |
-| 2026-08-20 | Cutover: D1 = obecny assign; dyspozytor później lub wcześniej jeśli czas |
+|---|---|
+| 2026-08-12 | v2.0 dyspozytor (Red Team × właściciel) |
+| 2026-08-20 | Cutover: D1 = stary assign; 15 min = cel do dyspozytora |
+| 2026-08-25 | Klasy AND; manager Maciej; Meta lista później (interim cały FB→Robert); continuity email/telefon; Biorę w limicie 3; zegar = kontynuacja minut roboczych |
+| 2026-08-25 | **Scalenie** draftu v2.0 + decyzji → ten plik = SSOT |
+| 2026-08-25 | Lista Piotra: 8× campaign_id marketing/strategia → Robert; reszta Meta → pula |

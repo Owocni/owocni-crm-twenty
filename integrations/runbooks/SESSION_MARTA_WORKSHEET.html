@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sesja Marta — checklista</title>
+  <style>
+    :root {
+      --bg: #f7f5f1;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #666;
+      --line: #ddd6cb;
+      --accent: #1f5c45;
+      --warn: #8a4b1a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 20px 16px 48px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-size: 1.35rem;
+      margin: 0 0 4px;
+      font-weight: 700;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px 16px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .row label { color: var(--muted); font-size: 0.9rem; }
+    input[type="text"], textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 7px 9px;
+      font: inherit;
+      background: #fafafa;
+    }
+    textarea { min-height: 56px; resize: vertical; }
+    ul.check {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.check li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    ul.check li:last-child { border-bottom: 0; }
+    ul.check input { margin-top: 3px; flex-shrink: 0; }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .verdict label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .print {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      section { break-inside: avoid; box-shadow: none; }
+      .print { display: none; }
+    }
+    @media (max-width: 560px) {
+      .row, .grid2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sesja Marta</h1>
+    <p class="meta">20–30 min · ekran u niej · Ty tylko prowadzisz</p>
+
+    <section>
+      <h2>Meta</h2>
+      <div class="row"><label>Data / godzina</label><input type="text" /></div>
+      <div class="row"><label>Kanał</label><input type="text" placeholder="Zoom / biuro / tel" /></div>
+      <div class="row"><label>Przeglądarka</label><input type="text" /></div>
+    </section>
+
+    <section>
+      <h2>0. Przed startem</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> PDF testowy (załącznik)</li>
+        <li><input type="checkbox" /> Numer / mail klienta do search</li>
+        <li><input type="checkbox" /> Ona klika — nie Ty</li>
+      </ul>
+      <textarea placeholder="Uwagi przed…"></textarea>
+    </section>
+
+    <section>
+      <h2>1. Otwarcie</h2>
+      <p class="meta" style="margin:0 0 8px">„Lejek tylko Twoje + Poczta tylko Twoje. BB na transition.”</p>
+      <div class="row"><label>Gdzie dziś pracuje?</label><input type="text" /></div>
+      <div class="row"><label>Otwierała Twenty?</label><input type="text" placeholder="tak / nie" /></div>
+      <div class="row"><label>Must jutro rano</label><input type="text" /></div>
+      <div class="row"><label>Główny strach</label><input type="text" /></div>
+      <textarea placeholder="Uwagi…"></textarea>
+    </section>
+
+    <section>
+      <h2>2. Lejek Owocni</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi Lejek Owocni</li>
+        <li><input type="checkbox" /> Tylko swoje leady</li>
+        <li><input type="checkbox" /> Bez chaosu (obce / testy)</li>
+        <li><input type="checkbox" /> Otworzyła 1 lead OK</li>
+      </ul>
+      <textarea placeholder="Uwagi Lejek…"></textarea>
+    </section>
+
+    <section>
+      <h2>3. Poczta Marta</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi IN</li>
+        <li><input type="checkbox" /> Widzi OUT</li>
+        <li><input type="checkbox" /> Bez szumu obcych</li>
+        <li><input type="checkbox" /> Wie gdzie odpisać</li>
+      </ul>
+      <textarea placeholder="Uwagi Poczta…"></textarea>
+    </section>
+
+    <section>
+      <h2>4. Smoke #1 — search tel/mail</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Sama wpisała</li>
+        <li><input type="checkbox" /> Znalazła właściwy rekord</li>
+        <li><input type="checkbox" /> &lt; 1 min</li>
+      </ul>
+      <div class="grid2">
+        <input type="text" placeholder="Numer / mail użyty" />
+        <input type="text" placeholder="Co znalazła" />
+      </div>
+      <textarea style="margin-top:8px" placeholder="Uwagi search…"></textarea>
+    </section>
+
+    <section>
+      <h2>5. Smoke #2 — notka</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Znalazła Notes</li>
+        <li><input type="checkbox" /> Dodała sama</li>
+        <li><input type="checkbox" /> Widać przy leadzie</li>
+      </ul>
+      <input type="text" placeholder="Treść notki (skrót)" />
+      <textarea style="margin-top:8px" placeholder="Uwagi notka…"></textarea>
+    </section>
+
+    <section>
+      <h2>6. Smoke #3 — OUT + załącznik</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Odpowiedź otwarta</li>
+        <li><input type="checkbox" /> Załącznik OK</li>
+        <li><input type="checkbox" /> Wysłane</li>
+        <li><input type="checkbox" /> Widać w OUT</li>
+      </ul>
+      <div class="grid2">
+        <input type="text" placeholder="Do kogo" />
+        <input type="text" placeholder="Problem (jeśli był)" />
+      </div>
+      <textarea style="margin-top:8px" placeholder="Uwagi OUT…"></textarea>
+    </section>
+
+    <section>
+      <h2>7. Zamknięcie</h2>
+      <div class="row"><label>Otworzy jutro?</label><input type="text" placeholder="tak / może / nie" /></div>
+      <div class="row"><label>BB zostaje do</label><input type="text" /></div>
+      <div class="row"><label>1 bloker</label><input type="text" /></div>
+      <div class="row"><label>2. sesja?</label><input type="text" placeholder="nie / tak — kiedy" /></div>
+      <textarea placeholder="Uwagi koniec…"></textarea>
+    </section>
+
+    <section>
+      <h2>8. Werdykt</h2>
+      <div class="verdict">
+        <label><input type="radio" name="v" /> 🟢 PASS</label>
+        <label><input type="radio" name="v" /> 🟡 WARUNKOWO</label>
+        <label><input type="radio" name="v" /> 🔴 FAIL → 2. sesja</label>
+      </div>
+      <textarea placeholder="Next (akcja / kto / do kiedy)…"></textarea>
+    </section>
+
+    <section>
+      <h2>9. Po sesji</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Follow-up wysłany</li>
+        <li><input type="checkbox" /> Status w arkuszu cutoveru</li>
+        <li><input type="checkbox" /> Pass/fail w session scripts</li>
+      </ul>
+    </section>
+
+    <p class="print">Ctrl/Cmd+P → druk / PDF · wartości w polach zostają w przeglądarce do zamknięcia karty</p>
+  </div>
+</body>
+</html>

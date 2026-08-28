@@ -6,7 +6,7 @@ export type SendableEmailAccount = {
   handle: string;
 };
 
-/** Shared team inboxes everyone may send from (when connected). */
+/** Shared team inboxes — tylko operator (owocni@…), nigdy domyślny From handlowca (ADR #22). */
 export const GENERAL_MAILBOX_HANDLES = [
   'studio@owocni.pl',
   'leads@owocni.pl',
@@ -14,6 +14,31 @@ export const GENERAL_MAILBOX_HANDLES = [
 
 /** Logins that are team/admin seats (no personal @owocni.pl mailbox). */
 const SHARED_OPERATOR_EMAILS = ['owocni@gmail.com'] as const;
+
+/**
+ * Workspace login → personal OUT mailbox when they differ.
+ * Maciej logs in as maciej@ but sends from copywriting@ (E12 / ADR #22).
+ */
+const LOGIN_TO_PERSONAL_SEND_HANDLES: Record<string, readonly string[]> = {
+  'maciej@owocni.pl': ['copywriting@owocni.pl'],
+};
+
+function personalSendHandlesForLogin(
+  loginEmail: string | null,
+): readonly string[] {
+  if (!loginEmail) {
+    return [];
+  }
+
+  return LOGIN_TO_PERSONAL_SEND_HANDLES[loginEmail] ?? [];
+}
+
+function isPersonalSendHandleForLogin(
+  handle: string,
+  loginEmail: string | null,
+): boolean {
+  return personalSendHandlesForLogin(loginEmail).includes(handle);
+}
 
 const OUR_MAILBOX_VALUE_TO_HANDLE: Record<string, string> = {
   MARTA: 'marta@owocni.pl',
@@ -117,9 +142,17 @@ function isOwnedByCurrentUser(
     return false;
   }
 
+  const handles = accountHandles(account);
+
   // Shared Settings → Accounts lists everyone's mailboxes for the whole team.
-  // Ownership is only "this handle is my login email", never userWorkspaceId alone.
-  return accountHandles(account).includes(currentUserEmail);
+  // Ownership: login email match OR mapped personal send mailbox (maciej→copywriting).
+  if (handles.includes(currentUserEmail)) {
+    return true;
+  }
+
+  return personalSendHandlesForLogin(currentUserEmail).some((personal) =>
+    handles.includes(personal),
+  );
 }
 
 function isAllowedForUser(
@@ -130,7 +163,12 @@ function isAllowedForUser(
     return true;
   }
 
-  // Shared team inboxes (studio@ / leads@) — for everyone, including owocni@gmail.com.
+  // ADR #22: handlowiec OUT tylko ze swojej skrzynki.
+  // leads@ / studio@ — tylko operator współdzielony (owocni@…), nie sprzedaż.
+  if (!currentUserEmail || !isSharedOperatorEmail(currentUserEmail)) {
+    return false;
+  }
+
   return accountHandles(account).some(isGeneralHandle);
 }
 
@@ -476,6 +514,10 @@ async function loadCandidateAccounts(
         return 0;
       }
 
+      if (isPersonalSendHandleForLogin(handle, identity.email)) {
+        return 0;
+      }
+
       if (isGeneralHandle(handle)) {
         return handle === 'studio@owocni.pl' ? 1 : 2;
       }
@@ -512,18 +554,35 @@ function pickDefaultAccount(
     }
   }
 
+  const isSeller =
+    Boolean(currentUserEmail) && !isSharedOperatorEmail(currentUserEmail);
+
+  // ADR #22: IN może być leads@ / studio@, OUT handlowca ZAWSZE z jego skrzynki.
+  // Nie bierzemy kontynuacji wątku z ogólnej — to blokowało Reply gdy mail przyszedł na leads@.
+  if (isSeller && currentUserEmail) {
+    for (const personal of personalSendHandlesForLogin(currentUserEmail)) {
+      const mapped = findAccountByHandle(allowedAccounts, personal);
+
+      if (mapped) {
+        return mapped;
+      }
+    }
+
+    const own = findAccountByHandle(allowedAccounts, currentUserEmail);
+
+    if (own) {
+      return own;
+    }
+
+    return allowedAccounts[0] ?? null;
+  }
+
   const continuation = (options.continuationHandles ?? [])
     .map(normalizeHandle)
     .filter(Boolean);
 
   for (const handle of continuation) {
-    const mayContinue =
-      isGeneralHandle(handle) ||
-      (Boolean(currentUserEmail) &&
-        !isSharedOperatorEmail(currentUserEmail) &&
-        handle === currentUserEmail);
-
-    if (!mayContinue) {
+    if (!isGeneralHandle(handle)) {
       continue;
     }
 
@@ -531,14 +590,6 @@ function pickDefaultAccount(
 
     if (match) {
       return match;
-    }
-  }
-
-  if (currentUserEmail && !isSharedOperatorEmail(currentUserEmail)) {
-    const own = findAccountByHandle(allowedAccounts, currentUserEmail);
-
-    if (own) {
-      return own;
     }
   }
 
@@ -626,7 +677,7 @@ export function mapSendEmailError(error: string): string {
     error.toLowerCase().includes('does not have permission') ||
     error.toLowerCase().includes('permission')
   ) {
-    return 'Brak uprawnień do wysyłki (Twenty SEND_EMAIL). Sprawdź: (1) rola „Owocni Mail default function role” ma włączone Tools / canAccessAllTools, (2) studio@ / leads@ są podłączone na koncie, z którego jesteś zalogowany (nie tylko widoczne w wspólnej liście), (3) nie wybierasz cudzej osobistej skrzynki.';
+    return 'Brak uprawnień do wysyłki (Twenty SEND_EMAIL). Sprawdź: (1) Twoja skrzynka podpięta na TWOIM loginie (Settings → Accounts), (2) login Twenty = adres skrzynki (np. marta@), (3) na leadzie z leads@ użyj przycisku Odpowiedz (Owocni Mail), nie natywnego Reply.';
   }
 
   return error;

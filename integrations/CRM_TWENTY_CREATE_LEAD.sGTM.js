@@ -10,7 +10,7 @@ var COLLECTION_TASK_QUEUE = "task_queue";
 var PENDING_WRITE_PREFIX = "pending_write_twenty_";
 var STATE_PREFIX = "create_lead_id_oid_";
 var CREATE_LEAD_WRITE_ENABLED = true;
-var CREATE_LEAD_BUILD_ID="2026-07-07-v17";
+var CREATE_LEAD_BUILD_ID="2026-08-27-v18-opp-name-email";
 var OWNER_MACIEJ = "7fddba1d-e443-47d4-97b7-a3a829efd8c1";
 var OWNER_MARTA = "4704e0c0-8d77-4640-ad1e-1875294294df";
 var OWNER_GOSIA = "ccac533d-a34b-4cfc-a036-9e75ee3f8910";
@@ -684,6 +684,19 @@ function resolveContactLabel(taskData, answers) {
   }
   return "Lead";
 }
+
+/** Pierwszy segment tytułu leada (formularz): pełny email, potem telefon, potem „Lead”. */
+function resolveEmailLabel(taskData, answers) {
+  var email = makeString(taskData.biz_email || answers.email || "").trim();
+  if (email) {
+    return email;
+  }
+  var phone = makeString(taskData.biz_phone || answers.phone || "").trim();
+  if (phone) {
+    return phone;
+  }
+  return "Lead";
+}
 function digitValue(ch) {
   if (ch === "0") {
     return 0;
@@ -1007,7 +1020,7 @@ function buildOpportunityName(taskData) {
     return "Lead mail leads@";
   }
   var answers = parseFormAnswers(taskData);
-  var segments = [];
+  var segments = [resolveEmailLabel(taskData, answers)];
   var productLabel = productLabelForName(taskData);
   if (productLabel) {
     segments.push(productLabel);
@@ -1020,7 +1033,6 @@ function buildOpportunityName(taskData) {
   if (intent && intent.label) {
     segments.push(intent.label);
   }
-  segments.push(resolveContactLabel(taskData, answers));
   if (segments.length === 1 && segments[0] === "Lead") {
     return "Lead formularz";
   }

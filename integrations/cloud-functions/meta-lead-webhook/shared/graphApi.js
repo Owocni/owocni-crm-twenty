@@ -35,6 +35,20 @@ async function fetchFormName(formId, pageAccessToken, graphApiVersion) {
   return String(body.name || "").trim();
 }
 
+/** Resolve Meta campaign_id from ad_id (Lead Ads payload has ad, not campaign). */
+async function fetchCampaignIdFromAd(adId, pageAccessToken, graphApiVersion) {
+  const id = String(adId || "").trim();
+  if (!id) return "";
+  const url =
+    `https://graph.facebook.com/${graphApiVersion}/${encodeURIComponent(id)}` +
+    `?fields=campaign_id` +
+    `&access_token=${encodeURIComponent(pageAccessToken)}`;
+  const res = await fetch(url);
+  if (!res.ok) return "";
+  const body = await res.json();
+  return String(body.campaign_id || "").trim();
+}
+
 /**
  * Lista leadów formularza nowszych niż sinceMs (created_time Graph).
  * Graph zwraca od najnowszych — przerywamy gdy natrafimy na starsze.
@@ -85,4 +99,9 @@ async function listFormLeadsSince(
   return out;
 }
 
-module.exports = { fetchLeadById, fetchFormName, listFormLeadsSince };
+module.exports = {
+  fetchLeadById,
+  fetchFormName,
+  fetchCampaignIdFromAd,
+  listFormLeadsSince,
+};

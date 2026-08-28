@@ -1,0 +1,6687 @@
+{
+  "exportedAt": "2026-08-28T03:56:28.100784+00:00",
+  "days": 30,
+  "count": 232,
+  "leads": [
+    {
+      "id": 9276,
+      "title": "Strona: Rewizja E-commerce dla Sklepu z Gadżetami",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-27T17:18:29.201912+00:00",
+      "last_modified_at": "2026-08-27T17:18:31.232187+00:00",
+      "company": {
+        "id": 15047,
+        "title": "Styl24nadruki@gmail.com",
+        "emails": [
+          "Styl24nadruki@gmail.com"
+        ],
+        "phones": [
+          "790760668"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "styl24nadruki@gmail.com"
+      ],
+      "phones": [
+        "790760668"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9276"
+    },
+    {
+      "id": 8127,
+      "title": "Do Ewy: Strona: Modernizacja dla Integracji Systemów Wizyjnych B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-03-26T07:42:24.506796+00:00",
+      "last_modified_at": "2026-08-27T15:07:35.572754+00:00",
+      "company": {
+        "id": 13915,
+        "title": "MV Center",
+        "emails": [
+          "pawel.janczyk@mv-center.com",
+          "kinga.mieruszynska@exactforestall.com"
+        ],
+        "phones": [
+          "+48669209109"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "pawel.janczyk@mv-center.com",
+        "kinga.mieruszynska@exactforestall.com"
+      ],
+      "phones": [
+        "+48669209109"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8127"
+    },
+    {
+      "id": 9273,
+      "title": "Logo dla Centrum Frezowania w Branży Dentystycznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-27T08:25:05.835158+00:00",
+      "last_modified_at": "2026-08-27T14:21:31.352952+00:00",
+      "company": {
+        "id": 15044,
+        "title": "vip cad/cam center by keratis",
+        "emails": [
+          "info@keratis-dent.pl"
+        ],
+        "phones": [
+          "781965750"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "info@keratis-dent.pl"
+      ],
+      "phones": [
+        "781965750"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9273"
+    },
+    {
+      "id": 9228,
+      "title": "Strona: Modernizacja dla B2B Dyspenserów Wody",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-20T16:37:33.146579+00:00",
+      "last_modified_at": "2026-08-27T14:06:48.584277+00:00",
+      "company": {
+        "id": 14999,
+        "title": "Direen.pl",
+        "emails": [
+          "jakub@direen.pl"
+        ],
+        "phones": [
+          "+48886848760"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "jakub@direen.pl"
+      ],
+      "phones": [
+        "+48886848760"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9228"
+    },
+    {
+      "id": 8908,
+      "title": "Logo dla Autokosmetyki - Nowa Marka w Siedlcach",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-07-07T17:40:58.10865+00:00",
+      "last_modified_at": "2026-08-27T13:05:41.94545+00:00",
+      "company": {
+        "id": 14678,
+        "title": "Tiper s Blaszak Kosmetyka Samochodowa",
+        "emails": [
+          "celsko@interia.pl"
+        ],
+        "phones": [
+          "664 658 226"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "celsko@interia.pl"
+      ],
+      "phones": [
+        "664 658 226"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8908"
+    },
+    {
+      "id": 9233,
+      "title": "Strona Wizytówka dla Artysty z Portfolio",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-22T13:44:48.512532+00:00",
+      "last_modified_at": "2026-08-27T13:05:41.94545+00:00",
+      "company": {
+        "id": 15004,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "kxcc111@gmail.com"
+        ],
+        "phones": [
+          "531227419"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "kxcc111@gmail.com"
+      ],
+      "phones": [
+        "531227419"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9233"
+    },
+    {
+      "id": 9226,
+      "title": "Strona Internetowa dla Firmy Lotniczej Charter Flights",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-20T09:53:23.604134+00:00",
+      "last_modified_at": "2026-08-27T12:45:42.152259+00:00",
+      "company": {
+        "id": 14997,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "ulaula4746@gmail.com"
+        ],
+        "phones": [
+          "511373205"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "ulaula4746@gmail.com"
+      ],
+      "phones": [
+        "511373205"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9226"
+    },
+    {
+      "id": 9235,
+      "title": "Strona Wizytówka dla Nowej Firmy E-commerce",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-22T15:29:17.022298+00:00",
+      "last_modified_at": "2026-08-27T12:35:42.054202+00:00",
+      "company": {
+        "id": 15006,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "mbrzozowiec@gmail.com"
+        ],
+        "phones": [
+          "+447778338808"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "mbrzozowiec@gmail.com"
+      ],
+      "phones": [
+        "+447778338808"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9235"
+    },
+    {
+      "id": 9240,
+      "title": "Strona Internetowa: Modernizacja dla Agencji Reklamowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T16:43:03.403048+00:00",
+      "last_modified_at": "2026-08-27T12:15:42.110757+00:00",
+      "company": {
+        "id": 15011,
+        "title": "www.brokersmedia.pl",
+        "emails": [
+          "biuro@brokersmedia.pl"
+        ],
+        "phones": [
+          "603343171"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "biuro@brokersmedia.pl"
+      ],
+      "phones": [
+        "603343171"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9240"
+    },
+    {
+      "id": 8150,
+      "title": "Strona Internetowa dla Nowej Firmy Beauty",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-03-31T14:06:04.883497+00:00",
+      "last_modified_at": "2026-08-27T11:55:31.054952+00:00",
+      "company": {
+        "id": 13938,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "pszczola82@gmail.com"
+        ],
+        "phones": [
+          "506795106"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "pszczola82@gmail.com"
+      ],
+      "phones": [
+        "506795106"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8150"
+    },
+    {
+      "id": 8992,
+      "title": "Strona Internetowa dla Salonów Kosmetologicznych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-20T16:03:31.525903+00:00",
+      "last_modified_at": "2026-08-27T11:54:19.193274+00:00",
+      "company": {
+        "id": 14761,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "wiithblog@gmail.com"
+        ],
+        "phones": [
+          "+48513560301"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "wiithblog@gmail.com"
+      ],
+      "phones": [
+        "+48513560301"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8992"
+    },
+    {
+      "id": 9267,
+      "title": "Strona Wizytówka: Odświeżenie dla Branży Gastronomicznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-26T13:35:55.948089+00:00",
+      "last_modified_at": "2026-08-27T11:13:37.133424+00:00",
+      "company": {
+        "id": 15038,
+        "title": "Www.tajsy.pl",
+        "emails": [
+          "ilove@tajsy.pl"
+        ],
+        "phones": [
+          "783789160"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "ilove@tajsy.pl"
+      ],
+      "phones": [
+        "783789160"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9267"
+    },
+    {
+      "id": 9275,
+      "title": "Strona Wizytówka dla Fotografa w Augsburgu",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-27T10:03:57.978519+00:00",
+      "last_modified_at": "2026-08-27T11:13:34.39719+00:00",
+      "company": {
+        "id": 15046,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "marzena123135@gmail.com"
+        ],
+        "phones": [
+          "+4917688238973"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "marzena123135@gmail.com"
+      ],
+      "phones": [
+        "+4917688238973"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9275"
+    },
+    {
+      "id": 9260,
+      "title": "Strona Internetowa: Modernizacja dla Ośrodka Kultury",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-26T03:00:37.150905+00:00",
+      "last_modified_at": "2026-08-27T11:05:41.567999+00:00",
+      "company": {
+        "id": 15035,
+        "title": "gokladek.pl",
+        "emails": [
+          "dyrektor@gokladek.pl"
+        ],
+        "phones": [
+          "506831849"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "dyrektor@gokladek.pl"
+      ],
+      "phones": [
+        "506831849"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9260"
+    },
+    {
+      "id": 9077,
+      "title": "Nazwa i logo dla Pana Roberta:",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-07-28T14:28:12.344675+00:00",
+      "last_modified_at": "2026-08-27T10:05:41.420543+00:00",
+      "company": {
+        "id": 14846,
+        "title": "biuro@mrcredo.pl",
+        "emails": [
+          "biuro@mrcredo.pl"
+        ],
+        "phones": [
+          "+48515156348"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "biuro@mrcredo.pl"
+      ],
+      "phones": [
+        "+48515156348"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9077"
+    },
+    {
+      "id": 9161,
+      "title": "Strona Wizytówka: Modernizacja dla Terapeuty Masażu",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-08T07:36:47.528384+00:00",
+      "last_modified_at": "2026-08-27T10:05:41.420543+00:00",
+      "company": {
+        "id": 14928,
+        "title": "Firma:pablo91bialek@gmail.com",
+        "emails": [
+          "pablo91bialek@gmail.com"
+        ],
+        "phones": [
+          "798728931"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "pablo91bialek@gmail.com"
+      ],
+      "phones": [
+        "798728931"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9161"
+    },
+    {
+      "id": 9194,
+      "title": "Strona: Integracja Noclegów Pod Jedną Marką",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-14T16:24:41.658317+00:00",
+      "last_modified_at": "2026-08-27T09:22:51.273982+00:00",
+      "company": {
+        "id": 14964,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "kamimeli73@gmail.com"
+        ],
+        "phones": [
+          "+48513120280"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kamimeli73@gmail.com"
+      ],
+      "phones": [
+        "+48513120280"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9194"
+    },
+    {
+      "id": 9274,
+      "title": "Logo dla nowej sali zabaw w Warszawie",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-27T08:40:44.470187+00:00",
+      "last_modified_at": "2026-08-27T09:13:41.042299+00:00",
+      "company": {
+        "id": 15045,
+        "title": "Firma: tetianazgiep@gmail.com",
+        "emails": [
+          "tetianazgiep@gmail.com"
+        ],
+        "phones": [
+          "794689846"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "tetianazgiep@gmail.com"
+      ],
+      "phones": [
+        "794689846"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9274"
+    },
+    {
+      "id": 397,
+      "title": "Strona Internetowa dla Gabinetu Terapii Wellness",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2024-11-23T13:14:46.928724+00:00",
+      "last_modified_at": "2026-08-27T07:08:06.825208+00:00",
+      "company": {
+        "id": 6532,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "olejarz_anna@o2.pl"
+        ],
+        "phones": [
+          "+48508396110"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "olejarz_anna@o2.pl"
+      ],
+      "phones": [
+        "+48508396110"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:397"
+    },
+    {
+      "id": 8878,
+      "title": "Do Ewy: Strona Wizytówka dla Firmy IT B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-05T16:01:57.984578+00:00",
+      "last_modified_at": "2026-08-27T06:52:09.02715+00:00",
+      "company": {
+        "id": 14648,
+        "title": "seequality.net",
+        "emails": [
+          "contact@seeqlty.com"
+        ],
+        "phones": [
+          "661083543"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "contact@seeqlty.com"
+      ],
+      "phones": [
+        "661083543"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8878"
+    },
+    {
+      "id": 9270,
+      "title": "Logo dla Nowej Marki Warsztatów Dziecięcych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T20:01:36.755438+00:00",
+      "last_modified_at": "2026-08-27T06:51:17.697815+00:00",
+      "company": {
+        "id": 15041,
+        "title": "Firma:kredospot@gmail.com",
+        "emails": [
+          "kredospot@gmail.com"
+        ],
+        "phones": [
+          "+48506292492"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kredospot@gmail.com"
+      ],
+      "phones": [
+        "+48506292492"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9270"
+    },
+    {
+      "id": 9269,
+      "title": "Logo dla Nowej Firmy Edukacyjno-Językowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T17:22:45.311373+00:00",
+      "last_modified_at": "2026-08-27T06:48:23.86936+00:00",
+      "company": {
+        "id": 15040,
+        "title": "Firma:mikolajczykklaudia512@gmail.com",
+        "emails": [
+          "mikolajczykklaudia512@gmail.com"
+        ],
+        "phones": [
+          "600170990"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mikolajczykklaudia512@gmail.com"
+      ],
+      "phones": [
+        "600170990"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9269"
+    },
+    {
+      "id": 9268,
+      "title": "Logo dla Ośrodka Szkolenia Spawaczy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T15:10:01.230797+00:00",
+      "last_modified_at": "2026-08-27T06:33:56.554248+00:00",
+      "company": {
+        "id": 15039,
+        "title": "Firma: proaura.tychy@gmail.com",
+        "emails": [
+          "proaura.tychy@gmail.com"
+        ],
+        "phones": [
+          "-"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "proaura.tychy@gmail.com"
+      ],
+      "phones": [
+        "-"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9268"
+    },
+    {
+      "id": 9271,
+      "title": "Strona Wizytówka dla Firmy Budowlanej Energooszczędnej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-27T03:49:13.548072+00:00",
+      "last_modified_at": "2026-08-27T03:49:14.761829+00:00",
+      "company": {
+        "id": 15042,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "elbud@vp.pl"
+        ],
+        "phones": [
+          "600037435"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "elbud@vp.pl"
+      ],
+      "phones": [
+        "600037435"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9271"
+    },
+    {
+      "id": 9179,
+      "title": "Strona Wizytówka dla Branży Olejków Eterycznych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-10T18:27:26.039189+00:00",
+      "last_modified_at": "2026-08-26T19:40:24.918313+00:00",
+      "company": {
+        "id": 14946,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "elawa66@wp.pl"
+        ],
+        "phones": [
+          "+48509226057"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "elawa66@wp.pl"
+      ],
+      "phones": [
+        "+48509226057"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9179"
+    },
+    {
+      "id": 8183,
+      "title": "Strona e-commerce dla regionalnych produktów spożywczych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-04-06T12:38:40.384547+00:00",
+      "last_modified_at": "2026-08-26T14:58:32.358924+00:00",
+      "company": {
+        "id": 13971,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "jasieklipiecki13@gmail.com"
+        ],
+        "phones": [
+          "720782403"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "jasieklipiecki13@gmail.com"
+      ],
+      "phones": [
+        "720782403"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8183"
+    },
+    {
+      "id": 9242,
+      "title": "Strona: Zmiana dla Architektonicznego Portfolio",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T19:05:35.902381+00:00",
+      "last_modified_at": "2026-08-26T14:31:29.724469+00:00",
+      "company": {
+        "id": 15013,
+        "title": "mccloskeystudio.com",
+        "emails": [
+          "kasia@mccloskeystudio.com"
+        ],
+        "phones": [
+          "17082097506"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kasia@mccloskeystudio.com"
+      ],
+      "phones": [
+        "17082097506"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9242"
+    },
+    {
+      "id": 9145,
+      "title": "Strona Internetowa dla Kliniki Medycyny Estetycznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "inne",
+      "created_at": "2026-08-05T04:20:00.997599+00:00",
+      "last_modified_at": "2026-08-26T11:30:13.776713+00:00",
+      "company": {
+        "id": 14913,
+        "title": "Firma: krolkasia01@gmail.com",
+        "emails": [
+          "krolkasia01@gmail.com"
+        ],
+        "phones": [
+          "786982109"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "krolkasia01@gmail.com"
+      ],
+      "phones": [
+        "786982109"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9145"
+    },
+    {
+      "id": 9261,
+      "title": "Strona Wizytówka dla Nowej Praktyki Stomatologicznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-26T03:00:37.16688+00:00",
+      "last_modified_at": "2026-08-26T08:44:07.257602+00:00",
+      "company": {
+        "id": 15034,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "Katarzyna.nwska@gmail.com"
+        ],
+        "phones": [
+          "790393915"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "katarzyna.nwska@gmail.com"
+      ],
+      "phones": [
+        "790393915"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9261"
+    },
+    {
+      "id": 9263,
+      "title": "Logo dla Msproschody.pl: Odświeżenie Marki Schodów Półkowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T03:00:37.311306+00:00",
+      "last_modified_at": "2026-08-26T08:43:53.569872+00:00",
+      "company": {
+        "id": 15032,
+        "title": "Msproschody.pl",
+        "emails": [
+          "mspro.lodz@gmail.com"
+        ],
+        "phones": [
+          "-"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mspro.lodz@gmail.com"
+      ],
+      "phones": [
+        "-"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9263"
+    },
+    {
+      "id": 9259,
+      "title": "Logo dla Romax Ceramika: Odświeżenie Marki Wnętrzarskiej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T03:00:37.140838+00:00",
+      "last_modified_at": "2026-08-26T08:30:39.317876+00:00",
+      "company": {
+        "id": 15030,
+        "title": "romaxceramika.pl",
+        "emails": [
+          "robert.abramczyk@romax.waw.pl"
+        ],
+        "phones": [
+          "512170455"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "robert.abramczyk@romax.waw.pl"
+      ],
+      "phones": [
+        "512170455"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9259"
+    },
+    {
+      "id": 9266,
+      "title": "Logo dla Nowej Firmy Dekarskiej Hydroizolacje",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T06:21:48.479954+00:00",
+      "last_modified_at": "2026-08-26T08:02:45.571787+00:00",
+      "company": {
+        "id": 15037,
+        "title": "Firma: pawel.rzepka.pr@gmail.com",
+        "emails": [
+          "pawel.rzepka.pr@gmail.com"
+        ],
+        "phones": [
+          "+48539087799"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "pawel.rzepka.pr@gmail.com"
+      ],
+      "phones": [
+        "+48539087799"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9266"
+    },
+    {
+      "id": 9262,
+      "title": "Logo dla nowej marki dioram historycznych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T03:00:37.274133+00:00",
+      "last_modified_at": "2026-08-26T07:58:38.700711+00:00",
+      "company": {
+        "id": 15029,
+        "title": "Firma: Powislestudio@gmail.com",
+        "emails": [
+          "Powislestudio@gmail.com"
+        ],
+        "phones": [
+          "+48451240393"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "powislestudio@gmail.com"
+      ],
+      "phones": [
+        "+48451240393"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9262"
+    },
+    {
+      "id": 9264,
+      "title": "Logo dla Nowej Firmy Transportowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T03:00:37.55864+00:00",
+      "last_modified_at": "2026-08-26T07:53:42.482199+00:00",
+      "company": {
+        "id": 15031,
+        "title": "Firma: dpalka@outlook.com",
+        "emails": [
+          "dpalka@outlook.com"
+        ],
+        "phones": [
+          "534912845"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "dpalka@outlook.com"
+      ],
+      "phones": [
+        "534912845"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9264"
+    },
+    {
+      "id": 9265,
+      "title": "Logo dla Trenera Personalnego - Budowa Marki",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-26T05:33:53.755669+00:00",
+      "last_modified_at": "2026-08-26T07:46:59.172157+00:00",
+      "company": {
+        "id": 15036,
+        "title": "Firma: lukasz.sambor@gmail.com",
+        "emails": [
+          "lukasz.sambor@gmail.com"
+        ],
+        "phones": [
+          "+48663562580"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "lukasz.sambor@gmail.com"
+      ],
+      "phones": [
+        "+48663562580"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9265"
+    },
+    {
+      "id": 9257,
+      "title": "Nazwa dla Nowej Marki Drukarni Wielkoformatowej (Marta)",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-26T03:00:36.904929+00:00",
+      "last_modified_at": "2026-08-26T07:11:10.127588+00:00",
+      "company": {
+        "id": 15028,
+        "title": "Firma: was.dawid@gmail.com",
+        "emails": [
+          "was.dawid@gmail.com"
+        ],
+        "phones": [
+          "451160997"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "was.dawid@gmail.com"
+      ],
+      "phones": [
+        "451160997"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9257"
+    },
+    {
+      "id": 9252,
+      "title": "Nazwa dla Nowej Marki Fizjoterapii Dziecięcej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-24T19:47:08.923582+00:00",
+      "last_modified_at": "2026-08-26T03:00:26.357842+00:00",
+      "company": {
+        "id": 15023,
+        "title": "Firma: adabrowska3a1@gmail.com",
+        "emails": [
+          "adabrowska3a1@gmail.com"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "adabrowska3a1@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9252"
+    },
+    {
+      "id": 9181,
+      "title": "Strona Internetowa i Marka dla Nowej Firmy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-11T14:56:50.662742+00:00",
+      "last_modified_at": "2026-08-25T13:43:57.132299+00:00",
+      "company": {
+        "id": 14948,
+        "title": "Firma:mariusz.bulka@icloud.com",
+        "emails": [
+          "mariusz.bulka@icloud.com"
+        ],
+        "phones": [
+          "798744769"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "mariusz.bulka@icloud.com"
+      ],
+      "phones": [
+        "798744769"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9181"
+    },
+    {
+      "id": 9220,
+      "title": "Do Ewy: Strona Internetowa dla Nowej Marki B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-19T12:57:02.055707+00:00",
+      "last_modified_at": "2026-08-25T13:34:54.918625+00:00",
+      "company": {
+        "id": 14991,
+        "title": "JP Group",
+        "emails": [
+          "mjozwicka@mjn-jozwicki.pl"
+        ],
+        "phones": [
+          "602244035"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "mjozwicka@mjn-jozwicki.pl"
+      ],
+      "phones": [
+        "602244035"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9220"
+    },
+    {
+      "id": 8381,
+      "title": "Logo dla FizjoBambino: Rozwój Biznesu Fizjoterapii Dziecięcej",
+      "stage_name": "pays",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-04-28T14:28:01.584986+00:00",
+      "last_modified_at": "2026-08-25T13:34:41.076622+00:00",
+      "company": {
+        "id": 14163,
+        "title": "FizjoBambino",
+        "emails": [
+          "s.paulinaa@gmail.com"
+        ],
+        "phones": [
+          "881563033"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "s.paulinaa@gmail.com"
+      ],
+      "phones": [
+        "881563033"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8381"
+    },
+    {
+      "id": 8931,
+      "title": "Strona: Profesjonalny Sklep E-commerce z Żywnością Naturalną",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-11T08:03:53.708161+00:00",
+      "last_modified_at": "2026-08-25T13:29:50.559723+00:00",
+      "company": {
+        "id": 14701,
+        "title": "NATURALEXPERT.pl",
+        "emails": [
+          "kalioo321@gmail.com"
+        ],
+        "phones": [
+          "+48606382944"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "kalioo321@gmail.com"
+      ],
+      "phones": [
+        "+48606382944"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8931"
+    },
+    {
+      "id": 9255,
+      "title": "Logo dla Legal Tech: Automatyzacja Aktów Notarialnych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-25T09:20:07.94924+00:00",
+      "last_modified_at": "2026-08-25T12:52:33.253131+00:00",
+      "company": {
+        "id": 15026,
+        "title": "Firma: krzysztof.mielniczek11@gmail.com",
+        "emails": [
+          "krzysztof.mielniczek11@gmail.com"
+        ],
+        "phones": [
+          "572097701"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "krzysztof.mielniczek11@gmail.com"
+      ],
+      "phones": [
+        "572097701"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9255"
+    },
+    {
+      "id": 9256,
+      "title": "Logo dla Kancelarii Podatkowej - Nowa Marka",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-25T09:40:09.510953+00:00",
+      "last_modified_at": "2026-08-25T11:42:17.658594+00:00",
+      "company": {
+        "id": 15027,
+        "title": "Kancelaria Podatkowa",
+        "emails": [
+          "dikrawczyk@icloud.com"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "dikrawczyk@icloud.com"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9256"
+    },
+    {
+      "id": 9234,
+      "title": "Strona: Odświeżenie Witryny dla Branży Smart Home",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-22T14:05:37.47216+00:00",
+      "last_modified_at": "2026-08-25T10:20:28.376586+00:00",
+      "company": {
+        "id": 15005,
+        "title": "houseoffuture.pl",
+        "emails": [
+          "info@houseoffuture.pl"
+        ],
+        "phones": [
+          "507809348"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "info@houseoffuture.pl"
+      ],
+      "phones": [
+        "507809348"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9234"
+    },
+    {
+      "id": 9243,
+      "title": "Strona: Zwiększenie Konwersji dla Firmy Sprzątającej B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T19:14:15.616805+00:00",
+      "last_modified_at": "2026-08-25T10:19:18.715283+00:00",
+      "company": {
+        "id": 15014,
+        "title": "Finest Cleaning",
+        "emails": [
+          "biuro@finest-cleaning.pl"
+        ],
+        "phones": [
+          "+48798798773"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@finest-cleaning.pl"
+      ],
+      "phones": [
+        "+48798798773"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9243"
+    },
+    {
+      "id": 9251,
+      "title": "Nazwa dla Marki Merchowej w Branży Furry",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-24T16:20:04.561623+00:00",
+      "last_modified_at": "2026-08-25T09:36:23.845575+00:00",
+      "company": {
+        "id": 15022,
+        "title": "Firma: konrad.moc@gmail.com",
+        "emails": [
+          "konrad.moc@gmail.com"
+        ],
+        "phones": [
+          "+48601655162"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "konrad.moc@gmail.com"
+      ],
+      "phones": [
+        "+48601655162"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9251"
+    },
+    {
+      "id": 9250,
+      "title": "Copywriting dla Nowej Marki Odzieżowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-24T16:19:52.701536+00:00",
+      "last_modified_at": "2026-08-25T09:36:16.385151+00:00",
+      "company": {
+        "id": 15021,
+        "title": "Firma: pawelpolanski02@gmail.com",
+        "emails": [
+          "pawelpolanski02@gmail.com"
+        ],
+        "phones": [
+          "667331502"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "pawelpolanski02@gmail.com"
+      ],
+      "phones": [
+        "667331502"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9250"
+    },
+    {
+      "id": 9254,
+      "title": "zapytanie ofertowe",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": null,
+      "created_at": "2026-08-25T07:01:11.876695+00:00",
+      "last_modified_at": "2026-08-25T07:03:01.360027+00:00",
+      "company": {
+        "id": 15025,
+        "title": "Firma holisskin@onet.pl",
+        "emails": [
+          "holisskin@onet.pl"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "holisskin@onet.pl"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9254"
+    },
+    {
+      "id": 9253,
+      "title": "Strona Internetowa dla Hurtowni Budowlanej i Opału",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-25T05:00:26.391968+00:00",
+      "last_modified_at": "2026-08-25T07:03:00.673772+00:00",
+      "company": {
+        "id": 15024,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "michal.krawczynski@o2.pl"
+        ],
+        "phones": [
+          "+48694871002"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "michal.krawczynski@o2.pl"
+      ],
+      "phones": [
+        "+48694871002"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9253"
+    },
+    {
+      "id": 9248,
+      "title": "Strona Wizytówka dla Nowej Firmy Terapeutycznej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-24T13:31:40.174982+00:00",
+      "last_modified_at": "2026-08-25T06:37:44.709438+00:00",
+      "company": {
+        "id": 15019,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "marta.pawlaczek@op.pl"
+        ],
+        "phones": [
+          "880 440 187"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "marta.pawlaczek@op.pl"
+      ],
+      "phones": [
+        "880 440 187"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9248"
+    },
+    {
+      "id": 9249,
+      "title": "Logo dla Nowej Marki w Branży Psychologiczno-BHP",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-24T14:47:02.515781+00:00",
+      "last_modified_at": "2026-08-25T06:34:18.972615+00:00",
+      "company": {
+        "id": 15020,
+        "title": "ASYLUM",
+        "emails": [
+          "ratkowskak@hotmail.com"
+        ],
+        "phones": [
+          "+48791065470"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "ratkowskak@hotmail.com"
+      ],
+      "phones": [
+        "+48791065470"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9249"
+    },
+    {
+      "id": 9182,
+      "title": "Prośba o ofertę na wykonanie strony www",
+      "stage_name": "pays",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-11T18:43:39.490491+00:00",
+      "last_modified_at": "2026-08-25T05:35:08.086821+00:00",
+      "company": {
+        "id": 14949,
+        "title": "Firma anna.gryglewicz@aero-bw.pl",
+        "emails": [
+          "anna.gryglewicz@aero-bw.pl"
+        ],
+        "phones": [
+          "+48668081645"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "anna.gryglewicz@aero-bw.pl"
+      ],
+      "phones": [
+        "+48668081645"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9182"
+    },
+    {
+      "id": 9245,
+      "title": "Tytuł tomu wierszy i fraszek (Marta)",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": null,
+      "created_at": "2026-08-24T08:36:14.330947+00:00",
+      "last_modified_at": "2026-08-24T22:03:39.481742+00:00",
+      "company": {
+        "id": 15016,
+        "title": "Firma p.radkowska@poczta.fm",
+        "emails": [
+          "p.radkowska@poczta.fm"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "p.radkowska@poczta.fm"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9245"
+    },
+    {
+      "id": 9204,
+      "title": "Strona internetowa",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-16T17:11:26.678891+00:00",
+      "last_modified_at": "2026-08-24T16:17:03.263734+00:00",
+      "company": {
+        "id": 14974,
+        "title": "Firma rutkowskik685@gmail.com",
+        "emails": [
+          "rutkowskik685@gmail.com"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "rutkowskik685@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9204"
+    },
+    {
+      "id": 9247,
+      "title": "Nazwa dla Studia Oklejania Rowerów Premium (Marta)",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-24T10:39:08.962413+00:00",
+      "last_modified_at": "2026-08-24T13:22:44.80967+00:00",
+      "company": {
+        "id": 15018,
+        "title": "Firma: jurek.galaz@o2.pl",
+        "emails": [
+          "jurek.galaz@o2.pl"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "jurek.galaz@o2.pl"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9247"
+    },
+    {
+      "id": 9246,
+      "title": "Copywriting dla Nowej Firmy Polerującej Pojazdy",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-24T08:44:54.855856+00:00",
+      "last_modified_at": "2026-08-24T09:11:07.174643+00:00",
+      "company": {
+        "id": 15017,
+        "title": "Firma: konradbartkowiak2@gmail.com",
+        "emails": [
+          "konradbartkowiak2@gmail.com"
+        ],
+        "phones": [
+          "693684844"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "konradbartkowiak2@gmail.com"
+      ],
+      "phones": [
+        "693684844"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9246"
+    },
+    {
+      "id": 4894,
+      "title": "Logo dla Biura Matrymonialnego - Projekt i Wycena",
+      "stage_name": "pays",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2025-07-24T11:40:51.771112+00:00",
+      "last_modified_at": "2026-08-24T09:10:58.816473+00:00",
+      "company": {
+        "id": 10827,
+        "title": "Firma: p.gryglewska@interia.pl",
+        "emails": [
+          "p.gryglewska@interia.pl"
+        ],
+        "phones": [
+          "+48730160973"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "p.gryglewska@interia.pl"
+      ],
+      "phones": [
+        "+48730160973"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:4894"
+    },
+    {
+      "id": 9227,
+      "title": "Logo dla Nowej Marki Politechniki Opolskiej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-20T11:06:13.616563+00:00",
+      "last_modified_at": "2026-08-24T07:14:58.242978+00:00",
+      "company": {
+        "id": 14998,
+        "title": "Politechnika Opolska",
+        "emails": [
+          "d.markiewicz@po.edu.pl"
+        ],
+        "phones": [
+          "774498125"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "d.markiewicz@po.edu.pl"
+      ],
+      "phones": [
+        "774498125"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9227"
+    },
+    {
+      "id": 9244,
+      "title": "Strona dla Nowej Firmy Kredytowej i Ubezpieczeniowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-24T04:16:33.574575+00:00",
+      "last_modified_at": "2026-08-24T06:25:08.555837+00:00",
+      "company": {
+        "id": 15015,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "paczekjan1971@gmail.com"
+        ],
+        "phones": [
+          "888618393"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "paczekjan1971@gmail.com"
+      ],
+      "phones": [
+        "888618393"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9244"
+    },
+    {
+      "id": 9241,
+      "title": "Strona Internetowa dla Nowego Studia Tańca",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T16:58:20.192976+00:00",
+      "last_modified_at": "2026-08-23T16:58:21.352349+00:00",
+      "company": {
+        "id": 15012,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "abernaskiewicz@gmail.com"
+        ],
+        "phones": [
+          "507 825 168"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "abernaskiewicz@gmail.com"
+      ],
+      "phones": [
+        "507 825 168"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9241"
+    },
+    {
+      "id": 9239,
+      "title": "Strona: Sklep Internetowy dla Branży Przecinarek",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T16:32:37.753865+00:00",
+      "last_modified_at": "2026-08-23T16:56:07.157666+00:00",
+      "company": {
+        "id": 15010,
+        "title": "Darex-przecinarki.com.pl",
+        "emails": [
+          "agnieszka78@o2.pl"
+        ],
+        "phones": [
+          "+48531714660"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "agnieszka78@o2.pl"
+      ],
+      "phones": [
+        "+48531714660"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9239"
+    },
+    {
+      "id": 9232,
+      "title": "Logo dla Producenta Muzycznego na YouTube",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-22T09:43:43.105958+00:00",
+      "last_modified_at": "2026-08-23T16:49:39.48537+00:00",
+      "company": {
+        "id": 15003,
+        "title": "Firma: othersidewave@gmail.com",
+        "emails": [
+          "othersidewave@gmail.com"
+        ],
+        "phones": [
+          "+48605870552"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "othersidewave@gmail.com"
+      ],
+      "phones": [
+        "+48605870552"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9232"
+    },
+    {
+      "id": 9238,
+      "title": "Strona Internetowa: Rebranding dla Sali Bankietowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-23T09:26:48.110847+00:00",
+      "last_modified_at": "2026-08-23T16:49:37.33611+00:00",
+      "company": {
+        "id": 15009,
+        "title": "Nasza Kuchnia",
+        "emails": [
+          "nat.tyr@wp.pl"
+        ],
+        "phones": [
+          "696504600"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "nat.tyr@wp.pl"
+      ],
+      "phones": [
+        "696504600"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9238"
+    },
+    {
+      "id": 9237,
+      "title": "Nazwa dla Usług Mulczowania i Rolnictwa",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-22T22:17:47.802547+00:00",
+      "last_modified_at": "2026-08-23T09:38:01.670022+00:00",
+      "company": {
+        "id": 15008,
+        "title": "Firma: grkozlowskikacper@gmail.com",
+        "emails": [
+          "grkozlowskikacper@gmail.com"
+        ],
+        "phones": [
+          "605 929 119"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "grkozlowskikacper@gmail.com"
+      ],
+      "phones": [
+        "605 929 119"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9237"
+    },
+    {
+      "id": 9236,
+      "title": "Nazwa dla Nowej Marki Usług Elewacyjnych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-22T17:04:50.636984+00:00",
+      "last_modified_at": "2026-08-23T09:27:23.131185+00:00",
+      "company": {
+        "id": 15007,
+        "title": "Firma: garusek1998@gmail.com",
+        "emails": [
+          "garusek1998@gmail.com"
+        ],
+        "phones": [
+          "517274195"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "garusek1998@gmail.com"
+      ],
+      "phones": [
+        "517274195"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9236"
+    },
+    {
+      "id": 9231,
+      "title": "Strona: Modernizacja i Rozbudowa dla Branży Okiennej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-21T13:17:45.264641+00:00",
+      "last_modified_at": "2026-08-21T13:55:21.080023+00:00",
+      "company": {
+        "id": 15002,
+        "title": "Firma: gacek-renovierung@gmx.de",
+        "emails": [
+          "gacek-renovierung@gmx.de"
+        ],
+        "phones": [
+          "+4917661468744"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "gacek-renovierung@gmx.de"
+      ],
+      "phones": [
+        "+4917661468744"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9231"
+    },
+    {
+      "id": 9215,
+      "title": "Do Ewy: Strona Modernizacja Park Rozrywki Kosmiczne Ranczo",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-18T15:41:48.315873+00:00",
+      "last_modified_at": "2026-08-21T13:53:17.999577+00:00",
+      "company": {
+        "id": 14986,
+        "title": "www.kosmiczneranczo.pl",
+        "emails": [
+          "tomek@kosmiczneranczo.pl"
+        ],
+        "phones": [
+          "501790226"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "tomek@kosmiczneranczo.pl"
+      ],
+      "phones": [
+        "501790226"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9215"
+    },
+    {
+      "id": 9070,
+      "title": "Copywriting dla Nowej Marki Aparatów Słuchowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-26T08:32:54.587771+00:00",
+      "last_modified_at": "2026-08-21T11:46:32.241474+00:00",
+      "company": {
+        "id": 14839,
+        "title": "Firma: aasarzynska@interia.pl",
+        "emails": [
+          "aasarzynska@interia.pl"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "aasarzynska@interia.pl"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9070"
+    },
+    {
+      "id": 9229,
+      "title": "Strona Wizytówka dla Firmy Korepetycyjnej Mathul",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-20T18:01:54.161507+00:00",
+      "last_modified_at": "2026-08-21T07:44:02.932959+00:00",
+      "company": {
+        "id": 15000,
+        "title": "Mathul | Inżynieria nauki",
+        "emails": [
+          "machuldominik32@gmail.com"
+        ],
+        "phones": [
+          "452515609"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "machuldominik32@gmail.com"
+      ],
+      "phones": [
+        "452515609"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9229"
+    },
+    {
+      "id": 9222,
+      "title": "Logo dla Butiku Internetowego Pasadena Boutique",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-19T18:46:42.100055+00:00",
+      "last_modified_at": "2026-08-20T12:13:27.374112+00:00",
+      "company": {
+        "id": 14993,
+        "title": "Pasadena Boutique",
+        "emails": [
+          "annapietrzak0811@gmail.com"
+        ],
+        "phones": [
+          "+48728767798"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "annapietrzak0811@gmail.com"
+      ],
+      "phones": [
+        "+48728767798"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9222"
+    },
+    {
+      "id": 9224,
+      "title": "Nazwa dla Personalizowanego Planera Podróży w Polsce",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-20T08:06:13.863711+00:00",
+      "last_modified_at": "2026-08-20T11:36:41.869206+00:00",
+      "company": {
+        "id": 14995,
+        "title": "Firma: karolina.sobotkiewicz@gmail.com",
+        "emails": [
+          "karolina.sobotkiewicz@gmail.com"
+        ],
+        "phones": [
+          "+48535360843"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "karolina.sobotkiewicz@gmail.com"
+      ],
+      "phones": [
+        "+48535360843"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9224"
+    },
+    {
+      "id": 9218,
+      "title": "Pablo Dach - firma dekarska",
+      "stage_name": "pays",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-19T07:47:52.250708+00:00",
+      "last_modified_at": "2026-08-20T11:12:02.420688+00:00",
+      "company": {
+        "id": 14989,
+        "title": "pablo-dach@wp.pl",
+        "emails": [
+          "pablo-dach@wp.pl"
+        ],
+        "phones": [
+          "+48451520757"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "pablo-dach@wp.pl"
+      ],
+      "phones": [
+        "+48451520757"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9218"
+    },
+    {
+      "id": 9225,
+      "title": "Strona Internetowa: Redesign dla Branży Architektonicznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-20T09:09:04.184614+00:00",
+      "last_modified_at": "2026-08-20T10:45:11.523517+00:00",
+      "company": {
+        "id": 14996,
+        "title": "Plara LTD",
+        "emails": [
+          "stanislaw.razniewski@gmail.com"
+        ],
+        "phones": [
+          "+48696070470"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "stanislaw.razniewski@gmail.com"
+      ],
+      "phones": [
+        "+48696070470"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9225"
+    },
+    {
+      "id": 9223,
+      "title": "Strona internetowa dla e-commerce chemii gospodarczej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-19T19:39:43.362255+00:00",
+      "last_modified_at": "2026-08-20T07:07:25.353308+00:00",
+      "company": {
+        "id": 14994,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "sartek.bkomski@gmail.com"
+        ],
+        "phones": [
+          "511095921"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "sartek.bkomski@gmail.com"
+      ],
+      "phones": [
+        "511095921"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9223"
+    },
+    {
+      "id": 8974,
+      "title": "Logo dla Nowej Firmy Budowlanej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-17T19:47:44.904966+00:00",
+      "last_modified_at": "2026-08-20T07:04:56.596828+00:00",
+      "company": {
+        "id": 14743,
+        "title": "Firma: gracek123_2001@o2.pl",
+        "emails": [
+          "gracek123_2001@o2.pl"
+        ],
+        "phones": [
+          "884786302"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "gracek123_2001@o2.pl"
+      ],
+      "phones": [
+        "884786302"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:8974"
+    },
+    {
+      "id": 9162,
+      "title": "Strona Internetowa dla Wynajmu Domków Sezonowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-08T08:11:13.635657+00:00",
+      "last_modified_at": "2026-08-20T07:04:47.714048+00:00",
+      "company": {
+        "id": 14929,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "m.witych1@wp.pl"
+        ],
+        "phones": [
+          "573964988"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "m.witych1@wp.pl"
+      ],
+      "phones": [
+        "573964988"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9162"
+    },
+    {
+      "id": 9219,
+      "title": "Strona Wizytówka dla Gabinetu Stomatologicznego",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-19T12:28:08.953002+00:00",
+      "last_modified_at": "2026-08-19T14:32:40.55233+00:00",
+      "company": {
+        "id": 14990,
+        "title": "Firma:primodentspiek@vp.pl",
+        "emails": [
+          "primodentspiek@vp.pl"
+        ],
+        "phones": [
+          "663501695"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "primodentspiek@vp.pl"
+      ],
+      "phones": [
+        "663501695"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9219"
+    },
+    {
+      "id": 9221,
+      "title": "Logo dla Serwisu Kotłów i Pomp Ciepła",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-19T13:17:44.896282+00:00",
+      "last_modified_at": "2026-08-19T14:22:58.837476+00:00",
+      "company": {
+        "id": 14992,
+        "title": "Firma: marcintonder2@gmail.com",
+        "emails": [
+          "marcintonder2@gmail.com"
+        ],
+        "phones": [
+          "-"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "marcintonder2@gmail.com"
+      ],
+      "phones": [
+        "-"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9221"
+    },
+    {
+      "id": 5527,
+      "title": "Copywriting: Tworzenie Nazw dla Branży Marketingowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "copywriting",
+      "created_at": "2025-09-11T08:43:21.129557+00:00",
+      "last_modified_at": "2026-08-19T10:39:07.308149+00:00",
+      "company": {
+        "id": 11434,
+        "title": "Firma:maciej@owocni.pl",
+        "emails": [
+          "maciej@owocni.pl"
+        ],
+        "phones": [
+          "+48508437380"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "maciej@owocni.pl"
+      ],
+      "phones": [
+        "+48508437380"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:5527"
+    },
+    {
+      "id": 9217,
+      "title": "Zapytanie o mozliwosc wykonania oferty handlowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": null,
+      "created_at": "2026-08-19T06:49:04.194025+00:00",
+      "last_modified_at": "2026-08-19T06:49:04.194025+00:00",
+      "company": {
+        "id": 14988,
+        "title": "Firma t.braniewicz@gmail.com",
+        "emails": [
+          "t.braniewicz@gmail.com"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "t.braniewicz@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9217"
+    },
+    {
+      "id": 9216,
+      "title": "Copywriting dla Odświeżenia Marki Usług Koszenia Trawników",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-18T19:38:04.183555+00:00",
+      "last_modified_at": "2026-08-19T06:47:09.136618+00:00",
+      "company": {
+        "id": 14987,
+        "title": "Twardowski",
+        "emails": [
+          "kacpertwardowski981@gmail.com"
+        ],
+        "phones": [
+          "885890834"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kacpertwardowski981@gmail.com"
+      ],
+      "phones": [
+        "885890834"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9216"
+    },
+    {
+      "id": 9214,
+      "title": "Logo dla Szkoleniowej Firmy Transformacyjnej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-18T15:12:29.839741+00:00",
+      "last_modified_at": "2026-08-19T06:43:41.948218+00:00",
+      "company": {
+        "id": 14985,
+        "title": "www.silaispokoj.pl",
+        "emails": [
+          "jakub.bajor@jbakademia.pl"
+        ],
+        "phones": [
+          "+48790668611"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "jakub.bajor@jbakademia.pl"
+      ],
+      "phones": [
+        "+48790668611"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9214"
+    },
+    {
+      "id": 9212,
+      "title": "Strona Wizytówka dla Nowej Firmy Masażu",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-18T15:00:16.894615+00:00",
+      "last_modified_at": "2026-08-18T18:41:11.167495+00:00",
+      "company": {
+        "id": 14983,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "bacha0303@gmail.com"
+        ],
+        "phones": [
+          "00447522336907"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "bacha0303@gmail.com"
+      ],
+      "phones": [
+        "00447522336907"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9212"
+    },
+    {
+      "id": 9213,
+      "title": "Logo dla Rozwoju Marki w Branży Motoryzacyjnej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-18T15:04:41.718815+00:00",
+      "last_modified_at": "2026-08-18T18:26:19.102435+00:00",
+      "company": {
+        "id": 14984,
+        "title": "www.partneropony.pl",
+        "emails": [
+          "aneta.dolinska@partneropony.pl"
+        ],
+        "phones": [
+          "+48510051432"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "aneta.dolinska@partneropony.pl"
+      ],
+      "phones": [
+        "+48510051432"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9213"
+    },
+    {
+      "id": 9151,
+      "title": "Strona Internetowa dla Firmy Projektującej Wnętrza",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T10:14:32.914754+00:00",
+      "last_modified_at": "2026-08-18T08:27:28.327849+00:00",
+      "company": {
+        "id": 14919,
+        "title": "Firma:kontakt@ayaa.pl",
+        "emails": [
+          "kontakt@ayaa.pl"
+        ],
+        "phones": [
+          "725720424"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "kontakt@ayaa.pl"
+      ],
+      "phones": [
+        "725720424"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9151"
+    },
+    {
+      "id": 9211,
+      "title": "Strona: Modernizacja Serwisu Samochodowego dla Biznesu",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-18T00:21:55.341481+00:00",
+      "last_modified_at": "2026-08-18T08:20:17.202261+00:00",
+      "company": {
+        "id": 14982,
+        "title": "www.auto-serwis-eia.pl",
+        "emails": [
+          "autoserwiseia@gmail.com"
+        ],
+        "phones": [
+          "603639104"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "autoserwiseia@gmail.com"
+      ],
+      "phones": [
+        "603639104"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9211"
+    },
+    {
+      "id": 8525,
+      "title": "Strona Wizytówka dla Agroturystyki Słowlife",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-05-17T08:09:52.994087+00:00",
+      "last_modified_at": "2026-08-18T07:58:22.628493+00:00",
+      "company": {
+        "id": 14299,
+        "title": "WsiaMać",
+        "emails": [
+          "walciszek@poczta.onet.pl"
+        ],
+        "phones": [
+          "604405712"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "walciszek@poczta.onet.pl"
+      ],
+      "phones": [
+        "604405712"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:8525"
+    },
+    {
+      "id": 7155,
+      "title": "Strona Internetowa dla Nowego Biura Nieruchomości",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-01-06T12:01:54.448989+00:00",
+      "last_modified_at": "2026-08-18T07:28:24.046343+00:00",
+      "company": {
+        "id": 12976,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "pelc-kancelaria@wp.pl"
+        ],
+        "phones": [
+          "509030606"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "pelc-kancelaria@wp.pl"
+      ],
+      "phones": [
+        "509030606"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:7155"
+    },
+    {
+      "id": 9195,
+      "title": "Strona Portfolio Artystyczne dla Działalności Online",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-14T18:50:15.908034+00:00",
+      "last_modified_at": "2026-08-18T06:57:31.918879+00:00",
+      "company": {
+        "id": 14965,
+        "title": "Firma: mroziakiga@gmail.com",
+        "emails": [
+          "mroziakiga@gmail.com"
+        ],
+        "phones": [
+          "500351118"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mroziakiga@gmail.com"
+      ],
+      "phones": [
+        "500351118"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9195"
+    },
+    {
+      "id": 9210,
+      "title": "Marketing: Wsparcie Skalowania Sklepu Suplementów",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "marketing",
+      "created_at": "2026-08-17T17:10:44.46079+00:00",
+      "last_modified_at": "2026-08-18T06:52:22.042061+00:00",
+      "company": {
+        "id": 14981,
+        "title": "Firma: sklep@supleprofit.pl",
+        "emails": [
+          "sklep@supleprofit.pl"
+        ],
+        "phones": [
+          "535114318"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "sklep@supleprofit.pl"
+      ],
+      "phones": [
+        "535114318"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9210"
+    },
+    {
+      "id": 9209,
+      "title": "Strona Wizytówka dla Producenta Siatek Stalowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-17T12:11:56.683068+00:00",
+      "last_modified_at": "2026-08-17T14:36:54.272498+00:00",
+      "company": {
+        "id": 14980,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "biuro@siatki-sita.pl"
+        ],
+        "phones": [
+          "76 840 81 73"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@siatki-sita.pl"
+      ],
+      "phones": [
+        "76 840 81 73"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9209"
+    },
+    {
+      "id": 9206,
+      "title": "Strona Internetowa dla Nowej Firmy Lokalnej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-17T07:09:57.598852+00:00",
+      "last_modified_at": "2026-08-17T14:14:30.171739+00:00",
+      "company": {
+        "id": 14977,
+        "title": "Firma:n.kawecka@nowemiasto.zory.pl",
+        "emails": [
+          "nataliakimage@gmail.com"
+        ],
+        "phones": [
+          "000000000"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "nataliakimage@gmail.com"
+      ],
+      "phones": [
+        "000000000"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9206"
+    },
+    {
+      "id": 9148,
+      "title": "Gabinety Psychologiczne Łąkowa - Logo",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-06T08:33:43.265759+00:00",
+      "last_modified_at": "2026-08-17T13:32:30.673993+00:00",
+      "company": {
+        "id": 14916,
+        "title": "Firma karalona@gmail.com",
+        "emails": [
+          "karalona@gmail.com"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "karalona@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9148"
+    },
+    {
+      "id": 9202,
+      "title": "Strona: Modernizacja dla Terapii Online dla Kobiet",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-16T11:39:45.243138+00:00",
+      "last_modified_at": "2026-08-17T09:19:47.996147+00:00",
+      "company": {
+        "id": 14972,
+        "title": "Firma:MAGDA@PSYCHONURT.PL",
+        "emails": [
+          "MAGDA@PSYCHONURT.PL"
+        ],
+        "phones": [
+          "+48603885303"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "magda@psychonurt.pl"
+      ],
+      "phones": [
+        "+48603885303"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9202"
+    },
+    {
+      "id": 9203,
+      "title": "Strona Wizytówka: Modernizacja dla Szkoły Pływania",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-16T14:28:15.081683+00:00",
+      "last_modified_at": "2026-08-17T09:15:19.865959+00:00",
+      "company": {
+        "id": 14973,
+        "title": "Www.kozakteam.pl",
+        "emails": [
+          "Alezniejkozak@gmail.com"
+        ],
+        "phones": [
+          "519659037"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "alezniejkozak@gmail.com"
+      ],
+      "phones": [
+        "519659037"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9203"
+    },
+    {
+      "id": 9200,
+      "title": "Strona: Kompleksowa Modernizacja dla Branży Turystycznej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-16T01:36:56.683555+00:00",
+      "last_modified_at": "2026-08-17T09:13:09.50551+00:00",
+      "company": {
+        "id": 14970,
+        "title": "osmiorniczka.net",
+        "emails": [
+          "adam@osmiorniczka.net"
+        ],
+        "phones": [
+          "517505471"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "adam@osmiorniczka.net"
+      ],
+      "phones": [
+        "517505471"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9200"
+    },
+    {
+      "id": 9197,
+      "title": "Strona Wizytówka dla Lutnika - Blog o Gitarach",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-15T06:13:45.596314+00:00",
+      "last_modified_at": "2026-08-16T17:11:00.342013+00:00",
+      "company": {
+        "id": 14967,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "swiatgitary@gmail.com"
+        ],
+        "phones": [
+          "+4866314493"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "swiatgitary@gmail.com"
+      ],
+      "phones": [
+        "+4866314493"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9197"
+    },
+    {
+      "id": 9199,
+      "title": "Logo dla Nowoczesnego Salonu Optycznego Premium",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-15T15:06:39.551657+00:00",
+      "last_modified_at": "2026-08-16T17:02:46.470264+00:00",
+      "company": {
+        "id": 14969,
+        "title": "Firma: aleksandra.puszkarczuk@vp.pl",
+        "emails": [
+          "aleksandra.puszkarczuk@vp.pl"
+        ],
+        "phones": [
+          "+48798292497"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "aleksandra.puszkarczuk@vp.pl"
+      ],
+      "phones": [
+        "+48798292497"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9199"
+    },
+    {
+      "id": 9201,
+      "title": "Nazwa: Tworzenie Nazwy dla Nowej Marki Cyfrowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-16T11:33:01.838204+00:00",
+      "last_modified_at": "2026-08-16T16:05:56.321616+00:00",
+      "company": {
+        "id": 14971,
+        "title": "Firma: wiktoria03210321@gmail.com",
+        "emails": [
+          "wiktoria03210321@gmail.com"
+        ],
+        "phones": [
+          "+48781006663"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "wiktoria03210321@gmail.com"
+      ],
+      "phones": [
+        "+48781006663"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9201"
+    },
+    {
+      "id": 7521,
+      "title": "Nazwa dla Nowej Firmy Architektonicznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-30T10:59:05.659824+00:00",
+      "last_modified_at": "2026-08-14T14:38:15.789052+00:00",
+      "company": {
+        "id": 13320,
+        "title": "Firma: kasia.k.majkowska@gmail.com",
+        "emails": [
+          "kasia.k.majkowska@gmail.com"
+        ],
+        "phones": [
+          "504815252"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kasia.k.majkowska@gmail.com"
+      ],
+      "phones": [
+        "504815252"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7521"
+    },
+    {
+      "id": 7522,
+      "title": "Copywriting: Nazwa dla Firmy Budowlanej Infrastrukturalnej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-30T12:11:58.951386+00:00",
+      "last_modified_at": "2026-08-14T14:38:11.403249+00:00",
+      "company": {
+        "id": 13321,
+        "title": "Firma: p.chamerski@o2.pl",
+        "emails": [
+          "p.chamerski@o2.pl"
+        ],
+        "phones": [
+          "5414361284"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "p.chamerski@o2.pl"
+      ],
+      "phones": [
+        "5414361284"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7522"
+    },
+    {
+      "id": 7523,
+      "title": "Copywriting: Nowa Nazwa Sklepu Obuwniczego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-30T12:12:36.583615+00:00",
+      "last_modified_at": "2026-08-14T14:38:07.046576+00:00",
+      "company": {
+        "id": 13322,
+        "title": "Firma:sandramateusz2829@gmail.com",
+        "emails": [
+          "sandramateusz2829@gmail.com"
+        ],
+        "phones": [
+          "533015766"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "sandramateusz2829@gmail.com"
+      ],
+      "phones": [
+        "533015766"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7523"
+    },
+    {
+      "id": 7515,
+      "title": "Copywriting: Nazwa dla Wynajmu Zjeżdżalni Dmuchanych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-30T05:00:40.210008+00:00",
+      "last_modified_at": "2026-08-14T14:38:02.618976+00:00",
+      "company": {
+        "id": 13314,
+        "title": "Firma: karolagajewska2511@gmail.com",
+        "emails": [
+          "karolagajewska2511@gmail.com"
+        ],
+        "phones": [
+          "533731215"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "karolagajewska2511@gmail.com"
+      ],
+      "phones": [
+        "533731215"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7515"
+    },
+    {
+      "id": 7486,
+      "title": "Nazwa: Tworzenie Nazwy dla Kancelarii Prawnej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-28T13:01:02.356862+00:00",
+      "last_modified_at": "2026-08-14T14:37:58.407436+00:00",
+      "company": {
+        "id": 13286,
+        "title": "Firma:paulina.ruszynska@wp.pl",
+        "emails": [
+          "paulina.ruszynska@wp.pl"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "paulina.ruszynska@wp.pl"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7486"
+    },
+    {
+      "id": 7482,
+      "title": "Nazwa: Rebranding Gabinetu Kosmetycznego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-28T11:20:53.931203+00:00",
+      "last_modified_at": "2026-08-14T14:37:53.10413+00:00",
+      "company": {
+        "id": 13282,
+        "title": "Firma: martafrej@poczta.fn",
+        "emails": [
+          "martafrej@poczta.fn"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "martafrej@poczta.fn"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7482"
+    },
+    {
+      "id": 7480,
+      "title": "Copywriting: Koncept Restauracyjny z Silnym Brandingiem",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-28T07:41:02.028832+00:00",
+      "last_modified_at": "2026-08-14T14:37:47.684528+00:00",
+      "company": {
+        "id": 13280,
+        "title": "Firma:natala8085@icloud.com",
+        "emails": [
+          "natala8085@icloud.com"
+        ],
+        "phones": [
+          "505735093"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "natala8085@icloud.com"
+      ],
+      "phones": [
+        "505735093"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7480"
+    },
+    {
+      "id": 7470,
+      "title": "Copywriting dla Kreatywnej Branży Marketingowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-27T12:12:36.245482+00:00",
+      "last_modified_at": "2026-08-14T14:36:50.344955+00:00",
+      "company": {
+        "id": 13270,
+        "title": "Firma: izabartoszewicz@gmail.com",
+        "emails": [
+          "izabartoszewicz@gmail.com"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "izabartoszewicz@gmail.com"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7470"
+    },
+    {
+      "id": 7469,
+      "title": "Nazwa Sklepu Second Hand Plus Size",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-27T11:37:32.614485+00:00",
+      "last_modified_at": "2026-08-14T14:36:45.240283+00:00",
+      "company": {
+        "id": 13269,
+        "title": "Firma:patrycjadenhoff@gmail.com",
+        "emails": [
+          "patrycjadenhoff@gmail.com"
+        ],
+        "phones": [
+          "789317008"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "patrycjadenhoff@gmail.com"
+      ],
+      "phones": [
+        "789317008"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7469"
+    },
+    {
+      "id": 7456,
+      "title": "Copywriting dla Premium Liofilizowanych Produktów Spożywczych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-27T05:00:35.822838+00:00",
+      "last_modified_at": "2026-08-14T14:36:36.334296+00:00",
+      "company": {
+        "id": 13256,
+        "title": "Firma: beata.fecica@gmail.com",
+        "emails": [
+          "beata.fecica@gmail.com"
+        ],
+        "phones": [
+          "502 460 331"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "beata.fecica@gmail.com"
+      ],
+      "phones": [
+        "502 460 331"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7456"
+    },
+    {
+      "id": 7458,
+      "title": "Nazwa dla Firmy Wydobywczej Piasku i Żwiru",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-27T05:00:38.442847+00:00",
+      "last_modified_at": "2026-08-14T14:36:29.657442+00:00",
+      "company": {
+        "id": 13258,
+        "title": "Firma: adaszewskipiotr@wp.pl",
+        "emails": [
+          "adaszewskipiotr@wp.pl"
+        ],
+        "phones": [
+          "667995956"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "adaszewskipiotr@wp.pl"
+      ],
+      "phones": [
+        "667995956"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7458"
+    },
+    {
+      "id": 7426,
+      "title": "Copywriting: Nazwa dla Sklepu Odzieżowego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-24T16:58:31.386617+00:00",
+      "last_modified_at": "2026-08-14T14:36:21.676371+00:00",
+      "company": {
+        "id": 13227,
+        "title": "Firma:qubekjakub13@gmail.com",
+        "emails": [
+          "qubekjakub13@gmail.com"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "qubekjakub13@gmail.com"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7426"
+    },
+    {
+      "id": 7428,
+      "title": "Copywriting dla Salonu Kosmetycznego - Promocja Usług",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-01-25T07:20:26.301265+00:00",
+      "last_modified_at": "2026-08-14T14:36:08.978688+00:00",
+      "company": {
+        "id": 13229,
+        "title": "Firma:tila69@interia.pl",
+        "emails": [
+          "tila69@interia.pl"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "tila69@interia.pl"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7428"
+    },
+    {
+      "id": 7438,
+      "title": "Copywriting: Nazwa dla Firmy Usług Porządkowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-01-25T16:52:02.471865+00:00",
+      "last_modified_at": "2026-08-14T14:36:04.11743+00:00",
+      "company": {
+        "id": 13239,
+        "title": "Firma: budzynowskimarcin@gmail.com",
+        "emails": [
+          "budzynowskimarcin@gmail.com"
+        ],
+        "phones": [
+          "603226482"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "budzynowskimarcin@gmail.com"
+      ],
+      "phones": [
+        "603226482"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7438"
+    },
+    {
+      "id": 7619,
+      "title": "Copywriting: Wyróżniająca Nazwa dla Firmy HVAC",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-02-06T05:00:42.583761+00:00",
+      "last_modified_at": "2026-08-14T14:35:54.336908+00:00",
+      "company": {
+        "id": 13415,
+        "title": "Firma:p.krzemien@poczta.onet.pl",
+        "emails": [
+          "p.krzemien@poczta.onet.pl"
+        ],
+        "phones": [
+          "502215217"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "p.krzemien@poczta.onet.pl"
+      ],
+      "phones": [
+        "502215217"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7619"
+    },
+    {
+      "id": 7629,
+      "title": "Copywriting: Redakcja Książki dla Autora",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "copywriting",
+      "created_at": "2026-02-06T05:00:43.259649+00:00",
+      "last_modified_at": "2026-08-14T14:35:46.609738+00:00",
+      "company": {
+        "id": 13419,
+        "title": "Firma:allesandrogm@gmail.com",
+        "emails": [
+          "allesandrogm@gmail.com"
+        ],
+        "phones": [
+          "690104731"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "allesandrogm@gmail.com"
+      ],
+      "phones": [
+        "690104731"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7629"
+    },
+    {
+      "id": 7653,
+      "title": "Logo dla Firmy Handlowej - Projektowanie",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-08T09:24:54.390902+00:00",
+      "last_modified_at": "2026-08-14T14:35:35.939119+00:00",
+      "company": {
+        "id": 13448,
+        "title": "Firma: patrycjaurbanska01@gmail.com",
+        "emails": [
+          "patrycjaurbanska01@gmail.com"
+        ],
+        "phones": [
+          "885642742"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "patrycjaurbanska01@gmail.com"
+      ],
+      "phones": [
+        "885642742"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7653"
+    },
+    {
+      "id": 7657,
+      "title": "Logo i Identyfikacja Wizualna dla Nowej Firmy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-08T13:23:15.218257+00:00",
+      "last_modified_at": "2026-08-14T14:35:22.615501+00:00",
+      "company": {
+        "id": 13451,
+        "title": "Firma:piotr.tomski@gmail.com",
+        "emails": [
+          "piotr.tomski@gmail.com"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "piotr.tomski@gmail.com"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7657"
+    },
+    {
+      "id": 7667,
+      "title": "Logo dla Sklepu z Biżuterią Błyskotka",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-09T11:16:33.530382+00:00",
+      "last_modified_at": "2026-08-14T14:35:14.493463+00:00",
+      "company": {
+        "id": 13461,
+        "title": "Firma: artur-paulina@wp.pl",
+        "emails": [
+          "artur-paulina@wp.pl"
+        ],
+        "phones": [
+          "501306022"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "artur-paulina@wp.pl"
+      ],
+      "phones": [
+        "501306022"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7667"
+    },
+    {
+      "id": 7652,
+      "title": "Logo dla Warsztatów Kulinarne Marcin Janik",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-08T05:00:34.806221+00:00",
+      "last_modified_at": "2026-08-14T14:35:05.58297+00:00",
+      "company": {
+        "id": 13447,
+        "title": "kuchnia, warsztaty kulinarne",
+        "emails": [
+          "180981@wp.pl"
+        ],
+        "phones": [
+          "508 342 984"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "180981@wp.pl"
+      ],
+      "phones": [
+        "508 342 984"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7652"
+    },
+    {
+      "id": 7647,
+      "title": "Logo dla Johnny’s Garage: Profesjonalizm w Detailing Samochodowy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-07T15:04:07.78638+00:00",
+      "last_modified_at": "2026-08-14T14:34:54.317136+00:00",
+      "company": {
+        "id": 13442,
+        "title": "Johnny’s Garage",
+        "emails": [
+          "janjakubzrolka@gmail.com"
+        ],
+        "phones": [
+          "604357984"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "janjakubzrolka@gmail.com"
+      ],
+      "phones": [
+        "604357984"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7647"
+    },
+    {
+      "id": 7650,
+      "title": "Logo: Uzyskanie Pełnych Praw Autorskich dla Firmy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-08T05:00:34.049576+00:00",
+      "last_modified_at": "2026-08-14T14:34:38.64705+00:00",
+      "company": {
+        "id": 13445,
+        "title": "Firma:Jmarciniak027@gmail.com",
+        "emails": [
+          "Jmarciniak027@gmail.com"
+        ],
+        "phones": [
+          "693783285"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "jmarciniak027@gmail.com"
+      ],
+      "phones": [
+        "693783285"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7650"
+    },
+    {
+      "id": 7664,
+      "title": "Logo dla Meble Kościelniak - Projektowanie Branżowe",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-02-08T21:31:42.592664+00:00",
+      "last_modified_at": "2026-08-14T14:34:00.663593+00:00",
+      "company": {
+        "id": 13458,
+        "title": "Meble Kościelniak",
+        "emails": [
+          "krzysztof.k77@wp.pl"
+        ],
+        "phones": [
+          "+48722050890"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "krzysztof.k77@wp.pl"
+      ],
+      "phones": [
+        "+48722050890"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7664"
+    },
+    {
+      "id": 7670,
+      "title": "Logo dla Biura Nieruchomości BM",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "logo",
+      "created_at": "2026-02-09T11:52:49.291272+00:00",
+      "last_modified_at": "2026-08-14T14:33:50.846114+00:00",
+      "company": {
+        "id": 13464,
+        "title": "BM nieruchomości",
+        "emails": [
+          "szymon.babicki8@gmail.com"
+        ],
+        "phones": [
+          "660744566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "szymon.babicki8@gmail.com"
+      ],
+      "phones": [
+        "660744566"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:7670"
+    },
+    {
+      "id": 9158,
+      "title": "Do Ewy: Zapytanie ofertowe – projekt i wykonanie nowej strony internetowej As You Wish ",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-07T10:26:25.071942+00:00",
+      "last_modified_at": "2026-08-14T14:27:21.396982+00:00",
+      "company": {
+        "id": 14926,
+        "title": "Firma marcin@asyouwish.pl",
+        "emails": [
+          "marcin@asyouwish.pl",
+          "pawel@vitamizu.com"
+        ],
+        "phones": null
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "marcin@asyouwish.pl",
+        "pawel@vitamizu.com"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9158"
+    },
+    {
+      "id": 9156,
+      "title": "Do Ewy: Modernizacja dla e-commerce Hypermed.pl",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T22:17:47.758751+00:00",
+      "last_modified_at": "2026-08-14T11:47:53.399834+00:00",
+      "company": {
+        "id": 14924,
+        "title": "Hypermed.pl",
+        "emails": [
+          "biuro@hypermed.pl"
+        ],
+        "phones": [
+          "+48602250159"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@hypermed.pl"
+      ],
+      "phones": [
+        "+48602250159"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9156"
+    },
+    {
+      "id": 9186,
+      "title": "Lead do Roberta: Strona Internetowa: Zmiana dla Szkoły Językowej",
+      "stage_name": "analysis",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-12T06:40:28.455482+00:00",
+      "last_modified_at": "2026-08-14T10:46:17.984681+00:00",
+      "company": {
+        "id": 14953,
+        "title": "Www.bjcentre.pl",
+        "emails": [
+          "Janickacentre@gmail.com"
+        ],
+        "phones": [
+          "602309547"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "janickacentre@gmail.com"
+      ],
+      "phones": [
+        "602309547"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9186"
+    },
+    {
+      "id": 7138,
+      "title": "Strona internetowa dla okulisty:",
+      "stage_name": "analysis",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-01-05T12:27:28.873162+00:00",
+      "last_modified_at": "2026-08-14T07:51:41.849978+00:00",
+      "company": {
+        "id": 12959,
+        "title": "magdarosinska3@gmail.com",
+        "emails": [
+          "magdarosinska3@gmail.com"
+        ],
+        "phones": [
+          "+48730733833"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "magdarosinska3@gmail.com"
+      ],
+      "phones": [
+        "+48730733833"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:7138"
+    },
+    {
+      "id": 9108,
+      "title": "Logo dla Nowej Marki w Branży Wynajmu Krótkoterminowego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-07-31T08:23:22.847456+00:00",
+      "last_modified_at": "2026-08-13T16:34:35.935263+00:00",
+      "company": {
+        "id": 14876,
+        "title": "Firma: kburgiel@poczta.onet.pl",
+        "emails": [
+          "kburgiel@poczta.onet.pl"
+        ],
+        "phones": [
+          "516108896"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "kburgiel@poczta.onet.pl"
+      ],
+      "phones": [
+        "516108896"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9108"
+    },
+    {
+      "id": 9192,
+      "title": "Gabinet - strona www",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-13T11:48:00.356434+00:00",
+      "last_modified_at": "2026-08-13T13:08:35.975633+00:00",
+      "company": {
+        "id": 14959,
+        "title": "Firma andywojtas@wp.pl",
+        "emails": [
+          "andywojtas@wp.pl"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "andywojtas@wp.pl"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9192"
+    },
+    {
+      "id": 9191,
+      "title": "Wycena strony internetowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": null,
+      "created_at": "2026-08-13T11:47:41.746826+00:00",
+      "last_modified_at": "2026-08-13T12:05:42.063407+00:00",
+      "company": {
+        "id": 14958,
+        "title": "Firma k.mierzej1@gmail.com",
+        "emails": [
+          "k.mierzej1@gmail.com"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "k.mierzej1@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9191"
+    },
+    {
+      "id": 9180,
+      "title": "Strona Wizytówka dla Usług Asenizacyjnych",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-11T12:47:23.864901+00:00",
+      "last_modified_at": "2026-08-13T11:46:57.998828+00:00",
+      "company": {
+        "id": 14947,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "krzysztofpec12@gmail.com"
+        ],
+        "phones": [
+          "796455585"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "krzysztofpec12@gmail.com"
+      ],
+      "phones": [
+        "796455585"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9180"
+    },
+    {
+      "id": 8938,
+      "title": "Logo dla gry mobilnej w branży sportowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-07-11T14:05:27.419626+00:00",
+      "last_modified_at": "2026-08-13T03:00:20.269451+00:00",
+      "company": {
+        "id": 14708,
+        "title": "Firma: matpizpolska@gmail.com",
+        "emails": [
+          "matpizpolska@gmail.com"
+        ],
+        "phones": [
+          "+48508563139"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "matpizpolska@gmail.com"
+      ],
+      "phones": [
+        "+48508563139"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8938"
+    },
+    {
+      "id": 9188,
+      "title": "Logo dla dostawcy części rolniczych w Polsce",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-12T10:10:11.574583+00:00",
+      "last_modified_at": "2026-08-12T13:11:36.145531+00:00",
+      "company": {
+        "id": 14955,
+        "title": "www.bartnik-online.pl",
+        "emails": [
+          "kubabartnik@bartniktwr.pl"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kubabartnik@bartniktwr.pl"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9188"
+    },
+    {
+      "id": 9190,
+      "title": "Copywriting dla Sklepu Dropshippingowego - Nowa Marka",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-12T11:34:14.385849+00:00",
+      "last_modified_at": "2026-08-12T12:54:43.979736+00:00",
+      "company": {
+        "id": 14957,
+        "title": "Firma: alalysiak1@gmail.com",
+        "emails": [
+          "alalysiak1@gmail.com"
+        ],
+        "phones": [
+          "728345434"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "alalysiak1@gmail.com"
+      ],
+      "phones": [
+        "728345434"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9190"
+    },
+    {
+      "id": 9115,
+      "title": "Logo dla Centrum Zdrowia - Nowa Marka",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-01T06:58:18.493307+00:00",
+      "last_modified_at": "2026-08-12T12:01:00.554955+00:00",
+      "company": {
+        "id": 14883,
+        "title": "Firma: hanna.goldyn@gmail.com",
+        "emails": [
+          "hanna.goldyn@gmail.com"
+        ],
+        "phones": [
+          "+48785621539"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "hanna.goldyn@gmail.com"
+      ],
+      "phones": [
+        "+48785621539"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9115"
+    },
+    {
+      "id": 9185,
+      "title": "Strona: Modernizacja dla Psychologa Sądowego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-12T05:29:42.686548+00:00",
+      "last_modified_at": "2026-08-12T08:54:13.951209+00:00",
+      "company": {
+        "id": 14952,
+        "title": "Firma:baron.d2018@gmial.com",
+        "emails": [
+          "baron.d2018@gmail.com"
+        ],
+        "phones": [
+          "+48785443440"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "baron.d2018@gmail.com"
+      ],
+      "phones": [
+        "+48785443440"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9185"
+    },
+    {
+      "id": 9184,
+      "title": "Strona Wizytówka dla Pośrednika Nieruchomości w Poznaniu",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-11T22:42:47.182773+00:00",
+      "last_modified_at": "2026-08-12T08:35:05.749395+00:00",
+      "company": {
+        "id": 14951,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "magdalna.siejek@gmail.com",
+          "magdalena.siejek@gmail.com"
+        ],
+        "phones": [
+          "668345953"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "magdalna.siejek@gmail.com",
+        "magdalena.siejek@gmail.com"
+      ],
+      "phones": [
+        "668345953"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9184"
+    },
+    {
+      "id": 9183,
+      "title": "Logo dla Szkoły Tańca KM Dance Studio",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-11T18:53:11.370036+00:00",
+      "last_modified_at": "2026-08-12T08:07:27.443233+00:00",
+      "company": {
+        "id": 14950,
+        "title": "KM Dance Studio",
+        "emails": [
+          "m4ti04.98@gmail.com"
+        ],
+        "phones": [
+          "+48668976844"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "m4ti04.98@gmail.com"
+      ],
+      "phones": [
+        "+48668976844"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9183"
+    },
+    {
+      "id": 9187,
+      "title": "Logo dla Nowej Marki w Branży Remontowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-12T07:12:28.11814+00:00",
+      "last_modified_at": "2026-08-12T08:05:36.723128+00:00",
+      "company": {
+        "id": 14954,
+        "title": "REVIBUILD",
+        "emails": [
+          "filip.mitoraj@gmail.com"
+        ],
+        "phones": [
+          "724515114"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "filip.mitoraj@gmail.com"
+      ],
+      "phones": [
+        "724515114"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9187"
+    },
+    {
+      "id": 9132,
+      "title": "Logo dla Nowej Marki Sportowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-03T14:40:56.977262+00:00",
+      "last_modified_at": "2026-08-11T13:37:22.172189+00:00",
+      "company": {
+        "id": 14900,
+        "title": "Firma: a.jablonska@spaki.com",
+        "emails": [
+          "a.jablonska@spaki.com"
+        ],
+        "phones": [
+          "+4916099036662"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "a.jablonska@spaki.com"
+      ],
+      "phones": [
+        "+4916099036662"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9132"
+    },
+    {
+      "id": 9176,
+      "title": "Strona Internetowa dla Sprzedaży Produktów Spożywczych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-10T07:58:48.512604+00:00",
+      "last_modified_at": "2026-08-11T07:47:40.917596+00:00",
+      "company": {
+        "id": 14943,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "trybalski_daniel@wp.pl"
+        ],
+        "phones": [
+          "508008930"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "trybalski_daniel@wp.pl"
+      ],
+      "phones": [
+        "508008930"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9176"
+    },
+    {
+      "id": 9107,
+      "title": "Logo dla MB AUTO: Odświeżenie Marki Motoryzacyjnej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-31T07:30:00.904405+00:00",
+      "last_modified_at": "2026-08-11T07:41:16.230137+00:00",
+      "company": {
+        "id": 14875,
+        "title": "MB AUTO",
+        "emails": [
+          "juliamb2626@gmail.com"
+        ],
+        "phones": [
+          "570448224"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "juliamb2626@gmail.com"
+      ],
+      "phones": [
+        "570448224"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9107"
+    },
+    {
+      "id": 9173,
+      "title": "Strona Internetowa dla Instalatora Kuchni - Rebranding",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T13:00:06.109648+00:00",
+      "last_modified_at": "2026-08-11T07:37:59.04844+00:00",
+      "company": {
+        "id": 14940,
+        "title": "Perfect Renovation",
+        "emails": [
+          "Info@perfectrenovation.ie"
+        ],
+        "phones": [
+          "+353892704752"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "info@perfectrenovation.ie"
+      ],
+      "phones": [
+        "+353892704752"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9173"
+    },
+    {
+      "id": 9170,
+      "title": "Strona Wizytówka dla Firmy Ogólnobudowlanej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T10:57:40.574663+00:00",
+      "last_modified_at": "2026-08-11T07:25:23.003864+00:00",
+      "company": {
+        "id": 14937,
+        "title": "Ogólnobudowlana Działająca",
+        "emails": [
+          "hoganfirmabudowlana@vp.pl"
+        ],
+        "phones": [
+          "+48726110150"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "hoganfirmabudowlana@vp.pl"
+      ],
+      "phones": [
+        "+48726110150"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9170"
+    },
+    {
+      "id": 9167,
+      "title": "Strona Internetowa dla Psychoterapii i Warsztatów Rozwojowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T06:05:12.048065+00:00",
+      "last_modified_at": "2026-08-11T07:11:57.043486+00:00",
+      "company": {
+        "id": 14934,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "j.justynabronska@gmail.com"
+        ],
+        "phones": [
+          "660631510"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "j.justynabronska@gmail.com"
+      ],
+      "phones": [
+        "660631510"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9167"
+    },
+    {
+      "id": 9177,
+      "title": "Logo dla Gabinetu Psychologicznego - Nowa Marka",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-10T08:26:00.382578+00:00",
+      "last_modified_at": "2026-08-10T08:44:15.640307+00:00",
+      "company": {
+        "id": 14944,
+        "title": "Firma: ewa.ewadr@gmail.com",
+        "emails": [
+          "ewa.ewadr@gmail.com"
+        ],
+        "phones": [
+          "666613130"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "ewa.ewadr@gmail.com"
+      ],
+      "phones": [
+        "666613130"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9177"
+    },
+    {
+      "id": 9174,
+      "title": "Strona Wizytówka dla B2B Opakowań Drewnianych",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T21:27:41.963078+00:00",
+      "last_modified_at": "2026-08-10T06:35:04.305781+00:00",
+      "company": {
+        "id": 14941,
+        "title": "lubianki.pl",
+        "emails": [
+          "krystian@lubianki.pl"
+        ],
+        "phones": [
+          "+48502096421"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "krystian@lubianki.pl"
+      ],
+      "phones": [
+        "+48502096421"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9174"
+    },
+    {
+      "id": 9169,
+      "title": "Strona Internetowa: Rozwój Rzeczoznawcy Samochodowego w Niemczech",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T10:01:04.967323+00:00",
+      "last_modified_at": "2026-08-10T06:30:12.131855+00:00",
+      "company": {
+        "id": 14936,
+        "title": "www.szkodawniemczech.pl",
+        "emails": [
+          "Info@szkodawniemczech.pl"
+        ],
+        "phones": [
+          "+4915738696996"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "info@szkodawniemczech.pl"
+      ],
+      "phones": [
+        "+4915738696996"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9169"
+    },
+    {
+      "id": 9175,
+      "title": "Strona Wizytówka dla Nowej Restauracji",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-09T21:40:52.876985+00:00",
+      "last_modified_at": "2026-08-10T06:16:18.755734+00:00",
+      "company": {
+        "id": 14942,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "fikipovskidgreat@gmail.com"
+        ],
+        "phones": [
+          "728358181"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "fikipovskidgreat@gmail.com"
+      ],
+      "phones": [
+        "728358181"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9175"
+    },
+    {
+      "id": 9164,
+      "title": "Logo dla Rolnika: Projekt na Social Media",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-08T11:54:14.410214+00:00",
+      "last_modified_at": "2026-08-10T06:05:21.693468+00:00",
+      "company": {
+        "id": 14931,
+        "title": "Firma: BIURO@MTWLOGISTIC.COM",
+        "emails": [
+          "BIURO@MTWLOGISTIC.COM"
+        ],
+        "phones": [
+          "+48663833553"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@mtwlogistic.com"
+      ],
+      "phones": [
+        "+48663833553"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9164"
+    },
+    {
+      "id": 7360,
+      "title": "Strona Internetowa dla Nowego Butiku Online",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-01-20T05:00:38.740698+00:00",
+      "last_modified_at": "2026-08-10T06:01:24.182945+00:00",
+      "company": {
+        "id": 13164,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "butik@langella.pl"
+        ],
+        "phones": [
+          "698295627"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "butik@langella.pl"
+      ],
+      "phones": [
+        "698295627"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:7360"
+    },
+    {
+      "id": 9166,
+      "title": "Logo dla szkoły matematycznej MathSchool",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-08T18:24:21.499347+00:00",
+      "last_modified_at": "2026-08-09T13:49:09.153342+00:00",
+      "company": {
+        "id": 14933,
+        "title": "MathSchool",
+        "emails": [
+          "hannapiepiora@wp.pl"
+        ],
+        "phones": [
+          "692158968"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "hannapiepiora@wp.pl"
+      ],
+      "phones": [
+        "692158968"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9166"
+    },
+    {
+      "id": 9168,
+      "title": "Logo dla Nowej Marki Wideofilmowania Wesel",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-09T07:57:37.082606+00:00",
+      "last_modified_at": "2026-08-09T13:44:37.441312+00:00",
+      "company": {
+        "id": 14935,
+        "title": "Firma: Sebamet@tlen.pl",
+        "emails": [
+          "Sebamet@tlen.pl"
+        ],
+        "phones": [
+          "515480900"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "sebamet@tlen.pl"
+      ],
+      "phones": [
+        "515480900"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9168"
+    },
+    {
+      "id": 9171,
+      "title": "Logo dla Nowej Marki Sklepu Medycznego",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-09T11:07:42.242098+00:00",
+      "last_modified_at": "2026-08-09T13:42:14.489725+00:00",
+      "company": {
+        "id": 14938,
+        "title": "Firma: smcentrumzdrowia@o2.pl",
+        "emails": [
+          "smcentrumzdrowia@o2.pl"
+        ],
+        "phones": [
+          "+48691683703"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "smcentrumzdrowia@o2.pl"
+      ],
+      "phones": [
+        "+48691683703"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9171"
+    },
+    {
+      "id": 9149,
+      "title": "Strona dla firmy budującej domy prefabrykowane",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T08:54:16.622245+00:00",
+      "last_modified_at": "2026-08-08T18:04:52.12453+00:00",
+      "company": {
+        "id": 14917,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "Biuro@vestamodern.pl"
+        ],
+        "phones": [
+          "514777588"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@vestamodern.pl"
+      ],
+      "phones": [
+        "514777588"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9149"
+    },
+    {
+      "id": 9124,
+      "title": "Strona Wizytówka dla Działkowców - Aktualizacja",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-02T10:19:20.373298+00:00",
+      "last_modified_at": "2026-08-08T17:57:54.211238+00:00",
+      "company": {
+        "id": 14892,
+        "title": "Firma: Andrzejko@poczta.fm",
+        "emails": [
+          "Andrzejko@poczta.fm"
+        ],
+        "phones": [
+          "669090848"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "andrzejko@poczta.fm"
+      ],
+      "phones": [
+        "669090848"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9124"
+    },
+    {
+      "id": 9097,
+      "title": "Strona Skup Nieruchomości Problematycznych Online",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-30T03:00:41.465087+00:00",
+      "last_modified_at": "2026-08-08T17:08:41.595052+00:00",
+      "company": {
+        "id": 14866,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "Zosia_kalucka@tlen.pl"
+        ],
+        "phones": [
+          "501287522"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "zosia_kalucka@tlen.pl"
+      ],
+      "phones": [
+        "501287522"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9097"
+    },
+    {
+      "id": 9165,
+      "title": "Nazwa: Tworzenie Nazwy dla Nowej Marki E-commerce",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-08T14:04:32.17886+00:00",
+      "last_modified_at": "2026-08-08T16:57:36.11262+00:00",
+      "company": {
+        "id": 14932,
+        "title": "Firma:wiktorswierk2@gmail.com",
+        "emails": [
+          "wiktorswierk2@gmail.com"
+        ],
+        "phones": [
+          "517079401"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "wiktorswierk2@gmail.com"
+      ],
+      "phones": [
+        "517079401"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9165"
+    },
+    {
+      "id": 9159,
+      "title": "Nazwa dla Nowej Marki w Branży HR i Terapii",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-07T13:53:39.059769+00:00",
+      "last_modified_at": "2026-08-08T16:46:53.322817+00:00",
+      "company": {
+        "id": 14927,
+        "title": "Firma: justyna.gniadek@yahoo.com",
+        "emails": [
+          "justyna.gniadek@yahoo.com"
+        ],
+        "phones": [
+          "787 741 293"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "justyna.gniadek@yahoo.com"
+      ],
+      "phones": [
+        "787 741 293"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9159"
+    },
+    {
+      "id": 9160,
+      "title": "Copywriting dla Nowej Marki w Branży Psychoterapii",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-07T15:34:15.535432+00:00",
+      "last_modified_at": "2026-08-07T17:45:34.913627+00:00",
+      "company": {
+        "id": 8079,
+        "title": "Firma: aniawawro@poczta.fm",
+        "emails": [
+          "aniawawro@poczta.fm"
+        ],
+        "phones": [
+          "+48512013582"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "aniawawro@poczta.fm"
+      ],
+      "phones": [
+        "+48512013582"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9160"
+    },
+    {
+      "id": 9133,
+      "title": "Do Ewy: Strona Internetowa dla Wynajmu Namiotów Plenerowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-03T17:02:49.031908+00:00",
+      "last_modified_at": "2026-08-07T13:29:05.125966+00:00",
+      "company": {
+        "id": 14901,
+        "title": "TENTivo.pl",
+        "emails": [
+          "plenerconcept@gmail.com"
+        ],
+        "phones": [
+          "+48505312727"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "plenerconcept@gmail.com"
+      ],
+      "phones": [
+        "+48505312727"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9133"
+    },
+    {
+      "id": 9129,
+      "title": "Do Ewy: Strona Wizytówka dla Silesian Pharma - Modernizacja",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-03T07:28:00.874623+00:00",
+      "last_modified_at": "2026-08-07T13:07:00.062309+00:00",
+      "company": {
+        "id": 14897,
+        "title": "silesianpharma.pl",
+        "emails": [
+          "madabrowska@farmacol.com.pl"
+        ],
+        "phones": [
+          "+48500048971"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "madabrowska@farmacol.com.pl"
+      ],
+      "phones": [
+        "+48500048971"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9129"
+    },
+    {
+      "id": 9157,
+      "title": "Logo dla Nowej Marki Depilacji Laserowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-07T10:01:33.382276+00:00",
+      "last_modified_at": "2026-08-07T10:27:41.516104+00:00",
+      "company": {
+        "id": 14925,
+        "title": "Firma: karolinag9906@gmail.com",
+        "emails": [
+          "karolinag9906@gmail.com"
+        ],
+        "phones": [
+          "5393119862"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "karolinag9906@gmail.com"
+      ],
+      "phones": [
+        "5393119862"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9157"
+    },
+    {
+      "id": 9155,
+      "title": "Strona Wizytówka dla Firmy Oświetleniowej i Automatyki",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T16:35:00.182586+00:00",
+      "last_modified_at": "2026-08-07T08:38:29.230516+00:00",
+      "company": {
+        "id": 14923,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "piotr.jan.sliwa@gmail.com"
+        ],
+        "phones": [
+          "+48693419003"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "piotr.jan.sliwa@gmail.com"
+      ],
+      "phones": [
+        "+48693419003"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9155"
+    },
+    {
+      "id": 9154,
+      "title": "Logo dla Nowej Marki w Branży HR",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-06T16:10:06.035189+00:00",
+      "last_modified_at": "2026-08-07T08:28:28.829887+00:00",
+      "company": {
+        "id": 14922,
+        "title": "Firma: rogalska.sylwia@gmail.com",
+        "emails": [
+          "rogalska.sylwia@gmail.com"
+        ],
+        "phones": [
+          "00447400598774"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "rogalska.sylwia@gmail.com"
+      ],
+      "phones": [
+        "00447400598774"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9154"
+    },
+    {
+      "id": 9126,
+      "title": "Strona Internetowa dla Serwisu Ekspresów do Kawy",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-02T16:08:37.79908+00:00",
+      "last_modified_at": "2026-08-06T18:43:13.50472+00:00",
+      "company": {
+        "id": 14894,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "mfgrsky@gmail.com"
+        ],
+        "phones": [
+          "+3530831717659"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mfgrsky@gmail.com"
+      ],
+      "phones": [
+        "+3530831717659"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9126"
+    },
+    {
+      "id": 9150,
+      "title": "Logo dla Nowej Marki Beauty - Zapytanie",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-08-06T08:59:15.282049+00:00",
+      "last_modified_at": "2026-08-06T17:33:26.402467+00:00",
+      "company": {
+        "id": 14918,
+        "title": "Firma: cabanania123@gmail.com",
+        "emails": [
+          "cabanania123@gmail.com"
+        ],
+        "phones": [
+          "790317176"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "cabanania123@gmail.com"
+      ],
+      "phones": [
+        "790317176"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9150"
+    },
+    {
+      "id": 9064,
+      "title": "Strona: Modernizacja dla Agroturystyki Dolina Bobrów",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-24T18:44:43.528965+00:00",
+      "last_modified_at": "2026-08-06T11:44:21.397466+00:00",
+      "company": {
+        "id": 14833,
+        "title": "www.dolinabobrow.pl",
+        "emails": [
+          "agromichalik@o2.pl"
+        ],
+        "phones": [
+          "668831622"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "agromichalik@o2.pl"
+      ],
+      "phones": [
+        "668831622"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9064"
+    },
+    {
+      "id": 9153,
+      "title": "Strona WWW dla Nowej Firmy Online",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T10:40:26.917405+00:00",
+      "last_modified_at": "2026-08-06T11:16:03.088438+00:00",
+      "company": {
+        "id": 14921,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "katarzyna_marek@yahoo.com"
+        ],
+        "phones": [
+          "535530140"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "katarzyna_marek@yahoo.com"
+      ],
+      "phones": [
+        "535530140"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9153"
+    },
+    {
+      "id": 9152,
+      "title": "Strona Internetowa dla Nowej Firmy B2B Yachting",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-06T10:14:33.220207+00:00",
+      "last_modified_at": "2026-08-06T11:06:13.072478+00:00",
+      "company": {
+        "id": 14920,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "s.kepa1212@o2.pl"
+        ],
+        "phones": [
+          "579187172"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "s.kepa1212@o2.pl"
+      ],
+      "phones": [
+        "579187172"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9152"
+    },
+    {
+      "id": 9095,
+      "title": "Do Ewy: Strona Internetowa: Rozbudowa i Integracja dla Taxi",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-30T03:00:41.380035+00:00",
+      "last_modified_at": "2026-08-06T10:14:04.163028+00:00",
+      "company": {
+        "id": 14867,
+        "title": "Www.greencabtaxi.pl",
+        "emails": [
+          "mmagdziarz@icloud.com",
+          "biznes@green-cab.pl"
+        ],
+        "phones": [
+          "519000666"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "mmagdziarz@icloud.com",
+        "biznes@green-cab.pl"
+      ],
+      "phones": [
+        "519000666"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9095"
+    },
+    {
+      "id": 9147,
+      "title": "Strona Internetowa dla Nowej Marki E-commerce",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-05T21:18:04.30001+00:00",
+      "last_modified_at": "2026-08-06T09:18:46.230902+00:00",
+      "company": {
+        "id": 14915,
+        "title": "proinstaller.pl",
+        "emails": [
+          "virtualrealityinnovation@gmail.com"
+        ],
+        "phones": [
+          "+48530882858"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "virtualrealityinnovation@gmail.com"
+      ],
+      "phones": [
+        "+48530882858"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9147"
+    },
+    {
+      "id": 9140,
+      "title": "Logo dla Autooczy: Odświeżenie Marki w Motoryzacji",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-04T20:33:03.274601+00:00",
+      "last_modified_at": "2026-08-05T10:19:23.39674+00:00",
+      "company": {
+        "id": 14908,
+        "title": "Autooczy Regeneracja Reflektorów",
+        "emails": [
+          "katarzyna.kwas94@gmail.com"
+        ],
+        "phones": [
+          "889977499"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "katarzyna.kwas94@gmail.com"
+      ],
+      "phones": [
+        "889977499"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9140"
+    },
+    {
+      "id": 9146,
+      "title": "Logo dla Nowego Salonu Kosmetycznego",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-05T09:49:06.421651+00:00",
+      "last_modified_at": "2026-08-05T10:15:43.903662+00:00",
+      "company": {
+        "id": 14914,
+        "title": "Firma:natalia.chrostowska66@gmail.com",
+        "emails": [
+          "natalia.chrostowska66@gmail.com"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "natalia.chrostowska66@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9146"
+    },
+    {
+      "id": 8927,
+      "title": "Nazwa dla Nowej Marki Kosmetycznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-10T09:24:46.309796+00:00",
+      "last_modified_at": "2026-08-05T10:08:00.31513+00:00",
+      "company": {
+        "id": 14697,
+        "title": "Firma:sagitamark@gmail.com",
+        "emails": [
+          "sagitamark@gmail.com"
+        ],
+        "phones": [
+          "+48607603346"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "sagitamark@gmail.com"
+      ],
+      "phones": [
+        "+48607603346"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:8927"
+    },
+    {
+      "id": 9141,
+      "title": "Logo dla EduChomik: Rozwój Korepetycji Online",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-04T21:21:19.514161+00:00",
+      "last_modified_at": "2026-08-05T07:50:28.181453+00:00",
+      "company": {
+        "id": 14909,
+        "title": "EduChomik",
+        "emails": [
+          "Karolinaalicja.w@gmail.com"
+        ],
+        "phones": [
+          "695933428"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "karolinaalicja.w@gmail.com"
+      ],
+      "phones": [
+        "695933428"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9141"
+    },
+    {
+      "id": 9142,
+      "title": "Copywriting dla Nowej Marki Beauty",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-04T22:10:37.333719+00:00",
+      "last_modified_at": "2026-08-05T07:18:02.520409+00:00",
+      "company": {
+        "id": 14910,
+        "title": "Firma: rerusmilena7@gmail.com",
+        "emails": [
+          "rerusmilena7@gmail.com"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "rerusmilena7@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9142"
+    },
+    {
+      "id": 2602,
+      "title": "Owocna strona:",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2025-03-11T10:20:50.493731+00:00",
+      "last_modified_at": "2026-08-04T14:50:57.04617+00:00",
+      "company": {
+        "id": 8642,
+        "title": "Firma biuro@fontannyplywajace.pl",
+        "emails": [
+          "biuro@fontannyplywajace.pl"
+        ],
+        "phones": [
+          "+48600600618"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@fontannyplywajace.pl"
+      ],
+      "phones": [
+        "+48600600618"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:2602"
+    },
+    {
+      "id": 9118,
+      "title": "Do Ewy: Strona: Modernizacja E-commerce dla Motocyklistów",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-01T09:33:26.687466+00:00",
+      "last_modified_at": "2026-08-04T13:10:03.709751+00:00",
+      "company": {
+        "id": 14886,
+        "title": "Firma: Biuro@motocentergroup.pl",
+        "emails": [
+          "Biuro@motocentergroup.pl"
+        ],
+        "phones": [
+          "608423218"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@motocentergroup.pl"
+      ],
+      "phones": [
+        "608423218"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9118"
+    },
+    {
+      "id": 9131,
+      "title": "Wycena zamówienia",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-08-03T13:19:25.915497+00:00",
+      "last_modified_at": "2026-08-04T11:12:09.708481+00:00",
+      "company": {
+        "id": 14899,
+        "title": "Firma bartlomiejkasztelewicz@gmail.com",
+        "emails": [
+          "bartlomiejkasztelewicz@gmail.com"
+        ],
+        "phones": null
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "bartlomiejkasztelewicz@gmail.com"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9131"
+    },
+    {
+      "id": 9136,
+      "title": "Strona Internetowa: Rebranding Florystyki i Dekoracji Ślubnych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-04T11:05:03.640704+00:00",
+      "last_modified_at": "2026-08-04T11:11:34.4814+00:00",
+      "company": {
+        "id": 14904,
+        "title": "KUSIOKO",
+        "emails": [
+          "kusiokoo@gmail.com"
+        ],
+        "phones": [
+          "534538927"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kusiokoo@gmail.com"
+      ],
+      "phones": [
+        "534538927"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9136"
+    },
+    {
+      "id": 9125,
+      "title": "Strona Blogowa: Ekspert dla Nowej Firmy o Tajlandii",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-08-02T14:19:31.368218+00:00",
+      "last_modified_at": "2026-08-04T09:47:10.239097+00:00",
+      "company": {
+        "id": 14893,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "tajtrip0111@gmail.com"
+        ],
+        "phones": [
+          "720863388"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "tajtrip0111@gmail.com"
+      ],
+      "phones": [
+        "720863388"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9125"
+    },
+    {
+      "id": 9128,
+      "title": "Strona: Odświeżenie i Zwiększenie Sprzedaży Reprodukcji",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-03T05:01:58.342905+00:00",
+      "last_modified_at": "2026-08-04T09:24:21.665363+00:00",
+      "company": {
+        "id": 14896,
+        "title": "www.reprodukcje-obrazy.pl",
+        "emails": [
+          "biuro@goldengrupa.com"
+        ],
+        "phones": [
+          "500293233"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@goldengrupa.com"
+      ],
+      "phones": [
+        "500293233"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9128"
+    },
+    {
+      "id": 9100,
+      "title": "Strona Internetowa: Rozwój Zakładu Kamieniarskiego",
+      "stage_name": "inquiry",
+      "assigned_user_id": 259,
+      "primary_product": "marketing",
+      "created_at": "2026-07-30T09:01:26.057652+00:00",
+      "last_modified_at": "2026-08-04T09:20:49.822917+00:00",
+      "company": {
+        "id": 14869,
+        "title": "Firma: centrumgranitu@gmail.com",
+        "emails": [
+          "centrumgranitu@gmail.com"
+        ],
+        "phones": [
+          "606128143"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "centrumgranitu@gmail.com"
+      ],
+      "phones": [
+        "606128143"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9100"
+    },
+    {
+      "id": 9134,
+      "title": "Strona Internetowa dla Mobilnego Detailingu Samochodowego",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-04T00:19:58.163429+00:00",
+      "last_modified_at": "2026-08-04T09:05:25.025728+00:00",
+      "company": {
+        "id": 14902,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "mb.florczak@gmail.com"
+        ],
+        "phones": [
+          "+447712336334"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mb.florczak@gmail.com"
+      ],
+      "phones": [
+        "+447712336334"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9134"
+    },
+    {
+      "id": 9135,
+      "title": "Strona Wizytówka dla Poradni Psychologicznej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-04T08:11:17.949765+00:00",
+      "last_modified_at": "2026-08-04T08:59:00.867851+00:00",
+      "company": {
+        "id": 14903,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "praca.beatapanasz@gmail.com"
+        ],
+        "phones": [
+          "+48501638152"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "praca.beatapanasz@gmail.com"
+      ],
+      "phones": [
+        "+48501638152"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9135"
+    },
+    {
+      "id": 9111,
+      "title": "Zapytanie o wycenę - strona sprzedażowa kursu „Droga Józefa\"",
+      "stage_name": "pays",
+      "assigned_user_id": 259,
+      "primary_product": null,
+      "created_at": "2026-07-31T13:10:38.027082+00:00",
+      "last_modified_at": "2026-08-03T11:25:48.475715+00:00",
+      "company": {
+        "id": 14879,
+        "title": "Firma lukasz@halemkl.pl",
+        "emails": [
+          "lukasz@halemkl.pl"
+        ],
+        "phones": null
+      },
+      "engagement": "hot",
+      "is_follow_up": false,
+      "emails": [
+        "lukasz@halemkl.pl"
+      ],
+      "phones": [],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9111"
+    },
+    {
+      "id": 9072,
+      "title": "Strona Internetowa dla Firmy Remontowej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-26T17:07:34.16633+00:00",
+      "last_modified_at": "2026-08-03T10:26:07.869142+00:00",
+      "company": {
+        "id": 14841,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "fcbm0891@yahoo.de"
+        ],
+        "phones": [
+          "017623765019"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "fcbm0891@yahoo.de"
+      ],
+      "phones": [
+        "017623765019"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9072"
+    },
+    {
+      "id": 9110,
+      "title": "Strona Internetowa dla Nowej Firmy Budowlanej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-31T11:49:34.303138+00:00",
+      "last_modified_at": "2026-08-03T10:08:52.481597+00:00",
+      "company": {
+        "id": 14878,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "Radoslaw.Iwanski@sokolka.com.pl"
+        ],
+        "phones": [
+          "609051213"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "radoslaw.iwanski@sokolka.com.pl"
+      ],
+      "phones": [
+        "609051213"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9110"
+    },
+    {
+      "id": 9112,
+      "title": "Strona Ofertowa dla Firmy Technicznej B2B",
+      "stage_name": "analysis",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-31T13:42:54.085568+00:00",
+      "last_modified_at": "2026-08-03T09:33:37.085466+00:00",
+      "company": {
+        "id": 14880,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "mlodyrentier1791@gmail.com"
+        ],
+        "phones": [
+          "665397725"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mlodyrentier1791@gmail.com"
+      ],
+      "phones": [
+        "665397725"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9112"
+    },
+    {
+      "id": 9119,
+      "title": "Logo dla Klubu Sportowego Siatkarskiego Kobiet",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-01T10:18:30.930385+00:00",
+      "last_modified_at": "2026-08-03T07:57:11.014173+00:00",
+      "company": {
+        "id": 14887,
+        "title": "AS CHEŁMIEC WAŁBRZYCH SZCZAWNO ZDRÓJ",
+        "emails": [
+          "otyliagawlik@wp.pl"
+        ],
+        "phones": [
+          "513203086"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "otyliagawlik@wp.pl"
+      ],
+      "phones": [
+        "513203086"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9119"
+    },
+    {
+      "id": 9120,
+      "title": "Logo dla Nowej Marki Odzieżowej \"Jabłuszko\"",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-01T18:52:15.209579+00:00",
+      "last_modified_at": "2026-08-03T07:54:37.474656+00:00",
+      "company": {
+        "id": 14888,
+        "title": "Firma: majataczynska402@gmail.com",
+        "emails": [
+          "majataczynska402@gmail.com"
+        ],
+        "phones": [
+          "+48511489366"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "majataczynska402@gmail.com"
+      ],
+      "phones": [
+        "+48511489366"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9120"
+    },
+    {
+      "id": 9122,
+      "title": "Logo dla Odświeżenia Marki Beauty Clinic",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-08-01T21:16:02.067764+00:00",
+      "last_modified_at": "2026-08-03T07:52:33.692116+00:00",
+      "company": {
+        "id": 14890,
+        "title": "Bella Beauty Clinic",
+        "emails": [
+          "nlavendula@yahoo.com"
+        ],
+        "phones": [
+          "577499249"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "nlavendula@yahoo.com"
+      ],
+      "phones": [
+        "577499249"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9122"
+    },
+    {
+      "id": 9117,
+      "title": "Strona internetowa dla sklepu obuwniczego online",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-01T08:25:39.336321+00:00",
+      "last_modified_at": "2026-08-03T07:49:04.682725+00:00",
+      "company": {
+        "id": 14885,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "mliszcz23@gmail.com"
+        ],
+        "phones": [
+          "+48691845736"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mliszcz23@gmail.com"
+      ],
+      "phones": [
+        "+48691845736"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9117"
+    },
+    {
+      "id": 9116,
+      "title": "Strona: Ulepszenie E-commerce dla Akcesoriów Samochodowych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-08-01T07:34:01.226689+00:00",
+      "last_modified_at": "2026-08-03T07:47:14.754061+00:00",
+      "company": {
+        "id": 14884,
+        "title": "Firma:mihailmatran@gmail.com",
+        "emails": [
+          "mihailmatran@gmail.com"
+        ],
+        "phones": [
+          "667931456"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "mihailmatran@gmail.com"
+      ],
+      "phones": [
+        "667931456"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9116"
+    },
+    {
+      "id": 9114,
+      "title": "Copywriting: Obniżenie Kosztów Pozyskania Klienta w Edukacji Biznesowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "marketing",
+      "created_at": "2026-07-31T20:19:52.831618+00:00",
+      "last_modified_at": "2026-08-03T07:43:00.708219+00:00",
+      "company": {
+        "id": 14882,
+        "title": "Founders Path",
+        "emails": [
+          "formelaaron@gmail.com"
+        ],
+        "phones": [
+          "+48665327080"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "formelaaron@gmail.com"
+      ],
+      "phones": [
+        "+48665327080"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9114"
+    },
+    {
+      "id": 7947,
+      "title": "Strona Internetowa: Rozwiązanie Problemów w Branży E-commerce",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-03-05T11:15:50.99426+00:00",
+      "last_modified_at": "2026-08-03T07:42:51.354002+00:00",
+      "company": {
+        "id": 13735,
+        "title": "E.GRAMI",
+        "emails": [
+          "ruda@egrami.pl"
+        ],
+        "phones": [
+          "601321101"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "ruda@egrami.pl"
+      ],
+      "phones": [
+        "601321101"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:7947"
+    },
+    {
+      "id": 9127,
+      "title": "Nazwa: Chwytliwa Nazwa Restauracji w Częstochowie",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-08-02T18:06:25.922079+00:00",
+      "last_modified_at": "2026-08-03T06:20:37.733645+00:00",
+      "company": {
+        "id": 14895,
+        "title": "Firma: dietalight.czest@gmail.com",
+        "emails": [
+          "dietalight.czest@gmail.com"
+        ],
+        "phones": [
+          "664615799"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "dietalight.czest@gmail.com"
+      ],
+      "phones": [
+        "664615799"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9127"
+    },
+    {
+      "id": 5874,
+      "title": "Copywriting: Nazwa dla Firmy Ochrony i Facility Management",
+      "stage_name": "negotiations",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2025-10-06T14:08:17.009355+00:00",
+      "last_modified_at": "2026-08-02T22:44:02.400863+00:00",
+      "company": {
+        "id": 11765,
+        "title": "Firma: p.mruk@onet.eu",
+        "emails": [
+          "p.mruk@onet.eu"
+        ],
+        "phones": [
+          "667081194"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "p.mruk@onet.eu"
+      ],
+      "phones": [
+        "667081194"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:5874"
+    },
+    {
+      "id": 9084,
+      "title": "Strona Wizytówka dla Firmy Projektowej w Budownictwie",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T03:00:47.047167+00:00",
+      "last_modified_at": "2026-08-02T17:36:28.467071+00:00",
+      "company": {
+        "id": 14853,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "indes@in-des.pl"
+        ],
+        "phones": [
+          "601350059"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "indes@in-des.pl"
+      ],
+      "phones": [
+        "601350059"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9084"
+    },
+    {
+      "id": 9078,
+      "title": "Strona Internetowa dla Agencji Nieruchomości w Karpatach",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T03:00:46.63139+00:00",
+      "last_modified_at": "2026-08-02T17:02:46.630339+00:00",
+      "company": {
+        "id": 14849,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "jaro.wypych@gmail.com"
+        ],
+        "phones": [
+          "662056600"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "jaro.wypych@gmail.com"
+      ],
+      "phones": [
+        "662056600"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9078"
+    },
+    {
+      "id": 9113,
+      "title": "Logo dla Behawiorysty Zwierząt w Krakowie",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-31T15:12:59.623611+00:00",
+      "last_modified_at": "2026-07-31T15:29:44.458304+00:00",
+      "company": {
+        "id": 14881,
+        "title": "Firma: binkiewicz.aleksandra@o2.pl",
+        "emails": [
+          "binkiewicz.aleksandra@o2.pl"
+        ],
+        "phones": [
+          "508324838"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "binkiewicz.aleksandra@o2.pl"
+      ],
+      "phones": [
+        "508324838"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9113"
+    },
+    {
+      "id": 9109,
+      "title": "Logo dla Midur-Tech: Odświeżenie Marki w Branży Stalowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-31T09:05:36.599802+00:00",
+      "last_modified_at": "2026-07-31T15:28:04.464244+00:00",
+      "company": {
+        "id": 14877,
+        "title": "Midur-Tech",
+        "emails": [
+          "kontakt@midur-tech.com.pl"
+        ],
+        "phones": [
+          "601949484"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kontakt@midur-tech.com.pl"
+      ],
+      "phones": [
+        "601949484"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9109"
+    },
+    {
+      "id": 9093,
+      "title": "Strona Internetowa dla Nowej Marki Kosmetycznej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T14:27:29.106484+00:00",
+      "last_modified_at": "2026-07-31T15:26:41.169932+00:00",
+      "company": {
+        "id": 14862,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "alanbielasty1@wp.pl"
+        ],
+        "phones": [
+          "796479216"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "alanbielasty1@wp.pl"
+      ],
+      "phones": [
+        "796479216"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9093"
+    },
+    {
+      "id": 9061,
+      "title": "Do Ewy: Strona Wizytówka: Modernizacja dla Firmy B2B Audire",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-24T15:25:31.998715+00:00",
+      "last_modified_at": "2026-07-31T12:21:28.95667+00:00",
+      "company": {
+        "id": 14830,
+        "title": "Audire",
+        "emails": [
+          "adam.matusiak@audire.pl"
+        ],
+        "phones": [
+          "576 432 836"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "adam.matusiak@audire.pl"
+      ],
+      "phones": [
+        "576 432 836"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9061"
+    },
+    {
+      "id": 9018,
+      "title": "Logo dla Nowej Marki Glazurniczej",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-07-23T07:49:31.568052+00:00",
+      "last_modified_at": "2026-07-31T08:29:27.71804+00:00",
+      "company": {
+        "id": 14787,
+        "title": "Firma: kamilbialowolski@gmail.com",
+        "emails": [
+          "kamilbialowolski@gmail.com"
+        ],
+        "phones": [
+          "+48791155695"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kamilbialowolski@gmail.com"
+      ],
+      "phones": [
+        "+48791155695"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9018"
+    },
+    {
+      "id": 9098,
+      "title": "Logo dla Nowej Marki Przypraw w Polsce",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-30T03:00:41.574089+00:00",
+      "last_modified_at": "2026-07-31T08:06:57.851775+00:00",
+      "company": {
+        "id": 14864,
+        "title": "irishgreen.ie",
+        "emails": [
+          "info.verdearoma.pl@gmail.com"
+        ],
+        "phones": [
+          "+48784371029"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "info.verdearoma.pl@gmail.com"
+      ],
+      "phones": [
+        "+48784371029"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9098"
+    },
+    {
+      "id": 9103,
+      "title": "Strona Internetowa: Modernizacja dla Branży Językowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-30T16:42:25.175002+00:00",
+      "last_modified_at": "2026-07-30T20:35:55.555149+00:00",
+      "company": {
+        "id": 14872,
+        "title": "www.classylanguage.com",
+        "emails": [
+          "jezyk.z.klasa@gmail.com"
+        ],
+        "phones": [
+          "+48729309797"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "jezyk.z.klasa@gmail.com"
+      ],
+      "phones": [
+        "+48729309797"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9103"
+    },
+    {
+      "id": 9104,
+      "title": "Logo dla Duetu Muzycznego Duo VivaTasto",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-30T16:50:00.907866+00:00",
+      "last_modified_at": "2026-07-30T20:31:52.781582+00:00",
+      "company": {
+        "id": 14873,
+        "title": "Duo VivaTasto",
+        "emails": [
+          "vivatastoduo@gmail.com"
+        ],
+        "phones": [
+          "882343162"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "vivatastoduo@gmail.com"
+      ],
+      "phones": [
+        "882343162"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9104"
+    },
+    {
+      "id": 9105,
+      "title": "Copywriting dla Nowej Marki Odzieżowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-30T19:53:20.786099+00:00",
+      "last_modified_at": "2026-07-30T20:14:30.066567+00:00",
+      "company": {
+        "id": 14874,
+        "title": "Firma: monis88@o2.pl",
+        "emails": [
+          "monis88@o2.pl"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "monis88@o2.pl"
+      ],
+      "phones": [],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9105"
+    },
+    {
+      "id": 8892,
+      "title": "Strona Internetowa dla Firmy Domów Modułowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-06T16:56:29.935986+00:00",
+      "last_modified_at": "2026-07-30T14:48:35.902949+00:00",
+      "company": {
+        "id": 14662,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "remigiuszpawlowski1978@gmail.com"
+        ],
+        "phones": [
+          "514966701"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "remigiuszpawlowski1978@gmail.com"
+      ],
+      "phones": [
+        "514966701"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8892"
+    },
+    {
+      "id": 9102,
+      "title": "Logo dla platformy społecznościowo-edukacyjnej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-30T12:16:35.884465+00:00",
+      "last_modified_at": "2026-07-30T13:52:08.555159+00:00",
+      "company": {
+        "id": 14871,
+        "title": "Firma: barbara.brylkowskaa@icloud.com",
+        "emails": [
+          "barbara.brylkowskaa@icloud.com"
+        ],
+        "phones": [
+          "0034610483490"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "barbara.brylkowskaa@icloud.com"
+      ],
+      "phones": [
+        "0034610483490"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9102"
+    },
+    {
+      "id": 8975,
+      "title": "Strona: Modernizacja dla Firmy Remontowej w Londynie",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-18T14:36:09.088282+00:00",
+      "last_modified_at": "2026-07-30T13:04:30.972158+00:00",
+      "company": {
+        "id": 14744,
+        "title": "www.mk-refurbishment.co.uk",
+        "emails": [
+          "mjakmaniek@wp.pl"
+        ],
+        "phones": [
+          "00447916282306"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "mjakmaniek@wp.pl"
+      ],
+      "phones": [
+        "00447916282306"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8975"
+    },
+    {
+      "id": 8967,
+      "title": "Do Ewy: Strona Internetowa: Redesign dla Firmy Opakowaniowej B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-17T03:00:42.569625+00:00",
+      "last_modified_at": "2026-07-30T13:02:49.244146+00:00",
+      "company": {
+        "id": 14734,
+        "title": "emdepack.pl",
+        "emails": [
+          "emdepack@gmail.com"
+        ],
+        "phones": [
+          "601878816"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "emdepack@gmail.com"
+      ],
+      "phones": [
+        "601878816"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8967"
+    },
+    {
+      "id": 9024,
+      "title": "Nazwa: Nowa Nazwa dla Firmy Dachowej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-23T14:35:26.77771+00:00",
+      "last_modified_at": "2026-07-30T12:20:21.079649+00:00",
+      "company": {
+        "id": 14793,
+        "title": "PROFI DACH",
+        "emails": [
+          "plprofidach@gmail.com"
+        ],
+        "phones": [
+          "698543576"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "plprofidach@gmail.com"
+      ],
+      "phones": [
+        "698543576"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9024"
+    },
+    {
+      "id": 9091,
+      "title": "Strona Internetowa dla Firmy Odbioru Odpadów B2B",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T12:17:39.558184+00:00",
+      "last_modified_at": "2026-07-30T07:36:07.470399+00:00",
+      "company": {
+        "id": 14860,
+        "title": "ZOJAPOLSKA.PL",
+        "emails": [
+          "bdo@zojapolska.pl"
+        ],
+        "phones": [
+          "607258663"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "bdo@zojapolska.pl"
+      ],
+      "phones": [
+        "607258663"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9091"
+    },
+    {
+      "id": 9099,
+      "title": "Strona Internetowa dla Food Truck Bistro",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-30T03:33:45.884743+00:00",
+      "last_modified_at": "2026-07-30T07:31:54.519585+00:00",
+      "company": {
+        "id": 14868,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "Biuro@avator.pl"
+        ],
+        "phones": [
+          "536344377"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@avator.pl"
+      ],
+      "phones": [
+        "536344377"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9099"
+    },
+    {
+      "id": 9096,
+      "title": "Strona dla Sklepu i Wypożyczalni Motorów Elektrycznych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-30T03:00:41.421741+00:00",
+      "last_modified_at": "2026-07-30T07:27:43.731328+00:00",
+      "company": {
+        "id": 14865,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "bartmajki2@gmail.com"
+        ],
+        "phones": [
+          "0783585751"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "bartmajki2@gmail.com"
+      ],
+      "phones": [
+        "0783585751"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9096"
+    },
+    {
+      "id": 8955,
+      "title": "Strona Internetowa dla Apartamentu Premium na Mazurach",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-16T03:00:42.937329+00:00",
+      "last_modified_at": "2026-07-29T14:49:33.807337+00:00",
+      "company": {
+        "id": 14725,
+        "title": "Firma: vet.walczak@gmail.com",
+        "emails": [
+          "vet.walczak@gmail.com"
+        ],
+        "phones": [
+          "502 705 206"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "vet.walczak@gmail.com"
+      ],
+      "phones": [
+        "502 705 206"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8955"
+    },
+    {
+      "id": 8932,
+      "title": "Strona Wizytówka dla Biura Nieruchomości",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "strona",
+      "created_at": "2026-07-11T08:06:08.465295+00:00",
+      "last_modified_at": "2026-07-29T14:48:13.931494+00:00",
+      "company": {
+        "id": 14702,
+        "title": "Pierwsza działalność",
+        "emails": [
+          "kontakt.nieruchomosciexpert@gmail.com"
+        ],
+        "phones": [
+          "605045079"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "kontakt.nieruchomosciexpert@gmail.com"
+      ],
+      "phones": [
+        "605045079"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:8932"
+    },
+    {
+      "id": 9090,
+      "title": "Logo dla Agencji Nieruchomości - Identyfikacja Wizualna",
+      "stage_name": "negotiations",
+      "assigned_user_id": 259,
+      "primary_product": "logo",
+      "created_at": "2026-07-29T10:49:22.309767+00:00",
+      "last_modified_at": "2026-07-29T13:51:18.302852+00:00",
+      "company": {
+        "id": 14859,
+        "title": "Firma: grzegorz.w.stankiewicz@gmail.com",
+        "emails": [
+          "grzegorz.w.stankiewicz@gmail.com"
+        ],
+        "phones": [
+          "+48503624676"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "grzegorz.w.stankiewicz@gmail.com"
+      ],
+      "phones": [
+        "+48503624676"
+      ],
+      "owner_label": "Marta",
+      "bitrix_deal_id": "bb:9090"
+    },
+    {
+      "id": 9092,
+      "title": "Copywriting: Promocja Wynajmu Sal Restauracyjnych",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "marketing",
+      "created_at": "2026-07-29T12:22:06.317378+00:00",
+      "last_modified_at": "2026-07-29T12:35:45.709984+00:00",
+      "company": {
+        "id": 14861,
+        "title": "Firma:trexbroker1@gmail.com",
+        "emails": [
+          "trexbroker1@gmail.com"
+        ],
+        "phones": [
+          "602515566"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "trexbroker1@gmail.com"
+      ],
+      "phones": [
+        "602515566"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9092"
+    },
+    {
+      "id": 9086,
+      "title": "Strona Wizytówka dla Firmy Transportowej B2B",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T07:18:20.238503+00:00",
+      "last_modified_at": "2026-07-29T12:35:38.647523+00:00",
+      "company": {
+        "id": 14855,
+        "title": "log-partner.pl",
+        "emails": [
+          "marcin.zywocki@polskieziarno.pl"
+        ],
+        "phones": [
+          "797377546"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "marcin.zywocki@polskieziarno.pl"
+      ],
+      "phones": [
+        "797377546"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9086"
+    },
+    {
+      "id": 9089,
+      "title": "Logo dla Nowej Marki w Branży Badawczej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-29T09:22:44.343274+00:00",
+      "last_modified_at": "2026-07-29T09:42:28.067772+00:00",
+      "company": {
+        "id": 14858,
+        "title": "Firma: roi@projektroi.com",
+        "emails": [
+          "roi@projektroi.com"
+        ],
+        "phones": [
+          "-"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "roi@projektroi.com"
+      ],
+      "phones": [
+        "-"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9089"
+    },
+    {
+      "id": 9087,
+      "title": "Nazwa: Tworzenie Nazwy dla Campów dla Kobiet 40+",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-29T08:12:33.692261+00:00",
+      "last_modified_at": "2026-07-29T09:20:24.268153+00:00",
+      "company": {
+        "id": 14856,
+        "title": "Firma: dominica.marek@gmail.com",
+        "emails": [
+          "dominica.marek@gmail.com"
+        ],
+        "phones": [
+          "690018330"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "dominica.marek@gmail.com"
+      ],
+      "phones": [
+        "690018330"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9087"
+    },
+    {
+      "id": 6368,
+      "title": "Strona internetowa dla nowej firmy doradczej",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2025-11-10T23:23:13.112855+00:00",
+      "last_modified_at": "2026-07-29T08:55:07.261432+00:00",
+      "company": {
+        "id": 12220,
+        "title": "Firma:biuro@loewe-kiedrowska.pl",
+        "emails": [
+          "biuro@loewe-kiedrowska.pl"
+        ],
+        "phones": [
+          "503801021"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "biuro@loewe-kiedrowska.pl"
+      ],
+      "phones": [
+        "503801021"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:6368"
+    },
+    {
+      "id": 9085,
+      "title": "Strona Wizytówka dla Organizacji Non-Profit w Edukacji",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T03:29:22.654138+00:00",
+      "last_modified_at": "2026-07-29T07:16:11.485158+00:00",
+      "company": {
+        "id": 14854,
+        "title": "Poland Bridge Institute",
+        "emails": [
+          "xplewka@gmail.com"
+        ],
+        "phones": [
+          "7733227871"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "xplewka@gmail.com"
+      ],
+      "phones": [
+        "7733227871"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9085"
+    },
+    {
+      "id": 9083,
+      "title": "Strona: Modernizacja dla Parkingów Lotniskowych",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T03:00:47.015993+00:00",
+      "last_modified_at": "2026-07-29T07:08:28.064904+00:00",
+      "company": {
+        "id": 14852,
+        "title": "Www.parking-modlin.com.pl",
+        "emails": [
+          "grzegorz.mielczarek@gmail.com"
+        ],
+        "phones": [
+          "+48669010011"
+        ]
+      },
+      "engagement": "hot",
+      "is_follow_up": true,
+      "emails": [
+        "grzegorz.mielczarek@gmail.com"
+      ],
+      "phones": [
+        "+48669010011"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9083"
+    },
+    {
+      "id": 9079,
+      "title": "Strona: Modernizacja dla Usług Parkingowych Modlin",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "strona",
+      "created_at": "2026-07-29T03:00:46.639973+00:00",
+      "last_modified_at": "2026-07-29T07:06:49.295508+00:00",
+      "company": {
+        "id": 14851,
+        "title": "Www.parking-modlin.com.pl",
+        "emails": [
+          "grzegorz.mielczarek@gmail.com"
+        ],
+        "phones": [
+          "+48669010011"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "grzegorz.mielczarek@gmail.com"
+      ],
+      "phones": [
+        "+48669010011"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9079"
+    },
+    {
+      "id": 8905,
+      "title": "Logo dla Instytucji Naukowej - Wycena",
+      "stage_name": "negotiations",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-07T15:55:23.876064+00:00",
+      "last_modified_at": "2026-07-29T06:47:35.59234+00:00",
+      "company": {
+        "id": 14675,
+        "title": "Firma: emilia.miaskowska@nglservices.pl",
+        "emails": [
+          "emilia.miaskowska@nglservices.pl",
+          "anna.lesiak@nglservices.pl"
+        ],
+        "phones": [
+          ""
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "emilia.miaskowska@nglservices.pl",
+        "anna.lesiak@nglservices.pl"
+      ],
+      "phones": [],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:8905"
+    },
+    {
+      "id": 9081,
+      "title": "Logo dla nowego gabinetu kosmetycznego",
+      "stage_name": "inquiry",
+      "assigned_user_id": 257,
+      "primary_product": "logo",
+      "created_at": "2026-07-29T03:00:46.811434+00:00",
+      "last_modified_at": "2026-07-29T06:47:31.076358+00:00",
+      "company": {
+        "id": 14847,
+        "title": "Firma: odnova.instytut@gmail.com",
+        "emails": [
+          "odnova.instytut@gmail.com"
+        ],
+        "phones": [
+          "+48 885 880 101"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": true,
+      "emails": [
+        "odnova.instytut@gmail.com"
+      ],
+      "phones": [
+        "+48 885 880 101"
+      ],
+      "owner_label": "Gosia",
+      "bitrix_deal_id": "bb:9081"
+    },
+    {
+      "id": 9082,
+      "title": "Nazwa dla Gabinetu Logopedycznego dla Dzieci i Młodzieży",
+      "stage_name": "inquiry",
+      "assigned_user_id": 79,
+      "primary_product": "nazwa",
+      "created_at": "2026-07-29T03:00:46.81154+00:00",
+      "last_modified_at": "2026-07-29T06:22:25.460172+00:00",
+      "company": {
+        "id": 14848,
+        "title": "Firma: karolina1301@onet.pl",
+        "emails": [
+          "karolina1301@onet.pl"
+        ],
+        "phones": [
+          "728960890"
+        ]
+      },
+      "engagement": "cold",
+      "is_follow_up": false,
+      "emails": [
+        "karolina1301@onet.pl"
+      ],
+      "phones": [
+        "728960890"
+      ],
+      "owner_label": "Maciej",
+      "bitrix_deal_id": "bb:9082"
+    }
+  ]
+}

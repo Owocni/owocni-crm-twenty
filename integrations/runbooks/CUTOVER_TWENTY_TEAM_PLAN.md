@@ -47,8 +47,9 @@ Ankiety zespołu: **wszyscy odpowiedzieli** (Marta, Gosia, Maciej, Robert, Ewa).
 **Na start wystarczy to, co jest (D1-7):** hard-assign — Meta/Marketing→Robert, COPY→Maciej, reszta hash Marta/Gosia, Ewa ręcznie.  
 **Większe reguły (model dyspozytora)** — zegar HOT/STANDARD/LOW, „Biorę”, limit 3, godziny 8–18, święta, urlop, kaskada, alerty managera — **domyślnie po cutoverze**.  
 Jeśli będzie czas: można wdrażać **wcześniej, nawet przed cutoverem**; nie są must-have D1.  
-**SSOT procesu:** [LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md) (instrukcja zespołu + LLM).  
-**Świadomie rezygnujemy** (stary claim/puli v1.3): „możliwość przejęcia”, rezerwacja 3 min, mini-shark/broadcast, sloty 1/2/3, status „rozmowa trwa”, overflow „wsparcie sprzedażowe”, conv rate — szczegóły w §11 dyspozytora.
+**SSOT procesu:** [LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md) (**v2.0 scalony 2026-08-25** — dyspozytor; lista Meta Piotra później, do tego FB→Robert).  
+**Świadomie rezygnujemy** (stary claim/puli v1.3): „możliwość przejęcia”, rezerwacja 3 min, mini-shark/broadcast, sloty 1/2/3, status „rozmowa trwa”, overflow „wsparcie sprzedażowe”, conv rate — szczegóły w §12 dyspozytora.  
+Do wdrożenia dyspozytora: **15 min TIME TO LEAD = cel systemu**, nie automat.
 
 ---
 

@@ -1,7 +1,11 @@
 "use strict";
 
 const { getConfig } = require("../shared/config");
-const { listFormLeadsSince, fetchFormName } = require("../shared/graphApi");
+const {
+  listFormLeadsSince,
+  fetchFormName,
+  fetchCampaignIdFromAd,
+} = require("../shared/graphApi");
 
 async function postToWorker(workerUrl, payload) {
   const res = await fetch(workerUrl, {
@@ -113,14 +117,28 @@ async function handlePollMetaLeads(req, res) {
       const leadgenId = String(lead.id || "").trim();
       if (!leadgenId) continue;
       try {
+        const adId = String(lead.ad_id || "").trim();
+        let campaignId = "";
+        if (adId) {
+          try {
+            campaignId = await fetchCampaignIdFromAd(
+              adId,
+              cfg.pageAccessToken,
+              cfg.graphApiVersion,
+            );
+          } catch (err) {
+            console.warn("poll campaign_id warn", adId, err.message);
+          }
+        }
         const workerResult = await postToWorker(cfg.workerUrl, {
           environment: cfg.environment,
           leadgen_id: leadgenId,
           page_id: cfg.pageId,
           form_id: String(lead.form_id || formId).trim(),
           form_name: formName,
-          ad_id: String(lead.ad_id || "").trim(),
+          ad_id: adId,
           adgroup_id: "",
+          campaign_id: campaignId,
           field_data: lead.field_data || [],
           created_time: lead.created_time,
         });

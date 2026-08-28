@@ -171,7 +171,13 @@ Po normalizacji (`normalize_email` §5.8.1, `normalizePhone` E.164 — ta sama l
 
 **Twenty Email Sync — zakres (Etap 1.2):** wszystkie skrzynki sprzedawców + `leads@` + `studio@` → Twenty (odpowiedzi, wątki, timeline). Faza Etap 1.2 (po rdzeniu 1.1: schema, paid inbound, webhook OUT); cutover dopiero gdy 1.2 gotowe.
 
-**Model operacyjny (parzystość BB, C13):** każdy handlowiec ma własną skrzynkę w Twenty (Email Sync); dodatkowo skrzynka ogólna `leads@` (główny kanał rozdziału) — wątki muszą trafiać do właściwego leada/handlowca (Opportunity owner). Wdrożenie: reguły Twenty lub proces operacyjny przy pierwszym kontakcie (szczegóły w runbooku Etap 1.2); wymaganie biznesowe zamknięte.
+**Model operacyjny (parzystość BB, C13):** każdy handlowiec ma własną skrzynkę w Twenty (Email Sync); dodatkowo skrzynka ogólna `leads@` (główny kanał rozdziału) — wątki muszą trafić do właściwego leada/handlowca (Opportunity owner).
+
+**ADR #22 — twarda reguła OUT (2026-08-24, Dawid):**  
+**IN może być na ogólne (`leads@` / `studio@` / …). OUT handlowca ZAWSZE ze swojej skrzynki** (`marta@`, `gosia@`, `copywriting@`, …) — nawet gdy pierwszy mail klienta / formularza wpadł na ogólne.  
+**Override UI (24.08):** natywne command menu **Reply** / **Send Email** / **Compose Email** wyłączone w sandboxie; pinned **Odpowiedz** = Owocni Mail (`template-picker`, From = własna skrzynka, free compose). Wspólne skrzynki sync: konto operacyjne; osobiste: konto handlowca (bez dublowania IMAP).
+
+Wdrożenie: Metadata override command menu + Owocni Mail (`findSendableEmailAccount`) + SOP sesji; wymaganie biznesowe zamknięte.
 
 | Skrzynka | Email Sync w Twenty |
 |---|---|

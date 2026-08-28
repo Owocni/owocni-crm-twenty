@@ -1,0 +1,157 @@
+{
+  "startedAt": "2026-08-28T07:56:50.148140+00:00",
+  "apply": true,
+  "results": [
+    {
+      "email": "plprofidach@gmail.com",
+      "action": "delete_duplicate",
+      "reason": "Duplikat: BB#9024 Maciej inquiry→CONTACTED już w Twenty; ghost TWENTY_EMAIL u Gosi",
+      "bb_id": 9024,
+      "before_delete": {
+        "id": "3f10dc9a-03dc-4755-b362-e6a6cf952b12",
+        "name": "Nazwa: Nowa Nazwa dla Firmy Dachowej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "GACRFV8FFZ2Y942QYWZK4YKK3X",
+        "createdAt": "2026-08-28T05:20:07.688Z"
+      },
+      "before_keep": {
+        "id": "70a44ae0-9f5c-4227-a9c1-9363a2a45755",
+        "name": "plprofidach@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9024",
+        "idOid": "",
+        "createdAt": "2026-08-28T04:07:06.762Z"
+      },
+      "delete_http": 200,
+      "delete_ok": true,
+      "stamp_http": 200,
+      "after_keep": {
+        "id": "70a44ae0-9f5c-4227-a9c1-9363a2a45755",
+        "name": "plprofidach@gmail.com · Naming",
+        "stage": "CONTACTED",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:9024",
+        "idOid": "GACRFV8FFZ2Y942QYWZK4YKK3X",
+        "createdAt": "2026-08-28T04:07:06.762Z"
+      }
+    },
+    {
+      "email": "jakub.orlowski@bws.poznan.pl",
+      "action": "align_to_bb",
+      "reason": "Ghost leads@ NEW → BB#4791 Marta analysis (PROPOSAL)",
+      "bb_id": 4791,
+      "before": {
+        "id": "4be0efae-e6e7-4076-9e92-2f6fcd06fbc8",
+        "name": "Jakub Orlowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "7FSKW3YMV5TTQGRK0H099K1PRV",
+        "createdAt": "2026-08-04T07:50:11.288Z"
+      },
+      "patch": {
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:4791",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizProduct": "WEB",
+        "bizSource": "MANUAL",
+        "name": "jakub.orlowski@bws.poznan.pl · Strona · BB#4791",
+        "idOid": "7FSKW3YMV5TTQGRK0H099K1PRV",
+        "campaignRejected": false
+      },
+      "http_status": 200,
+      "ok": true,
+      "after": {
+        "id": "4be0efae-e6e7-4076-9e92-2f6fcd06fbc8",
+        "name": "jakub.orlowski@bws.poznan.pl · Strona · BB#4791",
+        "stage": "PROPOSAL",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:4791",
+        "idOid": "7FSKW3YMV5TTQGRK0H099K1PRV",
+        "createdAt": "2026-08-04T07:50:11.288Z"
+      }
+    },
+    {
+      "email": "j.andrzejczyk.gorlewska@planetarium.olsztyn.pl",
+      "action": "align_to_bb",
+      "reason": "Ghost leads@ NEW → BB#7349 Gosia negotiations (PROPOSAL)",
+      "bb_id": 7349,
+      "before": {
+        "id": "92200eae-1fb0-4432-b020-dbd133a817ae",
+        "name": "J Andrzejczyk gorlewska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "A6ZPR8RN434EYAQVNHBXBFGZZQ",
+        "createdAt": "2026-08-04T07:40:05.815Z"
+      },
+      "patch": {
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "stage": "PROPOSAL",
+        "bitrixDealId": "bb:7349",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bizProduct": "LOGO",
+        "bizSource": "MANUAL",
+        "name": "j.andrzejczyk.gorlewska@planetarium.olsztyn.pl · Logo · BB#7349",
+        "idOid": "A6ZPR8RN434EYAQVNHBXBFGZZQ",
+        "campaignRejected": false
+      },
+      "http_status": 200,
+      "ok": true,
+      "after": {
+        "id": "92200eae-1fb0-4432-b020-dbd133a817ae",
+        "name": "j.andrzejczyk.gorlewska@planetarium.olsztyn.pl · Logo · BB#7349",
+        "stage": "PROPOSAL",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:7349",
+        "idOid": "A6ZPR8RN434EYAQVNHBXBFGZZQ",
+        "createdAt": "2026-08-04T07:40:05.815Z"
+      }
+    },
+    {
+      "email": "daria.kozieja@gamecape.pl",
+      "action": "archive_no_bb",
+      "reason": "Brak deala w BB; ghost leads@ NEW z 4.08 — archiwum LOST (osoba+maile zostają)",
+      "bb_id": null,
+      "before": {
+        "id": "b618c199-b4f9-4076-af5a-6b07f788dfd6",
+        "name": "Daria Kozieja — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "Q8X9CKR5VRQ8PRFG7K4GBWQ71H",
+        "createdAt": "2026-08-04T07:50:05.809Z"
+      },
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] daria.kozieja@gamecape.pl — mail leads@ (archiwum)"
+      },
+      "note": "Aktywna korespondencja 24.08 — jeśli Gosia prowadzi sprawę, można cofnąć LOST→CONTACTED",
+      "http_status": 200,
+      "ok": true,
+      "after": {
+        "id": "b618c199-b4f9-4076-af5a-6b07f788dfd6",
+        "name": "[brak BB] daria.kozieja@gamecape.pl — mail leads@ (archiwum)",
+        "stage": "LOST",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "bitrixDealId": "",
+        "idOid": "Q8X9CKR5VRQ8PRFG7K4GBWQ71H",
+        "createdAt": "2026-08-04T07:50:05.809Z"
+      }
+    }
+  ],
+  "finishedAt": "2026-08-28T07:56:54.556023+00:00"
+}

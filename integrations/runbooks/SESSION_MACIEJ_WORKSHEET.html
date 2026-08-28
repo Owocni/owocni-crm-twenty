@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sesja Maciej — checklista</title>
+  <style>
+    :root {
+      --bg: #f7f5f1;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #666;
+      --line: #ddd6cb;
+      --accent: #1f5c45;
+      --warn: #8a4b1a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 20px 16px 48px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-size: 1.35rem;
+      margin: 0 0 4px;
+      font-weight: 700;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px 16px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .row label { color: var(--muted); font-size: 0.9rem; }
+    input[type="text"], textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 7px 9px;
+      font: inherit;
+      background: #fafafa;
+    }
+    textarea { min-height: 56px; resize: vertical; }
+    ul.check {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.check li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    ul.check li:last-child { border-bottom: 0; }
+    ul.check input { margin-top: 3px; flex-shrink: 0; }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .verdict label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .note {
+      font-size: 0.9rem;
+      color: var(--ink);
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      background: #f3efe6;
+      border-radius: 6px;
+      border-left: 3px solid var(--warn);
+    }
+    .note strong { color: var(--warn); }
+    .say {
+      font-size: 0.9rem;
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      background: #eaf3ee;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+    .faq {
+      font-size: 0.9rem;
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    .faq li { margin-bottom: 6px; }
+    .faq .a { color: var(--muted); display: block; margin-top: 2px; }
+    .print {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      section { break-inside: avoid; box-shadow: none; }
+      .print { display: none; }
+    }
+    @media (max-width: 560px) {
+      .row, .grid2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sesja Maciej</h1>
+    <p class="meta">30–40 min · ekran u niego (Firefox / Win) · Ty tylko prowadzisz · copywriting@</p>
+
+    <section>
+      <h2>Meta</h2>
+      <div class="row"><label>Data / godzina</label><input type="text" /></div>
+      <div class="row"><label>Kanał</label><input type="text" placeholder="Zoom / biuro / tel" /></div>
+      <div class="row"><label>Przeglądarka</label><input type="text" placeholder="Firefox Win11 (jego default)" /></div>
+    </section>
+
+    <section>
+      <h2>0. Przed startem</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> On klika — nie Ty</li>
+        <li><input type="checkbox" /> Widoki 📥 Maciej / 📤 Maciej w folderze Poczta</li>
+        <li><input type="checkbox" /> 1 lead copy na Lejku (tel + mail + produkt)</li>
+        <li><input type="checkbox" /> (Opc.) Chrome otwarty obok — smoke UI jeśli Firefox muli</li>
+      </ul>
+      <textarea placeholder="Uwagi przed…"></textarea>
+    </section>
+
+    <section>
+      <h2>Obawy (z ankiety) — nie bagatelizuj</h2>
+      <div class="note">
+        <strong>Główny strach:</strong> powtórka BB — koszt + spowolnienie sprzedaży procedurami; miesiące wdrożenia bez „szybciej/drożej” vs Thunderbird×Excel.
+      </div>
+      <ul class="check">
+        <li><input type="checkbox" /> <span><b>Twenty = marketing/analityka, nie sprzedaż</b> — mało siedział w BB; sprzedaje copy</span></li>
+        <li><input type="checkbox" /> <span><b>Utrata Thunderbirda</b> — chce zapas = zwykły klient poczty / webmail na te same skrzynki</span></li>
+        <li><input type="checkbox" /> <span><b>Wolny UI</b> — Firefox Win11: podgląd maila wolny / znika po paru leadach; duży tekst, półprzezroczyste dropdowny</span></li>
+        <li><input type="checkbox" /> <span><b>Szum maili</b> — wcześniej widział cudze skrzynki; chce tylko swoje</span></li>
+        <li><input type="checkbox" /> <span><b>Za dużo pól</b> — ID, src, OID, orkiestracja, temperatura = szum; chce wywalić, nie dokładać</span></li>
+        <li><input type="checkbox" /> <span><b>Brak godziny wejścia leada</b> + brak dashboardu „co nowe 1–2 h”</span></li>
+      </ul>
+      <div class="say">
+        <b>Powiedz wprost:</b> Thunderbird <b>zostaje</b> backup. Workflows / Uczestnicy = nie na D1. Twenty = jego lista leadów copy + maile klientów — nie kampanie AI.
+      </div>
+      <textarea placeholder="Jak zareagował na obawy…"></textarea>
+    </section>
+
+    <section>
+      <h2>Pytania FAQ — odhaczyć na sesji</h2>
+      <ol class="faq">
+        <li>
+          <b>Kiedy SQL?</b>
+          <span class="a">→ Filmik V3 + 1 zdanie reguły firmy (nie „częściej w leadach”).</span>
+        </li>
+        <li>
+          <b>Co to Person?</b>
+          <span class="a">→ Kontakt / osoba przy leadzie (People).</span>
+        </li>
+        <li>
+          <b>Dlaczego nie było moich maili / maciej@?</b>
+          <span class="a">→ Setup: copywriting@ podpięte; 📥/📤 Maciej. Obce skrzynki = szum — nie używać.</span>
+        </li>
+        <li>
+          <b>Uczestnicy / Workflows / Tasks?</b>
+          <span class="a">→ D1: nie zaglądasz (Tasks opcjonalnie). Reszta = admin.</span>
+        </li>
+        <li>
+          <b>Twenty = kampanie / AI, nie sprzedaż?</b>
+          <span class="a">→ Nie. SoR sprzedaży; marketing czyta skutki, nie odwrotnie.</span>
+        </li>
+        <li>
+          <b>Wolny podgląd maila (Firefox)?</b>
+          <span class="a">→ Smoke Chrome obok; nie obiecywać „jak na filmie”.</span>
+        </li>
+        <li>
+          <b>Wszystkie maile + załączniki od/do klienta?</b>
+          <span class="a">→ Timeline na leadzie/osobie; Thunderbird = backup.</span>
+        </li>
+        <li>
+          <b>Statystyki rozmów / numer = obsługa vs sprzedaż?</b>
+          <span class="a">→ Po cutoverze — nie D1.</span>
+        </li>
+        <li>
+          <b>Poczta wielu osób / Mac vs Win / skórki?</b>
+          <span class="a">→ Tylko moje widoki; smoke na jego Firefox; UX poczty = Thunderbird.</span>
+        </li>
+        <li>
+          <b>Przekazywanie leadów / stopka / autoresponder?</b>
+          <span class="a">→ Owner change = tak (MVP). Stopka/autoresponder = Google, nie Twenty D1.</span>
+        </li>
+      </ol>
+      <textarea style="margin-top:10px" placeholder="Nowe pytania z sesji…"></textarea>
+    </section>
+
+    <section>
+      <h2>1. Otwarcie</h2>
+      <p class="meta" style="margin:0 0 8px">„Lejek = Twoje copy. Poczta = 📥/📤 Maciej. Thunderbird zostaje.”</p>
+      <div class="row"><label>Gdzie dziś pracuje?</label><input type="text" value="Thunderbird + Docs/Word/notatki" /></div>
+      <div class="row"><label>Otwierał Twenty?</label><input type="text" placeholder="tak / nie / rzadko" /></div>
+      <div class="row"><label>Must jutro rano</label><input type="text" placeholder="np. odpisać na copy lead" /></div>
+      <div class="row"><label>Główny strach dziś</label><input type="text" /></div>
+      <textarea placeholder="Uwagi…"></textarea>
+    </section>
+
+    <section>
+      <h2>2. Lejek Owocni</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi Lejek Owocni</li>
+        <li><input type="checkbox" /> Tylko swoje leady (Owner Me / copy)</li>
+        <li><input type="checkbox" /> Pola handlowe na górze (bez ID/src/OID)</li>
+        <li><input type="checkbox" /> Otworzył 1 lead — tel, mail, produkt OK</li>
+      </ul>
+      <textarea placeholder="Uwagi Lejek…"></textarea>
+    </section>
+
+    <section>
+      <h2>3. Poczta — 📥 / 📤 Maciej</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi 📥 Maciej (copywriting@)</li>
+        <li><input type="checkbox" /> Bez szumu obcych skrzynek</li>
+        <li><input type="checkbox" /> Podgląd maila działa (Firefox lub Chrome)</li>
+        <li><input type="checkbox" /> Wie gdzie odpisać (Odpowiedz / Owocni Mail)</li>
+        <li><input type="checkbox" /> 📤: widzi Sent albo świadomie „jeszcze nie wysyłałem z Twenty”</li>
+      </ul>
+      <textarea placeholder="Uwagi Poczta…"></textarea>
+    </section>
+
+    <section>
+      <h2>4. Smoke — test OUT (opc.)</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Odpowiedź / nowa wiadomość z copywriting@</li>
+        <li><input type="checkbox" /> Wysłane</li>
+        <li><input type="checkbox" /> Widać w 📤 (albo n.d. — nie wysyłał wcześniej)</li>
+      </ul>
+      <div class="grid2">
+        <input type="text" placeholder="Do kogo / temat" />
+        <input type="text" placeholder="Problem (jeśli był)" />
+      </div>
+      <textarea style="margin-top:8px" placeholder="Uwagi OUT…"></textarea>
+    </section>
+
+    <section>
+      <h2>5. SQL (tylko jeśli pyta)</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Rozumie 1 zdanie + V3</li>
+        <li><input type="checkbox" /> Nie wgłębiamy się w Workflows</li>
+      </ul>
+      <textarea placeholder="Uwagi SQL…"></textarea>
+    </section>
+
+    <section>
+      <h2>6. Zamknięcie</h2>
+      <div class="row"><label>Otworzy jutro?</label><input type="text" placeholder="tak / może / nie" /></div>
+      <div class="row"><label>Thunderbird do</label><input type="text" placeholder="backup / do kiedy" /></div>
+      <div class="row"><label>1 bloker</label><input type="text" /></div>
+      <div class="row"><label>2. sesja?</label><input type="text" placeholder="nie / tak — kiedy" /></div>
+      <textarea placeholder="Uwagi koniec…"></textarea>
+    </section>
+
+    <section>
+      <h2>7. Werdykt</h2>
+      <p class="meta" style="margin:0 0 8px">PASS = 📥 OK + Lejek Me + wie gdzie odpisać</p>
+      <div class="verdict">
+        <label><input type="radio" name="v" /> 🟢 PASS</label>
+        <label><input type="radio" name="v" /> 🟡 WARUNKOWO</label>
+        <label><input type="radio" name="v" /> 🔴 FAIL → 2. sesja</label>
+      </div>
+      <textarea placeholder="Next (akcja / kto / do kiedy)…"></textarea>
+    </section>
+
+    <section>
+      <h2>8. Po sesji</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Follow-up wysłany</li>
+        <li><input type="checkbox" /> Status w arkuszu cutoveru</li>
+        <li><input type="checkbox" /> Pass/fail w session scripts</li>
+      </ul>
+    </section>
+
+    <p class="print">Ctrl/Cmd+P → druk / PDF · wartości w polach zostają w przeglądarce do zamknięcia karty</p>
+  </div>
+</body>
+</html>

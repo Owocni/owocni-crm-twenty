@@ -34,12 +34,13 @@ Widok **By Stage** (Opportunities, KANBAN) w Twenty sandbox.
 
 Segmenty łączone separatorem ` · ` (pomijane, gdy brak danych):
 
-1. **Produkt** — Strona / Logo / Naming / Marketing…
-2. **Typ projektu** — `Nowe` / `Redesign` (z odpowiedzi `strona_ma`, `logo_ma`…)
-3. **Jakość** — `Cennik` / `Ekspert` (z `strona_jaka`, `logo_jakie`… → `basic` / `premium`)
-4. **Kontakt** — imię (obowiązkowy segment; fallback: prefix email, telefon, `Lead`)
+1. **Email** — pełny adres (obowiązkowy segment; fallback: telefon, `Lead`)
+2. **Produkt** — Strona / Logo / Naming / Marketing…
+3. **Typ projektu** — `Nowe` / `Redesign` (z odpowiedzi `strona_ma`, `logo_ma`…)
+4. **Jakość** — `Cennik` / `Ekspert` (z `strona_jaka`, `logo_jakie`… → `basic` / `premium`)
 
-Przykład: `Strona · Redesign · Ekspert · Anna`
+Przykład: `sebastian@mpm.pl · Strona · Redesign · Ekspert`  
+Krótszy: `sebastian@mpm.pl · Strona · Nowe` (gdy brak segmentu jakości)
 
 Maile `leads@`: bez zmian — temat / nadawca + `— mail leads@`.
 

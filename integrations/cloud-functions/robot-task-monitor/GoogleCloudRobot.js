@@ -6,6 +6,7 @@ const {
   logSandboxPlatformSkip,
   getSpreadsheetId,
 } = require("./shared/envGuard");
+const pricingAliases = require("./shared/pricingProductAliases");
 
 // ============================================
 // KONFIGURACJA
@@ -1054,45 +1055,26 @@ async function getPricingConfigFromSheets(spreadsheetId) {
 // HELPER: Mapowanie wartości z Pricing Key Config
 // ============================================
 function getPricingValue(pricingKey, platform, pricingConfig) {
-  if (!pricingKey || !pricingConfig) {
-    return null;
-  }
-
-  // Spróbuj najpierw dokładnego match
-  let keyConfig = pricingConfig[pricingKey];
-
-  // Jeśli nie znaleziono i ma prefiks, spróbuj bez prefiksu (fallback)
-  if (!keyConfig && pricingKey.includes("_")) {
-    const parts = pricingKey.split("_");
-    const withoutPrefix = parts.slice(1).join("\_");
-    keyConfig = pricingConfig[withoutPrefix];
-
-    if (keyConfig) {
-      console.log(
-        `🔧 Found pricing for "${withoutPrefix}" (without prefix from "${pricingKey}")`,
-      );
-    }
-  }
-
-  // Jeśli nadal nie znaleziono, spróbuj "Other"
-  if (!keyConfig) {
-    keyConfig = pricingConfig["Other"];
-    if (keyConfig) {
-      console.log(`🔧 Using fallback "Other" for key "${pricingKey}"`);
-    }
-  }
-
-  if (!keyConfig) {
+  const result = pricingAliases.getPricingValue(
+    pricingKey,
+    platform,
+    pricingConfig,
+  );
+  if (result.value == null && !result.matchedKey) {
     console.warn(`⚠️ No pricing mapping for key: "${pricingKey}"`);
     return null;
   }
-
-  const value = keyConfig[platform] || null;
+  if (result.fallbackOther) {
+    console.log(`🔧 Using fallback "Other" for key "${pricingKey}"`);
+  } else if (result.matchedKey && result.matchedKey !== pricingKey) {
+    console.log(
+      `🔧 Pricing alias: "${pricingKey}" → "${result.matchedKey}"`,
+    );
+  }
   console.log(
-    `💰 getPricingValue: "${pricingKey}" → ${value} (platform: ${platform})`,
+    `💰 getPricingValue: "${pricingKey}" → ${result.value} (platform: ${platform})`,
   );
-
-  return value;
+  return result.value;
 }
 
 // ============================================

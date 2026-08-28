@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sesja Gosia — checklista</title>
+  <style>
+    :root {
+      --bg: #f7f5f1;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #666;
+      --line: #ddd6cb;
+      --accent: #1f5c45;
+      --warn: #8a4b1a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 20px 16px 48px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-size: 1.35rem;
+      margin: 0 0 4px;
+      font-weight: 700;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px 16px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .row label { color: var(--muted); font-size: 0.9rem; }
+    input[type="text"], textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 7px 9px;
+      font: inherit;
+      background: #fafafa;
+    }
+    textarea { min-height: 56px; resize: vertical; }
+    ul.check {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.check li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    ul.check li:last-child { border-bottom: 0; }
+    ul.check input { margin-top: 3px; flex-shrink: 0; }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .verdict label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .note {
+      font-size: 0.9rem;
+      color: var(--ink);
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      background: #f3efe6;
+      border-radius: 6px;
+      border-left: 3px solid var(--warn);
+    }
+    .note strong { color: var(--warn); }
+    .say {
+      font-size: 0.9rem;
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      background: #eaf3ee;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+    .faq {
+      font-size: 0.9rem;
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    .faq li { margin-bottom: 6px; }
+    .faq .a { color: var(--muted); display: block; margin-top: 2px; }
+    .print {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      section { break-inside: avoid; box-shadow: none; }
+      .print { display: none; }
+    }
+    @media (max-width: 560px) {
+      .row, .grid2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sesja Gosia</h1>
+    <p class="meta">15–30 min · ekran u niej · Ty tylko prowadzisz · Lejek Me + szablon + etap</p>
+
+    <section>
+      <h2>Meta</h2>
+      <div class="row"><label>Data / godzina</label><input type="text" /></div>
+      <div class="row"><label>Kanał</label><input type="text" placeholder="Zoom / biuro / tel" /></div>
+      <div class="row"><label>Przeglądarka</label><input type="text" /></div>
+    </section>
+
+    <section>
+      <h2>0. Przed startem</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Ona klika — nie Ty</li>
+        <li><input type="checkbox" /> Lejek Owocni → Owner = Me (tylko Gosia)</li>
+        <li><input type="checkbox" /> 1 jej lead do przesunięcia etapu</li>
+        <li><input type="checkbox" /> (Opc.) testowe Opp Dawida — schować jeśli wciąż widać</li>
+      </ul>
+      <textarea placeholder="Uwagi przed…"></textarea>
+    </section>
+
+    <section>
+      <h2>Obawy (z ankiety) — nie bagatelizuj</h2>
+      <div class="note">
+        <strong>Główny strach:</strong> gubienie się — co już odpisane vs co czeka; chaos na kanbanie (obce leady / testy).
+      </div>
+      <ul class="check">
+        <li><input type="checkbox" /> <span><b>Kanban = chaos</b> — w Nowych: leady już odpisane w BB + obce; w Rozeznaniu: leady Roberta; dalej testy Dawida</span></li>
+        <li><input type="checkbox" /> <span><b>„Tylko moje”</b> — prosi o wyczyszczenie / filtr Owner Me</span></li>
+        <li><input type="checkbox" /> <span><b>Nie wie co czeka</b> — odpisane vs do zrobienia (status dnia)</span></li>
+        <li><input type="checkbox" /> <span><b>Faktury / proformy</b> — dziś Firmao; boi się, że Twenty to „zje” albo zostawi dziurę</span></li>
+        <li><input type="checkbox" /> <span><b>Transition z BB</b> — nadal pracuje głównie w Better Bitrix</span></li>
+      </ul>
+      <div class="say">
+        <b>Powiedz wprost:</b> Rano = <b>Lejek Owocni + Owner Me</b> + Poczta. Faktury / proformy / umowy PDF = <b>Firmao</b> (nie Twenty Day-1). BB na transition.
+      </div>
+      <textarea placeholder="Jak zareagowała na obawy…"></textarea>
+    </section>
+
+    <section>
+      <h2>Pytania / tematy — odhaczyć na sesji</h2>
+      <ol class="faq">
+        <li>
+          <b>Dlaczego widzę leady Roberta / testy / już odpisane?</b>
+          <span class="a">→ Filtr Owner = Me. Obce = nie Twoje. Testy schowamy / archiwum.</span>
+        </li>
+        <li>
+          <b>Jak mam wiedzieć, co czeka na odpis?</b>
+          <span class="a">→ Kolumna / etap na Lejku + maile w Poczcie. Nie szukaj „wszędzie”.</span>
+        </li>
+        <li>
+          <b>Gdzie odpisuję szablonem?</b>
+          <span class="a">→ Lead → Odpowiedz (Owocni Mail) → szablon. From = jej skrzynka.</span>
+        </li>
+        <li>
+          <b>Proforma / faktura / umowa PDF?</b>
+          <span class="a">→ Firmao (+ załącznik w mailu). Twenty D1 = lead + mail, nie księgowość.</span>
+        </li>
+        <li>
+          <b>SQL / WON — kiedy?</b>
+          <span class="a">→ Filmik V3; na D1: kwota przed Wygrany. Tylko jeśli utknie.</span>
+        </li>
+        <li>
+          <b>Jakie pola na karcie są ważne?</b>
+          <span class="a">→ Nazwa leada, imię i nazwisko, telefon, mail, data, produkt — reszta na dole / ukryta.</span>
+        </li>
+      </ol>
+      <textarea style="margin-top:10px" placeholder="Nowe pytania z sesji…"></textarea>
+    </section>
+
+    <section>
+      <h2>1. Otwarcie</h2>
+      <p class="meta" style="margin:0 0 8px">„Lejek tylko Twoje. Odpis szablonem. Faktury = Firmao.”</p>
+      <div class="row"><label>Gdzie dziś pracuje?</label><input type="text" value="Better Bitrix (+ Firmao na faktury)" /></div>
+      <div class="row"><label>Otwierała Twenty?</label><input type="text" placeholder="tak / nie / rzadko" /></div>
+      <div class="row"><label>Must jutro rano</label><input type="text" value="Odpis szablonem → po akceptacji proforma/faktura (Firmao)" /></div>
+      <div class="row"><label>Główny strach dziś</label><input type="text" /></div>
+      <textarea placeholder="Uwagi…"></textarea>
+    </section>
+
+    <section>
+      <h2>2. Lejek Owocni — tylko moje</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi Lejek Owocni</li>
+        <li><input type="checkbox" /> Owner = Me → tylko jej karty</li>
+        <li><input type="checkbox" /> Bez Roberta / testów Dawida (albo wie, że to nie jej)</li>
+        <li><input type="checkbox" /> Kafelek: nazwa, kontakt, tel, mail, produkt</li>
+        <li><input type="checkbox" /> Otworzyła 1 lead OK</li>
+      </ul>
+      <textarea placeholder="Uwagi Lejek…"></textarea>
+    </section>
+
+    <section>
+      <h2>3. Poczta + szablon</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Widzi IN</li>
+        <li><input type="checkbox" /> Widzi OUT</li>
+        <li><input type="checkbox" /> Wie gdzie odpisać</li>
+        <li><input type="checkbox" /> Szablon / Odpowiedz OK (albo wie jak)</li>
+      </ul>
+      <textarea placeholder="Uwagi Poczta…"></textarea>
+    </section>
+
+    <section>
+      <h2>4. Smoke — przesunięcie etapu</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Sama przeciągnęła / zmieniła etap</li>
+        <li><input type="checkbox" /> Karta ląduje w właściwej kolumnie</li>
+        <li><input type="checkbox" /> Rozumie: etap = gdzie jest sprzedaż</li>
+      </ul>
+      <div class="grid2">
+        <input type="text" placeholder="Z etapu → do etapu" />
+        <input type="text" placeholder="Lead (skrót)" />
+      </div>
+      <textarea style="margin-top:8px" placeholder="Uwagi etap…"></textarea>
+    </section>
+
+    <section>
+      <h2>5. SQL (tylko jeśli utknie)</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> V3 / 1 zdanie — OK</li>
+        <li><input type="checkbox" /> Nie rozjeżdżamy się w admin</li>
+      </ul>
+      <textarea placeholder="Uwagi SQL…"></textarea>
+    </section>
+
+    <section>
+      <h2>6. Zamknięcie</h2>
+      <div class="row"><label>Otworzy jutro?</label><input type="text" placeholder="tak / może / nie" /></div>
+      <div class="row"><label>BB / Firmao do</label><input type="text" placeholder="BB transition · Firmao = faktury" /></div>
+      <div class="row"><label>1 bloker</label><input type="text" /></div>
+      <div class="row"><label>2. sesja?</label><input type="text" placeholder="nie / tak — kiedy" /></div>
+      <textarea placeholder="Uwagi koniec…"></textarea>
+    </section>
+
+    <section>
+      <h2>7. Werdykt</h2>
+      <p class="meta" style="margin:0 0 8px">PASS = Lejek Me + przesunie kartę + wie gdzie odpisać</p>
+      <div class="verdict">
+        <label><input type="radio" name="v" /> 🟢 PASS</label>
+        <label><input type="radio" name="v" /> 🟡 WARUNKOWO</label>
+        <label><input type="radio" name="v" /> 🔴 FAIL → 2. sesja</label>
+      </div>
+      <textarea placeholder="Next (akcja / kto / do kiedy)…"></textarea>
+    </section>
+
+    <section>
+      <h2>8. Po sesji</h2>
+      <ul class="check">
+        <li><input type="checkbox" /> Follow-up wysłany</li>
+        <li><input type="checkbox" /> Status w arkuszu cutoveru</li>
+        <li><input type="checkbox" /> Pass/fail w session scripts</li>
+      </ul>
+    </section>
+
+    <p class="print">Ctrl/Cmd+P → druk / PDF · wartości w polach zostają w przeglądarce do zamknięcia karty</p>
+  </div>
+</body>
+</html>

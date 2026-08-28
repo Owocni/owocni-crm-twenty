@@ -18,6 +18,7 @@ import {
   personVars,
   resolvePersonContext,
 } from 'src/utils/personContext';
+import { readAttachmentRefs } from 'src/utils/uploadEmailAttachment';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -57,6 +58,8 @@ const handler = async (event: RoutePayload) => {
     const customBody = readClientHtmlBody(payload);
     const customTo = readStringField(payload, 'to');
     const requestedAccountId = readStringField(payload, 'connectedAccountId');
+    const inReplyToMessageId = readStringField(payload, 'inReplyToMessageId');
+    const attachmentFiles = readAttachmentRefs(payload);
     const clientSentBody = payloadHasClientBody(payload);
 
     if (!recordId && !customTo) {
@@ -198,17 +201,48 @@ const handler = async (event: RoutePayload) => {
       };
     }
 
+    let inReplyTo: string | undefined;
+
+    if (inReplyToMessageId) {
+      try {
+        const messageResult = await coreClient.query({
+          message: {
+            __args: { filter: { id: { eq: inReplyToMessageId } } },
+            headerMessageId: true,
+          },
+        } as never);
+
+        const headerId = (
+          messageResult as {
+            message?: { headerMessageId?: string | null } | null;
+          }
+        ).message?.headerMessageId;
+
+        if (headerId?.trim()) {
+          inReplyTo = headerId.trim();
+        }
+      } catch {
+        // Threading optional — still send as new message from own mailbox.
+      }
+    }
+
     let sendResult;
+
+    const sendInputBase = {
+      connectedAccountId: connectedAccount.id,
+      to: email,
+      subject: subject || '(brak tematu)',
+      body: htmlBody,
+      ...(attachmentFiles.length > 0 ? { files: attachmentFiles } : {}),
+    };
 
     try {
       sendResult = await metadataClient.mutation({
         sendEmail: {
           __args: {
             input: {
-              connectedAccountId: connectedAccount.id,
-              to: email,
-              subject: subject || '(brak tematu)',
-              body: htmlBody,
+              ...sendInputBase,
+              ...(inReplyTo ? { inReplyTo } : {}),
             },
           },
           success: true,
@@ -216,10 +250,30 @@ const handler = async (event: RoutePayload) => {
         },
       });
     } catch (sendError) {
-      return {
-        ok: false,
-        error: formatError(sendError),
-      };
+      // Older Twenty builds may reject unknown inReplyTo — retry without threading.
+      if (inReplyTo) {
+        try {
+          sendResult = await metadataClient.mutation({
+            sendEmail: {
+              __args: {
+                input: sendInputBase,
+              },
+              success: true,
+              error: true,
+            },
+          });
+        } catch (retryError) {
+          return {
+            ok: false,
+            error: formatError(retryError),
+          };
+        }
+      } else {
+        return {
+          ok: false,
+          error: formatError(sendError),
+        };
+      }
     }
 
     if (!sendResult.sendEmail?.success) {

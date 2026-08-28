@@ -5,7 +5,11 @@ const {
   getOwnerIds,
   getContinuityOwnerIds,
   isContinuityRoutingEnabled,
+  isLeadDispatcherEnabled,
   isCreateLeadWriteEnabled,
+  getLeadDispatchPoolIds,
+  getLeadDispatchVacationIds,
+  getMetaRobertAllowlist,
   MAX_CREATE_LEAD_TASKS,
   PENDING_WRITE_TTL_MS,
 } = require("../shared/config");
@@ -23,12 +27,23 @@ const {
   findPersonByPhone,
   findOpportunityByIdOid,
   findOpportunityByMetaLeadgenId,
+  findOpenOpportunityByPersonId,
   getPersonById,
   getCompanyById,
   findLatestSqlOpportunityByPersonId,
   patchTwentyRecord,
+  buildTwentyListPath,
+  parseTwentyListRecords,
 } = require("../shared/twentyRest");
 const { resolveContinuityOwner } = require("../shared/resolveContinuityOwner");
+const {
+  classifyLeadIntent,
+  resolveRoutingRuleId,
+  pickLeastLoaded,
+  resolveTimeOnPageMs,
+  MAX_OPEN,
+} = require("../shared/leadDispatch");
+const { countOpenUncontacted } = require("./leadDispatchSweep");
 
 const ADAPTER_ID = "crm:twenty_create_lead";
 
@@ -381,7 +396,9 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
 }
 
 /**
- * Continuity first (when enabled), else existing FACEBOOK/MARKETING/COPY/hash routing.
+ * Continuity first (when enabled), else FACEBOOK/MARKETING/COPY/hash
+ * — or full dispatcher v2.0 when LEAD_DISPATCHER_ENABLED.
+ * @returns {Promise<string|{ownerId:string, routingRule:string, intentClass:string, timeOnPageMs:number}>}
  */
 async function resolveOwnerIdForNewOpportunity(
   personId,
@@ -389,7 +406,21 @@ async function resolveOwnerIdForNewOpportunity(
   bizProductTwenty,
   idOid,
   taskData,
+  kanbanFields,
+  answers,
 ) {
+  if (isLeadDispatcherEnabled()) {
+    return resolveDispatcherAssignment({
+      personId,
+      companyId,
+      bizProductTwenty,
+      idOid,
+      taskData,
+      kanbanFields,
+      answers,
+    });
+  }
+
   const continuityOwnerId = await resolveContinuityOwner({
     personId,
     companyId,
@@ -403,6 +434,125 @@ async function resolveOwnerIdForNewOpportunity(
     return continuityOwnerId;
   }
   return resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData);
+}
+
+async function findLatestOwnedOpportunityByPersonId(personId) {
+  const id = String(personId || "").trim();
+  if (!id) return null;
+  const filter = `pointOfContactId[eq]:${id}`;
+  let path = buildTwentyListPath("opportunities", filter, 5);
+  path += "&order_by=createdAt[DescNullsLast]";
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) return null;
+  const opps = parseTwentyListRecords("opportunities", res.body);
+  return opps.find((o) => o.ownerId || o.owner?.id) || null;
+}
+
+/**
+ * Dispatcher v2.0 assignment (LEAD_DISPATCHER_PLAN).
+ */
+async function resolveDispatcherAssignment({
+  personId,
+  companyId,
+  bizProductTwenty,
+  idOid,
+  taskData,
+  kanbanFields,
+  answers,
+}) {
+  const owners = getOwnerIds();
+  const intentClass = classifyLeadIntent({
+    bizProductTwenty,
+    kanbanFields: kanbanFields || {},
+    answers: answers || {},
+    taskData,
+  });
+  const timeOnPageMs = resolveTimeOnPageMs(taskData);
+
+  // RULE-CONTINUITY: same person (email/phone reuse) → previous opp owner
+  const prior = await findLatestOwnedOpportunityByPersonId(personId);
+  const priorOwner = String(prior?.ownerId || prior?.owner?.id || "").trim();
+  if (priorOwner && getContinuityOwnerIds().has(priorOwner)) {
+    console.log("dispatch RULE-CONTINUITY", priorOwner, "person=", personId);
+    return {
+      ownerId: priorOwner,
+      routingRule: "RULE-CONTINUITY",
+      intentClass,
+      timeOnPageMs,
+    };
+  }
+
+  // Optional account-owner continuity (existing flag)
+  const continuityOwnerId = await resolveContinuityOwner({
+    personId,
+    companyId,
+    enabled: isContinuityRoutingEnabled(),
+    allowedOwnerIds: getContinuityOwnerIds(),
+    getCompanyById,
+    findLatestSqlOpportunityByPersonId,
+  });
+  if (continuityOwnerId) {
+    return {
+      ownerId: continuityOwnerId,
+      routingRule: "RULE-CONTINUITY",
+      intentClass,
+      timeOnPageMs,
+    };
+  }
+
+  const allowlist = getMetaRobertAllowlist();
+  const { ruleId, ownerHint } = resolveRoutingRuleId({
+    bizProductTwenty,
+    bizSource: mapBizSource(taskData),
+    metaFormId:
+      taskData.meta_form_id || taskData.form_id || taskData.metaFormId || "",
+    metaCampaignId:
+      taskData.meta_campaign_id ||
+      taskData.campaign_id ||
+      taskData.metaCampaignId ||
+      "",
+    metaAllowlist: allowlist,
+    metaInterimAllFacebook: allowlist.length === 0,
+  });
+
+  if (ownerHint && owners[ownerHint]) {
+    return {
+      ownerId: owners[ownerHint],
+      routingRule: ruleId,
+      intentClass,
+      timeOnPageMs,
+    };
+  }
+
+  const pool = getLeadDispatchPoolIds();
+  const vacations = getLeadDispatchVacationIds();
+  const candidates = [];
+  for (const memberId of pool) {
+    const openCount = await countOpenUncontacted(memberId);
+    candidates.push({
+      id: memberId,
+      openCount,
+      vacation: vacations.has(memberId),
+      lastAssignedAt: null,
+    });
+  }
+  const picked = pickLeastLoaded(candidates, MAX_OPEN);
+  if (!picked) {
+    console.warn("dispatch: no pool capacity — leave unassigned", idOid);
+    return {
+      ownerId: null,
+      routingRule: "RULE-POOL-DEFAULT",
+      intentClass,
+      timeOnPageMs,
+      unassigned: true,
+    };
+  }
+  return {
+    ownerId: picked,
+    routingRule: "RULE-POOL-DEFAULT",
+    intentClass,
+    timeOnPageMs,
+  };
 }
 
 async function resolvePersonCompanyId(personId) {
@@ -816,6 +966,15 @@ function resolveContactLabel(taskData, answers) {
   return "Lead";
 }
 
+/** Pierwszy segment tytułu leada (formularz): pełny email, potem telefon, potem „Lead”. */
+function resolveEmailLabel(taskData, answers) {
+  const email = String(taskData.biz_email || answers.email || "").trim();
+  if (email) return email;
+  const phone = resolveTaskPhone(taskData, answers).trim();
+  if (phone) return phone;
+  return "Lead";
+}
+
 function buildOpportunityName(taskData) {
   if (resolveSrcSystem(taskData) === "TWENTY_EMAIL") {
     const subject = String(
@@ -829,14 +988,13 @@ function buildOpportunityName(taskData) {
     return "Lead mail leads@";
   }
   const answers = parseFormAnswers(taskData);
-  const segments = [];
+  const segments = [resolveEmailLabel(taskData, answers)];
   const productLabel = productLabelForName(taskData);
   if (productLabel) segments.push(productLabel);
   const projectType = deriveProjectType(answers);
   if (projectType?.label) segments.push(projectType.label);
   const intent = deriveIntent(answers);
   if (intent?.label) segments.push(intent.label);
-  segments.push(resolveContactLabel(taskData, answers));
   if (segments.length === 1 && segments[0] === "Lead") return "Lead formularz";
   return segments.join(" · ");
 }
@@ -1062,13 +1220,19 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     taskData.meta_adgroup_id || taskData.adgroup_id || taskData.metaAdgroupId || "",
   ).trim();
 
-  const ownerId = await resolveOwnerIdForNewOpportunity(
+  const ownerResolved = await resolveOwnerIdForNewOpportunity(
     personId,
     companyId || null,
     bizProductTwenty,
     idOid,
     taskData,
+    kanbanFields,
+    answers,
   );
+  const dispatch =
+    ownerResolved && typeof ownerResolved === "object"
+      ? ownerResolved
+      : { ownerId: ownerResolved };
 
   const body = {
     name: buildOpportunityName(taskData),
@@ -1077,7 +1241,6 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     srcSystem: resolveSrcSystem(taskData),
     bizSource: resolveBizSourceForTask(taskData),
     bizProduct: bizProductTwenty,
-    ownerId,
     pointOfContactId: personId,
     lastContactAt: kanbanFields.lastContactAt,
     bizLastContactLabel: kanbanFields.bizLastContactLabel,
@@ -1086,6 +1249,7 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     bizCardEmail: kanbanFields.bizCardEmail,
     bizCardPhone: kanbanFields.bizCardPhone,
   };
+  if (dispatch.ownerId) body.ownerId = dispatch.ownerId;
   if (companyId) body.companyId = companyId;
   if (metaLeadgenId) body.metaLeadgenId = metaLeadgenId;
   if (metaAdId) body.metaAdId = metaAdId;
@@ -1102,6 +1266,13 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     "bizMailingOptIn",
   ]) {
     if (kanbanFields[key]) body[key] = kanbanFields[key];
+  }
+  if (isLeadDispatcherEnabled()) {
+    if (dispatch.intentClass) body.bizLeadIntentClass = dispatch.intentClass;
+    body.bizAssignedAt = new Date().toISOString();
+    if (dispatch.routingRule) body.bizRoutingRule = dispatch.routingRule;
+    body.bizFailoverCount = 0;
+    if (dispatch.timeOnPageMs > 0) body.bizTimeOnPageMs = dispatch.timeOnPageMs;
   }
   const res = await twentyRequest("POST", "/opportunities", body);
   if (res.statusCode < 200 || res.statusCode >= 300) {
@@ -1283,6 +1454,57 @@ async function processOneTask(task, audit, allPending) {
   }
 
   const personId = await resolveOrCreatePerson(taskData, idOid);
+
+  // Dedupe: Person already has an open Opportunity (e.g. BB sync without idOid).
+  // Prevents second TWENTY_EMAIL / form NEW ghost on the same contact.
+  const openOpp = await findOpenOpportunityByPersonId(personId);
+  if (openOpp?.id) {
+    if (!String(openOpp.idOid || "").trim() && idOid) {
+      try {
+        await patchTwentyRecord("opportunities", openOpp.id, { idOid });
+        console.log(
+          "SKIP — open Opportunity exists; stamped idOid",
+          openOpp.id,
+          idOid,
+          "src=",
+          openOpp.srcSystem,
+          "stage=",
+          openOpp.stage,
+        );
+      } catch (err) {
+        console.warn(
+          "stamp idOid on existing open opp warn",
+          openOpp.id,
+          err.message,
+        );
+        console.log(
+          "SKIP — open Opportunity exists",
+          openOpp.id,
+          "src=",
+          openOpp.srcSystem,
+          "stage=",
+          openOpp.stage,
+        );
+      }
+    } else {
+      console.log(
+        "SKIP — open Opportunity exists",
+        openOpp.id,
+        "src=",
+        openOpp.srcSystem,
+        "stage=",
+        openOpp.stage,
+      );
+    }
+    await updateTaskDone(
+      task.key,
+      taskData,
+      `already_exists_open_person opp=${openOpp.id}`,
+      audit,
+    );
+    return;
+  }
+
   const companyId = await resolvePersonCompanyId(personId);
   const oppId = await createOpportunityRecord(
     taskData,

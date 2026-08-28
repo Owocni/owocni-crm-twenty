@@ -1,7 +1,11 @@
 "use strict";
 
 const { getConfig } = require("../shared/config");
-const { fetchLeadById, fetchFormName } = require("../shared/graphApi");
+const {
+  fetchLeadById,
+  fetchFormName,
+  fetchCampaignIdFromAd,
+} = require("../shared/graphApi");
 const { parseLeadgenEvents, handleVerifyGet } = require("./parseLeadgen");
 const { handlePollMetaLeads } = require("./pollMetaLeads");
 
@@ -34,6 +38,7 @@ async function processOneLeadgenEvent(event, cfg) {
     cfg.graphApiVersion,
   );
   const formId = String(lead.form_id || event.form_id || "").trim();
+  const adId = String(lead.ad_id || event.ad_id || "").trim();
   let formName = "";
   try {
     formName = await fetchFormName(
@@ -45,14 +50,28 @@ async function processOneLeadgenEvent(event, cfg) {
     console.warn("form name warn", err.message);
   }
 
+  let campaignId = String(event.campaign_id || "").trim();
+  if (!campaignId && adId) {
+    try {
+      campaignId = await fetchCampaignIdFromAd(
+        adId,
+        cfg.pageAccessToken,
+        cfg.graphApiVersion,
+      );
+    } catch (err) {
+      console.warn("campaign_id warn", err.message);
+    }
+  }
+
   const ingestPayload = {
     environment: cfg.environment,
     leadgen_id: event.leadgen_id,
     page_id: event.page_id || cfg.pageId,
     form_id: formId,
     form_name: formName,
-    ad_id: String(lead.ad_id || event.ad_id || "").trim(),
+    ad_id: adId,
     adgroup_id: String(event.adgroup_id || "").trim(),
+    campaign_id: campaignId,
     field_data: lead.field_data || [],
     created_time: lead.created_time || event.created_time,
   };

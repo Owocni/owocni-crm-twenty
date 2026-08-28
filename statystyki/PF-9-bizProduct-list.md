@@ -26,6 +26,8 @@ Worker `createLead.js` → `mapBizProductToTwenty()` — **to jest kanon wartoś
 
 Prefiksy: `lead_`, `sql_`, `won_`, `rejected_` + slug produktu, np. `lead_strony`, `sql_logo`.
 
+Robot (`pricingProductAliases.js`) przy lookupie cennika traktuje aliasy jako ten sam produkt: `WEB`/`strony`/`strona`, `LOGO`/`logo`, `NAME`/`nazwa`/`naming`/`nazwy`, `MARKETING`/`marketing`/`strategia`/`konsultacje`, `COPYWRITING`/`copywriting`/`teksty`, `OPAKOWANIE`/`opakowanie`/`packaging`, `INNE`/`other`. Exact key wygrywa (np. `sql_WEB` jeśli jest w arkuszu), potem historyczny slug.
+
 Źródła kodu: `integrations/SORTOWNIA_V2_POPRAWIONY.js` (`normalizeBizProductSlug`, `inferBizProductFromUrl`), `createLead.js` (`mapBizProductToTwenty`).
 
 ---

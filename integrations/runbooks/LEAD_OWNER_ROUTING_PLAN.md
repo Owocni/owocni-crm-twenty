@@ -21,9 +21,9 @@ related:
 **Stan (2026-07-03):** przydzielanie ownerów **wdrożone** w obu workflow (form v7, mail v12). COPYWRITING → Maciej; reszta → losowo Marta/Gosia.  
 **Worker:** Meta/FB + Marketing → Robert; Copywriting → Maciej; reszta hash Marta/Gosia. **Ewa nie jest w auto-puli** (tylko ręczne).
 
-**Docelowo (TIME TO LEAD) — model dyspozytora:**  
-→ **[LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md)** (SSOT dla zespołu + LLM).  
-Stary wariant claim/puli/slotów — **odrzucony** (za złożony); nie wdrażać.
+**Docelowo (TIME TO LEAD) — model dyspozytora v2.0:**  
+→ **[LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md)** (SSOT scalony 2026-08-25).  
+Stary wariant claim/puli/slotów — **odrzucony**. Do dyspozytora: dotychczasowy assign OK; 15 min = cel, nie automat.
 
 ---
 

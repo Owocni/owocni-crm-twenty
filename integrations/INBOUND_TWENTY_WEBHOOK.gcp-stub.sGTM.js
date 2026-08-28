@@ -55,15 +55,10 @@ var env = getRuntimeEnvironment();
 if (!rawBody) {
   logToConsole("INBOUND_TWENTY_STUB: brak raw body (sprawdź Client INBOUND_TWENTY_WEBHOOK_CLIENT)");
   finish(false);
-} else if (env === "prod") {
-  logToConsole(
-    "INBOUND_TWENTY_STUB: prod — przywróć INBOUND_TWENTY_WEBHOOK.sGTM.legacy-full.js lub skonfiguruj prod GCP",
-  );
-  finish(true);
 } else {
   var headers = {
     "Content-Type": "application/json",
-    "X-Owocni-Runtime": "sandbox",
+    "X-Owocni-Runtime": env,
   };
   if (sig) {
     headers["twenty-webhook-signature"] = sig;
@@ -75,6 +70,8 @@ if (!rawBody) {
   logToConsole(
     "INBOUND_TWENTY_STUB: forward GCP",
     GCP_INBOUND_WEBHOOK_URL,
+    "env=",
+    env,
     "bytes=",
     rawBody.length,
   );

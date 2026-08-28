@@ -2,82 +2,138 @@
   "mapping": [
     {
       "bb_id": 131,
-      "twenty_id": "da130bfd-59bd-4aa0-b45d-ca72d83098d7",
+      "twenty_id": "30dc9629-d334-4d0f-8066-e750ebbff1d9",
       "name": "[BB 131] Og\u00f3lne \u2014 Black - LOGO",
       "category": "GENERAL",
       "priority": "NICE"
     },
     {
+      "bb_id": 133,
+      "twenty_id": "897aa068-5e19-400d-827b-a8a436c168fc",
+      "name": "[BB 133] Og\u00f3lne \u2014 Black - NAZWA",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 135,
+      "twenty_id": "27ed8504-6141-42dc-b83a-97f680877155",
+      "name": "[BB 135] Og\u00f3lne \u2014 Dane dost\u0119powe do nowego konta pocztowego",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
       "bb_id": 38,
-      "twenty_id": "7c68c180-69d6-4389-9bcd-64b49f3e632c",
+      "twenty_id": "4b09c50b-e0e4-4df4-bd8f-e6ad36f27899",
       "name": "[BB 38] Sprzeda\u017c \u2014 FAKTURA - Fina\u0142 pro forma",
       "category": "SALES",
       "priority": "MUST"
     },
     {
+      "bb_id": 42,
+      "twenty_id": "e180b957-c813-4a8e-945b-3dbd504340b6",
+      "name": "[BB 42] Sprzeda\u017c \u2014 FAKTURA - Start pro forma",
+      "category": "SALES",
+      "priority": "MUST"
+    },
+    {
       "bb_id": 58,
-      "twenty_id": "bdaf6aa9-18fc-4240-a5e9-392a870a2fa4",
+      "twenty_id": "368481ef-741b-422c-b0f1-e61693acc9bc",
       "name": "[BB 58] Sprzeda\u017c \u2014 LOGO - oferta",
       "category": "SALES",
       "priority": "MUST"
     },
     {
       "bb_id": 129,
-      "twenty_id": "0136b812-b9fb-40ea-b1d6-d4a968f40032",
+      "twenty_id": "1ceb6589-90cd-44ed-9931-355a29f23f18",
       "name": "[BB 129] Og\u00f3lne \u2014 NAZWA I LOGO (Pakiet)",
       "category": "GENERAL",
       "priority": "NICE"
     },
     {
       "bb_id": 130,
-      "twenty_id": "88a649e6-64a6-4481-827e-c3777bd16b1e",
+      "twenty_id": "ba8e8be7-a6d1-4d38-8d83-91707f38d9ed",
       "name": "[BB 130] Nazwa \u2014 NAZWA oferta",
       "category": "NAME",
       "priority": "NICE"
     },
     {
       "bb_id": 134,
-      "twenty_id": "bfd61fd5-2558-465b-b70b-3d18f961a198",
+      "twenty_id": "1927fc1e-a3a0-4422-b938-af84a38a600a",
       "name": "[BB 134] Og\u00f3lne \u2014 Oferta na opiek\u0119 nad stron\u0105",
       "category": "GENERAL",
       "priority": "NICE"
     },
     {
       "bb_id": 137,
-      "twenty_id": "73f647ad-41d4-4746-b188-687ae23f2d1e",
+      "twenty_id": "fc75392d-852c-449d-87d0-66e9ba052234",
       "name": "[BB 137] Helpdesk \u2014 Pod\u0142\u0105czenie systemu szybkich p\u0142atno\u015bci Przelewy24 do Pa\u0144stwa sklepu",
       "category": "HELPDESK",
       "priority": "MUST"
     },
     {
       "bb_id": 8,
-      "twenty_id": "610e3f3d-425e-4d0c-9150-9f69905348ca",
+      "twenty_id": "d7c63585-05da-4c23-8146-3fb0808f6a23",
       "name": "[BB 8] Helpdesk \u2014 Problem z uruchomieniem WordPressa",
       "category": "HELPDESK",
       "priority": "MUST"
     },
     {
+      "bb_id": 138,
+      "twenty_id": "aec2f087-f1a8-4bd5-88a8-6c8fc7b53567",
+      "name": "[BB 138] Og\u00f3lne \u2014 Rozwi\u0105zanie umowy - STRONY PRO",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
       "bb_id": 128,
-      "twenty_id": "42412921-e969-4baa-89f0-946f78fc86c4",
+      "twenty_id": "785d1748-0c8c-4c04-9b28-b8156cf2a7f5",
       "name": "[BB 128] Og\u00f3lne \u2014 Strona 8000",
       "category": "GENERAL",
       "priority": "NICE"
     },
     {
       "bb_id": 125,
-      "twenty_id": "3cf59e62-9e9f-481f-9712-645c95783a04",
+      "twenty_id": "2b416f63-c605-4b18-89bd-b23b86a414f4",
       "name": "[BB 125] Strona \u2014 Strona - Ewa (Czy maj\u0105 kas\u0119?)",
       "category": "WEBSITE",
       "priority": "MUST"
     },
     {
       "bb_id": 126,
-      "twenty_id": "e950f5fd-2c81-4bd5-9893-a70206e8b439",
+      "twenty_id": "0a7090ed-8ac7-46ae-be42-1b8c49621e0e",
       "name": "[BB 126] Strona \u2014 Strona - Ewa (Maj\u0105 kas\u0119!)",
       "category": "WEBSITE",
       "priority": "MUST"
+    },
+    {
+      "bb_id": 124,
+      "twenty_id": "523ae7f2-2ddb-4cc8-b501-3a0e3df8fdaf",
+      "name": "[BB 124] Og\u00f3lne \u2014 Strona PRO",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 6,
+      "twenty_id": "7f88a6d2-227f-4870-bcd2-820c43ee546f",
+      "name": "[BB 6] Helpdesk \u2014 Strona uruchomiana",
+      "category": "HELPDESK",
+      "priority": "MUST"
+    },
+    {
+      "bb_id": 136,
+      "twenty_id": "4e1a1059-47a4-44fb-8826-cf4ad0d91093",
+      "name": "[BB 136] Og\u00f3lne \u2014 Strona uruchomiana SKLEP",
+      "category": "GENERAL",
+      "priority": "NICE"
+    },
+    {
+      "bb_id": 7,
+      "twenty_id": "4e44ed3a-6550-4a6c-99aa-cf44d3df4682",
+      "name": "[BB 7] Helpdesk \u2014 Uruchomienie strony",
+      "category": "HELPDESK",
+      "priority": "MUST"
     }
   ],
-  "created": 11,
-  "skipped": 8
+  "created": 19,
+  "skipped": 0
 }

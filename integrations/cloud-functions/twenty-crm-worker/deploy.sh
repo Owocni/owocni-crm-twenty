@@ -39,32 +39,88 @@ gcloud services enable cloudfunctions.googleapis.com run.googleapis.com \
   cloudbuild.googleapis.com artifactregistry.googleapis.com \
   --project="$GCP_PROJECT" >/dev/null
 
-ENV_VARS="STAPE_API_BASE=${STAPE_API_BASE},TWENTY_REST_URL=${TWENTY_REST_URL},CREATE_LEAD_WRITE_ENABLED=${CREATE_LEAD_WRITE_ENABLED},CONTINUITY_ROUTING_ENABLED=${CONTINUITY_ROUTING_ENABLED},TWENTY_OWNER_MACIEJ=${TWENTY_OWNER_MACIEJ:-7fddba1d-e443-47d4-97b7-a3a829efd8c1},TWENTY_OWNER_MARTA=${TWENTY_OWNER_MARTA:-4704e0c0-8d77-4640-ad1e-1875294294df},TWENTY_OWNER_GOSIA=${TWENTY_OWNER_GOSIA:-ccac533d-a34b-4cfc-a036-9e75ee3f8910},TWENTY_OWNER_EWA=${TWENTY_OWNER_EWA:-b9e2b31e-0b4a-4936-9d2a-2e5b4a3e0b16},TWENTY_OWNER_ROBERT=${TWENTY_OWNER_ROBERT:-23ac9976-0232-4097-b056-5dc391bf7c34}"
+# YAML env file — przecinki w wartościach (POOL_IDS, META_ROBERT_IDS, HOLIDAYS)
+# nie łamią --set-env-vars.
+ENV_FILE="$(mktemp "${TMPDIR:-/tmp}/twenty-crm-worker-env.XXXXXX.yaml")"
+cleanup() { rm -f "$ENV_FILE"; }
+trap cleanup EXIT
 
-if [[ -n "${CONTINUITY_OWNER_IDS:-}" ]]; then
-  ENV_VARS="${ENV_VARS},CONTINUITY_OWNER_IDS=${CONTINUITY_OWNER_IDS}"
-fi
+yaml_escape() {
+  # Quote values that need it (commas, colons, spaces, specials)
+  local v="$1"
+  printf "'%s'\n" "${v//\'/\'\'}"
+}
 
-# Optional: company enrichment (ENRICH_COMPANY_PL) + GUS when available
-if [[ -n "${ENRICH_COMPANY_PL_TOKEN:-}" ]]; then
-  ENV_VARS="${ENV_VARS},ENRICH_COMPANY_PL_TOKEN=${ENRICH_COMPANY_PL_TOKEN}"
-fi
-if [[ -n "${GUS_BIR_KEY:-}" ]]; then
-  ENV_VARS="${ENV_VARS},GUS_BIR_KEY=${GUS_BIR_KEY}"
-fi
-# Fakturownia issue invoice
-if [[ -n "${X_INVOICE_TOKEN:-}" ]]; then
-  ENV_VARS="${ENV_VARS},X_INVOICE_TOKEN=${X_INVOICE_TOKEN}"
-fi
-if [[ -n "${FAKTUROWNIA_DOMAIN:-}" ]]; then
-  ENV_VARS="${ENV_VARS},FAKTUROWNIA_DOMAIN=${FAKTUROWNIA_DOMAIN}"
-fi
-if [[ -n "${FAKTUROWNIA_API_TOKEN:-}" ]]; then
-  ENV_VARS="${ENV_VARS},FAKTUROWNIA_API_TOKEN=${FAKTUROWNIA_API_TOKEN}"
-fi
-if [[ -n "${FAKTUROWNIA_DEPARTMENT_ID:-}" ]]; then
-  ENV_VARS="${ENV_VARS},FAKTUROWNIA_DEPARTMENT_ID=${FAKTUROWNIA_DEPARTMENT_ID}"
-fi
+{
+  echo "STAPE_API_BASE: $(yaml_escape "$STAPE_API_BASE")"
+  echo "TWENTY_REST_URL: $(yaml_escape "$TWENTY_REST_URL")"
+  echo "CREATE_LEAD_WRITE_ENABLED: $(yaml_escape "$CREATE_LEAD_WRITE_ENABLED")"
+  echo "CONTINUITY_ROUTING_ENABLED: $(yaml_escape "$CONTINUITY_ROUTING_ENABLED")"
+  echo "TWENTY_OWNER_MACIEJ: $(yaml_escape "${TWENTY_OWNER_MACIEJ:-7fddba1d-e443-47d4-97b7-a3a829efd8c1}")"
+  echo "TWENTY_OWNER_MARTA: $(yaml_escape "${TWENTY_OWNER_MARTA:-4704e0c0-8d77-4640-ad1e-1875294294df}")"
+  echo "TWENTY_OWNER_GOSIA: $(yaml_escape "${TWENTY_OWNER_GOSIA:-ccac533d-a34b-4cfc-a036-9e75ee3f8910}")"
+  echo "TWENTY_OWNER_EWA: $(yaml_escape "${TWENTY_OWNER_EWA:-b9e2b31e-0b4a-4936-9d2a-2e5b4a3e0b16}")"
+  echo "TWENTY_OWNER_ROBERT: $(yaml_escape "${TWENTY_OWNER_ROBERT:-23ac9976-0232-4097-b056-5dc391bf7c34}")"
+
+  if [[ -n "${CONTINUITY_OWNER_IDS:-}" ]]; then
+    echo "CONTINUITY_OWNER_IDS: $(yaml_escape "$CONTINUITY_OWNER_IDS")"
+  fi
+
+  if [[ "${LEAD_DISPATCHER_ENABLED:-}" == "true" || "${LEAD_DISPATCHER_ENABLED:-}" == "1" ]]; then
+    echo "LEAD_DISPATCHER_ENABLED: 'true'"
+  fi
+  if [[ "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "true" || "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "1" ]]; then
+    echo "LEAD_DISPATCHER_SWEEP_ON_POLL: 'true'"
+  fi
+  if [[ -n "${LEAD_DISPATCH_MANAGER_EMAIL:-}" ]]; then
+    echo "LEAD_DISPATCH_MANAGER_EMAIL: $(yaml_escape "$LEAD_DISPATCH_MANAGER_EMAIL")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_POOL_IDS:-}" ]]; then
+    echo "LEAD_DISPATCH_POOL_IDS: $(yaml_escape "$LEAD_DISPATCH_POOL_IDS")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_VACATION_IDS:-}" ]]; then
+    echo "LEAD_DISPATCH_VACATION_IDS: $(yaml_escape "$LEAD_DISPATCH_VACATION_IDS")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_HOLIDAYS:-}" ]]; then
+    echo "LEAD_DISPATCH_HOLIDAYS: $(yaml_escape "$LEAD_DISPATCH_HOLIDAYS")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_META_ROBERT_IDS:-}" ]]; then
+    echo "LEAD_DISPATCH_META_ROBERT_IDS: $(yaml_escape "$LEAD_DISPATCH_META_ROBERT_IDS")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_MANAGER_WEBHOOK_URL:-}" ]]; then
+    echo "LEAD_DISPATCH_MANAGER_WEBHOOK_URL: $(yaml_escape "$LEAD_DISPATCH_MANAGER_WEBHOOK_URL")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_MAX_OPEN:-}" ]]; then
+    echo "LEAD_DISPATCH_MAX_OPEN: $(yaml_escape "$LEAD_DISPATCH_MAX_OPEN")"
+  fi
+  if [[ -n "${LEAD_DISPATCH_SWEEP_LIMIT:-}" ]]; then
+    echo "LEAD_DISPATCH_SWEEP_LIMIT: $(yaml_escape "$LEAD_DISPATCH_SWEEP_LIMIT")"
+  fi
+
+  if [[ -n "${ENRICH_COMPANY_PL_TOKEN:-}" ]]; then
+    echo "ENRICH_COMPANY_PL_TOKEN: $(yaml_escape "$ENRICH_COMPANY_PL_TOKEN")"
+  fi
+  if [[ -n "${GUS_BIR_KEY:-}" ]]; then
+    echo "GUS_BIR_KEY: $(yaml_escape "$GUS_BIR_KEY")"
+  fi
+  if [[ -n "${X_INVOICE_TOKEN:-}" ]]; then
+    echo "X_INVOICE_TOKEN: $(yaml_escape "$X_INVOICE_TOKEN")"
+  fi
+  if [[ -n "${FAKTUROWNIA_DOMAIN:-}" ]]; then
+    echo "FAKTUROWNIA_DOMAIN: $(yaml_escape "$FAKTUROWNIA_DOMAIN")"
+  fi
+  if [[ -n "${FAKTUROWNIA_API_TOKEN:-}" ]]; then
+    echo "FAKTUROWNIA_API_TOKEN: $(yaml_escape "$FAKTUROWNIA_API_TOKEN")"
+  fi
+  if [[ -n "${FAKTUROWNIA_DEPARTMENT_ID:-}" ]]; then
+    echo "FAKTUROWNIA_DEPARTMENT_ID: $(yaml_escape "$FAKTUROWNIA_DEPARTMENT_ID")"
+  fi
+
+  if [[ "$USE_SECRETS" != "true" ]]; then
+    echo "STAPE_API_KEY: $(yaml_escape "$STAPE_API_KEY")"
+    echo "TWENTY_API_KEY: $(yaml_escape "$TWENTY_API_KEY")"
+  fi
+} >"$ENV_FILE"
 
 DEPLOY_ARGS=(
   --gen2
@@ -76,18 +132,16 @@ DEPLOY_ARGS=(
   --trigger-http
   --allow-unauthenticated
   --timeout=300s
+  --env-vars-file="$ENV_FILE"
 )
 
 if [[ "$USE_SECRETS" == "true" ]]; then
   gcloud functions deploy "$FUNCTION_NAME" \
     "${DEPLOY_ARGS[@]}" \
-    --set-env-vars="$ENV_VARS" \
     --set-secrets="STAPE_API_KEY=STAPE_API_KEY:latest,TWENTY_API_KEY=TWENTY_API_KEY:latest"
 else
-  # Sandbox: klucze z .env.deploy (brak Secret Manager w projekcie)
   gcloud functions deploy "$FUNCTION_NAME" \
-    "${DEPLOY_ARGS[@]}" \
-    --set-env-vars="${ENV_VARS},STAPE_API_KEY=${STAPE_API_KEY},TWENTY_API_KEY=${TWENTY_API_KEY}"
+    "${DEPLOY_ARGS[@]}"
 fi
 
 echo ""

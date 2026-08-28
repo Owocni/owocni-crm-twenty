@@ -106,6 +106,9 @@ function buildCreateLeadTaskData(payload) {
     meta_leadgen_id: leadgenId,
     meta_ad_id: String(payload.ad_id || payload.adId || "").trim(),
     meta_adgroup_id: String(payload.adgroup_id || payload.adgroupId || "").trim(),
+    meta_campaign_id: String(
+      payload.campaign_id || payload.campaignId || payload.meta_campaign_id || "",
+    ).trim(),
     meta_form_id: String(payload.form_id || payload.formId || "").trim(),
     meta_page_id: String(payload.page_id || payload.pageId || "").trim(),
     meta_form_name: formName,

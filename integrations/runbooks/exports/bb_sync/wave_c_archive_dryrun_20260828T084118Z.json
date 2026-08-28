@@ -1,0 +1,855 @@
+{
+  "startedAt": "2026-08-28T08:41:06.936836+00:00",
+  "apply": false,
+  "min_age_days": 7,
+  "cutoff": "2026-08-21T08:41:06.936677+00:00",
+  "archived": [
+    {
+      "email": "m.westwalewicz@gonito.pl",
+      "opp_id": "04ecad08-e0dd-4ca4-8897-5657acb355df",
+      "before": {
+        "id": "04ecad08-e0dd-4ca4-8897-5657acb355df",
+        "name": "Mateusz Westwalewicz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T23:10:10.697Z",
+        "bizCardEmail": "m.westwalewicz@gonito.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] m.westwalewicz@gonito.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "m.malart@epicgeneration.co",
+      "opp_id": "063a640f-3c0b-43fa-b22b-873f1eb9d095",
+      "before": {
+        "id": "063a640f-3c0b-43fa-b22b-873f1eb9d095",
+        "name": "M Malart — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-13T13:50:10.373Z",
+        "bizCardEmail": "m.malart@epicgeneration.co"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] m.malart@epicgeneration.co — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "m.labaszczuk@proeko.poznan.pl",
+      "opp_id": "072d59a8-af5b-421d-9e3a-4ac6af1598d0",
+      "before": {
+        "id": "072d59a8-af5b-421d-9e3a-4ac6af1598d0",
+        "name": "M Labaszczuk — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:35:11.671Z",
+        "bizCardEmail": "m.labaszczuk@proeko.poznan.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] m.labaszczuk@proeko.poznan.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "twojnar@biovenahealth.com",
+      "opp_id": "08b73ef4-8e69-47de-a9a0-b338e5dfc53d",
+      "before": {
+        "id": "08b73ef4-8e69-47de-a9a0-b338e5dfc53d",
+        "name": "Twojnar — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:40:08.239Z",
+        "bizCardEmail": "twojnar@biovenahealth.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] twojnar@biovenahealth.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "sternal@7sun.eu",
+      "opp_id": "221175cf-860a-41fd-8d2f-feb90ed9281c",
+      "before": {
+        "id": "221175cf-860a-41fd-8d2f-feb90ed9281c",
+        "name": "Sternal Paweł - 7SUN — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T21:20:09.770Z",
+        "bizCardEmail": "sternal@7sun.eu"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] sternal@7sun.eu — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "andrzej@wajda.in",
+      "opp_id": "25ac4779-b1c5-41e0-99fd-7d0301b0d91a",
+      "before": {
+        "id": "25ac4779-b1c5-41e0-99fd-7d0301b0d91a",
+        "name": "Andrzej — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-15T17:35:28.986Z",
+        "bizCardEmail": "andrzej@wajda.in"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] andrzej@wajda.in — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "a.wajnert@wajnert.pl",
+      "opp_id": "27abcea2-6eee-430a-96e8-e4934080dd2c",
+      "before": {
+        "id": "27abcea2-6eee-430a-96e8-e4934080dd2c",
+        "name": "A Wajnert — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-17T20:07:08.826Z",
+        "bizCardEmail": "a.wajnert@wajnert.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] a.wajnert@wajnert.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "aneta.bartoszek@interia.com",
+      "opp_id": "27f3b162-afb2-4ccc-9fd3-8bb688a05d2e",
+      "before": {
+        "id": "27f3b162-afb2-4ccc-9fd3-8bb688a05d2e",
+        "name": "Aneta Bartoszek — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-17T09:41:11.353Z",
+        "bizCardEmail": "aneta.bartoszek@interia.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] aneta.bartoszek@interia.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "karolina.jantos@doger-trans.com",
+      "opp_id": "2962cc0c-2887-46c4-9c10-0d6db2bdbea5",
+      "before": {
+        "id": "2962cc0c-2887-46c4-9c10-0d6db2bdbea5",
+        "name": "Karolina Doger Trans — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:35:05.584Z",
+        "bizCardEmail": "karolina.jantos@doger-trans.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] karolina.jantos@doger-trans.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "m.sawczuk@msbau.tech",
+      "opp_id": "3f054fe0-4d6c-43be-9c72-e6d2b1aa7d98",
+      "before": {
+        "id": "3f054fe0-4d6c-43be-9c72-e6d2b1aa7d98",
+        "name": "M Sawczuk — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:35:15.740Z",
+        "bizCardEmail": "m.sawczuk@msbau.tech"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] m.sawczuk@msbau.tech — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "biuro@fitnessfitback.com",
+      "opp_id": "4cd3220a-44b3-40fa-a520-43aaf49f1797",
+      "before": {
+        "id": "4cd3220a-44b3-40fa-a520-43aaf49f1797",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:35:14.076Z",
+        "bizCardEmail": "biuro@fitnessfitback.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] biuro@fitnessfitback.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "k.kupis@tmfuel.com",
+      "opp_id": "581790dc-df4b-4ee1-836c-c549c6db87a4",
+      "before": {
+        "id": "581790dc-df4b-4ee1-836c-c549c6db87a4",
+        "name": "K Kupis — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T21:15:09.906Z",
+        "bizCardEmail": "k.kupis@tmfuel.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] k.kupis@tmfuel.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "agata@medapteka.pl",
+      "opp_id": "58bec60d-0efd-4603-b1d6-5bbe1627f199",
+      "before": {
+        "id": "58bec60d-0efd-4603-b1d6-5bbe1627f199",
+        "name": "Agata Wilczanska — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T21:20:07.792Z",
+        "bizCardEmail": "agata@medapteka.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] agata@medapteka.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "aleksandra.barczyk@manahr.pl",
+      "opp_id": "60f854b0-9049-497e-bfe8-104d432097ab",
+      "before": {
+        "id": "60f854b0-9049-497e-bfe8-104d432097ab",
+        "name": "Aleksandra Barczyk — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T06:05:11.901Z",
+        "bizCardEmail": "aleksandra.barczyk@manahr.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] aleksandra.barczyk@manahr.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "kontakt@gmronczek.pl",
+      "opp_id": "67cc2aab-0402-4f14-bad6-629d7778e57a",
+      "before": {
+        "id": "67cc2aab-0402-4f14-bad6-629d7778e57a",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-13T13:50:09.162Z",
+        "bizCardEmail": "kontakt@gmronczek.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] kontakt@gmronczek.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "aleksandra@artystamowy.pl",
+      "opp_id": "70f01999-d162-4701-aabf-8c88453a67c3",
+      "before": {
+        "id": "70f01999-d162-4701-aabf-8c88453a67c3",
+        "name": "Aleksandra — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:15:10.289Z",
+        "bizCardEmail": "aleksandra@artystamowy.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] aleksandra@artystamowy.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "wiktoria.derylak@ptmsoft.pl",
+      "opp_id": "73274667-9db4-4d53-b462-da9ad1721a4b",
+      "before": {
+        "id": "73274667-9db4-4d53-b462-da9ad1721a4b",
+        "name": "Wiktoria Derylak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T23:20:05.159Z",
+        "bizCardEmail": "wiktoria.derylak@ptmsoft.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] wiktoria.derylak@ptmsoft.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "piotr@truck-outlet.pl",
+      "opp_id": "7ad43f34-ce4d-4276-8755-affb456e99b9",
+      "before": {
+        "id": "7ad43f34-ce4d-4276-8755-affb456e99b9",
+        "name": "Piotr — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T21:15:08.649Z",
+        "bizCardEmail": "piotr@truck-outlet.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] piotr@truck-outlet.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "m.pajak@dominopack.pl",
+      "opp_id": "7e86dcb3-13cc-49a4-a4e6-cae5a9ffba36",
+      "before": {
+        "id": "7e86dcb3-13cc-49a4-a4e6-cae5a9ffba36",
+        "name": "M Pajak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:55:07.516Z",
+        "bizCardEmail": "m.pajak@dominopack.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] m.pajak@dominopack.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "adam.gorniak@plotery.pl",
+      "opp_id": "864c7bc2-deba-4539-9d7f-7b427507506a",
+      "before": {
+        "id": "864c7bc2-deba-4539-9d7f-7b427507506a",
+        "name": "Adam Gorniak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:45:06.903Z",
+        "bizCardEmail": "adam.gorniak@plotery.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] adam.gorniak@plotery.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "marek.bona@cleangang.com",
+      "opp_id": "8c3b3dc5-1092-4c47-adda-1c03248f1356",
+      "before": {
+        "id": "8c3b3dc5-1092-4c47-adda-1c03248f1356",
+        "name": "Marek Bona — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:40:06.964Z",
+        "bizCardEmail": "marek.bona@cleangang.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] marek.bona@cleangang.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "dominik.lyda@hynfraenergystorage.pl",
+      "opp_id": "8ca87601-0c98-44a7-908b-d328ff62e6b6",
+      "before": {
+        "id": "8ca87601-0c98-44a7-908b-d328ff62e6b6",
+        "name": "Dominik Lyda — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-13T12:55:07.814Z",
+        "bizCardEmail": "dominik.lyda@hynfraenergystorage.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] dominik.lyda@hynfraenergystorage.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "w.liszka@ruminta.eu",
+      "opp_id": "8e6bd28f-57f5-4a4c-9a22-fc5261ed8851",
+      "before": {
+        "id": "8e6bd28f-57f5-4a4c-9a22-fc5261ed8851",
+        "name": "W Liszka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:20:09.995Z",
+        "bizCardEmail": "w.liszka@ruminta.eu"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] w.liszka@ruminta.eu — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "marketing@budros.pl",
+      "opp_id": "8ee60308-eb29-4a4c-b692-0a2e10fbb4c9",
+      "before": {
+        "id": "8ee60308-eb29-4a4c-b692-0a2e10fbb4c9",
+        "name": "Arkadiusz Statkiewicz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T23:10:11.824Z",
+        "bizCardEmail": "marketing@budros.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] marketing@budros.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "przemyslaw.klapkowski@ensafe.one",
+      "opp_id": "962a2b3b-1e2a-4ba1-ade8-a25cd06fcbe2",
+      "before": {
+        "id": "962a2b3b-1e2a-4ba1-ade8-a25cd06fcbe2",
+        "name": "Przemysław Kłapkowski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:25:09.552Z",
+        "bizCardEmail": "przemyslaw.klapkowski@ensafe.one"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] przemyslaw.klapkowski@ensafe.one — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "justyna.korczak@deige.pl",
+      "opp_id": "99b6b5f3-ee8d-498c-9594-d22f95f07168",
+      "before": {
+        "id": "99b6b5f3-ee8d-498c-9594-d22f95f07168",
+        "name": "Justyna Korczak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:30:11.231Z",
+        "bizCardEmail": "justyna.korczak@deige.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] justyna.korczak@deige.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "biuro@medicaltax.pl",
+      "opp_id": "aa188880-0e61-49bb-bf94-b08d626925b0",
+      "before": {
+        "id": "aa188880-0e61-49bb-bf94-b08d626925b0",
+        "name": "Biuro — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:10:06.414Z",
+        "bizCardEmail": "biuro@medicaltax.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] biuro@medicaltax.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "miron.dembski@hilton.com",
+      "opp_id": "ad38331a-98e5-4bf7-9f96-05820017d826",
+      "before": {
+        "id": "ad38331a-98e5-4bf7-9f96-05820017d826",
+        "name": "Miron Dembski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T08:20:08.139Z",
+        "bizCardEmail": "miron.dembski@hilton.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] miron.dembski@hilton.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "wojciech@owbet.pl",
+      "opp_id": "aecbda4b-6522-4387-9964-44b1d54e84c7",
+      "before": {
+        "id": "aecbda4b-6522-4387-9964-44b1d54e84c7",
+        "name": "Wojciech — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T21:10:09.058Z",
+        "bizCardEmail": "wojciech@owbet.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] wojciech@owbet.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "piotr.gorski@multiapps.pl",
+      "opp_id": "b10c5a2d-73a6-48f4-8bbc-2842dba6612e",
+      "before": {
+        "id": "b10c5a2d-73a6-48f4-8bbc-2842dba6612e",
+        "name": "Piotr Gorski — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T23:15:06.491Z",
+        "bizCardEmail": "piotr.gorski@multiapps.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] piotr.gorski@multiapps.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "marketing@fsg.pl",
+      "opp_id": "b2773af6-c2d2-4e42-adfd-03dbb15f1f8b",
+      "before": {
+        "id": "b2773af6-c2d2-4e42-adfd-03dbb15f1f8b",
+        "name": "Marketing — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T09:15:05.443Z",
+        "bizCardEmail": "marketing@fsg.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] marketing@fsg.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "jakub.korus@nlogo.pl",
+      "opp_id": "bb786944-c207-488c-b5b7-64f2770098b5",
+      "before": {
+        "id": "bb786944-c207-488c-b5b7-64f2770098b5",
+        "name": "Jakub Korus — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-15T16:43:08.153Z",
+        "bizCardEmail": "jakub.korus@nlogo.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] jakub.korus@nlogo.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "sebastian@desartestudio.pl",
+      "opp_id": "c238f420-ac60-4e6e-aaea-bcdcebd12c3b",
+      "before": {
+        "id": "c238f420-ac60-4e6e-aaea-bcdcebd12c3b",
+        "name": "Sebastian — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-16T06:09:09.897Z",
+        "bizCardEmail": "sebastian@desartestudio.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] sebastian@desartestudio.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "wspolpraca@cudownelampy.pl",
+      "opp_id": "c621f3b5-5212-4395-aa55-eb0db762f8f4",
+      "before": {
+        "id": "c621f3b5-5212-4395-aa55-eb0db762f8f4",
+        "name": "Wspolpraca — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:15:11.125Z",
+        "bizCardEmail": "wspolpraca@cudownelampy.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] wspolpraca@cudownelampy.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "kontakt@casa-carina.com.pl",
+      "opp_id": "c830d332-f09e-4cb8-9e5a-c3131109aa79",
+      "before": {
+        "id": "c830d332-f09e-4cb8-9e5a-c3131109aa79",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T14:15:11.727Z",
+        "bizCardEmail": "kontakt@casa-carina.com.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] kontakt@casa-carina.com.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "arek@artystyczni.pl",
+      "opp_id": "d5116ab0-eb9c-45be-a508-b95380142193",
+      "before": {
+        "id": "d5116ab0-eb9c-45be-a508-b95380142193",
+        "name": "Arek — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-16T04:47:08.156Z",
+        "bizCardEmail": "arek@artystyczni.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] arek@artystyczni.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "dagmara.lukasiewicz@prostokat.com",
+      "opp_id": "d98f0e7b-cc9c-440b-bcbe-1dc980bbb6b0",
+      "before": {
+        "id": "d98f0e7b-cc9c-440b-bcbe-1dc980bbb6b0",
+        "name": "Dagmara Lukasiewicz — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-31T23:15:07.783Z",
+        "bizCardEmail": "dagmara.lukasiewicz@prostokat.com"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] dagmara.lukasiewicz@prostokat.com — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "kontakt@fit-bag.pl",
+      "opp_id": "eb0d1997-00e7-4953-b175-896f079bf056",
+      "before": {
+        "id": "eb0d1997-00e7-4953-b175-896f079bf056",
+        "name": "Kontakt — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-07-18T00:56:04.767Z",
+        "bizCardEmail": "kontakt@fit-bag.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] kontakt@fit-bag.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "karol.szostak@fige.com.pl",
+      "opp_id": "f4a653be-a10f-4d48-9049-3f9e7dc09051",
+      "before": {
+        "id": "f4a653be-a10f-4d48-9049-3f9e7dc09051",
+        "name": "Karol Szostak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T07:55:09.410Z",
+        "bizCardEmail": "karol.szostak@fige.com.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] karol.szostak@fige.com.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "szymon@spp-pol.pl",
+      "opp_id": "faccd596-5450-41cc-8d5b-4f9f44eff9bd",
+      "before": {
+        "id": "faccd596-5450-41cc-8d5b-4f9f44eff9bd",
+        "name": "Szymon — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-04T06:05:11.134Z",
+        "bizCardEmail": "szymon@spp-pol.pl"
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] szymon@spp-pol.pl — mail leads@ (archiwum)"
+      }
+    },
+    {
+      "email": "dawidnowak@hellojuicy.com",
+      "opp_id": "fb2a61f3-d7df-469d-86b4-214d9842433e",
+      "before": {
+        "id": "fb2a61f3-d7df-469d-86b4-214d9842433e",
+        "name": "Dawid Nowak — mail leads@",
+        "stage": "NEW",
+        "ownerId": null,
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-06-30T05:50:04.511Z",
+        "bizCardEmail": ""
+      },
+      "decision": "archive",
+      "patch": {
+        "stage": "LOST",
+        "name": "[brak BB] dawidnowak@hellojuicy.com — mail leads@ (archiwum)"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "email": "rafal@salon2kolka.pl",
+      "opp_id": "64cd3b4a-1b5f-4ec5-996d-ef57d1bb4b49",
+      "before": {
+        "id": "64cd3b4a-1b5f-4ec5-996d-ef57d1bb4b49",
+        "name": "Rafal Zwierzycki — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T15:00:08.417Z",
+        "bizCardEmail": "rafal@salon2kolka.pl"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "marcin@integra-wyjazdy.pl",
+      "opp_id": "a1fd91af-a8ec-4ff2-84d3-d378c8e45c59",
+      "before": {
+        "id": "a1fd91af-a8ec-4ff2-84d3-d378c8e45c59",
+        "name": "Marcin Szubiński — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T15:05:05.527Z",
+        "bizCardEmail": "marcin@integra-wyjazdy.pl"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "zadroga@ekgo.online",
+      "opp_id": "ba9da2dd-13e4-41ba-b153-4e8c76ada802",
+      "before": {
+        "id": "ba9da2dd-13e4-41ba-b153-4e8c76ada802",
+        "name": "Zadroga Zadroga — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T15:25:05.895Z",
+        "bizCardEmail": "zadroga@ekgo.online"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "aga@stock-polska.com",
+      "opp_id": "cb1cc2ef-aa85-4129-bffc-a2b8168e2666",
+      "before": {
+        "id": "cb1cc2ef-aa85-4129-bffc-a2b8168e2666",
+        "name": "Aga Polska - Agnieszka — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T14:25:06.161Z",
+        "bizCardEmail": "aga@stock-polska.com"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "jakub@jakubbbaczek.pl",
+      "opp_id": "d8e1b531-dac6-40de-ad5c-3082bc4e2a85",
+      "before": {
+        "id": "d8e1b531-dac6-40de-ad5c-3082bc4e2a85",
+        "name": "Jakub B. Bączek — mail leads@",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T14:20:09.607Z",
+        "bizCardEmail": "jakub@jakubbbaczek.pl"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "marketing-pr@auratech.pl",
+      "opp_id": "ed9bfa30-0c9e-4ad3-81ab-d87fd425e4b4",
+      "before": {
+        "id": "ed9bfa30-0c9e-4ad3-81ab-d87fd425e4b4",
+        "name": "Marketing-pr - AURA Technologies Sp. z o. o. — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T16:40:06.498Z",
+        "bizCardEmail": "marketing-pr@auratech.pl"
+      },
+      "decision": "skip_too_fresh"
+    },
+    {
+      "email": "magda@pewsu.pl",
+      "opp_id": "fb517ab7-59fb-43f3-9f11-c38cb6203d6d",
+      "before": {
+        "id": "fb517ab7-59fb-43f3-9f11-c38cb6203d6d",
+        "name": "Magda Kozak — mail leads@",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "TWENTY_EMAIL",
+        "createdAt": "2026-08-24T14:45:06.368Z",
+        "bizCardEmail": "magda@pewsu.pl"
+      },
+      "decision": "skip_too_fresh"
+    }
+  ],
+  "failed": [],
+  "finishedAt": "2026-08-28T08:41:18.802865+00:00",
+  "counts": {
+    "candidates": 48,
+    "archived": 41,
+    "skipped": 7,
+    "failed": 0,
+    "archive_ok": 0
+  }
+}

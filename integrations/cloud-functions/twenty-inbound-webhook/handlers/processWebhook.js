@@ -735,39 +735,65 @@ async function enqueueIdentityBackfill(idOid, personId, tier, env, email, phone)
   return taskId;
 }
 
+const IDENTITY_ENRICH_FIELDS = [
+  "biz_email",
+  "biz_phone",
+  "biz_name",
+  "biz_product",
+  "order_id",
+  "owner",
+  "assist",
+  "attr_gclid",
+  "attr_fbc",
+  "attr_gbraid",
+  "attr_wbraid",
+  "ctx_page_url",
+  "ga_client_id",
+  "client_id",
+  "consent_analytics_storage",
+  "consent_ad_storage",
+  "ctx_ip_address",
+  "ctx_time_on_page_ms",
+  "biz_message",
+];
+
+function isEnrichFieldEmpty(value) {
+  return value === null || value === undefined || value === "";
+}
+
+function applyIdentityDocFields(enriched, doc) {
+  if (!doc || typeof doc !== "object") {
+    return;
+  }
+  for (const fieldName of IDENTITY_ENRICH_FIELDS) {
+    if (isEnrichFieldEmpty(enriched[fieldName]) && doc[fieldName]) {
+      enriched[fieldName] = doc[fieldName];
+    }
+  }
+}
+
 async function enrichFromIdentityMap(idOid, enriched) {
   if (!idOid) {
     return enriched;
   }
   try {
-    const doc = await readIdentityMapDoc(idOid);
-    if (doc) {
-      const fields = [
-        "biz_email",
-        "biz_phone",
-        "biz_name",
-        "biz_product",
-        "order_id",
-        "attr_gclid",
-        "ctx_page_url",
-        "ga_client_id",
-        "client_id",
-        "consent_analytics_storage",
-        "consent_ad_storage",
-        "ctx_ip_address",
-        "ctx_time_on_page_ms",
-        "biz_message",
-        "owner",
-      ];
-      for (const fieldName of fields) {
-        const current = enriched[fieldName];
-        if (
-          (current === null || current === undefined || current === "") &&
-          doc[fieldName]
-        ) {
-          enriched[fieldName] = doc[fieldName];
-        }
-      }
+    const oidDoc = await readIdentityMapDoc(idOid);
+    applyIdentityDocFields(enriched, oidDoc);
+
+    const emailKey = normalizeResolverEmail(
+      enriched.biz_email || (oidDoc && oidDoc.biz_email),
+    );
+    const phoneKey = normalizeResolverPhone(
+      enriched.biz_phone || (oidDoc && oidDoc.biz_phone),
+    );
+
+    if (emailKey && emailKey !== idOid) {
+      const emailDoc = await readIdentityMapDoc(emailKey);
+      applyIdentityDocFields(enriched, emailDoc);
+    }
+    if (phoneKey && phoneKey !== idOid && phoneKey !== emailKey) {
+      const phoneDoc = await readIdentityMapDoc(phoneKey);
+      applyIdentityDocFields(enriched, phoneDoc);
     }
   } catch {
     // match sGTM: enrich best-effort

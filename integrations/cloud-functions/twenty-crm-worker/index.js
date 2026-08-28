@@ -25,6 +25,8 @@ const { mergeLeads } = require("./workers/mergeLeads");
 const { ingestMetaLead } = require("./workers/metaLeadIngest");
 const { handleEnrichCompanyPl } = require("./workers/enrichCompanyPl");
 const { handleIssueInvoice } = require("./workers/issueInvoice");
+const { runLeadDispatchSweep } = require("./workers/leadDispatchSweep");
+const { leadAck } = require("./workers/leadAck");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
 const { withPendingTasksCache } = require("./shared/stapeStore");
 
@@ -220,6 +222,38 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       return;
     }
 
+    if (
+      req.method === "POST" &&
+      (body.action === "lead_dispatch_sweep" ||
+        body.job_type === "crm:lead_dispatch_sweep")
+    ) {
+      const sweep = await runLeadDispatchSweep();
+      res.status(200).json({
+        ok: true,
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "lead_dispatch_sweep",
+        sweep,
+      });
+      return;
+    }
+
+    if (
+      req.method === "POST" &&
+      (body.action === "lead_ack" || body.job_type === "crm:lead_ack")
+    ) {
+      const data = body.data || body;
+      const ack = await leadAck(
+        data.opportunityId || data.opportunity_id || data.id,
+      );
+      res.status(200).json({
+        ok: true,
+        build_id: CREATE_LEAD_BUILD_ID,
+        mode: "lead_ack",
+        ack,
+      });
+      return;
+    }
+
     const poll = await withPendingTasksCache(async () => {
       const updatePerson = await runUpdatePersonWorker();
       const createLead = await runCreateLeadWorker();
@@ -227,6 +261,13 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       const messageDirection = await runMessageDirectionEnrichWorker();
       const callTranscript = await runCallTranscriptIngestWorker();
       const missedCall = await runMissedCallIngestWorker();
+      let leadDispatch = { skipped: "not_on_poll" };
+      if (
+        process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "true" ||
+        process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "1"
+      ) {
+        leadDispatch = await runLeadDispatchSweep();
+      }
       return {
         update_person: updatePerson,
         create_lead: createLead,
@@ -234,6 +275,7 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
         message_direction_enrich: messageDirection,
         call_transcript_ingest: callTranscript,
         missed_call_ingest: missedCall,
+        lead_dispatch_sweep: leadDispatch,
       };
     });
     res.status(200).json({

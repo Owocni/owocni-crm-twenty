@@ -1,6 +1,6 @@
 "use strict";
 
-const CREATE_LEAD_BUILD_ID = "2026-08-20-gcp-v13-continuity";
+const CREATE_LEAD_BUILD_ID = "2026-08-28-gcp-v16-dedupe-open-person";
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -37,12 +37,10 @@ function getOwnerIds() {
     marta: process.env.TWENTY_OWNER_MARTA || "4704e0c0-8d77-4640-ad1e-1875294294df",
     gosia: process.env.TWENTY_OWNER_GOSIA || "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
     ewa: process.env.TWENTY_OWNER_EWA || "b9e2b31e-0b4a-4936-9d2a-2e5b4a3e0b16",
-    // Meta Instant Form / FACEBOOK → zawsze Robert Mańk (nie Marta/Gosia RR)
     robert: process.env.TWENTY_OWNER_ROBERT || "23ac9976-0232-4097-b056-5dc391bf7c34",
   };
 }
 
-/** Map firmowych numerów Play PBX → workspaceMemberId handlowca. */
 function getPhoneOwnerMap() {
   const owners = getOwnerIds();
   const defaults = {
@@ -72,16 +70,58 @@ function isCreateLeadWriteEnabled() {
   return flag === "true" || flag === "1";
 }
 
-/** Continuity routing: returning clients → SQL Account Owner. Default OFF. */
 function isContinuityRoutingEnabled() {
   const flag = process.env.CONTINUITY_ROUTING_ENABLED;
   return flag === "true" || flag === "1";
 }
 
-/**
- * Workspace members allowed as continuity owners (never Ewa by default).
- * Override: CONTINUITY_OWNER_IDS=uuid,uuid,...
- */
+function isLeadDispatcherEnabled() {
+  const flag = process.env.LEAD_DISPATCHER_ENABLED;
+  return flag === "true" || flag === "1";
+}
+
+function getLeadDispatchPoolIds() {
+  const owners = getOwnerIds();
+  const raw = process.env.LEAD_DISPATCH_POOL_IDS;
+  if (raw && String(raw).trim()) {
+    return String(raw)
+      .split(",")
+      .map((p) => p.trim())
+      .filter(Boolean);
+  }
+  return [owners.marta, owners.gosia];
+}
+
+function getLeadDispatchVacationIds() {
+  const raw = process.env.LEAD_DISPATCH_VACATION_IDS || "";
+  return new Set(
+    String(raw)
+      .split(",")
+      .map((p) => p.trim())
+      .filter(Boolean),
+  );
+}
+
+function getLeadDispatchHolidays() {
+  return process.env.LEAD_DISPATCH_HOLIDAYS || "";
+}
+
+function getManagerEmail() {
+  return (
+    process.env.LEAD_DISPATCH_MANAGER_EMAIL ||
+    process.env.MANAGER_EMAIL ||
+    "maciej@owocni.pl"
+  );
+}
+
+function getMetaRobertAllowlist() {
+  const raw = process.env.LEAD_DISPATCH_META_ROBERT_IDS || "";
+  return String(raw)
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
 function getContinuityOwnerIds() {
   const owners = getOwnerIds();
   const raw = process.env.CONTINUITY_OWNER_IDS;
@@ -109,6 +149,12 @@ module.exports = {
   getPhoneOwnerMap,
   isCreateLeadWriteEnabled,
   isContinuityRoutingEnabled,
+  isLeadDispatcherEnabled,
+  getLeadDispatchPoolIds,
+  getLeadDispatchVacationIds,
+  getLeadDispatchHolidays,
+  getManagerEmail,
+  getMetaRobertAllowlist,
   getContinuityOwnerIds,
   MAX_CREATE_LEAD_TASKS: Number(process.env.MAX_CREATE_LEAD_TASKS || 5),
   MAX_UPDATE_PERSON_TASKS: Number(process.env.MAX_UPDATE_PERSON_TASKS || 10),

@@ -108,6 +108,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 |---|---|---|
 | #15 | Email Sync: zakres podsumowań/zadań w Twenty — Etap 1 vs 2 | **Kierunek zamknięty (2026-06-02):** opcja A (zostaje w CONSTITUTION do czasu przekroczenia progu wydzielenia). Szczegóły AI-podsumowań → Etap 2 |
 | **#21** | Continuity / Account Owner przy SQL (powracający klient → sprzedawca SQL) | **Nieblokujące cutoveru.** Kill-switch `CONTINUITY_ROUTING_ENABLED` (default false). Kontrakt: `/Volumes/Samsung_T5/RULE_CONTINUITY_IMPLEMENTATION_CONTRACT.md`. Runbook: `integrations/runbooks/RULE_CONTINUITY_IMPL_CHECKLIST.md`. |
+| **#22** | OUT ze swojej skrzynki przy IN na ogólne (`leads@`) | **Day-1.** IDENTITY §5.5; command menu override → pinned **Odpowiedz** (Owocni Mail); native Reply/Send wyłączone. |
 | FIX-2 | Format `time_occurred` (ISO vs epoch ms) | Decyzja: epoch ms; wdrożenie w backlogu |
 | OQ (glosariusz) | Kanon glosariusza w CONSTITUTION vs osobny GLOSSARY.md | Próg powstania pliku (CONSTITUTION §5.6) |
 
@@ -126,6 +127,7 @@ Dziś: **NIE** — otwarte blokery §5.2.
 | **#18** | Analytics: metryki M1–M9 + pola CRM-only + dashboardy KPI (sandbox D2) | `owocni-crm/METRICS.md` → §5; `statystyki/IMPLEMENTATION-STATUS.md` → Zamknięcie ADR #18 | Dawid + właściciel | 2026-07-09 |
 | **#19** | Message.direction = perspektywa firmy (OUTGOING jeśli jakakolwiek MCMA OUTGOING) | `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md` → §5.2; `DATA_MODEL.md` → Message | właściciel (2026-07-16) + wdrożenie 2026-07-28 | 2026-07-28 |
 | **#20** | Migracja Pipedrive: `srcSystem+=PIPEDRIVE_LEGACY`, `bizSource+=PIPEDRIVE_IMPORT`, `pipedriveId` ×3, legacy fields | `DATA_MODEL.md` → §5.1–5.3; `integrations/runbooks/PIPEDRIVE_MIGRATION_CHECKLIST.md` | właściciel 2026-07-31 + Metadata deploy | 2026-07-31 |
+| **#22** | IN na ogólne → OUT ze swojej; UI = pinned **Odpowiedz** (native Reply/Send off) | `IDENTITY_AND_INBOUND.md` → §5.5; `E12_EMAIL_SYNC_EXECUTION.md` → Cutover Day-1 | Dawid | 2026-08-24 |
 
 > **#5/#11/#6/#7/#1/#2 pozostają `closed`** — NIE re-litygować bez REWIZJI (NR-4).
 
@@ -161,6 +163,15 @@ Evidence: akceptacja właściciela 2026-07-31; deploy Metadata `integrations/too
 Zasada: powracający klient wraca do pracownika, który doprowadził relację do SQL. Ewa nie jest w puli continuity. Stempel: workflow „Opp · SQL → Account Owner gdy pusty” (nie nadpisuje). Routing: `resolveContinuityOwner` w GCP `createLead.js` **przed** FACEBOOK/MARKETING/COPY/hash; flaga `CONTINUITY_ROUTING_ENABLED` default false.
 Zakazy: brak auto Company / domain link / backfill / zmian Resolvera / AO=Ewa.
 Evidence (kod+unit): `shared/resolveContinuityOwner.js`, T1–T3/T5 PASS; kontrakt `RULE_CONTINUITY_IMPLEMENTATION_CONTRACT.md`; checklista `RULE_CONTINUITY_IMPL_CHECKLIST.md`. Do zamknięcia ADR: deploy CF + smoke T4 + flaga ON na pierwszym live trafieniu.
+
+**ADR #22 (OUT ze swojej skrzynki przy IN na ogólne) — closed 2026-08-24, `blocks: none` (operacyjnie Day-1), `implementation_status: in_progress`.**
+Reguła właściciela: **przychodzi na ogólne (`leads@` itd.) → handlowiec odpisywa ZAWSZE ze swojej** (`marta@` / `gosia@` / …). Natywny Reply Twenty wiąże send z kanałem odbioru → na wątku `leads@` Reply u handlowca bywa martwy (case Marta / „Strona · Dawiddd” 24.08). **Override (24.08):** command menu native **Reply** / **Send Email** / **Compose** wyłączone (`engineComponentKey` → `FRONT_COMPONENT_RENDERER` bez FC → inactive); pinned **Odpowiedz** = Owocni Mail na Opportunity / Person / Company / Message Thread (+ RECORD_SELECTION ogólny). Kod: `findSendableEmailAccount` — handlowiec tylko własna skrzynka. Sync: osobiste na koncie handlowca; wspólne na ops (bez duplikatu IMAP).
+Evidence: decyzja Dawida 24.08; Metadata sandbox override; IDENTITY §5.5; E12. Do domknięcia: `yarn twenty apply` app **0.1.46** + smoke Marta **Odpowiedz** na „Strona · Dawiddd” (From=`marta@`) + szkolenie.
+
+**ADR #23 (Lead Dispatcher v2.0) — open, `blocks: none`, `implementation_status: in_progress` (2026-08-25).**
+Model dyspozytora zamiast claim/puli: klasyfikacja HOT/STANDARD/LOW, least-loaded Marta/Gosia, failover/eskalacja w minutach roboczych, „Biorę”=`bizAckAt`, manager=`maciej@owocni.pl`. Meta: interim cały FB→Robert do listy Piotra.
+Evidence: `LEAD_DISPATCHER_PLAN.md`; Metadata fields deployed (`deploy_lead_dispatcher_fields.py`); kod `shared/leadDispatch.js`, `leadDispatchSweep.js`, createLead za `LEAD_DISPATCHER_ENABLED` (default OFF); kontrakt `workflows/lead-dispatch.contract.md`; unit PASS.
+Do zamknięcia ADR: deploy CF + flaga ON + smoke + przycisk „Biorę” w Twenty + Scheduler sweep 5 min.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 

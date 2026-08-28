@@ -243,6 +243,55 @@ async function findLatestSqlOpportunityByPersonId(personId) {
   return match || opps[0] || null;
 }
 
+const OPEN_OPPORTUNITY_STAGES = new Set([
+  "NEW",
+  "CONTACTED",
+  "QUALIFIED",
+  "PROPOSAL",
+  "CONTRACT_SENT",
+  "PAYING",
+]);
+
+/**
+ * Open Opportunity for Person — dedupe create_lead (esp. leads@ vs BB sync).
+ * Prefer BETTER_BITRIX_LEGACY / bitrixDealId, else newest open.
+ */
+async function findOpenOpportunityByPersonId(personId) {
+  const id = String(personId || "").trim();
+  if (!id) return null;
+  const filter = `pointOfContactId[eq]:${id}`;
+  let path = buildTwentyListPath("opportunities", filter, 20);
+  path += "&order_by=createdAt[DescNullsLast]";
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(
+      `find open opp by person HTTP ${res.statusCode} ${res.rawBody}`,
+    );
+  }
+  const opps = parseTwentyListRecords("opportunities", res.body).filter(
+    (opp) =>
+      String(opp.pointOfContactId || opp.pointOfContact?.id || "").trim() ===
+        id && OPEN_OPPORTUNITY_STAGES.has(String(opp.stage || "")),
+  );
+  return preferOpenOpportunity(opps);
+}
+
+/** Pure: pick BB/Pipedrive legacy over Sortownia over newest. */
+function preferOpenOpportunity(opps) {
+  if (!opps || !opps.length) return null;
+  return (
+    opps.find(
+      (o) =>
+        o.srcSystem === "BETTER_BITRIX_LEGACY" ||
+        o.srcSystem === "PIPEDRIVE_LEGACY" ||
+        String(o.bitrixDealId || "").trim(),
+    ) ||
+    opps.find((o) => o.srcSystem === "OWOCNI_SORTOWNIA") ||
+    opps[0] ||
+    null
+  );
+}
+
 async function patchTwentyRecord(collection, recordId, patchBody) {
   const res = await twentyRequest(
     "PATCH",
@@ -270,5 +319,8 @@ module.exports = {
   getPersonById,
   getCompanyById,
   findLatestSqlOpportunityByPersonId,
+  findOpenOpportunityByPersonId,
+  preferOpenOpportunity,
+  OPEN_OPPORTUNITY_STAGES,
   patchTwentyRecord,
 };

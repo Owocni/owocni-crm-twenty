@@ -40,10 +40,16 @@ const handler = async (event: RoutePayload) => {
     });
 
     if (readiness.accounts.length === 0) {
+      const email = readiness.currentUserEmail;
+      const maciejHint =
+        email === 'maciej@owocni.pl'
+          ? ' Dla Macieja From = copywriting@owocni.pl (nie maciej@) — skrzynka musi być podpięta pod jego konto z sync + SMTP.'
+          : '';
+
       return {
         canSend: false,
-        reason: readiness.currentUserEmail
-          ? `Brak dozwolonej skrzynki dla ${readiness.currentUserEmail}. Dla konta wspólnego (np. owocni@gmail.com) potrzebne są studio@ / leads@ z sync + SMTP w Settings → Accounts.`
+        reason: email
+          ? `Brak dozwolonej skrzynki dla ${email}.${maciejHint} Handlowiec: własna skrzynka w Settings → Accounts. Konto wspólne (owocni@…): studio@ / leads@.`.trim()
           : 'Brak dozwolonej skrzynki (własna albo studio@ / leads@). Sprawdź Settings → Accounts.',
         accountHandle: null,
         connectedAccountId: null,

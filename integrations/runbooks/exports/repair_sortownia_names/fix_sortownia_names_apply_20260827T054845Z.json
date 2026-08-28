@@ -1,0 +1,4043 @@
+{
+  "generatedAt": "2026-08-27T05:57:00.368234+00:00",
+  "apply": true,
+  "scanned_opps": 448,
+  "processed": 448,
+  "skipped_already_new_format": 0,
+  "skipped_unchanged": 0,
+  "ok": 448,
+  "results": [
+    {
+      "id": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+      "old_name": "Nikodem — INNE",
+      "new_name": "info@inkflowcollective.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "02086221-e98d-4d67-a8a5-85c4ed26ec24",
+      "old_name": "Strona · Nowe · Ekspert · Natalia",
+      "new_name": "n.kawecka@nowemiasto.zory.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "n.kawecka@nowemiasto.zory.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "02719bc7-214e-4081-a9e4-7650b77049f8",
+      "old_name": "Strona · Nowe · Ekspert · Remigiusz",
+      "new_name": "remigiuszpawlowski1978@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "remigiuszpawlowski1978@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "03b03136-000c-490c-9a1a-ab8997043d8b",
+      "old_name": "Strona · Mariusz  Miękoś",
+      "new_name": "mariusz.miekos@greywolfgroup.pl · Strona",
+      "bizCardEmail": "mariusz.miekos@greywolfgroup.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "03eb224d-3be7-4036-b3f5-c6f6d351cd02",
+      "old_name": "Logo · Nowe · Paweł",
+      "new_name": "celsko@interia.pl · Logo · Nowe",
+      "bizCardEmail": "celsko@interia.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "058c792f-e292-41b6-b133-219be245717f",
+      "old_name": "Logo · Redesign · Cennik · Patrycja Tratwal",
+      "new_name": "patrycjatratwal1@gmail.com · Logo · Redesign · Cennik",
+      "bizCardEmail": "patrycjatratwal1@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "066ce397-c91d-44f3-86b6-8ef11a167a91",
+      "old_name": "Yaroslav",
+      "new_name": "y.broda@you-look.com · INNE",
+      "bizCardEmail": "y.broda@you-look.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "06ba522d-6660-464a-a1f5-9636d8ff50cd",
+      "old_name": "yBagKjJLdewWdwiEznqeMMB",
+      "new_name": "derek@concernfounddation.org · INNE",
+      "bizCardEmail": "derek@concernfounddation.org",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "07a08bca-7b9f-4fde-aaca-a09478ef5007",
+      "old_name": "lead · form · wf filter test",
+      "new_name": "a@fastman.eu",
+      "bizCardEmail": "",
+      "bizProduct": "",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "08be4c5c-e19d-4a1c-9332-a3aaeae016ae",
+      "old_name": "Strona · Ekspert · Maciej",
+      "new_name": "maciej.markowski@awf.gda.pl · Strona · Ekspert",
+      "bizCardEmail": "maciej.markowski@awf.gda.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "09aa0285-81aa-4b1b-9f0d-c323dd3f61ac",
+      "old_name": "Piotr — INNE",
+      "new_name": "youtuber77@wp.pl · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0af57c7c-3c99-43e3-a474-783dbb209188",
+      "old_name": "Strona · Nowe · Ekspert · Aneta",
+      "new_name": "anetaautoelba@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "anetaautoelba@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0b0a5a1e-77a7-4693-a4b9-8dbf20f9b044",
+      "old_name": "Strona · Nowe · Ekspert · Jakub Ślęzak",
+      "new_name": "uzywane-wpy@tlen.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "uzywane-wpy@tlen.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0b16e0f4-eb29-4047-b630-47a5b88eea49",
+      "old_name": "Iga — WEB",
+      "new_name": "igaizabelajanik@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0edeb863-afc4-4646-afcf-923193ba89b1",
+      "old_name": "Magdalena Piasecka — LOGO",
+      "new_name": "magdalenka1993-1993@o2.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0fa11fd1-87a1-4ba8-81be-2755b7a64cf9",
+      "old_name": "Strona · Nowe · Ekspert · Katarzyna",
+      "new_name": "kamimeli73@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "kamimeli73@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "0fb8f96b-2e50-4cf6-937a-89e88c1bb089",
+      "old_name": "Strona · Nowe · Ekspert · Anna Olejarz",
+      "new_name": "olejarz_anna@o2.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "olejarz_anna@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "105545e3-a128-4fca-a580-93a237c2818e",
+      "old_name": "Logo · Nowe · Aleksandra",
+      "new_name": "binkiewicz.aleksandra@o2.pl · Logo · Nowe",
+      "bizCardEmail": "binkiewicz.aleksandra@o2.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+      "old_name": "Verify liimendf — WEB",
+      "new_name": "verify-create-lead-liimendf@example.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "10dc33cc-ec29-4b80-b157-8a618f52b5ef",
+      "old_name": "Strona · Ekspert · Daria",
+      "new_name": "mechdekoracyjny@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "mechdekoracyjny@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "11743b81-f032-4589-94bf-14bc2d472467",
+      "old_name": "Logo · Nowe · Marzena",
+      "new_name": "marzenaszymura@gmail.com · Logo · Nowe",
+      "bizCardEmail": "marzenaszymura@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "11969473-b47e-41df-ae62-02e1a2f325b0",
+      "old_name": "Strona · Ekspert · Mihail",
+      "new_name": "mihailmatran@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "mihailmatran@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "11fa21c1-1ae5-4093-8e0c-c6b0253dbe41",
+      "old_name": "Strona · Nowe · Ekspert · Antoni",
+      "new_name": "antonimordal420@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "antonimordal420@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "124d4ff5-38ba-48e2-b11a-a98abb823e82",
+      "old_name": "Logo · Redesign · Cennik · Sandra",
+      "new_name": "stepbystepwithsandra@gmail.com · Logo · Redesign · Cennik",
+      "bizCardEmail": "stepbystepwithsandra@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "13135e6e-6797-4616-bb8d-b659a4ff909e",
+      "old_name": "Strona · Ekspert · Filip Gacek",
+      "new_name": "gacek-renovierung@gmx.de · Strona · Ekspert",
+      "bizCardEmail": "gacek-renovierung@gmx.de",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "13c1efdc-f0af-48ab-8d47-1aceec689431",
+      "old_name": "Logo · Nowe · Ekspert · Daniel",
+      "new_name": "dpalka@outlook.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "dpalka@outlook.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "13e873d7-5911-441d-b146-0ec10fe228cf",
+      "old_name": "Strona · Ekspert · Kamila",
+      "new_name": "kamila.springer-wolska@techbud.eu · Strona · Ekspert",
+      "bizCardEmail": "kamila.springer-wolska@techbud.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1422cbeb-d0a0-42ea-8adf-f5f082006bc5",
+      "old_name": "Copywriting · Nowe · Cennik · Anna",
+      "new_name": "aasarzynska@interia.pl · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "aasarzynska@interia.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "14442624-7427-4fd5-b1be-e985ebb59c66",
+      "old_name": "Logo · Nowe · Ania",
+      "new_name": "cabanania123@gmail.com · Logo · Nowe",
+      "bizCardEmail": "cabanania123@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "14b27762-13ce-49c4-ace5-1266b313c44b",
+      "old_name": "Copywriting · Nowe · Ekspert · Justyna",
+      "new_name": "justyna.gniadek@yahoo.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "justyna.gniadek@yahoo.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "154f5a90-2466-41b9-a8c3-e71d18a9a982",
+      "old_name": "Copywriting · Nowe · Cennik · marta",
+      "new_name": "dietalightczest@gmail.com · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "dietalightczest@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "15d53a15-6e2e-4da2-ba47-28285a09a690",
+      "old_name": "Strona · Nowe · Ekspert · ANNA PICHLER",
+      "new_name": "aniakrolik@op.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "aniakrolik@op.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+      "old_name": "test 9945 — INNE",
+      "new_name": "test858ggaf@fastman.eu · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "19257a2b-147c-4ef0-9e36-1e7c1c89f04d",
+      "old_name": "Logo · Nowe · Damian",
+      "new_name": "damianstarmach@gmail.com · Logo · Nowe",
+      "bizCardEmail": "damianstarmach@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1b7e5b05-854b-4203-8371-bba4cb36bf45",
+      "old_name": "Strona · Nowe · Dominik",
+      "new_name": "machuldominik32@gmail.com · Strona · Nowe",
+      "bizCardEmail": "machuldominik32@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1ba75b3e-7ce7-4da4-a1b3-504eb86526be",
+      "old_name": "Strona · Nowe · Ekspert · Aleksandra Bacańska",
+      "new_name": "a.bacanska@highline.com.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "a.bacanska@highline.com.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1c88432c-b473-425f-bc72-9a7c97df6487",
+      "old_name": "Logo · Nowe · Cennik · Marlena",
+      "new_name": "marlenabitner@icloud.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "marlenabitner@icloud.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1c8ecfb1-ec0d-4eb3-bd98-7240b96807ef",
+      "old_name": "Logo · Nowe · Grzegorz Stankiewicz",
+      "new_name": "grzegorzwstankiewicz@gmail.com · Logo · Nowe",
+      "bizCardEmail": "grzegorzwstankiewicz@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1cefbb5f-c909-4eaf-a1d2-19f7f32b71ec",
+      "old_name": "Strona · Andrzej",
+      "new_name": "andrzejko@poczta.fm · Strona",
+      "bizCardEmail": "andrzejko@poczta.fm",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1e56276e-de81-4ca6-85b6-3c28478119a4",
+      "old_name": "filter test · form v4 SORTOWNIA",
+      "new_name": "info@invitely.in",
+      "bizCardEmail": "",
+      "bizProduct": "",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1ecbfbae-4bd7-4c52-ac48-adef0268f1c0",
+      "old_name": "Strona · Nowe · Ekspert · katarzyna marek",
+      "new_name": "katarzyna_marek@yahoo.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "katarzyna_marek@yahoo.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1ee53517-895b-4c2e-995e-f9532676ad33",
+      "old_name": "Strona · Marcin",
+      "new_name": "Marcin.gorzejewski9393@gmail.com · Strona",
+      "bizCardEmail": "Marcin.gorzejewski9393@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "1f9f70f8-dfe4-44ef-8a06-c139f81a1c0a",
+      "old_name": "Strona · Nowe · Beata Panasz",
+      "new_name": "pracabeatapanasz@gmail.com · Strona · Nowe",
+      "bizCardEmail": "pracabeatapanasz@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "200232f4-b483-4977-b9bb-bbc924a23195",
+      "old_name": "Strona · Nowe · Kamil",
+      "new_name": "kamilwisniowski@vp.pl · Strona · Nowe",
+      "bizCardEmail": "kamilwisniowski@vp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2041db7f-b01c-4c76-9fd9-4bb3af67422b",
+      "old_name": "Kacper — LOGO",
+      "new_name": "k.aleksandrowicz@kadeo.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "20a0fc8b-53f3-4bb6-8d78-15bd4a6df5a8",
+      "old_name": "Copywriting · Nowe · Cennik · Jacek",
+      "new_name": "wzp471@gmail.com · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "wzp471@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "216797ba-d2e6-4c1b-93bb-486e47b4fe24",
+      "old_name": "Logo · Nowe · Ekspert · Martyna",
+      "new_name": "proauratychy@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "proauratychy@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "227e4787-a084-4aab-8ad8-959d4e668c93",
+      "old_name": "Copywriting · Nowe · Iga Dębska",
+      "new_name": "debskaiga1@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "debskaiga1@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "232656a7-93b6-45a4-aedb-c34b15c9688c",
+      "old_name": "Strona · Nowe · Ekspert · Karolina",
+      "new_name": "karolina.gerke@foger.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "karolina.gerke@foger.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2414c56b-f274-4b22-8327-a3e1f16c1e16",
+      "old_name": "Strona · Nowe · Ekspert · JOANNA",
+      "new_name": "pelc-kancelaria@wp.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "pelc-kancelaria@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "24a10d32-168b-4554-af62-af8b0a8d195d",
+      "old_name": "Logo · Nowe · Ekspert · Arkadiusz Dumont",
+      "new_name": "legaldumont@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "legaldumont@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "250f9c29-cf22-43f9-b933-7bd4bcbe8a8f",
+      "old_name": "Strona · Nowe · Ekspert · Liliana Dabrowska",
+      "new_name": "lilianadabrowska2372@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "lilianadabrowska2372@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2526ccc2-d750-48ea-be87-1ba1aa15ccf5",
+      "old_name": "Logo · Nowe · Adam",
+      "new_name": "adamprzybylinski22@gmail.com · Logo · Nowe",
+      "bizCardEmail": "adamprzybylinski22@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "25528f4c-bef3-447c-a9d8-fc1aa64e717f",
+      "old_name": "Copywriting · Nowe · Marcin",
+      "new_name": "domagalam88@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "domagalam88@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "25b68fa7-0430-41f5-b51c-6700df0e048f",
+      "old_name": "Strona · Nowe · Ekspert · Karolina Tutro",
+      "new_name": "karolinatutro@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "karolinatutro@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "25f3d8ab-3759-44cc-bc1a-6495cf12636e",
+      "old_name": "Strona · Ekspert · Grzegorz Wojdyga",
+      "new_name": "g.wojdyga@vertigo.global · Strona · Ekspert",
+      "bizCardEmail": "g.wojdyga@vertigo.global",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "26d02941-6649-4f29-a261-416897f047f5",
+      "old_name": "Strona · Nowe · Szymon",
+      "new_name": "hoganfirmabudowlana@vp.pl · Strona · Nowe",
+      "bizCardEmail": "hoganfirmabudowlana@vp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2704143e-f37f-480f-9d2e-5971839b957b",
+      "old_name": "Strona · Nowe · Lidia",
+      "new_name": "lidia.wilczynska@wp.pl · Strona · Nowe",
+      "bizCardEmail": "lidia.wilczynska@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "27ecfbdb-bcbf-4dbc-99d2-f85bc3233261",
+      "old_name": "Copywriting · Nowe · Alicja Łysiak",
+      "new_name": "alalysiak1@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "alalysiak1@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "284c06cd-0c79-4ad3-9757-99088053e73f",
+      "old_name": "wf-notify-test — WEB",
+      "new_name": "Lead · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "28e69875-220b-4aeb-bb8d-93a25789a753",
+      "old_name": "Strona · Nowe · Ekspert · Roksana",
+      "new_name": "roksanakarasiewicz@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "roksanakarasiewicz@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "28fb27b0-18b3-499f-a5bc-de5f76599a16",
+      "old_name": "Strona · Ekspert · Michał Pawłowski",
+      "new_name": "pawlocrystal@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "pawlocrystal@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "29cfbbca-2ef8-421b-9ec7-835e70a6beef",
+      "old_name": "Copywriting · Nowe · Cennik · Dawid",
+      "new_name": "jurek.galaz@o2.pl · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "jurek.galaz@o2.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2a01d10a-ad12-480c-854c-68143b7ebb0e",
+      "old_name": "Strona · Nowe · Ekspert · Aremis",
+      "new_name": "dorotamagnat@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "dorotamagnat@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2b97a125-6605-4904-b119-d37e71663c41",
+      "old_name": "Artur Raczyński",
+      "new_name": "artur@maxseo.pl · INNE",
+      "bizCardEmail": "artur@maxseo.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2bbd6dc2-7abf-4fc3-b029-0fd8f6156db9",
+      "old_name": "Copywriting · Nowe · Ekspert · Anna",
+      "new_name": "galazkaanna274@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "galazkaanna274@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2c6c3131-09e4-48e3-b4ad-90ba4c9039e7",
+      "old_name": "Logo · Nowe · Katarzyna",
+      "new_name": "kredospot@gmail.com · Logo · Nowe",
+      "bizCardEmail": "kredospot@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2cb65973-3284-425b-b73d-5a77d4f79486",
+      "old_name": "XtgqyVucTNMzEdYJ — INNE",
+      "new_name": "dunlapcharissaum50@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2cba03d7-9041-403e-b11e-7b609e4db7b8",
+      "old_name": "Strona · Ekspert · Beata",
+      "new_name": "janickacentre@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "janickacentre@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2dbc95a7-2bd2-485f-8766-4178a8450ae3",
+      "old_name": "Strona · Ekspert · Tomek",
+      "new_name": "tomekt4044@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "tomekt4044@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2dd0e8e4-a736-45e7-a568-59d0f9301e92",
+      "old_name": "Logo · Redesign · Marek",
+      "new_name": "msprolodz@gmail.com · Logo · Redesign",
+      "bizCardEmail": "msprolodz@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2e26ff12-80e9-44b5-9d4c-54574ddc2852",
+      "old_name": "Strona · Nowe · Ekspert · ula",
+      "new_name": "ulaula4746@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "ulaula4746@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2e85938e-6bd1-4034-a5c4-23a472aff26e",
+      "old_name": "Strona · Nowe · Ekspert · Khrystyna",
+      "new_name": "timecoffee457@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "timecoffee457@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2f97681f-5d85-446f-854d-bbf5854ccb19",
+      "old_name": "Copywriting · Nowe · test81549",
+      "new_name": "tijj9994@fastman.eu · Copywriting · Nowe",
+      "bizCardEmail": "tijj9994@fastman.eu",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2ff092d4-2d72-474b-b8ff-d3e168e11d45",
+      "old_name": "Logo · Nowe · Natalia",
+      "new_name": "nataliachrostowska66@gmail.com · Logo · Nowe",
+      "bizCardEmail": "nataliachrostowska66@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "2ffd4a04-9171-406b-bacc-019d5d2dd5e5",
+      "old_name": "Strona · Nowe · Ekspert · Edyta",
+      "new_name": "kontakt@ayaa.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "kontakt@ayaa.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "30182a91-49e9-4da2-b183-112ea55c05ce",
+      "old_name": "Logo · Jacek",
+      "new_name": "przyciemnianie.szyb@op.pl · Logo",
+      "bizCardEmail": "przyciemnianie.szyb@op.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "318b54f1-4a44-40cf-b121-e071a36ee0d1",
+      "old_name": "Logo · Nowe · Cennik · Daria",
+      "new_name": "dikrawczyk@icloud.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "dikrawczyk@icloud.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "31e53c29-2939-4946-a4e8-ff1a9f34e182",
+      "old_name": "Strona · Nowe · Ekspert · Bartek",
+      "new_name": "bartmajki2@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "bartmajki2@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "31f865c7-6285-4d31-8088-f2b8d5e956ae",
+      "old_name": "Strona · Nowe · Anna",
+      "new_name": "annakapelska@gmail.com · Strona · Nowe",
+      "bizCardEmail": "annakapelska@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "334691b0-3a5b-4c3e-8277-c4b9f1befd76",
+      "old_name": "Strona · Nowe · Filip",
+      "new_name": "fikipovskidgreat@gmail.com · Strona · Nowe",
+      "bizCardEmail": "fikipovskidgreat@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "344a11f5-f69b-4358-a163-61585c5a678c",
+      "old_name": "Adam — LOGO",
+      "new_name": "adamfrackowiak00@wp.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "34a530ec-4263-478f-885b-94c2aef3c7fc",
+      "old_name": "Strona · Nowe · Ekspert · Andrzej",
+      "new_name": "butik@langella.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "butik@langella.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "34eb75b5-1c76-4af4-ac6a-b887c0b859b3",
+      "old_name": "czobXJJDomsFDZNOxvcjJ",
+      "new_name": "alewofux53@gmail.com · INNE",
+      "bizCardEmail": "alewofux53@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "361cbf97-fa96-46fd-8c1f-7eb2087b9c32",
+      "old_name": "Logo · Nowe · Ekspert · Aleksandra",
+      "new_name": "bednarskavet@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "bednarskavet@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "372a6f5b-f865-49d7-8be5-9447b45765ec",
+      "old_name": "Logo · Nowe · Ekspert · Dariusz",
+      "new_name": "d.markiewicz@po.edu.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "d.markiewicz@po.edu.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "379b5c04-965e-4571-8ec8-e362083c93bb",
+      "old_name": "Bartosz",
+      "new_name": "bartoszwilenta@gmail.com · INNE",
+      "bizCardEmail": "bartoszwilenta@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "37bab1e4-c545-4d45-870b-cffad894ee00",
+      "old_name": "Strona · Ekspert · Katarzyna Gawior",
+      "new_name": "katarzyna.gawior@embevity.com · Strona · Ekspert",
+      "bizCardEmail": "katarzyna.gawior@embevity.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "38113f4d-e44d-40f9-9d49-cdffb14fc11b",
+      "old_name": "Strona · Dorota",
+      "new_name": "dorota@wizarte.pl · Strona",
+      "bizCardEmail": "dorota@wizarte.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "38b76d7f-a39b-4ac2-97cd-a89d998ffd25",
+      "old_name": "Logo · Nowe · Ekspert · Ewa Legeń-Romanowska",
+      "new_name": "ewalegen@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "ewalegen@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "39179994-429c-49a2-a09a-67466d4645e8",
+      "old_name": "Jarosław — WEB",
+      "new_name": "archikwiat@mac.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3b78390b-5f10-4146-8ada-cb3941647353",
+      "old_name": "Strona · Daniel",
+      "new_name": "Sawczuk.praca@gmail.com · Strona",
+      "bizCardEmail": "Sawczuk.praca@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3b80e894-0637-407c-817e-410858f102fc",
+      "old_name": "Logo · Redesign · Ekspert · Kuba",
+      "new_name": "jakub.bajor@jbakademia.pl · Logo · Redesign · Ekspert",
+      "bizCardEmail": "jakub.bajor@jbakademia.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3ce39c89-6036-4816-8915-68abad8560cd",
+      "old_name": "Agata Dębska — WEB",
+      "new_name": "agata.debska@drdebski.pl · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3d8d9609-8e4d-4c62-a8dd-184e5ae64d4b",
+      "old_name": "Strona · Nowe · Marta",
+      "new_name": "marta.pawlaczek@op.pl · Strona · Nowe",
+      "bizCardEmail": "marta.pawlaczek@op.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3d923f67-7f0b-4261-8242-993f4e0584a9",
+      "old_name": "Strona · Nowe · Ekspert · Jacek",
+      "new_name": "jacek.debski@pikobook.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "jacek.debski@pikobook.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "3e85df83-01c1-4d03-8f54-c7aa6113abd8",
+      "old_name": "Strona · Ekspert · Jacek",
+      "new_name": "biuro@motocentergroup.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@motocentergroup.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "408273b8-d913-47fa-9600-df6811b31928",
+      "old_name": "Strona · Nowe · Ekspert · radosław Iwanski",
+      "new_name": "radoslaw.iwanski@sokolka.com.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "radoslaw.iwanski@sokolka.com.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "41b1a02b-dbb2-4123-8a15-91d1853ec685",
+      "old_name": "Strona · Nowe · Ekspert · Alicja",
+      "new_name": "zespolmazurki@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "zespolmazurki@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "41dc6d9c-64d7-44ff-b16b-9ff8024e15c7",
+      "old_name": "Logo · Nowe · Ania",
+      "new_name": "gozdziaszekania@gmail.com · Logo · Nowe",
+      "bizCardEmail": "gozdziaszekania@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "427e3190-095d-49a9-bccb-36faaf962f91",
+      "old_name": "Strona · Aneta Romanyk",
+      "new_name": "anetaromanyk4@gmail.com · Strona",
+      "bizCardEmail": "anetaromanyk4@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "42ed74ee-3f51-49db-949d-5a60a208da84",
+      "old_name": "Copywriting · Nowe · Karolina Sobotkiewicz",
+      "new_name": "karolinasobotkiewicz@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "karolinasobotkiewicz@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "42fe1bf4-0f8c-49bf-9f90-f79e947fba66",
+      "old_name": "Logo · Nowe · Cennik · Klaudia",
+      "new_name": "mikolajczykklaudia512@gmail.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "mikolajczykklaudia512@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "432cf881-215d-4274-a344-f73295df6ce9",
+      "old_name": "Logo · Nowe · Kornelia",
+      "new_name": "korneladobrze@gmail.com · Logo · Nowe",
+      "bizCardEmail": "korneladobrze@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "434fc4e8-4eb2-41c0-9d61-8ae2023b2569",
+      "old_name": "Sylwia",
+      "new_name": "s.aliw@quantuminnovations.pl · INNE",
+      "bizCardEmail": "s.aliw@quantuminnovations.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "44954721-cc18-4213-b7a5-634e1f3cca28",
+      "old_name": "Logo · Nowe · Milena",
+      "new_name": "bialikborowiec@gmail.com · Logo · Nowe",
+      "bizCardEmail": "bialikborowiec@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4583611a-e94f-4f69-b0e0-f9308357d634",
+      "old_name": "Logo · Nowe · Ekspert · Hanna Gołdyn",
+      "new_name": "hannagoldyn@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "hannagoldyn@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "45ba00a8-cf40-4eb7-9c1f-c5dd4075b7df",
+      "old_name": "Strona · Nowe · Ekspert · Justyna",
+      "new_name": "j.justynabronska@gmai.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "j.justynabronska@gmai.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "46309adf-7412-4c95-9cfb-bd1e9120cc29",
+      "old_name": "Logo · Nowe · Anna",
+      "new_name": "czerwiec.bergi-4q@icloud.com · Logo · Nowe",
+      "bizCardEmail": "czerwiec.bergi-4q@icloud.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "46378691-ba2a-4b62-927a-bc85385de26e",
+      "old_name": "Strona · Ewa C",
+      "new_name": "ewa@tradewars.pl · Strona",
+      "bizCardEmail": "ewa@tradewars.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "471245ef-2a1d-4d09-b80b-f9bf4607e113",
+      "old_name": "Strona · Marcin",
+      "new_name": "marcin.zywocki@polskieziarno.pl · Strona",
+      "bizCardEmail": "marcin.zywocki@polskieziarno.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "47c36036-f115-4a87-b057-c6a31565327f",
+      "old_name": "Logo · Cennik · Przemysław",
+      "new_name": "waszek44@gmail.com · Logo · Cennik",
+      "bizCardEmail": "waszek44@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "47ee2193-a1bb-45a4-87a0-edd0830f0d38",
+      "old_name": "WsiaMać Walciszek-Szczurek",
+      "new_name": "walciszek@poczta.onet.pl · INNE",
+      "bizCardEmail": "walciszek@poczta.onet.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "48175545-910b-4c61-91b9-215cd4a239f5",
+      "old_name": "Strona · Nowe · Ekspert · Mariusz Florczak",
+      "new_name": "mbflorczak@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mbflorczak@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4865c6fc-f1ac-476c-9c95-5a6153786c5b",
+      "old_name": "Logo · Redesign · Róża",
+      "new_name": "nlavendula@yahoo.com · Logo · Redesign",
+      "bizCardEmail": "nlavendula@yahoo.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "48c9cbf0-fae1-490f-9939-db4d6de752eb",
+      "old_name": "Logo · Nowe · Tosia",
+      "new_name": "tosiamic123@gmail.com · Logo · Nowe",
+      "bizCardEmail": "tosiamic123@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4928ee66-f6de-488c-a3be-77ea814fe4f6",
+      "old_name": "Agnieszka — LOGO",
+      "new_name": "agaskrobisz@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4b10f165-44c8-4854-97e0-c20e2e3ae5ec",
+      "old_name": "Logo · Nowe · Cennik · Natalia",
+      "new_name": "nataliamac98@gmail.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "nataliamac98@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4c49766d-e322-409f-8c71-97da96e3f750",
+      "old_name": "Logo · Nowe · Ewa",
+      "new_name": "ewaewadr@gmail.com · Logo · Nowe",
+      "bizCardEmail": "ewaewadr@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "4e1b1942-7475-4194-bd55-46ecdb03b1a0",
+      "old_name": "Strona · Ekspert · Robert",
+      "new_name": "biuro@hypermed.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@hypermed.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5049518a-d3f4-4c9a-a49d-85ea793ce498",
+      "old_name": "Strona · Nowe · Ekspert · Martyna",
+      "new_name": "biuro@edens.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "biuro@edens.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "50782be9-881a-4e91-974b-06b9ad3376f7",
+      "old_name": "Strona · Nowe · Ekspert · Jerzy Śmiałowski",
+      "new_name": "llsolarenergy@onet.eu · Strona · Nowe · Ekspert",
+      "bizCardEmail": "llsolarenergy@onet.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "50e64236-cbd6-452b-836c-db21b991285f",
+      "old_name": "Mateusz — WEB",
+      "new_name": "audiaudi300ps@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "51a7de55-0ddb-45b9-8bc7-fdc3068d6040",
+      "old_name": "Copywriting · Nowe · Ekspert · Anna Wawro-Flakus",
+      "new_name": "aniawawro@poczta.fm · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "aniawawro@poczta.fm",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "53081308-5f1c-4f2f-9113-0e575160dc4f",
+      "old_name": "Paweł — INNE",
+      "new_name": "p.brzdek@bhp-nord.pl · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "548e9bc6-8659-4163-a709-63d4cffe0603",
+      "old_name": "Strona · test",
+      "new_name": "test84499@fastman.eu · Strona",
+      "bizCardEmail": "test84499@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "54b2f6d9-36cd-4ede-afb0-cc189338f8ca",
+      "old_name": "Logo · Radosław Krawczyk",
+      "new_name": "radoslawkrawczyk@gmail.com · Logo",
+      "bizCardEmail": "radoslawkrawczyk@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "54e886cd-42a1-41d8-b0f8-609a38e12224",
+      "old_name": "Strona · Krystian Węgrzynowski",
+      "new_name": "krystian@lubianki.pl · Strona",
+      "bizCardEmail": "krystian@lubianki.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "54fd492e-fe4b-4b3d-871a-bbf0f6a34f9c",
+      "old_name": "Strona · Sławomir Trojanowski",
+      "new_name": "trojanowski@togatus.pl · Strona",
+      "bizCardEmail": "trojanowski@togatus.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "550ce47f-3815-40c1-a82f-5e35620c112b",
+      "old_name": "Logo · Redesign · Ekspert · Arkadiusz",
+      "new_name": "dzikieanimacje@gmail.com · Logo · Redesign · Ekspert",
+      "bizCardEmail": "dzikieanimacje@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "550e6081-2130-41c7-8f14-9a240e7b0a1b",
+      "old_name": "Strona · Ekspert · Edyta",
+      "new_name": "autoserwiseia@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "autoserwiseia@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5512af3c-0def-4f12-b2b9-a4fd190ce6b8",
+      "old_name": "Strona · Marcin Cal",
+      "new_name": "marcin.cal@o2.pl · Strona",
+      "bizCardEmail": "marcin.cal@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "55ae6a1d-8103-444b-9664-43752d7e5f37",
+      "old_name": "ydmhFlFjifCGeBMY",
+      "new_name": "oheneru576@gmail.com · INNE",
+      "bizCardEmail": "oheneru576@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5664b1b9-ea7a-40af-9814-35b541acb2d8",
+      "old_name": "Strona · Magdalena Dąbrowska",
+      "new_name": "madabrowska@farmacol.com.pl · Strona",
+      "bizCardEmail": "madabrowska@farmacol.com.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5712f373-b00f-412e-888f-7effe2dd2b0e",
+      "old_name": "Hubert — LOGO",
+      "new_name": "wernerhubercio123@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "571d1eb5-92e2-4d82-8741-e8ee8170ee12",
+      "old_name": "Strona · Ekspert · Wojciech",
+      "new_name": "pachocki.w@sprzatanie-atom.pl · Strona · Ekspert",
+      "bizCardEmail": "pachocki.w@sprzatanie-atom.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "57908625-fd8d-48f7-9ce9-1dc34d745876",
+      "old_name": "Strona · Ekspert · Aldona",
+      "new_name": "kontakt@aldonacholewa.artt · Strona · Ekspert",
+      "bizCardEmail": "kontakt@aldonacholewa.artt",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "57b773d3-2312-4576-b7b0-b7751b1f72f4",
+      "old_name": "Agnieszka — LOGO",
+      "new_name": "szczerbickaa@icloud.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "585c6aaa-1397-4df5-bc5f-9cd9cd9a96f8",
+      "old_name": "Copywriting · Nowe · Ekspert · Sebastian",
+      "new_name": "sebakiedos@wp.pl · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "sebakiedos@wp.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5a14e621-1197-4d97-a4a8-236388309379",
+      "old_name": "Strona · Arkadiusz Ciosek",
+      "new_name": "arkadiusz.ciosek96@gmail.com · Strona",
+      "bizCardEmail": "arkadiusz.ciosek96@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5aa03ad6-0718-4336-853a-21bc14126c89",
+      "old_name": "Pooja — INNE",
+      "new_name": "pooja@cssplayer.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5b77f81c-77ee-4c8e-a6c6-3b1acc59ddee",
+      "old_name": "Copywriting · Nowe · Milena Kledzik",
+      "new_name": "rerusmilena7@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "rerusmilena7@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5ca43008-5eaf-48a8-a558-00c1ecdf0850",
+      "old_name": "Strona · Ekspert · Dorota Baron",
+      "new_name": "barond2018@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "barond2018@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5d896e4e-979c-4e7d-8756-57920e8e3534",
+      "old_name": "Strona · Nowe · Ekspert · Jakub",
+      "new_name": "biuro@avator.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "biuro@avator.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5e6ec972-ea05-4084-affa-d75dd0ce6d33",
+      "old_name": "Strona · Nowe · Ekspert · Zofia Kałucka",
+      "new_name": "zosia_kalucka@tlen.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "zosia_kalucka@tlen.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5ea74188-54ef-49a0-8ad9-a2ad3ebef1f0",
+      "old_name": "Logo · Nowe · Remigiusz",
+      "new_name": "smcentrumzdrowia@o2.pl · Logo · Nowe",
+      "bizCardEmail": "smcentrumzdrowia@o2.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5f622daf-22a1-4da0-bf14-e1e868f40c8a",
+      "old_name": "Strona · Nowe · Krzysztof",
+      "new_name": "krzysztofpec12@gmail.com · Strona · Nowe",
+      "bizCardEmail": "krzysztofpec12@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "5fe200f2-28a5-4f46-b955-9195f91e60fd",
+      "old_name": "Logo · Redesign · Patrycja",
+      "new_name": "ksiegowa.taxmaster@outlook.com · Logo · Redesign",
+      "bizCardEmail": "ksiegowa.taxmaster@outlook.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "619fa12e-02f9-45ce-8834-842a18109c91",
+      "old_name": "Strona · Ekspert · Kasia McCloskey",
+      "new_name": "kasia@mccloskeystudio.com · Strona · Ekspert",
+      "bizCardEmail": "kasia@mccloskeystudio.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "61f545e7-b241-4bf8-86bd-582169b938f9",
+      "old_name": "Logo · Nowe · Filip",
+      "new_name": "filipmitoraj@gmail.com · Logo · Nowe",
+      "bizCardEmail": "filipmitoraj@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "621e81a8-2b2a-4852-92f3-2bb7efa4cba9",
+      "old_name": "Strona · Nowe · Ekspert · Piotr Śliwa",
+      "new_name": "piotrjansliwa@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "piotrjansliwa@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "624e27e9-3f4a-453a-a07d-40d4eb786b2f",
+      "old_name": "Strona · Ekspert · Katarzyna",
+      "new_name": "biuro@loewe-kiedrowska.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@loewe-kiedrowska.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "62d17350-dfe4-494d-94e5-9dd6421dafed",
+      "old_name": "Strona · Michal",
+      "new_name": "michal@callbob.ai · Strona",
+      "bizCardEmail": "michal@callbob.ai",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "62d5f0be-5a09-4d29-9ab0-bd12529cb3b7",
+      "old_name": "OLcIaHtGcwCSiodGBHrEgD",
+      "new_name": "imekoqagex21@gmail.com · INNE",
+      "bizCardEmail": "imekoqagex21@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "62d8328c-fb18-415f-b4ee-dee2c852df90",
+      "old_name": "Logo · Kamil",
+      "new_name": "waldikwaldik6@gmail.com · Logo",
+      "bizCardEmail": "waldikwaldik6@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "62ecc24f-eb26-499d-a37a-7cb155df8428",
+      "old_name": "Strona · Nowe · Barbara",
+      "new_name": "bacha0303@gmail.com · Strona · Nowe",
+      "bizCardEmail": "bacha0303@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "633fd52c-f5e5-44a1-805c-f2151fd59e81",
+      "old_name": "Strona · Nowe · Ekspert · Katarzyna",
+      "new_name": "kasia14g@op.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "kasia14g@op.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "636a2117-a0ab-4128-9a1e-aadbcc8000b5",
+      "old_name": "Strona · Ekspert · Robert",
+      "new_name": "artbet@o2.pl · Strona · Ekspert",
+      "bizCardEmail": "artbet@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "63a7df59-f042-483e-86fb-0203ea9f61d8",
+      "old_name": "Strona · Nowe · Ewelina",
+      "new_name": "ewla1231@o2.pl · Strona · Nowe",
+      "bizCardEmail": "ewla1231@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6441b4d9-a385-4192-a328-84b66dece833",
+      "old_name": "Strona · Nowe · Ekspert · Daniel",
+      "new_name": "trybalski_daniel@wp.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "trybalski_daniel@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6572bf5a-0998-4273-a134-c0a194035417",
+      "old_name": "Copywriting · Nowe · Wiktoria Wójcik",
+      "new_name": "wiktoria03210321@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "wiktoria03210321@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6591b7f3-74e8-4e5c-b857-cad727467e19",
+      "old_name": "Logo · Redesign · Ekspert · Aneta",
+      "new_name": "aneta.dolinska@partneropony.pl · Logo · Redesign · Ekspert",
+      "bizCardEmail": "aneta.dolinska@partneropony.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "660fbbff-3344-456a-a2a2-ba50c947d023",
+      "old_name": "Strona · Nowe · Jakub",
+      "new_name": "wave.gdynia@gd.pl · Strona · Nowe",
+      "bizCardEmail": "wave.gdynia@gd.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "66678f8d-c498-4338-bf2f-131fb13b25e7",
+      "old_name": "eliza suder — MARKETING",
+      "new_name": "elizasuder@gmail.com · Marketing",
+      "bizCardEmail": "",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "669ceee8-4c0a-4955-acfc-2e5ce3309ed2",
+      "old_name": "Strona · Nowe · Ekspert · Żaneta",
+      "new_name": "biuro@vestamodern.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "biuro@vestamodern.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "66e058da-5879-44c5-838c-8cb6dc704d7f",
+      "old_name": "Strona · Nowe · Ekspert · GCP Worker Test",
+      "new_name": "gcp-worker-test@fastman.eu · Strona · Nowe · Ekspert",
+      "bizCardEmail": "gcp-worker-test@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "671a4012-f5c4-4cf8-87aa-e996d1ecc5f5",
+      "old_name": "Strona · Ekspert · ELZBIETA",
+      "new_name": "e.krawczyk@multonic.com · Strona · Ekspert",
+      "bizCardEmail": "e.krawczyk@multonic.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6749c395-b0f4-4017-9a6b-dbf11a176529",
+      "old_name": "Strona · Nowe · Ekspert · Józef",
+      "new_name": "biuro@montechbramy.eu · Strona · Nowe · Ekspert",
+      "bizCardEmail": "biuro@montechbramy.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "67e969b4-1033-424e-8899-10e3f3e5b92e",
+      "old_name": "Aleksander Borecki — INNE",
+      "new_name": "bloodynekt1@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "684dfcec-01cb-4770-8c57-dd328a5bd45f",
+      "old_name": "Logo · Nowe · Karolina",
+      "new_name": "karolinapochrzest21@gmail.com · Logo · Nowe",
+      "bizCardEmail": "karolinapochrzest21@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "68801bf1-2c8a-4697-a6f5-499c7e4e7549",
+      "old_name": "Anna Drapacz — LOGO",
+      "new_name": "galeriaurody@poczta.onet.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "69a74446-00b4-46ca-bef9-5572189ef9e7",
+      "old_name": "Strona · Nowe · Ekspert · Joanba",
+      "new_name": "abernaskiewicz@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "abernaskiewicz@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "69bbe710-4fe6-4659-baa8-9b3445faf31b",
+      "old_name": "Daniel",
+      "new_name": "danielnowak24@gmail.com · INNE",
+      "bizCardEmail": "danielnowak24@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6b9272ca-0682-40b6-a1ab-8e453f2468c3",
+      "old_name": "Strona · Nowe · Ekspert · Dawid",
+      "new_name": "849rtest@fastman.eu · Strona · Nowe · Ekspert",
+      "bizCardEmail": "849rtest@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6ba30645-d1ab-4ebe-bbd5-355cf456b362",
+      "old_name": "OEpnCCiYyYqComxXnnCsKRMK",
+      "new_name": "6128651100@txt.att.net · INNE",
+      "bizCardEmail": "6128651100@txt.att.net",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6bc487e0-c9ca-478d-9480-98730bbe5f78",
+      "old_name": "Marketing · Klara",
+      "new_name": "klarasztyler@gmail.com · Marketing",
+      "bizCardEmail": "klarasztyler@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6c4b64e8-8172-48bd-aa73-478a655fc031",
+      "old_name": "Dominika Gamoń — INNE",
+      "new_name": "domgam2905@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6c6ef944-64b9-4e36-aa6d-441334e3a695",
+      "old_name": "Strona · Jakub Wieczorek",
+      "new_name": "jakub.wieczorek.biznes@gmail.com · Strona",
+      "bizCardEmail": "jakub.wieczorek.biznes@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6d631741-40d4-4d4b-b863-ed57880f5442",
+      "old_name": "Strona · Nowe · Ekspert · Piotr Koczorowski",
+      "new_name": "interstartplus@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "interstartplus@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6e108365-6360-46d8-8c40-a5e0b4fc4c17",
+      "old_name": "Strona · Ekspert · Bartek",
+      "new_name": "bartoszgiecewicz@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "bartoszgiecewicz@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6ea4b32b-d768-4bc9-b5e8-390b8fe639d0",
+      "old_name": "Strona · Ekspert · Martyna",
+      "new_name": "kusiokoo@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "kusiokoo@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "6f6746be-abe5-42d4-a51d-29a6b9e75412",
+      "old_name": "Strona · Ekspert · Dominik",
+      "new_name": "biuro@brokersmedia.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@brokersmedia.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "712fbd50-0bb7-4260-a981-a35b2738bf50",
+      "old_name": "Strona · Nowe · Paweł Skibiński",
+      "new_name": "pawelskibinski1973@gmail.com · Strona · Nowe",
+      "bizCardEmail": "pawelskibinski1973@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7133da57-81a0-4051-a20d-9257e1d2766f",
+      "old_name": "wf-notify-v3-test — INNE",
+      "new_name": "Lead · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "72f62296-fdc3-473b-b99f-d71768e88469",
+      "old_name": "Copywriting · test7858",
+      "new_name": "test74848@fastman.eu · Copywriting",
+      "bizCardEmail": "test74848@fastman.eu",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "73085b9e-1bac-44f5-950a-940caf0d7b8f",
+      "old_name": "Strona · Ekspert · Plara LTD Stanislaw Razniewski",
+      "new_name": "stanislawrazniewski@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "stanislawrazniewski@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "73c00329-441f-48de-9e53-b590941fee5b",
+      "old_name": "Strona · Nowe · Ekspert · Michal",
+      "new_name": "mfgrsky@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mfgrsky@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "73d45fd2-e654-48bd-8f61-0610e623429e",
+      "old_name": "Strona · Nowe · Ekspert · Dariusz",
+      "new_name": "virtualrealityinnovation@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "virtualrealityinnovation@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "747961b0-3fee-40c2-b66f-5434050a8416",
+      "old_name": "Strona · Nowe · Justyna",
+      "new_name": "justynaopora@gmail.com · Strona · Nowe",
+      "bizCardEmail": "justynaopora@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "751ca24b-84a3-4a79-a6c5-15bab930f703",
+      "old_name": "Marketing · Jarek",
+      "new_name": "pj1983@icloud.com · Marketing",
+      "bizCardEmail": "pj1983@icloud.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "75537198-408b-48c5-a874-62fd92e5f5f8",
+      "old_name": "Rafał — LOGO",
+      "new_name": "rplotka1@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7575c1a0-b91c-4dd5-b40f-220f2729a598",
+      "old_name": "Strona · Joanna",
+      "new_name": "marketing@almus.pl · Strona",
+      "bizCardEmail": "marketing@almus.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "75c6ca5d-c039-41f2-a42d-89e7e81a3c30",
+      "old_name": "Logo · Nowe · Tomek",
+      "new_name": "tomekbonikowski@gmail.com · Logo · Nowe",
+      "bizCardEmail": "tomekbonikowski@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "75d5bea2-3634-4edc-b698-1b6a9a273346",
+      "old_name": "Strona · Nowe · Ekspert · Mateusz",
+      "new_name": "fcbm0891@yahoo.de · Strona · Nowe · Ekspert",
+      "bizCardEmail": "fcbm0891@yahoo.de",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "76cb0120-ee87-45af-bd34-37ee9b937043",
+      "old_name": "filter test · form SORTOWNIA",
+      "new_name": "info@invitely.in",
+      "bizCardEmail": "",
+      "bizProduct": "",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "77e38c3c-fdf2-4985-8f80-6067afee3566",
+      "old_name": "Strona · Ekspert · Aldona",
+      "new_name": "aldona.cholewa@interia.pl · Strona · Ekspert",
+      "bizCardEmail": "aldona.cholewa@interia.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "789c3caf-fd41-4d9f-99e3-3f9ee39e5c98",
+      "old_name": "Mateusz Skalski",
+      "new_name": "mateusz@max-seo.pl · INNE",
+      "bizCardEmail": "mateusz@max-seo.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "797d3a34-3c13-480d-8f71-42b6bd5f6437",
+      "old_name": "Strona · Nowe · Ekspert · Michal",
+      "new_name": "michal.krawczynski@o2.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "michal.krawczynski@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7aaf0032-5dbe-4848-8601-3bd419223487",
+      "old_name": "Strona · Ekspert · Fontanny Pływające Tomasz Grajek",
+      "new_name": "biuro@fontannyplywajace.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@fontannyplywajace.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7adca55b-f589-4e59-883d-6bc1a2339598",
+      "old_name": "Copywriting · Nowe · Dawid",
+      "new_name": "test98844@fastman.eu · Copywriting · Nowe",
+      "bizCardEmail": "test98844@fastman.eu",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7b048318-f070-4b90-8f28-a270cfd31560",
+      "old_name": "Strona · Nowe · RADOSŁAW",
+      "new_name": "fradziula@gmail.com · Strona · Nowe",
+      "bizCardEmail": "fradziula@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7b87a2fc-5560-4290-b1cf-5de96f168a0a",
+      "old_name": "Strona · Nowe · Krzysztof Kunicki / 2arch sp. z o.o.",
+      "new_name": "kunicki@2arch.pl · Strona · Nowe",
+      "bizCardEmail": "kunicki@2arch.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7c2118d4-2aa4-4dc2-a382-7ce31c31351d",
+      "old_name": "PAWEŁ KAŁUŻNY — WEB",
+      "new_name": "pawel@acepark.pl · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7c44c9c1-530c-4822-b08e-7e9c12e226ee",
+      "old_name": "Strona · Nowe · Agnieszka",
+      "new_name": "agusia75niki@gmail.com · Strona · Nowe",
+      "bizCardEmail": "agusia75niki@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7cc3c9af-c62b-48ad-8ebe-3fd5c3bac976",
+      "old_name": "Strona · Ekspert · adam",
+      "new_name": "adam@osmiorniczka.net · Strona · Ekspert",
+      "bizCardEmail": "adam@osmiorniczka.net",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7ed5e1c4-0b6b-45fd-a8c6-e78725e937d3",
+      "old_name": "Strona · Nowe · Ekspert · Bartosz",
+      "new_name": "bkublik@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "bkublik@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7ed97282-947e-4e0a-81dc-3d157af67722",
+      "old_name": "Michał",
+      "new_name": "mmarkiewiczalsaeedi@gmail.com · INNE",
+      "bizCardEmail": "mmarkiewiczalsaeedi@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7f9f8358-b02d-40be-935d-40c29165b665",
+      "old_name": "Logo · Nowe · Cennik · Daniel",
+      "new_name": "majews1993@wp.pl · Logo · Nowe · Cennik",
+      "bizCardEmail": "majews1993@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "7fb2434e-0ca0-45a4-9000-6da20d2b0fe5",
+      "old_name": "Strona · Ekspert · Olga",
+      "new_name": "bdo@zojapolska.pl · Strona · Ekspert",
+      "bizCardEmail": "bdo@zojapolska.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "807c196e-4ff3-4d99-bd0c-0cf7f91a4179",
+      "old_name": "Strona · Nowe · Sebastian",
+      "new_name": "elbud@vp.pl · Strona · Nowe",
+      "bizCardEmail": "elbud@vp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8090d74b-cb91-4ef8-b227-91e0ad997079",
+      "old_name": "Strona · Jendrek Hyc",
+      "new_name": "jendrekh@poczta.fm · Strona",
+      "bizCardEmail": "jendrekh@poczta.fm",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "813bee17-1957-4cdc-b6ca-27e23a391dda",
+      "old_name": "Strona · Ekspert · Anna",
+      "new_name": "agromichalik@o2.pl · Strona · Ekspert",
+      "bizCardEmail": "agromichalik@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "814c27ad-7a86-4fd0-b192-6ba19e913848",
+      "old_name": "Stanisław Szymanowski — WEB",
+      "new_name": "stasszym@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "81787e79-d611-4d58-8e3c-1c695475fdfa",
+      "old_name": "Strona · Mariusz werner",
+      "new_name": "Biuro.izzitherm@gmail.com · Strona",
+      "bizCardEmail": "Biuro.izzitherm@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "82739981-f35b-4e25-bc21-fbdfc97a9519",
+      "old_name": "Verify llmkbjml — WEB",
+      "new_name": "verify-create-lead-llmkbjml@example.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "831dcbaf-a844-487a-a58f-f61c2eb84265",
+      "old_name": "Strona · Ekspert · Zuzanna Kania",
+      "new_name": "zuzanna.kania@op.pl · Strona · Ekspert",
+      "bizCardEmail": "zuzanna.kania@op.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "83bee89e-9ac7-4683-aec0-e9b0d6542e4e",
+      "old_name": "Strona · Nowe · Wojtek",
+      "new_name": "wojciechradomski@gmail.com · Strona · Nowe",
+      "bizCardEmail": "wojciechradomski@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "841b34ff-086b-47aa-96cf-f2c5906d2c16",
+      "old_name": "Strona · Nowe · Ekspert · Rafał",
+      "new_name": "czwartak@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "czwartak@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "84250721-f8c7-4c75-bac3-af6f1dba2e31",
+      "old_name": "Logo · Redesign · Ekspert · Wioletat",
+      "new_name": "biuro@efektywna-ksiegowosc.pl · Logo · Redesign · Ekspert",
+      "bizCardEmail": "biuro@efektywna-ksiegowosc.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8435c20c-4117-48c7-aecb-f76a1cb55b98",
+      "old_name": "Strona · Marcin Michnicki",
+      "new_name": "m.michnicki@moliera2.com · Strona",
+      "bizCardEmail": "m.michnicki@moliera2.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "849a4c17-18c3-4d6a-a3a3-cbb9994d6803",
+      "old_name": "Strona · Nowe · Ekspert · Małgorzata Witych",
+      "new_name": "m.witych1@wp.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "m.witych1@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "871f4dae-e169-4b29-b53b-3afa9421cdb6",
+      "old_name": "Logo · Redesign · Ekspert · Kuba Bartnik",
+      "new_name": "kubabartnik@bartniktwr.pl · Logo · Redesign · Ekspert",
+      "bizCardEmail": "kubabartnik@bartniktwr.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "87bb14c4-6fa2-4387-b66b-32bb1eac4a82",
+      "old_name": "Copywriting · Nowe · Kacper",
+      "new_name": "grkozlowskikacper@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "grkozlowskikacper@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "88137166-ab14-4c4e-a75b-06af2cbcabf5",
+      "old_name": "Logo · Nowe · Michał",
+      "new_name": "roi@projektroi.com · Logo · Nowe",
+      "bizCardEmail": "roi@projektroi.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "885bd227-4d6b-4be1-98ea-4f84399ab3ba",
+      "old_name": "Agnieszka Kurczab — WEB",
+      "new_name": "agnieszkamadetko@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8953ac04-ac14-472d-b041-2c40f244f3d5",
+      "old_name": "Strona · Przemek Kolankiewicz",
+      "new_name": "kolankiewiczprzemek@gmail.com · Strona",
+      "bizCardEmail": "kolankiewiczprzemek@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8a0753ef-046a-4b42-95c9-784fb1040e60",
+      "old_name": "Logo · Nowe · Ekspert · Rafał",
+      "new_name": "piki1100@wp.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "piki1100@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8a16942a-c0c6-4a26-8209-89161ae195d3",
+      "old_name": "Logo · Nowe · Sebastian",
+      "new_name": "sebamet@tlen.pl · Logo · Nowe",
+      "bizCardEmail": "sebamet@tlen.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8a32c68f-f637-4257-b6bd-1b71e5711ed6",
+      "old_name": "adrian — WEB",
+      "new_name": "contact@seeqlty.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8a47a533-e9ee-4b28-8018-5099333de2be",
+      "old_name": "Logo · Ekspert · Gabriel Wałachowski",
+      "new_name": "biuro@mtwlogistic.com · Logo · Ekspert",
+      "bizCardEmail": "biuro@mtwlogistic.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8b46662f-ddf2-480b-9657-123b21fee0e0",
+      "old_name": "Logo · Nowe · Marcin",
+      "new_name": "marcintonder2@gmail.com · Logo · Nowe",
+      "bizCardEmail": "marcintonder2@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8c4d140e-90a1-4a8a-8022-31fb6135434f",
+      "old_name": "Logo · Redesign · Cennik · Anna",
+      "new_name": "kontakt@midur-tech.com.pl · Logo · Redesign · Cennik",
+      "bizCardEmail": "kontakt@midur-tech.com.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8c62642e-43d9-4b5e-a9db-838fb2601f8a",
+      "old_name": "Copywriting · Nowe · Ekspert · Jolanta Krupińska",
+      "new_name": "jolantakrupinskapoczta@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "jolantakrupinskapoczta@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8da28d24-8967-4bd6-b873-57e3b929ecc9",
+      "old_name": "Strona · Nowe · michal brzozowiec",
+      "new_name": "mbrzozowiec@gmail.com · Strona · Nowe",
+      "bizCardEmail": "mbrzozowiec@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8e2e605c-9c8e-4857-9beb-46259757bee6",
+      "old_name": "Strona · Ekspert · Krzysztof Jońca",
+      "new_name": "biuro@goldengrupa.com · Strona · Ekspert",
+      "bizCardEmail": "biuro@goldengrupa.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8eddf9a7-3c84-406f-a115-8ec3cf0b2609",
+      "old_name": "Copywriting · Nowe · Ekspert · Wioletta Radziszewska",
+      "new_name": "wiolettaradziszewska@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "wiolettaradziszewska@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8ee3ec90-66b7-45f9-8535-e7a8cfff170a",
+      "old_name": "Strona · Ekspert · Jakub",
+      "new_name": "biuro@flexdrew.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@flexdrew.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8f4f757a-4571-49f4-8695-316d590480fa",
+      "old_name": "Strona · Nowe · Katarzyna",
+      "new_name": "katarzynanwska@gmail.com · Strona · Nowe",
+      "bizCardEmail": "katarzynanwska@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8f787572-0092-4338-9c33-c90253f25506",
+      "old_name": "Logo · Nowe · Ekspert · Pawel Rzepka",
+      "new_name": "pawelrzepkapr@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "pawelrzepkapr@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8fa9df7e-41eb-46ea-ae4d-f877479184c0",
+      "old_name": "Strona · Krzysztof Małecki",
+      "new_name": "kristofmalecki@gmail.com · Strona",
+      "bizCardEmail": "kristofmalecki@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "8fe1dba1-d08b-4a9c-948c-01ef779cd267",
+      "old_name": "Logo · Nowe · Gracjan",
+      "new_name": "gracek123_2001@o2.pl · Logo · Nowe",
+      "bizCardEmail": "gracek123_2001@o2.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "91af4c11-816c-4791-9b55-c95755b410ad",
+      "old_name": "Copywriting · Nowe · Ekspert · Dominika",
+      "new_name": "unitedshopsport@outlook.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "unitedshopsport@outlook.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "92dbfe35-e36a-4fbd-9af2-8f66178861f2",
+      "old_name": "Strona · Łukasz Karmowski",
+      "new_name": "l.karmowski@grupaorla.pl · Strona",
+      "bizCardEmail": "l.karmowski@grupaorla.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "92fe499f-a101-44f7-b410-7c882079a43c",
+      "old_name": "Copywriting · Nowe · Aleksandra",
+      "new_name": "adabrowska3a1@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "adabrowska3a1@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9318656d-28dd-4cc0-a9bc-fd6544f81b78",
+      "old_name": "Logo · Przemek",
+      "new_name": "psfotokadr@gmail.com · Logo",
+      "bizCardEmail": "psfotokadr@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "934bdee7-2fee-4dbd-8a84-9c7710f64bd3",
+      "old_name": "Logo · Nowe · Ekspert · Kamil",
+      "new_name": "kamil.handball.7@wp.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "kamil.handball.7@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "93e8b201-067f-4b45-a17d-d37136cbd74e",
+      "old_name": "Strona · Nowe · test9494",
+      "new_name": "test949d@fastman.eu · Strona · Nowe",
+      "bizCardEmail": "test949d@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "93f36c32-e55d-4516-a755-f5444c5a16fe",
+      "old_name": "Adam — WEB2",
+      "new_name": "bedzikowski96@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "94979075-0e12-4c0d-856a-62a5dc59c4af",
+      "old_name": "Wiola — WEB",
+      "new_name": "teresa1327@interia.pl · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "94afd866-0b94-4ef7-b2c1-5555e2987ff4",
+      "old_name": "Agnieszka Swit — WEB",
+      "new_name": "agnieszkaswit7@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "95da9342-17b5-4499-a526-e8672d44ebf7",
+      "old_name": "Strona · Nowe · magda",
+      "new_name": "magdalnasiejek@gmail.com · Strona · Nowe",
+      "bizCardEmail": "magdalnasiejek@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "962c36e1-b902-4df6-b2f7-409adfccc3e4",
+      "old_name": "Strona · Nowe · Ekspert · Krystyna Khan",
+      "new_name": "krystynaczerbniak@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "krystynaczerbniak@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "968c9594-2802-4547-878a-d6901896d65a",
+      "old_name": "Logo · Nowe · Mateusz Janiak",
+      "new_name": "m4ti0498@gmail.com · Logo · Nowe",
+      "bizCardEmail": "m4ti0498@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "96a048dd-8a9e-4a4d-b796-2e94c68330d4",
+      "old_name": "Strona · Ekspert · Maciej",
+      "new_name": "biuro@edisonenergy.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@edisonenergy.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "97c956f1-c372-47c4-805b-bb27204fa0ad",
+      "old_name": "945919nnff — INNE",
+      "new_name": "tjagurtn489@fastman.eu · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "97e734ff-6353-49f6-9c3e-1735d201f80c",
+      "old_name": "Strona · Ekspert · Kamil Chojnowski",
+      "new_name": "kalioo321@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "kalioo321@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "97fb335a-45f6-4b89-a0e9-463ed4bbf458",
+      "old_name": "Maksymilian Cabaj — INNE",
+      "new_name": "maksiucabajk@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "98416e3e-1c62-4222-b341-96f9e021b7c9",
+      "old_name": "Strona · Nowe · test849",
+      "new_name": "test94902@fastman.eu · Strona · Nowe",
+      "bizCardEmail": "test94902@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9879f0b1-2064-41b5-83cc-c66e78b89ce0",
+      "old_name": "Strona · Ekspert · Robert Nowak",
+      "new_name": "dyrektor@gokladek.pl · Strona · Ekspert",
+      "bizCardEmail": "dyrektor@gokladek.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "99373aba-2975-4583-9fbe-52641eb090ee",
+      "old_name": "XWQaKikTYNgOUaMSX",
+      "new_name": "otecola973@gmail.com · INNE",
+      "bizCardEmail": "otecola973@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9978a66c-3971-4178-b8c6-d5b6d4582bc9",
+      "old_name": "Strona · Ekspert · Klaudia Rojek",
+      "new_name": "jezykzklasa@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "jezykzklasa@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9a17b27a-ecc8-4f81-96c5-f5e867f33ec9",
+      "old_name": "Marketing · Dominik",
+      "new_name": "dominik.bobela@nutrilogic.io · Marketing",
+      "bizCardEmail": "dominik.bobela@nutrilogic.io",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9a2eeb49-7f42-4d9d-b5fc-29b7ed69fec6",
+      "old_name": "Strona · Nowe · Ekspert · DOMINIK LEPCZYŃSKI",
+      "new_name": "plenerconcept@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "plenerconcept@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9b5c0146-69e1-47e2-b4a3-97b138b8659b",
+      "old_name": "Logo · Nowe · Ekspert · Agnieszka Kubiak",
+      "new_name": "agnieszka.kubiak@toyota-okecie.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "agnieszka.kubiak@toyota-okecie.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9bf70d6b-cf52-4c12-bf8a-9e3d81e7ec1a",
+      "old_name": "Strona · Nowe · Ekspert · Pawel",
+      "new_name": "vetwalczak@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "vetwalczak@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9c8003c9-c9cb-4849-9852-ef2dd16c76db",
+      "old_name": "Piotr Ciesielski — INNE",
+      "new_name": "ciesielskip@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9ec12298-f744-41de-aba5-3ceeae018f98",
+      "old_name": "Strona · Ekspert · Adam",
+      "new_name": "info@perfectrenovation.ie · Strona · Ekspert",
+      "bizCardEmail": "info@perfectrenovation.ie",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "9ef0f338-ee6e-4f57-9c10-afd0a488684f",
+      "old_name": "Strona · Nowe · Ekspert · Jan",
+      "new_name": "paczekjan1971@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "paczekjan1971@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a0721932-98d1-4ddc-a8ea-a65c89d15853",
+      "old_name": "Logo · Nowe · Ekspert · Maja Taczyńska",
+      "new_name": "majataczynska402@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "majataczynska402@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a20869e5-9128-4424-8b26-3bfceb6fdf08",
+      "old_name": "Logo · Redesign · Katarzyna",
+      "new_name": "vivatastoduo@gmail.com · Logo · Redesign",
+      "bizCardEmail": "vivatastoduo@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a2bfca1e-9eaf-4260-9b89-bab34cd3ac03",
+      "old_name": "Strona · Nowe · Ekspert · Krystian",
+      "new_name": "krystianpuczniewski@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "krystianpuczniewski@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a382e3ab-c8dc-4fcb-a07c-4965dff32379",
+      "old_name": "Naming · Nowe · Ekspert · Karolina",
+      "new_name": "karolina1301@onet.pl · Naming · Nowe · Ekspert",
+      "bizCardEmail": "karolina1301@onet.pl",
+      "bizProduct": "NAME",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a40202bd-49ab-41ec-8cdc-c4f19337979f",
+      "old_name": "Marketing · Dmytro",
+      "new_name": "hoskopl@gmail.com · Marketing",
+      "bizCardEmail": "hoskopl@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a484f063-2f13-4500-8c95-c920d52c875f",
+      "old_name": "Strona · Nowe · Ekspert · Magorzata",
+      "new_name": "mliszcz23@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mliszcz23@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a50a71fe-9e39-44d9-8664-fdd4696dca50",
+      "old_name": "Strona · Ekspert · Jakub Bielak",
+      "new_name": "jakub@direen.pl · Strona · Ekspert",
+      "bizCardEmail": "jakub@direen.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a5ab18c7-2dca-444a-83b6-b53b0001624d",
+      "old_name": "Strona · Paweł",
+      "new_name": "pablo91bialek@gmail.com · Strona",
+      "bizCardEmail": "pablo91bialek@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a5c36940-ddd9-4b28-b3f2-cd7647e971f6",
+      "old_name": "Mateusz Rogalski — LOGO",
+      "new_name": "mateuszrogalski1989@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a71b63b5-d837-4bf9-9e5a-f8134be97f3a",
+      "old_name": "Strona · Nowe · Jaroslaw Wypych",
+      "new_name": "jarowypych@gmail.com · Strona · Nowe",
+      "bizCardEmail": "jarowypych@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a7720e70-a91d-4fe9-b4d1-b58f684737c4",
+      "old_name": "Mariusz — WEB",
+      "new_name": "mdmmariusz@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a88aa583-646d-41f2-944f-20c988f63e3f",
+      "old_name": "test — WEB",
+      "new_name": "test9959058@fastman.eu · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a88ce14c-6e31-4113-bed1-7a20acb9a6ee",
+      "old_name": "Strona · Nowe · ELŻBIETA Waligórska",
+      "new_name": "elawa66@wp.pl · Strona · Nowe",
+      "bizCardEmail": "elawa66@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a8ce16a2-cbdc-4962-b1d7-959050aba77f",
+      "old_name": "Strona · Nowe · Ekspert · Monika",
+      "new_name": "monikastudzinska1984@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "monikastudzinska1984@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a9000da7-1179-46fd-94ca-c97588b64ea2",
+      "old_name": "Strona · Magda",
+      "new_name": "Trendmagda@gmail.com · Strona",
+      "bizCardEmail": "Trendmagda@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a9601301-aa32-46d6-b1f0-7e4ef3aa36d1",
+      "old_name": "Strona · Nowe · Ekspert · Kamil",
+      "new_name": "mlodyrentier1791@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mlodyrentier1791@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a97ff085-9b76-4d5e-b56b-7335151e3e44",
+      "old_name": "Marketing · Kamil",
+      "new_name": "szubielskikamil@gmail.com · Marketing",
+      "bizCardEmail": "szubielskikamil@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "a9a2ebb4-208c-4f9d-a94e-2fa6c354d702",
+      "old_name": "Strona · Mateusz",
+      "new_name": "ilove@tajsy.pl · Strona",
+      "bizCardEmail": "ilove@tajsy.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "aa386171-c340-4c9c-bd9e-4fb0927956d5",
+      "old_name": "Mariusz",
+      "new_name": "mariusz.bulka@icloud.com · INNE",
+      "bizCardEmail": "mariusz.bulka@icloud.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "aa84983f-9631-4b23-89fe-b111b6091959",
+      "old_name": "Strona · Nowe · Ekspert · Bartosz",
+      "new_name": "sartekbkomski@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "sartekbkomski@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ab02f26f-34db-4e0e-a8e5-5e617caba3b6",
+      "old_name": "Strona · Nowe · Ekspert · Michał Niezdropa",
+      "new_name": "michalniezdropa26@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "michalniezdropa26@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ab7a5e87-8ebd-490f-9dcf-a9169b934003",
+      "old_name": "Logo · Nowe · Agnieszka",
+      "new_name": "odnovainstytut@gmail.com · Logo · Nowe",
+      "bizCardEmail": "odnovainstytut@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "aba6309c-43ad-4b0e-b672-0a33e9007163",
+      "old_name": "Logo · Nowe · Ekspert · Damian",
+      "new_name": "biuro@rivotekt.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "biuro@rivotekt.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "abed49bf-da51-4ea0-a731-038fad02f2a4",
+      "old_name": "Copywriting · Nowe · Małgorzata Lato",
+      "new_name": "malgorzatalato@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "malgorzatalato@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ac0fa2ef-365d-43c7-a292-b847287a0752",
+      "old_name": "Strona · Barbara Jerschina",
+      "new_name": "Dr.barbara.jerschina@gmail.com · Strona",
+      "bizCardEmail": "Dr.barbara.jerschina@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "acd7b04a-9f38-4225-8d3d-ab9b8dfda6ec",
+      "old_name": "Strona · Paweł Dobaj",
+      "new_name": "paweldobaj5@gmail.com · Strona",
+      "bizCardEmail": "paweldobaj5@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ad0aede9-e832-4d8b-8a11-2dab21b309fa",
+      "old_name": "Copywriting · Nowe · Ekspert · Dominika Marek",
+      "new_name": "dominicamarek@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "dominicamarek@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ae40627c-f83d-426c-bb05-c90072941382",
+      "old_name": "Katarzyna król ozimek",
+      "new_name": "krolkasia01@gmail.com · INNE",
+      "bizCardEmail": "krolkasia01@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ae51b601-0e69-4ab6-b198-7c9a5d303cea",
+      "old_name": "Daria Kowalska",
+      "new_name": "daria@social4you.net.pl · INNE",
+      "bizCardEmail": "daria@social4you.net.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "aec00639-952d-43d9-b2d8-6ffba4aac607",
+      "old_name": "Strona · Ekspert · Szymon",
+      "new_name": "biuro@finest-cleaning.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@finest-cleaning.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "af4b9118-fafc-4002-98d3-46d0794c835c",
+      "old_name": "Logo · Redesign · Patrycja Bańska",
+      "new_name": "biuro@inspekcje.com.pl · Logo · Redesign",
+      "bizCardEmail": "biuro@inspekcje.com.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "af95c47c-75ea-4b1a-9f73-0db82d29e839",
+      "old_name": "Filip — WEB",
+      "new_name": "biuro@satari.pl · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "afb329a0-9d0c-4f63-b2b6-354237fde6b1",
+      "old_name": "Logo · Nowe · Ekspert · Karolina",
+      "new_name": "karolinaalicjaw@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "karolinaalicjaw@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "afca5bc1-81fd-4c85-b24c-34d9f660e1b7",
+      "old_name": "Logo · Nowe · Ekspert · Paweł",
+      "new_name": "pawelcebulak@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "pawelcebulak@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b0491b0a-4961-4460-b414-6e741f80eea0",
+      "old_name": "Maja — WEB",
+      "new_name": "majapochylska96@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b0756933-2e1e-4936-8a1d-957f1ff81c27",
+      "old_name": "Bartosz Kozłowski — LOGO",
+      "new_name": "bartosz@bartoszkozlowski.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b1204b24-320d-479d-9d25-3620ddb82c23",
+      "old_name": "Pawel — LOGO",
+      "new_name": "pawelkijewski@wp.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b127944b-1480-4f9e-9f00-fb2735475b0a",
+      "old_name": "Strona · Nowe · Ekspert · Aleksandra Kamińska",
+      "new_name": "wiithblog@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "wiithblog@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b1760ca6-2a4c-497d-9553-a2448ac724e3",
+      "old_name": "Logo · Nowe · Ekspert · Barbara",
+      "new_name": "barbara.brylkowskaa@icloud.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "barbara.brylkowskaa@icloud.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b17addac-bece-40e2-a64a-a83661368711",
+      "old_name": "Strona · Ekspert · Sebastian",
+      "new_name": "biuro@multiimmo.pl · Strona · Ekspert",
+      "bizCardEmail": "biuro@multiimmo.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b295a671-bdb8-47e6-adf2-4d83ecdfbb71",
+      "old_name": "Copywriting · Nowe · Ekspert · Katarzyna Szymaszek",
+      "new_name": "katarzyna.wysota@poczta.onet.pl · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "katarzyna.wysota@poczta.onet.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b2a43ace-3579-4a78-a640-94cbaf0a3a36",
+      "old_name": "Strona · Jan Achrem",
+      "new_name": "achremjan@wp.pl · Strona",
+      "bizCardEmail": "achremjan@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b3002221-24cc-4b52-b9d3-c201bd3c9bf8",
+      "old_name": "Strona · Tylkotest",
+      "new_name": "test915995@fastman.eu · Strona",
+      "bizCardEmail": "test915995@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b3298e10-0419-40df-a8a2-9a28e468a06e",
+      "old_name": "Strona · Iwona Domeracka",
+      "new_name": "iwona.d@ekf24.pl · Strona",
+      "bizCardEmail": "iwona.d@ekf24.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b4750335-0747-430e-9e69-8835a71a232e",
+      "old_name": "Strona · Paweł Janik",
+      "new_name": "paweljanik@neoneo.pl · Strona",
+      "bizCardEmail": "paweljanik@neoneo.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b561edb5-d0a7-4071-b6b5-ff098354097e",
+      "old_name": "Copywriting · Nowe · Anna",
+      "new_name": "lankacraftrekodzielo@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "lankacraftrekodzielo@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b5ebae9f-9965-46b4-9cee-dbeb0f49fe3c",
+      "old_name": "Copywriting · Nowe · Cennik · Konrad Bartkowiak",
+      "new_name": "konradbartkowiak2@gmail.com · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "konradbartkowiak2@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b6785951-82c6-461a-bd8a-d8ce51fe2a01",
+      "old_name": "Logo · Nowe · Karolina Górecka",
+      "new_name": "ratkowskak@hotmail.com · Logo · Nowe",
+      "bizCardEmail": "ratkowskak@hotmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b6fdf8a7-7bd7-4f32-9b4d-b8e139a03b71",
+      "old_name": "Logo · Nowe · Ekspert · Krystian Rosa",
+      "new_name": "krystianrosa23@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "krystianrosa23@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b7df214e-391b-463d-ad1b-e02beec05a12",
+      "old_name": "Marketing · Paulina",
+      "new_name": "dorisino@interia.pl · Marketing",
+      "bizCardEmail": "dorisino@interia.pl",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "b9a6d4d1-9a74-4605-b4e2-89aa83405949",
+      "old_name": "Alek",
+      "new_name": "aleksander.kowzan@adwokatura.pl · INNE",
+      "bizCardEmail": "aleksander.kowzan@adwokatura.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ba04ed60-2a83-4358-8ad8-847ff115d461",
+      "old_name": "Strona · Ekspert · Magdalena Urszula Wasilewska",
+      "new_name": "magda@psychonurt.pl · Strona · Ekspert",
+      "bizCardEmail": "magda@psychonurt.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ba0630c7-b1bd-429d-aa1e-303e308ed9b5",
+      "old_name": "Copywriting · Nowe · Ekspert · Cezary Pisowodzki",
+      "new_name": "cezarypisowodzki@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "cezarypisowodzki@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bac3aad5-9960-42fd-801e-6d8c114a0f25",
+      "old_name": "Strona · Iga",
+      "new_name": "mroziakiga@gmail.com · Strona",
+      "bizCardEmail": "mroziakiga@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bac3ab79-b93e-4b77-9058-386054cc8ddf",
+      "old_name": "Strona · mariusz",
+      "new_name": "mail.box@gazeta.pl · Strona",
+      "bizCardEmail": "mail.box@gazeta.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "badd97f4-53e1-4224-883c-77a83d5efcbf",
+      "old_name": "Strona · Nowe · Ekspert · Szymon Nowak",
+      "new_name": "nowgonzales@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "nowgonzales@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bafc5e39-9dec-4334-88c7-ec3adb96395d",
+      "old_name": "Copywriting · Nowe · Ekspert · Mariusz Drążkowski",
+      "new_name": "sagitamark@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "sagitamark@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bb0d7018-09be-4e1a-a6e3-4bc3bf695bb2",
+      "old_name": "Strona · Ewa Bochenko",
+      "new_name": "transakcje99@gmail.com · Strona",
+      "bizCardEmail": "transakcje99@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bbdb4217-7f59-4a5d-9057-b9eecd55c8c0",
+      "old_name": "Strona · Nowe · Mariusz",
+      "new_name": "swiatgitary@gmail.com · Strona · Nowe",
+      "bizCardEmail": "swiatgitary@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bbdefa42-a78a-42c0-9297-e0791fd0c4c4",
+      "old_name": "Strona · Mieszko Palmi-Kukiełko",
+      "new_name": "swimwildpl@gmail.com · Strona",
+      "bizCardEmail": "swimwildpl@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bc366687-45b0-4a2b-ae2a-e929b3219f91",
+      "old_name": "Logo · Redesign · Robert",
+      "new_name": "robert.abramczyk@romax.waw.pl · Logo · Redesign",
+      "bizCardEmail": "robert.abramczyk@romax.waw.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bce2841c-db65-4a1a-a74c-b909241c11d8",
+      "old_name": "Logo · Nowe · Ekspert · Mateusz",
+      "new_name": "matpizpolska@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "matpizpolska@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bd3f440a-70da-48f6-b660-9356db119eb0",
+      "old_name": "Strona · Nowe · Ekspert · Małgorzata",
+      "new_name": "mjozwicka@mjn-jozwicki.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mjozwicka@mjn-jozwicki.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bd7368b7-b697-4016-a91e-70f7ab52aa90",
+      "old_name": "Dział Promocji — INNE",
+      "new_name": "promocja@biblioteka.lodz.pl · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "be51c1e3-305d-4b19-85ce-f0c17ace60ce",
+      "old_name": "Strona · Nowe · Ekspert · Sebastian",
+      "new_name": "s.kepa1212@o2.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "s.kepa1212@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "becb7dda-fd72-4983-b49c-0f313834d43c",
+      "old_name": "Logo · Nowe · Cennik · Grzegorz Orzechowski",
+      "new_name": "gorzech@o2.pl · Logo · Nowe · Cennik",
+      "bizCardEmail": "gorzech@o2.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "bff6b0e7-965c-4d9d-8e94-37dbf5955a7c",
+      "old_name": "Strona · Nowe · Jakub",
+      "new_name": "indes@in-des.pl · Strona · Nowe",
+      "bizCardEmail": "indes@in-des.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c086f82c-669b-457e-b438-01761cbe48a7",
+      "old_name": "Strona · Sławomir Chabiera",
+      "new_name": "biuro@alucon.pl · Strona",
+      "bizCardEmail": "biuro@alucon.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c12ab48f-6a0d-471b-b7ac-46fc5054d2ba",
+      "old_name": "Zenona Mielcarek — WEB",
+      "new_name": "zenonamielcarek58@gmail.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c13ec01f-07bf-401c-bfc6-1c2ed8c2f800",
+      "old_name": "Logo · Grzegorz",
+      "new_name": "krzywickigrzegorz@gmail.com · Logo",
+      "bizCardEmail": "krzywickigrzegorz@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c16d4c31-faac-4a0a-88fd-dd76d0e08aa3",
+      "old_name": "Strona · Marcin Piechocki",
+      "new_name": "marcin.piechocki@gmail.com · Strona",
+      "bizCardEmail": "marcin.piechocki@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c1ae4789-e1eb-41c5-94e2-7feddf83318b",
+      "old_name": "Logo · Nowe · Nikodem Koziróg",
+      "new_name": "nikodemkozirog@gmail.com · Logo · Nowe",
+      "bizCardEmail": "nikodemkozirog@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c2b0cf7e-1ff2-4188-b927-8c7c10be8412",
+      "old_name": "Logo · Nowe · Artur Żugaj",
+      "new_name": "artur.z@vp.pl · Logo · Nowe",
+      "bizCardEmail": "artur.z@vp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c3ddd576-aed1-4ff3-b883-93cabbe60304",
+      "old_name": "Copywriting · Redesign · Kacper",
+      "new_name": "kacpertwardowski981@gmail.com · Copywriting · Redesign",
+      "bizCardEmail": "kacpertwardowski981@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c40e3818-f3c2-46b8-a1c7-62520bc884ea",
+      "old_name": "Logo · Nowe · Ekspert · Anna Jablonska",
+      "new_name": "a.jablonska@spaki.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "a.jablonska@spaki.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c45bfa89-df0f-46b8-8f48-bad3f29938a0",
+      "old_name": "Logo · Nowe · Ekspert · Dawid",
+      "new_name": "dawidkodi82@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "dawidkodi82@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c4dff2b2-0efe-4662-a2bb-29d0af58189a",
+      "old_name": "Copywriting · Nowe · Paweł",
+      "new_name": "pawelpolanski02@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "pawelpolanski02@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c57c75b7-acb5-4d67-86cb-ecd4dec705da",
+      "old_name": "Miłosz",
+      "new_name": "milosz@przygody4x4.pl · INNE",
+      "bizCardEmail": "milosz@przygody4x4.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c624cb70-a8f1-4af9-9b9b-9d3f60a65249",
+      "old_name": "Logo · Cennik · Patryk Łabędzki",
+      "new_name": "othersidewave@gmail.com · Logo · Cennik",
+      "bizCardEmail": "othersidewave@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c78c1a93-2149-4f16-9a3d-50880d8dcb94",
+      "old_name": "Logo · Nowe · Marcin",
+      "new_name": "powislestudio@gmail.com · Logo · Nowe",
+      "bizCardEmail": "powislestudio@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c79c626d-09c6-4132-84fc-b99505c87e0c",
+      "old_name": "Marcin — LOGO",
+      "new_name": "marcin.szymik@wp.pl · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c7a3a956-473b-450f-b7c1-848e8938efa6",
+      "old_name": "Strona · Nowe · Weronika",
+      "new_name": "biuro@siatki-sita.pl · Strona · Nowe",
+      "bizCardEmail": "biuro@siatki-sita.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c8b383a0-c342-46e2-aa94-0955bb4c94a4",
+      "old_name": "Strona · Ekspert · Sebastian",
+      "new_name": "sebastian@saracen.net.pl · Strona · Ekspert",
+      "bizCardEmail": "sebastian@saracen.net.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c8ddb569-dc55-455f-9441-bcd111ade83b",
+      "old_name": "Strona · Aleksandra Bacańska",
+      "new_name": "a.bacanska@highline.com.pl · Strona",
+      "bizCardEmail": "a.bacanska@highline.com.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c968132e-b3f1-4caa-8d6f-1bf2490b31fe",
+      "old_name": "Strona · Nowe · Ekspert · Malgorzata Madrawska",
+      "new_name": "madrawskam@yahoo.co.uk · Strona · Nowe · Ekspert",
+      "bizCardEmail": "madrawskam@yahoo.co.uk",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "c9f1add0-b0ff-4ad6-a522-2bbfef65ea72",
+      "old_name": "Paulina Tyczyńska — INNE",
+      "new_name": "paulinaslopiecka@gmail.com · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ca2a4848-eeca-4563-98b1-ef8e77ba9fc8",
+      "old_name": "Strona · Aga",
+      "new_name": "agaignaczuk@gmail.com · Strona",
+      "bizCardEmail": "agaignaczuk@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cb258db9-f5c4-4aaa-8c4f-72e329e0baae",
+      "old_name": "Konrad Gołembowski — LOGO",
+      "new_name": "kgolembowski6b@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cc45b25e-4005-4fbd-a84d-8cc8a8fd514c",
+      "old_name": "Strona · Nowe · Ekspert · Michal Pawlukiewicz",
+      "new_name": "mpawlukiewicz83@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "mpawlukiewicz83@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ccc2b017-f456-43d9-ad1a-d7040d8069fa",
+      "old_name": "Strona · Bartosz",
+      "new_name": "bartoszszpakowsky@gmail.com · Strona",
+      "bizCardEmail": "bartoszszpakowsky@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cccdd5f9-f4c9-4f6c-a650-0d1e282457c8",
+      "old_name": "Logo · Cennik · Paweł Kalemba",
+      "new_name": "pawelkalemba28@wp.pl · Logo · Cennik",
+      "bizCardEmail": "pawelkalemba28@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cdae8296-6f9b-4c9f-a42f-cdf44153b1e0",
+      "old_name": "Strona · Arek",
+      "new_name": "arek@acrofamily.pl · Strona",
+      "bizCardEmail": "arek@acrofamily.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cebfeece-d76e-4d02-98b1-221e62f7b619",
+      "old_name": "Strona · Piotr Obara",
+      "new_name": "primodentspiek@vp.pl · Strona",
+      "bizCardEmail": "primodentspiek@vp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cf657dfb-c0d4-46ef-aa94-8d353ff35e3c",
+      "old_name": "Logo · Redesign · Ekspert · Robert",
+      "new_name": "r.kudelka@senatusmarine.pl · Logo · Redesign · Ekspert",
+      "bizCardEmail": "r.kudelka@senatusmarine.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "cf6d9a13-9b12-4ad8-b7b2-1b341e6e01cf",
+      "old_name": "Marketing · Aron Formela",
+      "new_name": "formelaaron@gmail.com · Marketing",
+      "bizCardEmail": "formelaaron@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d0280bca-4e4a-4be9-b3ce-ad79a98ea469",
+      "old_name": "Logo · Nowe · Barbara",
+      "new_name": "basia.wojcik10@wp.pl · Logo · Nowe",
+      "bizCardEmail": "basia.wojcik10@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d06f9a1c-76ee-4261-9479-92c632540c32",
+      "old_name": "Logo · Nowe · Cennik · Hania Soluch",
+      "new_name": "haniasoluch@gmail.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "haniasoluch@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d087a53b-016a-48e7-89da-55445c79751c",
+      "old_name": "Strona · Ekspert · Piotrek",
+      "new_name": "info@houseoffuture.pl · Strona · Ekspert",
+      "bizCardEmail": "info@houseoffuture.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d16ff6b4-111f-4b96-8327-5173abf371c0",
+      "old_name": "Copywriting · Nowe · Cennik · Ola",
+      "new_name": "exit1973@tlen.pl · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "exit1973@tlen.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d5571cda-0e6c-4b5a-96f3-790ab7c6cef4",
+      "old_name": "Copywriting · Nowe · Jan",
+      "new_name": "janlewandrowski10@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "janlewandrowski10@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d5bbdcc4-bab5-456a-affe-bf152817cad1",
+      "old_name": "Logo · Redesign · julia",
+      "new_name": "juliamb2626@gmail.com · Logo · Redesign",
+      "bizCardEmail": "juliamb2626@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d611d82e-0a67-490f-8daf-1e1ef34ef183",
+      "old_name": "Strona · Nowe · Monika",
+      "new_name": "kontaktnieruchomosciexpert@gmail.com · Strona · Nowe",
+      "bizCardEmail": "kontaktnieruchomosciexpert@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d64282fc-33e3-4317-bdbc-60a0f451cb2d",
+      "old_name": "Strona · Iza Gajewska",
+      "new_name": "bajecznyogrod@gmail.com · Strona",
+      "bizCardEmail": "bajecznyogrod@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d6612032-0a6b-4957-9230-69eb1a2c3b58",
+      "old_name": "Copywriting · Nowe · Patrycja",
+      "new_name": "patrycjatookaj@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "patrycjatookaj@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d6a1dd02-6f10-4645-bc84-b1fd8e698796",
+      "old_name": "Logo · Redesign · Ekspert · Kasia",
+      "new_name": "katarzynakwas94@gmail.com · Logo · Redesign · Ekspert",
+      "bizCardEmail": "katarzynakwas94@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d7ace694-f7d6-4169-8323-5e8bb59bb1c4",
+      "old_name": "Strona · Ekspert · Joanna",
+      "new_name": "joanna.wojciechowska@saplings.pl · Strona · Ekspert",
+      "bizCardEmail": "joanna.wojciechowska@saplings.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d7f77a95-3a47-4384-8d0e-200de55e7f5f",
+      "old_name": "Logo · Nowe · Ewa Pilawska",
+      "new_name": "ewazpilawska@gmail.com · Logo · Nowe",
+      "bizCardEmail": "ewazpilawska@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d8117586-82f8-468a-bdaf-d9d15a8bc0fd",
+      "old_name": "Strona · Ekspert · Grzegorz Mielczarek",
+      "new_name": "grzegorzmielczarek@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "grzegorzmielczarek@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d84209af-718b-45ec-9d08-b5bbed0b78a8",
+      "old_name": "Strona · Ekspert · Malgorzata Szczurowska",
+      "new_name": "malgorzata@studiomodin.com · Strona · Ekspert",
+      "bizCardEmail": "malgorzata@studiomodin.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d956ae4c-a447-430d-9cea-7b272614f314",
+      "old_name": "Strona · Jarosław Dutkiewicz",
+      "new_name": "jarek.poznan@tlen.pl · Strona",
+      "bizCardEmail": "jarek.poznan@tlen.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d95ef5f5-bf0f-4032-987b-7bbfbd9b4087",
+      "old_name": "Marta",
+      "new_name": "m.luszczynska@wysokofunkcyjni.pl · INNE",
+      "bizCardEmail": "m.luszczynska@wysokofunkcyjni.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "d9903dd7-ed1a-4047-b007-3f656dcfb5e4",
+      "old_name": "Strona · Monika Korneć",
+      "new_name": "M.kornec@przystanekprawnik.pl · Strona",
+      "bizCardEmail": "M.kornec@przystanekprawnik.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "da2d86e5-2871-4e5a-b125-f82ff3c29c67",
+      "old_name": "Logo · Nowe · Ekspert · Piotr Nowak",
+      "new_name": "piotrnowak231@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "piotrnowak231@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "db8f2f34-37a9-4702-8fc0-8fffa8cafcc8",
+      "old_name": "Marketing · Daniel",
+      "new_name": "sklep@supleprofit.pl · Marketing",
+      "bizCardEmail": "sklep@supleprofit.pl",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ddc56126-c089-426f-9b40-472a3bc2d784",
+      "old_name": "Logo · Nowe · Ekspert · Emilia Miaskowska",
+      "new_name": "emilia.miaskowska@nglservices.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "emilia.miaskowska@nglservices.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ddec2fad-0af2-4f53-be36-5ccacba3a5a1",
+      "old_name": "Strona · Daniel Maciaszczyk",
+      "new_name": "danielmaciaszczyk20@gmail.com · Strona",
+      "bizCardEmail": "danielmaciaszczyk20@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "dded82dc-3ebc-41d5-9b20-94dd2ee02de7",
+      "old_name": "Marketing · Michał",
+      "new_name": "trexbroker1@gmail.com · Marketing",
+      "bizCardEmail": "trexbroker1@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "de486fe0-01e0-4195-91f1-84b7cd5046a2",
+      "old_name": "Strona · Nowe · Ekspert · Alan",
+      "new_name": "alanbielasty1@wp.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "alanbielasty1@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "df7191db-d6d0-4ac6-9dbc-59a7d0a5b6c7",
+      "old_name": "Logo · Nowe · Mateusz",
+      "new_name": "lubinski.mateusz@onet.pl · Logo · Nowe",
+      "bizCardEmail": "lubinski.mateusz@onet.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "df8fbe64-63c0-40a4-931a-b03ea8542714",
+      "old_name": "Jonatan Piech",
+      "new_name": "jonatan.p@social4you.com.pl · INNE",
+      "bizCardEmail": "jonatan.p@social4you.com.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "dfd13169-8f06-405b-b9eb-6a6d5d3b998c",
+      "old_name": "Strona · Redesign · Ekspert · Mariusz",
+      "new_name": "mjakmaniek@wp.pl · Strona · Redesign · Ekspert",
+      "bizCardEmail": "mjakmaniek@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e1c3540b-8923-47c5-82ab-ba8d5128fbad",
+      "old_name": "Strona · Nowe · Katarzyna",
+      "new_name": "kasiawieclawmaluje@gmail.com · Strona · Nowe",
+      "bizCardEmail": "kasiawieclawmaluje@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e24cf8c4-56d5-4a82-868f-68a26a05ef7d",
+      "old_name": "QXdmSyLcajThKXwW",
+      "new_name": "rehevesusi523@gmail.com · INNE",
+      "bizCardEmail": "rehevesusi523@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e4349466-eab9-4ba3-b641-dd4b68a456fd",
+      "old_name": "Copywriting · Nowe · Ekspert · Konrad",
+      "new_name": "konradmoc@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "konradmoc@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e464a408-c153-4084-9f2e-feb3d24bf1ee",
+      "old_name": "Logo · Redesign · Cennik · Piotr Jędrzejczyk",
+      "new_name": "infoverdearomapl@gmail.com · Logo · Redesign · Cennik",
+      "bizCardEmail": "infoverdearomapl@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e4aee6f2-5bb9-4c1d-985f-5bcc0d9f9c81",
+      "old_name": "Olga — WEB",
+      "new_name": "olga.kolomiiets@bedeko-europe.com · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e51e6a68-db13-4164-83e1-400e0e70ea09",
+      "old_name": "Strona · Ekspert · Natalia",
+      "new_name": "nat.tyr@wp.pl · Strona · Ekspert",
+      "bizCardEmail": "nat.tyr@wp.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e53c1008-9f0e-48b3-8674-84cdf7832ebd",
+      "old_name": "Strona · Nowe · Ekspert · Ewelina",
+      "new_name": "ewelina.tarapacka@interia.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "ewelina.tarapacka@interia.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e6001251-abff-4150-8db6-6561c8caed03",
+      "old_name": "Strona · KRUPAmed•Rehabilitacja•Fizjoterapia•Trening Medyczny•Zabrze",
+      "new_name": "krupak1997@interia.pl · Strona",
+      "bizCardEmail": "krupak1997@interia.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e6391f72-8f6d-4975-bd2b-acbef35e870a",
+      "old_name": "Strona · Nowe · Ekspert · Arkadiusz Piotr Minko",
+      "new_name": "ekobiznes@onet.pl · Strona · Nowe · Ekspert",
+      "bizCardEmail": "ekobiznes@onet.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e739a2d3-d04b-4103-a2cf-b59a6cc4aa16",
+      "old_name": "Copywriting · Nowe · Ekspert · test",
+      "new_name": "testowolowolovo@tset.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "testowolowolovo@tset.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e73cd23f-6bb5-450f-a7a7-8808d13f1a25",
+      "old_name": "Strona · Nowe · Ekspert · Damian",
+      "new_name": "tajtrip0111@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "tajtrip0111@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e76bca01-600e-4c61-bbdb-056304b25fb8",
+      "old_name": "Logo · Nowe · Cennik · Sylwia Blonska",
+      "new_name": "rogalskasylwia@gmail.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "rogalskasylwia@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e79db3e5-3224-45e1-bd68-02ddae94885d",
+      "old_name": "Strona · Tomasz Nowak",
+      "new_name": "tomunow@gmail.com · Strona",
+      "bizCardEmail": "tomunow@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e879bce4-84de-4977-9f56-62dd5d265a30",
+      "old_name": "Strona · Dominika",
+      "new_name": "alezniejkozak@gmail.com · Strona",
+      "bizCardEmail": "alezniejkozak@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e9126cb7-8d3f-40b9-b8a4-6d8804328f66",
+      "old_name": "fLPnTgXdnIIxUHvnrOTnDKM",
+      "new_name": "suhapofaluq16@gmail.com · INNE",
+      "bizCardEmail": "suhapofaluq16@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e954fd7e-f552-4d08-b3bd-2ccf368ec303",
+      "old_name": "Marketing · Lucyna Madejska",
+      "new_name": "centrumgranitu@gmail.com · Marketing",
+      "bizCardEmail": "centrumgranitu@gmail.com",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "e979cc42-f2cb-4c88-bdd0-8fca5d3fe0d3",
+      "old_name": "Logo · Nowe · Oliwia Ziemba",
+      "new_name": "oliwiaziemba123@gmail.com · Logo · Nowe",
+      "bizCardEmail": "oliwiaziemba123@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ea7a67da-0954-41ac-84a9-84e1a3bd8ca7",
+      "old_name": "Strona · Dawiddd",
+      "new_name": "testy8914884@fastman.eu · Strona",
+      "bizCardEmail": "testy8914884@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "eb2a4989-664e-4bc9-be09-bc0ba587d827",
+      "old_name": "Logo · Nowe · Cennik · Anna Pietrzak",
+      "new_name": "annapietrzak0811@gmail.com · Logo · Nowe · Cennik",
+      "bizCardEmail": "annapietrzak0811@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+      "old_name": "t99595 — INNE",
+      "new_name": "v4-test-test@fastman.eu · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ec314cd4-8009-46f6-bba3-fe8a5e769191",
+      "old_name": "Logo · Redesign · Cennik · Karolina",
+      "new_name": "karolinakaszkowiak7@gmail.com · Logo · Redesign · Cennik",
+      "bizCardEmail": "karolinakaszkowiak7@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ec753151-6b2e-476f-9996-dbb1676178f9",
+      "old_name": "Strona · Nowe · Eliza",
+      "new_name": "elwassermann@gmail.com · Strona · Nowe",
+      "bizCardEmail": "elwassermann@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ed225619-c29f-4c1c-b524-c880c0686bbe",
+      "old_name": "Logo · Nowe · Aleksandra Puszkarczuk",
+      "new_name": "aleksandra.puszkarczuk@vp.pl · Logo · Nowe",
+      "bizCardEmail": "aleksandra.puszkarczuk@vp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ed30a7f8-baad-4b3a-99f5-a135743c9305",
+      "old_name": "Mariusz Ryfel",
+      "new_name": "mariusz.ryfel@social4you.com.pl · INNE",
+      "bizCardEmail": "mariusz.ryfel@social4you.com.pl",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "edbb824f-6e26-4538-933b-2fb268adf401",
+      "old_name": "Logo · Nowe · Karolina Górecka",
+      "new_name": "karolinag9906@gmail.com · Logo · Nowe",
+      "bizCardEmail": "karolinag9906@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ef38a88b-b20a-470c-b62a-6c3cb242d39e",
+      "old_name": "Copywriting · Nowe · Marcin",
+      "new_name": "garusek1998@gmail.com · Copywriting · Nowe",
+      "bizCardEmail": "garusek1998@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ef3e530c-7ef7-4de4-90b0-27ce40efce31",
+      "old_name": "link-test — WEB",
+      "new_name": "Lead · Strona",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ef5c3208-bc09-4a63-9c1e-2606860deb7e",
+      "old_name": "Strona · Anna Ty",
+      "new_name": "bbbyyob11@gmail.com · Strona",
+      "bizCardEmail": "bbbyyob11@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "efb47f31-bcff-40f8-8d6b-12a29402debb",
+      "old_name": "Strona · Ekspert · testtest",
+      "new_name": "test8585@fastman.eu · Strona · Ekspert",
+      "bizCardEmail": "test8585@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "efbbbfcb-50a4-460f-bafa-cd8764fa8c66",
+      "old_name": "Strona · Andrzej Lempicki",
+      "new_name": "biuro@help-hybrid.pl · Strona",
+      "bizCardEmail": "biuro@help-hybrid.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f0df31d4-fb7b-4968-b302-ff4f7078a47d",
+      "old_name": "Logo · Nowe · Ekspert · Krzysztof",
+      "new_name": "kburgiel@poczta.onet.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "kburgiel@poczta.onet.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f15a1028-4e7c-4e7a-9b32-78804ccd701e",
+      "old_name": "Strona · Ekspert · Dawid Bloch",
+      "new_name": "dbloch1@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "dbloch1@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f2637fa6-8d0e-43aa-b617-db14330b7941",
+      "old_name": "Strona · Ekspert · Michał Bonio",
+      "new_name": "booking@traviboo.com · Strona · Ekspert",
+      "bizCardEmail": "booking@traviboo.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f31434ba-2c2e-40ca-88e7-c94c5e848ae3",
+      "old_name": "Copywriting · Nowe · Ekspert · Monika",
+      "new_name": "andrysiakmonika@gmail.com · Copywriting · Nowe · Ekspert",
+      "bizCardEmail": "andrysiakmonika@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f374f8a4-6b70-4a38-b51c-d92504fe515b",
+      "old_name": "Strona · Pawel",
+      "new_name": "Matketing@pinokio.pl · Strona",
+      "bizCardEmail": "Matketing@pinokio.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f4077e1a-c32a-44c2-888b-83263555d0a3",
+      "old_name": "Marketing · Filip",
+      "new_name": "filip.hartwig@ijon.pl · Marketing",
+      "bizCardEmail": "filip.hartwig@ijon.pl",
+      "bizProduct": "MARKETING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f4498115-a776-403b-aa09-63b342f17c09",
+      "old_name": "Strona · Nowe · Daniel",
+      "new_name": "xplewka@gmail.com · Strona · Nowe",
+      "bizCardEmail": "xplewka@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f46106d3-f9f9-4b5b-8464-e69f1f1f03d6",
+      "old_name": "Strona · Adam",
+      "new_name": "adam.matusiak@audire.pl · Strona",
+      "bizCardEmail": "adam.matusiak@audire.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f488fa91-5284-4d48-8199-b563f38a88b5",
+      "old_name": "Copywriting · Nowe · Cennik · Aurelia Bill",
+      "new_name": "lcel3965@gmail.com · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "lcel3965@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+      "old_name": "test — INNE",
+      "new_name": "test120gagafg@fastman.eu · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f6472e33-4a8f-4112-b16f-d40f26dcbdb8",
+      "old_name": "Tomasz — LOGO",
+      "new_name": "skitomasz@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f6503cba-c0cb-4b5c-8199-26b57b702612",
+      "old_name": "test — INNE",
+      "new_name": "15ffjfj949@fastman.eu · INNE",
+      "bizCardEmail": "",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f6a87c79-20a6-4b54-8d49-51bfe22b75d7",
+      "old_name": "Strona · Ekspert · Maja Wysińska",
+      "new_name": "maja.wysinska@partner-nieruchomosci.pl · Strona · Ekspert",
+      "bizCardEmail": "maja.wysinska@partner-nieruchomosci.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f7459634-413a-43ff-a9c1-2f94ccf3ec0f",
+      "old_name": "Strona · Ekspert · Piotr Cichon",
+      "new_name": "allnikoal74@gmail.com · Strona · Ekspert",
+      "bizCardEmail": "allnikoal74@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f7edbeeb-081a-4456-b38c-84a5a0ffcf41",
+      "old_name": "Strona · Nowe · Ekspert · Adam",
+      "new_name": "osieckiadam052@gmail.com · Strona · Nowe · Ekspert",
+      "bizCardEmail": "osieckiadam052@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f808e691-dc32-4b35-91e9-8132119cfc88",
+      "old_name": "Copywriting · Nowe · Cennik · Wiktor",
+      "new_name": "wiktorswierk2@gmail.com · Copywriting · Nowe · Cennik",
+      "bizCardEmail": "wiktorswierk2@gmail.com",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f838c3bd-4097-4c57-88d8-592b8cd64794",
+      "old_name": "Logo · Nowe · Maciej",
+      "new_name": "v-class@taximw.pl · Logo · Nowe",
+      "bizCardEmail": "v-class@taximw.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f944593d-c115-4b06-a132-dc1b9b045b4c",
+      "old_name": "Strona · Ekspert · Agnieszka Walicka",
+      "new_name": "agnieszka78@o2.pl · Strona · Ekspert",
+      "bizCardEmail": "agnieszka78@o2.pl",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f9d95a2d-cf6d-4af7-a9fb-a1be59649a63",
+      "old_name": "Logo · Nowe · Ekspert · Hanna",
+      "new_name": "hannapiepiora@wp.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "hannapiepiora@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "f9e5307b-edfe-4319-9578-2f03d477fc4b",
+      "old_name": "Logo · Nowe · Ekspert · Julia",
+      "new_name": "jsierakowska@espes.pl · Logo · Nowe · Ekspert",
+      "bizCardEmail": "jsierakowska@espes.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "fa959c3b-b7ab-4902-b99b-05878b8fb940",
+      "old_name": "Strona · Nowe · Ekspert · tylkotest99",
+      "new_name": "teddst8884@fastman.eu · Strona · Nowe · Ekspert",
+      "bizCardEmail": "teddst8884@fastman.eu",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "fae4c42f-06a1-4985-995f-0b027005f83a",
+      "old_name": "Magdalena — LOGO",
+      "new_name": "maniakrolowa@gmail.com · Logo",
+      "bizCardEmail": "",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "fbe57845-7c5b-48a2-ba53-cfc57dd4ed87",
+      "old_name": "Strona · Nowe · Kacper",
+      "new_name": "kxcc111@gmail.com · Strona · Nowe",
+      "bizCardEmail": "kxcc111@gmail.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "fc10c321-89a5-4c22-8ab7-f57bcb672e68",
+      "old_name": "IwAWkttWPDJwxZotDkYEMlr",
+      "new_name": "anthonyesteffen@gmail.com · INNE",
+      "bizCardEmail": "anthonyesteffen@gmail.com",
+      "bizProduct": "INNE",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "febbf5e6-6ceb-4402-b4c8-72287a955a8c",
+      "old_name": "Logo · Nowe · Kornelia Stępień",
+      "new_name": "korneliastepien1994@gmail.com · Logo · Nowe",
+      "bizCardEmail": "korneliastepien1994@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ff167020-17ed-4462-8a5c-d9cf6145d886",
+      "old_name": "Copywriting · Nowe · Monika Bus",
+      "new_name": "monis88@o2.pl · Copywriting · Nowe",
+      "bizCardEmail": "monis88@o2.pl",
+      "bizProduct": "COPYWRITING",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ff659706-4c49-4c87-9968-98754b31f55e",
+      "old_name": "Strona · Ekspert · Marek",
+      "new_name": "mmagdziarz@icloud.com · Strona · Ekspert",
+      "bizCardEmail": "mmagdziarz@icloud.com",
+      "bizProduct": "WEB",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ff847abf-0d39-422c-9b07-f9f741c9e8f1",
+      "old_name": "Logo · Nowe · Ekspert · Łukasz Sambor",
+      "new_name": "lukaszsambor@gmail.com · Logo · Nowe · Ekspert",
+      "bizCardEmail": "lukaszsambor@gmail.com",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "ff8ffd6f-822d-41ca-8553-43c5f627e797",
+      "old_name": "Logo · Nowe · Otylia",
+      "new_name": "otyliagawlik@wp.pl · Logo · Nowe",
+      "bizCardEmail": "otyliagawlik@wp.pl",
+      "bizProduct": "LOGO",
+      "status": 200,
+      "ok": true
+    }
+  ]
+}

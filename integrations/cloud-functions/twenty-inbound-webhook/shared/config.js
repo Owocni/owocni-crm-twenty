@@ -1,6 +1,6 @@
 "use strict";
 
-const INBOUND_BUILD_ID = "2026-07-16-gcp-v6-freemail";
+const INBOUND_BUILD_ID = "2026-08-28-gcp-v7-identity-enrich-fallback";
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -32,7 +32,13 @@ function getTwentyConfig() {
 }
 
 function getRuntimeEnvironment(headerValue) {
-  const raw = headerValue || process.env.RUNTIME_ENVIRONMENT || "sandbox";
+  const deployed = String(process.env.RUNTIME_ENVIRONMENT || "")
+    .trim()
+    .toLowerCase();
+  if (deployed === "prod" || deployed === "sandbox") {
+    return deployed;
+  }
+  const raw = headerValue || "sandbox";
   const n = String(raw).toLowerCase();
   return n === "sandbox" ? "sandbox" : "prod";
 }

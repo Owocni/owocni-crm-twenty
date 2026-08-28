@@ -1,0 +1,21 @@
+{
+  "action": "delete_sortownia_gmail_dot_ghost",
+  "reason": "Gmail dots: proauratychy@ vs proaura.tychy@ — Sortownia NEW at Gosia duplicate of BB Marta PROPOSAL bb:9268",
+  "deleted": {
+    "id": "216797ba-d2e6-4c1b-93bb-486e47b4fe24",
+    "name": "proauratychy@gmail.com · Logo · Nowe · Ekspert",
+    "stage": "NEW",
+    "srcSystem": "OWOCNI_SORTOWNIA",
+    "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "email": "proauratychy@gmail.com"
+  },
+  "kept": {
+    "id": "81a5d096-4970-45c5-a1b4-3a6f5103e936",
+    "name": "proaura.tychy@gmail.com · Logo",
+    "stage": "PROPOSAL",
+    "srcSystem": "BETTER_BITRIX_LEGACY",
+    "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+    "email": "proaura.tychy@gmail.com"
+  },
+  "at": "20260828T090703Z"
+}
