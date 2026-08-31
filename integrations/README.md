@@ -15,6 +15,7 @@
 7. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)
 8. **Scalanie leadów:** [`runbooks/MERGE_LEADS.md`](runbooks/MERGE_LEADS.md) (polityka: `../owocni-crm/IDENTITY_AND_INBOUND.md` §5.9)
 8b. **Wiele kontaktów na leadzie:** [`runbooks/OPPORTUNITY_MULTI_CONTACT.md`](runbooks/OPPORTUNITY_MULTI_CONTACT.md)
+8c. **Import historii maili BB:** [`runbooks/BB_MAIL_IMAP_APPEND_RUNBOOK.md`](runbooks/BB_MAIL_IMAP_APPEND_RUNBOOK.md)
 9. **Anti-wpadki:** [`runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md`](runbooks/LLM_ANTI_WPADKI_GO_NO_GO.md)
 10. **Dlaczego nie 100% runtime:** [`runbooks/WHY_NOT_FULL_RUNTIME_YET.md`](runbooks/WHY_NOT_FULL_RUNTIME_YET.md)
 11. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`

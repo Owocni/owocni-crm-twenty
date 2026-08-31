@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-08-31T05:19:06.616637+00:00",
+  "scope": {
+    "bb_leads_open": 204,
+    "client_emails_unique": 206,
+    "days_window": 30,
+    "since_filter": null
+  },
+  "estimates_from_cutover_doc": {
+    "threads": 5900,
+    "messages": 7400,
+    "note": "Refined by this audit when RPC/sample completes"
+  },
+  "sales_inboxes": [
+    "marta@owocni.pl",
+    "gosia@owocni.pl",
+    "copywriting@owocni.pl",
+    "mariusz@owocni.pl",
+    "studio@owocni.pl",
+    "pomoc@owocni.pl"
+  ],
+  "rpc_get_emails_count": null,
+  "sample": {
+    "emails_queried": 15,
+    "stats": {
+      "messages_total": 35,
+      "with_body": 31,
+      "outbound_like": 7,
+      "outbound_with_body": 4,
+      "inbound_like": 35,
+      "inbound_with_body": 31,
+      "bb_only_outbound_candidate": 4,
+      "without_body": 4,
+      "archived_flag": 4,
+      "threads_distinct": 23
+    },
+    "extrapolate_factor": 13.733333333333333,
+    "extrapolated": {
+      "messages_total": 481,
+      "with_body": 426,
+      "outbound_like": 96,
+      "outbound_with_body": 55,
+      "inbound_like": 481,
+      "inbound_with_body": 426,
+      "bb_only_outbound_candidate": 55,
+      "without_body": 55,
+      "archived_flag": 55
+    }
+  }
+}

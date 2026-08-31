@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-08-31T05:18:45.427324+00:00",
+  "scope": {
+    "bb_leads_open": 204,
+    "client_emails_unique": 206,
+    "days_window": 30,
+    "since_filter": null
+  },
+  "estimates_from_cutover_doc": {
+    "threads": 5900,
+    "messages": 7400,
+    "note": "Refined by this audit when RPC/sample completes"
+  },
+  "sales_inboxes": [
+    "marta@owocni.pl",
+    "gosia@owocni.pl",
+    "copywriting@owocni.pl",
+    "mariusz@owocni.pl",
+    "studio@owocni.pl",
+    "pomoc@owocni.pl"
+  ],
+  "rpc_get_emails_count": null
+}

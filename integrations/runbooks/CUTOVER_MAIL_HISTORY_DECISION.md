@@ -5,8 +5,9 @@ layer: runbook
 status: draft
 owner: "Dawid"
 audience: "Mariusz"
-last_verified: 2026-08-28
+last_verified: 2026-08-31
 related:
+  - BB_MAIL_IMAP_APPEND_RUNBOOK.md
   - CUTOVER_BB_SYNC_DECISION.md
   - CUTOVER_BB_SYNC_EXECUTION.md
   - CUTOVER_TWENTY_TEAM_PLAN.md
@@ -97,17 +98,21 @@ Zabezpieczenie: worker `create_lead` nie tworzy już drugiej karty, gdy osoba ma
 
 ---
 
-### Opcja C — import historii z BB do Twenty (tylko leady po syncu / czystce)
+### Opcja C — import historii z BB do Twenty (IMAP APPEND — zatwierdzone 2026-08-30)
 
 | | |
 |---|---|
-| **Co** | Jednorazowy importer: BB `email_thread` / `email_message` → Twenty Messages, podpięte do Person / Opportunity z `bb:{id}` |
+| **Co** | BB `email_message` → RFC822 → **IMAP APPEND** do folderu `BB Archive` → Twenty Email Sync (zero zapisu Message przez API) |
 | **Ile (po czystce, zakres sync 30 dni)** | **~7 400** wiadomości / **~5 900** wątków (~236 adresów / ~166 otwartych kart) |
-| **Czas** | **realnie 3–7 dni roboczych** (mapowanie, body/załączniki, dedupe vs IMAP, visibility, dry-run, apply, QA z 3 osobami) |
-| **Ryzyko** | średnie–wysokie: duplikaty z bieżącym IMAP, brak body w BB (część = „archived” i fetch z IMAP), limity API Twenty, kto „właścicielem” wątku |
-| **Cutover pn** | **tak, ale bez czekania na C** — import jako **faza 2** po go-live |
+| **Czas inżynierii** | **4–5 dni roboczych** (preflight + narzędzie + dry-run + apply + QA) |
+| **Czas maszynowy** | APPEND ~20–30 min + sync Twenty ~20 min |
+| **Koszt cash** | ~**0 PLN** infra · **32–40 h** Dawida |
+| **Ryzyko** | średnie — mitygowane preflightem (dedup, threading, rollback) |
+| **Cutover pn** | **tak, bez czekania** — start importu **≥30 dni po cutoverze** + preflight PASS |
 
-**Dlaczego nie „szybko przed poniedziałkiem”:** to nie jest przełączenie przełącznika. BB trzyma maile w osobnym modelu (`email_message` + czasem body dopiero po dociągnięciu z IMAP). Twenty ma własny model Message Channel. Trzeba zbudować most, nie skopiować plik.
+**Runbook:** [`BB_MAIL_IMAP_APPEND_RUNBOOK.md`](./BB_MAIL_IMAP_APPEND_RUNBOOK.md) · audit: `integrations/tools/audit_bb_mail_import_scope.py`
+
+**Dlaczego nie API Twenty:** sync jest właścicielem tabel Message — APPEND przez skrzynkę to jedyna bezpieczna ścieżka (NR-1).
 
 Warianty zawężenia C (jeśli jednak idziemy w import):
 
@@ -133,7 +138,7 @@ Warianty zawężenia C (jeśli jednak idziemy w import):
 
 1. **Cutover pn 31.08 — Opcja A** (BB archiwum ≥1 miesiąc).  
 2. **Równolegle / w tym tygodniu — Opcja B** jeśli zespół zgłasza kłódki na mailach kolegów.  
-3. **Opcja C — osobna decyzja kosztowa** (tak/nie + C1 vs C2). Start dopiero po cutoverze, nie blokuje D1.
+3. **Opcja C — osobna decyzja kosztowa** (tak/nie + C1 vs C2) — szczegóły w [`BB_MAIL_IMAP_APPEND_RUNBOOK.md`](./BB_MAIL_IMAP_APPEND_RUNBOOK.md). Start **≥30 dni po cutoverze** + preflight, nie blokuje D1.
 
 ---
 
