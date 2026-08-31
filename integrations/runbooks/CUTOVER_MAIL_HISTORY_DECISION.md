@@ -144,9 +144,9 @@ Warianty zawężenia C (jeśli jednak idziemy w import):
 
 ## Checklist poniedziałek (niezależnie od C)
 
-- [ ] Delta sync BB → Twenty (`sync_bb_to_twenty.py delta`) — domknięcie zmian weekendowych  
-- [ ] Analytics BB → `environment: sandbox` (żeby Meta/Google nie dublowały z Twenty)  
-- [ ] Komunikat: SoR = Twenty; BB tylko archiwum korespondencji / starych spraw  
+- [x] Delta sync BB → Twenty (`sync_bb_to_twenty.py delta`) — **2026-08-31** · 8 rekordów, 1 patch etapu, 2 create, 3 skipped (edycja w Twenty)
+- [ ] Analytics BB → `environment: sandbox` — patch w BB + **deploy** (helpdesk **bez zmian**)
+- [ ] Komunikat: **sprzedaż = Twenty**; BB `/lead` = archiwum; **BB `/helpdesk` = normalna obsługa**
 - [ ] Smoke: 1 lead nowy z formularza + 1 mail na `leads@` + 1 karta BB-legacy (etap/owner)
 
 ---

@@ -1,0 +1,147 @@
+{
+  "deltaAt": "2026-08-31T05:37:54.725276+00:00",
+  "since": "2026-08-28T04:00:03.860845+00:00",
+  "records": [
+    {
+      "bb_id": 9279,
+      "bb_title": "Copywriting dla Odświeżenia Marki Przychodni Medycznej",
+      "bb_stage": "inquiry",
+      "twenty_stage": "CONTACTED",
+      "bb_owner": "Maciej",
+      "twenty_owner_id": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "emails": [
+        "kontaktklinikadobra@gmail.com"
+      ],
+      "bitrix_deal_id": "bb:9279",
+      "action": "patch",
+      "match_reason": "email_single",
+      "twenty_opp_id": "be9cca16-827e-4151-960c-c036505bfceb",
+      "twenty_opp_name_before": "kontaktklinikadobra@gmail.com · Copywriting · Redesign",
+      "twenty_stage_before": "NEW",
+      "twenty_owner_before": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "needs_patch": true,
+      "appliedAt": "2026-08-31T05:37:38.477307+00:00",
+      "status": "patched",
+      "http_status": 200,
+      "rollback": {
+        "opportunity_id": "be9cca16-827e-4151-960c-c036505bfceb",
+        "stage": "NEW",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "bitrixDealId": null
+      },
+      "delta_reason": "new_or_unlinked"
+    },
+    {
+      "bb_id": 9280,
+      "bb_title": "Strona dla Firmy Technicznej B2B - Nowa Działalność",
+      "bb_stage": "inquiry",
+      "twenty_stage": "CONTACTED",
+      "bb_owner": "Gosia",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "emails": [
+        "kamil.dnp@gmail.com"
+      ],
+      "bitrix_deal_id": "bb:9280",
+      "action": "create",
+      "match_reason": "no_match",
+      "twenty_opp_id": "03445fca-db3d-4896-9ce6-ebb621bfab4a",
+      "twenty_opp_name_before": null,
+      "twenty_stage_before": null,
+      "twenty_owner_before": null,
+      "appliedAt": "2026-08-31T05:37:42.013200+00:00",
+      "status": "created",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "03445fca-db3d-4896-9ce6-ebb621bfab4a",
+        "action": "delete",
+        "created": true
+      },
+      "delta_reason": "new_or_unlinked"
+    },
+    {
+      "bb_id": 397,
+      "twenty_opp_id": "0fb8f96b-2e50-4cf6-937a-89e88c1bb089",
+      "status": "skipped_twenty_user_edit",
+      "twenty_stage_now": "CONTRACT_SENT",
+      "snap_stage": "PROPOSAL"
+    },
+    {
+      "bb_id": 9278,
+      "bb_title": "Strona internetowa dla pracowni cukierniczej",
+      "bb_stage": "inquiry",
+      "twenty_stage": "CONTACTED",
+      "bb_owner": "Marta",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "emails": [
+        "pankejkstudio@gmail.com"
+      ],
+      "bitrix_deal_id": "bb:9278",
+      "action": "patch",
+      "match_reason": "email_single",
+      "twenty_opp_id": "ad5bcd66-c0e6-4153-b6fa-976bcebc5d3d",
+      "twenty_opp_name_before": "pankejkstudio@gmail.com · Strona · Nowe · Ekspert",
+      "twenty_stage_before": "NEW",
+      "twenty_owner_before": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "needs_patch": true,
+      "appliedAt": "2026-08-31T05:37:44.407288+00:00",
+      "status": "patched",
+      "http_status": 200,
+      "rollback": {
+        "opportunity_id": "ad5bcd66-c0e6-4153-b6fa-976bcebc5d3d",
+        "stage": "NEW",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "bitrixDealId": null
+      },
+      "delta_reason": "new_or_unlinked"
+    },
+    {
+      "bb_id": 9277,
+      "bb_title": "Logo dla Fotografa: Rozwojowy Projekt Fotograficzny",
+      "bb_stage": "inquiry",
+      "twenty_stage": "CONTACTED",
+      "bb_owner": "Gosia",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "emails": [
+        "prox.clublife@gmail.com"
+      ],
+      "bitrix_deal_id": "bb:9277",
+      "action": "create",
+      "match_reason": "no_match",
+      "twenty_opp_id": "ca4a2ade-2a75-492f-bab1-79cbcb04ab72",
+      "twenty_opp_name_before": null,
+      "twenty_stage_before": null,
+      "twenty_owner_before": null,
+      "appliedAt": "2026-08-31T05:37:45.142419+00:00",
+      "status": "created",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "ca4a2ade-2a75-492f-bab1-79cbcb04ab72",
+        "action": "delete",
+        "created": true
+      },
+      "delta_reason": "new_or_unlinked"
+    },
+    {
+      "bb_id": 9161,
+      "twenty_opp_id": "a5ab18c7-2dca-444a-83b6-b53b0001624d",
+      "status": "skipped_twenty_user_edit",
+      "twenty_stage_now": "QUALIFIED",
+      "snap_stage": "PROPOSAL"
+    },
+    {
+      "bb_id": 8908,
+      "twenty_opp_id": "03eb224d-3be7-4036-b3f5-c6f6d351cd02",
+      "status": "skipped_twenty_user_edit",
+      "twenty_stage_now": "PAYING",
+      "snap_stage": "PROPOSAL"
+    },
+    {
+      "bb_id": 9276,
+      "twenty_opp_id": "1694fb12-da8f-4a7e-aeeb-895d27631697",
+      "status": "delta_patched",
+      "bb_stage": "negotiations",
+      "from_stage": "CONTACTED",
+      "to_stage": "PROPOSAL"
+    }
+  ]
+}

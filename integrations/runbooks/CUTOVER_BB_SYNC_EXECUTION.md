@@ -165,15 +165,20 @@ BB `/api/analytics/lead` **nie wysyła** pola `environment` → Robot domyślnie
 | 2 | Deploy BB → wtedy SQL/WON z BB = tylko arkusz debug, **bez Meta/Google** |
 | 3 | julia362 / `leads@` → BB — osobna decyzja (wyłączenie zapisu); analytics BB = sandbox |
 
-**Cel pn:** SoR = Twenty (prod analytics) · BB = read-only + sandbox analytics.
+**Cel pn:** SoR sprzedaży = Twenty (prod analytics) · BB `/lead` = archiwum + sandbox analytics · **BB `/helpdesk` = nadal aktywny SoR obsługi**.
 
 ---
 
 ## BB po cutoverze
 
-- **Read-only min. 1 miesiąc** — podgląd historii / maili.
-- Wyłączenie zapisu (julia362 / nowe leady do BB) — **osobna decyzja**, nie w pn rano.
-- Zespół wie: **SoR = Twenty** od pn 8:00.
+| Obszar BB | Od pn 8:00 | Uwagi |
+|---|---|---|
+| **`/helpdesk`** | **Aktywny** — normalna obsługa zgłoszeń, tickety, maile helpdesk | **Nie** traktować jako read-only |
+| **`/lead` (sprzedaż)** | Archiwum + podgląd starych wątków ≥1 miesiąc | Nowa praca sprzedażowa w **Twenty** |
+| **Analytics `/api/analytics/lead`** | `environment: sandbox` (cutover 2026-08-31) | SQL/WON z BB `/lead` nie idzie do Meta/Google |
+| **julia362 / nowe leady do BB** | Osobna decyzja | Nie blokować helpdesku |
+
+- Zespół wie: **sprzedaż = Twenty** od pn 8:00; **helpdesk = BB** bez zmian.
 
 ---
 
