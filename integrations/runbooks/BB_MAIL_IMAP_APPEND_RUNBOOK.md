@@ -86,11 +86,16 @@ Sync leadów (`sync_bb_to_twenty.py`) przeniósł **karty** (etap, owner, `bb:{i
 
 | Metryka | Wartość | Źródło |
 |---|---:|---|
-| Otwarte `BETTER_BITRIX_LEGACY` w Twenty | **~166** | `CUTOVER_MAIL_HISTORY_DECISION.md` |
-| Unikalne emaile klientów (sync 30d) | **~236** | j.w. |
-| Wątki BB powiązane z tymi adresami | **~5 900** | j.w. |
-| Wiadomości w wątkach | **~7 400** | j.w. |
+| Otwarte leady BB (30d, Marta/Gosia/Maciej) | **204** | audit 2026-08-31 |
+| Otwarte `BETTER_BITRIX_LEGACY` w Twenty | **~166** | cutover 28.08 (delta timing) |
+| Unikalne emaile klientów | **206** | audit 2026-08-31 |
+| Wątki BB (pełna historia tych adresów) | **~5 900** | cutover 28.08 |
+| Wiadomości (pełna historia) | **~7 400** | cutover 28.08 |
+| **Outbound BB-only** (Sent + body, główna luka IMAP) | **~55+** w scope 30d; **~500–1 500** szac. pełna historia | sample 15/206 emaili × extrapolacja |
+| Wiadomości bez body (pomijane przy imporcie) | **~11%** próbki (4/35) | sample audit |
 | Cała tabela `email_message` (kontekst) | **~330 000** | **poza zakresem** (NR-4 / C3 odrzucone) |
+
+> **Uwaga:** `audit_bb_mail_import_scope.py --sample-emails 15` daje **dolną granicę** (wąski filtr PostgREST). Liczby **~7 400** z cutoveru obejmują **pełną historię wątków** powiązanych z adresami — przed apply uruchom pełny audit (`--sample-emails 50` lub naprawa RPC `get_emails_count`).
 
 ### Warianty (decyzja kosztowa)
 
@@ -298,7 +303,7 @@ Fallback (gdy preflight FAIL):  notatki na kartach / zostaw BB archiwum
 
 | Plik | Rola |
 |---|---|
-| `integrations/tools/audit_bb_mail_import_scope.py` | Liczy wątki/msg Sent/inbound/body — raport przed decyzją |
+| **tools/audit_bb_mail_import_scope.py** | Liczy scope + sample; raport w `exports/bb_sync/bb_mail_import_audit_*.json` |
 | `integrations/tools/bb_supabase.py` | Read-only BB Supabase |
 | `integrations/tools/sync_bb_to_twenty.py` | Scope leadów / emaile klientów |
 | *(TODO po preflight)* `bb_mail_to_imap_append.py` | Eksport RFC822 + APPEND + manifest |
