@@ -93,7 +93,23 @@ function normalizeEmail(raw) {
     i = i + 1;
   }
   if (out.indexOf("@") < 1) return undefined;
-  return out;
+  var at2 = out.indexOf("@");
+  var local2 = out.substring(0, at2);
+  var domain2 = out.substring(at2 + 1);
+  if (domain2 === "googlemail.com") domain2 = "gmail.com";
+  if (domain2 === "gmail.com") {
+    var plusIdx = local2.indexOf("+");
+    if (plusIdx !== -1) local2 = local2.substring(0, plusIdx);
+    var lp = "";
+    var gi = 0;
+    while (gi < local2.length) {
+      if (local2.charAt(gi) !== ".") lp = lp + local2.charAt(gi);
+      gi = gi + 1;
+    }
+    local2 = lp;
+    if (!local2) return undefined;
+  }
+  return local2 + "@" + domain2;
 }
 
 function normalizePhone(raw) {

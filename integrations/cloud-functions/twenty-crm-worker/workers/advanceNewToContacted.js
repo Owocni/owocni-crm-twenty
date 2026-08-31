@@ -14,6 +14,10 @@ const {
   buildTwentyListPath,
 } = require("../shared/twentyRest");
 const { resolveForwardLastContactAt } = require("../shared/lastContact");
+const {
+  shouldApplyFollowUpFlag,
+  resolveFollowUpFlag,
+} = require("../shared/followUp");
 
 const PROCESSED_PREFIX = "email_contact_processed_";
 const INTERNAL_DOMAIN = "@owocni.pl";
@@ -151,7 +155,7 @@ async function markProcessed(associationId, opportunityId, messageId, meta) {
   });
 }
 
-async function touchContactFields(opp, contactIso, outboundIso) {
+async function touchContactFields(opp, contactIso, outboundIso, mailDirection) {
   const patch = {};
   const forward = resolveForwardLastContactAt(opp.lastContactAt, contactIso);
   if (forward.advanced && forward.lastContactAt) {
@@ -168,6 +172,14 @@ async function touchContactFields(opp, contactIso, outboundIso) {
   if (outboundIso && !opp.bizFirstAttemptAt) {
     patch.bizFirstAttemptAt = outboundIso;
     patch.bizFirstAttemptChannel = "EMAIL";
+  }
+  const followUp = resolveFollowUpFlag(mailDirection);
+  if (
+    followUp !== null &&
+    shouldApplyFollowUpFlag(contactIso) &&
+    opp.isFollowUp !== followUp
+  ) {
+    patch.isFollowUp = followUp;
   }
   if (!Object.keys(patch).length) {
     return false;
@@ -211,7 +223,12 @@ async function processOutgoingAssociation(assoc) {
   }
 
   const contactIso = messageContactIso(message, assoc);
-  const m2Written = await touchContactFields(opp, contactIso, contactIso);
+  const m2Written = await touchContactFields(
+    opp,
+    contactIso,
+    contactIso,
+    "OUTGOING",
+  );
 
   let advanced = false;
   if (String(opp.stage || "").toUpperCase() === "NEW") {
@@ -280,7 +297,7 @@ async function processIncomingAssociation(assoc) {
   }
 
   const contactIso = messageContactIso(message, assoc);
-  await touchContactFields(opp, contactIso);
+  await touchContactFields(opp, contactIso, null, "INCOMING");
   await markProcessed(associationId, opp.id, messageId, {
     direction: "INCOMING",
   });

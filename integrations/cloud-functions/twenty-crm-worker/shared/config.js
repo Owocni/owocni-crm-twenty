@@ -1,6 +1,6 @@
 "use strict";
 
-const CREATE_LEAD_BUILD_ID = "2026-08-28-gcp-v16-dedupe-open-person";
+const CREATE_LEAD_BUILD_ID = "2026-08-31-gcp-v18-gmail-alias";
 
 function requireEnv(name) {
   const value = process.env[name];

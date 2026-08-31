@@ -738,11 +738,29 @@ export async function resolvePersonContext(
   return resolved.person;
 }
 
+/**
+ * Greeting token for mail templates. BB {{client_name}} = imię only
+ * ("Dzień dobry, Grzegorz"), never first+last and never an email.
+ */
+export function greetingFirstName(
+  firstName: string | null | undefined,
+): string {
+  const raw = String(firstName ?? '').trim();
+  if (!raw || raw.includes('@')) {
+    return '';
+  }
+
+  return raw.split(/\s+/)[0] ?? '';
+}
+
 export function personVars(person: PersonContext | null): Record<string, string> {
+  const first = greetingFirstName(person?.firstName);
+
   return {
-    firstName: person?.firstName ?? '',
+    firstName: first,
     lastName: person?.lastName ?? '',
-    client_name: person?.clientName ?? '',
+    client_name: first,
+    clientName: first,
     companyName: person?.companyName ?? '',
     email: person?.email ?? '',
   };

@@ -29,7 +29,7 @@ import {
   type EmailAttachmentRef,
 } from 'src/utils/emailAttachmentShared';
 import { resolveAccessToken } from 'src/utils/resolveAccessToken';
-import { toReplySubject } from 'src/utils/replySubject';
+import { resolveSendSubject, toReplySubject } from 'src/utils/replySubject';
 
 export const TEMPLATE_PICKER_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER =
   '2d49aa61-2a83-485b-856d-c3d26885cae5';
@@ -350,6 +350,8 @@ const TemplatePicker = () => {
   const [editorSessionId, setEditorSessionId] = useState(() => createId());
   const editorRef = useRef<MailBodyEditorHandle>(null);
   const replySubjectRef = useRef<string | null>(null);
+  const editSubjectRef = useRef('');
+  const subjectTouchedRef = useRef(false);
   const [recentRecipients, setRecentRecipients] = useState<RecentRecipient[]>([]);
   const [leadSearchQuery, setLeadSearchQuery] = useState('');
   const [leadSearchHits, setLeadSearchHits] = useState<RecipientSearchHit[]>([]);
@@ -386,6 +388,7 @@ const TemplatePicker = () => {
   const isReplyContext = Boolean(replySubject);
 
   replySubjectRef.current = replySubject;
+  editSubjectRef.current = editSubject;
 
   // Keep „Do” input in sync with resolved lead / thread context (picker showed empty while send used person.email).
   useEffect(() => {
@@ -405,6 +408,7 @@ const TemplatePicker = () => {
   }, [templates, selectedId]);
 
   const enterFreeCompose = (subjectHint?: string | null) => {
+    subjectTouchedRef.current = false;
     setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
     setEditBodyHtml('<p><br></p>');
     setEditorSessionId(createId());
@@ -420,9 +424,9 @@ const TemplatePicker = () => {
     setSubjectFromTemplate(false);
   };
 
-  // When Reply context arrives after template was already opened, force Re: subject.
+  // Prefill Re:/Odp: from the thread. Never overwrite a subject the user already typed.
   useEffect(() => {
-    if (!replySubject || !selectedId) {
+    if (!replySubject || !selectedId || subjectTouchedRef.current) {
       return;
     }
 
@@ -831,6 +835,7 @@ const TemplatePicker = () => {
       setRecipientEmail(knownRecipient);
     }
 
+    subjectTouchedRef.current = false;
     setSelectedId(template.id);
     setEditSubject('');
     setEditBodyHtml('');
@@ -922,6 +927,7 @@ const TemplatePicker = () => {
   };
 
   const applyRecentRecipient = (recipient: RecentRecipient) => {
+    subjectTouchedRef.current = false;
     setRecipientEmail(recipient.email);
     setEmailSource('manualRecent');
     if (recipient.subject) {
@@ -936,6 +942,7 @@ const TemplatePicker = () => {
   };
 
   const applySearchHit = async (hit: RecipientSearchHit) => {
+    subjectTouchedRef.current = false;
     setRecipientEmail(hit.email);
     setEmailSource('leadSearch');
     setResolvedRecordId(hit.recordId);
@@ -1022,11 +1029,10 @@ const TemplatePicker = () => {
       setEditBodyHtml(bodyHtml);
     }
 
-    const subject = (
-      replySubjectRef.current
-        ? toReplySubject(replySubjectRef.current)
-        : editSubject
-    ).trim() || editSubject.trim();
+    const subject = resolveSendSubject(
+      editSubjectRef.current,
+      replySubjectRef.current,
+    );
 
     if (!bodyHtml) {
       await enqueueSnackbar({
@@ -1695,8 +1701,8 @@ const TemplatePicker = () => {
         >
           <div
             style={{
-              flex: 1,
-              minHeight: 0,
+              flexShrink: 0,
+              maxHeight: '42%',
               overflowY: 'auto',
               overflowX: 'hidden',
               WebkitOverflowScrolling: 'touch',
@@ -1815,69 +1821,98 @@ const TemplatePicker = () => {
               )}
             </details>
           ) : null}
-          <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
-              Do
-            </span>
-            <input
+          <div
+            style={{
+              display: 'flex',
+              gap: 8,
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+            }}
+          >
+            <label
               style={{
-                padding: '6px 8px',
-                border: `1px solid ${personEmail ? '#ddd' : '#f87171'}`,
-                borderRadius: 5,
-                fontSize: 13,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 4,
+                flex: 1,
+                minWidth: 160,
               }}
-              value={displayRecipientEmail}
-              onChange={(event) => setRecipientEmail(event.target.value)}
-              placeholder="email@klienta.pl"
-              disabled={sending || sendCountdown !== null}
-            />
-            {!personEmail ? (
-              <span style={{ fontSize: 11, color: '#b00020' }}>
-                Nie wykryto emaila — wybierz z listy ostatnich albo wpisz ręcznie.
-              </span>
-            ) : null}
-          </label>
-
-          {allowedSendAccounts.length > 0 ? (
-            <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            >
               <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
-                Od
+                Do
               </span>
-              <select
+              <input
                 style={{
                   padding: '6px 8px',
-                  border: '1px solid #ddd',
+                  border: `1px solid ${personEmail ? '#ddd' : '#f87171'}`,
                   borderRadius: 5,
                   fontSize: 13,
-                  background: '#fff',
                 }}
-                value={connectedAccountId ?? ''}
-                onChange={(event) => {
-                  const nextId = event.target.value || null;
-                  const match = allowedSendAccounts.find(
-                    (account) => account.id === nextId,
-                  );
-
-                  setConnectedAccountId(nextId);
-                  setConnectedAccountHandle(match?.handle ?? null);
-                }}
+                value={displayRecipientEmail}
+                onChange={(event) => setRecipientEmail(event.target.value)}
+                placeholder="email@klienta.pl"
                 disabled={sending || sendCountdown !== null}
-              >
-                {allowedSendAccounts.map((account) => (
-                  <option key={account.id} value={account.id}>
-                    {account.handle}
-                  </option>
-                ))}
-              </select>
-              <span style={{ fontSize: 11, color: '#888' }}>
-                Domyślnie: kontynuacja wątku (jeśli Twoja / studio@ / leads@), inaczej Twoja skrzynka.
-              </span>
+              />
+              {!personEmail ? (
+                <span style={{ fontSize: 11, color: '#b00020' }}>
+                  Nie wykryto emaila — wybierz z listy ostatnich albo wpisz ręcznie.
+                </span>
+              ) : null}
             </label>
-          ) : canSendEmail && connectedAccountHandle ? (
-            <span style={{ fontSize: 12, color: '#666' }}>
-              Od: {connectedAccountHandle}
-            </span>
-          ) : null}
+
+            {allowedSendAccounts.length > 0 ? (
+              <label
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4,
+                  flex: 1,
+                  minWidth: 160,
+                }}
+              >
+                <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
+                  Od
+                </span>
+                <select
+                  style={{
+                    padding: '6px 8px',
+                    border: '1px solid #ddd',
+                    borderRadius: 5,
+                    fontSize: 13,
+                    background: '#fff',
+                  }}
+                  value={connectedAccountId ?? ''}
+                  onChange={(event) => {
+                    const nextId = event.target.value || null;
+                    const match = allowedSendAccounts.find(
+                      (account) => account.id === nextId,
+                    );
+
+                    setConnectedAccountId(nextId);
+                    setConnectedAccountHandle(match?.handle ?? null);
+                  }}
+                  disabled={sending || sendCountdown !== null}
+                >
+                  {allowedSendAccounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {account.handle}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : canSendEmail && connectedAccountHandle ? (
+              <span
+                style={{
+                  fontSize: 12,
+                  color: '#666',
+                  paddingTop: 22,
+                  flexShrink: 0,
+                }}
+              >
+                Od: {connectedAccountHandle}
+              </span>
+            ) : null}
+          </div>
 
           {!personEmail && recentRecipients.length > 0 ? (
             <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -1938,7 +1973,7 @@ const TemplatePicker = () => {
               {isReplyContext ? (
                 <span style={{ fontWeight: 400, color: '#166534' }}>
                   {' '}
-                  (odpowiedź — z wątku)
+                  (z wątku — możesz zmienić)
                 </span>
               ) : !subjectFromTemplate && editSubject ? (
                 <span style={{ fontWeight: 400, color: '#888' }}>
@@ -1955,19 +1990,23 @@ const TemplatePicker = () => {
                 fontSize: 13,
               }}
               value={editSubject}
-              onChange={(event) => setEditSubject(event.target.value)}
+              onChange={(event) => {
+                subjectTouchedRef.current = true;
+                setEditSubject(event.target.value);
+              }}
               placeholder="Temat wiadomości"
               disabled={loadingDraft || sending || sendCountdown !== null}
             />
           </label>
+          </div>
           </div>
 
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              height: 260,
-              minHeight: 220,
+              flex: 1,
+              minHeight: 0,
               padding: '0 16px 12px',
             }}
           >
@@ -1995,7 +2034,6 @@ const TemplatePicker = () => {
                 disabled={sending || sendCountdown !== null}
               />
             )}
-          </div>
           </div>
 
           <div
@@ -2090,6 +2128,11 @@ const TemplatePicker = () => {
               <span style={{ fontSize: 13, color: '#9a3412', fontWeight: 600 }}>
                 Wysyłka za {sendCountdown}s
               </span>
+              {editSubject.trim() ? (
+                <span style={{ fontSize: 12, color: '#9a3412' }}>
+                  Temat: {editSubject.trim()}
+                </span>
+              ) : null}
               <div style={{ display: 'flex', gap: 8 }}>
                 <button
                   type="button"

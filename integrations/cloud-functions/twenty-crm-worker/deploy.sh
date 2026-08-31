@@ -56,6 +56,7 @@ yaml_escape() {
   echo "TWENTY_REST_URL: $(yaml_escape "$TWENTY_REST_URL")"
   echo "CREATE_LEAD_WRITE_ENABLED: $(yaml_escape "$CREATE_LEAD_WRITE_ENABLED")"
   echo "CONTINUITY_ROUTING_ENABLED: $(yaml_escape "$CONTINUITY_ROUTING_ENABLED")"
+  echo "CUTOVER_AT: $(yaml_escape "${CUTOVER_AT:-2026-08-31T00:00:00+02:00}")"
   echo "TWENTY_OWNER_MACIEJ: $(yaml_escape "${TWENTY_OWNER_MACIEJ:-7fddba1d-e443-47d4-97b7-a3a829efd8c1}")"
   echo "TWENTY_OWNER_MARTA: $(yaml_escape "${TWENTY_OWNER_MARTA:-4704e0c0-8d77-4640-ad1e-1875294294df}")"
   echo "TWENTY_OWNER_GOSIA: $(yaml_escape "${TWENTY_OWNER_GOSIA:-ccac533d-a34b-4cfc-a036-9e75ee3f8910}")"

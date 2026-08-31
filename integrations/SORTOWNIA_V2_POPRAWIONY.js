@@ -223,7 +223,7 @@ function getCharAt(s, idx) {
   return s.substring(idx, idx + 1);
 }
 
-function normalizeEmail(raw) {
+function normalizeEmail(raw, keepGmailDots) {
   if (raw === null || raw === undefined) return undefined;
 
   var str = typeof raw === "string" ? raw : raw + "";
@@ -481,19 +481,21 @@ function normalizeEmail(raw) {
   if (domain === "gmail.com" || domain === "googlemail.com") {
     domain = "gmail.com";
 
-    var plusIdx = localPart.indexOf("+");
-    if (plusIdx !== -1) {
-      localPart = localPart.substring(0, plusIdx);
-    }
+    if (!keepGmailDots) {
+      var plusIdx = localPart.indexOf("+");
+      if (plusIdx !== -1) {
+        localPart = localPart.substring(0, plusIdx);
+      }
 
-    var lp2 = "";
-    var g = 0;
-    while (g < localPart.length) {
-      var ch2 = getCharAt(localPart, g);
-      if (ch2 !== ".") lp2 = lp2 + ch2;
-      g = g + 1;
+      var lp2 = "";
+      var g = 0;
+      while (g < localPart.length) {
+        var ch2 = getCharAt(localPart, g);
+        if (ch2 !== ".") lp2 = lp2 + ch2;
+        g = g + 1;
+      }
+      localPart = lp2;
     }
-    localPart = lp2;
     if (localPart.length === 0) {
       return undefined;
     }
@@ -1039,7 +1041,9 @@ logToConsole("SORTOWNIA: rawEmail (przed normalizeEmail) =", rawEmail);
 logToConsole("SORTOWNIA: rawPhone (przed normalizePhone) =", rawPhone);
 
 const email = normalizeEmail(rawEmail);
+const emailOriginal = normalizeEmail(rawEmail, true);
 logToConsole("SORTOWNIA: email (po normalizeEmail) =", email);
+logToConsole("SORTOWNIA: emailOriginal (CRM / IMAP) =", emailOriginal);
 var phone = normalizePhone(rawPhone);
 logToConsole("SORTOWNIA: phone (po normalizePhone) =", phone);
 if (phone && !getEventDataWithFallback("biz_phone") && earlyBizMessage) {
@@ -1254,6 +1258,7 @@ logToConsole("SORTOWNIA: _oid cookie =", oidCookie);
 const resolveKeys = [];
 if (oidCookie) resolveKeys.push(oidCookie);
 if (email) resolveKeys.push(email);
+if (emailOriginal && emailOriginal !== email) resolveKeys.push(emailOriginal);
 if (phone) resolveKeys.push(phone);
 if (gaClientId) resolveKeys.push(gaClientId);
 
@@ -1283,7 +1288,7 @@ function resolveProfile(keys, idx) {
     function (res) {
       var resolveKeyType = "unknown";
       if (key === oidCookie) resolveKeyType = "_oid";
-      else if (key === email) resolveKeyType = "email";
+      else if (key === email || key === emailOriginal) resolveKeyType = "email";
       else if (key === phone) resolveKeyType = "phone";
       else if (key === gaClientId) resolveKeyType = "ga_client_id";
 
@@ -1774,6 +1779,7 @@ function saveProfileAndTask(
   const keys = [];
   keys.push(idOid);
   if (email) keys.push(email);
+  if (emailOriginal && emailOriginal !== email) keys.push(emailOriginal);
   if (phone) keys.push(phone);
   if (resolvedGaClientId) keys.push(resolvedGaClientId);
 
@@ -1863,7 +1869,7 @@ function saveProfileAndTask(
         status: "pending",
         created_at: timestamp,
         environment: taskEnvironment,
-        biz_email: email,
+        biz_email: emailOriginal || email,
         biz_phone: phone,
         biz_name: name,
         biz_product: resolvedBizProduct,

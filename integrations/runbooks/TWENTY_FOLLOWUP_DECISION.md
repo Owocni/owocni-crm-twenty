@@ -1,17 +1,18 @@
 ---
 doc_id: TWENTY_FOLLOWUP_DECISION
-title: "Decyzja Mariusz — widok Follow-up w Twenty (Gosia: za dużo leadów)"
+title: "Decyzja Mariusz — Do odpisania + zaplanowany follow-up (oba warianty)"
 layer: runbook
-status: awaiting_decision
+status: wariant_A_wdrozone — NEW → Do odpisania ON (backfill 31.08); open+replay CONTACTED+ czeka; wariant B nie ruszany
 owner: "Dawid"
 audience: "Mariusz"
-last_verified: 2026-08-28
+last_verified: 2026-08-31
 related:
   - KANBAN_CARD_SPEC.md
   - G_PAR_BETTER_BITRIX_PARITY.md
   - E12_5_MAIL_DIRECTION_VIEWS.md
   - CUTOVER_TWENTY_TEAM_PLAN.md
 source: "skarga Gosi + audyt Twenty 28.08.2026"
+decision_source: "załącznik Mariusz FollowUP.pdf 31.08.2026 — Sprawa 2, oba warianty"
 ---
 
 # Follow-up w Twenty — prośba o decyzję
@@ -29,7 +30,7 @@ source: "skarga Gosi + audyt Twenty 28.08.2026"
 2. W Twenty pole „Follow-up” **już istnieje**, ale jest puste na wszystkich sprawach. Nie ma widoku. Mail przychodzący/wychodzący **nie przełącza** tej flagi.
 3. Dlatego dziś Gosia na lejku widzi wszystko naraz: do odpisania **i** czekające na odpowiedź.
 4. **Nie trzeba nowego systemu.** Kierunek maila już znamy. Brakuje: reguły + widoku + jednorazowego posprzątania starych spraw.
-5. **Propozycja:** follow-up = *klient napisał, my jesteśmy dłużni odpowiedź*. Po naszej odpowiedzi sprawa **znika** z tego widoku.
+5. **Kolejka „Do odpisania”** = wszystko, co czeka na ruch handlowca: nowy lead **albo** mail od klienta bez naszej odpowiedzi. Po naszym ruchu sprawa **znika** z tej listy (z lejka nie znika).
 
 ---
 
@@ -65,16 +66,16 @@ Bez tych trzech ostatnich Gosia dalej będzie widzieć za dużo.
 
 ## Proponowana reguła
 
-Follow-up = **do odpisania**, nie „gonienie klienta”.
+„Do odpisania” = **kolejka akcji handlowca**, nie „gonienie klienta”.
 
-| Co się dzieje | Follow-up | Co widzi Gosia |
+| Co się dzieje | Do odpisania | Co widzi Gosia |
 |---|---|---|
-| Mail od klienta | włączony | sprawa **wchodzi** do follow-up |
-| Nasza odpowiedź (Twenty, Outlook, Sent) | wyłączony | sprawa **znika** |
-| Nowy lead z formularza (etap Nowy) | wyłączony | zostaje na lejku w „Nowych”, nie w follow-up |
-| Ręcznie na karcie leada | checkbox | bez zmian — awaryjnie można kliknąć |
+| Nowy lead (formularz, mail, FB…) | **włączony** | sprawa **wchodzi** — czeka na pierwszy ruch |
+| Mail od klienta (kolejna wiadomość) | włączony | sprawa **wchodzi** (albo zostaje) |
+| Nasza odpowiedź (Twenty, Outlook, Sent) | wyłączony | sprawa **znika z listy**; na lejku zostaje w swoim etapie |
+| Ręcznie na karcie leada | checkbox | awaryjnie |
 
-Lejek (Nowy → Rozeznanie → SQL…) zostaje jak jest. Follow-up to **osobna lista „muszę odpisać”**, nie nowy etap sprzedaży.
+Lejek (Nowy → Rozeznanie → SQL…) zostaje jak jest. „Do odpisania” to **osobna lista „muszę coś zrobić”**, nie nowy etap sprzedaży. Po odpowiedzi sprawa nadal jest na kanbanie — tylko nie zaśmieca kolejki.
 
 ---
 
@@ -84,8 +85,8 @@ Lejek (Nowy → Rozeznanie → SQL…) zostaje jak jest. Follow-up to **osobna l
 
 | | |
 |---|---|
-| **Co** | Worker: mail od klienta → Follow-up ON; nasza odpowiedź → OFF. Widok „Follow-up” (moje, otwarte, flaga ON). Jednorazowe posprzątanie otwartych spraw po ostatnim mailu. |
-| **Efekt dla Gosi** | po odpowiedzi lead znika; zostają tylko te, które czekają na **nią** |
+| **Co** | Nowy lead i mail od klienta → ON; nasza odpowiedź → OFF. Widok „Do odpisania” (moje, otwarte, flaga ON). Jednorazowe posprzątanie otwartych spraw. |
+| **Efekt dla Gosi** | jedna lista akcji; po odpowiedzi lead znika z niej (na lejku zostaje) |
 | **Czas** | **pół dnia** (kod + widok + backfill + smoke na 2–3 sprawach Gosi) |
 | **Ryzyko** | niskie — pole już jest; nie ruszamy lejka, reklam ani Sortowni |
 | **Cutover** | nie blokuje; można zrobić **przed lub tuż po** starcie pracy w Twenty |
@@ -119,11 +120,26 @@ Lejek (Nowy → Rozeznanie → SQL…) zostaje jak jest. Follow-up to **osobna l
 
 ---
 
-## Decyzja (do uzupełnienia)
+## Decyzja (31.08.2026 — Mariusz, załącznik FollowUP.pdf)
 
 ```
-Opcja: A / B / C
-Follow-up = do odpisania (ON po mailu klienta, OFF po naszej odpowiedzi): TAK / NIE
-Backfill starych otwartych spraw: TAK / NIE
-Kiedy: …………
+Sprawa 2 — OBA warianty
+Formalnie „follow-up" = wariant B (zaplanowana wysyłka)
+Wariant A = kolejka „Do odpisania" (skarga Gosi)
 ```
+
+**Wspólny fundament (zawsze):**
+
+- kierunek maila już działa — oba warianty na nim stoją
+- guard w workerze: `receivedAt < cutoverAt` → projekcje techniczne TAK, skutki biznesowe NIE (flagi, zadania, powiadomienia, przydziały); brak `receivedAt` = fail-closed
+- jedna stała `cutoverAt` dla guarda i backfillu
+- masowe operacje: batchami, `no_emit` (INV-6)
+- nazwy: **„follow-up"** tylko na zaplanowaną wysyłkę · kolejka = **„Do odpisania"** · odwrotny widok później = **„Do ponowienia kontaktu"**
+
+**A — Do odpisania (wdrożone 31.08):** worker: nowy lead → ON · IN→ON · OUT→OFF + guard `CUTOVER_AT`; pole etykieta „Do odpisania” (`defaultValue: true`); widok `70f01c16-…` moje + otwarte + ON. **Backfill NEW 31.08:** 398 rekordów Nowy (null/false → true), `toChange` po = 0; Gosia NEW ON = 80. Skrypt: `backfill_do_odpisania.py --new-only --apply`. Pełny open+replay (CONTACTED+) nadal czeka na `--apply` bez `--new-only`. Deploy workera: build `2026-08-31-gcp-v17-do-odpisania`.
+
+**Poprawka Dawid 31.08 (vs PDF):** w PDF nowe z formularza miały być OFF i zostać tylko w „Nowych”. To rozbija kolejkę na dwa miejsca. **Wdrożenie: nowe też ON** — lista = wszystko, co czeka na ruch handlowca. Z lejka i tak nie znikają. Mariusz: PDF mówił inaczej — to świadoma zmiana semantyki A, nie nowy wariant.
+
+**B — Zaplanuj follow-up (osobno, po A):** workflow per osoba (Gosia / Marta / Mariusz): Form (data + temat + treść) → Delay Scheduled Date → Send Email ze swojej skrzynki → notatka. Wysłany mail = zwykły OUTGOING → A samo zgasi „Do odpisania". Przed ogłoszeniem smoke 30–60 min na workflow Gosi.
+
+**Świadome braki B v1:** nowy mail (nie wątek; łagodzenie `Re:`); brak auto-cancel gdy klient odpisze wcześniej; podgląd tylko w Workflow Runs.

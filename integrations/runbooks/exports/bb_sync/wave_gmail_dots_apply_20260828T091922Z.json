@@ -1,0 +1,69 @@
+{
+  "mode": "apply_retry",
+  "at": "20260828T091922Z",
+  "policy": "delete NEW Sortownia/TWENTY_EMAIL when BB keeper exists; never delete BB",
+  "counts": {
+    "this_run_ok": 2,
+    "this_run_fail": 0,
+    "remaining_ghost_pairs": 0
+  },
+  "results": [
+    {
+      "norm": "odnovainstytut@gmail.com",
+      "delete": {
+        "id": "ab7a5e87-8ebd-490f-9dcf-a9169b934003",
+        "name": "odnovainstytut@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "odnovainstytut@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "ab0083c8-f56a-49c9-8a78-91fbe092d314",
+          "name": "odnova.instytut@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "odnova.instytut@gmail.com"
+        }
+      ],
+      "status": 200,
+      "body": "{\"data\":{\"deleteOpportunity\":{\"id\":\"ab7a5e87-8ebd-490f-9dcf-a9169b934003\"}}}",
+      "gone": true,
+      "keepers_ok": [
+        true
+      ],
+      "ok": true
+    },
+    {
+      "norm": "stanislawrazniewski@gmail.com",
+      "delete": {
+        "id": "73085b9e-1bac-44f5-950a-940caf0d7b8f",
+        "name": "stanislawrazniewski@gmail.com · Strona · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "stanislawrazniewski@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "448d07b8-9c5d-4aed-8a6a-2ca96373fa01",
+          "name": "stanislaw.razniewski@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "stanislaw.razniewski@gmail.com"
+        }
+      ],
+      "status": 200,
+      "body": "{\"data\":{\"deleteOpportunity\":{\"id\":\"73085b9e-1bac-44f5-950a-940caf0d7b8f\"}}}",
+      "gone": true,
+      "keepers_ok": [
+        true
+      ],
+      "ok": true
+    }
+  ],
+  "remaining": []
+}

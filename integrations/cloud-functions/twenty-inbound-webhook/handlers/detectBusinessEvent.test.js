@@ -121,4 +121,83 @@ describe("detectBusinessEvent — PF-4 metric-only updates", () => {
     );
     assert.equal(bb.skip, "SKIP_LEGACY_IMPORT");
   });
+
+  it("does not re-emit qualify_lead after CONTRACT_SENT bounce", () => {
+    const decision = detectBusinessEvent(
+      opp("QUALIFIED", { bizSqlConfirmed: true }),
+      {
+        last_stage: "CONTRACT_SENT",
+        last_campaignRejected: false,
+        emitted_qualify_lead: 1788003068458,
+      },
+    );
+    assert.equal(decision.skip, "SKIP_DUPLICATE_BUSINESS_EVENT");
+    assert.equal(decision.emit, undefined);
+  });
+
+  it("does not emit qualify_lead when returning from a post-SQL stage", () => {
+    const decision = detectBusinessEvent(
+      opp("QUALIFIED", { bizSqlConfirmed: true }),
+      prev("CONTRACT_SENT"),
+    );
+    assert.equal(decision.skip, "SKIP_DUPLICATE_BUSINESS_EVENT");
+  });
+
+  it("does not re-emit purchase after CONTRACT_SENT bounce", () => {
+    const decision = detectBusinessEvent(opp("WON"), {
+      last_stage: "CONTRACT_SENT",
+      last_campaignRejected: false,
+      emitted_purchase: 1788003661997,
+    });
+    assert.equal(decision.skip, "SKIP_DUPLICATE_BUSINESS_EVENT");
+    assert.equal(decision.emit, undefined);
+  });
+});
+
+describe("opportunity webhook merge + SQL revert guard", () => {
+  const {
+    parseTwentyPayload,
+    mergeWebhookOpportunityRecord,
+    shouldRevertUnconfirmedSql,
+  } = require("./processWebhook");
+
+  it("keeps bizSqlConfirmed from previousRecord on partial update", () => {
+    const parsed = parseTwentyPayload({
+      event: "opportunity.updated",
+      previousRecord: {
+        id: "opp-1",
+        stage: "QUALIFIED",
+        bizSqlConfirmed: true,
+        idOid: "TEST_OID",
+      },
+      data: {
+        id: "opp-1",
+        stage: "QUALIFIED",
+        hoursToQualified: 12,
+        idOid: "TEST_OID",
+      },
+    });
+    assert.equal(parsed.bizSqlConfirmed, true);
+    assert.equal(parsed.stage, "QUALIFIED");
+  });
+
+  it("does not revert SQL when last_stage is already QUALIFIED", () => {
+    assert.equal(
+      shouldRevertUnconfirmedSql({ last_stage: "QUALIFIED" }),
+      false,
+    );
+    assert.equal(
+      shouldRevertUnconfirmedSql({ emitted_qualify_lead: 1, last_stage: "CONTRACT_SENT" }),
+      false,
+    );
+    assert.equal(shouldRevertUnconfirmedSql({ last_stage: "CONTACTED" }), true);
+  });
+
+  it("prefers current data fields over previousRecord", () => {
+    const merged = mergeWebhookOpportunityRecord(
+      { stage: "WON", bizSqlConfirmed: true },
+      { stage: "CONTRACT_SENT", bizSqlConfirmed: true },
+    );
+    assert.equal(merged.stage, "WON");
+  });
 });

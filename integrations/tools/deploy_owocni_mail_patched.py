@@ -11,6 +11,8 @@ import json
 import mimetypes
 import pathlib
 import sys
+import time
+import urllib.error
 import urllib.request
 from typing import Any
 
@@ -162,20 +164,34 @@ def upload_file(
         f"Content-Type: {mime}\r\n\r\n"
     ).encode() + content + b"\r\n--boundary--\r\n"
 
-    req = urllib.request.Request(
-        metadata_url,
-        data=body,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "multipart/form-data; boundary=boundary",
-            "User-Agent": "Mozilla/5.0",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        data = json.loads(resp.read())
-    if data.get("errors"):
-        raise RuntimeError(f"upload {rel_path}: {data['errors']}")
+    last_error: Exception | None = None
+    for attempt in range(1, 5):
+        req = urllib.request.Request(
+            metadata_url,
+            data=body,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "multipart/form-data; boundary=boundary",
+                "User-Agent": "Mozilla/5.0",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                data = json.loads(resp.read())
+            if data.get("errors"):
+                raise RuntimeError(f"upload {rel_path}: {data['errors']}")
+            return
+        except (urllib.error.HTTPError, TimeoutError, OSError) as exc:
+            last_error = exc
+            code = getattr(exc, "code", None)
+            retryable = code in {502, 503, 504} or isinstance(exc, (TimeoutError, OSError))
+            if not retryable or attempt == 4:
+                raise
+            print(f"  retry {rel_path} ({code or type(exc).__name__}) attempt {attempt}")
+            time.sleep(3 * attempt)
+    if last_error:
+        raise last_error
 
 
 def update_checksums(manifest: dict) -> dict:

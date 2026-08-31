@@ -68,7 +68,7 @@ related:
 | A2.1 | Faza 0: SOP dual compose + test BB→Twenty timeline | Dawid | ☐ |
 | A2.2 | Spike Sidecar (picker + kopiuj do Twenty) | Dawid | ☐ plan w strategii §Faza 1 |
 | A2.3 | Sidecar MVP → G-PAR PAR-5 PASS | Dawid | ☐ |
-| A2.4 | Podpisy BB → Sidecar / Accounts | Dawid | ☐ eksport gotowy |
+| A2.4 | Podpisy BB → Sidecar / Accounts | Dawid | ☐ eksport gotowy · decyzja: [E12_3_EMAIL_SIGNATURES_DECISION.md](./E12_3_EMAIL_SIGNATURES_DECISION.md) |
 
 **PASS E12.3 (szablony):** Sidecar MVP **lub** Twenty native + PAR-5 PASS. Do tego czasu Faza 0 dual.
 

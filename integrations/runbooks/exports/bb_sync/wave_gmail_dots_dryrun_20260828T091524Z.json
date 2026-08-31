@@ -1,0 +1,704 @@
+{
+  "mode": "dry-run",
+  "at": "20260828T091524Z",
+  "policy": "delete NEW OWOCNI_SORTOWNIA/TWENTY_EMAIL when open BETTER_BITRIX_LEGACY exists on same gmail-norm (dots ignored); never delete BB",
+  "counts": {
+    "delete": 31,
+    "skipped": 0,
+    "applied_ok": 0,
+    "applied_fail": 0
+  },
+  "actions": [
+    {
+      "norm": "barond2018@gmail.com",
+      "delete": {
+        "id": "5ca43008-5eaf-48a8-a558-00c1ecdf0850",
+        "name": "barond2018@gmail.com · Strona · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "barond2018@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "293a5721-20e2-4905-bc4f-580d2d8728f8",
+          "name": "baron.d2018@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "baron.d2018@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "dietalightczest@gmail.com",
+      "delete": {
+        "id": "154f5a90-2466-41b9-a8c3-e71d18a9a982",
+        "name": "dietalightczest@gmail.com · Copywriting · Nowe · Cennik",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Maciej",
+        "email": "dietalightczest@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "dee6e63d-b334-4ffb-8092-6e2e7a50666a",
+          "name": "dietalight.czest@gmail.com · Naming",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Maciej",
+          "email": "dietalight.czest@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "dominicamarek@gmail.com",
+      "delete": {
+        "id": "ad0aede9-e832-4d8b-8a11-2dab21b309fa",
+        "name": "dominicamarek@gmail.com · Copywriting · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Maciej",
+        "email": "dominicamarek@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "51de1c2c-6160-42e6-9ecd-562f8bf2248a",
+          "name": "dominica.marek@gmail.com · Naming",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Maciej",
+          "email": "dominica.marek@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "ewaewadr@gmail.com",
+      "delete": {
+        "id": "4c49766d-e322-409f-8c71-97da96e3f750",
+        "name": "ewaewadr@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "ewaewadr@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "05899a75-cc4b-49c2-9a8a-24825ad44b51",
+          "name": "ewa.ewadr@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "ewa.ewadr@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "filipmitoraj@gmail.com",
+      "delete": {
+        "id": "61f545e7-b241-4bf8-86bd-582169b938f9",
+        "name": "filipmitoraj@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "filipmitoraj@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "00c29da9-c044-4e6f-b5c2-207665654dd2",
+          "name": "filip.mitoraj@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "filip.mitoraj@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "grzegorzmielczarek@gmail.com",
+      "delete": {
+        "id": "d8117586-82f8-468a-bdaf-d9d15a8bc0fd",
+        "name": "grzegorzmielczarek@gmail.com · Strona · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "grzegorzmielczarek@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "3dbac981-8c80-4b58-9488-05dedb25dd77",
+          "name": "grzegorz.mielczarek@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "grzegorz.mielczarek@gmail.com"
+        },
+        {
+          "id": "7be395d3-77f3-4ed3-b627-6745c9a66037",
+          "name": "grzegorz.mielczarek@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "grzegorz.mielczarek@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "grzegorzwstankiewicz@gmail.com",
+      "delete": {
+        "id": "1c8ecfb1-ec0d-4eb3-bd98-7240b96807ef",
+        "name": "grzegorzwstankiewicz@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "grzegorzwstankiewicz@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "f4c28969-7665-476a-bb79-e94b160d91a8",
+          "name": "grzegorz.w.stankiewicz@gmail.com · Logo",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "grzegorz.w.stankiewicz@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "hannagoldyn@gmail.com",
+      "delete": {
+        "id": "4583611a-e94f-4f69-b0e0-f9308357d634",
+        "name": "hannagoldyn@gmail.com · Logo · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "hannagoldyn@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "2f7a5fb7-623f-47eb-8d9c-102840b4bef9",
+          "name": "hanna.goldyn@gmail.com · Logo",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "hanna.goldyn@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "infoverdearomapl@gmail.com",
+      "delete": {
+        "id": "e464a408-c153-4084-9f2e-feb3d24bf1ee",
+        "name": "infoverdearomapl@gmail.com · Logo · Redesign · Cennik",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "infoverdearomapl@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "522601c7-0571-45d2-88a1-75be0e0626b0",
+          "name": "info.verdearoma.pl@gmail.com · Logo",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "info.verdearoma.pl@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "jarowypych@gmail.com",
+      "delete": {
+        "id": "a71b63b5-d837-4bf9-9e5a-f8134be97f3a",
+        "name": "jarowypych@gmail.com · Strona · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "jarowypych@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "ac1f9be9-9f6b-400f-ae6b-77f2f92e6530",
+          "name": "jaro.wypych@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "jaro.wypych@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "jezykzklasa@gmail.com",
+      "delete": {
+        "id": "9978a66c-3971-4178-b8c6-d5b6d4582bc9",
+        "name": "jezykzklasa@gmail.com · Strona · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "jezykzklasa@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "bf143da7-f28d-4399-99cd-b53583ab97e9",
+          "name": "jezyk.z.klasa@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "jezyk.z.klasa@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "karolinaalicjaw@gmail.com",
+      "delete": {
+        "id": "afb329a0-9d0c-4f63-b2b6-354237fde6b1",
+        "name": "karolinaalicjaw@gmail.com · Logo · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "karolinaalicjaw@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "e900278c-16b0-4c04-ae25-a269fd2b9e7f",
+          "name": "karolinaalicja.w@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "karolinaalicja.w@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "karolinasobotkiewicz@gmail.com",
+      "delete": {
+        "id": "42ed74ee-3f51-49db-949d-5a60a208da84",
+        "name": "karolinasobotkiewicz@gmail.com · Copywriting · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Maciej",
+        "email": "karolinasobotkiewicz@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "57b58cfa-f0b3-40a8-9a27-0469c29f7801",
+          "name": "karolina.sobotkiewicz@gmail.com · Naming",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Maciej",
+          "email": "karolina.sobotkiewicz@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "katarzynakwas94@gmail.com",
+      "delete": {
+        "id": "d6a1dd02-6f10-4645-bc84-b1fd8e698796",
+        "name": "katarzynakwas94@gmail.com · Logo · Redesign · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "katarzynakwas94@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "2e30e0b4-181e-4371-a4df-267b0662b583",
+          "name": "katarzyna.kwas94@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "katarzyna.kwas94@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "katarzynanwska@gmail.com",
+      "delete": {
+        "id": "8f4f757a-4571-49f4-8695-316d590480fa",
+        "name": "katarzynanwska@gmail.com · Strona · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "katarzynanwska@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "f51b979a-0d79-4e4b-9233-b313f9544c2a",
+          "name": "katarzyna.nwska@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "katarzyna.nwska@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "konradmoc@gmail.com",
+      "delete": {
+        "id": "e4349466-eab9-4ba3-b641-dd4b68a456fd",
+        "name": "konradmoc@gmail.com · Copywriting · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Maciej",
+        "email": "konradmoc@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "3836b584-2bab-4f95-8c93-361c7807f565",
+          "name": "konrad.moc@gmail.com · Naming",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Maciej",
+          "email": "konrad.moc@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "kontaktnieruchomosciexpert@gmail.com",
+      "delete": {
+        "id": "d611d82e-0a67-490f-8daf-1e1ef34ef183",
+        "name": "kontaktnieruchomosciexpert@gmail.com · Strona · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "kontaktnieruchomosciexpert@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "ba6b43b8-7f11-45e7-8468-5615466969f0",
+          "name": "kontakt.nieruchomosciexpert@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "kontakt.nieruchomosciexpert@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "lukaszsambor@gmail.com",
+      "delete": {
+        "id": "ff847abf-0d39-422c-9b07-f9f741c9e8f1",
+        "name": "lukaszsambor@gmail.com · Logo · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "lukaszsambor@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "430a50b6-2d70-4cfa-a774-3ef467e8df90",
+          "name": "lukasz.sambor@gmail.com · Logo",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "lukasz.sambor@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "m4ti0498@gmail.com",
+      "delete": {
+        "id": "968c9594-2802-4547-878a-d6901896d65a",
+        "name": "m4ti0498@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "m4ti0498@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "35e639f2-ae57-451f-80d0-d956a911f71b",
+          "name": "m4ti04.98@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "m4ti04.98@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "magdalnasiejek@gmail.com",
+      "delete": {
+        "id": "95da9342-17b5-4499-a526-e8672d44ebf7",
+        "name": "magdalnasiejek@gmail.com · Strona · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "magdalnasiejek@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "7bfc74cb-5dab-4e02-ab01-3ed84c51d62b",
+          "name": "magdalna.siejek@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "magdalna.siejek@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "mbflorczak@gmail.com",
+      "delete": {
+        "id": "48175545-910b-4c61-91b9-215cd4a239f5",
+        "name": "mbflorczak@gmail.com · Strona · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "mbflorczak@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "1498a50e-085a-4111-ba55-968f2533c927",
+          "name": "mb.florczak@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "mb.florczak@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "msprolodz@gmail.com",
+      "delete": {
+        "id": "2dd0e8e4-a736-45e7-a568-59d0f9301e92",
+        "name": "msprolodz@gmail.com · Logo · Redesign",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "msprolodz@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "ee2d0125-30e2-4e28-a8e6-2e702f33d6a9",
+          "name": "mspro.lodz@gmail.com · Logo",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "mspro.lodz@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "nataliachrostowska66@gmail.com",
+      "delete": {
+        "id": "2ff092d4-2d72-474b-b8ff-d3e168e11d45",
+        "name": "nataliachrostowska66@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "nataliachrostowska66@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "971a3061-7b89-4591-a1af-4cd70c4d8060",
+          "name": "natalia.chrostowska66@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "natalia.chrostowska66@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "odnovainstytut@gmail.com",
+      "delete": {
+        "id": "ab7a5e87-8ebd-490f-9dcf-a9169b934003",
+        "name": "odnovainstytut@gmail.com · Logo · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "odnovainstytut@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "ab0083c8-f56a-49c9-8a78-91fbe092d314",
+          "name": "odnova.instytut@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "odnova.instytut@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "pawelrzepkapr@gmail.com",
+      "delete": {
+        "id": "8f787572-0092-4338-9c33-c90253f25506",
+        "name": "pawelrzepkapr@gmail.com · Logo · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "pawelrzepkapr@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "37a3f7ee-2aaa-41a3-abae-a863fa9f91e9",
+          "name": "pawel.rzepka.pr@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "pawel.rzepka.pr@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "piotrjansliwa@gmail.com",
+      "delete": {
+        "id": "621e81a8-2b2a-4852-92f3-2bb7efa4cba9",
+        "name": "piotrjansliwa@gmail.com · Strona · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "piotrjansliwa@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "6322fae2-5a04-4c75-9ce0-3a34d37b480c",
+          "name": "piotr.jan.sliwa@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "piotr.jan.sliwa@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "pracabeatapanasz@gmail.com",
+      "delete": {
+        "id": "1f9f70f8-dfe4-44ef-8a06-c139f81a1c0a",
+        "name": "pracabeatapanasz@gmail.com · Strona · Nowe",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "pracabeatapanasz@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "4ef576b1-b1d1-4b1a-bf45-f2e11e9fd373",
+          "name": "praca.beatapanasz@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "praca.beatapanasz@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "rogalskasylwia@gmail.com",
+      "delete": {
+        "id": "e76bca01-600e-4c61-bbdb-056304b25fb8",
+        "name": "rogalskasylwia@gmail.com · Logo · Nowe · Cennik",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "rogalskasylwia@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "3daf3a4b-3ec6-4f7e-8325-d0682083ea7f",
+          "name": "rogalska.sylwia@gmail.com · Logo",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "rogalska.sylwia@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "sartekbkomski@gmail.com",
+      "delete": {
+        "id": "aa84983f-9631-4b23-89fe-b111b6091959",
+        "name": "sartekbkomski@gmail.com · Strona · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "sartekbkomski@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "6a0af315-7d69-49df-9a69-ac2f4c10936c",
+          "name": "sartek.bkomski@gmail.com · Strona",
+          "stage": "CONTACTED",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "sartek.bkomski@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "stanislawrazniewski@gmail.com",
+      "delete": {
+        "id": "73085b9e-1bac-44f5-950a-940caf0d7b8f",
+        "name": "stanislawrazniewski@gmail.com · Strona · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Gosia",
+        "email": "stanislawrazniewski@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "448d07b8-9c5d-4aed-8a6a-2ca96373fa01",
+          "name": "stanislaw.razniewski@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Gosia",
+          "email": "stanislaw.razniewski@gmail.com"
+        }
+      ],
+      "other": []
+    },
+    {
+      "norm": "vetwalczak@gmail.com",
+      "delete": {
+        "id": "9bf70d6b-cf52-4c12-bf8a-9e3d81e7ec1a",
+        "name": "vetwalczak@gmail.com · Strona · Nowe · Ekspert",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "owner": "Marta",
+        "email": "vetwalczak@gmail.com"
+      },
+      "keep": [
+        {
+          "id": "1e95ed6f-d6fa-4524-a191-f15b3021e3d3",
+          "name": "vet.walczak@gmail.com · Strona",
+          "stage": "PROPOSAL",
+          "srcSystem": "BETTER_BITRIX_LEGACY",
+          "owner": "Marta",
+          "email": "vet.walczak@gmail.com"
+        }
+      ],
+      "other": []
+    }
+  ],
+  "skipped": []
+}

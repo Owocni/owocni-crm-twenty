@@ -99,8 +99,16 @@ async function putIdentityMapDocument(key, doc) {
   });
 }
 
-async function writeIdentityMapProfile(idOid, email, phone, tier, env, identityAdapterId) {
-  const { companyDomainKey } = require("./isFreeMail");
+async function writeIdentityMapProfile(
+  idOid,
+  email,
+  phone,
+  tier,
+  env,
+  identityAdapterId,
+  extraEmailKeys,
+) {
+  const { companyDomainKey, normalizeEmail } = require("./isFreeMail");
   const profile = {
     id_oid: idOid,
     biz_email: email || null,
@@ -114,8 +122,20 @@ async function writeIdentityMapProfile(idOid, email, phone, tier, env, identityA
     environment: env,
   };
   const keys = [idOid];
-  if (email) keys.push(email);
-  if (phone) keys.push(phone);
+  const seen = new Set();
+  function addKey(raw) {
+    const k = String(raw || "").trim();
+    if (!k || seen.has(k)) return;
+    seen.add(k);
+    keys.push(k);
+  }
+  addKey(email);
+  if (email) {
+    const n = normalizeEmail(email);
+    if (!n.invalid && n.email) addKey(n.email);
+  }
+  for (const extra of extraEmailKeys || []) addKey(extra);
+  if (phone) addKey(phone);
   for (const key of keys) {
     await putIdentityMapDocument(key, profile);
   }

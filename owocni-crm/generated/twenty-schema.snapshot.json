@@ -576,8 +576,8 @@
           "type": "BOOLEAN",
           "isUnique": null,
           "options": null,
-          "label": "Follow-up",
-          "description": "Czy lead jest w trybie follow-up"
+          "label": "Do odpisania",
+          "description": "Czeka na ruch handlowca (nowy lead albo mail od klienta). OFF po naszej odpowiedzi."
         },
         "updatedAt": {
           "id": "6979dc3f-7dfd-4489-b00d-3be79d445c16",

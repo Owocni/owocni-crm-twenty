@@ -37,6 +37,10 @@ const {
 } = require("../shared/twentyRest");
 const { resolveContinuityOwner } = require("../shared/resolveContinuityOwner");
 const {
+  twentyEmailsFields,
+  preferPersonId,
+} = require("../shared/gmailEmail");
+const {
   classifyLeadIntent,
   resolveRoutingRuleId,
   pickLeastLoaded,
@@ -1063,12 +1067,18 @@ async function writeRunAuditDoc(taskKey, audit, result, errorMsg) {
   });
 }
 
-async function patchPersonContactFields(personId, taskData) {
+async function patchPersonContactFields(personId, taskData, existingPerson) {
   const contact = resolveTaskContactFields(taskData);
   const patch = {};
   const phoneFields = formatPhoneForTwenty(contact.phone);
   if (phoneFields) patch.phones = phoneFields;
-  if (contact.email) patch.emails = { primaryEmail: contact.email };
+  if (contact.email) {
+    patch.emails = twentyEmailsFields(
+      contact.email,
+      existingPerson?.emails?.additionalEmails,
+      existingPerson?.emails?.primaryEmail,
+    );
+  }
   if (!patch.phones && !patch.emails) return;
   await patchTwentyRecord("people", personId, patch);
 }
@@ -1082,7 +1092,7 @@ async function createPersonRecord(taskData, idOid) {
   const nameParts = splitFullName(contact.name);
   const phoneFields = formatPhoneForTwenty(contact.phone);
   const body = { name: nameParts, idOid };
-  if (contact.email) body.emails = { primaryEmail: contact.email };
+  if (contact.email) body.emails = twentyEmailsFields(contact.email);
   if (phoneFields) body.phones = phoneFields;
   const res = await twentyRequest("POST", "/people", body);
   if (res.statusCode < 200 || res.statusCode >= 300) {
@@ -1244,6 +1254,7 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     pointOfContactId: personId,
     lastContactAt: kanbanFields.lastContactAt,
     bizLastContactLabel: kanbanFields.bizLastContactLabel,
+    isFollowUp: true,
     bizValueDisplay: kanbanFields.bizValueDisplay,
     amount: kanbanFields.amount,
     bizCardEmail: kanbanFields.bizCardEmail,
@@ -1294,13 +1305,16 @@ async function resolveExistingPersonId(taskData, idOid) {
   }
   const person = res.body?.data?.person || {};
   if (!person.id) throw new Error("existing person not found");
+  return person.id;
+}
+
+async function stampAndReusePerson(person, taskData, idOid, reason) {
   const existingOid = String(person.idOid || "").trim();
-  // Person może mieć starszy idOid (wcześniejszy lead). Nowa Opportunity
-  // dostaje task idOid; kontaktu nie nadpisujemy.
   if (!existingOid) await patchPersonIdOid(person.id, idOid);
   else if (existingOid !== idOid) {
     console.log(
-      "reuse person by id",
+      "reuse person",
+      reason,
       person.id,
       "personOid=",
       existingOid,
@@ -1308,41 +1322,63 @@ async function resolveExistingPersonId(taskData, idOid) {
       idOid,
     );
   }
-  await patchPersonContactFields(person.id, taskData);
+  await patchPersonContactFields(person.id, taskData, person);
   return person.id;
 }
 
 async function resolveOrCreatePerson(taskData, idOid) {
-  const existingId = await resolveExistingPersonId(taskData, idOid);
-  if (existingId) return existingId;
-
   const email = String(taskData.biz_email || "").trim();
   const phone = String(taskData.biz_phone || "").trim();
-  let existingPerson = await findPersonByEmail(email);
-  if (!existingPerson?.id && phone) {
-    existingPerson = await findPersonByPhone(phone);
-    if (existingPerson?.id) {
-      console.log("reuse person by phone", existingPerson.id, phone);
+  const existingId = await resolveExistingPersonId(taskData, idOid);
+  let aliasPerson = email ? await findPersonByEmail(email) : null;
+  if (!aliasPerson?.id && phone) {
+    aliasPerson = await findPersonByPhone(phone);
+    if (aliasPerson?.id) {
+      console.log("reuse person by phone", aliasPerson.id, phone);
     }
   }
-  if (existingPerson?.id) {
-    const existingOid = existingPerson.idOid || "";
-    // Ten sam email/telefon = ten sam kontakt. Meta Instant Form (i kolejne leady)
-    // dostają nowe idOid na Opportunity — Person zostaje z oryginalnym idOid.
-    if (!existingOid) await patchPersonIdOid(existingPerson.id, idOid);
-    else if (existingOid !== idOid) {
+
+  let existingPerson = null;
+  if (existingId) {
+    if (aliasPerson?.id === existingId) existingPerson = aliasPerson;
+    else {
+      try {
+        existingPerson = await getPersonById(existingId);
+      } catch {
+        existingPerson = { id: existingId };
+      }
+    }
+  }
+
+  const aliasOpen = aliasPerson?.id
+    ? await findOpenOpportunityByPersonId(aliasPerson.id)
+    : null;
+  const existingOpen = existingId
+    ? await findOpenOpportunityByPersonId(existingId)
+    : null;
+  const chosenId = preferPersonId({
+    existingPersonId: existingId,
+    aliasPersonId: aliasPerson?.id,
+    aliasHasOpenOpp: Boolean(aliasOpen?.id),
+    existingHasOpenOpp: Boolean(existingOpen?.id),
+  });
+
+  if (chosenId && aliasPerson?.id === chosenId) {
+    if (existingId && existingId !== chosenId) {
       console.log(
-        "reuse person",
-        existingPerson.id,
-        "personOid=",
-        existingOid,
-        "taskOid=",
-        idOid,
+        "reuse person gmail-alias",
+        chosenId,
+        "ignored imap person",
+        existingId,
+        email,
       );
     }
-    await patchPersonContactFields(existingPerson.id, taskData);
-    return existingPerson.id;
+    return stampAndReusePerson(aliasPerson, taskData, idOid, "alias");
   }
+  if (chosenId && existingPerson?.id === chosenId) {
+    return stampAndReusePerson(existingPerson, taskData, idOid, "existing_id");
+  }
+
   try {
     return await createPersonRecord(taskData, idOid);
   } catch (err) {
@@ -1352,7 +1388,7 @@ async function resolveOrCreatePerson(taskData, idOid) {
     if (!raced?.id && phone) raced = await findPersonByPhone(phone);
     if (!raced?.id) throw err;
     console.log("reuse person after duplicate create", raced.id, email || phone);
-    await patchPersonContactFields(raced.id, taskData);
+    await patchPersonContactFields(raced.id, taskData, raced);
     return raced.id;
   }
 }
@@ -1588,4 +1624,5 @@ module.exports = {
   normalizeFormMessageText,
   resolveOpportunityOwnerId,
   resolveOwnerIdForNewOpportunity,
+  preferPersonId,
 };

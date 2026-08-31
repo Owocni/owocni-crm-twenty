@@ -1,0 +1,69 @@
+{
+  "verdict": "FAIL",
+  "total": 236,
+  "ok": 234,
+  "user_edit_skips": 3,
+  "fail": 2,
+  "stage_distribution_ok": {
+    "PROPOSAL": 125,
+    "CONTACTED": 101,
+    "PAYING": 5
+  },
+  "owner_distribution_ok": {
+    "Marta": 88,
+    "Gosia": 98,
+    "Maciej": 45
+  },
+  "srcSystem_mix": {
+    "OWOCNI_SORTOWNIA": 139,
+    "BETTER_BITRIX_LEGACY": 94
+  },
+  "spotlight": {
+    "bb:9268": {
+      "stage": "PROPOSAL",
+      "owner": "Marta",
+      "name": "proaura.tychy@gmail.com · Logo",
+      "bitrixDealId": "bb:9268",
+      "srcSystem": "BETTER_BITRIX_LEGACY"
+    },
+    "bb:9276": {
+      "stage": "PROPOSAL",
+      "owner": "Marta",
+      "name": "styl24nadruki@gmail.com · Strona · Ekspert",
+      "bitrixDealId": "bb:9276",
+      "srcSystem": "OWOCNI_SORTOWNIA"
+    },
+    "bb:9280": {
+      "stage": "CONTACTED",
+      "owner": "Gosia",
+      "name": "kamil.dnp@gmail.com · Strona",
+      "bitrixDealId": "bb:9280",
+      "srcSystem": "BETTER_BITRIX_LEGACY"
+    },
+    "bb:9278": {
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "name": "pankejkstudio@gmail.com · Strona · Nowe · Ekspert",
+      "bitrixDealId": "bb:9278",
+      "srcSystem": "OWOCNI_SORTOWNIA"
+    }
+  },
+  "issues": [
+    {
+      "bb_id": 8127,
+      "issue": "stage",
+      "exp": "PROPOSAL",
+      "got": "WON",
+      "owner": "Marta",
+      "title": "Do Ewy: Strona: Modernizacja dla Integracji System"
+    },
+    {
+      "bb_id": 5874,
+      "issue": "stage",
+      "exp": "PROPOSAL",
+      "got": "WON",
+      "owner": "Maciej",
+      "title": "Copywriting: Nazwa dla Firmy Ochrony i Facility Ma"
+    }
+  ]
+}

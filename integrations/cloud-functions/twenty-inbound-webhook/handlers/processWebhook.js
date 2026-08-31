@@ -23,6 +23,7 @@ const {
 const {
   processFreemailCompanyStrip,
 } = require("./stripFreemailCompany");
+const { normalizeEmail: normalizeFreeMailEmail } = require("../shared/isFreeMail");
 
 const ADAPTER_ID = "inbound:twenty_webhook";
 const IDENTITY_ADAPTER_ID = "identity:twenty_resolver";
@@ -97,6 +98,16 @@ function mergeWebhookPersonRecord(record, previous) {
       prevPhones.primaryPhoneCallingCode || "";
   }
   return merged;
+}
+
+function mergeWebhookOpportunityRecord(record, previous) {
+  if (!previous || typeof previous !== "object") {
+    return record || {};
+  }
+  if (!record || typeof record !== "object") {
+    return previous;
+  }
+  return Object.assign({}, previous, record);
 }
 
 function inferObjectTypeFromRecord(record, previous) {
@@ -181,6 +192,9 @@ function parseTwentyPayload(eventData) {
   }
   if (objectType === "person" && previous) {
     record = mergeWebhookPersonRecord(record, previous);
+  }
+  if (objectType === "opportunity" && previous) {
+    record = mergeWebhookOpportunityRecord(record, previous);
   }
   const emails = record.emails || {};
   const phones = record.phones || {};
@@ -335,6 +349,12 @@ function resolveIdentityOid(parsed) {
   );
 }
 
+const PRE_SQL_STAGES = new Set(["NEW", "CONTACTED"]);
+
+function isPreSqlStage(stage) {
+  return stage == null || stage === "" || PRE_SQL_STAGES.has(stage);
+}
+
 function detectBusinessEvent(parsed, prev) {
   if (isLegacyImportRecord(parsed)) {
     return { skip: REASON_SKIP_LEGACY_IMPORT };
@@ -351,12 +371,18 @@ function detectBusinessEvent(parsed, prev) {
   }
   if (prev.last_stage == null && prev.last_campaignRejected == null) {
     if (parsed.stage === "QUALIFIED") {
+      if (prev.emitted_qualify_lead) {
+        return { skip: REASON_SKIP_DUPLICATE_BUSINESS_EVENT };
+      }
       if (parsed.bizSqlConfirmed === true) {
         return { emit: "qualify_lead" };
       }
       return { skip: REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM };
     }
     if (parsed.stage === "WON") {
+      if (prev.emitted_purchase) {
+        return { skip: REASON_SKIP_DUPLICATE_BUSINESS_EVENT };
+      }
       return { emit: "purchase" };
     }
     if (parsed.campaignRejected === true) {
@@ -365,12 +391,18 @@ function detectBusinessEvent(parsed, prev) {
     return { skip: REASON_SKIP_COLD_START_BASELINE };
   }
   if (prev.last_stage !== parsed.stage && parsed.stage === "QUALIFIED") {
+    if (prev.emitted_qualify_lead || !isPreSqlStage(prev.last_stage)) {
+      return { skip: REASON_SKIP_DUPLICATE_BUSINESS_EVENT };
+    }
     if (parsed.bizSqlConfirmed === true) {
       return { emit: "qualify_lead" };
     }
     return { skip: REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM };
   }
   if (prev.last_stage !== parsed.stage && parsed.stage === "WON") {
+    if (prev.emitted_purchase) {
+      return { skip: REASON_SKIP_DUPLICATE_BUSINESS_EVENT };
+    }
     return { emit: "purchase" };
   }
   if (
@@ -473,7 +505,9 @@ async function resolvePersonIdOidForWrite(personId, decision, env) {
 
 function normalizeResolverEmail(raw) {
   if (!raw) return undefined;
-  const str = makeString(raw).toLowerCase();
+  const parsed = normalizeFreeMailEmail(raw);
+  if (parsed && !parsed.invalid && parsed.email) return parsed.email;
+  const str = makeString(raw).toLowerCase().replace(/\s+/g, "");
   const at = str.indexOf("@");
   if (at < 1) return undefined;
   return str;
@@ -509,6 +543,30 @@ async function setPendingWrite(opportunityId) {
     adapter: "inbound:sql_guard_revert",
     expires_at: Date.now() + PENDING_WRITE_TTL_MS,
   });
+}
+
+function shouldRevertUnconfirmedSql(prev) {
+  if (!prev) return true;
+  if (prev.emitted_qualify_lead) return false;
+  if (prev.last_stage === "QUALIFIED" || prev.last_stage === "WON") {
+    return false;
+  }
+  return true;
+}
+
+function nextOpportunityState(parsed, prev, fp, extras) {
+  const extra = extras || {};
+  return {
+    last_stage: parsed.stage,
+    last_campaignRejected: parsed.campaignRejected,
+    last_delivery_fingerprint: fp,
+    updated_at: Date.now(),
+    emitted_qualify_lead:
+      extra.emitted_qualify_lead || prev.emitted_qualify_lead || null,
+    emitted_purchase: extra.emitted_purchase || prev.emitted_purchase || null,
+    emitted_rejected_lead:
+      extra.emitted_rejected_lead || prev.emitted_rejected_lead || null,
+  };
 }
 
 async function revertUnconfirmedSqlStage(parsed, prev) {
@@ -932,6 +990,12 @@ async function processPersonIdentityFromWebhook(parsed, env) {
     if (email) {
       try {
         emailOid = await readIdentityMapOid(email);
+        const displayKey = makeString(parsed.bizEmail)
+          .toLowerCase()
+          .replace(/\s+/g, "");
+        if (!emailOid && displayKey && displayKey !== email) {
+          emailOid = await readIdentityMapOid(displayKey);
+        }
       } catch (eErr) {
         console.log("INBOUND_IDENTITY: FAIL_CLOSED email", eErr.message);
         throw eErr;
@@ -977,6 +1041,7 @@ async function processPersonIdentityFromWebhook(parsed, env) {
       writeTier,
       env,
       IDENTITY_ADAPTER_ID,
+      [parsed.bizEmail],
     );
     await enqueueIdentityBackfill(
       idOid,
@@ -1106,25 +1171,37 @@ async function processTwentyWebhook(webhookBody, options = {}) {
 
   if (decision.skip === REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM) {
     console.log("INBOUND_TWENTY:", decision.skip);
-    await revertUnconfirmedSqlStage(parsed, prev);
+    if (shouldRevertUnconfirmedSql(prev)) {
+      await revertUnconfirmedSqlStage(parsed, prev);
+    } else {
+      console.log("INBOUND_TWENTY: SKIP_REVERT already SQL confirmed");
+    }
     await writeTwentyStateDoc(stateKey, {
+      ...nextOpportunityState(parsed, prev, fp),
       last_stage:
         (prev && prev.last_stage) ||
         parsed.bizLastNonSqlStage ||
         parsed.stage,
-      last_campaignRejected: parsed.campaignRejected,
-      last_delivery_fingerprint: fp,
-      updated_at: Date.now(),
     });
     return { status: "skipped", reason: REASON_SKIP_QUALIFIED_WITHOUT_SQL_CONFIRM };
   }
 
-  await writeTwentyStateDoc(stateKey, {
-    last_stage: parsed.stage,
-    last_campaignRejected: parsed.campaignRejected,
-    last_delivery_fingerprint: fp,
-    updated_at: Date.now(),
-  });
+  const timestamp = Date.now();
+  const emitExtras = {};
+  if (decision.emit === "qualify_lead") {
+    emitExtras.emitted_qualify_lead = timestamp;
+  }
+  if (decision.emit === "purchase") {
+    emitExtras.emitted_purchase = timestamp;
+  }
+  if (decision.emit === "rejected_lead") {
+    emitExtras.emitted_rejected_lead = timestamp;
+  }
+
+  await writeTwentyStateDoc(
+    stateKey,
+    nextOpportunityState(parsed, prev, fp, emitExtras),
+  );
 
   if (decision.skip) {
     console.log("INBOUND_TWENTY:", decision.skip);
@@ -1132,7 +1209,6 @@ async function processTwentyWebhook(webhookBody, options = {}) {
   }
 
   const eventName = normalizeSsoEventName(decision.emit);
-  const timestamp = Date.now();
   const idOid = resolveIdentityOid(parsed) || "pending_mint";
 
   const taskPayload = {
@@ -1177,6 +1253,8 @@ async function processTwentyWebhook(webhookBody, options = {}) {
 module.exports = {
   parseTwentyPayload,
   detectBusinessEvent,
+  mergeWebhookOpportunityRecord,
+  shouldRevertUnconfirmedSql,
   isLegacyImportRecord,
   deliveryFingerprint,
   normalizeBizValueForTask,
@@ -1184,8 +1262,10 @@ module.exports = {
   resolveOpportunityBizValue,
   processTwentyWebhook,
   processPersonIdentityFromWebhook,
+  normalizeResolverEmail,
   REASON_EMITTED,
   REASON_SKIP_UNSUPPORTED_OBJECT,
   REASON_SKIP_CAMPAIGN_REJECTED,
   REASON_SKIP_LEGACY_IMPORT,
+  REASON_SKIP_DUPLICATE_BUSINESS_EVENT,
 };

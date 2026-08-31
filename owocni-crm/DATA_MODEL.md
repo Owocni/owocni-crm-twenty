@@ -99,7 +99,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 
 | Field (API) | Type | Owner | Used by | Freeze? | Description |
 |---|---|---|---|---|---|
-| `lastContactAt` | DATETIME | Adapter / workflow | Kanban, follow-up | OPEN | Ostatni kontakt (lead lub odpowiedź klienta) |
+| `lastContactAt` | DATETIME | Adapter / workflow | Kanban, Do odpisania | OPEN | Ostatni kontakt (lead lub odpowiedź klienta) |
 | `bizLastContactLabel` | TEXT | Adapter / workflow | Kanban kafelek | OPEN | `Godzin: N` / `Dni: N` |
 | `bizProjectType` | SELECT | Formularz | Nazwa leada, raport | OPEN | NEW / REDESIGN |
 | `bizIntent` | SELECT | Formularz | Nazwa leada, raport | OPEN | CENNIK / EKSPERT |
@@ -109,6 +109,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
 | `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
 | `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę (główny) |
+| `isFollowUp` | BOOLEAN | GCP `email_contact_sync` / createLead | **true** (metadata default + POST createLead; istniejące NEW backfill 31.08) | Widok „Do odpisania” | OPEN | **UI label:** „Do odpisania”. CRM-only (NR-5). ON = czeka na ruch handlowca (nowy lead **albo** mail od klienta). Etap NEW = zawsze ON (brak interakcji). OFF po naszej odpowiedzi. API name zostaje `isFollowUp`. Słowo „follow-up” zarezerwowane na zaplanowaną wysyłkę. Guard: flaga tylko gdy `receivedAt >= CUTOVER_AT`. |
 | `bizAdditionalEmails` | EMAILS | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; **nie** zastępuje `bizCardEmail`. Po `merge_leads` — kontakty z leada loser |
 | `bizAdditionalPhones` | PHONES | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; j.w. dla telefonów |
 | `metaLeadgenId` | TEXT | Meta Lead webhook | null | CAPI SQL (`lead_id`), idempotencja inbound | OPEN | `leadgen_id` z Meta Instant Form — unikalny |

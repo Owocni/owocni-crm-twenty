@@ -689,7 +689,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
               style={{
                 display: mode === 'visual' ? 'flex' : 'none',
                 flex: 1,
-                minHeight: 200,
+                minHeight: 0,
                 minWidth: 0,
                 overflow: 'hidden',
               }}
@@ -706,7 +706,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
                   width: '100%',
                   height: '100%',
                   flex: 1,
-                  minHeight: 200,
+                  minHeight: 0,
                   border: 'none',
                   background: '#fff',
                   opacity: disabled ? 0.65 : 1,
@@ -742,7 +742,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
               aria-label="Kod HTML maila"
               style={{
                 flex: 1,
-                minHeight: 200,
+                minHeight: 0,
                 width: '100%',
                 boxSizing: 'border-box',
                 padding: 12,

@@ -78,6 +78,8 @@ function buildTwentyListPath(collection, filterExpr, limit) {
   return path;
 }
 
+const { emailLookupKeys, displayEmail } = require("./gmailEmail");
+
 function normalizeEmail(email) {
   return String(email || "")
     .trim()
@@ -89,41 +91,52 @@ function personPrimaryEmail(person) {
   return normalizeEmail(person.emails.primaryEmail);
 }
 
-async function findPersonByEmail(email) {
-  if (!email) return null;
+async function findPersonByPrimaryEmailEq(email) {
+  const key = String(email || "").trim();
+  if (!key) return null;
   const path = buildTwentyListPath(
     "people",
-    `emails.primaryEmail[eq]:${email}`,
-    1,
+    `emails.primaryEmail[eq]:${key}`,
+    5,
   );
   const res = await twentyRequest("GET", path);
   if (res.statusCode < 200 || res.statusCode >= 300) {
     throw new Error(`find person HTTP ${res.statusCode} ${res.rawBody}`);
   }
   const people = parseTwentyListRecords("people", res.body);
-  let person = people.length ? people[0] : null;
-  // List response czasem bez emails — nie odrzucaj trafienia z filtra eq.
-  const got = personPrimaryEmail(person);
-  if (person && got && got !== normalizeEmail(email)) {
-    person = null;
-  }
-  if (!person) {
-    // Retry lowercase (Twenty eq bywa case-sensitive)
-    const lower = normalizeEmail(email);
-    if (lower && lower !== String(email || "").trim()) {
-      const path2 = buildTwentyListPath(
-        "people",
-        `emails.primaryEmail[eq]:${lower}`,
-        1,
-      );
-      const res2 = await twentyRequest("GET", path2);
-      if (res2.statusCode >= 200 && res2.statusCode < 300) {
-        const people2 = parseTwentyListRecords("people", res2.body);
-        person = people2.length ? people2[0] : null;
-      }
+  const expected = displayEmail(key) || normalizeEmail(key);
+  return (
+    people.find((person) => {
+      const got = personPrimaryEmail(person);
+      return !got || got === expected || got === normalizeEmail(key);
+    }) ||
+    people[0] ||
+    null
+  );
+}
+
+async function findPersonByEmail(email) {
+  if (!email) return null;
+  const keys = emailLookupKeys(email);
+  if (!keys.length) keys.push(normalizeEmail(email));
+  const found = [];
+  const seen = new Set();
+  for (const key of keys) {
+    const person = await findPersonByPrimaryEmailEq(key);
+    if (person?.id && !seen.has(person.id)) {
+      seen.add(person.id);
+      found.push(person);
     }
   }
-  return person;
+  if (found.length <= 1) return found[0] || null;
+  for (const person of found) {
+    const open = await findOpenOpportunityByPersonId(person.id);
+    if (open?.id) return person;
+  }
+  found.sort((a, b) =>
+    String(a.createdAt || "").localeCompare(String(b.createdAt || "")),
+  );
+  return found[0];
 }
 
 async function findPersonByPhone(rawPhone) {
