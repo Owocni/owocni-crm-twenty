@@ -180,6 +180,16 @@ BB `/api/analytics/lead` **nie wysyła** pola `environment` → Robot domyślnie
 
 - Zespół wie: **sprzedaż = Twenty** od pn 8:00; **helpdesk = BB** bez zmian.
 
+### Monitoring leadów BB (Make.com) — wyłączony 2026-08-31
+
+| Warstwa | Akcja |
+|---|---|
+| **Vercel cron** | Usunięty wpis `/api/monitoring/leads` z `vercel.json` |
+| **Endpoint** | Domyślnie OFF; włączenie tylko `BB_LEAD_MONITORING_ENABLED=true` |
+| **Make.com** | Ręcznie **wyłączyć** scenariusz „Monitoring Leadów” (webhook + ewentualny Schedule) |
+
+Powód: endpoint liczył `leads` w Supabase BB (<2/dzień = alert). Po cutoverze leady idą do Twenty → fałszywy alert „System CRM nie przesyła Leadów”. **Helpdesk nie dotknięty.**
+
 ---
 
 ## Pliki w run folderze
