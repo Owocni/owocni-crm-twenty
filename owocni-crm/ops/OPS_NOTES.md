@@ -144,6 +144,7 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-08-28 | **Opportunity multi-contact + Person max 5 email/phone** | Metadata API live: `bizAdditionalEmails`, `bizAdditionalPhones`; Record Page order; Person `maxNumberOfValues=5` | **TAK** | Composer | Runbook `OPPORTUNITY_MULTI_CONTACT.md`. Lookup po additional = backlog. |
 | 2026-08-28 | **Owocni Mail deploy 0.1.54** | `deploy_owocni_mail_patched.py` (yarn apply drift); scroll/reply preview PASS | **TAK** | Composer | Natywny Reply Twenty — scroll OPEN (SOP: używać Owocni Odpowiedz). |
 | 2026-08-31 | **Owocni Mail deploy 0.1.57** | Większe pole odpowiedzi (edytor wypełnia panel, nie 260px); Do/Od w jednym rzędzie. `deploy_owocni_mail_patched.py` | **TAK** | Composer | Gosia: po odświeżeniu (hard refresh) Odpowiedz — treść zajmuje resztę paska. |
+| 2026-09-01 | **H-WF: ON guardy/metryki po pętli kredytów 31.08** | ACTIVE: Track Stage Time v3, zapamiętaj etap v4e, guard odrzucony v1, Account Owner v13. Guard SQL był już ON. HTTP Stape/rejected **zostają OFF** (native webhook). | **TAK** | Composer | Hamulec 31.08 06:15–06:42; kolejka pusta 31.08 10:13; ON 01.09 bez lawiny NOT_STARTED. |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
 
@@ -151,7 +152,7 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 
 | Data | Incydent | Wpływ | row_class | Rozwiązanie |
 |---|---|---|---|---|
-| (pusto) | — | — | `incident` | — |
+| 2026-08-31 | Pętla `opportunity.updated` (CODE+UPDATE stage) → kredyty → hamulec 5× MUST_ON | H-WF DOWN 01.09 08:00; metryki/guard odrzucony/AO OFF ~26 h | `incident` | Guard SQL ON 31.08 06:45. 01.09: ON Track Stage Time, zapamiętaj, guard odrzucony, AO. HTTP Stape/rejected zostają OFF. |
 
 ---
 

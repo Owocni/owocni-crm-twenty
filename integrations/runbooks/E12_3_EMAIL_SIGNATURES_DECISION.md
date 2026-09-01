@@ -2,7 +2,7 @@
 doc_id: E12_3_EMAIL_SIGNATURES_DECISION
 title: "Decyzja Mariusz — stałe stopki maili w odpowiedziach z Twenty"
 layer: runbook
-status: option_a_accepted — szkice stopek do przeglądu Szefa
+status: option_a_accepted — wdrożone w Owocni Mail 0.1.58 (stopka w edytorze; send = edytor)
 owner: "Dawid"
 audience: "Mariusz"
 last_verified: 2026-08-31

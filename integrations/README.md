@@ -21,6 +21,7 @@
 11. **SSOT semantyka:** `../owocni-crm/EVENT_CONTRACT.md`
 12. **Workflowy SQL / odrzucenie:** [`runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md`](runbooks/TWENTY_WORKFLOWS_REJECT_AND_GUARD.md)
 13. **Migracja GCP:** [`runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md`](runbooks/MIGRATE_TWENTY_CRM_TO_GCP.md)
+14. **Rollback SQL/WON/rejected (Ads/Meta):** [`runbooks/ADS_SQL_SIGNAL_ROLLBACK.md`](runbooks/ADS_SQL_SIGNAL_ROLLBACK.md) — Twenty sandbox, BB prod; `generate_lead` bez zmian
 
 **NIE czytaj jako SSOT:** `archive/**`
 

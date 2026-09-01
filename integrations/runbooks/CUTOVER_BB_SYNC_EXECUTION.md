@@ -8,6 +8,7 @@ audience: "Dawid + Mariusz + Marta / Gosia / Maciej"
 last_verified: 2026-08-28
 related:
   - CUTOVER_BB_SYNC_DECISION.md
+  - ADS_SQL_SIGNAL_ROLLBACK.md
   - G_PAR_BETTER_BITRIX_PARITY.md
   - PIPEDRIVE_IMPORT_GATE.md
   - CUTOVER_1ON1_CHECKPOINT_SHEET.md
@@ -135,7 +136,9 @@ Evidence: `delta_manifest.json`.
 
 ## Analytics: sandbox → prod (Twenty) / prod → sandbox (BB)
 
-**Twenty CRM ≠ analytics env.** Workspace Twenty jest prod od dawna; **eventy z Twenty idą dziś w `environment=sandbox`** → Robot zapisuje tylko do arkusza debug, **bez Meta / Google Ads** (`envGuard.js`, `TWENTY_PATHS.md` §5).
+**Twenty CRM ≠ analytics env.** Workspace Twenty jest prod od dawna. **Od dnia zero (pt 28.08.2026)** eventy SQL/WON/rejected z Twenty idą z `environment=prod` → Meta / Google Ads. BB `/api/analytics/lead` ma `environment=sandbox` (arkusz debug, bez platform).
+
+**Rollback tej warstwy** (Twenty z powrotem sandbox, BB z powrotem prod, bez ruszania `generate_lead`) → [`ADS_SQL_SIGNAL_ROLLBACK.md`](./ADS_SQL_SIGNAL_ROLLBACK.md). To **nie** to samo co `sync_bb_to_twenty.py rollback` (dane CRM).
 
 ### Piątek (przed spotkaniem z Piotrem) — Twenty na prod
 
@@ -212,4 +215,5 @@ Powód: endpoint liczył `leads` w Supabase BB (<2/dzień = alert). Po cutoverze
 |---|---|
 | Duplikat Opp po teście maila | STOP apply · merge ręczny · fix match |
 | >10% review_list bez decyzji | nie apply reszty · sesja z Dawidem |
-| Pn: coś nie gra | `rollback` → BB master tymczasowo · post-mortem |
+| Pn: coś nie gra w **danych** syncu | `sync_bb_to_twenty.py rollback` → BB master tymczasowo · post-mortem |
+| Ads/Meta: SQL/WON z Twenty do odcięcia | [`ADS_SQL_SIGNAL_ROLLBACK.md`](./ADS_SQL_SIGNAL_ROLLBACK.md) — Twenty sandbox, BB prod |

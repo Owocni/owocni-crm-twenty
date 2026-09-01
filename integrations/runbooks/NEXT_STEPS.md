@@ -56,7 +56,7 @@ flowchart LR
 | **Merge leadów (ręczne)** | ✅ MVP sandbox 2026-07-21 · **+ deal additional contacts 2026-08-28** | `MERGE_LEADS` · `OPPORTUNITY_MULTI_CONTACT` · IDENTITY §5.9 |
 | **G-PAR** (pełna parzystość BB) | **OPEN** | `G_PAR_BETTER_BITRIX_PARITY` |
 | E12.3b rozdział `leads@` | OPEN | `E12_3_EMAIL_TEMPLATES_AND_TRAINING` §B |
-| **A2.4 stałe stopki w Owocni Mail** | **opcja A · szkice stopek do przeglądu Szefa** | `E12_3_EMAIL_SIGNATURES_DECISION` |
+| **A2.4 stałe stopki w Owocni Mail** | **live sandbox 0.1.58** | `E12_3_EMAIL_SIGNATURES_DECISION` |
 | PAR-5.3 szkolenie handlowców | OPEN | `E12_4_P4_CUTOVER_INSTRUCTIONS` |
 | E12.4 wyłączenie julia362 | po G-PAR | `E12_4_OWOCNI_MAIL_RESET_PLAN` |
 | Call: summary LLM + archiwum dropów GCS | backlog | `CALL_CHANNEL_ARCHITECTURE` §6 · `CALL_INGEST_N8N.contract` |

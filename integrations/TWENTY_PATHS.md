@@ -4,13 +4,14 @@ title: "TWENTY_PATHS — mapa ścieżek Twenty ↔ Sortownia ↔ Robot"
 layer: reference
 status: active
 owner: "Dawid"
-last_verified: 2026-07-21
+last_verified: 2026-09-01
 related:
   - ../owocni-crm/ARCHITECTURE.md
   - ../owocni-crm/EVENT_CONTRACT.md
   - INTEGRATIONS_PARITY.md
   - runbooks/CALL_INGEST_N8N.contract.md
   - runbooks/MERGE_LEADS.md
+  - runbooks/ADS_SQL_SIGNAL_ROLLBACK.md
 ---
 
 # TWENTY_PATHS — kotwica dla LLM i implementacji
@@ -111,6 +112,8 @@ Runbook: `MERGE_LEADS.md` · polityka: `IDENTITY_AND_INBOUND.md` §5.9 (NR-5, ni
 | `sandbox` | safe-sink (log/arkusz), **bez** prod API | SKIP prod API; arkusze debug OK |
 
 Implementacja: `shared/envGuard.js` (Robot), `ENV_GUARD.sGTM.js` (Stape copy-paste).
+
+Po cutoverze 28.08 inbound Twenty stempluje `prod` (`RUNTIME_ENVIRONMENT` na CF). Cofnięcie SQL/WON/rejected na Ads/Meta: [`runbooks/ADS_SQL_SIGNAL_ROLLBACK.md`](runbooks/ADS_SQL_SIGNAL_ROLLBACK.md).
 
 ## 6. Event names (kanon)
 
