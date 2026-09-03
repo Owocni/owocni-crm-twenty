@@ -1,0 +1,51 @@
+{
+  "doc": "thread_stitch_probe",
+  "ran_at": "2026-09-03",
+  "in_reply_to_copied_1to1": true,
+  "cases": [
+    {
+      "id": "B2-dekarstwo",
+      "bb_id": 1999627,
+      "append_mailbox": "mariusz@owocni.pl",
+      "parent_channel": "LEADS",
+      "parent_thread": "fe2efd4f-648a-4395-8f74-9d4effe44df4",
+      "parent_headerMessageId": "<760b27e3e8303f42b742cfea1b391ac4@form2020.owocni.pl>",
+      "in_reply_to_on_imap": "<760b27e3e8303f42b742cfea1b391ac4@form2020.owocni.pl>",
+      "landed_thread": "97152277-510e-4618-aba6-d513708867f3",
+      "stitch": "FAIL",
+      "rolled_back": true
+    },
+    {
+      "id": "B2-scts",
+      "bb_id": 1999568,
+      "append_mailbox": "mariusz@owocni.pl",
+      "parent_channel": "LEADS",
+      "parent_thread": "97ad5821-5f39-4eeb-8641-9bd352278bf9",
+      "landed_thread": "377d9958-ed6f-44c7-9ef5-607869c66cb8",
+      "stitch": "FAIL",
+      "note": "landed on leftover thread from first probe (similar subject), not on form parent",
+      "rolled_back": true
+    },
+    {
+      "id": "B1-copywriting-same-mailbox",
+      "bb_id": 2057003,
+      "append_mailbox": "copywriting@owocni.pl",
+      "parent_channel": "COPYWRITING",
+      "parent_thread": "9173175c-bbb0-4f7f-9073-c83b2db75ec1",
+      "parent_headerMessageId": "<5FBB794F-20AA-4DC5-8EFE-7DAD47682DE1@gmail.com>",
+      "own_headerMessageId": "<fd41ef28-4600-bf40-03f1-77cfbf0a2542@owocni.pl>",
+      "landed_thread": "9173175c-bbb0-4f7f-9073-c83b2db75ec1",
+      "stitch": "PASS",
+      "receivedAt": "2026-08-26T06:46:07.000Z",
+      "direction": "OUTGOING",
+      "new_opportunity": false,
+      "left_in_twenty": true,
+      "imap_folder_deleted": true
+    }
+  ],
+  "also": {
+    "recreated_same_folder_name_does_not_resync": true,
+    "new_folder_name_syncs_in_about_5_min": true,
+    "twenty_rate_limit_429_during_candidate_search": true
+  }
+}

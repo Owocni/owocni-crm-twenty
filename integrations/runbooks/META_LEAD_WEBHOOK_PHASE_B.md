@@ -42,7 +42,7 @@ cd integrations/cloud-functions/meta-lead-webhook && bash deploy.sh
 
 ## Poza zakresem tej fazy
 
-- Prawdziwy Graph CAPI przy SQL (`lead_id` + `action_source=system`) — Robot nadal Sheets imitation; osobny krok.
+- Prawdziwy Graph CAPI przy SQL/WON: Robot `sendToMetaCapi` (pixel `META_PIXEL_ID`, eventy `QualifiedLead` / `Purchase`). Instant Form: `lead_id` + `action_source=system_generated`.
 
 ## Incydent 2026-07-28 (Iwona / EKF)
 

@@ -9,6 +9,7 @@
 const {
   getOwnerIds,
   isLeadDispatcherEnabled,
+  isLeadDispatchFailoverEnabled,
   getLeadDispatchPoolIds,
   getLeadDispatchVacationIds,
   getLeadDispatchHolidays,
@@ -144,8 +145,12 @@ async function processOpportunity(opp, holidays) {
     result.actions.push("escalate");
   }
 
-  // Failover only without Ack
+  // Failover only without Ack — paused until the team agrees on assignment (G8).
   if (!opp.bizAckAt && elapsed >= failoverMsForClass(intent)) {
+    if (!isLeadDispatchFailoverEnabled()) {
+      result.actions.push("failover_paused");
+      return result;
+    }
     const pool = getLeadDispatchPoolIds();
     const vacations = getLeadDispatchVacationIds();
     const other = otherPoolMember(pool, ownerId);
@@ -199,9 +204,22 @@ async function runLeadDispatchSweep() {
     return { skipped: "outside_work_window" };
   }
 
-  const opps = await listNewDispatchOpportunities(
-    Number(process.env.LEAD_DISPATCH_SWEEP_LIMIT || 40),
-  );
+  let opps;
+  try {
+    opps = await listNewDispatchOpportunities(
+      Number(process.env.LEAD_DISPATCH_SWEEP_LIMIT || 40),
+    );
+  } catch (err) {
+    // Twenty 100 tokens / 60s — poll already spent budget on enrich/create_lead.
+    // Must not 500 the whole worker: Scheduler last-fail pages H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON.
+    console.error("lead_dispatch_sweep list FAIL", err.message);
+    return {
+      ok: false,
+      error: err.message,
+      scanned: 0,
+      results: [],
+    };
+  }
   const results = [];
   for (const opp of opps) {
     try {

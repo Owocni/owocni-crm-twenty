@@ -1,6 +1,6 @@
 "use strict";
 
-const { describe, it } = require("node:test");
+const { describe, it, afterEach } = require("node:test");
 const assert = require("node:assert/strict");
 const {
   classifyLeadIntent,
@@ -169,5 +169,23 @@ describe("businessElapsedMs", () => {
       new Date("2026-08-24T07:00:00.000Z"),
     );
     assert.equal(ms, 60 * 60 * 1000);
+  });
+});
+
+describe("isLeadDispatchFailoverEnabled", () => {
+  const { isLeadDispatchFailoverEnabled } = require("../shared/config");
+
+  afterEach(() => {
+    delete process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
+  });
+
+  it("defaults to on", () => {
+    delete process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
+    assert.equal(isLeadDispatchFailoverEnabled(), true);
+  });
+
+  it("pauses when false", () => {
+    process.env.LEAD_DISPATCH_FAILOVER_ENABLED = "false";
+    assert.equal(isLeadDispatchFailoverEnabled(), false);
   });
 });

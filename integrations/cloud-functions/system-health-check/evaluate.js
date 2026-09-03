@@ -2,11 +2,17 @@
 
 /**
  * Czysta ocena H-* (SYSTEM_HEALTH.md §5.2–5.3, §5.8).
- * Bez I/O — testowalne. DOWN tylko z heartbeat, nigdy z ciszy rekordów (NR-1).
+ * Bez I/O — testowalne. Cisza rekordów ≠ DOWN (NR-1), z wyjątkiem H-LEAD-FORM:
+ * świadek maila Zapytanie bez nowszej karty OWOCNI_SORTOWNIA.
  */
+
+/** IMAP ~5 min + worker every 5 min + zapas. */
+const FORM_GRACE_MS = 45 * 60 * 1000;
 
 const RANK = { OK: 0, SKIP: 0, DEGRADED: 1, UNKNOWN: 2, DOWN: 3 };
 
+// HTTP „QUALIFIED → Stape” / „campaign rejected” = NIE MUST_ON.
+// Transport platform = native webhook OUT (H-INBOUND). Workflow HTTP pali kredyty.
 const MUST_ON_DATABASE = [
   {
     id: "wf-form-notify",
@@ -19,16 +25,6 @@ const MUST_ON_DATABASE = [
     re: /mail.*powiadom/i,
   },
   { id: "wf-track-stage", label: "Track Stage Time", re: /track stage time/i },
-  {
-    id: "wf-sql-stape",
-    label: "deal · stage QUALIFIED → Stape",
-    re: /qualified.*stape|stape v14/i,
-  },
-  {
-    id: "wf-campaign-rejected",
-    label: "deal · campaign rejected",
-    re: /campaign rejected/i,
-  },
   { id: "wf-guard-sql", label: "Opp · guard SQL", re: /guard sql/i },
   {
     id: "wf-guard-rejected",
@@ -147,6 +143,87 @@ function evaluateWorkflows(workflows, gateOpen) {
     detail: `${rows.length}/${rows.length} ACTIVE`,
     rows,
     offCount: 0,
+  };
+}
+
+function agoLabel(iso, nowMs) {
+  const then = Date.parse(iso);
+  if (!Number.isFinite(then)) return iso || "?";
+  const min = Math.max(0, Math.round((nowMs - then) / 60000));
+  if (min < 60) return `${min} min temu`;
+  const hours = Math.round(min / 60);
+  if (hours < 48) return `${hours} h temu`;
+  return `${Math.round(hours / 24)} d temu`;
+}
+
+function trimSubject(subject) {
+  const s = String(subject || "").replace(/\s+/g, " ").trim();
+  if (s.length <= 72) return s;
+  return `${s.slice(0, 72)}…`;
+}
+
+/**
+ * Worker scheduler = heartbeat. Świadek = INCOMING Zapytanie na leads@
+ * (formularz zawsze wysyła mail, nawet gdy sGTM/API_KEY padnie).
+ */
+function evaluateLeadForm(worker, formFlow, nowMs = Date.now()) {
+  if (!worker.found || !worker.ok) {
+    return { status: "DOWN", detail: worker.detail };
+  }
+  const workerBit = worker.detail;
+
+  if (!formFlow) {
+    return { status: "OK", detail: workerBit };
+  }
+  if (formFlow.error) {
+    return {
+      status: "DEGRADED",
+      detail: `${workerBit}; świadek formularza: ${formFlow.error}`,
+    };
+  }
+
+  const mailAt = formFlow.lastFormMailAt;
+  if (!mailAt) {
+    return {
+      status: "OK",
+      detail: `${workerBit}; brak maili Zapytanie (cisza ≠ awaria)`,
+    };
+  }
+
+  const mailMs = Date.parse(mailAt);
+  const oppMs = formFlow.lastSortowniaAt
+    ? Date.parse(formFlow.lastSortowniaAt)
+    : 0;
+  if (!Number.isFinite(mailMs)) {
+    return {
+      status: "DEGRADED",
+      detail: `${workerBit}; nieparsowalna data świadka ${mailAt}`,
+    };
+  }
+
+  const mailAge = nowMs - mailMs;
+  const subj = trimSubject(formFlow.lastFormMailSubject);
+  const oppAgo = formFlow.lastSortowniaAt
+    ? agoLabel(formFlow.lastSortowniaAt, nowMs)
+    : "brak";
+
+  if (oppMs >= mailMs) {
+    return {
+      status: "OK",
+      detail: `${workerBit}; form ${agoLabel(mailAt, nowMs)}, Sortownia ${oppAgo}`,
+    };
+  }
+
+  if (mailAge < FORM_GRACE_MS) {
+    return {
+      status: "OK",
+      detail: `${workerBit}; form „${subj}” ${agoLabel(mailAt, nowMs)} — okno ${FORM_GRACE_MS / 60000} min (IMAP+worker)`,
+    };
+  }
+
+  return {
+    status: "DOWN",
+    detail: `mail Zapytanie „${subj}” ${agoLabel(mailAt, nowMs)} bez nowszej Opportunity OWOCNI_SORTOWNIA (ostatnia ${oppAgo})`,
   };
 }
 
@@ -282,7 +359,8 @@ function evaluateShared(input) {
   }
 
   const workerStatus = worker.found && worker.ok ? "OK" : "DOWN";
-  push("H-LEAD-FORM", "P0", workerStatus, worker.detail);
+  const leadForm = evaluateLeadForm(worker, input.formFlow, input.nowMs);
+  push("H-LEAD-FORM", "P0", leadForm.status, leadForm.detail);
   push("H-UPDATE-PERSON", "P1", workerStatus, worker.detail);
   push(
     "H-MAIL-DIR",
@@ -407,6 +485,8 @@ module.exports = {
   evaluateWorkflows,
   evaluateInstance,
   evaluateShared,
+  evaluateLeadForm,
+  FORM_GRACE_MS,
   schedulerOk,
   overallStatus,
   worstStatus,

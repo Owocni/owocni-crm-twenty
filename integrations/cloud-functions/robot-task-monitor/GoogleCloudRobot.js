@@ -7,6 +7,7 @@ const {
   getSpreadsheetId,
 } = require("./shared/envGuard");
 const pricingAliases = require("./shared/pricingProductAliases");
+const { buildMetaCapiEvent } = require("./shared/metaCapi");
 
 // ============================================
 // KONFIGURACJA
@@ -113,29 +114,17 @@ function normalizeSsoEventName(eventName) {
 }
 
 function resolvePurchaseValueFromPricing(taskData, pricingConfig, platform) {
-  let pricingKey = taskData.biz_pricing_key;
-  if (pricingKey) {
-    const hasPrefix =
-      pricingKey.startsWith("lead_") ||
-      pricingKey.startsWith("sql_") ||
-      pricingKey.startsWith("purchase_") ||
-      pricingKey.startsWith("rejected_");
-    if (!hasPrefix && taskData.biz_product) {
-      pricingKey = `purchase_${taskData.biz_product}`;
-    }
-  } else if (taskData.biz_product) {
-    pricingKey = `purchase_${taskData.biz_product}`;
-  }
-  if (!pricingKey || !pricingConfig) return null;
-  let value = getPricingValue(pricingKey, platform, pricingConfig);
-  if (value === null) {
-    pricingKey = `sql_${taskData.biz_product || "Other"}`;
-    value = getPricingValue(pricingKey, platform, pricingConfig);
-  }
-  if (value === null) {
-    value = getPricingValue("Other", platform, pricingConfig);
-  }
-  return value;
+  if (!pricingConfig) return null;
+  const product =
+    taskData.biz_product ||
+    pricingAliases.splitPricingKey(taskData.biz_pricing_key || "").product ||
+    "";
+  const hit = pricingAliases.resolvePurchasePricingValue(
+    product,
+    pricingConfig,
+    platform,
+  );
+  return hit.value != null ? hit.value : null;
 }
 
 function normalizeTasksEventNames(tasks) {
@@ -212,6 +201,12 @@ function enrichPurchaseBizValues(tasks, pricingConfigProd, pricingConfigSandbox)
   tasks.forEach((task) => {
     const taskData = task.data || {};
     if (taskData.event_name !== "purchase") return;
+    if (!taskData.biz_pricing_key && taskData.biz_product) {
+      taskData.biz_pricing_key = pricingAliases.buildBizPricingKey(
+        "purchase",
+        taskData.biz_product,
+      );
+    }
     if (isMeaningfulBizValue(taskData.biz_value)) return;
     const sheetId = getSheetIdForTaskData(taskData);
     const pricing =
@@ -462,6 +457,10 @@ functions.http("processTaskQueue", async (req, res) => {
     const metaAppended = await appendMetaEventsToSheets(metaEvents);
     console.log(`✅ Appended ${metaAppended} Meta events to Meta_Events sheet`);
 
+    // KROK 6b: Wyślij do Meta Conversions API (tylko prod)
+    const metaCapiSent = await sendToMetaCapi(prodTasks, pricingConfigProd);
+    console.log(`✅ Sent ${metaCapiSent} Meta events to Conversions API (prod only)`);
+
     // KROK 7: Google Ads Events (imitacja) — routing arkusza
     const googleAdsEvents = tasks
       .map((task) =>
@@ -502,6 +501,7 @@ functions.http("processTaskQueue", async (req, res) => {
       ga4_events: ga4Appended,
       ga4_mp_sent: ga4MPSent,
       meta_events: metaAppended,
+      meta_capi_sent: metaCapiSent,
       googleads_events: googleAdsAppended,
       googleads_api_sent: googleAdsSent,
       done: doneCount,
@@ -1670,6 +1670,76 @@ async function appendMetaEventsToSheets(metaEvents) {
   }
 
   return total;
+}
+
+// ============================================
+// Meta Conversions API (Graph) — SQL / WON / Lead / rejected
+// ============================================
+async function sendToMetaCapi(tasks, pricingConfig) {
+  const pixelId = String(process.env.META_PIXEL_ID || "").trim();
+  const accessToken = String(process.env.META_CAPI_ACCESS_TOKEN || "").trim();
+  const graphVersion = String(
+    process.env.META_GRAPH_API_VERSION || "v21.0",
+  ).replace(/^v/i, "v");
+  const testEventCode = String(
+    process.env.META_CAPI_TEST_EVENT_CODE || "",
+  ).trim();
+
+  if (!pixelId || !accessToken) {
+    console.log(
+      "⏭️ SKIP Meta CAPI: brak META_PIXEL_ID lub META_CAPI_ACCESS_TOKEN",
+    );
+    return 0;
+  }
+
+  const events = [];
+  for (const task of tasks) {
+    const prepared = prepareMetaEvent(task, pricingConfig);
+    if (!prepared) continue;
+    const capiEvent = buildMetaCapiEvent(task.data || {}, prepared);
+    if (!capiEvent) continue;
+    events.push(capiEvent);
+  }
+
+  if (events.length === 0) return 0;
+
+  const url = `https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pixelId)}/events`;
+  const body = { data: events, access_token: accessToken };
+  if (testEventCode) body.test_event_code = testEventCode;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const text = await res.text();
+    let parsed = {};
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      parsed = {};
+    }
+    if (!res.ok) {
+      console.error(
+        `❌ Meta CAPI HTTP ${res.status}:`,
+        text.slice(0, 500),
+      );
+      return 0;
+    }
+    const sent = Number(parsed.events_received || events.length) || 0;
+    console.log(
+      `✅ Meta CAPI: events_received=${parsed.events_received ?? sent}` +
+        (testEventCode ? ` [TEST ${testEventCode}]` : ""),
+    );
+    if (Array.isArray(parsed.messages) && parsed.messages.length > 0) {
+      console.warn("⚠️ Meta CAPI messages:", JSON.stringify(parsed.messages));
+    }
+    return sent;
+  } catch (err) {
+    console.error("❌ Meta CAPI fetch error:", err.message);
+    return 0;
+  }
 }
 
 // ============================================

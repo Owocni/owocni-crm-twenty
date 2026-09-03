@@ -526,7 +526,7 @@ Konwencja `DATA_MODEL` §5.4 — trzy rozłączne warstwy: **API name** (camelCa
 | Artefakt | Wartość |
 |---|---|
 | Pole | `ourMailboxes` MULTI_SELECT (`4b2ecd47-…`) |
-| Reguła widoku | Marta/Gosia/Mariusz = **własna** ∪ `STUDIO` ∪ `LEADS` + kierunek |
+| Reguła widoku | Marta/Gosia/Ewa = **własna** ∪ `STUDIO` (bez `LEADS`, 2026-09-03) · Robert = tylko `ROBERT` (LEADS nie było) · Mariusz = własna ∪ `STUDIO` ∪ `LEADS` |
 | Writer | `backfill_message_our_mailboxes.py` (żywe Message → participants) |
 | Live | **GCP worker** `messageDirectionEnrich` (workflow E12.5b DEACTIVATED — Message blocked for automation) |
 | Granica | **nie ACL** — to filtr widoku; da się zdjąć / obejść |

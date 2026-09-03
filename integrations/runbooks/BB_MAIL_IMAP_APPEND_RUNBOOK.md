@@ -10,6 +10,8 @@ last_verified: 2026-08-31
 recheck_trigger: "cutover +30d · preflight PASS/FAIL · zmiana Twenty Email Sync"
 related:
   - CUTOVER_MAIL_HISTORY_DECISION.md
+  - BB_MAIL_IMPORT_RISKS_DECISION.md
+  - WEEKEND_CDELTA_MAIL_IMPORT.md
   - CUTOVER_BB_SYNC_EXECUTION.md
   - E12_5_MAIL_DIRECTION_VIEWS.md
   - EVENT_CONTRACT.md

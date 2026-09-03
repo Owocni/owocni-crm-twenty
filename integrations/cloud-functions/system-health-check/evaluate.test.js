@@ -6,6 +6,7 @@ const {
   evaluateWorkflows,
   evaluateInstance,
   evaluateShared,
+  evaluateLeadForm,
   diffAlerts,
   overallStatus,
   schedulerOk,
@@ -16,8 +17,6 @@ const ACTIVE_WORKFLOWS = [
   { name: "lead · formularz · powiadom owner v3", statuses: ["ACTIVE"] },
   { name: "lead · mail · powiadom owner v1", statuses: ["ACTIVE"] },
   { name: "Track Stage Time v3", statuses: ["ACTIVE"] },
-  { name: "deal · stage QUALIFIED → Stape v14b", statuses: ["ACTIVE"] },
-  { name: "deal · campaign rejected · event do orkiestracji", statuses: ["ACTIVE"] },
   { name: "Opp · guard SQL v6", statuses: ["ACTIVE"] },
   { name: "Opp · guard odrzucony v1", statuses: ["ACTIVE"] },
   { name: "Opp · zapamiętaj etap przed SQL v4e", statuses: ["ACTIVE"] },
@@ -53,15 +52,15 @@ describe("evaluateWorkflows", () => {
 
   it("prefers ACTIVE vN when old version is DEACTIVATED", () => {
     const workflows = [
-      { name: "deal · stage QUALIFIED → Stape v14", statuses: ["DEACTIVATED"] },
+      { name: "Track Stage Time v2", statuses: ["DEACTIVATED"] },
       { name: "Opp · Przyjmij jako SQL v4", statuses: ["DEACTIVATED"] },
       { name: "Opp · Scal z leadem v1", statuses: ["DEACTIVATED"] },
-      { name: "deal · stage QUALIFIED → Stape v14b", statuses: ["ACTIVE"] },
+      { name: "Track Stage Time v3", statuses: ["ACTIVE"] },
       { name: "Opp · Przyjmij jako SQL v5", statuses: ["ACTIVE"] },
       { name: "Opp · Scal z leadem v2", statuses: ["ACTIVE"] },
       ...ACTIVE_WORKFLOWS.filter(
         (w) =>
-          !/qualified.*stape|przyjmij jako sql|scal z leadem/i.test(w.name),
+          !/track stage time|przyjmij jako sql|scal z leadem/i.test(w.name),
       ),
     ];
     const result = evaluateWorkflows(workflows, false);
@@ -169,6 +168,109 @@ describe("evaluateInstance NR-1", () => {
     assert.equal(items.find((i) => i.id === "H-LEAD-FORM").status, "DOWN");
     assert.equal(items.find((i) => i.id === "H-ROBOT").status, "DOWN");
     assert.equal(items.find((i) => i.id === "H-LEAD-META").status, "DOWN");
+  });
+});
+
+describe("evaluateLeadForm witness (incydent 2026-08-31)", () => {
+  const workerOk = {
+    found: true,
+    ok: true,
+    detail: "twenty-crm-worker-sandbox",
+  };
+  const now = Date.parse("2026-09-01T12:00:00Z");
+  const jobs = [
+    { name: "telefony-play-poller", state: "ENABLED" },
+    { name: "twenty-crm-worker-sandbox", state: "ENABLED" },
+    { name: "robot-task-monitor", state: "ENABLED" },
+    { name: "meta-lead-poll-every-5min", state: "ENABLED" },
+  ];
+
+  it("worker OFF is still DOWN even with matching form+opp", () => {
+    const result = evaluateLeadForm(
+      { found: true, ok: false, detail: "PAUSED" },
+      {
+        lastFormMailAt: "2026-09-01T11:00:00Z",
+        lastSortowniaAt: "2026-09-01T11:02:00Z",
+      },
+      now,
+    );
+    assert.equal(result.status, "DOWN");
+  });
+
+  it("no Zapytanie mail = OK (NR-1 cisza)", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      { lastFormMailAt: null, lastSortowniaAt: "2026-08-20T10:00:00Z" },
+      now,
+    );
+    assert.equal(result.status, "OK");
+    assert.match(result.detail, /cisza/);
+  });
+
+  it("fresh Zapytanie within grace while Sortownia lags = OK", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      {
+        lastFormMailAt: "2026-09-01T11:30:00Z",
+        lastFormMailSubject: "Zapytanie: strony.owocni.pl",
+        lastSortowniaAt: "2026-08-31T07:45:00Z",
+      },
+      now,
+    );
+    assert.equal(result.status, "OK");
+    assert.match(result.detail, /okno 45 min/);
+  });
+
+  it("Zapytanie 2h ago without newer Sortownia = DOWN (empty API key)", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      {
+        lastFormMailAt: "2026-09-01T09:21:00Z",
+        lastFormMailSubject:
+          "Zapytanie: logofirmowe.pl/projektowanie-logo-lublin?gad_source=1",
+        lastSortowniaAt: "2026-08-31T07:45:05Z",
+      },
+      now,
+    );
+    assert.equal(result.status, "DOWN");
+    assert.match(result.detail, /OWOCNI_SORTOWNIA/);
+  });
+
+  it("Sortownia newer than last Zapytanie = OK", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      {
+        lastFormMailAt: "2026-09-01T09:21:00Z",
+        lastFormMailSubject: "Zapytanie: logofirmowe.pl",
+        lastSortowniaAt: "2026-09-01T11:14:00Z",
+      },
+      now,
+    );
+    assert.equal(result.status, "OK");
+  });
+
+  it("probe error = DEGRADED not pager DOWN", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      { error: "messages HTTP 403" },
+      now,
+    );
+    assert.equal(result.status, "DEGRADED");
+  });
+
+  it("evaluateShared pages H-LEAD-FORM DOWN on stale witness", () => {
+    const items = evaluateShared({
+      schedulers: jobs,
+      n8n: { active: true, name: "Play PBX" },
+      nowMs: now,
+      formFlow: {
+        lastFormMailAt: "2026-09-01T09:21:00Z",
+        lastFormMailSubject: "Zapytanie: logofirmowe.pl",
+        lastSortowniaAt: "2026-08-31T07:45:05Z",
+      },
+    });
+    assert.equal(items.find((i) => i.id === "H-LEAD-FORM").status, "DOWN");
+    assert.equal(items.find((i) => i.id === "H-UPDATE-PERSON").status, "OK");
   });
 });
 

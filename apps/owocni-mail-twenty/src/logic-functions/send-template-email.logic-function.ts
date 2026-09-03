@@ -18,6 +18,7 @@ import {
   personVars,
   resolvePersonContext,
 } from 'src/utils/personContext';
+import { decideInReplyTo } from 'src/utils/replyThreading';
 import { readAttachmentRefs } from 'src/utils/uploadEmailAttachment';
 
 function applyVars(text: string, vars: Record<string, string>): string {
@@ -209,17 +210,38 @@ const handler = async (event: RoutePayload) => {
           message: {
             __args: { filter: { id: { eq: inReplyToMessageId } } },
             headerMessageId: true,
+            messageParticipants: {
+              edges: {
+                node: {
+                  handle: true,
+                },
+              },
+            },
           },
         } as never);
 
-        const headerId = (
+        const message = (
           messageResult as {
-            message?: { headerMessageId?: string | null } | null;
+            message?: {
+              headerMessageId?: string | null;
+              messageParticipants?: {
+                edges?: Array<{ node?: { handle?: string | null } }>;
+              };
+            } | null;
           }
-        ).message?.headerMessageId;
+        ).message;
 
-        if (headerId?.trim()) {
-          inReplyTo = headerId.trim();
+        const decided = decideInReplyTo({
+          recipientEmail: email,
+          headerMessageId: message?.headerMessageId,
+          participantHandles:
+            message?.messageParticipants?.edges?.map(
+              (edge) => edge.node?.handle,
+            ) ?? [],
+        });
+
+        if (decided.ok) {
+          inReplyTo = decided.headerMessageId;
         }
       } catch {
         // Threading optional — still send as new message from own mailbox.

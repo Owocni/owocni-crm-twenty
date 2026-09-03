@@ -1,0 +1,544 @@
+{
+  "since": "2026-08-31T00:00:00.000Z",
+  "outgoingCount": 130,
+  "threadsWithOutgoing": 93,
+  "owocniMailThreads": 73,
+  "d2OutgoingToCandidates": 6,
+  "confirmedDisjointFullThread": 6,
+  "knownGosiaThreadsPresent": [
+    "0a77aa92-e708-454e-bb3d-7bb912913218",
+    "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd"
+  ],
+  "otherThanKnown": [
+    {
+      "threadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+      "outgoingCount": 5,
+      "owocniMailOutgoing": 5,
+      "externalToClusters": [
+        [
+          "dominika.anna.o@gmail.com"
+        ],
+        [
+          "natprus@wp.pl"
+        ],
+        [
+          "a.rudnicka@origininvestment.pl"
+        ],
+        [
+          "olgagrzesiak06@gmail.com"
+        ],
+        [
+          "m.wydra@todom.pl"
+        ]
+      ],
+      "externalToCount": 5,
+      "subjects": [
+        "Owocna strona - konsultacja ze specjalistą",
+        "Owocna strona - pytania",
+        "Owocne logo",
+        "Owocny landing"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "29121f66-7818-44b6-92f5-6fcc06bacc45",
+        "7f472799-e40c-48e2-8ff6-1bf8904f7871",
+        "9eab78ab-33ce-4e23-8337-88394a5bca3e",
+        "a67af0da-80c0-486d-821c-c00eb42ce095",
+        "d606b445-954e-485a-93b6-2d3f627a7df9"
+      ],
+      "fullMessageCount": 5,
+      "fullExternalClusters": [
+        [
+          "dominika.anna.o@gmail.com"
+        ],
+        [
+          "natprus@wp.pl"
+        ],
+        [
+          "a.rudnicka@origininvestment.pl"
+        ],
+        [
+          "olgagrzesiak06@gmail.com"
+        ],
+        [
+          "m.wydra@todom.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+      "outgoingCount": 3,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "prox.clublife@gmail.com"
+        ],
+        [
+          "mariuszprzezdziek@gmail.com"
+        ],
+        [
+          "info@thermalbalance.ch"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "Nowa strona firmowa - konsultacja ze specjalistą",
+        "Owocna strona-sklep",
+        "Owocne logo"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "1269357e-ed60-4c00-8919-846c5a6c15d3",
+        "60f2ca8a-5251-415c-8daa-4e9f4d0139b3",
+        "a319a24d-046d-4dda-9612-305d212392d9"
+      ],
+      "fullMessageCount": 3,
+      "fullExternalClusters": [
+        [
+          "prox.clublife@gmail.com"
+        ],
+        [
+          "mariuszprzezdziek@gmail.com"
+        ],
+        [
+          "info@thermalbalance.ch"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "ae289f9d-654a-4357-ace7-3b36d1f5dcf1",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 0,
+      "externalToClusters": [
+        [
+          "martyna.ruta@intereuropol.pl"
+        ],
+        [
+          "bartek.potkanski@gmail.com"
+        ]
+      ],
+      "externalToCount": 2,
+      "subjects": [
+        "Fwd: RE: FW: Materiały na stronę WWW",
+        "Re: FW: Materiały na stronę WWW"
+      ],
+      "mailboxes": [
+        "EWA"
+      ],
+      "sampleIds": [
+        "007f0a76-7054-425c-a297-ac4918ab4006",
+        "8c8f843e-d948-404e-b61b-f9961ef3b946",
+        "a97b9e04-9329-41b0-a56e-6d1cc912b90f",
+        "d14d7a76-ea5c-4bd7-a84a-29994d0bc379"
+      ],
+      "fullMessageCount": 18,
+      "fullExternalClusters": [
+        [
+          "bartek.potkanski@gmail.com"
+        ],
+        [
+          "martyna.ruta@intereuropol.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "1cef54c4-9ee8-42eb-b80a-f4d3566a60f6",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 0,
+      "externalToClusters": [
+        [
+          "luiza.lukasiak@eximit.pl"
+        ],
+        [
+          "czesc@parusdesign.pl"
+        ]
+      ],
+      "externalToCount": 2,
+      "subjects": [
+        "Prośba o wycenę projektu nowego logo",
+        "Re: ODP: Prośba o wycenę projektu nowego logo",
+        "Re: Prośba o wycenę projektu nowego logo"
+      ],
+      "mailboxes": [
+        "EWA"
+      ],
+      "sampleIds": [
+        "2acfcfae-b692-4b14-826c-a61be2414694",
+        "3b78c30c-3ca3-4acc-9995-c76339c54d0b",
+        "8ba36c74-a7e5-492a-b033-b80cf2161c2e",
+        "d20b36be-fb52-4a6b-85a3-091a13410378"
+      ],
+      "fullMessageCount": 9,
+      "fullExternalClusters": [
+        [
+          "czesc@parusdesign.pl"
+        ],
+        [
+          "luiza.lukasiak@eximit.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    }
+  ],
+  "known": [
+    {
+      "threadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "mkupis100@gmail.com"
+        ],
+        [
+          "biuro@inspekcje.com.pl"
+        ],
+        [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "RE: Owocne logo dla Inspekcji Pracy Zabaw",
+        "Re: Nowa strona - konsultacja ze specjalistą",
+        "Re: Wspopraca"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "2a134475-f630-42c6-a60a-3fbdb5af5ae4",
+        "4282e6e9-eedd-4a6d-a3b1-ad45f37cd7a9",
+        "63da53a3-2cf1-429a-af51-cbddeca8aa1a",
+        "92a465ca-d7b2-492f-8213-a5417603d0c9"
+      ],
+      "fullMessageCount": 8,
+      "fullExternalClusters": [
+        [
+          "biuro@inspekcje.com.pl"
+        ],
+        [
+          "mkupis100@gmail.com"
+        ],
+        [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+      "outgoingCount": 3,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "pawel.lepa@hajsplon.pl"
+        ],
+        [
+          "jkercher11@gmail.com"
+        ],
+        [
+          "exotrans99@gmail.com"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "Nowa strona - konsultacja ze specjalistą",
+        "Owocne logo",
+        "Pytania przed propozycją współpracy"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "19052184-ae5d-4415-8130-c3267b8647fc",
+        "1d9230f9-a3ad-4db6-b311-a1a907d7b060",
+        "96d01d55-b24b-4567-b295-c47840bc9faf"
+      ],
+      "fullMessageCount": 3,
+      "fullExternalClusters": [
+        [
+          "pawel.lepa@hajsplon.pl"
+        ],
+        [
+          "jkercher11@gmail.com"
+        ],
+        [
+          "exotrans99@gmail.com"
+        ]
+      ],
+      "confirmedDisjoint": true
+    }
+  ],
+  "allConfirmed": [
+    {
+      "threadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+      "outgoingCount": 5,
+      "owocniMailOutgoing": 5,
+      "externalToClusters": [
+        [
+          "dominika.anna.o@gmail.com"
+        ],
+        [
+          "natprus@wp.pl"
+        ],
+        [
+          "a.rudnicka@origininvestment.pl"
+        ],
+        [
+          "olgagrzesiak06@gmail.com"
+        ],
+        [
+          "m.wydra@todom.pl"
+        ]
+      ],
+      "externalToCount": 5,
+      "subjects": [
+        "Owocna strona - konsultacja ze specjalistą",
+        "Owocna strona - pytania",
+        "Owocne logo",
+        "Owocny landing"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "29121f66-7818-44b6-92f5-6fcc06bacc45",
+        "7f472799-e40c-48e2-8ff6-1bf8904f7871",
+        "9eab78ab-33ce-4e23-8337-88394a5bca3e",
+        "a67af0da-80c0-486d-821c-c00eb42ce095",
+        "d606b445-954e-485a-93b6-2d3f627a7df9"
+      ],
+      "fullMessageCount": 5,
+      "fullExternalClusters": [
+        [
+          "dominika.anna.o@gmail.com"
+        ],
+        [
+          "natprus@wp.pl"
+        ],
+        [
+          "a.rudnicka@origininvestment.pl"
+        ],
+        [
+          "olgagrzesiak06@gmail.com"
+        ],
+        [
+          "m.wydra@todom.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "mkupis100@gmail.com"
+        ],
+        [
+          "biuro@inspekcje.com.pl"
+        ],
+        [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "RE: Owocne logo dla Inspekcji Pracy Zabaw",
+        "Re: Nowa strona - konsultacja ze specjalistą",
+        "Re: Wspopraca"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "2a134475-f630-42c6-a60a-3fbdb5af5ae4",
+        "4282e6e9-eedd-4a6d-a3b1-ad45f37cd7a9",
+        "63da53a3-2cf1-429a-af51-cbddeca8aa1a",
+        "92a465ca-d7b2-492f-8213-a5417603d0c9"
+      ],
+      "fullMessageCount": 8,
+      "fullExternalClusters": [
+        [
+          "biuro@inspekcje.com.pl"
+        ],
+        [
+          "mkupis100@gmail.com"
+        ],
+        [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+      "outgoingCount": 3,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "prox.clublife@gmail.com"
+        ],
+        [
+          "mariuszprzezdziek@gmail.com"
+        ],
+        [
+          "info@thermalbalance.ch"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "Nowa strona firmowa - konsultacja ze specjalistą",
+        "Owocna strona-sklep",
+        "Owocne logo"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "1269357e-ed60-4c00-8919-846c5a6c15d3",
+        "60f2ca8a-5251-415c-8daa-4e9f4d0139b3",
+        "a319a24d-046d-4dda-9612-305d212392d9"
+      ],
+      "fullMessageCount": 3,
+      "fullExternalClusters": [
+        [
+          "prox.clublife@gmail.com"
+        ],
+        [
+          "mariuszprzezdziek@gmail.com"
+        ],
+        [
+          "info@thermalbalance.ch"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+      "outgoingCount": 3,
+      "owocniMailOutgoing": 3,
+      "externalToClusters": [
+        [
+          "pawel.lepa@hajsplon.pl"
+        ],
+        [
+          "jkercher11@gmail.com"
+        ],
+        [
+          "exotrans99@gmail.com"
+        ]
+      ],
+      "externalToCount": 3,
+      "subjects": [
+        "Nowa strona - konsultacja ze specjalistą",
+        "Owocne logo",
+        "Pytania przed propozycją współpracy"
+      ],
+      "mailboxes": [
+        "GOSIA"
+      ],
+      "sampleIds": [
+        "19052184-ae5d-4415-8130-c3267b8647fc",
+        "1d9230f9-a3ad-4db6-b311-a1a907d7b060",
+        "96d01d55-b24b-4567-b295-c47840bc9faf"
+      ],
+      "fullMessageCount": 3,
+      "fullExternalClusters": [
+        [
+          "pawel.lepa@hajsplon.pl"
+        ],
+        [
+          "jkercher11@gmail.com"
+        ],
+        [
+          "exotrans99@gmail.com"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "ae289f9d-654a-4357-ace7-3b36d1f5dcf1",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 0,
+      "externalToClusters": [
+        [
+          "martyna.ruta@intereuropol.pl"
+        ],
+        [
+          "bartek.potkanski@gmail.com"
+        ]
+      ],
+      "externalToCount": 2,
+      "subjects": [
+        "Fwd: RE: FW: Materiały na stronę WWW",
+        "Re: FW: Materiały na stronę WWW"
+      ],
+      "mailboxes": [
+        "EWA"
+      ],
+      "sampleIds": [
+        "007f0a76-7054-425c-a297-ac4918ab4006",
+        "8c8f843e-d948-404e-b61b-f9961ef3b946",
+        "a97b9e04-9329-41b0-a56e-6d1cc912b90f",
+        "d14d7a76-ea5c-4bd7-a84a-29994d0bc379"
+      ],
+      "fullMessageCount": 18,
+      "fullExternalClusters": [
+        [
+          "bartek.potkanski@gmail.com"
+        ],
+        [
+          "martyna.ruta@intereuropol.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    },
+    {
+      "threadId": "1cef54c4-9ee8-42eb-b80a-f4d3566a60f6",
+      "outgoingCount": 4,
+      "owocniMailOutgoing": 0,
+      "externalToClusters": [
+        [
+          "luiza.lukasiak@eximit.pl"
+        ],
+        [
+          "czesc@parusdesign.pl"
+        ]
+      ],
+      "externalToCount": 2,
+      "subjects": [
+        "Prośba o wycenę projektu nowego logo",
+        "Re: ODP: Prośba o wycenę projektu nowego logo",
+        "Re: Prośba o wycenę projektu nowego logo"
+      ],
+      "mailboxes": [
+        "EWA"
+      ],
+      "sampleIds": [
+        "2acfcfae-b692-4b14-826c-a61be2414694",
+        "3b78c30c-3ca3-4acc-9995-c76339c54d0b",
+        "8ba36c74-a7e5-492a-b033-b80cf2161c2e",
+        "d20b36be-fb52-4a6b-85a3-091a13410378"
+      ],
+      "fullMessageCount": 9,
+      "fullExternalClusters": [
+        [
+          "czesc@parusdesign.pl"
+        ],
+        [
+          "luiza.lukasiak@eximit.pl"
+        ]
+      ],
+      "confirmedDisjoint": true
+    }
+  ]
+}

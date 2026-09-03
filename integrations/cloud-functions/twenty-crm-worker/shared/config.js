@@ -1,6 +1,6 @@
 "use strict";
 
-const CREATE_LEAD_BUILD_ID = "2026-08-31-gcp-v18-gmail-alias";
+const CREATE_LEAD_BUILD_ID = "2026-09-03-failover-paused";
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -80,6 +80,15 @@ function isLeadDispatcherEnabled() {
   return flag === "true" || flag === "1";
 }
 
+/** Owner handoff (Marta↔Gosia). Default on; set false to pause until the team agrees. */
+function isLeadDispatchFailoverEnabled() {
+  const flag = process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
+  if (flag === undefined || String(flag).trim() === "") {
+    return true;
+  }
+  return flag === "true" || flag === "1";
+}
+
 function getLeadDispatchPoolIds() {
   const owners = getOwnerIds();
   const raw = process.env.LEAD_DISPATCH_POOL_IDS;
@@ -141,6 +150,13 @@ function getContinuityOwnerIds() {
   );
 }
 
+function getLeadsAtMessageChannelId() {
+  return (
+    process.env.LEADS_AT_MESSAGE_CHANNEL_ID ||
+    "32629e97-6dc2-452f-aa26-38c72eaab3a4"
+  );
+}
+
 module.exports = {
   CREATE_LEAD_BUILD_ID,
   getStapeConfig,
@@ -150,12 +166,14 @@ module.exports = {
   isCreateLeadWriteEnabled,
   isContinuityRoutingEnabled,
   isLeadDispatcherEnabled,
+  isLeadDispatchFailoverEnabled,
   getLeadDispatchPoolIds,
   getLeadDispatchVacationIds,
   getLeadDispatchHolidays,
   getManagerEmail,
   getMetaRobertAllowlist,
   getContinuityOwnerIds,
+  getLeadsAtMessageChannelId,
   MAX_CREATE_LEAD_TASKS: Number(process.env.MAX_CREATE_LEAD_TASKS || 5),
   MAX_UPDATE_PERSON_TASKS: Number(process.env.MAX_UPDATE_PERSON_TASKS || 10),
   MAX_CALL_TRANSCRIPT_TASKS: Number(process.env.MAX_CALL_TRANSCRIPT_TASKS || 5),

@@ -1,0 +1,28 @@
+{
+  "doc": "phase0_bb_imap_probe",
+  "ran_at": "2026-09-03T10:50:00Z",
+  "mailbox": "mariusz@owocni.pl",
+  "imap_host": "d28.thecamels.org",
+  "folder": "BB Archive Phase0",
+  "bb_ids": [2000220, 2000156],
+  "findings": {
+    "mariusz_imap_sent_count": 0,
+    "imap_search_roundtrip": "PASS",
+    "append_rfc822": "PASS",
+    "internaldate_original_not_today": "PASS",
+    "twenty_ingested_within_one_sync_cycle": true,
+    "unsynced_folder_isolation": "FAIL — new folder was synced automatically",
+    "receivedAt_matches_bb_sent_date": "PASS",
+    "direction": "OUTGOING",
+    "new_opportunity": false,
+    "new_person": false,
+    "people_existed_since": {
+      "meblegrodzisk@gmail.com": "2026-06-16",
+      "mc@scts.pl": "2026-06-19"
+    },
+    "imap_folder_delete": "PASS",
+    "twenty_records_after_imap_delete": "STILL PRESENT until GraphQL deleteMessages",
+    "twenty_graphql_delete": "PASS — messages + threads hidden from normal queries"
+  },
+  "note": "Phase 0 as designed (CRM untouched) is not available on this mailbox: Email Sync picks up a newly created folder within ~5 min. Ingest itself looks healthy for C-Δ."
+}

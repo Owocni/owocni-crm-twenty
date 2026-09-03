@@ -6,6 +6,7 @@ const {
   normalizeBizValueForTask,
   parseBizValueDisplay,
   resolveOpportunityBizValue,
+  buildBizPricingKey,
 } = require("./processWebhook");
 
 describe("normalizeBizValueForTask", () => {
@@ -55,5 +56,34 @@ describe("resolveOpportunityBizValue", () => {
       }),
       3,
     );
+  });
+
+  it("reads won amount from kanban display for Twenty WON cards", () => {
+    assert.equal(
+      resolveOpportunityBizValue({
+        bizValueWon: { amountMicros: null, currencyCode: null },
+        amount: { amountMicros: 0, currencyCode: "PLN" },
+        bizValueDisplay: "2000 PLN",
+      }),
+      2000,
+    );
+  });
+});
+
+describe("buildBizPricingKey", () => {
+  it("builds purchase_logo from Twenty LOGO", () => {
+    assert.equal(buildBizPricingKey("purchase", "LOGO"), "purchase_logo");
+  });
+
+  it("builds sql_copywriting from Twenty COPYWRITING", () => {
+    assert.equal(
+      buildBizPricingKey("qualify_lead", "COPYWRITING"),
+      "sql_copywriting",
+    );
+  });
+
+  it("returns empty when product or event is missing", () => {
+    assert.equal(buildBizPricingKey("purchase", null), "");
+    assert.equal(buildBizPricingKey("identity_resolve", "LOGO"), "");
   });
 });

@@ -79,6 +79,11 @@ Sweep nie wymaga osobnego Schedulera — działa na istniejącym poll `*/5`.
 
 ## Kill-switch (rollback)
 
+**Tylko oddawanie kart (G8, 3 IX):** `LEAD_DISPATCH_FAILOVER_ENABLED=false` + `bash deploy.sh`.
+Przydział przy tworzeniu leada zostaje. Sweep nie zmienia ownera.
+
+**Cały dyspozytor:**
+
 1. W `.env.deploy`: `LEAD_DISPATCHER_ENABLED=false` (i opcjonalnie `LEAD_DISPATCHER_SWEEP_ON_POLL=false`)
 2. `cd integrations/cloud-functions/twenty-crm-worker && bash deploy.sh`
 3. CreateLead wraca do hash/COPY/Meta jak przed dyspozytorem.

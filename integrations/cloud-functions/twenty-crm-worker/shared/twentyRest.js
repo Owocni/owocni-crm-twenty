@@ -44,6 +44,12 @@ function extractCreatedId(collection, responseBody) {
   if (collection === "notes") createKey = "createNote";
   if (collection === "noteTargets") createKey = "createNoteTarget";
   if (collection === "timelineActivities") createKey = "createTimelineActivity";
+  if (collection === "messageChannelMessageAssociations") {
+    createKey = "createMessageChannelMessageAssociation";
+  }
+  if (collection === "messageThreadTargets") {
+    createKey = "createMessageThreadTarget";
+  }
   const singularGuess = collection.endsWith("ies")
     ? collection.slice(0, -3) + "y"
     : collection.endsWith("s")

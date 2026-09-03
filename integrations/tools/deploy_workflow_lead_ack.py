@@ -18,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 ERR = {"retryOnFailure": {"value": False}, "continueOnFailure": {"value": False}}
 
 STEP_HTTP = "d7000001-1111-4111-8111-111111111101"
-WORKFLOW_NAME = "Opp · Biorę v1"
+WORKFLOW_NAME = "Biorę"
 
 
 def load_dotenv_local() -> None:

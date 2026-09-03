@@ -226,10 +226,15 @@ function parseTwentyPayload(eventData) {
       isPerson || isCompany ? null : sanitizeWebhookField(record.idOid),
     eventNamePlatform: eventPlatform,
     bizValueWon: record.bizValueWon || null,
+    amount: record.amount || null,
+    bizValueMin: record.bizValueMin || null,
+    bizValueMax: record.bizValueMax || null,
+    bizValueDisplay: record.bizValueDisplay || null,
     bizProduct: sanitizeWebhookField(record.bizProduct) || null,
     srcSystem: sanitizeWebhookField(record.srcSystem) || null,
     pipedriveId: sanitizeWebhookField(record.pipedriveId) || null,
     bizSource: sanitizeWebhookField(record.bizSource) || null,
+    metaLeadgenId: sanitizeWebhookField(record.metaLeadgenId) || null,
     bizEmail:
       emails.primaryEmail ||
       (record.person && record.person.email) ||
@@ -322,6 +327,34 @@ function resolveOpportunityBizValue(opp) {
     }
   }
   return "";
+}
+
+const EVENT_PRICING_PREFIX = {
+  generate_lead: "lead",
+  qualify_lead: "sql",
+  purchase: "purchase",
+  rejected_lead: "rejected",
+};
+
+function buildBizPricingKey(eventName, product) {
+  const prefix = EVENT_PRICING_PREFIX[eventName];
+  if (!prefix) return "";
+  const slug = String(product || "")
+    .trim()
+    .toLowerCase();
+  if (!slug) return "";
+  return `${prefix}_${slug}`;
+}
+
+function opportunityValueFields(source) {
+  if (!source || typeof source !== "object") return {};
+  return {
+    bizValueWon: source.bizValueWon,
+    amount: source.amount,
+    bizValueMax: source.bizValueMax,
+    bizValueMin: source.bizValueMin,
+    bizValueDisplay: source.bizValueDisplay,
+  };
 }
 
 function deliveryFingerprint(webhookBody) {
@@ -803,6 +836,7 @@ const IDENTITY_ENRICH_FIELDS = [
   "assist",
   "attr_gclid",
   "attr_fbc",
+  "attr_fbp",
   "attr_gbraid",
   "attr_wbraid",
   "ctx_page_url",
@@ -811,8 +845,11 @@ const IDENTITY_ENRICH_FIELDS = [
   "consent_analytics_storage",
   "consent_ad_storage",
   "ctx_ip_address",
+  "ctx_user_agent",
   "ctx_time_on_page_ms",
   "biz_message",
+  "lead_id",
+  "meta_leadgen_id",
 ];
 
 function isEnrichFieldEmpty(value) {
@@ -828,6 +865,36 @@ function applyIdentityDocFields(enriched, doc) {
       enriched[fieldName] = doc[fieldName];
     }
   }
+}
+
+function applyMetaAdsRouting(enriched, parsed, opp) {
+  if (!enriched || typeof enriched !== "object") return enriched;
+  const leadId = String(
+    enriched.lead_id ||
+      enriched.meta_leadgen_id ||
+      (opp && opp.metaLeadgenId) ||
+      (parsed && parsed.metaLeadgenId) ||
+      "",
+  ).trim();
+  if (leadId) {
+    if (isEnrichFieldEmpty(enriched.lead_id)) enriched.lead_id = leadId;
+    if (isEnrichFieldEmpty(enriched.meta_leadgen_id)) {
+      enriched.meta_leadgen_id = leadId;
+    }
+  }
+  const bizSource = String(
+    (opp && opp.bizSource) || (parsed && parsed.bizSource) || "",
+  ).trim();
+  if (
+    isEnrichFieldEmpty(enriched.owner) &&
+    (leadId || bizSource === "FACEBOOK")
+  ) {
+    enriched.owner = "platform:meta_ads";
+    if (isEnrichFieldEmpty(enriched.assist)) {
+      enriched.assist = "platform:meta_ads";
+    }
+  }
+  return enriched;
 }
 
 async function enrichFromIdentityMap(idOid, enriched) {
@@ -884,18 +951,27 @@ async function fetchTwentyPersonPii(personId) {
   };
 }
 
+function applyBizPricingKey(task) {
+  if (!task || task.biz_pricing_key) return task;
+  task.biz_pricing_key = buildBizPricingKey(task.event_name, task.biz_product);
+  return task;
+}
+
 async function enrichInboundTaskFromTwenty(taskPayload, parsed) {
   const enriched = structuredClone(taskPayload);
   if (!parsed.opportunityId) {
-    return enrichFromIdentityMap(enriched.id_oid, enriched);
+    const afterIdentity = await enrichFromIdentityMap(enriched.id_oid, enriched);
+    applyMetaAdsRouting(afterIdentity, parsed, null);
+    return applyBizPricingKey(afterIdentity);
   }
 
+  let opp = {};
   const oppRes = await twentyRequest(
     "GET",
     "/opportunities/" + encodeURIComponent(parsed.opportunityId),
   );
   if (oppRes.statusCode >= 200 && oppRes.statusCode < 300) {
-    const opp = (oppRes.body.data && oppRes.body.data.opportunity) || {};
+    opp = (oppRes.body.data && oppRes.body.data.opportunity) || {};
     if (!enriched.id_oid && opp.idOid) {
       enriched.id_oid = sanitizeWebhookField(opp.idOid);
     }
@@ -911,8 +987,17 @@ async function enrichInboundTaskFromTwenty(taskPayload, parsed) {
     if (!enriched.biz_product && opp.bizProduct) {
       enriched.biz_product = opp.bizProduct;
     }
-    if (enriched.biz_value === undefined || enriched.biz_value === null || enriched.biz_value === "") {
-      enriched.biz_value = resolveOpportunityBizValue(opp);
+    if (isEnrichFieldEmpty(enriched.lead_id) && opp.metaLeadgenId) {
+      enriched.lead_id = sanitizeWebhookField(opp.metaLeadgenId);
+    }
+    if (isEnrichFieldEmpty(enriched.meta_leadgen_id) && opp.metaLeadgenId) {
+      enriched.meta_leadgen_id = sanitizeWebhookField(opp.metaLeadgenId);
+    }
+    const fromGet = resolveOpportunityBizValue(opportunityValueFields(opp));
+    const fromParsed = resolveOpportunityBizValue(opportunityValueFields(parsed));
+    const fromOpp = isMeaningfulBizValue(fromGet) ? fromGet : fromParsed;
+    if (isMeaningfulBizValue(fromOpp)) {
+      enriched.biz_value = fromOpp;
     } else {
       enriched.biz_value = normalizeBizValueForTask(enriched.biz_value);
     }
@@ -941,10 +1026,12 @@ async function enrichInboundTaskFromTwenty(taskPayload, parsed) {
     }
   }
 
-  return enrichFromIdentityMap(
+  const afterIdentity = await enrichFromIdentityMap(
     enriched.id_oid || parsed.opportunityIdOid,
     enriched,
   );
+  applyMetaAdsRouting(afterIdentity, parsed, opp);
+  return applyBizPricingKey(afterIdentity);
 }
 
 async function enqueueTaskQueue(taskPayload) {
@@ -1222,13 +1309,17 @@ async function processTwentyWebhook(webhookBody, options = {}) {
     biz_email: parsed.bizEmail,
     biz_phone: parsed.bizPhone,
     biz_product: parsed.bizProduct,
-    biz_value: normalizeBizValueForTask(parsed.bizValueWon) || "",
+    biz_pricing_key: buildBizPricingKey(eventName, parsed.bizProduct),
+    biz_value:
+      resolveOpportunityBizValue(opportunityValueFields(parsed)) || "",
     src_system: "TWENTY_UI",
     src_action_source: decision.manual ? "manual_create" : "crm_webhook",
     adapter: ADAPTER_ID,
     opportunity_id: parsed.opportunityId,
     stage: parsed.stage,
     campaign_rejected: parsed.campaignRejected,
+    lead_id: parsed.metaLeadgenId || "",
+    meta_leadgen_id: parsed.metaLeadgenId || "",
   };
 
   if (decision.manual) {
@@ -1260,6 +1351,7 @@ module.exports = {
   normalizeBizValueForTask,
   parseBizValueDisplay,
   resolveOpportunityBizValue,
+  buildBizPricingKey,
   processTwentyWebhook,
   processPersonIdentityFromWebhook,
   normalizeResolverEmail,
@@ -1268,4 +1360,7 @@ module.exports = {
   REASON_SKIP_CAMPAIGN_REJECTED,
   REASON_SKIP_LEGACY_IMPORT,
   REASON_SKIP_DUPLICATE_BUSINESS_EVENT,
+  applyIdentityDocFields,
+  applyMetaAdsRouting,
+  IDENTITY_ENRICH_FIELDS,
 };

@@ -11,6 +11,13 @@
 
 const PRICING_PREFIXES = ["rejected", "purchase", "lead", "sql", "won"];
 
+const EVENT_PRICING_PREFIX = {
+  generate_lead: "lead",
+  qualify_lead: "sql",
+  purchase: "purchase",
+  rejected_lead: "rejected",
+};
+
 const PRODUCT_ALIAS_GROUPS = [
   ["strony", "strona", "web"],
   ["logo"],
@@ -138,12 +145,57 @@ function getPricingValue(pricingKey, platform, pricingConfig) {
   };
 }
 
+function buildBizPricingKey(eventName, product) {
+  const prefix = EVENT_PRICING_PREFIX[eventName];
+  if (!prefix) return "";
+  const slug = normalizeProductSlug(product);
+  if (!slug) return "";
+  return `${prefix}_${slug}`;
+}
+
+function lookupPricingConfigExactFamily(pricingKey, pricingConfig) {
+  const hit = lookupPricingConfig(pricingKey, pricingConfig);
+  if (hit.fallbackOther) {
+    return { matchedKey: null, config: null, fallbackOther: false };
+  }
+  return hit;
+}
+
+/**
+ * Purchase: najpierw purchase_{product}, potem sql_{product}, dopiero Other.
+ * getPricingValue(purchase_X) samo wpada w Other=1 gdy brak wiersza purchase_* —
+ * to zjada prawdziwy cennik sql_logo / sql_copywriting.
+ */
+function resolvePurchasePricingValue(product, pricingConfig, platform) {
+  const purchaseKey = buildBizPricingKey("purchase", product) || "purchase_other";
+  let hit = lookupPricingConfigExactFamily(purchaseKey, pricingConfig);
+  if (!hit.config && product) {
+    hit = lookupPricingConfigExactFamily(
+      buildBizPricingKey("qualify_lead", product),
+      pricingConfig,
+    );
+  }
+  if (!hit.config) {
+    hit = lookupPricingConfig("Other", pricingConfig);
+  }
+  const value = hit.config ? (hit.config[platform] ?? null) : null;
+  return {
+    value,
+    matchedKey: hit.matchedKey,
+    requestedKey: purchaseKey,
+    fallbackOther: !!hit.fallbackOther,
+  };
+}
+
 module.exports = {
   PRICING_PREFIXES,
   PRODUCT_ALIAS_GROUPS,
+  EVENT_PRICING_PREFIX,
   splitPricingKey,
   aliasSlugsFor,
   listPricingKeyCandidates,
   lookupPricingConfig,
   getPricingValue,
+  buildBizPricingKey,
+  resolvePurchasePricingValue,
 };

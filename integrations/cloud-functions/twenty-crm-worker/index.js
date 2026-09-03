@@ -27,6 +27,7 @@ const { handleEnrichCompanyPl } = require("./workers/enrichCompanyPl");
 const { handleIssueInvoice } = require("./workers/issueInvoice");
 const { runLeadDispatchSweep } = require("./workers/leadDispatchSweep");
 const { leadAck } = require("./workers/leadAck");
+const { runFormMailWitnessWorker } = require("./workers/formMailWitness");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
 const { withPendingTasksCache } = require("./shared/stapeStore");
 
@@ -256,6 +257,7 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
 
     const poll = await withPendingTasksCache(async () => {
       const updatePerson = await runUpdatePersonWorker();
+      const formMailWitness = await runFormMailWitnessWorker();
       const createLead = await runCreateLeadWorker();
       const advanceContacted = await runAdvanceNewToContactedWorker();
       const messageDirection = await runMessageDirectionEnrichWorker();
@@ -266,10 +268,16 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
         process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "true" ||
         process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "1"
       ) {
-        leadDispatch = await runLeadDispatchSweep();
+        try {
+          leadDispatch = await runLeadDispatchSweep();
+        } catch (err) {
+          console.error("lead_dispatch_sweep poll FAIL", err.message);
+          leadDispatch = { ok: false, error: err.message };
+        }
       }
       return {
         update_person: updatePerson,
+        form_mail_witness: formMailWitness,
         create_lead: createLead,
         advance_new_to_contacted: advanceContacted,
         message_direction_enrich: messageDirection,

@@ -31,8 +31,8 @@ type PersonRow = {
 };
 
 /**
- * Avoid heavy messages/messageParticipants scans (Query read timeout in this workspace).
- * Path: latest messageThreads → one message → external participant.
+ * Latest external mailbox peer for the Recents dropdown only.
+ * Do not use messageId for In-Reply-To — this query is workspace-global.
  */
 export async function findSuggestedReply(coreClient: CoreApiClient): Promise<{
   recipients: RecentRecipient[];
@@ -178,8 +178,9 @@ export async function findSuggestedReply(coreClient: CoreApiClient): Promise<{
       const suggestedReply: SuggestedReply = {
         email,
         subject,
-        messageId: message.id ?? null,
-        threadId: message.messageThreadId ?? thread.id,
+        // Never a threading id — this path is workspace-latest, not this lead.
+        messageId: null,
+        threadId: null,
         role: role || null,
       };
 

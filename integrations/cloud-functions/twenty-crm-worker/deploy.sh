@@ -54,6 +54,7 @@ yaml_escape() {
 {
   echo "STAPE_API_BASE: $(yaml_escape "$STAPE_API_BASE")"
   echo "TWENTY_REST_URL: $(yaml_escape "$TWENTY_REST_URL")"
+  echo "LEADS_AT_MESSAGE_CHANNEL_ID: $(yaml_escape "${LEADS_AT_MESSAGE_CHANNEL_ID:-32629e97-6dc2-452f-aa26-38c72eaab3a4}")"
   echo "CREATE_LEAD_WRITE_ENABLED: $(yaml_escape "$CREATE_LEAD_WRITE_ENABLED")"
   echo "CONTINUITY_ROUTING_ENABLED: $(yaml_escape "$CONTINUITY_ROUTING_ENABLED")"
   echo "CUTOVER_AT: $(yaml_escape "${CUTOVER_AT:-2026-08-31T00:00:00+02:00}")"
@@ -69,6 +70,9 @@ yaml_escape() {
 
   if [[ "${LEAD_DISPATCHER_ENABLED:-}" == "true" || "${LEAD_DISPATCHER_ENABLED:-}" == "1" ]]; then
     echo "LEAD_DISPATCHER_ENABLED: 'true'"
+  fi
+  if [[ -n "${LEAD_DISPATCH_FAILOVER_ENABLED:-}" ]]; then
+    echo "LEAD_DISPATCH_FAILOVER_ENABLED: $(yaml_escape "$LEAD_DISPATCH_FAILOVER_ENABLED")"
   fi
   if [[ "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "true" || "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "1" ]]; then
     echo "LEAD_DISPATCHER_SWEEP_ON_POLL: 'true'"

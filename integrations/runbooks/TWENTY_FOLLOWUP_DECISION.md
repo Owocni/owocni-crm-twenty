@@ -2,15 +2,16 @@
 doc_id: TWENTY_FOLLOWUP_DECISION
 title: "Decyzja Mariusz — Do odpisania + zaplanowany follow-up (oba warianty)"
 layer: runbook
-status: wariant_A_wdrozone — NEW → Do odpisania ON (backfill 31.08); open+replay CONTACTED+ czeka; wariant B nie ruszany
+status: wariant_A_wdrozone — NEW → Do odpisania ON (backfill 31.08); open+replay CONTACTED+ czeka; wariant B nie ruszany; odroczenie = ODROCZENIE_DECISION.md (3.09, decision_closed)
 owner: "Dawid"
 audience: "Mariusz"
-last_verified: 2026-08-31
+last_verified: 2026-09-03
 related:
   - KANBAN_CARD_SPEC.md
   - G_PAR_BETTER_BITRIX_PARITY.md
   - E12_5_MAIL_DIRECTION_VIEWS.md
   - CUTOVER_TWENTY_TEAM_PLAN.md
+  - ODROCZENIE_DECISION.md
 source: "skarga Gosi + audyt Twenty 28.08.2026"
 decision_source: "załącznik Mariusz FollowUP.pdf 31.08.2026 — Sprawa 2, oba warianty"
 ---
@@ -138,7 +139,9 @@ Wariant A = kolejka „Do odpisania" (skarga Gosi)
 
 **A — Do odpisania (wdrożone 31.08):** worker: nowy lead → ON · IN→ON · OUT→OFF + guard `CUTOVER_AT`; pole etykieta „Do odpisania” (`defaultValue: true`); widok `70f01c16-…` moje + otwarte + ON. **Backfill NEW 31.08:** 398 rekordów Nowy (null/false → true), `toChange` po = 0; Gosia NEW ON = 80. Skrypt: `backfill_do_odpisania.py --new-only --apply`. Pełny open+replay (CONTACTED+) nadal czeka na `--apply` bez `--new-only`. Deploy workera: build `2026-08-31-gcp-v17-do-odpisania`.
 
-**Poprawka Dawid 31.08 (vs PDF):** w PDF nowe z formularza miały być OFF i zostać tylko w „Nowych”. To rozbija kolejkę na dwa miejsca. **Wdrożenie: nowe też ON** — lista = wszystko, co czeka na ruch handlowca. Z lejka i tak nie znikają. Mariusz: PDF mówił inaczej — to świadoma zmiana semantyki A, nie nowy wariant.
+**Poprawka Dawid 31.08 (vs PDF):** w PDF nowe z formularza miały być OFF i zostać tylko w „Nowych”. To rozbija kolejkę na dwa miejsca. **Wdrożenie: nowe też ON** — lista = wszystko, co czeka na ruch handlowca. Z lejka i tak nie znikają.
+
+**Rewizja Mariusz 3.09.2026:** korekta Dawida jest obowiązująca. Nowe **mają** być w „Do odpisania”. PDF (formularz → OFF) w tym punkcie wycofany. Odroczenie (przycisk + budzik) — osobny plik `ODROCZENIE_DECISION.md`; automatyczne odkładanie „włączymy filtr gdy ktoś wpisze datę” z sekcji „świadomie pomijamy” **nie obowiązuje**.
 
 **B — Zaplanuj follow-up (osobno, po A):** workflow per osoba (Gosia / Marta / Mariusz): Form (data + temat + treść) → Delay Scheduled Date → Send Email ze swojej skrzynki → notatka. Wysłany mail = zwykły OUTGOING → A samo zgasi „Do odpisania". Przed ogłoszeniem smoke 30–60 min na workflow Gosi.
 

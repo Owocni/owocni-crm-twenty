@@ -5,6 +5,7 @@ const assert = require("node:assert/strict");
 const {
   normalizeFormMessageText,
   shouldSeedFormInquiryEmail,
+  FORM_INQUIRY_EMAIL_SUBJECT,
 } = require("./createLead");
 
 describe("form inquiry email thread", () => {
@@ -34,5 +35,17 @@ describe("form inquiry email thread", () => {
       }),
       true,
     );
+  });
+
+  it("uses a stable subject so Emails tab is readable", () => {
+    assert.equal(
+      FORM_INQUIRY_EMAIL_SUBJECT,
+      "Zapytanie z formularza owocni.pl",
+    );
+  });
+
+  it("exports TO-participant helper required by EmailThreadMessage", () => {
+    const { addFormInquiryToParticipant } = require("./createLead");
+    assert.equal(typeof addFormInquiryToParticipant, "function");
   });
 });

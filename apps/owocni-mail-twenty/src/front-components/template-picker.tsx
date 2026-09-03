@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { RestApiClient, RestApiClientError } from 'twenty-client-sdk/rest';
 import { defineFrontComponent } from 'twenty-sdk/define';
 import {
@@ -147,16 +147,21 @@ function formatMessageDate(iso: string | null | undefined): string {
 
 /** Host-injected CSS so the compose overlay can cover the CRM viewport (Remote DOM cannot portal). */
 const COMPOSE_FULLSCREEN_CSS = `
-.owocni-mail-fs-root {
+.owocni-mail-fs-root,
+.owocni-mail-fs-root:popover-open {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
+  inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
   max-width: none !important;
   max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
   z-index: 2147483000 !important;
   background: #ffffff !important;
   overflow: hidden !important;
@@ -304,6 +309,73 @@ const HEADER_ACTION_BUTTON_STYLE = {
   background: '#fff',
   cursor: 'pointer',
 } as const;
+
+/** Inline fallback — host CSS for class names can arrive a frame late in Remote DOM. */
+const COMPOSE_FULLSCREEN_ROOT_STYLE = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  width: '100vw',
+  height: '100vh',
+  maxWidth: 'none',
+  maxHeight: 'none',
+  margin: 0,
+  zIndex: 2147483000,
+  background: '#ffffff',
+  overflow: 'hidden',
+} as const;
+
+type PopoverHostElement = HTMLElement & {
+  showPopover: () => void;
+  hidePopover: () => void;
+};
+
+function asPopoverHost(node: HTMLElement | null): PopoverHostElement | null {
+  if (!node || typeof (node as PopoverHostElement).showPopover !== 'function') {
+    return null;
+  }
+  return node as PopoverHostElement;
+}
+
+function closeComposePopover(node: HTMLElement | null) {
+  const popover = asPopoverHost(node);
+  if (popover) {
+    try {
+      popover.hidePopover();
+    } catch {
+      // already closed
+    }
+  }
+  try {
+    node?.removeAttribute('popover');
+  } catch {
+    // Remote DOM proxy may not expose attributes
+  }
+}
+
+function openComposePopover(node: HTMLElement | null): boolean {
+  const popover = asPopoverHost(node);
+  if (!popover) {
+    return false;
+  }
+  try {
+    popover.setAttribute('popover', 'manual');
+    popover.showPopover();
+    if (typeof getComputedStyle === 'function') {
+      const display = getComputedStyle(popover).display;
+      if (display === 'none') {
+        closeComposePopover(popover);
+        return false;
+      }
+    }
+    return true;
+  } catch {
+    closeComposePopover(popover);
+    return false;
+  }
+}
 
 const CATEGORY_ORDER = [
   'SALES',
@@ -547,9 +619,6 @@ const TemplatePicker = () => {
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
   const [attachmentToken, setAttachmentToken] = useState('');
   const [composerExpanded, setComposerExpanded] = useState(false);
-  const [coverState, setCoverState] = useState<'pending' | 'yes' | 'no'>(
-    'pending',
-  );
   const overlayRootRef = useRef<HTMLDivElement | null>(null);
 
   const personEmail = recipientEmail.trim() || person?.email?.trim() || '';
@@ -870,9 +939,8 @@ const TemplatePicker = () => {
             setRecentRecipients(suggestion.recentRecipients);
           }
 
-          if (!cancelled && suggestion.suggestedReply?.messageId) {
-            setReplyMessageId(suggestion.suggestedReply.messageId);
-          }
+          // Never copy suggestedReply.messageId into In-Reply-To.
+          // That query is "latest threads in the workspace", not this lead.
 
           // Thread reply: subject known but CRM person missing — use mailbox peer when subjects align.
           if (
@@ -1595,69 +1663,57 @@ const TemplatePicker = () => {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!composerExpanded) {
-      setCoverState('pending');
+      closeComposePopover(overlayRootRef.current);
       return;
     }
 
     let cancelled = false;
-    let innerFrame = 0;
+    let frame = 0;
+    let attempts = 0;
 
-    setCoverState('pending');
-
-    const measure = () => {
-      const node = overlayRootRef.current;
-      if (!node) {
-        return false;
-      }
-
-      const rect = node.getBoundingClientRect();
-      const viewportWidth = window.innerWidth || 0;
-
-      if (!rect.width || !viewportWidth) {
-        return false;
-      }
-
-      setCoverState(
-        Math.abs(rect.left) <= viewportWidth * 0.12 &&
-          rect.width >= viewportWidth * 0.7
-          ? 'yes'
-          : 'no',
-      );
-      return true;
-    };
-
-    const outerFrame = requestAnimationFrame(() => {
+    const tryOpen = () => {
       if (cancelled) {
         return;
       }
-
-      if (measure()) {
+      const node = overlayRootRef.current;
+      if (!node) {
+        if (attempts++ < 24) {
+          frame = requestAnimationFrame(tryOpen);
+        }
         return;
       }
+      openComposePopover(node);
+    };
 
-      innerFrame = requestAnimationFrame(() => {
-        if (!cancelled) {
-          measure();
-        }
-      });
-    });
-
-    const fallbackTimer = setTimeout(() => {
-      if (!cancelled) {
-        setCoverState((current) => (current === 'pending' ? 'no' : current));
-      }
-    }, 400);
+    tryOpen();
 
     return () => {
       cancelled = true;
-      clearTimeout(fallbackTimer);
-      cancelAnimationFrame(outerFrame);
-      if (innerFrame) {
-        cancelAnimationFrame(innerFrame);
+      if (frame) {
+        cancelAnimationFrame(frame);
       }
+      closeComposePopover(overlayRootRef.current);
     };
+  }, [composerExpanded]);
+
+  useEffect(() => {
+    if (!composerExpanded) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      setComposerExpanded(false);
+    };
+
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
   }, [composerExpanded]);
 
   const visibleTemplates = templates
@@ -1674,11 +1730,12 @@ const TemplatePicker = () => {
   const showOriginalPane = Boolean(
     composerExpanded && (replyMessage?.text || isReplyContext),
   );
-  const useViewportSplit = composerExpanded && coverState === 'yes';
-  const rootClassName =
-    composerExpanded && coverState !== 'no' ? 'owocni-mail-fs-root' : undefined;
+  const useWideSplit =
+    showOriginalPane &&
+    (typeof window === 'undefined' || window.innerWidth >= 860);
+  const rootClassName = composerExpanded ? 'owocni-mail-fs-root' : undefined;
   const composeSplitClassName = composerExpanded
-    ? useViewportSplit && showOriginalPane
+    ? showOriginalPane
       ? 'owocni-mail-fs-split'
       : 'owocni-mail-fs-stacked'
     : undefined;
@@ -1695,6 +1752,7 @@ const TemplatePicker = () => {
         height: '100%',
         minHeight: 0,
         overflow: 'hidden',
+        ...(composerExpanded ? COMPOSE_FULLSCREEN_ROOT_STYLE : null),
       }}
     >
       <style>{COMPOSE_FULLSCREEN_CSS}</style>
@@ -2090,13 +2148,39 @@ const TemplatePicker = () => {
             borderTop: '1px solid #eee',
             flex: 1,
             minHeight: 0,
+            minWidth: 0,
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: useWideSplit ? 'row' : 'column',
             overflow: 'hidden',
           }}
         >
           {showOriginalPane ? (
-            <div className="owocni-mail-fs-left">
+            <div
+              className="owocni-mail-fs-left"
+              style={
+                useWideSplit
+                  ? {
+                      flex: '1 1 42%',
+                      minWidth: 280,
+                      maxWidth: '48%',
+                      borderRight: '1px solid #e5e7eb',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      background: '#f8fafc',
+                    }
+                  : {
+                      flex: '0 0 38%',
+                      minWidth: 0,
+                      maxWidth: 'none',
+                      borderBottom: '1px solid #e5e7eb',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      background: '#f8fafc',
+                    }
+              }
+            >
               <div
                 style={{
                   flexShrink: 0,
@@ -2119,12 +2203,13 @@ const TemplatePicker = () => {
           <div
             className={composerExpanded ? 'owocni-mail-fs-right' : undefined}
             style={{
-              flex: 1,
+              flex: useWideSplit ? '1 1 58%' : 1,
               minHeight: 0,
               minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
+              background: composerExpanded ? '#fff' : undefined,
             }}
           >
           <div

@@ -188,7 +188,8 @@ Każda nowa integracja Owocni = nowy wiersz. Kolumna **Prio:** P0 = „CRM wydaj
 | **Świadek (twardy, 2026-09-01)** | GET Message `subject[startsWith]:Zapytanie` + GET Opportunity `srcSystem=OWOCNI_SORTOWNIA`. Formularz **zawsze** wysyła mail na `leads@` (równolegle do Sortowni). Mail bez nowszej karty po 45 min = Sortownia/API_KEY/sGTM padły, nie „cisza reklam”. |
 | **Freshness** | ostatnia Opportunity z kanału paid/form (nie `PIPEDRIVE_LEGACY`) — miękka **tylko** gdy brak świadka. |
 | **Zależność** | H-WF `lead · formularz · powiadom owner v3` — brak **powiadomienia** ≠ brak rekordu. Rozróżniaj. |
-| **Backup** | `sendToGoogleSheets` + Make — jeśli Twenty puste a arkusz pełny → pada **nasz** tor, nie formularz. |
+| **Backup** | Mail `Zapytanie` na `leads@` → worker `formMailWitness` (GCP `*/5`) enqueue `crm:twenty_create_lead` gdy sGTM milczy. Sheets/Make nadal równolegle. |
+| **Typowe awarie** | **2026-09-03:** Scheduler last-fail (code 13) przy jobie ENABLED = poll 500 z `leadDispatchSweep` HTTP 429 — create_lead już 200, karta żywa. Pager H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON z jednego last-fail. Najpierw świadek mail/karta, nie Sortownia. |
 
 ##### H-LEAD-MAIL — Leady z `leads@` (Email Sync + workflow)
 
@@ -304,6 +305,7 @@ Pozycja jako **dependency** H-LEAD-MAIL i H-MAIL-TPL: skrzynki z IDENTITY §5.5 
 | **Łańcuch** | Webhook `messageChannelMessageAssociation.*` + poll `messageDirectionEnrich` + `advanceNewToContacted`. Workflowy direction **DEACTIVATED** (Message nieedytowalny przez automation — `OPS_NOTES` 2026-07-28). |
 | **Runbook** | `E12_5_MAIL_DIRECTION_VIEWS.md` |
 | **NIE** | włączanie z powrotem workflowów direction „żeby naprawić”. Live path = GCP. |
+| **Typowe awarie** | **2026-09-03:** pager H-MAIL-DIR przy `workflow OFF = zamierzone` = ten sam last-fail workera co H-LEAD-FORM (429 sweep), nie pad kierunku. |
 
 #### P2 — dodatki, cisza nie = „CRM martwy”
 
@@ -365,6 +367,7 @@ Wspólne narzędzia: Twenty MCP `find_many_*` / `group_by_*` (limit 10 + filtr d
 
 1. Czy submit w ogóle doszedł? Mail `Zapytanie` na `leads@` (Twenty Message) / arkusz backup / Make.
 2. Mail jest, Opportunity `OWOCNI_SORTOWNIA` starsza o ≥45 min → **H-LEAD-FORM DOWN** (tag sGTM / pusty `API_KEY` / Stape). Nie ufaj samemu schedulerowi workera.
+2b. Trzy maile naraz (H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON) z detail `twenty-crm-worker-sandbox: ENABLED` → last HTTP workera ≠ 2xx (często 429 sweep). Sprawdź świadek i log `lead_dispatch_sweep list FAIL` zanim ruszysz Sortownię.
 3. Jest w Twenty, nikt nie dostał maila → H-WF pozycja 1, nie worker.
 4. `srcSystem=PIPEDRIVE_LEGACY` nie liczy się jako live form.
 

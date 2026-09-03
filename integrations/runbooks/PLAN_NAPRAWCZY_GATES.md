@@ -10,7 +10,10 @@ related:
   - STUDIO_AT_AUTO_LEAD_DECISION.md
   - E12_3_EMAIL_SIGNATURES_DECISION.md
   - TWENTY_FOLLOWUP_DECISION.md
+  - ODROCZENIE_DECISION.md
   - CUTOVER_MAIL_HISTORY_DECISION.md
+  - BB_MAIL_IMPORT_RISKS_DECISION.md
+  - WEEKEND_CDELTA_MAIL_IMPORT.md
   - LEAD_DISPATCHER_PLAN.md
 source: "PlanNaprawczyTwenty-2026-09-03-OSTATECZNY + brakiwobecustalen + Docs STARE + mail Mariusz 3 IX"
 ---
@@ -27,7 +30,7 @@ Przy każdej naprawie, zanim wejdzie do roboty:
 
 Pozycja bez odpowiedzi na (2) nie ma zgłaszającego — inny mandat albo wypada.
 
-**Przyklepane (nie otwierać):** R-1 skrzynki/podglądy · R-2 odroczenie = gest · R-3 „Do odpisania” = klient napisał, my nie · R-4 przeliczenie po ostatniej wiadomości otwartej sprawy · R-5 scalanie bez ceremonii · R-6 historia od 1.01.2023 · R-7 Biorę / zegar jak 12 VIII · R-8 Maciek w puli gdy Marta+Gosia zapchane · R-9 D-2 bez okna szkody.
+**Przyklepane (nie otwierać):** R-1 skrzynki/podglądy · R-2 odroczenie = przycisk + data/godzina, spec `ODROCZENIE_DECISION.md` · R-3 „Do odpisania” = kolejka roboty (nowe **i** piłka u nas) — **rewizja wieczór 3 IX, poranny zapis „nowe tylko w Nowych” wycofany** · R-4 przeliczenie po ostatniej wiadomości otwartej sprawy · R-5 scalanie bez ceremonii · R-6 historia od 1.01.2023 · R-7 Biorę / zegar jak 12 VIII · R-8 Maciek w puli gdy Marta+Gosia zapchane · R-9 D-2 bez okna szkody.
 
 **Zamrożenie miękkie (do PASS G4):** nie dociągamy ręcznie *historycznych* przykładów Gosi/Marty/Maćka (kasuje dowód). Wyjątek: żywy lead, który **dziś** blokuje odpowiedź — można odblokować, ale zapisujemy który i dlaczego.
 
@@ -79,7 +82,7 @@ Lejek pokazuje otwarte sprawy z okna ok. 30 dni, nie całe archiwum z BB. To nie
 
 `studio@` to podgląd tego, co dzieje się na studiu — na razie w tym samym widoku co Twoja skrzynka. `leads@` z Twojej poczty zszedł: leady z tej skrzynki i tak trafiają na lejek.
 
-„Do odpisania” = klient napisał, my nie odpisaliśmy. Nowe zapytania są w Nowych. Odroczenie (umówienie na czwartek) to gest na karcie, który zrobisz Ty — nie wyliczy się z maili.
+„Do odpisania” = wszystko, czym musisz się zająć: nowe bez kontaktu **i** te, na które klient odpisał. Odroczenie to przycisk z datą i godziną — do tej chwili karta znika z listy, wraca o czasie albo wcześniej, gdy klient napisze. Przycisku jeszcze nie ma.
 
 Na razie nie dociągamy ręcznie pojedynczych maili. Zbieramy przykłady, żeby złapać dziurę, a nie zamazać ją.
 
@@ -108,29 +111,15 @@ Odczyt live: `findOneApplication` po odświeżeniu OAuth CLI. W tej bramce nie b
 
 ## G2 — `copywriting@` u Maćka
 
-**Odczyt 8:** czy skrzynka jest podpięta pod jego konto z sync + SMTP.
-
-Jedna niepodpięta skrzynka wyjaśnia cztery jego zgłoszenia. Kod już zwraca `canSend: false` z komunikatem o `copywriting@`.
-
-**Test odbioru (on, nie my):** otwiera leada, klika Odpowiedz, widzi treść klienta, wysyła — bez komunikatu o braku skrzynki.
-
-**PASS:** Maciek wysłał jeden mail. Jeśli odczyt pokaże, że już podpięta — G2 zamyka się odczytem, nie naprawą.
+**PASS 2026-09-03 (Dawid):** skrzynka jest podpięta pod jego konto. Zostaje odbiór: Maciek wysyła jeden mail przyciskiem Odpowiedz (on, nie my). Bez tej wysyłki G2 jest deklaracją, nie testem.
 
 ---
 
 ## G3 — rotacja dwóch tokenów
 
-Pliki: `integrations/tools/verify_identity_e2e.py` (token sklejany z pięciu fragmentów) oraz `apps/owocni-mail-twenty/vitest.config.ts`. Polecenie z 4 VIII, nigdy niewykonane.
+**3 IX:** literały wycięte z gita (`verify_identity_e2e.py` czyta `TWENTY_API_KEY` z env; `vitest.config.ts` bez JWT). Instrukcja: `G3_TOKEN_ROTATION.md`.
 
-Kolejność wiążąca:
-
-1. Lista konsumentów obu tokenów (także forki, cache, prawdziwe repo — ten checkout historii może nie mieć).
-2. Rotacja.
-3. Skan wykrywający sklejane literały.
-
-Odwrotnie: rotacja zabije integracje, których nie przewidzieliśmy, a drugi token zabije testy.
-
-**PASS:** oba tokeny nieważne w git + historia; nowe w menedżerze haseł; skan czysty.
+Dawid: rotacja w panelu była wcześniej. Żywy klucz workera nadal jest w gitignorowanym `.env.deploy` — nie commitujemy go.
 
 ---
 
@@ -145,7 +134,7 @@ G1 i G2 już zużyły odczyty 1 i 8. Zostaje:
 | 4 | Czym jest byt „do wzięcia” | O-4, widoki, K17 |
 | 5 | Widoczność treści — który kanał ma pełną | G5 Gosia, model skrzynek |
 | 6 | Przynależność maila: uczestnicy czy kanał | F6+F7, P4 |
-| 7 | Etykiety pól w instancji vs plan | A6, R-2, R-3 |
+| 7 | Etykiety pól w instancji vs plan | A6, R-2, R-3 — po rewizji: pole `snoozeUntil` ma dostać etykietę „Odroczenie do”; opis `isFollowUp` ma mówić o kolejce roboty, nie o „tylko klient napisał” |
 | 9 | Liczba kart per owner Twenty vs Bitrix | K1–K2 Maćka |
 | 10 | Czy treść maili jest w globalnej wyszukiwarce | K16, O-3 |
 | 11 | Sufity kierunku + flagi po ostatnim deployu workera | cała P2 i P5 |
@@ -156,25 +145,11 @@ G1 i G2 już zużyły odczyty 1 i 8. Zostaje:
 
 ## G5 — D-2 + stopka (jedno okno, jedna wersja)
 
-Jedyna pozycja, przy której zwłoka produkuje szkodę u klienta.
+**Naprawa 3 IX, wersja 0.1.61.** Zrobione: (1) panel nie nadpisuje message-id z workspace-latest, (2) temat z kontekstu karty jak wcześniej, (4) brak kontekstu / niespełniona walidacja ⇒ bez `In-Reply-To`, (5) serwer: odbiorca musi być uczestnikiem wiadomości. Punkt 3 (zawężenie recents do skrzynek zalogowanego) nie jest potrzebny do bezpieczeństwa wątku — recents nie niosą już id do wątkowania.
 
-Cztery kroki (+ temat, dopisany po weryfikacji):
+Część odpowiedzi u klienta będzie nową wiadomością zamiast wpinki w cudzy wątek. To cel.
 
-1. Usunąć bezwarunkowe nadpisanie identyfikatora wiadomości.
-2. Temat z tego samego kontekstu (Gmail grupuje po temacie; sam ID nie wystarczy).
-3. Zawęzić zapytanie o ostatnie wątki do skrzynek zalogowanego.
-4. Brak kontekstu ⇒ nie wysyłać nagłówka wątkowania.
-5. Walidacja w naszej funkcji serwerowej: skrzynka, wiadomość, wątek, adresat, rekord = jeden łańcuch.
-
-Zawężenie uprawnień aplikacji — **osobna pozycja**, nie punkt w tej.
-
-**Test:** odpowiedź na leada na zewnętrzną skrzynkę testową = nowy wątek albo wątek tego klienta — nigdy cudza rozmowa. Sprawdzać u odbiorcy. Drugi przypadek: świeższy cudzy wątek w workspace.
-
-**Zdanie do zespołu przed deployem:** część odpowiedzi przestanie się wątkować i pojawi się u klienta jako nowa wiadomość. Lepsze niż wpięcie w cudzą rozmowę. 15-sekundowe odliczanie przy „Wyślij” jest dziś jedynym cofnij — jego usunięcie też wymaga zdania (mail może nie wyjść przy zamknięciu panelu).
-
-Jeśli odzyskanie stopki się przeciąga: deploy z repo ze stopką odtworzoną z mapy w `E12_3_EMAIL_SIGNATURES_DECISION`. Utrata stopki jest widoczna i odwracalna; wpięcie w cudzą rozmowę nie.
-
-**PASS:** test u odbiorcy + Marta potwierdza stopkę przy *odpowiedzi* (nie tylko nowej wiadomości).
+**PASS:** test u odbiorcy (odpowiedź na leada ≠ cudza rozmowa) + Marta potwierdza stopkę przy *odpowiedzi*.
 
 ---
 
@@ -182,12 +157,13 @@ Jeśli odzyskanie stopki się przeciąga: deploy z repo ze stopką odtworzoną z
 
 Jedno okno, jedno ogłoszenie, odbiór przez Martę, Gosię i Maćka.
 
-- Rozdzielić: własna skrzynka / podgląd `studio@` / `leads@` tam gdzie ma być (nie u Marty i Gosi).
-- Przestawić kryterium przynależności z uczestników na kanał — bez tego rozdzielenie jest pozorne.
-- Test wycieku treści: adres podglądowy w kopii nie może odsłonić korespondencji handlowej całej firmie (reguła platformy jest zbiorcza).
-- Byt „do wzięcia” — dopiero po odczycie 4. Jeśli to opcja etapu, usunięcie zeruje etap na kartach.
+- `leads@` zdjęte z podglądów Marty, Gosi i Ewy (zrobione 3 IX). Robert nie miał LEADS.
+- `studio@` **zostaje w tym samym widoku** co własna skrzynka (Dawid, 3 IX, potwierdzone). Osobnej zakładki nie robimy.
+- Przestawić kryterium przynależności z uczestników na kanał — bez tego Marta nadal „jest przypisywana do wiadomości ze studio@”.
+- Test wycieku treści: adres podglądowy w kopii nie może odsłonić korespondencji handlowej całej firmie.
+- Byt „do wzięcia” = **widok tabeli** Opportunity `fc2d2e30-…` (ikona ręki, jak Biorę). Nie jest opcją etapu — usunięcie widoku **nie** zeruje kart. Przycisk Biorę to osobny pinned workflow; Twenty nie umie go schować po wykonaniu.
 
-**PASS:** Marta widzi u siebie własną korespondencję, studio w osobnej zakładce, `leads@` nigdzie. Gosia to samo. Maciek — `copywriting@` + studio, bez cudzych leadów w „moich”.
+**PASS:** Marta/Gosia/Ewa widzą własną + studio, `leads@` nigdzie. Maciek — `copywriting@` + studio, bez cudzych leadów w „moich”.
 
 ---
 
@@ -197,24 +173,19 @@ Jedna funkcja, jedna rewizja. Każdy redeploy unieważnia odczyt flag (odczyt 11
 
 Wchodzi tu m.in. wejście leada, ponowienia, kolejka, dyspozytor, kierunek, notatka, scalanie. Sitko `studio@` **tylko** jeśli Mariusz odhaczył A/B/C.
 
+**Odroczenie** (przycisk + budzik): decyzja zamknięta, `ODROCZENIE_DECISION.md`. Nie w tym oknie, dopóki G4 odczyt 7 nie padnie. Potem: pinned workflow jak Biorę (form datetime) + worker IN kasuje `snoozeUntil` + job budzenia tylko otwartych. OUT daty nie rusza.
+
 Nie w tym oknie: operacje masowe na historii (G9).
 
 **PASS:** smoke na Godlewskim (albo świadomy wyjątek z karty) + jeden nowy mail na `leads@` + regresja „istniejąca otwarta sprawa nie robi drugiej karty”.
 
 ---
 
-## G8 — przycisk Biorę (P3)
+## G8 — przycisk Biorę / zegar (P3)
 
-Poza godzinami. Fail-closed: włączenie zegara bez aktualizacji definicji zatrzyma przycisk.
+**3 IX:** oddawanie kart (failover Marta↔Gosia) **wstrzymane** (`LEAD_DISPATCH_FAILOVER_ENABLED=false`). Przydział przy nowym leadzie zostaje. Biorę zostaje. Dyskusja z zespołem, potem ewentualnie włączamy z powrotem.
 
-Blokady, które zostają:
-
-- pierwszy kontakt z każdego kanału **przed** przeliczeniem kolejki **i przed** włączeniem zegara (Maciek odpisuje z BB — bez tego K7 kłamie),
-- Maciek dostał model (G0),
-- eskalacja naprawdę wysyła, nie tylko pisze do logu,
-- limit trzech liczy kontakt nie tylko z maila Twenty.
-
-**PASS:** Marta klika Biorę — Maciek widzi właściciela na kafelku i nie odpisuje „w ciemno”. Scenariusz „kliknę o 4 rano wszystko” nie gasi eskalacji.
+Build workera: `2026-09-03-failover-paused`.
 
 ---
 
@@ -225,9 +196,9 @@ Każda pojedynczo, ze snapshotem i przebiegiem próbnym. Nigdy w parze.
 Kolejność robocza (do potwierdzenia po G4):
 
 1. Korekta kierunku (sufity z odczytu 11).
-2. Przeliczenie kolejki „Do odpisania” wg R-3 i R-4 — nie `--new-only`.
+2. Przeliczenie kolejki „Do odpisania” wg R-3 (kolejka roboty, nowe zostają ON) i R-4 — nie `--new-only`; nie gasić NEW.
 3. Historia poczty od 2023 — **zablokowane przez O-5** (zakaz emisji przy masowych nie ma implementacji).
-4. Import IMAP z BB (B62) — apply po preflighcie, nie odwrotnie.
+4. Import IMAP z BB (B62) — **pt 4.09 rano: test 10 szt.**; weekend C-Δ same-mailbox po PASS ([`WEEKEND_CDELTA_MAIL_IMPORT.md`](./WEEKEND_CDELTA_MAIL_IMPORT.md)). C2/R-6 nie w tym oknie.
 
 **PASS:** per operacja: liczby przed/po + jedna osoba z zespołu na swojej skrzynce.
 
@@ -240,8 +211,8 @@ Kolejność robocza (do potwierdzenia po G4):
 | O-1 | BB tylko odczyt czy zapas? | Dawid 3 IX | **Nie zapas.** Maciek na Twenty. Awaria wysyłki → Thunderbird z `copywriting@`. BB nie pisze Sent na IMAP — to dziura, nie backup. |
 | O-2 | Auto-karta na `studio@` / `gosia@` / `marta@`? | Mariusz (karta A/B/C) | Imienne: nie. Studio: czeka |
 | O-3 | Pisemna lista czego system nie robi | Dawid, 1 strona | Najtańsza; dodać wyszukiwarkę treści i granicę formatowania IN |
-| O-4 | Czym jest „do wzięcia”? | Odczyt 4, potem decyzja | Nie usuwać w ciemno |
-| O-5 | Zakaz emisji przy masowych | Dawid + Mariusz | Albo wyłącznik, albo jawne zawężenie niezmiennika — blokuje historię |
+| O-4 | Czym jest „do wzięcia”? | **Odpowiedź 3 IX:** widok tabeli Opportunity `fc2d2e30-…`, nie etap. Biorę Twenty nie schowa po kliknięciu. Szczegóły: `O4_DO_WZIECIA.md` | Widok można ukryć bez zerowania kart. |
+| O-5 | Zakaz emisji przy masowych | Dawid + Mariusz | Karta do akceptacji: `BB_MAIL_IMPORT_RISKS_DECISION.md` (zawężenie `no_emit` z konstrukcji vs czekanie na kill-switch). Bez tej decyzji G9.historia stoi. |
 | O-6 | Uprawnienia rekordowe (taryfa) | Mariusz | Nie. Koliduje z „widzisz ≠ jesteś właścicielem” |
 
 ---

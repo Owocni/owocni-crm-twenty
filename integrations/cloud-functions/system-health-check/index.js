@@ -19,7 +19,7 @@ const {
 } = require("./evaluate");
 const { sendHealthEmail } = require("./email");
 
-const BUILD_ID = "2026-08-21-health-n8n";
+const BUILD_ID = "2026-09-01-health-form-witness";
 
 function gateOpen() {
   const until = process.env.HEALTH_GATE_UNTIL;
@@ -33,6 +33,7 @@ async function collectReport() {
   const [n8n, schedulers] = await Promise.all([probeN8n(), probeSchedulers()]);
   const items = [];
   const twentyByInstance = {};
+  let formFlow = null;
 
   if (!instances.length) {
     items.push({
@@ -56,6 +57,9 @@ async function collectReport() {
       ok: !twenty.error,
       workflowCount: (twenty.workflows || []).length,
     };
+    if (!formFlow && twenty.formFlow) {
+      formFlow = twenty.formFlow;
+    }
     items.push(
       ...evaluateInstance({
         instance: instance.id,
@@ -69,6 +73,7 @@ async function collectReport() {
     ...evaluateShared({
       n8n,
       schedulers: schedulers.jobs || [],
+      formFlow,
     }),
   );
 

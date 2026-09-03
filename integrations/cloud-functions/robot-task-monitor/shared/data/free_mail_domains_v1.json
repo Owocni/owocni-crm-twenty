@@ -1,0 +1,5591 @@
+{
+ "schema": "owocni/free_mail_domains/v1",
+ "version": "1.0.0",
+ "generated": "2026-07-15",
+ "purpose": "Domeny, dla ktorych CRM NIE ustawia company_domain_key (zakaz auto-mintowania/laczenia firmy po domenie e-maila).",
+ "usage": "is_free_mail(domain_reg) := domain_reg in domains OR any(pattern.match(domain_reg)). Wejscie MUSI byc juz znormalizowane do eTLD+1 przez Public Suffix List.",
+ "tiers": {
+  "A": "czysty freemail/portal - blokada twarda, ryzyko false-positive ~zero",
+  "B": "ISP/telco/hosting - domena dual-use (abonenci + pracownicy operatora); blokujemy mimo to, patrz rozdz. 2 i 7.1"
+ },
+ "confidence": {
+  "high": "pewne",
+  "med": "prawdopodobne, odtworzone z pamieci - zweryfikuj przed uzyciem krytycznym",
+  "low": "niepewne, moze juz nie istniec - zostawione bo martwa domena w denyliscie nie szkodzi"
+ },
+ "never_block": [
+  "google.com",
+  "microsoft.com",
+  "apple.com",
+  "orange.com",
+  "telekom.de",
+  "vodafone.com",
+  "bt.com",
+  "t-mobile.com",
+  "sfr.com",
+  "telefonica.com",
+  "proximus.com"
+ ],
+ "patterns_optional": true,
+ "patterns": [
+  {
+   "re": "^(hotmail|outlook|live|msn)\\.[a-z]{2,3}(\\.[a-z]{2,3})?$",
+   "provider": "microsoft",
+   "tier": "A"
+  },
+  {
+   "re": "^(yahoo|ymail|rocketmail)\\.[a-z]{2,3}(\\.[a-z]{2,3})?$",
+   "provider": "yahoo",
+   "tier": "A"
+  },
+  {
+   "re": "^gmx\\.[a-z]{2,3}(\\.[a-z]{2,3})?$",
+   "provider": "gmx",
+   "tier": "A"
+  },
+  {
+   "re": "^fastmail\\.[a-z]{2,3}(\\.[a-z]{2,3})?$",
+   "provider": "fastmail",
+   "tier": "A"
+  },
+  {
+   "re": "^yandex\\.[a-z]{2,3}(\\.[a-z]{2,3})?$",
+   "provider": "yandex",
+   "tier": "A"
+  },
+  {
+   "re": "^interia\\.(pl|eu|com)$",
+   "provider": "interia",
+   "tier": "A"
+  },
+  {
+   "re": "^(protonmail|proton)\\.(com|ch|me)$",
+   "provider": "proton",
+   "tier": "A"
+  },
+  {
+   "re": "^(tutanota|tutamail|tuta)\\.(com|de|io)$",
+   "provider": "tuta",
+   "tier": "A"
+  }
+ ],
+ "count": 918,
+ "domains": {
+  "10g.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "126.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "150mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "150ml.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "163.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "16mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "1gb.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "2-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "21cn.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "4email.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "50mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "9online.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "a1.net": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "abv.bg": {
+   "p": "BG",
+   "t": "A",
+   "r": "BG",
+   "c": "high"
+  },
+  "accountant.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "activist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "adexec.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "adresik.net": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "aim.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "akcja.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "alice.fr": {
+   "p": "FR - Free / Iliad",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "alice.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "aliceadsl.fr": {
+   "p": "FR - Free / Iliad",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "aliyun.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "allergist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "allmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "alumni.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "alumnidirector.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ameritech.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "amorki.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "aol.co.uk": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aol.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aol.de": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aol.es": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aol.fr": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aol.it": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aon.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "apollo.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "archaeologist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "arcor.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "arcticmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "artlover.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "asia.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "aster.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "astercity.net": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "atheist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "atlanticbb.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "atlas.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "atlas.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "att.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "auctioneer.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "autograf.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "autorambler.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "az.pl": {
+   "p": "PL - hosting (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "med"
+  },
+  "azet.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "bahnhof.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "bartender.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "base.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "bbox.fr": {
+   "p": "FR - Bouygues",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "belgacom.net": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "bell.net": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "bellsouth.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "bestmail.us": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "biglobe.ne.jp": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "bigmir.net": {
+   "p": "UA",
+   "t": "A",
+   "r": "UA",
+   "c": "high"
+  },
+  "bigpond.com": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "bigpond.net.au": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "bikerider.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "birdlover.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "bk.ru": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "blu.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "bluemail.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "bluewin.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "blueyonder.co.uk": {
+   "p": "UK - Virgin Media",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "bol.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "box43.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "bredband.net": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "brew-master.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "broadpark.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "btconnect.com": {
+   "p": "UK - BT",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "btinternet.com": {
+   "p": "UK - BT",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "btopenworld.com": {
+   "p": "UK - BT",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "buziaczek.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "c2i.net": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "cableone.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "caiway.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "caramail.com": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "caramail.fr": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "casema.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "cash4u.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "catlover.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cegetel.net": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "centras.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "centrum.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "centrum.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "centurylink.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "charter.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "cheerful.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "chef.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "chello.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "chello.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "chello.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "chello.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "chello.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "chello.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "chello.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "chemist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "chez.com": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "chinamail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "citromail.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "clerk.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "clicknet.ro": {
+   "p": "RO",
+   "t": "B",
+   "r": "RO",
+   "c": "med"
+  },
+  "clix.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "club-internet.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "cluemail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cmoki.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "cogeco.ca": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "collector.org": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "columnist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "comcast.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "comhem.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "comic.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "compuserve.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "computer4u.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "consultant.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "contractor.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "coolsite.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "counsellor.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cox.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "cs.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cutey.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cyber-wizard.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cyberdude.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cybergal.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "cyberservices.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dallasmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "daum.net": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "delfi.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "delfi.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "deliveryman.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dialog.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "diplomats.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dir.bg": {
+   "p": "BG",
+   "t": "A",
+   "r": "BG",
+   "c": "high"
+  },
+  "disciples.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dnainternet.net": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "dobramama.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "dobrytata.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "docomo.ne.jp": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "doctor.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "doglover.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "doramail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dr.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "dublin.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "duck.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "earthling.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "earthlink.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "eastlink.ca": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "edpnet.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "eir.ie": {
+   "p": "IE - ISP",
+   "t": "B",
+   "r": "IE",
+   "c": "med"
+  },
+  "eircom.net": {
+   "p": "IE - ISP",
+   "t": "B",
+   "r": "IE",
+   "c": "med"
+  },
+  "elisanet.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "elitemail.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "elvisfan.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "email.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "email.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "email.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "emailcorner.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "emailengine.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "emailengine.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "emailgroups.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "emailplus.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "emailuser.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "embarqmail.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "eml.cc": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "engineer.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "epix.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "era.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "eresmas.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "eunet.rs": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "europe.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "euskaltel.net": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "ewetel.net": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "execs.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ezweb.ne.jp": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "f-m.fm": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fajne.to": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "fastmail.ca": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.co.uk": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "fastmail.de": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.es": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.fm": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "fastmail.fr": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.in": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.jp": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.mx": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.nl": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.se": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.to": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastmail.us": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastservice.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fastwebnet.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "fea.st": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "feelings.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fejm.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "financier.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fireman.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "flash.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "fmail.co.uk": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fmgirl.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "fmguy.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "forthnet.gr": {
+   "p": "GR",
+   "t": "A",
+   "r": "GR",
+   "c": "med"
+  },
+  "foxmail.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "free.fr": {
+   "p": "FR - Free / Iliad",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "freemail.gr": {
+   "p": "GR",
+   "t": "A",
+   "r": "GR",
+   "c": "med"
+  },
+  "freemail.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "freenet.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "freeserve.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "freesurf.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "freesurf.fr": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "frisurf.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "frontier.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "fsnet.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "games.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "gardener.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "gawab.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "gazeta.pl": {
+   "p": "Agora",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "gbg.bg": {
+   "p": "BG",
+   "t": "A",
+   "r": "BG",
+   "c": "high"
+  },
+  "gci.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "geologist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "get2net.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "getmail.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "globo.com": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "globomail.com": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "glocalnet.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "gmail.com": {
+   "p": "Google",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "gmx.at": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.biz": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.ch": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.co.uk": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.com": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.de": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.eu": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.fr": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.info": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.li": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.net": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.org": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.tm": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "gmx.us": {
+   "p": "United Internet - GMX",
+   "t": "A",
+   "r": "DE/GLOBAL",
+   "c": "high"
+  },
+  "go2.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "googlemail.com": {
+   "p": "Google",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "graduate.org": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "graphic-designer.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "greenmail.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "groupmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hackermail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hailmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hairdresser.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hanmail.net": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "hetnet.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "hispeed.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "hoga.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "hol.gr": {
+   "p": "GR",
+   "t": "A",
+   "r": "GR",
+   "c": "med"
+  },
+  "home.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "home.pl": {
+   "p": "PL - hosting (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "med"
+  },
+  "home.ro": {
+   "p": "RO",
+   "t": "B",
+   "r": "RO",
+   "c": "med"
+  },
+  "home.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "hot-shot.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hot.ee": {
+   "p": "EE",
+   "t": "A",
+   "r": "EE",
+   "c": "med"
+  },
+  "hotmail.at": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.be": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.ca": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.ch": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.il": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.jp": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.kr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.nz": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.th": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.co.uk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "hotmail.com.ar": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.com.au": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.com.br": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.com.mx": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.com.tr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.cz": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.de": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.dk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.es": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.fi": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.fr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.gr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.hu": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.it": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.nl": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.no": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.ru": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "hotmail.se": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "htp-tel.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "hu.inter.net": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high",
+   "psl_collapses_to": "inter.net"
+  },
+  "hush.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "hushmail.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "hushmail.me": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "i.ua": {
+   "p": "UA",
+   "t": "A",
+   "r": "UA",
+   "c": "high"
+  },
+  "icloud.com": {
+   "p": "Apple",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "icpnet.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "ifrance.com": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "ig.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "iinet.net.au": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "image.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "imap-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "imap.cc": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "imapmail.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "in.gr": {
+   "p": "GR",
+   "t": "A",
+   "r": "GR",
+   "c": "med"
+  },
+  "iname.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "inbox.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "inbox.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "inbox.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "inbox.ru": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "indamail.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "indiatimes.com": {
+   "p": "IN",
+   "t": "A",
+   "r": "IN",
+   "c": "med"
+  },
+  "indigo.ie": {
+   "p": "IE - ISP",
+   "t": "B",
+   "r": "IE",
+   "c": "med"
+  },
+  "inea.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "inet.hr": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "infinito.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "infonie.fr": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "inmail.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "innocent.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "inode.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "inorbit.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "inoutbox.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "insightbb.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "instruction.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "instructor.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "insurer.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "int.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "interfree.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "interia.com": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "interia.eu": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "interia.pl": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "interiowy.pl": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "internet-e-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "internet-mail.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "internet.ru": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "internetemails.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "internetia.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "internetmailing.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "internode.on.net": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med",
+   "psl_collapses_to": "on.net"
+  },
+  "intmail.pl": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "invitel.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "inwind.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "iol.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "iol.ie": {
+   "p": "IE - ISP",
+   "t": "B",
+   "r": "IE",
+   "c": "med"
+  },
+  "iol.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "iol.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "irelandmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "israelmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "italymail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "jadamspam.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "jazzfree.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "jazztel.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "jetemail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "job4u.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "journalist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "jubii.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "jumpy.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "juno.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "kabelmail.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "kabsi.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "katamail.com": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "keemail.me": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "keromail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "kissfans.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "kittymail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "kolumbus.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "koreamail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "kozacki.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "kpnmail.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "kpnplanet.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "laposte.net": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "latinmail.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "latnet.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "lawyer.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "legislator.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "lenta.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "letterboxes.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "libero.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "libertysurf.fr": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "lineone.net": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "linuxmail.org": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "list.ru": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "live.at": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.be": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.ca": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.cl": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.cn": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.co.uk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "live.com.ar": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.com.au": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.com.mx": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.com.pt": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.de": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.dk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.fi": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.fr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.ie": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.it": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.jp": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.nl": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.no": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.ru": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "live.se": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "liwest.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "lobbyist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "love.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "lovecat.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "luukku.com": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "lycos.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "lycos.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "lycos.fr": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "lykamspam.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "mac.com": {
+   "p": "Apple",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "madonnafan.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mageos.com": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "mail-central.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mail-me.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mail-page.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mail.bg": {
+   "p": "BG",
+   "t": "A",
+   "r": "BG",
+   "c": "high"
+  },
+  "mail.by": {
+   "p": "BY",
+   "t": "A",
+   "r": "BY",
+   "c": "med"
+  },
+  "mail.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "mail.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "mail.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "mail.ee": {
+   "p": "EE",
+   "t": "A",
+   "r": "EE",
+   "c": "med"
+  },
+  "mail.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "mail.ru": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "mailandftp.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailas.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailbolt.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailbox.org": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "mailc.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailcan.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailforce.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailftp.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailhaven.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailingaddress.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailite.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailmight.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailmix.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "mailnew.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailplus.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "mailsent.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailservice.ms": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailup.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mailworks.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "marchmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mchsi.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "me.com": {
+   "p": "Apple",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "meo.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "meta.ua": {
+   "p": "UA",
+   "t": "A",
+   "r": "UA",
+   "c": "high"
+  },
+  "metrocast.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "mindspring.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "minister.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mixbox.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "mixmail.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "ml1.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mm.st": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "moscowmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "movistar.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "msn.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "msn.de": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "multimania.fr": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "multimedia.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "munich.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "musician.org": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "muslim.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mweb.co.za": {
+   "p": "ZA / MEA",
+   "t": "A",
+   "r": "MEA",
+   "c": "med"
+  },
+  "my.com": {
+   "p": "VK / Mail.ru",
+   "t": "A",
+   "r": "RU",
+   "c": "high"
+  },
+  "mybox.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "myfastmail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mymacmail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "mynet.com": {
+   "p": "TR",
+   "t": "A",
+   "r": "TR",
+   "c": "med"
+  },
+  "myrambler.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "myself.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "narod.ru": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "nate.com": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "naver.com": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "navigator.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "nazwa.pl": {
+   "p": "PL - hosting (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "med"
+  },
+  "neostrada.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "net-shopping.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "net.hr": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "netcabo.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "netcologne.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "netcourrier.com": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "neti.ee": {
+   "p": "EE",
+   "t": "A",
+   "r": "EE",
+   "c": "med"
+  },
+  "netia.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "netlab.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "netscape.net": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "netti.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "netzero.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "neuf.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "nexgo.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "nextgentel.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "nifty.com": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "nightmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ninfan.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "nomade.fr": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "nonpartisan.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "noos.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "nordnet.fr": {
+   "p": "FR - Orange / Wanadoo",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "nos.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "nospammail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "notowany.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "ntlworld.com": {
+   "p": "UK - Virgin Media",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "numericable.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "nycmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "o2.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "o2.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "ocn.ne.jp": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "ogarnij.se": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "oi.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "one.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "one.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "onet.com.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "onet.eu": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "onet.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "oninet.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "online.de": {
+   "p": "United Internet - web.de / 1&1",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "online.ee": {
+   "p": "EE",
+   "t": "A",
+   "r": "EE",
+   "c": "med"
+  },
+  "online.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "online.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "online.ua": {
+   "p": "UA",
+   "t": "A",
+   "r": "UA",
+   "c": "high"
+  },
+  "ono.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "op.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "open.by": {
+   "p": "BY",
+   "t": "A",
+   "r": "BY",
+   "c": "med"
+  },
+  "operamail.com": {
+   "p": "Pozostale globalne freemail",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "opoczta.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "optician.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "optonline.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "optusnet.com.au": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "orange.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "orange.fr": {
+   "p": "FR - Orange / Wanadoo",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "orange.net": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "orange.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "orangemail.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "orthodontist.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "os.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "osnanet.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "otenet.gr": {
+   "p": "GR",
+   "t": "A",
+   "r": "GR",
+   "c": "med"
+  },
+  "outlook.at": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.be": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.cl": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.co.id": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.co.il": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.co.nz": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.co.th": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "outlook.com.au": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com.br": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com.gr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com.pe": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com.tr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.com.vn": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.cz": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.de": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.dk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.es": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.fr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.hu": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.ie": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.in": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.it": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.jp": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.kr": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.lv": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.my": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.ph": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.pt": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.sa": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.sg": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "outlook.sk": {
+   "p": "Microsoft - warianty ccTLD",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ownmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "pacbell.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "pacz.to": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "pandora.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "passagen.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "passport.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "pediatrician.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "personal.ro": {
+   "p": "RO",
+   "t": "B",
+   "r": "RO",
+   "c": "med"
+  },
+  "petlover.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "petml.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "pf.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "photographer.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "physicist.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "pisz.to": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "planet.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "planetmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "planetmail.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "plus.net": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "plus.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "plusnet.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "pm.me": {
+   "p": "Proton",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "pobox.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "poczta.fm": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "poczta.onet.eu": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high",
+   "psl_collapses_to": "onet.eu"
+  },
+  "poczta.onet.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high",
+   "psl_collapses_to": "onet.pl"
+  },
+  "poczta.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "poczta.wp.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high",
+   "psl_collapses_to": "wp.pl"
+  },
+  "polandmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "politician.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "post.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "post.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "post.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "post.tele.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med",
+   "psl_collapses_to": "tele.dk"
+  },
+  "posteo.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "posteo.net": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "postinbox.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "postpro.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "pp.inet.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med",
+   "psl_collapses_to": "inet.fi"
+  },
+  "presidency.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "priest.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "priv.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "privat.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "prodigy.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "prodigy.net.mx": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "programmer.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "proinbox.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "prokonto.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "promessage.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "proton.me": {
+   "p": "Proton",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "protonmail.ch": {
+   "p": "Proton",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "protonmail.com": {
+   "p": "Proton",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "proximus.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "ptd.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "publicist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "qq.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "qualityservice.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "quick.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "quicknet.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "r0.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "radiologist.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "rambler.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "ravemail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "rdslink.ro": {
+   "p": "RO",
+   "t": "B",
+   "r": "RO",
+   "c": "med"
+  },
+  "realemail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "reallyfast.biz": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "reallyfast.info": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "realtyagent.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "rediffmail.com": {
+   "p": "IN",
+   "t": "A",
+   "r": "IN",
+   "c": "med"
+  },
+  "reggaefan.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "registerednurses.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "reincarnate.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "religious.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "repairman.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "representative.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "rescueteam.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "retemail.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "revenue.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ro.ru": {
+   "p": "Rambler",
+   "t": "A",
+   "r": "RU",
+   "c": "med"
+  },
+  "roadrunner.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "rocketmail.com": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "rocketship.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "rogers.com": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "romantyczka.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "rr.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "rubikon.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "rushpost.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "safrica.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "saintly.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "salesperson.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "samerica.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sanfranmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sapo.pt": {
+   "p": "PT",
+   "t": "A",
+   "r": "PT",
+   "c": "med"
+  },
+  "satfilm.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "saunalahti.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "sbcglobal.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "scarlet.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "sci.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "scientist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "scotlandmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "secretary.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "seductive.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sent.as": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sent.at": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sent.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "serwus.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "seznam.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "sferia.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "sfr.fr": {
+   "p": "FR - SFR / Numericable",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "shaw.ca": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "sify.com": {
+   "p": "IN",
+   "t": "A",
+   "r": "IN",
+   "c": "med"
+  },
+  "sina.cn": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "sina.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "siol.net": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "sky.com": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "skynet.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "snakebite.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "socialworker.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "sociologist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "softbank.ne.jp": {
+   "p": "JP / KR",
+   "t": "A",
+   "r": "JP/KR",
+   "c": "med"
+  },
+  "sohu.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "sol.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "solution4u.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "songwriter.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "spainmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "speedymail.org": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "spoko.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "spray.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "spray.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "ssl-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "starman.ee": {
+   "p": "EE",
+   "t": "A",
+   "r": "EE",
+   "c": "med"
+  },
+  "start.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "stofanet.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "stonline.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  },
+  "student.pl": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "suddenlink.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "sunrise.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "suomi24.fi": {
+   "p": "FI",
+   "t": "B",
+   "r": "FI",
+   "c": "med"
+  },
+  "supanet.com": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "superbox.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "supereva.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "superonline.com": {
+   "p": "TR",
+   "t": "A",
+   "r": "TR",
+   "c": "med"
+  },
+  "swbell.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "swift-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "swing.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "swipnet.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "swissonline.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "sympatico.ca": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "szeptem.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "t-mobile.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "t-online.de": {
+   "p": "DE - freemail",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "t-online.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "takas.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "talk21.com": {
+   "p": "UK - BT",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "talktalk.net": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "tdcadsl.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "teachers.org": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "tech-center.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "techie.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "techno-link.com": {
+   "p": "BG",
+   "t": "A",
+   "r": "BG",
+   "c": "high"
+  },
+  "technologist.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "tele2.fr": {
+   "p": "FR - do weryfikacji",
+   "t": "A",
+   "r": "FR",
+   "c": "low"
+  },
+  "tele2.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "tele2.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "tele2.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "telefonica.net": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "teleline.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "telemach.net": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "telenet.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "telenor.no": {
+   "p": "NO",
+   "t": "B",
+   "r": "NO",
+   "c": "med"
+  },
+  "teletu.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "telewest.co.uk": {
+   "p": "UK - Virgin Media",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "telfort.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "telia.com": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "telia.se": {
+   "p": "SE",
+   "t": "B",
+   "r": "SE",
+   "c": "med"
+  },
+  "telkomsa.net": {
+   "p": "ZA / MEA",
+   "t": "A",
+   "r": "MEA",
+   "c": "med"
+  },
+  "telus.net": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "tenbit.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "terra.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "terra.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "the-fastest.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "the-quickest.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "theinternetemail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "theplate.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "therapist.net": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "theweb2mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "tim.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "tin.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "tiscali.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "tiscali.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "tiscali.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "tiscali.fr": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "tiscali.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "tlen.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "toke.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "tom.com": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "toothfairy.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "toya.net.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "toya.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "tpg.com.au": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "ttmail.com": {
+   "p": "TR",
+   "t": "A",
+   "r": "TR",
+   "c": "med"
+  },
+  "tut.by": {
+   "p": "BY",
+   "t": "A",
+   "r": "BY",
+   "c": "med"
+  },
+  "tuta.com": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "tuta.io": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "tutamail.com": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "tutanota.com": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "tutanota.de": {
+   "p": "Tuta (Tutanota)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "tvnet.lv": {
+   "p": "LV",
+   "t": "A",
+   "r": "LV",
+   "c": "med"
+  },
+  "tvstar.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "twc.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "ukr.net": {
+   "p": "UA",
+   "t": "A",
+   "r": "UA",
+   "c": "high"
+  },
+  "umpire.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "unitybox.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "uol.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "upc.com.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "upcmail.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "upcmail.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "upcpoczta.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "usa.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "utanet.at": {
+   "p": "AT - freemail / ISP",
+   "t": "B",
+   "r": "AT",
+   "c": "med"
+  },
+  "uymail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "vectra.pl": {
+   "p": "PL - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "PL",
+   "c": "high"
+  },
+  "verizon.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "versanet.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "versatel.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "videotron.ca": {
+   "p": "CA - ISP (dual-use)",
+   "t": "B",
+   "r": "CA",
+   "c": "med"
+  },
+  "vip.hr": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "vip.interia.pl": {
+   "p": "Grupa Interia",
+   "t": "A",
+   "r": "PL",
+   "c": "high",
+   "psl_collapses_to": "interia.pl"
+  },
+  "vipmail.hu": {
+   "p": "HU",
+   "t": "A",
+   "r": "HU",
+   "c": "high"
+  },
+  "virgilio.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "virgin.net": {
+   "p": "UK - Virgin Media",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "virginmedia.com": {
+   "p": "UK - Virgin Media",
+   "t": "B",
+   "r": "UK",
+   "c": "high"
+  },
+  "vodafone.de": {
+   "p": "DE - telco / ISP (dual-use)",
+   "t": "B",
+   "r": "DE",
+   "c": "med"
+  },
+  "vodafone.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "voila.fr": {
+   "p": "FR - Orange / Wanadoo",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "volja.net": {
+   "p": "HR / SI / RS",
+   "t": "A",
+   "r": "EU-SE",
+   "c": "med"
+  },
+  "volny.cz": {
+   "p": "CZ",
+   "t": "A",
+   "r": "CZ",
+   "c": "high"
+  },
+  "voo.be": {
+   "p": "BE",
+   "t": "B",
+   "r": "BE",
+   "c": "high"
+  },
+  "vp.pl": {
+   "p": "Onet (Ringier Axel Springer)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "vtxnet.ch": {
+   "p": "CH - freemail / ISP",
+   "t": "B",
+   "r": "CH",
+   "c": "med"
+  },
+  "wanadoo.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "wanadoo.es": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "wanadoo.fr": {
+   "p": "FR - Orange / Wanadoo",
+   "t": "B",
+   "r": "FR",
+   "c": "high"
+  },
+  "wanadoo.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "warpmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "web.de": {
+   "p": "United Internet - web.de / 1&1",
+   "t": "A",
+   "r": "DE",
+   "c": "high"
+  },
+  "webmail.co.za": {
+   "p": "ZA / MEA",
+   "t": "A",
+   "r": "MEA",
+   "c": "med"
+  },
+  "webname.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "webspeed.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "wind.it": {
+   "p": "IT",
+   "t": "A",
+   "r": "IT",
+   "c": "high"
+  },
+  "windowslive.com": {
+   "p": "Microsoft - rdzen",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "windstream.net": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "wir.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "worker.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "workmail.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "worldonline.fr": {
+   "p": "FR - freemail",
+   "t": "A",
+   "r": "FR",
+   "c": "high"
+  },
+  "wow.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "wowway.com": {
+   "p": "US - ISP (dual-use)",
+   "t": "B",
+   "r": "US",
+   "c": "high"
+  },
+  "wp.eu": {
+   "p": "PL - pozostale portale / freemail",
+   "t": "A",
+   "r": "PL",
+   "c": "med"
+  },
+  "wp.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "writeme.com": {
+   "p": "mail.com - domeny vanity (FALSE CORPORATE!)",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "xboxer.pl": {
+   "p": "Wirtualna Polska (WP / o2 / tlen)",
+   "t": "A",
+   "r": "PL",
+   "c": "high"
+  },
+  "xs4all.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "xsmail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "xtra.co.nz": {
+   "p": "AU / NZ - ISP (dual-use)",
+   "t": "B",
+   "r": "AU/NZ",
+   "c": "med"
+  },
+  "ya.com": {
+   "p": "ES",
+   "t": "A",
+   "r": "ES",
+   "c": "high"
+  },
+  "ya.ru": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.at": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.be": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.ca": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.ch": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.cl": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.cn": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.id": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.in": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.jp": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.kr": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.nz": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.th": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.uk": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.co.za": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.ar": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.au": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.br": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.cn": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.co": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.hk": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.mx": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.my": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.pe": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.ph": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.sg": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.tr": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.tw": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.ve": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.com.vn": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.cz": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.de": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.dk": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.es": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.fi": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.fr": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.gr": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.hu": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.ie": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.in": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.it": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.nl": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.no": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.pl": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.pt": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.ro": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yahoo.se": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.by": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.com": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.com.tr": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.kz": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.ru": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yandex.ua": {
+   "p": "Yandex",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "yeah.net": {
+   "p": "CN",
+   "t": "A",
+   "r": "CN",
+   "c": "high"
+  },
+  "yepmail.net": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ygm.com": {
+   "p": "AOL",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "ymail.com": {
+   "p": "Yahoo",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "youmail.dk": {
+   "p": "DK",
+   "t": "B",
+   "r": "DK",
+   "c": "med"
+  },
+  "your-mail.com": {
+   "p": "Fastmail - domeny aliasowe",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "med"
+  },
+  "zebra.lt": {
+   "p": "LT",
+   "t": "A",
+   "r": "LT",
+   "c": "med"
+  },
+  "zen.co.uk": {
+   "p": "UK - pozostali ISP",
+   "t": "B",
+   "r": "UK",
+   "c": "med"
+  },
+  "ziggo.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "zipmail.com.br": {
+   "p": "BR / LATAM",
+   "t": "A",
+   "r": "LATAM",
+   "c": "med"
+  },
+  "zoho.com": {
+   "p": "Zoho",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "zoho.eu": {
+   "p": "Zoho",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "zohomail.com": {
+   "p": "Zoho",
+   "t": "A",
+   "r": "GLOBAL",
+   "c": "high"
+  },
+  "zonnet.nl": {
+   "p": "NL",
+   "t": "B",
+   "r": "NL",
+   "c": "high"
+  },
+  "zoznam.sk": {
+   "p": "SK",
+   "t": "A",
+   "r": "SK",
+   "c": "high"
+  }
+ }
+}

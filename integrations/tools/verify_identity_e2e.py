@@ -3,24 +3,58 @@
 from __future__ import annotations
 
 import json
+import os
 import random
 import sys
 import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
-TWENTY_KEY = (
-    "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBiZjg2YmY5LTVhNTgtNGRmYi1iMWZhLWVmOWYzYTk2ODRhMCJ9."
-    "eyJzdWIiOiIyNTM0YjE5My01NTIzLTRlOWQtYjQ1Yy1hZTczODE4ZGM3MjQiLCJ0eXBlIjoiQVBJX0tFWSIsIndvcmtzcGFjZUlkIjoi"
-    "MjUzNGIxOTMtNTUyMy00ZTlkLWI0NWMtYWU3MzgxOGRjNzI0IiwiaWF0IjoxNzgwOTE1MDYyLCJleHAiOjQ5MzQ0Mjg2NjEsImp0aSI6"
-    "ImEzNGQ4NzQzLTJjMjgtNGQ1MS1iMTU5LTQ3NmMyYjZlMzg4MSJ9.WHGh70YFp7J8kARqIdHvNES2DeGchijlj5F32RHdrXBrOSgzTK9"
-    "prXRkppWATorI9625JWRGCQZwi6keyR_urA"
-)
-TWENTY_HEADERS = {
-    "Authorization": f"Bearer {TWENTY_KEY}",
-    "User-Agent": "owocni-verify-identity-e2e/1.0",
-}
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def load_dotenv_local() -> None:
+    for name in (".env.local", ".env"):
+        env_path = REPO_ROOT / name
+        if not env_path.is_file():
+            continue
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
+
+    deploy_env = (
+        REPO_ROOT
+        / "integrations"
+        / "cloud-functions"
+        / "twenty-crm-worker"
+        / ".env.deploy"
+    )
+    if deploy_env.is_file():
+        for line in deploy_env.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
+
+
+def twenty_headers() -> dict[str, str]:
+    key = os.environ.get("TWENTY_API_KEY", "").strip()
+    if not key:
+        raise SystemExit(
+            "TWENTY_API_KEY required (export, .env.local, or worker .env.deploy)"
+        )
+    return {
+        "Authorization": f"Bearer {key}",
+        "User-Agent": "owocni-verify-identity-e2e/1.0",
+    }
+
+
 STAPE_BASE = "https://uinpcbwf.eug.stape.io"
 STAPE_STORE = (
     f"{STAPE_BASE}/stape-api/"
@@ -65,7 +99,7 @@ def record(name: str, ok: bool, detail: str = "") -> None:
 def twenty_get(path: str) -> dict:
     req = urllib.request.Request(
         f"https://api.twenty.com/rest{path}",
-        headers=TWENTY_HEADERS,
+        headers=twenty_headers(),
     )
     with urllib.request.urlopen(req, timeout=30) as res:
         return json.loads(res.read())
@@ -96,7 +130,7 @@ def twenty_patch_person(person_id: str, body: dict) -> dict:
     req = urllib.request.Request(
         f"https://api.twenty.com/rest/people/{person_id}",
         data=data,
-        headers={**TWENTY_HEADERS, "Content-Type": "application/json"},
+        headers={**twenty_headers(), "Content-Type": "application/json"},
         method="PATCH",
     )
     with urllib.request.urlopen(req, timeout=30) as res:
@@ -601,6 +635,8 @@ def test_skip_already_has_idoid(person: dict) -> None:
 
 
 def main() -> int:
+    load_dotenv_local()
+    twenty_headers()
     print("=== E12.2 Identity Resolver — API verification ===\n")
 
     print("1. Known E2E subjects (BUILD_IDENTITY_RESOLVER §Test)")

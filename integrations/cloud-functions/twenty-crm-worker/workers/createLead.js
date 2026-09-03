@@ -4,6 +4,7 @@ const {
   CREATE_LEAD_BUILD_ID,
   getOwnerIds,
   getContinuityOwnerIds,
+  getLeadsAtMessageChannelId,
   isContinuityRoutingEnabled,
   isLeadDispatcherEnabled,
   isCreateLeadWriteEnabled,
@@ -1170,12 +1171,82 @@ async function createFormInquiryNote(taskData, opportunityId, personId) {
   return noteId;
 }
 
-async function createFormInquiryEmailThread(taskData, personId) {
+const FORM_INQUIRY_EMAIL_SUBJECT = "Zapytanie z formularza owocni.pl";
+const LEADS_AT_HANDLE = "leads@owocni.pl";
+
+async function addFormInquiryToParticipant(messageId) {
+  if (!messageId) return { skipped: "missing_ids" };
+  const res = await twentyRequest("POST", "/messageParticipants", {
+    role: "TO",
+    handle: LEADS_AT_HANDLE,
+    displayName: LEADS_AT_HANDLE,
+    messageId,
+  });
+  if (res.statusCode === 400 || res.statusCode === 409) {
+    return { skipped: "already_associated", statusCode: res.statusCode };
+  }
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(
+      `POST messageParticipants TO HTTP ${res.statusCode} ${res.rawBody}`,
+    );
+  }
+  return { id: extractCreatedId("messageParticipants", res.body) };
+}
+
+async function attachMessageToLeadsChannel(messageId, threadId) {
+  const channelId = getLeadsAtMessageChannelId();
+  if (!messageId || !threadId || !channelId) return { skipped: "missing_ids" };
+  const res = await twentyRequest("POST", "/messageChannelMessageAssociations", {
+    messageId,
+    messageThreadId: threadId,
+    messageChannelId: channelId,
+    direction: "INCOMING",
+    messageExternalId: `owocni-form:${messageId}`,
+  });
+  if (res.statusCode === 400 || res.statusCode === 409) {
+    return { skipped: "already_associated", statusCode: res.statusCode };
+  }
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(
+      `POST messageChannelMessageAssociations HTTP ${res.statusCode} ${res.rawBody}`,
+    );
+  }
+  return {
+    id: extractCreatedId("messageChannelMessageAssociations", res.body),
+  };
+}
+
+async function addFormInquiryThreadTarget(threadId, { personId, opportunityId }) {
+  const body = {
+    position: "last",
+    isAutomaticallyAssigned: true,
+    isManuallyAssigned: false,
+    messageThreadId: threadId,
+  };
+  if (personId) body.targetPersonId = personId;
+  if (opportunityId) body.targetOpportunityId = opportunityId;
+  if (!personId && !opportunityId) return null;
+  const res = await twentyRequest("POST", "/messageThreadTargets", body);
+  if (res.statusCode === 400 || res.statusCode === 409) return null;
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    console.warn(
+      "form inquiry thread target warn",
+      res.statusCode,
+      res.rawBody?.slice?.(0, 200),
+    );
+    return null;
+  }
+  return extractCreatedId("messageThreadTargets", res.body);
+}
+
+async function createFormInquiryEmailThread(taskData, personId, opportunityId) {
   if (!shouldSeedFormInquiryEmail(taskData)) return null;
   const contact = resolveTaskContactFields(taskData);
   if (!contact.email) return null;
 
-  const threadRes = await twentyRequest("POST", "/messageThreads", {});
+  const threadRes = await twentyRequest("POST", "/messageThreads", {
+    subject: FORM_INQUIRY_EMAIL_SUBJECT,
+  });
   if (threadRes.statusCode < 200 || threadRes.statusCode >= 300) {
     throw new Error(
       `POST messageThreads HTTP ${threadRes.statusCode} ${threadRes.rawBody}`,
@@ -1189,10 +1260,12 @@ async function createFormInquiryEmailThread(taskData, personId) {
     normalizeFormMessageText(taskData) ||
     `Nowe zapytanie z formularza (${contact.email}).`;
   const messageRes = await twentyRequest("POST", "/messages", {
-    subject: "Zapytanie z formularza owocni.pl",
+    subject: FORM_INQUIRY_EMAIL_SUBJECT,
     text,
     receivedAt: resolveLastContactIso(taskData),
     messageThreadId: threadId,
+    direction: "INCOMING",
+    ourMailboxes: ["LEADS"],
   });
   if (messageRes.statusCode < 200 || messageRes.statusCode >= 300) {
     throw new Error(`POST messages HTTP ${messageRes.statusCode} ${messageRes.rawBody}`);
@@ -1212,6 +1285,18 @@ async function createFormInquiryEmailThread(taskData, personId) {
     throw new Error(
       `POST messageParticipants HTTP ${partRes.statusCode} ${partRes.rawBody}`,
     );
+  }
+
+  // Twenty EmailThreadMessage returns null unless the message has a TO/CC/BCC
+  // receiver — without this, Emails tab lists the thread but the body is blank.
+  await addFormInquiryToParticipant(messageId);
+
+  await attachMessageToLeadsChannel(messageId, threadId);
+  if (personId) {
+    await addFormInquiryThreadTarget(threadId, { personId });
+  }
+  if (opportunityId) {
+    await addFormInquiryThreadTarget(threadId, { opportunityId });
   }
   return messageId;
 }
@@ -1557,7 +1642,11 @@ async function processOneTask(task, audit, allPending) {
     console.warn("form inquiry note warn", err.message);
   }
   try {
-    const messageId = await createFormInquiryEmailThread(taskData, personId);
+    const messageId = await createFormInquiryEmailThread(
+      taskData,
+      personId,
+      oppId,
+    );
     if (messageId) {
       console.log("form inquiry email thread", messageId, "person=", personId);
     }
@@ -1622,6 +1711,9 @@ module.exports = {
   isLeadsAtEmailTask,
   shouldSeedFormInquiryEmail,
   normalizeFormMessageText,
+  FORM_INQUIRY_EMAIL_SUBJECT,
+  addFormInquiryToParticipant,
+  attachMessageToLeadsChannel,
   resolveOpportunityOwnerId,
   resolveOwnerIdForNewOpportunity,
   preferPersonId,

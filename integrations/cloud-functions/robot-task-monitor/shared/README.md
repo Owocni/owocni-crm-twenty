@@ -6,5 +6,17 @@ Wspólne stałe i helpery **dla dokumentacji LLM** oraz runtime **Node (Robot)**
 |------|---------|------|
 | `ssotPaths.js` | Node (+ kopia const w tagach Stape) | Nazwy adapterów, kolekcje Stape Store, kanon eventów |
 | `envGuard.js` | Node (`GoogleCloudRobot.js`) | `sandbox` → bez prod Ads/Meta/GA4 MP |
+| `pricingProductAliases.js` | Node (`GoogleCloudRobot.js`) | Aliasy produktu Pricing_Config: Twenty `WEB` ↔ Sortownia `strony`/`strona`, analogicznie LOGO/NAME/… |
+| `metaCapi.js` | Node (`GoogleCloudRobot.js`) | Payload Graph CAPI: SQL=`QualifiedLead`, WON=`Purchase`; Instant Form = `lead_id` + `system_generated` |
+| `isFreeMail.js` / `is_free_mail.py` | Node / Python | `company_domain_key` gate — exact match SSOT v1 (bez substring) |
 
-**Stape (sGTM):** tagi nie używają `require()` — skopiuj logikę z `../ENV_GUARD.sGTM.js` i stałe z `ssotPaths.js` (lub `TWENTY_PATHS.md`).
+**Free-mail SSOT:** kanon `../../owocni-crm/data/free_mail_domains_v1.json` · runtime bundle `data/free_mail_domains_v1.json` (obok `isFreeMail.js`) · docs: `SSOT_free-mail-domains_v1.md` · generator: `../tools/gen_free_mail.py` (pisze kanon + runtime + CF inbound).
+
+**Stape (sGTM):** tagi nie używają `require()` — thin `companyDomainKey` w Sortowni (exact set); patrz `../runbooks/FREE_MAIL_SHIELD.md`.
+
+**GCP Cloud Functions:** przy deploy kopiowane są do:
+- `cloud-functions/robot-task-monitor/shared/` (z tego katalogu + `GoogleCloudRobot.js`)
+- `cloud-functions/twenty-inbound-webhook/shared/` (config, twentyRest, stapeStore, **isFreeMail.js + data/**)
+- `cloud-functions/twenty-crm-worker/shared/`
+
+Zmiana stałych SSOT → zaktualizuj źródło tutaj i prze-deployuj odpowiedni CF.

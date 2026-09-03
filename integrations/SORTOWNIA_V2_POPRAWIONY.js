@@ -192,8 +192,6 @@ function getEventDataNonempty(key) {
   return result;
 }
 
-data.gtmOnSuccess();
-
 function parseUrlParams(url) {
   if (!url) return {};
   const params = {};
@@ -736,6 +734,15 @@ logToConsole("=== SORTOWNIA V2 START === event_name =", eventName);
 const BASE_URL = "https://uinpcbwf.eug.stape.io";
 const API_KEY = ""; // PLACEHOLDER: wklej klucz Stape TYLKO w UI tagu — NIE commituj
 const API_BASE = BASE_URL + "/stape-api/" + API_KEY + "/v2/store/collections";
+
+if (!makeString(API_KEY).trim()) {
+  logToConsole(
+    "SORTOWNIA: FATAL — pusty API_KEY. Wklej klucz w UI tagu i opublikuj. Store nie działa.",
+  );
+  data.gtmOnFailure();
+  return;
+}
+data.gtmOnSuccess();
 
 function generateULID() {
   const chars = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";

@@ -135,7 +135,47 @@ async function probeTwenty(instance) {
     webhooksError = `webhooks HTTP ${whRes.status}`;
   }
 
-  return { workflows, mailTemplateCount, webhooks, webhooksError };
+  const formFlow = await probeFormFlow(instance.restUrl, instance.apiKey);
+
+  return { workflows, mailTemplateCount, webhooks, webhooksError, formFlow };
+}
+
+async function probeFormFlow(restUrl, apiKey) {
+  const oppPath =
+    "/opportunities?filter=" +
+    encodeURIComponent("srcSystem[eq]:OWOCNI_SORTOWNIA") +
+    "&order_by=createdAt[DescNullsLast]&limit=1";
+  const msgPath =
+    "/messages?filter=" +
+    encodeURIComponent("subject[startsWith]:Zapytanie") +
+    "&order_by=receivedAt[DescNullsLast]&limit=5";
+
+  try {
+    const [oppRes, msgRes] = await Promise.all([
+      twentyGet(restUrl, apiKey, oppPath),
+      twentyGet(restUrl, apiKey, msgPath),
+    ]);
+    if (oppRes.status < 200 || oppRes.status >= 300) {
+      return { error: `opportunities HTTP ${oppRes.status}` };
+    }
+    if (msgRes.status < 200 || msgRes.status >= 300) {
+      return { error: `messages HTTP ${msgRes.status}` };
+    }
+    const opps = collection(oppRes.body, "opportunities");
+    const msgs = collection(msgRes.body, "messages");
+    const opp = opps[0] || null;
+    const mail =
+      msgs.find((m) => String(m.direction || "").toUpperCase() !== "OUTGOING") ||
+      null;
+    return {
+      lastFormMailAt: mail?.receivedAt || mail?.createdAt || null,
+      lastFormMailSubject: mail?.subject || null,
+      lastSortowniaAt: opp?.createdAt || null,
+      lastSortowniaName: opp?.name || null,
+    };
+  } catch (err) {
+    return { error: String(err.message || err).slice(0, 160) };
+  }
 }
 
 async function probeN8n() {
@@ -211,6 +251,7 @@ module.exports = {
   getInstances,
   uniqueInstances,
   probeTwenty,
+  probeFormFlow,
   probeN8n,
   probeSchedulers,
   loadState,

@@ -1,0 +1,374 @@
+{
+  "0a77aa92-e708-454e-bb3d-7bb912913218": {
+    "messages": [
+      {
+        "id": "2a134475-f630-42c6-a60a-3fbdb5af5ae4",
+        "subject": "Re: Wspopraca",
+        "receivedAt": "2026-09-03T10:07:51.000Z",
+        "externals": [
+          "mkupis100@gmail.com"
+        ]
+      },
+      {
+        "id": "4282e6e9-eedd-4a6d-a3b1-ad45f37cd7a9",
+        "subject": "Re: Nowa strona - konsultacja ze specjalistą",
+        "receivedAt": "2026-09-03T10:28:29.511Z",
+        "externals": [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      },
+      {
+        "id": "452a80e5-709e-450f-b756-953ee107dd82",
+        "subject": "Re: Wspopraca",
+        "receivedAt": "2026-09-03T07:54:52.000Z",
+        "externals": [
+          "mkupis100@gmail.com"
+        ]
+      },
+      {
+        "id": "63da53a3-2cf1-429a-af51-cbddeca8aa1a",
+        "subject": "RE: Owocne logo dla Inspekcji Pracy Zabaw",
+        "receivedAt": "2026-09-03T08:00:44.984Z",
+        "externals": [
+          "biuro@inspekcje.com.pl"
+        ]
+      },
+      {
+        "id": "7d96fb6f-f893-4070-a392-aed9a09ae9a2",
+        "subject": "Re: Wspopraca",
+        "receivedAt": "2026-09-03T08:03:16.000Z",
+        "externals": [
+          "mkupis100@gmail.com"
+        ]
+      },
+      {
+        "id": "92a465ca-d7b2-492f-8213-a5417603d0c9",
+        "subject": "Re: Nowa strona - konsultacja ze specjalistą",
+        "receivedAt": "2026-09-03T10:09:27.819Z",
+        "externals": [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      },
+      {
+        "id": "9fea7e40-7331-41f3-b234-adf3f1f3ee4c",
+        "subject": "Wspopraca",
+        "receivedAt": "2026-09-03T07:46:43.000Z",
+        "externals": [
+          "mkupis100@gmail.com"
+        ]
+      },
+      {
+        "id": "c87c1240-7f02-4a87-b19d-b2139f6e58ef",
+        "subject": "Re: Nowa strona - konsultacja ze specjalistą",
+        "receivedAt": "2026-09-03T10:18:37.000Z",
+        "externals": [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "id": "599dbedd-738c-48d3-9be8-47997fec6907",
+        "messageThreadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+        "targetPersonId": null,
+        "targetOpportunityId": "af4b9118-fafc-4002-98d3-46d0794c835c",
+        "targetCompanyId": null
+      },
+      {
+        "id": "5aa1290e-78ae-4999-9a8d-f49898d3e117",
+        "messageThreadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+        "targetPersonId": "759e84cb-8a9c-4ac6-99ce-5dbe8a928cb8",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "9e231a6d-23f2-42b7-a21d-e62aca64b2c0",
+        "messageThreadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+        "targetPersonId": "2438018c-2a37-4153-aa8b-a18fbcac1bc5",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "b39fb50e-ab3d-4a64-abf0-e345a6958b2c",
+        "messageThreadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+        "targetPersonId": null,
+        "targetOpportunityId": "a5d571a2-e0dd-428a-aaff-39617cdaef94",
+        "targetCompanyId": null
+      },
+      {
+        "id": "e619398c-0266-4153-a3fb-75f59f43378d",
+        "messageThreadId": "0a77aa92-e708-454e-bb3d-7bb912913218",
+        "targetPersonId": "4359ed5e-12dd-41ea-9575-de6505265b14",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      }
+    ]
+  },
+  "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd": {
+    "messages": [
+      {
+        "id": "19052184-ae5d-4415-8130-c3267b8647fc",
+        "subject": "Nowa strona - konsultacja ze specjalistą",
+        "receivedAt": "2026-09-03T09:29:44.109Z",
+        "externals": [
+          "pawel.lepa@hajsplon.pl"
+        ]
+      },
+      {
+        "id": "1d9230f9-a3ad-4db6-b311-a1a907d7b060",
+        "subject": "Pytania przed propozycją współpracy",
+        "receivedAt": "2026-09-03T09:41:57.881Z",
+        "externals": [
+          "jkercher11@gmail.com"
+        ]
+      },
+      {
+        "id": "96d01d55-b24b-4567-b295-c47840bc9faf",
+        "subject": "Owocne logo",
+        "receivedAt": "2026-09-03T09:26:33.638Z",
+        "externals": [
+          "exotrans99@gmail.com"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "id": "6a3e0444-79d7-4837-a8b7-0a1263792da7",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": null,
+        "targetOpportunityId": "a21f1d0b-6f41-483c-b9d4-03e05c32e0af",
+        "targetCompanyId": null
+      },
+      {
+        "id": "6d2e5de9-1993-4845-a780-46dcfac41683",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": "85e4a5ef-deb1-4285-ac14-be7812da6a66",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "959e8504-717e-462d-b653-0a075c5b49cf",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": null,
+        "targetOpportunityId": "a5d571a2-e0dd-428a-aaff-39617cdaef94",
+        "targetCompanyId": null
+      },
+      {
+        "id": "acccdfe3-42e7-4731-9e48-7438b5f7f374",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": "6adb5250-7064-4f7c-89a6-5cc42fb7bfb4",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "c212a87c-63e7-4b4b-ac39-655d89068c0c",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": "4359ed5e-12dd-41ea-9575-de6505265b14",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "c49f1dfd-6fd0-46a4-91bd-16864d4ae0da",
+        "messageThreadId": "a7ea2a8a-4efc-4aa6-b5c4-80d5005d1dcd",
+        "targetPersonId": null,
+        "targetOpportunityId": "b41000d6-3e91-42b2-888e-4ffbd7579dd7",
+        "targetCompanyId": null
+      }
+    ]
+  },
+  "1fc0f336-1a15-468e-a010-da25c63c4ef5": {
+    "messages": [
+      {
+        "id": "29121f66-7818-44b6-92f5-6fcc06bacc45",
+        "subject": "Owocne logo",
+        "receivedAt": "2026-09-01T11:24:14.155Z",
+        "externals": [
+          "dominika.anna.o@gmail.com"
+        ]
+      },
+      {
+        "id": "7f472799-e40c-48e2-8ff6-1bf8904f7871",
+        "subject": "Owocne logo",
+        "receivedAt": "2026-09-01T11:41:01.804Z",
+        "externals": [
+          "natprus@wp.pl"
+        ]
+      },
+      {
+        "id": "9eab78ab-33ce-4e23-8337-88394a5bca3e",
+        "subject": "Owocna strona - konsultacja ze specjalistą",
+        "receivedAt": "2026-09-01T11:47:27.349Z",
+        "externals": [
+          "a.rudnicka@origininvestment.pl"
+        ]
+      },
+      {
+        "id": "a67af0da-80c0-486d-821c-c00eb42ce095",
+        "subject": "Owocna strona - pytania",
+        "receivedAt": "2026-09-01T11:44:52.128Z",
+        "externals": [
+          "olgagrzesiak06@gmail.com"
+        ]
+      },
+      {
+        "id": "d606b445-954e-485a-93b6-2d3f627a7df9",
+        "subject": "Owocny landing",
+        "receivedAt": "2026-09-01T11:37:40.762Z",
+        "externals": [
+          "m.wydra@todom.pl"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "id": "0221fe4c-a9f1-47ae-9c18-d9f5a6c6d38c",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": "a96990e0-aa89-48bf-9c97-763b8d33ecf2",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "31bcbedd-6644-4301-a1f6-4e8316e6abbc",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": "fbf554d8-7bde-4dc6-866f-b5489ba911f7",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "85885d89-8b34-44ec-87fe-9d3f4795c6a3",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": "0d81f390-1ebe-4526-ba6c-c5a79bf55f90",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "87c9cfd3-c4b1-44e7-b02a-034d60dffa21",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": "4c2a5e6e-dd99-48f4-9c6e-ffd0c0258b32",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "8acb52e0-85aa-45fa-bfff-0b993b522c68",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "fefe2b10-3772-45fb-9742-13bceccbc2c3",
+        "targetCompanyId": null
+      },
+      {
+        "id": "b3f060ea-3a58-45bb-b1cd-8427faf950c7",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "136649ca-4fd5-4be8-acbb-407b3efeb9c7",
+        "targetCompanyId": null
+      },
+      {
+        "id": "d7543c68-62e4-4f31-9832-453ca4802ea0",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "5bc0a106-0f60-4892-a424-198900522462",
+        "targetCompanyId": null
+      },
+      {
+        "id": "ddf2e84e-4acf-4f83-921d-7d1fee6d2fe6",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "12d432a8-5dcf-4e50-be26-38ac7034b33e",
+        "targetCompanyId": null
+      },
+      {
+        "id": "fb3bab5b-42da-4598-b761-a8d917122c06",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": "93ea5177-5bce-4e58-8dc4-cf36ade4d58a",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "fbfb47e8-5927-466e-9a3f-45fb2a1a0f07",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "e12d7513-a528-4189-8b04-987ebcb758f9",
+        "targetCompanyId": null
+      },
+      {
+        "id": "ff685cdf-cf82-4557-81b7-c83b7ee4ca5b",
+        "messageThreadId": "1fc0f336-1a15-468e-a010-da25c63c4ef5",
+        "targetPersonId": null,
+        "targetOpportunityId": "8dde495c-4f1f-4581-89f8-11b167ff199d",
+        "targetCompanyId": null
+      }
+    ]
+  },
+  "155504c3-f361-4287-a97b-7fe69151e6c1": {
+    "messages": [
+      {
+        "id": "1269357e-ed60-4c00-8919-846c5a6c15d3",
+        "subject": "Owocne logo",
+        "receivedAt": "2026-08-31T08:36:18.048Z",
+        "externals": [
+          "prox.clublife@gmail.com"
+        ]
+      },
+      {
+        "id": "60f2ca8a-5251-415c-8daa-4e9f4d0139b3",
+        "subject": "Owocna strona-sklep",
+        "receivedAt": "2026-08-31T08:41:36.856Z",
+        "externals": [
+          "mariuszprzezdziek@gmail.com"
+        ]
+      },
+      {
+        "id": "a319a24d-046d-4dda-9612-305d212392d9",
+        "subject": "Nowa strona firmowa - konsultacja ze specjalistą",
+        "receivedAt": "2026-08-31T08:39:17.398Z",
+        "externals": [
+          "info@thermalbalance.ch"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "id": "25d49a91-f4db-4249-9e3b-3359c45e69c9",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": "d76631a9-4bc5-45b1-bb1a-23dde72249ee",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "59ecda92-d8c4-4342-a5e6-5300276f7b7d",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": "c4622626-4fab-46ea-aa81-92364804a339",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      },
+      {
+        "id": "65b5de7d-2907-4130-a6d8-694e83a21e36",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": null,
+        "targetOpportunityId": "9c2eb6ee-7080-4f09-9414-4fddd899c29e",
+        "targetCompanyId": null
+      },
+      {
+        "id": "8831f393-c65d-4bfd-a2d7-b1b44a7a0b1d",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": null,
+        "targetOpportunityId": "ca4a2ade-2a75-492f-bab1-79cbcb04ab72",
+        "targetCompanyId": null
+      },
+      {
+        "id": "bcc148b8-d657-4329-a45d-d577781fbda5",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": null,
+        "targetOpportunityId": "aa3f09a8-8205-4763-85de-43e567f59e25",
+        "targetCompanyId": null
+      },
+      {
+        "id": "cfc23e73-117e-4e2f-a02b-d63dc7b6f558",
+        "messageThreadId": "155504c3-f361-4287-a97b-7fe69151e6c1",
+        "targetPersonId": "084b25b1-26cc-46fe-8694-e23f3b158b76",
+        "targetOpportunityId": null,
+        "targetCompanyId": null
+      }
+    ]
+  }
+}

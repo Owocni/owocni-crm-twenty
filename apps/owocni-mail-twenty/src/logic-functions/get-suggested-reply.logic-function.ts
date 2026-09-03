@@ -23,7 +23,7 @@ export default defineLogicFunction({
   universalIdentifier: 'e7a91c2b-4d5f-4a8e-9b1c-3f6d8e0a2b4c',
   name: 'get-suggested-reply',
   description:
-    'Returns latest external mailbox participant + subject for Reply autofill',
+    'Latest external mailbox peer for Recents dropdown — not a threading source',
   timeoutSeconds: 45,
   handler,
   httpRouteTriggerSettings: {
