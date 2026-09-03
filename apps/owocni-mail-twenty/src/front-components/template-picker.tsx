@@ -26,10 +26,17 @@ import {
   ATTACHMENT_UPLOAD_PATH,
   formatFileSize,
   MAX_EMAIL_ATTACHMENTS,
+  parseAttachmentFrameMessage,
   type EmailAttachmentRef,
 } from 'src/utils/emailAttachmentShared';
 import { resolveAccessToken } from 'src/utils/resolveAccessToken';
 import { resolveSendSubject, toReplySubject } from 'src/utils/replySubject';
+import {
+  applySignatureForNewBody,
+  hasSignatureMarker,
+  isEmptyComposeHtml,
+  swapSignatureOnFromChange,
+} from 'src/utils/mailSignature';
 
 export const TEMPLATE_PICKER_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER =
   '2d49aa61-2a83-485b-856d-c3d26885cae5';
@@ -137,6 +144,166 @@ function formatMessageDate(iso: string | null | undefined): string {
     return iso;
   }
 }
+
+/** Host-injected CSS so the compose overlay can cover the CRM viewport (Remote DOM cannot portal). */
+const COMPOSE_FULLSCREEN_CSS = `
+.owocni-mail-fs-root {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  z-index: 2147483000 !important;
+  background: #ffffff !important;
+  overflow: hidden !important;
+}
+.owocni-mail-fs-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+}
+.owocni-mail-fs-left {
+  flex: 1 1 42% !important;
+  min-width: 280px !important;
+  max-width: 48% !important;
+  border-right: 1px solid #e5e7eb !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #f8fafc !important;
+}
+.owocni-mail-fs-right {
+  flex: 1 1 58% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+}
+.owocni-mail-fs-stacked {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+.owocni-mail-fs-stacked .owocni-mail-fs-left {
+  max-width: none !important;
+  min-width: 0 !important;
+  flex: 0 0 38% !important;
+  border-right: none !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+@media (max-width: 860px) {
+  .owocni-mail-fs-split {
+    flex-direction: column !important;
+  }
+  .owocni-mail-fs-left {
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: 0 0 38% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+}
+`;
+
+type OriginalMessageBodyProps = {
+  replyMessage: ReplyMessagePreview | null;
+  replySubject: string | null;
+  fillHeight?: boolean;
+};
+
+const OriginalMessageBody = ({
+  replyMessage,
+  replySubject,
+  fillHeight = false,
+}: OriginalMessageBodyProps) => {
+  if (!replyMessage?.text) {
+    return (
+      <div
+        style={{
+          marginTop: fillHeight ? 0 : 8,
+          fontSize: 12,
+          color: '#64748b',
+          lineHeight: 1.45,
+          padding: fillHeight ? 12 : 0,
+        }}
+      >
+        Treść wiadomości nie jest dostępna w CRM
+        {fillHeight ? '.' : ' — sprawdź wątek maili po lewej stronie.'}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        marginTop: fillHeight ? 0 : 8,
+        fontSize: 13,
+        color: '#334155',
+        lineHeight: 1.5,
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: 0,
+        flex: fillHeight ? 1 : undefined,
+        padding: fillHeight ? 16 : 0,
+        boxSizing: 'border-box',
+      }}
+    >
+      {replyMessage.fromLabel || replyMessage.fromEmail ? (
+        <div style={{ marginBottom: 4, flexShrink: 0 }}>
+          <strong>Od:</strong> {replyMessage.fromLabel}
+          {replyMessage.fromEmail &&
+          replyMessage.fromEmail !== replyMessage.fromLabel
+            ? ` (${replyMessage.fromEmail})`
+            : ''}
+        </div>
+      ) : null}
+      {replyMessage.receivedAt ? (
+        <div style={{ marginBottom: 4, flexShrink: 0 }}>
+          <strong>Data:</strong> {formatMessageDate(replyMessage.receivedAt)}
+        </div>
+      ) : null}
+      {(replyMessage.subject || replySubject) && (
+        <div style={{ marginBottom: 8, flexShrink: 0 }}>
+          <strong>Temat:</strong>{' '}
+          {replyMessage.subject || toReplySubject(replySubject ?? '')}
+        </div>
+      )}
+      <div
+        style={{
+          maxHeight: fillHeight ? undefined : 220,
+          flex: fillHeight ? 1 : undefined,
+          minHeight: 0,
+          overflowY: 'auto',
+          whiteSpace: 'pre-wrap',
+          padding: '10px 12px',
+          borderRadius: 4,
+          background: '#fff',
+          border: '1px solid #e2e8f0',
+        }}
+      >
+        {replyMessage.text}
+      </div>
+    </div>
+  );
+};
+
+const HEADER_ACTION_BUTTON_STYLE = {
+  fontSize: 12,
+  padding: '4px 10px',
+  border: '1px solid #ddd',
+  borderRadius: 6,
+  background: '#fff',
+  cursor: 'pointer',
+} as const;
 
 const CATEGORY_ORDER = [
   'SALES',
@@ -349,6 +516,7 @@ const TemplatePicker = () => {
   const [editBodyHtml, setEditBodyHtml] = useState('<p><br></p>');
   const [editorSessionId, setEditorSessionId] = useState(() => createId());
   const editorRef = useRef<MailBodyEditorHandle>(null);
+  const signatureSeededForSessionRef = useRef<string | null>(null);
   const replySubjectRef = useRef<string | null>(null);
   const editSubjectRef = useRef('');
   const subjectTouchedRef = useRef(false);
@@ -375,8 +543,14 @@ const TemplatePicker = () => {
     Array<EmailAttachmentRef & { size?: number }>
   >([]);
   const [uploadingAttachments, setUploadingAttachments] = useState(false);
+  const [attachmentError, setAttachmentError] = useState<string | null>(null);
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
   const [attachmentToken, setAttachmentToken] = useState('');
+  const [composerExpanded, setComposerExpanded] = useState(false);
+  const [coverState, setCoverState] = useState<'pending' | 'yes' | 'no'>(
+    'pending',
+  );
+  const overlayRootRef = useRef<HTMLDivElement | null>(null);
 
   const personEmail = recipientEmail.trim() || person?.email?.trim() || '';
   const displayRecipientEmail =
@@ -410,11 +584,18 @@ const TemplatePicker = () => {
   const enterFreeCompose = (subjectHint?: string | null) => {
     subjectTouchedRef.current = false;
     setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
-    setEditBodyHtml('<p><br></p>');
-    setEditorSessionId(createId());
+    const nextSessionId = createId();
+    signatureSeededForSessionRef.current = connectedAccountHandle
+      ? nextSessionId
+      : null;
+    setEditBodyHtml(
+      applySignatureForNewBody('<p><br></p>', connectedAccountHandle),
+    );
+    setEditorSessionId(nextSessionId);
     setLoadingDraft(false);
     setDraftError(null);
     setAttachments([]);
+    setAttachmentError(null);
     const subj = subjectHint?.trim() || replySubjectRef.current?.trim() || null;
     if (subj) {
       setEditSubject(toReplySubject(subj));
@@ -732,8 +913,14 @@ const TemplatePicker = () => {
             resolvedContext.scrapedSubject?.trim() ||
             null;
           setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
-          setEditBodyHtml('<p><br></p>');
-          setEditorSessionId(createId());
+          const nextSessionId = createId();
+          signatureSeededForSessionRef.current = connectedAccountHandle
+            ? nextSessionId
+            : null;
+          setEditBodyHtml(
+            applySignatureForNewBody('<p><br></p>', connectedAccountHandle),
+          );
+          setEditorSessionId(nextSessionId);
           setLoadingDraft(false);
           setDraftError(null);
           setSubjectFromTemplate(false);
@@ -827,6 +1014,50 @@ const TemplatePicker = () => {
     };
   }, [effectiveRecordId, personEmail]);
 
+  useEffect(() => {
+    if (!connectedAccountHandle) {
+      return;
+    }
+
+    setEditBodyHtml((current) => {
+      if (hasSignatureMarker(current)) {
+        signatureSeededForSessionRef.current = editorSessionId;
+        const swapped = swapSignatureOnFromChange(
+          current,
+          connectedAccountHandle,
+        );
+
+        if (swapped !== current) {
+          queueMicrotask(() => {
+            editorRef.current?.setHtml(swapped);
+          });
+        }
+
+        return swapped;
+      }
+
+      if (signatureSeededForSessionRef.current === editorSessionId) {
+        return current;
+      }
+
+      const next = applySignatureForNewBody(current, connectedAccountHandle);
+      signatureSeededForSessionRef.current = editorSessionId;
+
+      if (next !== current) {
+        const remountEmpty = isEmptyComposeHtml(current);
+        queueMicrotask(() => {
+          if (remountEmpty) {
+            setEditorSessionId(createId());
+          } else {
+            editorRef.current?.setHtml(next);
+          }
+        });
+      }
+
+      return next;
+    });
+  }, [connectedAccountHandle, editorSessionId]);
+
   const handleSelectTemplate = async (template: MailTemplateSummary) => {
     const nextSessionId = createId();
     const knownRecipient =
@@ -842,6 +1073,7 @@ const TemplatePicker = () => {
     setEditorSessionId(nextSessionId);
     setDraftError(null);
     setAttachments([]);
+    setAttachmentError(null);
     setLoadingDraft(true);
 
     try {
@@ -899,12 +1131,19 @@ const TemplatePicker = () => {
             : (draft.subject ?? ''),
       });
 
-      setEditBodyHtml(bodyHtml);
+      const signedBody = applySignatureForNewBody(
+        bodyHtml,
+        connectedAccountHandle,
+      );
+      signatureSeededForSessionRef.current = connectedAccountHandle
+        ? nextSessionId
+        : null;
+      setEditBodyHtml(signedBody);
       setEditorSessionId(nextSessionId);
 
       // Seed server draft immediately (same LF memory the iframe will update).
       try {
-        const bytes = new TextEncoder().encode(bodyHtml);
+        const bytes = new TextEncoder().encode(signedBody);
         let binary = '';
         for (const byte of bytes) {
           binary += String.fromCharCode(byte);
@@ -912,7 +1151,7 @@ const TemplatePicker = () => {
         await client.post('/s/mail/editor-draft', {
           sessionId: nextSessionId,
           htmlBase64: btoa(binary),
-          html: bodyHtml.slice(0, 50_000),
+          html: signedBody.slice(0, 50_000),
         });
       } catch {
         // non-fatal — editor will seed on mount
@@ -1108,10 +1347,18 @@ const TemplatePicker = () => {
     setAttachments((prev) => prev.filter((entry) => entry.id !== id));
   };
 
+  // Overlay / send lock — includes in-flight upload.
   const attachmentPickerDisabled =
     sending ||
     loadingDraft ||
     uploadingAttachments ||
+    attachments.length >= MAX_EMAIL_ATTACHMENTS ||
+    sendCountdown !== null;
+
+  // Remounting the iframe aborts fetch. Never bake `uploadingAttachments` into srcDoc.
+  const attachmentPickerLocked =
+    sending ||
+    loadingDraft ||
     attachments.length >= MAX_EMAIL_ATTACHMENTS ||
     sendCountdown !== null;
 
@@ -1134,7 +1381,7 @@ const TemplatePicker = () => {
           buildAttachmentPickerSrcDoc({
             sessionId: editorSessionId,
             accessToken: token,
-            disabled: attachmentPickerDisabled,
+            disabled: attachmentPickerLocked,
           }),
         );
       } catch {
@@ -1155,9 +1402,56 @@ const TemplatePicker = () => {
     return () => {
       cancelled = true;
     };
-    // Rebuild when session/disabled flips; token refresh is best-effort.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, editorSessionId, attachmentPickerDisabled]);
+  }, [selected, editorSessionId, attachmentPickerLocked]);
+
+  useEffect(() => {
+    if (!selected || !editorSessionId) {
+      return;
+    }
+
+    const onMessage = (event: MessageEvent) => {
+      const parsed = parseAttachmentFrameMessage(event.data, editorSessionId);
+
+      if (!parsed) {
+        return;
+      }
+
+      if (parsed.uploading === true) {
+        setUploadingAttachments(true);
+      }
+
+      if (parsed.uploading === false) {
+        setUploadingAttachments(false);
+      }
+
+      if (parsed.file?.id && parsed.file.name) {
+        setAttachmentError(null);
+        setAttachments((prev) => {
+          if (prev.some((entry) => entry.id === parsed.file?.id)) {
+            return prev;
+          }
+
+          return [...prev, parsed.file!].slice(0, MAX_EMAIL_ATTACHMENTS);
+        });
+        return;
+      }
+
+      if (parsed.error) {
+        setAttachmentError(parsed.error);
+        void enqueueSnackbar({
+          message: parsed.error,
+          variant: 'error',
+        });
+      }
+    };
+
+    window.addEventListener('message', onMessage);
+
+    return () => {
+      window.removeEventListener('message', onMessage);
+    };
+  }, [selected, editorSessionId]);
 
   useEffect(() => {
     if (!selected || !editorSessionId) {
@@ -1182,7 +1476,10 @@ const TemplatePicker = () => {
           return;
         }
 
-        setUploadingAttachments((data.uploading ?? 0) > 0);
+        // Store may live on another isolate — never clear busy from an empty poll.
+        if ((data.uploading ?? 0) > 0) {
+          setUploadingAttachments(true);
+        }
 
         const incoming = Array.isArray(data.files) ? data.files : [];
 
@@ -1217,6 +1514,7 @@ const TemplatePicker = () => {
         });
 
         if (acceptedIds.length > 0) {
+          setAttachmentError(null);
           await client.post(ATTACHMENT_UPLOAD_PATH, {
             action: 'ack',
             sessionId: editorSessionId,
@@ -1297,6 +1595,71 @@ const TemplatePicker = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!composerExpanded) {
+      setCoverState('pending');
+      return;
+    }
+
+    let cancelled = false;
+    let innerFrame = 0;
+
+    setCoverState('pending');
+
+    const measure = () => {
+      const node = overlayRootRef.current;
+      if (!node) {
+        return false;
+      }
+
+      const rect = node.getBoundingClientRect();
+      const viewportWidth = window.innerWidth || 0;
+
+      if (!rect.width || !viewportWidth) {
+        return false;
+      }
+
+      setCoverState(
+        Math.abs(rect.left) <= viewportWidth * 0.12 &&
+          rect.width >= viewportWidth * 0.7
+          ? 'yes'
+          : 'no',
+      );
+      return true;
+    };
+
+    const outerFrame = requestAnimationFrame(() => {
+      if (cancelled) {
+        return;
+      }
+
+      if (measure()) {
+        return;
+      }
+
+      innerFrame = requestAnimationFrame(() => {
+        if (!cancelled) {
+          measure();
+        }
+      });
+    });
+
+    const fallbackTimer = setTimeout(() => {
+      if (!cancelled) {
+        setCoverState((current) => (current === 'pending' ? 'no' : current));
+      }
+    }, 400);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(fallbackTimer);
+      cancelAnimationFrame(outerFrame);
+      if (innerFrame) {
+        cancelAnimationFrame(innerFrame);
+      }
+    };
+  }, [composerExpanded]);
+
   const visibleTemplates = templates
     .filter((template) => !categoryFilter || template.category === categoryFilter)
     .filter(
@@ -1308,8 +1671,22 @@ const TemplatePicker = () => {
     templates.some((template) => template.category === category),
   );
 
+  const showOriginalPane = Boolean(
+    composerExpanded && (replyMessage?.text || isReplyContext),
+  );
+  const useViewportSplit = composerExpanded && coverState === 'yes';
+  const rootClassName =
+    composerExpanded && coverState !== 'no' ? 'owocni-mail-fs-root' : undefined;
+  const composeSplitClassName = composerExpanded
+    ? useViewportSplit && showOriginalPane
+      ? 'owocni-mail-fs-split'
+      : 'owocni-mail-fs-stacked'
+    : undefined;
+
   return (
     <div
+      ref={overlayRootRef}
+      className={rootClassName}
       style={{
         fontFamily: 'sans-serif',
         fontSize: 14,
@@ -1320,6 +1697,7 @@ const TemplatePicker = () => {
         overflow: 'hidden',
       }}
     >
+      <style>{COMPOSE_FULLSCREEN_CSS}</style>
       {listError ? (
         <div
           style={{
@@ -1384,46 +1762,63 @@ const TemplatePicker = () => {
             i otwórz <strong>Odpowiedz</strong> z karty leada.
           </span>
         ) : null}
-        {selected?.id === FREE_COMPOSE_TEMPLATE_ID ? (
-          <button
-            type="button"
+        {selected ? (
+          <div
             style={{
               marginLeft: 'auto',
-              fontSize: 12,
-              padding: '4px 10px',
-              border: '1px solid #ddd',
-              borderRadius: 6,
-              background: '#fff',
-              cursor: 'pointer',
-            }}
-            disabled={sending}
-            onClick={() => {
-              setSelectedId(null);
+              display: 'flex',
+              gap: 8,
+              flexWrap: 'wrap',
+              alignItems: 'center',
             }}
           >
-            Wstaw szablon
-          </button>
-        ) : selected ? (
-          <button
-            type="button"
-            style={{
-              marginLeft: 'auto',
-              fontSize: 12,
-              padding: '4px 10px',
-              border: '1px solid #ddd',
-              borderRadius: 6,
-              background: '#fff',
-              cursor: 'pointer',
-            }}
-            disabled={sending}
-            onClick={() => enterFreeCompose(replySubject)}
-          >
-            Bez szablonu
-          </button>
+            <button
+              type="button"
+              title={
+                composerExpanded
+                  ? 'Wróć do panelu bocznego'
+                  : 'Otwórz wiadomość źródłową i edytor na cały ekran'
+              }
+              style={{
+                ...HEADER_ACTION_BUTTON_STYLE,
+                background: composerExpanded ? '#eef2ff' : '#fff',
+                borderColor: composerExpanded ? '#6366f1' : '#ddd',
+                color: composerExpanded ? '#3730a3' : '#333',
+                fontWeight: composerExpanded ? 600 : 400,
+                cursor: sending ? 'not-allowed' : 'pointer',
+              }}
+              disabled={sending}
+              onClick={() => setComposerExpanded((open) => !open)}
+            >
+              {composerExpanded ? 'Zamknij pełne okno' : 'Pełne okno'}
+            </button>
+            {selected.id === FREE_COMPOSE_TEMPLATE_ID ? (
+              <button
+                type="button"
+                style={HEADER_ACTION_BUTTON_STYLE}
+                disabled={sending}
+                onClick={() => {
+                  setComposerExpanded(false);
+                  setSelectedId(null);
+                }}
+              >
+                Wstaw szablon
+              </button>
+            ) : (
+              <button
+                type="button"
+                style={HEADER_ACTION_BUTTON_STYLE}
+                disabled={sending}
+                onClick={() => enterFreeCompose(replySubject)}
+              >
+                Bez szablonu
+              </button>
+            )}
+          </div>
         ) : null}
       </div>
 
-      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID ? (
+      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID && !composerExpanded ? (
       <div
         style={{
           display: 'flex',
@@ -1467,7 +1862,7 @@ const TemplatePicker = () => {
       </div>
       ) : null}
 
-      {!selected ? (
+      {!selected && !composerExpanded ? (
       <div
         style={{
           padding: '10px 16px',
@@ -1632,7 +2027,7 @@ const TemplatePicker = () => {
       </div>
       ) : null}
 
-      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID ? (
+      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID && !composerExpanded ? (
       <div
         style={{
           overflowY: 'auto',
@@ -1690,6 +2085,7 @@ const TemplatePicker = () => {
 
       {selected && (
         <div
+          className={composeSplitClassName}
           style={{
             borderTop: '1px solid #eee',
             flex: 1,
@@ -1699,10 +2095,42 @@ const TemplatePicker = () => {
             overflow: 'hidden',
           }}
         >
+          {showOriginalPane ? (
+            <div className="owocni-mail-fs-left">
+              <div
+                style={{
+                  flexShrink: 0,
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e2e8f0',
+                  fontWeight: 600,
+                  fontSize: 13,
+                  color: '#1e3a8a',
+                }}
+              >
+                Wiadomość, na którą odpowiadasz
+              </div>
+              <OriginalMessageBody
+                replyMessage={replyMessage}
+                replySubject={replySubject}
+                fillHeight
+              />
+            </div>
+          ) : null}
+          <div
+            className={composerExpanded ? 'owocni-mail-fs-right' : undefined}
+            style={{
+              flex: 1,
+              minHeight: 0,
+              minWidth: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
           <div
             style={{
               flexShrink: 0,
-              maxHeight: '42%',
+              maxHeight: composerExpanded ? undefined : '42%',
               overflowY: 'auto',
               overflowX: 'hidden',
               WebkitOverflowScrolling: 'touch',
@@ -1719,7 +2147,7 @@ const TemplatePicker = () => {
           {displayRecipientEmail ? (
             <div
               style={{
-                padding: '8px 10px',
+                padding: composerExpanded ? '6px 10px' : '8px 10px',
                 borderRadius: 6,
                 background: '#ecfdf5',
                 border: '1px solid #86efac',
@@ -1737,7 +2165,7 @@ const TemplatePicker = () => {
               ) : null}
             </div>
           ) : null}
-          {replyMessage?.text || isReplyContext ? (
+          {!composerExpanded && (replyMessage?.text || isReplyContext) ? (
             <details
               open={false}
               style={{
@@ -1762,63 +2190,10 @@ const TemplatePicker = () => {
                     ? ` · ${toReplySubject(replySubject).slice(0, 48)}`
                     : ''}
               </summary>
-              {replyMessage?.text ? (
-                <div
-                  style={{
-                    marginTop: 8,
-                    fontSize: 12,
-                    color: '#334155',
-                    lineHeight: 1.45,
-                  }}
-                >
-                  {replyMessage.fromLabel || replyMessage.fromEmail ? (
-                    <div style={{ marginBottom: 4 }}>
-                      <strong>Od:</strong>{' '}
-                      {replyMessage.fromLabel}
-                      {replyMessage.fromEmail &&
-                      replyMessage.fromEmail !== replyMessage.fromLabel
-                        ? ` (${replyMessage.fromEmail})`
-                        : ''}
-                    </div>
-                  ) : null}
-                  {replyMessage.receivedAt ? (
-                    <div style={{ marginBottom: 4 }}>
-                      <strong>Data:</strong>{' '}
-                      {formatMessageDate(replyMessage.receivedAt)}
-                    </div>
-                  ) : null}
-                  {(replyMessage.subject || replySubject) && (
-                    <div style={{ marginBottom: 8 }}>
-                      <strong>Temat:</strong>{' '}
-                      {replyMessage.subject || toReplySubject(replySubject ?? '')}
-                    </div>
-                  )}
-                  <div
-                    style={{
-                      maxHeight: 140,
-                      overflowY: 'auto',
-                      whiteSpace: 'pre-wrap',
-                      padding: '8px 10px',
-                      borderRadius: 4,
-                      background: '#fff',
-                      border: '1px solid #e2e8f0',
-                    }}
-                  >
-                    {replyMessage.text}
-                  </div>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    marginTop: 8,
-                    fontSize: 11,
-                    color: '#64748b',
-                  }}
-                >
-                  Treść wiadomości nie jest dostępna w CRM — sprawdź wątek maili
-                  po lewej stronie.
-                </div>
-              )}
+              <OriginalMessageBody
+                replyMessage={replyMessage}
+                replySubject={replySubject}
+              />
             </details>
           ) : null}
           <div
@@ -1887,9 +2262,24 @@ const TemplatePicker = () => {
                     const match = allowedSendAccounts.find(
                       (account) => account.id === nextId,
                     );
+                    const nextHandle = match?.handle ?? null;
 
                     setConnectedAccountId(nextId);
-                    setConnectedAccountHandle(match?.handle ?? null);
+                    setConnectedAccountHandle(nextHandle);
+                    setEditBodyHtml((current) => {
+                      const next = swapSignatureOnFromChange(
+                        current,
+                        nextHandle,
+                      );
+
+                      if (next !== current) {
+                        queueMicrotask(() => {
+                          editorRef.current?.setHtml(next);
+                        });
+                      }
+
+                      return next;
+                    });
                   }}
                   disabled={sending || sendCountdown !== null}
                 >
@@ -2050,6 +2440,18 @@ const TemplatePicker = () => {
               gap: 10,
             }}
           >
+          {attachmentError ? (
+            <div
+              role="alert"
+              style={{
+                fontSize: 12,
+                lineHeight: 1.4,
+                color: '#b91c1c',
+              }}
+            >
+              {attachmentError}
+            </div>
+          ) : null}
           {attachments.length > 0 ? (
             <div
               style={{
@@ -2264,6 +2666,7 @@ const TemplatePicker = () => {
             </div>
           )}
           </div>
+        </div>
         </div>
       )}
     </div>

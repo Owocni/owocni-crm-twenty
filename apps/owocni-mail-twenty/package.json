@@ -1,6 +1,6 @@
 {
   "name": "owocni-mail",
-  "version": "0.1.57",
+  "version": "0.1.60",
   "license": "MIT",
   "engines": {
     "node": "^24.5.0",
@@ -14,6 +14,7 @@
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint --fix -c .oxlintrc.json .",
     "test": "vitest run",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
     "test:watch": "vitest"
   },
   "devDependencies": {

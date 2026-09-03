@@ -2,10 +2,10 @@
 doc_id: E12_3_EMAIL_SIGNATURES_DECISION
 title: "Decyzja Mariusz — stałe stopki maili w odpowiedziach z Twenty"
 layer: runbook
-status: option_a_accepted — wdrożone w Owocni Mail 0.1.58 (stopka w edytorze; send = edytor)
+status: option_a_accepted — live i git Owocni Mail **0.1.60** (2026-09-03). Stopka: `apps/owocni-mail-twenty/src/utils/mailSignature.ts`. Numer **0.1.58** z wcześniejszej wersji tego dokumentu nigdy nie istniał w git.
 owner: "Dawid"
 audience: "Mariusz"
-last_verified: 2026-08-31
+last_verified: 2026-09-03
 related:
   - E12_3_EMAIL_TEMPLATES_AND_TRAINING.md
   - E12_3_EMAIL_TEMPLATE_STRATEGY.md

@@ -1,4 +1,5 @@
 import {
+  ATTACHMENT_FRAME_MESSAGE_TYPE,
   ATTACHMENT_UPLOAD_PATH,
   MAX_EMAIL_ATTACHMENT_BYTES,
 } from 'src/utils/emailAttachmentShared';
@@ -8,6 +9,9 @@ import { resolveAppOrigin } from 'src/utils/editorDraftApi';
  * Real-DOM attachment picker for the FC sandbox.
  * Remote-DOM refs have no `.click()` and never receive File bytes — the iframe
  * owns the native file input and posts base64 to our logic function.
+ *
+ * Success/errors go to the parent via postMessage. Do not remount this iframe
+ * while an upload is in flight — that aborts fetch and looks like a silent miss.
  */
 export function buildAttachmentPickerSrcDoc(options: {
   sessionId: string;
@@ -58,6 +62,7 @@ export function buildAttachmentPickerSrcDoc(options: {
   var accessToken = ${JSON.stringify(options.accessToken)};
   var uploadUrl = ${JSON.stringify(uploadUrl)};
   var maxBytes = ${MAX_EMAIL_ATTACHMENT_BYTES};
+  var messageType = ${JSON.stringify(ATTACHMENT_FRAME_MESSAGE_TYPE)};
   var disabled = ${options.disabled ? 'true' : 'false'};
   var input = document.getElementById('file');
   var root = document.getElementById('root');
@@ -65,8 +70,21 @@ export function buildAttachmentPickerSrcDoc(options: {
   var busy = document.getElementById('busy');
   var uploading = false;
 
+  function notify(payload) {
+    var message = { type: messageType, sessionId: sessionId };
+    for (var key in payload) {
+      if (Object.prototype.hasOwnProperty.call(payload, key)) {
+        message[key] = payload[key];
+      }
+    }
+    try {
+      window.parent.postMessage(message, '*');
+    } catch (e) {}
+  }
+
   function setBusy(on) {
     uploading = on;
+    notify({ uploading: on });
     if (on) {
       icon.hidden = true;
       busy.hidden = false;
@@ -127,20 +145,39 @@ export function buildAttachmentPickerSrcDoc(options: {
     try {
       for (var i = 0; i < files.length; i++) {
         var file = files[i];
-        if (!file || file.size <= 0 || file.size > maxBytes) {
+        if (!file || file.size <= 0) {
+          notify({ ok: false, error: 'Plik jest pusty.' });
+          continue;
+        }
+        if (file.size > maxBytes) {
+          notify({
+            ok: false,
+            error: 'Plik jest za duży (max ' + Math.round(maxBytes / (1024 * 1024)) + ' MB).'
+          });
           continue;
         }
         var contentBase64 = await fileToBase64(file);
-        await postJson({
+        var data = await postJson({
           action: 'upload',
           sessionId: sessionId,
           filename: file.name,
           contentType: file.type || 'application/octet-stream',
           contentBase64: contentBase64
         });
+        var uploaded = data && data.file && data.file.id && data.file.name
+          ? data.file
+          : { id: '', name: file.name };
+        if (!uploaded.id) {
+          notify({ ok: false, error: 'Upload „' + file.name + '” nie zwrócił id pliku.' });
+          continue;
+        }
+        notify({ ok: true, file: uploaded });
       }
     } catch (e) {
-      // Parent poll shows successful uploads; failures simply omit chips.
+      notify({
+        ok: false,
+        error: (e && e.message) ? e.message : 'Nie udało się dodać załącznika.'
+      });
     } finally {
       setBusy(false);
     }
