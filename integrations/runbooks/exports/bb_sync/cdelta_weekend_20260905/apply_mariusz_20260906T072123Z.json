@@ -1,0 +1,261 @@
+{
+  "mailbox": "mariusz@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 0,
+  "bb_limit": 400,
+  "rows": 53,
+  "scanned": 53,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_parent_not_in_twenty": 17,
+    "skip_other_channel": 35,
+    "skip_no_parent": 1
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1997668,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Strona - Warsztat projektowy.",
+      "sent_date": "2024-11-07T15:31:34.024+00:00",
+      "own": "<ff356dbb-6df2-94fe-df47-d5df64ca93ff@owocni.pl>",
+      "parent": "<6a11cb1ef2d21e32715b1c1aecbdc2f5@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "27661e8f-9f47-49be-8e2f-0a8280ecb02f",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1997624,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Re: Strona internetowa dla Pana Michała:",
+      "sent_date": "2024-11-07T12:52:09.747+00:00",
+      "own": "<2b6a60b6-e347-5735-70fb-8073909f366c@owocni.pl>",
+      "parent": "<CAB8qMwq89soXT5in5MhvnpO1uKgzW3cGnwh9dOR+q7qM1uj+5A@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1997478,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Yacht Hornet - Nowa strona. ",
+      "sent_date": "2024-11-06T14:16:54.993+00:00",
+      "own": "<5da06a0b-2896-b27e-164b-eb5305fe47fc@owocni.pl>",
+      "parent": "<3fad345c-aabe-abd7-cb02-bfe0c8555b21@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1997460,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Fwd: Strona internetowa dla Pana Michała:",
+      "sent_date": "2024-11-06T13:44:10.224+00:00",
+      "own": "<93a6aca8-4645-f4df-1f1b-90c5c2462f4b@owocni.pl>",
+      "parent": "<CAB8qMwoQa14mvyuQnZ5yUmkjeboq9yX-ySL=VnvDaPMb_XeZZA@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1997266,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Beto-pref od nowej strony.",
+      "sent_date": "2024-11-04T19:17:14.295+00:00",
+      "own": "<d20b2bb5-f787-f06a-deee-d340a5392c6d@owocni.pl>",
+      "parent": "<12726d31076bf503435ae4854b872dfe@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "6e1e9b36-8b97-4cdc-bc0e-b647879bdf91",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1997216,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Yacht Hornet - Nowa strona. ",
+      "sent_date": "2024-11-04T12:50:00.603+00:00",
+      "own": "<3fad345c-aabe-abd7-cb02-bfe0c8555b21@owocni.pl>",
+      "parent": "<c8894785-a6fc-5d12-c6aa-6bef7a05396f@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1997215,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Strona Maszyn",
+      "sent_date": "2024-11-04T12:42:37.851+00:00",
+      "own": "<aa1846a5-eb5d-7979-84d5-a1823a820735@owocni.pl>",
+      "parent": "<E1t7iDa-00000005t3A-3z3N@d28.thecamels.org>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1997189,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Strona Pesonal Branding'owa",
+      "sent_date": "2024-11-04T10:35:28.695+00:00",
+      "own": "<c041eaec-c658-ab63-a823-b81d4a7fbfd7@owocni.pl>",
+      "parent": "<094a3bc40d7a0e043f8a4eea592bfc69@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "6999b234-aef2-4f78-98b4-abb27d7fc801",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996921,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Re: Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-31T00:11:49.27+00:00",
+      "own": "<2af7eb7a-f2b9-7da4-96b4-4bbaf7039881@owocni.pl>",
+      "parent": "<53b93024-30d2-4c9b-5040-8f2326bdb88a@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996920,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Re: Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-31T00:07:24.108+00:00",
+      "own": "<53b93024-30d2-4c9b-5040-8f2326bdb88a@owocni.pl>",
+      "parent": "<3a0ca509-87a8-e23a-675e-94b00abd4d7a@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996919,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Re: Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-31T00:00:58.807+00:00",
+      "own": "<3a0ca509-87a8-e23a-675e-94b00abd4d7a@owocni.pl>",
+      "parent": "<CAJ-Jp2UV0Wqm9bFycBD-tX=cBm=R9whZ5juDVqyCufwKgX33tg@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996912,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-30T21:47:58.449+00:00",
+      "own": "<ed8fa52e-328d-9a07-b780-f91c47052811@owocni.pl>",
+      "parent": "<3a1041c7d097444487bfb0005f82e8a6@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a624ba24-30d0-4cf7-bdc4-00df14483f42",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996911,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-30T21:45:55.075+00:00",
+      "own": "<cb589b3a-23c0-f619-e5cc-74ffa86fdf47@owocni.pl>",
+      "parent": "<3a1041c7d097444487bfb0005f82e8a6@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a624ba24-30d0-4cf7-bdc4-00df14483f42",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996910,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-30T21:41:11.067+00:00",
+      "own": "<6a16b892-68c5-53d4-cb61-e4d9136055fb@owocni.pl>",
+      "parent": "<3a1041c7d097444487bfb0005f82e8a6@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a624ba24-30d0-4cf7-bdc4-00df14483f42",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996909,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-30T21:35:46.657+00:00",
+      "own": "<9375fd46-fa26-8ef6-b53d-63664f2af18b@owocni.pl>",
+      "parent": "<3a1041c7d097444487bfb0005f82e8a6@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a624ba24-30d0-4cf7-bdc4-00df14483f42",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996908,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 04:19:21]",
+      "sent_date": "2024-10-30T21:30:55.76+00:00",
+      "own": "<18ef4e1b-81f6-b858-64e8-eef97e3cc972@owocni.pl>",
+      "parent": "<3a1041c7d097444487bfb0005f82e8a6@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a624ba24-30d0-4cf7-bdc4-00df14483f42",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996901,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 02:20:12]",
+      "sent_date": "2024-10-30T20:29:15.163+00:00",
+      "own": "<cf3863d3-5e9e-975c-1f72-7ac5db5f198d@owocni.pl>",
+      "parent": "<ecfd1f34ba2a28518c82f3aa42c51cdb@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d0556184-93cd-449f-8d65-6c0137e29d46",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996900,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 02:20:12]",
+      "sent_date": "2024-10-30T20:27:31.19+00:00",
+      "own": "<212b3ac0-b97b-c1ec-a065-4e2d0c6beaac@owocni.pl>",
+      "parent": "<ecfd1f34ba2a28518c82f3aa42c51cdb@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d0556184-93cd-449f-8d65-6c0137e29d46",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996899,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 02:20:12]",
+      "sent_date": "2024-10-30T20:23:26.268+00:00",
+      "own": "<83c0a62e-e89e-d8ff-117d-950e9ffd586e@owocni.pl>",
+      "parent": "<18e04675-8c2e-0270-87f8-3ba9b50a300a@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996897,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 02:20:12]",
+      "sent_date": "2024-10-30T20:01:27.224+00:00",
+      "own": "<18e04675-8c2e-0270-87f8-3ba9b50a300a@owocni.pl>",
+      "parent": "<ecfd1f34ba2a28518c82f3aa42c51cdb@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d0556184-93cd-449f-8d65-6c0137e29d46",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

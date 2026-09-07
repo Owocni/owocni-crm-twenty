@@ -26,6 +26,7 @@ const { ingestMetaLead } = require("./workers/metaLeadIngest");
 const { handleEnrichCompanyPl } = require("./workers/enrichCompanyPl");
 const { handleIssueInvoice } = require("./workers/issueInvoice");
 const { runLeadDispatchSweep } = require("./workers/leadDispatchSweep");
+const { runSnoozeWakeWorker } = require("./workers/snoozeWake");
 const { leadAck } = require("./workers/leadAck");
 const { runFormMailWitnessWorker } = require("./workers/formMailWitness");
 const { CREATE_LEAD_BUILD_ID } = require("./shared/config");
@@ -263,18 +264,7 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
       const messageDirection = await runMessageDirectionEnrichWorker();
       const callTranscript = await runCallTranscriptIngestWorker();
       const missedCall = await runMissedCallIngestWorker();
-      let leadDispatch = { skipped: "not_on_poll" };
-      if (
-        process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "true" ||
-        process.env.LEAD_DISPATCHER_SWEEP_ON_POLL === "1"
-      ) {
-        try {
-          leadDispatch = await runLeadDispatchSweep();
-        } catch (err) {
-          console.error("lead_dispatch_sweep poll FAIL", err.message);
-          leadDispatch = { ok: false, error: err.message };
-        }
-      }
+      const snoozeWake = await runSnoozeWakeWorker();
       return {
         update_person: updatePerson,
         form_mail_witness: formMailWitness,
@@ -283,7 +273,8 @@ functions.http("processTwentyCrmWorker", async (req, res) => {
         message_direction_enrich: messageDirection,
         call_transcript_ingest: callTranscript,
         missed_call_ingest: missedCall,
-        lead_dispatch_sweep: leadDispatch,
+        snooze_wake: snoozeWake,
+        lead_dispatch_sweep: { skipped: "retired_biore" },
       };
     });
     res.status(200).json({

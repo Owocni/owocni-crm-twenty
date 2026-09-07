@@ -3,9 +3,11 @@ import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
 import {
+  listThreadMessagesByEmail,
   resolveMailContext,
   type PersonContext,
   type ReplyMessagePreview,
+  type ThreadMessage,
 } from 'src/utils/personContext';
 import {
   findSuggestedReply,
@@ -75,6 +77,7 @@ const handler = async (event: RoutePayload) => {
   let person: PersonContext | null = null;
   let replySubject: string | null = null;
   let replyMessage: ReplyMessagePreview | null = null;
+  let threadMessages: ThreadMessage[] = [];
   let contextKind: string | null = null;
   let resolveError: string | null = null;
 
@@ -84,6 +87,14 @@ const handler = async (event: RoutePayload) => {
     replySubject = resolved.replySubject;
     replyMessage = resolved.replyMessage;
     contextKind = resolved.contextKind;
+    const threadEmail = person?.email?.trim() || email;
+    if (threadEmail) {
+      threadMessages = await listThreadMessagesByEmail(coreClient, threadEmail);
+      if (!replyMessage && threadMessages[0]) {
+        replyMessage = threadMessages[0];
+        replySubject = replySubject || threadMessages[0].subject;
+      }
+    }
   } catch (personError) {
     resolveError =
       personError instanceof Error ? personError.message : String(personError);
@@ -117,6 +128,7 @@ const handler = async (event: RoutePayload) => {
     person,
     replySubject,
     replyMessage,
+    threadMessages,
     contextKind,
     contextRecordId: recordId,
     recentRecipients,
@@ -129,6 +141,7 @@ const handler = async (event: RoutePayload) => {
       replySubject,
       replyMessageId: replyMessage?.messageId ?? null,
       replyMessageTextLen: replyMessage?.text?.length ?? 0,
+      threadMessageCount: threadMessages.length,
       contextKind,
       recent: recentDebug,
       suggestedReply,

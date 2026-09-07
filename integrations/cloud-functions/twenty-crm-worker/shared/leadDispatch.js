@@ -1,8 +1,11 @@
 "use strict";
 
 /**
- * Lead Dispatcher v2.0 — pure routing + classification + business-minutes helpers.
- * Spec: integrations/runbooks/LEAD_DISPATCHER_PLAN.md
+ * Retired 2026-09-04 — Lead Dispatcher v2.0 helpers kept as inactive archive.
+ * Production assignment is COPY → Maciej + idOid hash in createLead.js.
+ * sampleWeekRouting still uses warsawMinutesSinceMidnight.
+ *
+ * Spec (archive): integrations/runbooks/LEAD_DISPATCHER_PLAN.md
  */
 
 const TIME_ON_PAGE_HOT_MS = 360_000;
@@ -291,4 +294,5 @@ module.exports = {
   otherPoolMember,
   parseHolidaySet,
   isWorkInstant,
+  warsawMinutesSinceMidnight,
 };

@@ -1,0 +1,642 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 0,
+  "bb_limit": 400,
+  "rows": 370,
+  "scanned": 295,
+  "hit_limit": true,
+  "window_done": false,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_parent_not_in_twenty": 148,
+    "skip_other_channel": 102,
+    "skip_in_twenty": 12,
+    "skip_no_parent": 5,
+    "skip_on_imap": 3
+  },
+  "appended": [
+    {
+      "bb_id": 2057864,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pana Pawła:",
+      "sent_date": "2026-09-04T12:45:36.847+00:00",
+      "own": "<a115a819-b942-1f86-0fac-8da16efc9c91@owocni.pl>",
+      "parent": "<mzozvykschquyviatltx@cezv>",
+      "status": "appended",
+      "parent_thread": "e3e4a605-9962-4be9-bd69-baa32295ae51",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 12534
+    },
+    {
+      "bb_id": 2057814,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Nowe logo CINEMA WORLD 360",
+      "sent_date": "2026-09-04T06:45:50.013+00:00",
+      "own": "<b7b4d169-fd03-bf4d-1e2d-357cf91640c2@owocni.pl>",
+      "parent": "<CALtiRRZPvdmLpcShj=4j1hXp9Sq+5Vw0O+7rT1t7Tb-VCNdm1g@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "52761bb1-d7af-4420-aa08-faf110406410",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 23971
+    },
+    {
+      "bb_id": 2057773,
+      "inbox": "marta@owocni.pl",
+      "subject": "Dane dostępowe do strony:",
+      "sent_date": "2026-09-03T11:44:35.678+00:00",
+      "own": "<4635dc98-7552-b815-d915-8f2922919e45@owocni.pl>",
+      "parent": "<DB4PR10MB6991DB27FED2E9B6A607EE6887B62@DB4PR10MB6991.EURPRD10.PROD.OUTLOOK.COM>",
+      "status": "appended",
+      "parent_thread": "0d7ef6d7-7b90-40f8-8244-6a8b4741fd12",
+      "parent_mailboxes": [
+        "MARTA",
+        "POMOC"
+      ],
+      "folder": "BB Archive",
+      "bytes": 268544
+    },
+    {
+      "bb_id": 2057761,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pana Jana:",
+      "sent_date": "2026-09-03T10:51:27.769+00:00",
+      "own": "<ab65cd49-cbde-e3f3-15ac-6f396b913c9a@owocni.pl>",
+      "parent": "<CACwqtYW_xnoEBR2_katFTUze3oyuxqKV5xo8Gk-7HDxT7jzsSQ@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "34246d5b-e4b8-44c0-8b6b-f80f9f4288ca",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 99653
+    },
+    {
+      "bb_id": 2057687,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pana Jana:",
+      "sent_date": "2026-09-02T21:36:05.414+00:00",
+      "own": "<f7e5a7ea-b239-e2cb-a96b-10fa087c3dda@owocni.pl>",
+      "parent": "<CACwqtYWs5mtjCQGRHyBZL82VkuxAFzB-zsqWT7uYEjwf57ke0A@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "34246d5b-e4b8-44c0-8b6b-f80f9f4288ca",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 97092
+    },
+    {
+      "bb_id": 2057588,
+      "inbox": "marta@owocni.pl",
+      "subject": "Do usłyszenia w przyszłym tygodniu:",
+      "sent_date": "2026-09-01T11:15:42.758+00:00",
+      "own": "<1aebc04b-253a-d948-adf1-7a8d8774f7f0@owocni.pl>",
+      "parent": "<bd374631-21b6-a78c-13fc-e06ece9eb838@owocni.pl>",
+      "status": "appended",
+      "parent_thread": "f7d07f5d-966f-45e5-8ee7-761f7231a1aa",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 5861
+    },
+    {
+      "bb_id": 2057572,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Prawa do dodatkowego projektu logo:",
+      "sent_date": "2026-09-01T10:54:10.133+00:00",
+      "own": "<4289411f-b95c-a31f-1f7a-c24892920c9e@owocni.pl>",
+      "parent": "<570301875b4a4d90900dabeff89ea869@grupawp.pl>",
+      "status": "appended",
+      "parent_thread": "8a59aded-20ea-491f-aab8-27404e7cfad3",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 71355
+    },
+    {
+      "bb_id": 2057532,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona dla studia tańca Pani Joanny:",
+      "sent_date": "2026-08-31T14:53:36.346+00:00",
+      "own": "<0a34bdbb-d4b4-ce83-4a06-dd17fd175e4d@owocni.pl>",
+      "parent": "<CAHq3TFkpc-pNq0rpFstQP_kq89vjpk-uNBqvk-vJ9TRTMGZUOQ@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "45beabed-d660-4461-98b0-6923eb934100",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 7041
+    },
+    {
+      "bb_id": 2057502,
+      "inbox": "marta@owocni.pl",
+      "subject": "Idealne logo. Za symboliczną złotówkę.",
+      "sent_date": "2026-08-31T10:34:32.951+00:00",
+      "own": "<20b6ee91-d212-cf0a-9adc-8c5274c14caf@owocni.pl>",
+      "parent": "<7bdff72b4abe4ac38485f7f88af70373@grupawp.pl>",
+      "status": "appended",
+      "parent_thread": "206b7f18-3d69-45ba-895e-9e459420395a",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 8175
+    },
+    {
+      "bb_id": 2057295,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Draft umowy:",
+      "sent_date": "2026-08-27T19:40:51.964+00:00",
+      "own": "<e6c0a56a-c64e-56d4-0f95-434b2a73283c@owocni.pl>",
+      "parent": "<310e3eb1-0efe-4347-b1d9-3213810e6b0a@aero-bw.pl>",
+      "status": "appended",
+      "parent_thread": "b8f62116-424b-41ce-917d-fde1b3c23c71",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 871100
+    },
+    {
+      "bb_id": 2057217,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona internetowa dla Pana Radosława:",
+      "sent_date": "2026-08-26T14:01:08.48+00:00",
+      "own": "<f963279a-c651-22c3-20e7-57b571c9bba2@owocni.pl>",
+      "parent": "<CAMHnt9jvSZ3q9AeAK6kwEsKLKRpAdC973DmHGb7=6Rq6CgpP8w@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "a5c42b09-8530-4e79-9cdd-aacb53167268",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 83657
+    },
+    {
+      "bb_id": 2057006,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Finalizacja projektu &gt; fakturaproforma nr 6099",
+      "sent_date": "2026-08-26T07:09:47.236+00:00",
+      "own": "<12689f44-d86a-8425-324d-80f2d711a031@owocni.pl>",
+      "parent": "<joiaupmzotuxyubqwvlp@yfke>",
+      "status": "appended",
+      "parent_thread": "8d71cf11-8733-4d75-aab5-6264be1745c1",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 27503
+    },
+    {
+      "bb_id": 2056885,
+      "inbox": "marta@owocni.pl",
+      "subject": "Przekazanie sprawy do działu wsparcia:",
+      "sent_date": "2026-08-24T15:36:10.556+00:00",
+      "own": "<fb4cd84d-716c-5a45-5b17-f952f818b05a@owocni.pl>",
+      "parent": "<CA+k22A2XapcwmJe8TPy3LaES5-aOcsGPF+DjwjQZihRqCgsmKg@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "3a9a14c9-7913-41a2-a53d-17e571ab41d8",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 16662
+    },
+    {
+      "bb_id": 2056878,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona internetowa dla Pana Radosława:",
+      "sent_date": "2026-08-24T14:50:05.972+00:00",
+      "own": "<7043bc20-b966-dac6-4af9-8e9bde4a51bf@owocni.pl>",
+      "parent": "<CAMHnt9iyrVx3zxJwKnr-psiniETEsM2xrX7hoSqL=BfjKx5Fhg@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "a5c42b09-8530-4e79-9cdd-aacb53167268",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 77871
+    },
+    {
+      "bb_id": 2056652,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Przebudowa strony spreek.pl",
+      "sent_date": "2026-08-20T07:28:50.15+00:00",
+      "own": "<c938068d-1be0-3df2-4864-7eb0a7955e50@owocni.pl>",
+      "parent": "<CAH9jsK-tiA_bKnKC2YPtfobe3n2ECGhgae1qWuyvAOzAVYWf_g@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "f08d6ae8-fee8-440f-8d12-3ea30b91b49e",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 45203
+    },
+    {
+      "bb_id": 2056443,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Karoliny:",
+      "sent_date": "2026-08-17T13:32:23.765+00:00",
+      "own": "<298ba28a-08ef-8af9-8f78-50af9eaa387a@owocni.pl>",
+      "parent": "<CAA_HKxBtzugBV96EDZ_ysiC8YLXTtkjtwhDfRpiBCM7W=e7JzA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "eba2b401-30d7-4e37-a216-6c176bfeba83",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 42847
+    },
+    {
+      "bb_id": 2056433,
+      "inbox": "marta@owocni.pl",
+      "subject": "Zapytanie",
+      "sent_date": "2026-08-17T11:57:39.31+00:00",
+      "own": "<860e788c-8fae-422e-3b6e-c8dcb87c3a65@owocni.pl>",
+      "parent": "<ECB35B4A-C663-48F5-B88C-F75B42CB6BE9@rk9.pl>",
+      "status": "appended",
+      "parent_thread": "1b542472-f909-4f12-8688-408c47b6b053",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 65759
+    },
+    {
+      "bb_id": 2056039,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Realizacja projektu Logo",
+      "sent_date": "2026-08-12T13:52:14.84+00:00",
+      "own": "<231bbae7-bc73-3151-154d-59169628ec36@owocni.pl>",
+      "parent": "<CACjFCX9UuqQSg-bJNUbhQvYGz+GWLS69YKKeWvvN9OJESd5w0Q@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "321f3c37-50e2-4632-ba5e-0e898fa60756",
+      "parent_mailboxes": [
+        "MARTA",
+        "OBSLUGA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 17346
+    },
+    {
+      "bb_id": 2056033,
+      "inbox": "marta@owocni.pl",
+      "subject": "RE: Owocny hosting:",
+      "sent_date": "2026-08-12T13:31:31.208+00:00",
+      "own": "<6def503e-fed3-6f9d-a942-955792ff04b1@owocni.pl>",
+      "parent": "<DB4PR10MB699113A6AAB1AF186E868FED87DD2@DB4PR10MB6991.EURPRD10.PROD.OUTLOOK.COM>",
+      "status": "appended",
+      "parent_thread": "38a80335-f370-4597-8b5c-906c4e745b38",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 134041
+    },
+    {
+      "bb_id": 2056023,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Nazwa i logo dla Pana Mateusza:",
+      "sent_date": "2026-08-12T13:04:02.225+00:00",
+      "own": "<1b9d6aa4-2022-96e6-9d95-b32a32d5d629@owocni.pl>",
+      "parent": "<CAD-1m+0qXMKHfriMv1SwfmRwrk2aat83mN88z4RpFhGb5dgXyQ@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "2dd931b7-62e7-4c54-9774-0bf4600d8c14",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 75776
+    },
+    {
+      "bb_id": 2055799,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Owocne logo dla kancelarii Ausobsky & Zawadzki",
+      "sent_date": "2026-08-10T11:02:17.623+00:00",
+      "own": "<e0792a13-86fd-9c99-983e-da507ee8b349@owocni.pl>",
+      "parent": "<ca839c91-f02d-4206-a70e-12566430078c@zawadzki.consulting>",
+      "status": "appended",
+      "parent_thread": "660ebf36-1844-4d2a-868c-fa1d4cc9b888",
+      "parent_mailboxes": [
+        "MARTA",
+        "STUDIO"
+      ],
+      "folder": "BB Archive",
+      "bytes": 929800
+    },
+    {
+      "bb_id": 2055599,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Marzeny:",
+      "sent_date": "2026-08-06T18:20:51.931+00:00",
+      "own": "<81deeeee-8af5-c877-9e31-f9a405057881@owocni.pl>",
+      "parent": "<CAA9Kh3me_VKJSyt-VU5TBYbP+qpAB4Jk=hymjXzDG2vceaeGSQ@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "877fb48c-f29f-47d8-9348-0ef51f48cdd3",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 21912
+    },
+    {
+      "bb_id": 2055535,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Uruchomienie logo / Strona internetowa",
+      "sent_date": "2026-08-06T10:21:43.437+00:00",
+      "own": "<4ee5bf9e-b2ac-7214-065e-27a6d6430c2b@owocni.pl>",
+      "parent": "<2D1A952A-D122-4864-B82E-507D2BED8574@gmail.com>",
+      "status": "appended",
+      "parent_thread": "c5d9190d-ccea-4d47-934a-ec5196e0b855",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 94276
+    },
+    {
+      "bb_id": 2055272,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona internetowa po logo dla Pana Damiana:",
+      "sent_date": "2026-08-03T13:48:38.751+00:00",
+      "own": "<4c1eb4cc-8278-e121-2813-a60790cf1cee@owocni.pl>",
+      "parent": "<4B1B200B-53A0-4088-B495-4ACE183F58C4@rivotekt.pl>",
+      "status": "appended",
+      "parent_thread": "7f66f02c-d673-4eaa-97dc-57f653f7923d",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 89619
+    },
+    {
+      "bb_id": 2055034,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona typu katalog dla Pana Łukasza:",
+      "sent_date": "2026-07-31T12:06:21.091+00:00",
+      "own": "<4af5d9cb-ac4d-f8ac-80aa-8144fcf7223b@owocni.pl>",
+      "parent": "<CAMokq2jemeueeDvHOr7oNuP-fqMnYKbJK0GJAk_TL7RukJgZWA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "96ad6ef4-81ac-4d40-953d-ce3fb69d0037",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 52780
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2055227,
+      "inbox": "marta@owocni.pl",
+      "subject": "Pytanie przed współpracą:",
+      "sent_date": "2026-08-03T09:14:06.698+00:00",
+      "own": "<90728b56-22a9-d91b-94cc-facd6bb3e529@owocni.pl>",
+      "parent": "<0aff4c38734317158d733a359334de1c@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "4cd6a250-aa64-43f4-ac6e-e81516aec25a",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055225,
+      "inbox": "marta@owocni.pl",
+      "subject": "Zapytanie o wycenę - strona sprzedażowa kursu „Droga Józefa\"",
+      "sent_date": "2026-08-03T09:09:29.685+00:00",
+      "own": "<8a659103-1d82-4f3c-203b-16a0bcfbfcb1@owocni.pl>",
+      "parent": "<fd0b6a83-4992-44ff-b3a3-5109903e270f@halemkl.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "1d750e4b-9fb1-4e38-9d22-f05c5ec04830",
+      "parent_mailboxes": [
+        "STUDIO"
+      ]
+    },
+    {
+      "bb_id": 2055165,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Konsultacja dotycząca strony biura podróży",
+      "sent_date": "2026-08-02T19:42:13.757+00:00",
+      "own": "<7281d918-1002-597b-e9d7-178d97ecc0b9@owocni.pl>",
+      "parent": "<CAO1Nk6gceYdnk8JaC+P=zNigyskFF25REDWTsAQiF31oPh+uUQ@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055163,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja dotycząca rozwoju strony www.greencabtaxi.pl",
+      "sent_date": "2026-08-02T19:40:30.02+00:00",
+      "own": "<2c536324-2a54-fec7-0015-beddec162805@owocni.pl>",
+      "parent": "<f32ad3d9e9ccf07c2414cfe64b0f35bd@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c020e3cc-2802-49e5-9034-d5e1c4464465",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055158,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja dotycząca rozwoju sklepu www.city-bike.pl",
+      "sent_date": "2026-08-02T17:39:52.005+00:00",
+      "own": "<b6a7e164-959f-720d-1a0c-2dd4ee06956c@owocni.pl>",
+      "parent": "<7e6b2be64da7c798a458c5a2ccbef51a@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "f4179a4a-1937-4bb1-81a5-b2af0202f351",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055157,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pana Jakuba:",
+      "sent_date": "2026-08-02T17:36:17.338+00:00",
+      "own": "<76590c15-e945-0a6f-6a7f-ccdb8e127241@owocni.pl>",
+      "parent": "<5ebbd01b7606be5fb3053fd267af1623@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "7f3289d8-258b-41d6-9e5b-b7d50f654a48",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055156,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja dotycząca strony biura podróży",
+      "sent_date": "2026-08-02T17:25:25.929+00:00",
+      "own": "<de8ae331-7bb2-ffa4-30e2-ec5a547ed186@owocni.pl>",
+      "parent": "<53aecb23618c48e2d6e5b9eeaf4e2f8f@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "f39bdb32-7570-43e5-b138-0947962d4293",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055155,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pani Marleny 2:",
+      "sent_date": "2026-08-02T17:14:10.363+00:00",
+      "own": "<16491201-b97f-fcfb-7762-f8307f90e5d2@owocni.pl>",
+      "parent": "<270f653f243caa79626c84334cba48f3@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "346853be-fa95-4c78-acfe-4f55181628a6",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055154,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pani Marleny:",
+      "sent_date": "2026-08-02T17:08:12.304+00:00",
+      "own": "<93a30318-a4b4-9999-edc0-5521037e3957@owocni.pl>",
+      "parent": "<d4d6e19754cadb6ddbe034bae845b1f7@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "b4777196-cbe3-428e-ba3e-c2164cf6a513",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055153,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pana Jarosława:",
+      "sent_date": "2026-08-02T17:02:24.752+00:00",
+      "own": "<a635672e-4915-6300-9ab6-000c4602575e@owocni.pl>",
+      "parent": "<e9eb2fc7088f1ea8803300247137ab20@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "89a7f740-4ec5-424e-9f41-f4cf6c4f139b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055152,
+      "inbox": "marta@owocni.pl",
+      "subject": "Draft umowy:",
+      "sent_date": "2026-08-02T16:55:06.127+00:00",
+      "own": "<c05094a0-7ae5-bb21-110c-6fb8f04e52c2@owocni.pl>",
+      "parent": "<5fb74cd6-ca56-bafe-83fa-11d1dc130c53@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055151,
+      "inbox": "marta@owocni.pl",
+      "subject": "Umowa czeka na podpis:",
+      "sent_date": "2026-08-02T16:11:55.006+00:00",
+      "own": "<c42b2fa8-f551-d467-ab57-244eed30769f@owocni.pl>",
+      "parent": "<18dbf0da-3a70-0fa7-389a-8e2badb1ff9f@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055148,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Powrót do rozmowy o stronie internetowej",
+      "sent_date": "2026-08-02T15:48:35.093+00:00",
+      "own": "<5d38c7ef-da1b-c142-0950-1d9e24c4399b@owocni.pl>",
+      "parent": "<CAOK87--AnN_BvWxj0=8OqK8CdPB03z+MWHFtU3EwtRwsQNQCQQ@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055147,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa po logo dla Pana Damiana:",
+      "sent_date": "2026-08-02T15:19:16.753+00:00",
+      "own": "<83f774e1-2802-144b-0df3-8e42cd5c1e56@owocni.pl>",
+      "parent": "<C409CA9F-F176-4324-9018-0CF42DEAC442@rivotekt.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055145,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pani Hanny:",
+      "sent_date": "2026-08-02T14:54:20.625+00:00",
+      "own": "<d3ccbf62-9c83-e940-4acc-c3455055298b@owocni.pl>",
+      "parent": "<2f4c33ed8b0a2356f31cd70c285d795e@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "3ebfae03-5650-4ee9-b1bb-1d8355a7bbeb",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055144,
+      "inbox": "marta@owocni.pl",
+      "subject": "Logo dla Pani Hanny",
+      "sent_date": "2026-08-02T14:47:37.192+00:00",
+      "own": "<c2aaa2ef-238f-0d3b-f92b-31a0e37ec7fb@owocni.pl>",
+      "parent": "<2d9bc9f83ccf669edecbfaa93318a910@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "230ebb2c-06f1-46f1-a504-d3a0ef77f705",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2055056,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Re: Kalendarz na stronie:",
+      "sent_date": "2026-07-31T14:32:27.268+00:00",
+      "own": "<2005b5a4-10b7-c17c-3dbd-92033e5c4942@owocni.pl>",
+      "parent": "<0d166d24-16a8-7151-d449-67331afc4682@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055055,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Re: Kalendarz na stronie:",
+      "sent_date": "2026-07-31T14:25:24.079+00:00",
+      "own": "<0d166d24-16a8-7151-d449-67331afc4682@owocni.pl>",
+      "parent": "<a37ec4d6-e284-fce8-21dc-2b22e5f80e6a@op.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055037,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Uruchomienie projektu &gt; fakturaproforma nr 6077",
+      "sent_date": "2026-07-31T12:23:18.506+00:00",
+      "own": "<18dbf0da-3a70-0fa7-389a-8e2badb1ff9f@owocni.pl>",
+      "parent": "<83b08905-4cc0-9106-52c2-2e7c16ddf72a@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055036,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Zmiana umowy na osobę fizyczną",
+      "sent_date": "2026-07-31T12:15:54.603+00:00",
+      "own": "<e2875cac-2c8d-07ec-3b45-f600dc189bd1@owocni.pl>",
+      "parent": "<97bb6afc-12c3-d8a5-e7c9-0dceee770b30@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

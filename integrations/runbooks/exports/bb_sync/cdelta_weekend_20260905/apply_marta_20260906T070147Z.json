@@ -1,0 +1,238 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 9786,
+  "bb_limit": 400,
+  "rows": 399,
+  "scanned": 399,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_on_imap": 346,
+    "skip_in_twenty": 53
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1991449,
+      "inbox": "marta@owocni.pl",
+      "subject": "Jak pracujemy nad projektem logo?",
+      "sent_date": "2024-08-16T11:13:37+00:00",
+      "own": "<crm.activity.44219-DA64FL@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991455,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna strona wizytówkowa:",
+      "sent_date": "2024-08-14T20:33:45+00:00",
+      "own": "<crm.activity.44123-WO8OUB@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991452,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Uruchomienie poszukiwań nazwy:",
+      "sent_date": "2024-08-14T19:58:06+00:00",
+      "own": "<crm.activity.44119-8XI0UO@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991448,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Uruchomienie poszukiwań nazwy:",
+      "sent_date": "2024-08-14T17:00:42+00:00",
+      "own": "<crm.activity.44107-A8IQ29@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991456,
+      "inbox": "marta@owocni.pl",
+      "subject": "Odp: Zapytanie-Magdalena Radio",
+      "sent_date": "2024-08-14T13:54:34+00:00",
+      "own": "<crm.activity.44091-SPSI0O@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991453,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocne możliwości:",
+      "sent_date": "2024-08-14T13:24:47+00:00",
+      "own": "<crm.activity.44087-RIRX2S@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991444,
+      "inbox": "marta@owocni.pl",
+      "subject": "Tańsze opcje nazwy:",
+      "sent_date": "2024-08-14T11:14:34+00:00",
+      "own": "<crm.activity.44067-4AXSY4@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991446,
+      "inbox": "marta@owocni.pl",
+      "subject": "Umowa nr 7/07/2024 stworzenia strony",
+      "sent_date": "2024-08-14T11:05:28+00:00",
+      "own": "<crm.activity.44063-SJIUZ6@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991438,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Anecoop c.d",
+      "sent_date": "2024-08-14T10:07:56+00:00",
+      "own": "<crm.activity.44047-LAXC8R@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991439,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pana Grzegorza:",
+      "sent_date": "2024-08-14T09:28:42+00:00",
+      "own": "<crm.activity.44029-7DMCUM@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991442,
+      "inbox": "marta@owocni.pl",
+      "subject": "Jak pracujemy nad projektem logo?",
+      "sent_date": "2024-08-14T09:12:40+00:00",
+      "own": "<crm.activity.44021-7NA4GI@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991441,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Pytanie przed współpracą z Panią Moniką:",
+      "sent_date": "2024-08-14T08:15:18+00:00",
+      "own": "<crm.activity.44001-U4SIXB@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991445,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Pytanie przed współpracą z Panią Kamilą:",
+      "sent_date": "2024-08-14T08:07:27+00:00",
+      "own": "<crm.activity.43995-PNXB8D@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991440,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Justyny:",
+      "sent_date": "2024-08-14T08:05:44+00:00",
+      "own": "<crm.activity.43993-QIPDQ4@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991443,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-08-13T14:34:27+00:00",
+      "own": "<crm.activity.43899-JF9QU0@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991437,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-08-13T14:27:21+00:00",
+      "own": "<crm.activity.43895-NDU3NZ@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991434,
+      "inbox": "marta@owocni.pl",
+      "subject": "Pytanie przed współpracą z Panią Moniką:",
+      "sent_date": "2024-08-13T14:21:44+00:00",
+      "own": "<crm.activity.43893-THF4DY@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991428,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-08-13T12:46:53+00:00",
+      "own": "<crm.activity.43867-DQTFT5@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991433,
+      "inbox": "marta@owocni.pl",
+      "subject": "Pytanie przed współpracą z Panem Kacprem:",
+      "sent_date": "2024-08-13T12:41:35+00:00",
+      "own": "<crm.activity.43865-J47LBC@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991430,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Jak pracujemy nad projektem nazwy?",
+      "sent_date": "2024-08-13T12:08:02+00:00",
+      "own": "<crm.activity.43847-R3C3IT@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

@@ -174,12 +174,13 @@ async function touchContactFields(opp, contactIso, outboundIso, mailDirection) {
     patch.bizFirstAttemptChannel = "EMAIL";
   }
   const followUp = resolveFollowUpFlag(mailDirection);
-  if (
-    followUp !== null &&
-    shouldApplyFollowUpFlag(contactIso) &&
-    opp.isFollowUp !== followUp
-  ) {
-    patch.isFollowUp = followUp;
+  if (followUp !== null && shouldApplyFollowUpFlag(contactIso)) {
+    if (opp.isFollowUp !== followUp) {
+      patch.isFollowUp = followUp;
+    }
+    if (followUp === true && opp.snoozeUntil) {
+      patch.snoozeUntil = null;
+    }
   }
   if (!Object.keys(patch).length) {
     return false;

@@ -1,0 +1,258 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 2578,
+  "bb_limit": 400,
+  "rows": 367,
+  "scanned": 367,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 262,
+    "skip_in_twenty": 52,
+    "skip_parent_not_in_twenty": 24,
+    "skip_no_parent": 29
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 2034457,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy i logo w pakiecie ze zniżką",
+      "sent_date": "2025-11-17T08:35:24.064+00:00",
+      "own": "<b75acdbf-b7fe-a454-f46f-fdf124289ee0@owocni.pl>",
+      "parent": "<ca3ae42d5174b0f5371c230080e0db96@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a3c6de6b-b362-442d-9eea-9fd02e355b26",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034455,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2025-11-17T08:28:38.569+00:00",
+      "own": "<a665d10b-7bd4-59b5-adc2-6b03839ed06c@owocni.pl>",
+      "parent": "<d64e023540c9890d891d8c70ae449d56@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "ee390956-6678-4bb0-bbb5-bae344bcca34",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034454,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2025-11-17T08:16:19.862+00:00",
+      "own": "<f2fb6de2-542b-70cd-30aa-74ebd7f7856c@owocni.pl>",
+      "parent": "<e6b9eca000fe6b7bdcea1d4129bebfb9@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c648315c-11e2-48dc-a9e3-948bcac2d6ce",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034449,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2025-11-17T07:57:43.649+00:00",
+      "own": "<df47741a-ef91-4a0c-ebcd-7b328063e40b@owocni.pl>",
+      "parent": "<9dd7dbee1b3e1c41071536f9901a88a1@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "87ac2791-aa26-4bc7-8b19-7f7c138d69d2",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034448,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2025-11-17T07:55:52.687+00:00",
+      "own": "<8380b34f-3f34-22bc-b97a-444242f91f56@owocni.pl>",
+      "parent": "<d2480ad4bb4df9077f1348b95234f11e@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "b67e3828-4221-4a1b-bcd6-4f9c087f4e30",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034408,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocny portal",
+      "sent_date": "2025-11-15T16:36:29.132+00:00",
+      "own": "<55a0d96c-1999-d046-f73e-aeb8dafe4a0d@owocni.pl>",
+      "parent": "<e8f8b740-e628-abab-77e9-3fc4454fe4ab@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034364,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2025-11-14T15:10:05.057+00:00",
+      "own": "<cf6cf44f-e922-3aa5-c701-df879dca6785@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034334,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Aktywny PDF",
+      "sent_date": "2025-11-14T14:50:06.196+00:00",
+      "own": "<9ca3b513-9ce9-d470-36f0-4a726e946e9a@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034333,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona-wizytówka",
+      "sent_date": "2025-11-14T14:50:04.804+00:00",
+      "own": "<bdbe1ade-c2b8-1041-c438-d403839e80fd@owocni.pl>",
+      "parent": "<CAOFuaVg1StmnOAk7CecJ+RsqPasYy9TfCa4RzDMJW=z8pFzXdw@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "2a444bb2-40b0-43a2-96ff-e30e2ade367b",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034332,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne możliwości",
+      "sent_date": "2025-11-14T14:49:20.546+00:00",
+      "own": "<98cd19d3-0258-4f30-15ec-6d13402b1e08@owocni.pl>",
+      "parent": "<3d7ffe36befab1705c8e018d93eb1010@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "2a119b71-9156-44d8-9372-687ffbb8ac93",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034324,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Odp: Owocne logo",
+      "sent_date": "2025-11-14T14:26:15+00:00",
+      "own": "<bx.mail.69173c05.7f24e0@novedo.bitrix24.com>",
+      "parent": "<DBBPR09MB35414BA1FD7FE604A33E5EADB3CAA@DBBPR09MB3541.eurprd09.prod.outlook.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034303,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Logo Klub Sportowy Shinobi",
+      "sent_date": "2025-11-14T13:16:28.735+00:00",
+      "own": "<c63d32b1-79a6-af47-c76c-a9c98177c954@owocni.pl>",
+      "parent": "<12F42587-12FF-404C-B6A5-DAD88C145110@goetze-investments.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "5bfbc4d9-54b9-41ee-af37-299e6377200f",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034293,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: RFP - Airbnb Madeira",
+      "sent_date": "2025-11-14T12:19:53.078+00:00",
+      "own": "<76eb842b-1ae3-b3a9-1ae1-4f89366131a4@owocni.pl>",
+      "parent": "<CAAi0xbW2KRGscfr=zW1efraHwLj9w5aB8iCVi6JxpFX0c=k0DQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "bd34d91f-1a65-43c4-a7a4-10f185e6a784",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034289,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa",
+      "sent_date": "2025-11-14T11:55:54.073+00:00",
+      "own": "<d2a93a47-ad1a-da6e-6397-79f292b7330c@owocni.pl>",
+      "parent": "<DU4P193MB2606272753ECDC3AD51E59D2FACAA@DU4P193MB2606.EURP193.PROD.OUTLOOK.COM>",
+      "status": "skip_other_channel",
+      "parent_thread": "a3bb6f04-8d8d-4ab1-af96-c0b56a78c3b5",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034283,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2025-11-14T11:38:56.653+00:00",
+      "own": "<7dd0253c-fc27-14a6-46b2-1166d6481980@owocni.pl>",
+      "parent": "<27d0336c059afc4b9756a782e327bdfe@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "8fff4fa6-3d9f-493f-b292-69582daa4804",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034276,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Strona firmowa",
+      "sent_date": "2025-11-14T10:55:20+00:00",
+      "own": "<bx.mail.69170a96.949382@novedo.bitrix24.com>",
+      "parent": "<CAF+3ttV714HAapM9jXUC3FUTU58ESTb89VujG4NFpEFapH_hOA@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034269,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Strona firmowa",
+      "sent_date": "2025-11-14T10:33:39.329+00:00",
+      "own": "<390b3c3a-89f6-f96c-1a19-43da464723e7@owocni.pl>",
+      "parent": "<bx.mail.6915998f.a55fc7@novedo.bitrix24.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "12864ffa-7399-4aef-9533-584d47101858",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034267,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Dziękujemy za zwrócenie uwagi na Owocnych",
+      "sent_date": "2025-11-14T09:16:28.603+00:00",
+      "own": "<d5bfb14e-4a9d-faae-a25a-a47eff9dbede@owocni.pl>",
+      "parent": "<9c2949e8ed4531738a89d1016501c516@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "b08bbe4d-47e4-480a-9706-84aacb27b975",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2034256,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa",
+      "sent_date": "2025-11-14T08:23:56.393+00:00",
+      "own": "<6ee2eff5-1953-3109-63bb-5f3bc67a5eab@owocni.pl>",
+      "parent": "<19a81672ef7.41ba680a235753.4387227372446280192@ampera.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "7bd4862c-03df-4304-8958-263aac188dbe",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2034255,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo ",
+      "sent_date": "2025-11-14T08:17:12.893+00:00",
+      "own": "<49ec996b-4591-9d1c-0b61-b9f83bbdab87@owocni.pl>",
+      "parent": "<75407bff8d840dec70fe26652065a6f3@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "946d5fdd-5457-435c-bb2c-028bbaf61da9",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

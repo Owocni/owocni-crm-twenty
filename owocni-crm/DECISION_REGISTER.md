@@ -168,10 +168,9 @@ Evidence (kod+unit): `shared/resolveContinuityOwner.js`, T1–T3/T5 PASS; kontra
 Reguła właściciela: **przychodzi na ogólne (`leads@` itd.) → handlowiec odpisywa ZAWSZE ze swojej** (`marta@` / `gosia@` / …). Natywny Reply Twenty wiąże send z kanałem odbioru → na wątku `leads@` Reply u handlowca bywa martwy (case Marta / „Strona · Dawiddd” 24.08). **Override (24.08):** command menu native **Reply** / **Send Email** / **Compose** wyłączone (`engineComponentKey` → `FRONT_COMPONENT_RENDERER` bez FC → inactive); pinned **Odpowiedz** = Owocni Mail na Opportunity / Person / Company / Message Thread (+ RECORD_SELECTION ogólny). Kod: `findSendableEmailAccount` — handlowiec tylko własna skrzynka. Sync: osobiste na koncie handlowca; wspólne na ops (bez duplikatu IMAP).
 Evidence: decyzja Dawida 24.08; Metadata sandbox override; IDENTITY §5.5; E12. Do domknięcia: `yarn twenty apply` app **0.1.46** + smoke Marta **Odpowiedz** na „Strona · Dawiddd” (From=`marta@`) + szkolenie.
 
-**ADR #23 (Lead Dispatcher v2.0) — open, `blocks: none`, `implementation_status: in_progress` (2026-08-25).**
-Model dyspozytora zamiast claim/puli: klasyfikacja HOT/STANDARD/LOW, least-loaded Marta/Gosia, failover/eskalacja w minutach roboczych, „Biorę”=`bizAckAt`, manager=`maciej@owocni.pl`. Meta: interim cały FB→Robert do listy Piotra.
-Evidence: `LEAD_DISPATCHER_PLAN.md`; Metadata fields deployed (`deploy_lead_dispatcher_fields.py`); kod `shared/leadDispatch.js`, `leadDispatchSweep.js`, createLead za `LEAD_DISPATCHER_ENABLED` (default OFF); kontrakt `workflows/lead-dispatch.contract.md`; unit PASS.
-Do zamknięcia ADR: deploy CF + flaga ON + smoke + przycisk „Biorę” w Twenty + Scheduler sweep 5 min.
+**ADR #23 (Lead Dispatcher v2.0) — retired 2026-09-04, `blocks: none`, `implementation_status: withdrawn`.**
+Biorę / least-loaded / failover / sweep / limit 3 wycofane. Jedyny przydział nowych kart: GCP hash (COPY→Maciej, parzysty idOid→Gosia, nieparzysty→Marta). Pola `bizAckAt` itd. zostają jako archiwum. Skrypty `go` / `prepare` usunięte.
+Evidence: worker build `2026-09-04-retire-biore`; WF Biorę DEACTIVATED; widok „Do wzięcia” usunięty.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**
 

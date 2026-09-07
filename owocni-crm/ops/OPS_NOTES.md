@@ -116,6 +116,9 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 
 | Data | Operacja | Zakres | `no_emit` | Wykonał | Wynik |
 |---|---|---|---|---|---|
+| 2026-09-04 | Widoki poczty: 1 skrzynka / osoba; `studio@` i `leads@` w folderze Poczta | 8 filtrów `ourMailboxes` (Marta/Gosia/Mariusz/Ewa IN+OUT) → tylko własna. Nowe widoki 📥/📤 studio@ + leads@ **w Poczcie**. Osobne foldery top-level usunięte (Twenty MAX_DEPTH 2). | **TAK** | Composer | Soft filter, nie ACL. |
+| 2026-09-04 | C-Δ preflight sitko | Auto-create **None** na 6 skrzynkach. Webhooki bez `message.*` / `*.*`. Failover `false`. `CUTOVER_AT=2026-08-31`. | **TAK (konstrukcja)** | Dawid + Composer | S1–S8 PASS przed APPEND. |
+| 2026-09-04 | C-Δ paka copywriting offset 852 | **2 APPEND** (koniec okna Sent). QA 2/2. | **TAK (konstrukcja)** | Composer | copywriting C-Δ same-mailbox **31 łącznie**. Dalej: gosia@. |
 | 2026-09-03 | R-1: zdjęcie `LEADS` z filtrów `ourMailboxes` na widokach 📥/📤 Marta i Gosia | 4 widoki; duplikat filtra Gosi IN usunięty | **TAK** | Composer | Marta/Gosia = MARTA\|GOSIA ∪ STUDIO. Soft filter, nie ACL. |
 | 2026-07-28 | E12.5b soft filter `Message.ourMailboxes` (MULTI_SELECT z uczestników) + widoki 📥/📤 Marta·Gosia·Mariusz | living Message; źródło participant handles | **TAK** | Composer | Soft filter, nie ACL. Widoki w folderze Poczta. |
 | 2026-07-28 | E12.5 live path: workflow → GCP (Message nieedytowalny przez automation) | 2 maile w 🔧 naprawione ręcznie; workflowy direction+ourMailboxes DEACTIVATED; enrich w twenty-crm-worker | **TAK** | Composer | Błąd: `Object cannot be updated by automation`. REST PATCH Message OK. 🔧 MA BYĆ 0. |
@@ -147,6 +150,9 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-08-31 | **Owocni Mail deploy 0.1.57** | Większe pole odpowiedzi (edytor wypełnia panel, nie 260px); Do/Od w jednym rzędzie. `deploy_owocni_mail_patched.py` | **TAK** | Composer | Gosia: po odświeżeniu (hard refresh) Odpowiedz — treść zajmuje resztę paska. |
 | 2026-09-01 | **H-WF: ON guardy/metryki po pętli kredytów 31.08** | ACTIVE: Track Stage Time v3, zapamiętaj etap v4e, guard odrzucony v1, Account Owner v13. Guard SQL był już ON. HTTP Stape/rejected **zostają OFF** (native webhook). | **TAK** | Composer | Hamulec 31.08 06:15–06:42; kolejka pusta 31.08 10:13; ON 01.09 bez lawiny NOT_STARTED. |
 | 2026-09-03 | **Owocni Mail deploy 0.1.60** | Przycisk **Pełne okno** w Odpowiedz: lewa = wiadomość źródłowa, prawa = edytor. `deploy_owocni_mail_patched.py` | **TAK** | Composer | Hard refresh; Twenty FC nie portaluuje — overlay `position:fixed` + fallback stacked w panelu. |
+| 2026-09-04 | **Ads rollback + sample-week Twenty** | Inbound `RUNTIME_ENVIRONMENT=sandbox`; worker `LEAD_SAMPLE_WEEK_ENABLED` (quota 2/dzień Marta/Gosia/Maciej → surplus `owocni@gmail.com`; Robert exempt). BB analytics → `prod` w kodzie — **wymaga deployu crm.owocni.pl**. | **TAK** (Twenty) | Composer | Runbook `SAMPLE_WEEK_BB_TWENTY.md` + `ADS_SQL_SIGNAL_ROLLBACK.md`. Stape Client sandbox w repo — publish sGTM. |
+| 2026-09-04 | **Park open Opp Marta/Gosia/Maciej → holding** | 557 otwartych → owner `owocni@gmail.com`; stempel `PARKED-SAMPLE-WEEK:{slug}`. Manifest `exports/sample_week_park/20260904T042844Z/`. Restore: `park_sample_week_owners.py restore --run 20260904T042844Z`. | **TAK** | Composer | WON/LOST nietknięte. Sample-week quota od dziś na czysto. |
+| 2026-09-04 | **Retire Biorę / dyspozytor** | WF Biorę DEACTIVATED; widok Do wzięcia usunięty; sweep no-op; hash COPY/Gosia/Marta jedynym przydziałem nowych kart. Ownerów istniejących nie ruszano. | **TAK** | Composer | Build `2026-09-04-retire-biore`. Pola bizAckAt archiwum. |
 | 2026-09-03 | **Stape: 5× `crm:twenty_update_person` → failed** | Trucizny 400/404 (2× duplicate idOid Natalia/CSE, 3× skasowane karty). Pending update_person 5→0. Kart Twenty nietknięte. | **TAK** | Composer | Nie `create_lead`. Klucze: `twenty_person_aa83516b…`, `twenty_person_6414820e…`, `pending_mint_1785492977871`, `_1785826212154`, `_1787643292542`. |
 | 2026-09-03 | **Owocni Mail deploy 0.1.62** | Pełne okno: nie zdejmować overlay po fałszywym pomiarze; inline `position:fixed` + popover. `deploy_owocni_mail_patched.py` | **TAK** | Composer | Hard refresh. Live `version=0.1.62` checksum `62e86904…`. |
 
@@ -159,6 +165,9 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-08-31 | Pętla `opportunity.updated` (CODE+UPDATE stage) → kredyty → hamulec 5× MUST_ON | H-WF DOWN 01.09 08:00; metryki/guard odrzucony/AO OFF ~26 h | `incident` | Guard SQL ON 31.08 06:45. 01.09: ON Track Stage Time, zapamiętaj, guard odrzucony, AO. HTTP Stape/rejected zostają OFF. |
 | 2026-09-02 | H-LEAD-FORM DOWN: maile Zapytanie bez karty OWOCNI_SORTOWNIA (sGTM nie enqueue, worker processed=0) | 5 formularzy tylko w BB+mail; 3 sales + 2 spam `/kontakt` | `incident` | Worker `formMailWitness` — parse maila Zapytanie → `crm:twenty_create_lead`. Sortownia: fail-closed na pusty `API_KEY`. |
 | 2026-09-03 | Failover dyspozytora wstrzymany (G8) | Sweep nie zmienia ownera do ustaleń z zespołem. Przydział przy create zostaje. | `decision` | `LEAD_DISPATCH_FAILOVER_ENABLED=false`. Build `2026-09-03-failover-paused`. |
+| 2026-09-04 | Biorę / dyspozytor wycofany | Brak przycisku, brak sweep, brak ponownego przydziału istniejących kart. | `decision` | Hash GCP only. `2026-09-04-retire-biore`. |
+| 2026-09-04 | Tydzień BB: Ads z Twenty sandbox; sprzedaż w BB; sample routing w Twenty | SQL/WON z Twenty nie na Ads; surplus leadów → holding owocni@ | `decision` | `SAMPLE_WEEK_BB_TWENTY.md`. Build worker `2026-09-04-sample-week`. |
+| 2026-09-07 | H-LEAD-FORM DOWN: `Zapytanie ze strony kontakt.` (JuicyLogos) bez karty Sortowni | Fałszywy pager; formularze Owocni z kartami | `incident` | Allowlist świadka w `formWitness.js` (build `2026-09-07-health-form-witness-owocni`). Quota 2/dzień nie blokuje kart. |
 
 ---
 

@@ -1,0 +1,266 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 5156,
+  "bb_limit": 400,
+  "rows": 374,
+  "scanned": 374,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 278,
+    "skip_in_twenty": 17,
+    "skip_no_parent": 43,
+    "skip_parent_not_in_twenty": 36
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 2017723,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Dalsze prace",
+      "sent_date": "2025-05-19T11:20:13.486+00:00",
+      "own": "<1ce5454a-b7dc-ed12-5599-502f448d02f7@owocni.pl>",
+      "parent": "<CAHUkXHiUUHyEBMF8Rw8v3XgP3nt4LRq4BTCZtXbSZhAeHRrtKA@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "7869dd58-c26d-46a8-9ae8-4e04b86298c4",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017711,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-05-19T10:45:11.349+00:00",
+      "own": "<0d1796b0-caa0-d80d-3daa-4431744ef2d6@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017686,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Anety",
+      "sent_date": "2025-05-19T08:46:32.877+00:00",
+      "own": "<19a935f4-fa5b-c0f9-8293-32a98a27647e@owocni.pl>",
+      "parent": "<CAEecpxvVuzT2gxABE7pBKwLUsvhAc0o2x_JNLaGvkJUD2N_Pfg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "30d02d05-9e44-4f5a-9aba-ee4033e3f388",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017685,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nowej nazwy i logo w pakiecie ze zniżką",
+      "sent_date": "2025-05-19T08:43:55.943+00:00",
+      "own": "<57b78e71-a5f5-d30c-4732-2b5067da2d0b@owocni.pl>",
+      "parent": "<f76af866c6f9048efc728541f3ef918e@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d5906d88-4e6f-472a-a923-a88f6d80c9f4",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017681,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo dla Pani Anety",
+      "sent_date": "2025-05-19T08:37:10.577+00:00",
+      "own": "<b9e56f67-8d49-a09b-8aeb-399d6a54f7f1@owocni.pl>",
+      "parent": "<9d89bea4d0d515d99c48b055f07c533c@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "3e2b7c4e-ba7c-4278-b26d-51adcdf58b28",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017680,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Prace nad logo",
+      "sent_date": "2025-05-19T08:34:15.998+00:00",
+      "own": "<a5db81ee-3d26-e5bf-f1fe-004218b9e7db@owocni.pl>",
+      "parent": "<ffd986a758d49ca0e2e6a1f08d147808@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "069f3075-f23e-4010-8bfa-3876731b337c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017678,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy dla Pani Aleksandry",
+      "sent_date": "2025-05-19T08:32:26.303+00:00",
+      "own": "<3cc8b8f5-d68d-51fe-5b60-78d3575eceaa@owocni.pl>",
+      "parent": "<381684fd9ba9c2d392aeea1ee7a91bca@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "0db885bd-812a-45c1-8a7d-dbb81bbfcd96",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017677,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Projekt logo",
+      "sent_date": "2025-05-19T08:26:32.616+00:00",
+      "own": "<ecf0b010-2ed1-60bc-9a65-fdb5cf582bda@owocni.pl>",
+      "parent": "<01b601dbc896$22500240$66f006c0$@customercaresolutions.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a3c95a8f-84ed-4afa-b36f-8e0391d8d1f3",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017675,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy",
+      "sent_date": "2025-05-19T08:23:09.776+00:00",
+      "own": "<dbd7057d-d783-ee1a-c103-b16a5d7baeea@owocni.pl>",
+      "parent": "<e7cec7ae2828737aed5174377b84d6d2@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "1d17ba78-1715-4fcd-bb9c-0163a41cd1e6",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017674,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2025-05-19T08:21:36.855+00:00",
+      "own": "<f8aa5967-9104-ead9-9eeb-77a11716d52c@owocni.pl>",
+      "parent": "<22a3fc7e93e350228ece80aa191e3ecf@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "07b4544e-df68-4d39-bc83-14dd3571998f",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017672,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo dla hodowli",
+      "sent_date": "2025-05-19T08:14:02.898+00:00",
+      "own": "<8f6063b1-ae30-0126-92d9-1b80a30c3994@owocni.pl>",
+      "parent": "<4eca2da6a96eaab99df138c81aaa0e95@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "60c316d4-32aa-445a-a2cb-c2d44fee2ed6",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017670,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: design strony AmbientHub",
+      "sent_date": "2025-05-19T07:56:13.648+00:00",
+      "own": "<f24cd6cd-21c7-e418-fe0e-71fcca426477@owocni.pl>",
+      "parent": "<DB9PR07MB9781AFDA8B04689457B65428A093A@DB9PR07MB9781.eurprd07.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "95916738-f50c-4283-8c3a-7640b8afdcd8",
+      "parent_mailboxes": [
+        "STUDIO"
+      ]
+    },
+    {
+      "bb_id": 2017669,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo na 25lecie",
+      "sent_date": "2025-05-19T07:49:36.035+00:00",
+      "own": "<0c1856a3-1da6-8a00-4ca3-3e176ea79f43@owocni.pl>",
+      "parent": "<6595299a5a0e67926456ad6ebb1a85f3@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "b1569833-1f76-4cb3-a8f1-fc9ea662a861",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017666,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy dla Pana Damiana",
+      "sent_date": "2025-05-19T07:37:31.127+00:00",
+      "own": "<af6867a8-708c-1637-9922-727de6c08fbf@owocni.pl>",
+      "parent": "<02a126d00874f54ff935b30b5a1d5ba3@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a7654cde-748d-4361-892a-ef16a9f02639",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017664,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo ",
+      "sent_date": "2025-05-19T07:25:06.643+00:00",
+      "own": "<340bc0d3-66c9-a677-c481-5d19d5d14ce0@owocni.pl>",
+      "parent": "<89e2795882fd6e07d04af88d1da894c0@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "fd382e59-1d66-46f0-b4c9-3745f88ff7b5",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017660,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-05-19T07:11:19.973+00:00",
+      "own": "<508e19d6-cdc1-6502-0a1f-3d5ab2c10412@owocni.pl>",
+      "parent": "<7582a1095a8da49a611f8ad48e040e10@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "e504c2e2-1835-4139-bc4a-dabb796f295c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017659,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Finalizacja projektu logo > faktura pro forma nr 5303",
+      "sent_date": "2025-05-19T07:06:51.972+00:00",
+      "own": "<0fa7759a-13d1-8d21-fa7b-9c5f250deb05@owocni.pl>",
+      "parent": "<4h5OsPixnK6rf5CHB4y7KRalCiv_BAUChXFIm2Is_aoBIouVW1bJ4OUU_yfUXmHdIFY9-8SnkTG_t29-hbCkiV1DT2h9nC648lKt8VAJQH8=@protonmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "a3816ea9-c060-48f5-a6d2-7ea7cc57e0d8",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017564,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt logo",
+      "sent_date": "2025-05-16T13:47:21.724+00:00",
+      "own": "<8a7534c3-cc7d-2bc9-e233-08dd697f2611@owocni.pl>",
+      "parent": "<F991692B-6CE7-4992-9559-0094223B48F1@gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1d3f3f30-ee31-49b7-95d4-7726deb3b0c7",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2017543,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-05-16T10:31:52.04+00:00",
+      "own": "<6ea9687c-6711-8cb2-1242-b0a0bcf01753@owocni.pl>",
+      "parent": "<67af809fa1075591a5f6f31cc0d3c5c1@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "e4c5d317-a9c5-46bd-92d0-8d86db157e40",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2017542,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: ODP: Nagranie ze spotkani",
+      "sent_date": "2025-05-16T10:21:02+00:00",
+      "own": "<bx.mail.6827118c.d6e557@novedo.bitrix24.com>",
+      "parent": "<VE1P190MB0973581BFDEC6C2B9AB1D6CAB493A@VE1P190MB0973.EURP190.PROD.OUTLOOK.COM>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

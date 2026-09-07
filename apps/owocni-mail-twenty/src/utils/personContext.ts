@@ -18,6 +18,10 @@ export type ReplyMessagePreview = {
   text: string;
 };
 
+export type ThreadMessage = ReplyMessagePreview & {
+  direction: 'in' | 'out';
+};
+
 export type MailResolveContext = {
   person: PersonContext | null;
   /** Original thread/message subject when opened from email Reply context. */
@@ -75,11 +79,18 @@ const MESSAGE_PREVIEW_FIELDS = {
   },
 } as const;
 
+/** Same preview plus CRM-only Message.direction (ADR #19). */
+const MESSAGE_THREAD_FIELDS = {
+  ...MESSAGE_PREVIEW_FIELDS,
+  direction: true,
+};
+
 type MessagePreviewNode = {
   id?: string;
   subject?: string | null;
   text?: string | null;
   receivedAt?: string | null;
+  direction?: unknown;
   messageParticipants?: {
     edges?: Array<{ node: ParticipantNode }>;
   };
@@ -125,9 +136,9 @@ function previewFromMessage(
   const nodes = message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
   const fromExternal = nodes.find(
     (node) =>
-      String(node.role ?? '') === 'FROM' &&
+      participantRole(node.role) === 'FROM' &&
       typeof node.handle === 'string' &&
-      node.handle.includes('@') &&
+      extractEmailFromHandle(node.handle).includes('@') &&
       !node.workspaceMemberId &&
       !isInternalMailbox(node.handle),
   );
@@ -142,13 +153,35 @@ function previewFromMessage(
   const fromEmail = from?.handle?.trim().toLowerCase() ?? null;
   const fromLabel = participantLabel(from) || fromEmail;
 
+    return {
+      messageId: message.id,
+      fromEmail,
+      fromLabel,
+      subject,
+      receivedAt: message.receivedAt ?? null,
+      text,
+    };
+  }
+
+function threadMessageFromNode(
+  message: MessagePreviewNode,
+  parentParticipant?: ParticipantNode | null,
+): ThreadMessage | null {
+  const preview = previewFromMessage(message);
+  if (!preview) {
+    return null;
+  }
+
+  const nodes =
+    message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
+
   return {
-    messageId: message.id,
-    fromEmail,
-    fromLabel,
-    subject,
-    receivedAt: message.receivedAt ?? null,
-    text,
+    ...preview,
+    direction: directionFromMessage({
+      direction: message.direction,
+      participants: nodes,
+      parentParticipant,
+    }),
   };
 }
 
@@ -186,13 +219,109 @@ function emailOnlyContext(email: string, recordId?: string | null): PersonContex
   };
 }
 
+/** GraphQL SELECT / enum may be a string or `{ value: 'FROM' }`. */
+export function selectFieldValue(raw: unknown): string {
+  if (typeof raw === 'string' || typeof raw === 'number') {
+    return String(raw);
+  }
+
+  if (raw && typeof raw === 'object' && 'value' in raw) {
+    return String((raw as { value?: unknown }).value ?? '');
+  }
+
+  return '';
+}
+
+function participantRole(role: unknown): string {
+  return selectFieldValue(role).toUpperCase();
+}
+
+/** `"Marta Kowalska" <marta@owocni.pl>` → `marta@owocni.pl`. */
+export function extractEmailFromHandle(
+  handle: string | null | undefined,
+): string {
+  const raw = String(handle ?? '').trim().toLowerCase();
+  if (!raw) {
+    return '';
+  }
+
+  const angle = raw.match(/<([^<>]*@[^<>]+)>/);
+  if (angle?.[1]) {
+    return angle[1].trim().toLowerCase();
+  }
+
+  const email = raw.match(/[a-z0-9._%+\-]+@[a-z0-9.-]+\.[a-z]{2,}/i);
+  return (email?.[0] ?? raw).toLowerCase();
+}
+
 function isInternalMailbox(handle: string): boolean {
-  const lower = handle.trim().toLowerCase();
+  const email = extractEmailFromHandle(handle);
   return (
-    lower.endsWith('@owocni.pl') ||
-    lower.endsWith('@copywriting.pl') ||
-    lower.endsWith('@studioowocni.pl')
+    email.endsWith('@owocni.pl') ||
+    email.endsWith('@copywriting.pl') ||
+    email.endsWith('@studioowocni.pl')
   );
+}
+
+/** FROM workspace member or internal mailbox = our outbound mail. */
+export function directionFromFromParticipant(input: {
+  workspaceMemberId?: string | null;
+  handle?: string | null;
+}): 'in' | 'out' {
+  if (input.workspaceMemberId) {
+    return 'out';
+  }
+
+  if (input.handle && isInternalMailbox(input.handle)) {
+    return 'out';
+  }
+
+  return 'in';
+}
+
+/**
+ * Thread-list direction: company Message.direction first (OUTGOING/INCOMING),
+ * then FROM participant, then the client's own role on this message
+ * (FROM = inbound, TO/CC/BCC = we wrote to them).
+ */
+export function directionFromMessage(input: {
+  direction?: unknown;
+  participants?: ParticipantNode[];
+  parentParticipant?: ParticipantNode | null;
+}): 'in' | 'out' {
+  const stored = selectFieldValue(input.direction).toUpperCase();
+  if (stored === 'OUTGOING' || stored === 'OUT') {
+    return 'out';
+  }
+  if (stored === 'INCOMING' || stored === 'IN') {
+    return 'in';
+  }
+
+  const nodes = input.participants ?? [];
+  const fromNodes = nodes.filter((node) => participantRole(node.role) === 'FROM');
+  for (const node of fromNodes) {
+    if (
+      directionFromFromParticipant({
+        workspaceMemberId: node.workspaceMemberId,
+        handle: node.handle,
+      }) === 'out'
+    ) {
+      return 'out';
+    }
+  }
+  if (fromNodes.length > 0) {
+    return 'in';
+  }
+
+  const parentRole = participantRole(input.parentParticipant?.role);
+  if (parentRole === 'FROM') {
+    return 'in';
+  }
+  if (parentRole === 'TO' || parentRole === 'CC' || parentRole === 'BCC') {
+    return 'out';
+  }
+
+  return 'in';
 }
 
 function personFromParticipants(
@@ -209,9 +338,9 @@ function personFromParticipants(
 
   const fromExternal = nodes.find(
     (node) =>
-      String(node.role ?? '') === 'FROM' &&
+      participantRole(node.role) === 'FROM' &&
       typeof node.handle === 'string' &&
-      node.handle.includes('@') &&
+      extractEmailFromHandle(node.handle).includes('@') &&
       !node.workspaceMemberId &&
       !isInternalMailbox(node.handle),
   );
@@ -665,6 +794,106 @@ async function findReplyMessageByEmail(
   } catch {
     return null;
   }
+}
+
+async function queryThreadParticipantMessages(
+  coreClient: CoreApiClient,
+  email: string,
+  limit: number,
+  includeDirection: boolean,
+) {
+  return coreClient.query({
+    messageParticipants: {
+      __args: {
+        filter: { handle: { eq: email } },
+        first: limit,
+        orderBy: [{ createdAt: 'DescNullsLast' }],
+      },
+      edges: {
+        node: {
+          role: true,
+          handle: true,
+          workspaceMemberId: true,
+          message: includeDirection
+            ? MESSAGE_THREAD_FIELDS
+            : MESSAGE_PREVIEW_FIELDS,
+        },
+      },
+    },
+  } as never);
+}
+
+export async function listThreadMessagesByEmail(
+  coreClient: CoreApiClient,
+  email: string,
+  limit = 40,
+): Promise<ThreadMessage[]> {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized) {
+    return [];
+  }
+
+  let result: { messageParticipants?: unknown };
+  try {
+    result = await queryThreadParticipantMessages(
+      coreClient,
+      normalized,
+      limit,
+      true,
+    );
+  } catch {
+    try {
+      result = await queryThreadParticipantMessages(
+        coreClient,
+        normalized,
+        limit,
+        false,
+      );
+    } catch {
+      return [];
+    }
+  }
+
+  const seen = new Set<string>();
+  const messages: ThreadMessage[] = [];
+
+  const participantEdges =
+    (
+      result.messageParticipants as {
+        edges?: Array<{
+          node?: {
+            role?: string | null;
+            handle?: string | null;
+            workspaceMemberId?: string | null;
+            message?: MessagePreviewNode | null;
+          };
+        }>;
+      } | null
+    )?.edges ?? [];
+
+  for (const edge of participantEdges) {
+    const parent = edge.node;
+    const message = parent?.message;
+    if (!message?.id || seen.has(message.id)) {
+      continue;
+    }
+
+    const threadMessage = threadMessageFromNode(message, parent);
+    if (!threadMessage?.messageId) {
+      continue;
+    }
+
+    seen.add(message.id);
+    messages.push(threadMessage);
+  }
+
+  messages.sort((left, right) => {
+    const leftAt = left.receivedAt ? Date.parse(left.receivedAt) : 0;
+    const rightAt = right.receivedAt ? Date.parse(right.receivedAt) : 0;
+    return rightAt - leftAt;
+  });
+
+  return messages;
 }
 
 async function enrichReplyMessage(

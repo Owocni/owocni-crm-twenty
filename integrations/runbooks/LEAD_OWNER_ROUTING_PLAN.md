@@ -18,12 +18,10 @@ related:
 
 **Cel:** po utworzeniu Opportunity handlowiec dostaje Task + email, a rekord ma ustawionego **Opportunity owner** (Gosia lub Marta).
 
-**Stan (2026-07-03):** przydzielanie ownerów **wdrożone** w obu workflow (form v7, mail v12). COPYWRITING → Maciej; reszta → losowo Marta/Gosia.  
-**Worker:** Meta/FB + Marketing → Robert; Copywriting → Maciej; reszta hash Marta/Gosia. **Ewa nie jest w auto-puli** (tylko ręczne).
+**Stan (2026-09-04):** dyspozytor / Biorę **wycofane**. Jedyny przydział nowych kart w GCP: Copywriting → Maciej (pierwszeństwo niezależnie od źródła); FACEBOOK/MARKETING → Robert; reszta hash `idOid` parzysty → Gosia, nieparzysty → Marta. Ewa nie jest w auto-puli.
 
-**Docelowo (TIME TO LEAD) — model dyspozytora v2.0:**  
-→ **[LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md)** (SSOT scalony 2026-08-25).  
-Stary wariant claim/puli/slotów — **odrzucony**. Do dyspozytora: dotychczasowy assign OK; 15 min = cel, nie automat.
+**Archiwum (TIME TO LEAD / dyspozytor v2.0):**  
+→ **[LEAD_DISPATCHER_PLAN.md](./LEAD_DISPATCHER_PLAN.md)** (`status: retired`). Nie włączaj ponownie.
 
 ---
 

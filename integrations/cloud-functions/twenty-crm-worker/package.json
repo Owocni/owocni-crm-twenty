@@ -9,7 +9,7 @@
   "scripts": {
     "start": "functions-framework --target=processTwentyCrmWorker --port=8080",
     "deploy": "bash deploy.sh",
-    "test": "node --test workers/*.test.js"
+    "test": "node --test workers/*.test.js shared/*.test.js"
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.4.0",

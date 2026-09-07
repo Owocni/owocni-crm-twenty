@@ -3,7 +3,7 @@
 /**
  * Czysta ocena H-* (SYSTEM_HEALTH.md §5.2–5.3, §5.8).
  * Bez I/O — testowalne. Cisza rekordów ≠ DOWN (NR-1), z wyjątkiem H-LEAD-FORM:
- * świadek maila Zapytanie bez nowszej karty OWOCNI_SORTOWNIA.
+ * świadek maila formularza Owocni (nie każde Zapytanie*) bez nowszej karty OWOCNI_SORTOWNIA.
  */
 
 /** IMAP ~5 min + worker every 5 min + zapas. */
@@ -163,8 +163,10 @@ function trimSubject(subject) {
 }
 
 /**
- * Worker scheduler = heartbeat. Świadek = INCOMING Zapytanie na leads@
- * (formularz zawsze wysyła mail, nawet gdy sGTM/API_KEY padnie).
+ * Worker scheduler = heartbeat. Świadek = INCOMING mail formularza Owocni
+ * (PHP/Make: „Zapytanie z formularza owocni.pl” / „Zapytanie z strony:” /
+ * „Zapytanie:” + host owocni|copywriting|logofirmowe). Nie JuicyLogos
+ * „Zapytanie ze strony kontakt.” — to nie tor Sortowni.
  */
 function evaluateLeadForm(worker, formFlow, nowMs = Date.now()) {
   if (!worker.found || !worker.ok) {

@@ -1,0 +1,2617 @@
+2026-09-04 10:39:47 loop start mailbox=gosia@owocni.pl offset=735 limit=25
+2026-09-04 10:39:47 loop start mailbox=gosia@owocni.pl offset=735 limit=25
+2026-09-04 10:39:47 Email Sync wait 600s for 1 APPEND
+2026-09-04 10:39:47 Email Sync wait 600s for 1 APPEND
+2026-09-04 10:49:48 QA bb:2052535 pass 'Re: Nowa strona firmowa - konsultacja ze specjalis'
+2026-09-04 10:49:48 QA bb:2052535 pass 'Re: Nowa strona firmowa - konsultacja ze specjalis'
+2026-09-04 10:49:53 counts people=28429 companies=1529 opp=3970
+2026-09-04 10:49:53 counts people=28429 companies=1529 opp=3970
+2026-09-04 10:49:53 STOP: new_cards:people 28428→28429,opportunities 3969→3970
+2026-09-04 10:49:53 STOP: new_cards:people 28428→28429,opportunities 3969→3970
+2026-09-04 11:04:45 loop start mailbox=gosia@owocni.pl offset=735 limit=25
+2026-09-04 11:04:45 paka gosia@owocni.pl offset=735 limit=25
+gosia@owocni.pl: BB window offset=735 fetch=400 rows=362 target_append=25
+  scanned 25/362 appended=0 last=skip_no_parent
+  scanned 50/362 appended=0 last=skip_other_channel
+  scanned 75/362 appended=0 last=skip_other_channel
+  scanned 100/362 appended=0 last=skip_other_channel
+  scanned 125/362 appended=0 last=skip_no_parent
+  scanned 150/362 appended=0 last=skip_in_twenty
+  scanned 175/362 appended=0 last=skip_other_channel
+  scanned 200/362 appended=0 last=skip_other_channel
+  scanned 225/362 appended=0 last=skip_other_channel
+  scanned 250/362 appended=0 last=skip_other_channel
+  scanned 275/362 appended=0 last=skip_other_channel
+  scanned 300/362 appended=0 last=skip_in_twenty
+  scanned 325/362 appended=0 last=skip_in_twenty
+  scanned 350/362 appended=0 last=skip_other_channel
+appended=0 skipped_seen=362 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T092759Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 11:27:59 paka done appended=0 rows=362 scanned=362 window_done=True skip={'skip_parent_not_in_twenty': 30, 'skip_other_channel': 270, 'skip_in_twenty': 39, 'skip_no_parent': 23}
+2026-09-04 11:28:04 counts people=28430 companies=1529 opp=3971
+2026-09-04 11:28:09 sitko delta people 28429→28430,opportunities 3970→3971 new opp=1 people=1 companies=0
+2026-09-04 11:28:09 sitko allow opp 'kubapan8@gmail.com · Strona · Nowe' src=OWOCNI_SORTOWNIA
+2026-09-04 11:28:09 sitko allow person kubapan8@gmail.com
+2026-09-04 11:28:09 sitko: Sortownia only — baseline bumped, import continues
+2026-09-04 11:28:09 gosia@owocni.pl next offset 735 → 1097
+2026-09-04 11:28:09 paka gosia@owocni.pl offset=1097 limit=25
+gosia@owocni.pl: BB window offset=1097 fetch=400 rows=370 target_append=25
+  scanned 25/370 appended=0 last=skip_other_channel
+  scanned 50/370 appended=0 last=skip_other_channel
+2026-09-04 11:33:18 STOP: apply_exception
+2026-09-04 11:33:18 Traceback (most recent call last):
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_weekend_loop.py", line 330, in main
+    result = run_apply(
+        mailbox=inbox,
+    ...<4 lines>...
+        manifest_dir=OUT,
+    )
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_append.py", line 231, in run_apply
+    rec = classify_row(row, inbox=inbox, imap=imap, folders=folders)
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_append.py", line 134, in classify_row
+    parent_msgs = twenty_get_messages_by_msgid(parent)
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_append.py", line 89, in twenty_get_messages_by_msgid
+    with urllib.request.urlopen(req, timeout=60) as res:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 487, in open
+    response = self._open(req, data)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1369, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1430, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py", line 725, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+Traceback (most recent call last):
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_weekend_loop.py", line 427, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_weekend_loop.py", line 305, in main
+    state = load_state()
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_weekend_loop.py", line 69, in load_state
+    return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 25 column 3 (char 448)
+2026-09-04 11:41:41 loop start mailbox=gosia@owocni.pl offset=1097 limit=25
+2026-09-04 11:41:41 paka gosia@owocni.pl offset=1097 limit=25
+gosia@owocni.pl: BB window offset=1097 fetch=400 rows=370 target_append=25
+  scanned 25/370 appended=0 last=skip_other_channel
+  scanned 50/370 appended=0 last=skip_other_channel
+  scanned 75/370 appended=0 last=skip_other_channel
+  scanned 100/370 appended=0 last=skip_other_channel
+  scanned 125/370 appended=0 last=skip_other_channel
+  scanned 150/370 appended=0 last=skip_other_channel
+  scanned 175/370 appended=0 last=skip_other_channel
+  scanned 200/370 appended=0 last=skip_other_channel
+  scanned 225/370 appended=0 last=skip_in_twenty
+  scanned 250/370 appended=0 last=skip_other_channel
+  scanned 275/370 appended=0 last=skip_other_channel
+  scanned 300/370 appended=0 last=skip_other_channel
+  scanned 325/370 appended=0 last=skip_other_channel
+  scanned 350/370 appended=0 last=skip_parent_not_in_twenty
+appended=0 skipped_seen=370 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T100531Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 12:05:31 paka done appended=0 rows=370 scanned=370 window_done=True skip={'skip_parent_not_in_twenty': 30, 'skip_other_channel': 264, 'skip_in_twenty': 47, 'skip_no_parent': 29}
+2026-09-04 12:05:36 counts people=28430 companies=1529 opp=3971
+2026-09-04 12:05:36 gosia@owocni.pl next offset 1097 → 1467
+2026-09-04 12:05:36 paka gosia@owocni.pl offset=1467 limit=25
+gosia@owocni.pl: BB window offset=1467 fetch=400 rows=357 target_append=25
+  scanned 25/357 appended=0 last=skip_other_channel
+  scanned 50/357 appended=0 last=skip_other_channel
+  scanned 75/357 appended=0 last=skip_other_channel
+  scanned 100/357 appended=0 last=skip_in_twenty
+APPEND bb:2042921 → gosia@owocni.pl/BB Archive 'Re: Owocna strona'
+  scanned 125/357 appended=1 last=skip_other_channel
+  scanned 150/357 appended=1 last=skip_other_channel
+  scanned 175/357 appended=1 last=skip_other_channel
+  scanned 200/357 appended=1 last=skip_other_channel
+  scanned 225/357 appended=1 last=skip_other_channel
+  scanned 250/357 appended=1 last=skip_other_channel
+  scanned 275/357 appended=1 last=skip_other_channel
+  scanned 300/357 appended=1 last=skip_other_channel
+  scanned 325/357 appended=1 last=skip_other_channel
+  scanned 350/357 appended=1 last=skip_other_channel
+appended=1 skipped_seen=356 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T102853Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 12:28:53 paka done appended=1 rows=357 scanned=357 window_done=True skip={'skip_other_channel': 278, 'skip_parent_not_in_twenty': 25, 'skip_no_parent': 23, 'skip_in_twenty': 30}
+2026-09-04 12:28:53 Email Sync wait 600s for 1 APPEND
+2026-09-04 12:38:55 QA bb:2042921 pass 'Re: Owocna strona'
+2026-09-04 12:39:00 counts people=28431 companies=1529 opp=3972
+2026-09-04 12:39:05 sitko delta people 28430→28431,opportunities 3971→3972 new opp=1 people=1 companies=0
+2026-09-04 12:39:05 sitko allow opp 'skrytkapocztowa@gmail.com · Strona · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-04 12:39:05 sitko allow person skrytkapocztowa@gmail.com
+2026-09-04 12:39:05 sitko: Sortownia only — baseline bumped, import continues
+2026-09-04 12:39:05 gosia@owocni.pl next offset 1467 → 1824
+2026-09-04 12:39:05 paka gosia@owocni.pl offset=1824 limit=25
+gosia@owocni.pl: BB window offset=1824 fetch=400 rows=385 target_append=25
+  scanned 25/385 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/385 appended=0 last=skip_other_channel
+  scanned 75/385 appended=0 last=skip_other_channel
+  scanned 100/385 appended=0 last=skip_other_channel
+  scanned 125/385 appended=0 last=skip_in_twenty
+  scanned 150/385 appended=0 last=skip_other_channel
+  scanned 175/385 appended=0 last=skip_other_channel
+  scanned 200/385 appended=0 last=skip_in_twenty
+  scanned 225/385 appended=0 last=skip_other_channel
+  scanned 250/385 appended=0 last=skip_other_channel
+  scanned 275/385 appended=0 last=skip_in_twenty
+  scanned 300/385 appended=0 last=skip_other_channel
+  scanned 325/385 appended=0 last=skip_other_channel
+  scanned 350/385 appended=0 last=skip_other_channel
+  scanned 375/385 appended=0 last=skip_other_channel
+appended=0 skipped_seen=385 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T110332Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 13:03:33 paka done appended=0 rows=385 scanned=385 window_done=True skip={'skip_other_channel': 300, 'skip_in_twenty': 43, 'skip_parent_not_in_twenty': 28, 'skip_no_parent': 14}
+2026-09-04 13:03:38 counts people=28431 companies=1529 opp=3972
+2026-09-04 13:03:38 gosia@owocni.pl next offset 1824 → 2209
+2026-09-04 13:03:38 paka gosia@owocni.pl offset=2209 limit=25
+gosia@owocni.pl: BB window offset=2209 fetch=400 rows=369 target_append=25
+  scanned 25/369 appended=0 last=skip_other_channel
+  scanned 50/369 appended=0 last=skip_other_channel
+  scanned 75/369 appended=0 last=skip_in_twenty
+  scanned 100/369 appended=0 last=skip_other_channel
+  scanned 125/369 appended=0 last=skip_other_channel
+  scanned 150/369 appended=0 last=skip_other_channel
+  scanned 175/369 appended=0 last=skip_other_channel
+  scanned 200/369 appended=0 last=skip_other_channel
+  scanned 225/369 appended=0 last=skip_other_channel
+  scanned 250/369 appended=0 last=skip_in_twenty
+  scanned 275/369 appended=0 last=skip_other_channel
+  scanned 300/369 appended=0 last=skip_other_channel
+  scanned 325/369 appended=0 last=skip_in_twenty
+  scanned 350/369 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=369 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T112634Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 13:26:34 paka done appended=0 rows=369 scanned=369 window_done=True skip={'skip_other_channel': 293, 'skip_in_twenty': 47, 'skip_parent_not_in_twenty': 17, 'skip_no_parent': 12}
+2026-09-04 13:26:39 counts people=28431 companies=1529 opp=3972
+2026-09-04 13:26:39 gosia@owocni.pl next offset 2209 → 2578
+2026-09-04 13:26:39 paka gosia@owocni.pl offset=2578 limit=25
+gosia@owocni.pl: BB window offset=2578 fetch=400 rows=367 target_append=25
+  scanned 25/367 appended=0 last=skip_other_channel
+  scanned 50/367 appended=0 last=skip_other_channel
+  scanned 75/367 appended=0 last=skip_other_channel
+  scanned 100/367 appended=0 last=skip_other_channel
+  scanned 125/367 appended=0 last=skip_other_channel
+  scanned 150/367 appended=0 last=skip_in_twenty
+  scanned 175/367 appended=0 last=skip_other_channel
+  scanned 200/367 appended=0 last=skip_other_channel
+  scanned 225/367 appended=0 last=skip_other_channel
+  scanned 250/367 appended=0 last=skip_no_parent
+  scanned 275/367 appended=0 last=skip_other_channel
+  scanned 300/367 appended=0 last=skip_other_channel
+  scanned 325/367 appended=0 last=skip_no_parent
+  scanned 350/367 appended=0 last=skip_other_channel
+appended=0 skipped_seen=367 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T115040Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 13:50:40 paka done appended=0 rows=367 scanned=367 window_done=True skip={'skip_other_channel': 262, 'skip_in_twenty': 52, 'skip_parent_not_in_twenty': 24, 'skip_no_parent': 29}
+2026-09-04 13:50:45 counts people=28431 companies=1529 opp=3972
+2026-09-04 13:50:45 gosia@owocni.pl next offset 2578 → 2945
+2026-09-04 13:50:45 paka gosia@owocni.pl offset=2945 limit=25
+gosia@owocni.pl: BB window offset=2945 fetch=400 rows=352 target_append=25
+  scanned 25/352 appended=0 last=skip_in_twenty
+  scanned 50/352 appended=0 last=skip_other_channel
+  scanned 75/352 appended=0 last=skip_other_channel
+  scanned 100/352 appended=0 last=skip_other_channel
+  scanned 125/352 appended=0 last=skip_parent_not_in_twenty
+  scanned 150/352 appended=0 last=skip_other_channel
+  scanned 175/352 appended=0 last=skip_in_twenty
+  scanned 200/352 appended=0 last=skip_other_channel
+  scanned 225/352 appended=0 last=skip_other_channel
+  scanned 250/352 appended=0 last=skip_other_channel
+  scanned 275/352 appended=0 last=skip_in_twenty
+  scanned 300/352 appended=0 last=skip_no_parent
+  scanned 325/352 appended=0 last=skip_no_parent
+  scanned 350/352 appended=0 last=skip_other_channel
+appended=0 skipped_seen=352 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T121356Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 14:13:56 paka done appended=0 rows=352 scanned=352 window_done=True skip={'skip_other_channel': 244, 'skip_parent_not_in_twenty': 29, 'skip_no_parent': 26, 'skip_in_twenty': 53}
+2026-09-04 14:14:01 counts people=28431 companies=1529 opp=3972
+2026-09-04 14:14:01 gosia@owocni.pl next offset 2945 → 3297
+2026-09-04 14:14:01 paka gosia@owocni.pl offset=3297 limit=25
+gosia@owocni.pl: BB window offset=3297 fetch=400 rows=374 target_append=25
+  scanned 25/374 appended=0 last=skip_other_channel
+  scanned 50/374 appended=0 last=skip_other_channel
+  scanned 75/374 appended=0 last=skip_other_channel
+  scanned 100/374 appended=0 last=skip_other_channel
+  scanned 125/374 appended=0 last=skip_other_channel
+  scanned 150/374 appended=0 last=skip_other_channel
+  scanned 175/374 appended=0 last=skip_other_channel
+  scanned 200/374 appended=0 last=skip_other_channel
+  scanned 225/374 appended=0 last=skip_other_channel
+  scanned 250/374 appended=0 last=skip_other_channel
+  scanned 275/374 appended=0 last=skip_in_twenty
+  scanned 300/374 appended=0 last=skip_other_channel
+  scanned 325/374 appended=0 last=skip_other_channel
+  scanned 350/374 appended=0 last=skip_other_channel
+appended=0 skipped_seen=374 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T123803Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 14:38:03 paka done appended=0 rows=374 scanned=374 window_done=True skip={'skip_other_channel': 278, 'skip_parent_not_in_twenty': 42, 'skip_in_twenty': 25, 'skip_no_parent': 29}
+2026-09-04 14:38:09 counts people=28431 companies=1529 opp=3972
+2026-09-04 14:38:09 gosia@owocni.pl next offset 3297 → 3671
+2026-09-04 14:38:09 paka gosia@owocni.pl offset=3671 limit=25
+gosia@owocni.pl: BB window offset=3671 fetch=400 rows=375 target_append=25
+  scanned 25/375 appended=0 last=skip_other_channel
+  scanned 50/375 appended=0 last=skip_in_twenty
+  scanned 75/375 appended=0 last=skip_other_channel
+  scanned 100/375 appended=0 last=skip_other_channel
+  scanned 125/375 appended=0 last=skip_other_channel
+  scanned 150/375 appended=0 last=skip_other_channel
+  scanned 175/375 appended=0 last=skip_other_channel
+  scanned 200/375 appended=0 last=skip_other_channel
+  scanned 225/375 appended=0 last=skip_other_channel
+  scanned 250/375 appended=0 last=skip_other_channel
+Twenty REST timeout (TimeoutError) attempt 1/8 — sleep 8s
+  scanned 275/375 appended=0 last=skip_other_channel
+Twenty REST timeout (URLError) attempt 1/8 — sleep 8s
+Twenty REST timeout (ConnectionResetError) attempt 1/8 — sleep 8s
+Twenty REST timeout (URLError) attempt 2/8 — sleep 16s
+Twenty REST timeout (TimeoutError) attempt 1/8 — sleep 8s
+  scanned 300/375 appended=0 last=skip_other_channel
+  scanned 325/375 appended=0 last=skip_other_channel
+Twenty REST timeout (TimeoutError) attempt 1/8 — sleep 8s
+  scanned 350/375 appended=0 last=skip_other_channel
+  scanned 375/375 appended=0 last=skip_other_channel
+appended=0 skipped_seen=375 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T183643Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 20:36:43 paka done appended=0 rows=375 scanned=375 window_done=True skip={'skip_other_channel': 291, 'skip_no_parent': 30, 'skip_parent_not_in_twenty': 31, 'skip_in_twenty': 23}
+2026-09-04 20:36:48 counts people=28431 companies=1529 opp=3972
+2026-09-04 20:36:48 gosia@owocni.pl next offset 3671 → 4046
+2026-09-04 20:36:48 paka gosia@owocni.pl offset=4046 limit=25
+gosia@owocni.pl: BB window offset=4046 fetch=400 rows=365 target_append=25
+  scanned 25/365 appended=0 last=skip_other_channel
+  scanned 50/365 appended=0 last=skip_in_twenty
+  scanned 75/365 appended=0 last=skip_other_channel
+  scanned 100/365 appended=0 last=skip_other_channel
+  scanned 125/365 appended=0 last=skip_other_channel
+  scanned 150/365 appended=0 last=skip_other_channel
+  scanned 175/365 appended=0 last=skip_other_channel
+  scanned 200/365 appended=0 last=skip_other_channel
+  scanned 225/365 appended=0 last=skip_other_channel
+  scanned 250/365 appended=0 last=skip_in_twenty
+  scanned 275/365 appended=0 last=skip_other_channel
+  scanned 300/365 appended=0 last=skip_other_channel
+  scanned 325/365 appended=0 last=skip_other_channel
+  scanned 350/365 appended=0 last=skip_other_channel
+appended=0 skipped_seen=365 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T190113Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 21:01:13 paka done appended=0 rows=365 scanned=365 window_done=True skip={'skip_other_channel': 285, 'skip_in_twenty': 26, 'skip_no_parent': 27, 'skip_parent_not_in_twenty': 27}
+2026-09-04 21:01:18 counts people=28431 companies=1529 opp=3972
+2026-09-04 21:01:18 gosia@owocni.pl next offset 4046 → 4411
+2026-09-04 21:01:18 paka gosia@owocni.pl offset=4411 limit=25
+gosia@owocni.pl: BB window offset=4411 fetch=400 rows=371 target_append=25
+  scanned 25/371 appended=0 last=skip_other_channel
+  scanned 50/371 appended=0 last=skip_no_parent
+  scanned 75/371 appended=0 last=skip_other_channel
+  scanned 100/371 appended=0 last=skip_other_channel
+  scanned 125/371 appended=0 last=skip_other_channel
+  scanned 150/371 appended=0 last=skip_other_channel
+  scanned 175/371 appended=0 last=skip_other_channel
+  scanned 200/371 appended=0 last=skip_other_channel
+  scanned 225/371 appended=0 last=skip_other_channel
+  scanned 250/371 appended=0 last=skip_other_channel
+  scanned 275/371 appended=0 last=skip_other_channel
+  scanned 300/371 appended=0 last=skip_other_channel
+  scanned 325/371 appended=0 last=skip_other_channel
+  scanned 350/371 appended=0 last=skip_other_channel
+appended=0 skipped_seen=371 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T192448Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 21:24:48 paka done appended=0 rows=371 scanned=371 window_done=True skip={'skip_other_channel': 291, 'skip_in_twenty': 16, 'skip_no_parent': 33, 'skip_parent_not_in_twenty': 31}
+2026-09-04 21:24:53 counts people=28431 companies=1529 opp=3972
+2026-09-04 21:24:53 gosia@owocni.pl next offset 4411 → 4782
+2026-09-04 21:24:53 paka gosia@owocni.pl offset=4782 limit=25
+gosia@owocni.pl: BB window offset=4782 fetch=400 rows=374 target_append=25
+  scanned 25/374 appended=0 last=skip_other_channel
+  scanned 50/374 appended=0 last=skip_other_channel
+  scanned 75/374 appended=0 last=skip_other_channel
+APPEND bb:2021944 → gosia@owocni.pl/BB Archive 'Re: Owocna strona firmowa'
+  scanned 100/374 appended=1 last=skip_other_channel
+  scanned 125/374 appended=1 last=skip_other_channel
+  scanned 150/374 appended=1 last=skip_other_channel
+APPEND bb:2021442 → gosia@owocni.pl/BB Archive 'Re: Projekt logo'
+  scanned 175/374 appended=2 last=skip_other_channel
+  scanned 200/374 appended=2 last=skip_other_channel
+  scanned 225/374 appended=2 last=skip_other_channel
+  scanned 250/374 appended=2 last=skip_other_channel
+  scanned 275/374 appended=2 last=skip_other_channel
+  scanned 300/374 appended=2 last=skip_other_channel
+  scanned 325/374 appended=2 last=skip_no_parent
+  scanned 350/374 appended=2 last=skip_other_channel
+appended=2 skipped_seen=372 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T194859Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 21:48:59 paka done appended=2 rows=374 scanned=374 window_done=True skip={'skip_in_twenty': 18, 'skip_no_parent': 30, 'skip_parent_not_in_twenty': 21, 'skip_other_channel': 303}
+2026-09-04 21:48:59 Email Sync wait 600s for 2 APPEND
+2026-09-04 21:59:00 QA bb:2021944 pass 'Re: Owocna strona firmowa'
+2026-09-04 21:59:02 QA bb:2021442 pass 'Re: Projekt logo'
+2026-09-04 21:59:07 counts people=28431 companies=1529 opp=3972
+2026-09-04 21:59:07 gosia@owocni.pl next offset 4782 → 5156
+2026-09-04 21:59:07 paka gosia@owocni.pl offset=5156 limit=25
+gosia@owocni.pl: BB window offset=5156 fetch=400 rows=374 target_append=25
+  scanned 25/374 appended=0 last=skip_other_channel
+  scanned 50/374 appended=0 last=skip_other_channel
+  scanned 75/374 appended=0 last=skip_other_channel
+  scanned 100/374 appended=0 last=skip_other_channel
+  scanned 125/374 appended=0 last=skip_other_channel
+  scanned 150/374 appended=0 last=skip_other_channel
+  scanned 175/374 appended=0 last=skip_other_channel
+  scanned 200/374 appended=0 last=skip_parent_not_in_twenty
+  scanned 225/374 appended=0 last=skip_other_channel
+  scanned 250/374 appended=0 last=skip_other_channel
+  scanned 275/374 appended=0 last=skip_in_twenty
+  scanned 300/374 appended=0 last=skip_other_channel
+  scanned 325/374 appended=0 last=skip_no_parent
+  scanned 350/374 appended=0 last=skip_no_parent
+appended=0 skipped_seen=374 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T202227Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 22:22:27 paka done appended=0 rows=374 scanned=374 window_done=True skip={'skip_other_channel': 278, 'skip_in_twenty': 17, 'skip_no_parent': 43, 'skip_parent_not_in_twenty': 36}
+2026-09-04 22:22:32 counts people=28431 companies=1529 opp=3972
+2026-09-04 22:22:32 gosia@owocni.pl next offset 5156 → 5530
+2026-09-04 22:22:32 paka gosia@owocni.pl offset=5530 limit=25
+gosia@owocni.pl: BB window offset=5530 fetch=400 rows=381 target_append=25
+  scanned 25/381 appended=0 last=skip_other_channel
+  scanned 50/381 appended=0 last=skip_other_channel
+  scanned 75/381 appended=0 last=skip_parent_not_in_twenty
+  scanned 100/381 appended=0 last=skip_parent_not_in_twenty
+  scanned 125/381 appended=0 last=skip_other_channel
+  scanned 150/381 appended=0 last=skip_no_parent
+  scanned 175/381 appended=0 last=skip_other_channel
+  scanned 200/381 appended=0 last=skip_other_channel
+  scanned 225/381 appended=0 last=skip_other_channel
+  scanned 250/381 appended=0 last=skip_no_parent
+  scanned 275/381 appended=0 last=skip_other_channel
+  scanned 300/381 appended=0 last=skip_no_parent
+  scanned 325/381 appended=0 last=skip_other_channel
+  scanned 350/381 appended=0 last=skip_other_channel
+  scanned 375/381 appended=0 last=skip_no_parent
+appended=0 skipped_seen=381 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T204725Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 22:47:25 paka done appended=0 rows=381 scanned=381 window_done=True skip={'skip_other_channel': 308, 'skip_parent_not_in_twenty': 38, 'skip_no_parent': 26, 'skip_in_twenty': 9}
+2026-09-04 22:47:30 counts people=28431 companies=1529 opp=3972
+2026-09-04 22:47:30 gosia@owocni.pl next offset 5530 → 5911
+2026-09-04 22:47:30 paka gosia@owocni.pl offset=5911 limit=25
+gosia@owocni.pl: BB window offset=5911 fetch=400 rows=367 target_append=25
+  scanned 25/367 appended=0 last=skip_other_channel
+  scanned 50/367 appended=0 last=skip_other_channel
+  scanned 75/367 appended=0 last=skip_other_channel
+  scanned 100/367 appended=0 last=skip_other_channel
+  scanned 125/367 appended=0 last=skip_other_channel
+  scanned 150/367 appended=0 last=skip_in_twenty
+  scanned 175/367 appended=0 last=skip_other_channel
+  scanned 200/367 appended=0 last=skip_other_channel
+  scanned 225/367 appended=0 last=skip_other_channel
+  scanned 250/367 appended=0 last=skip_other_channel
+  scanned 275/367 appended=0 last=skip_other_channel
+  scanned 300/367 appended=0 last=skip_other_channel
+APPEND bb:2012972 → gosia@owocni.pl/BB Archive 'Re: Konsultacja ze specjalistą'
+  scanned 325/367 appended=1 last=skip_parent_not_in_twenty
+  scanned 350/367 appended=1 last=skip_other_channel
+appended=1 skipped_seen=366 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T211142Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 23:11:42 paka done appended=1 rows=367 scanned=367 window_done=True skip={'skip_other_channel': 293, 'skip_no_parent': 21, 'skip_parent_not_in_twenty': 37, 'skip_in_twenty': 15}
+2026-09-04 23:11:42 Email Sync wait 600s for 1 APPEND
+2026-09-04 23:21:44 QA bb:2012972 pass 'Re: Konsultacja ze specjalistą'
+2026-09-04 23:21:49 counts people=28432 companies=1529 opp=3973
+2026-09-04 23:21:54 sitko delta people 28431→28432,opportunities 3972→3973 new opp=1 people=1 companies=0
+2026-09-04 23:21:54 sitko allow opp 'maciek.majchrowski@gmail.com · Strona · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-04 23:21:54 sitko allow person maciek.majchrowski@gmail.com
+2026-09-04 23:21:54 sitko: Sortownia only — baseline bumped, import continues
+2026-09-04 23:21:54 gosia@owocni.pl next offset 5911 → 6278
+2026-09-04 23:21:54 paka gosia@owocni.pl offset=6278 limit=25
+gosia@owocni.pl: BB window offset=6278 fetch=400 rows=376 target_append=25
+  scanned 25/376 appended=0 last=skip_other_channel
+  scanned 50/376 appended=0 last=skip_other_channel
+  scanned 75/376 appended=0 last=skip_other_channel
+  scanned 100/376 appended=0 last=skip_parent_not_in_twenty
+  scanned 125/376 appended=0 last=skip_parent_not_in_twenty
+  scanned 150/376 appended=0 last=skip_other_channel
+  scanned 175/376 appended=0 last=skip_other_channel
+  scanned 200/376 appended=0 last=skip_other_channel
+  scanned 225/376 appended=0 last=skip_other_channel
+  scanned 250/376 appended=0 last=skip_other_channel
+  scanned 275/376 appended=0 last=skip_other_channel
+  scanned 300/376 appended=0 last=skip_other_channel
+  scanned 325/376 appended=0 last=skip_other_channel
+  scanned 350/376 appended=0 last=skip_other_channel
+  scanned 375/376 appended=0 last=skip_other_channel
+appended=0 skipped_seen=376 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T214635Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-04 23:46:35 paka done appended=0 rows=376 scanned=376 window_done=True skip={'skip_other_channel': 276, 'skip_parent_not_in_twenty': 73, 'skip_no_parent': 20, 'skip_in_twenty': 7}
+2026-09-04 23:46:40 counts people=28432 companies=1529 opp=3973
+2026-09-04 23:46:40 gosia@owocni.pl next offset 6278 → 6654
+2026-09-04 23:46:40 paka gosia@owocni.pl offset=6654 limit=25
+gosia@owocni.pl: BB window offset=6654 fetch=400 rows=379 target_append=25
+  scanned 25/379 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/379 appended=0 last=skip_other_channel
+  scanned 75/379 appended=0 last=skip_other_channel
+  scanned 100/379 appended=0 last=skip_other_channel
+  scanned 125/379 appended=0 last=skip_other_channel
+  scanned 150/379 appended=0 last=skip_other_channel
+  scanned 175/379 appended=0 last=skip_other_channel
+  scanned 200/379 appended=0 last=skip_other_channel
+  scanned 225/379 appended=0 last=skip_other_channel
+  scanned 250/379 appended=0 last=skip_other_channel
+  scanned 275/379 appended=0 last=skip_no_parent
+  scanned 300/379 appended=0 last=skip_other_channel
+  scanned 325/379 appended=0 last=skip_other_channel
+  scanned 350/379 appended=0 last=skip_other_channel
+  scanned 375/379 appended=0 last=skip_other_channel
+appended=0 skipped_seen=379 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T221101Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 00:11:02 paka done appended=0 rows=379 scanned=379 window_done=True skip={'skip_other_channel': 286, 'skip_parent_not_in_twenty': 54, 'skip_no_parent': 21, 'skip_in_twenty': 18}
+2026-09-05 00:11:07 counts people=28432 companies=1529 opp=3973
+2026-09-05 00:11:07 gosia@owocni.pl next offset 6654 → 7033
+2026-09-05 00:11:07 paka gosia@owocni.pl offset=7033 limit=25
+gosia@owocni.pl: BB window offset=7033 fetch=400 rows=376 target_append=25
+  scanned 25/376 appended=0 last=skip_other_channel
+  scanned 50/376 appended=0 last=skip_other_channel
+  scanned 75/376 appended=0 last=skip_in_twenty
+  scanned 100/376 appended=0 last=skip_other_channel
+  scanned 125/376 appended=0 last=skip_other_channel
+  scanned 150/376 appended=0 last=skip_other_channel
+  scanned 175/376 appended=0 last=skip_other_channel
+  scanned 200/376 appended=0 last=skip_other_channel
+  scanned 225/376 appended=0 last=skip_other_channel
+  scanned 250/376 appended=0 last=skip_in_twenty
+  scanned 275/376 appended=0 last=skip_other_channel
+  scanned 300/376 appended=0 last=skip_other_channel
+  scanned 325/376 appended=0 last=skip_other_channel
+  scanned 350/376 appended=0 last=skip_other_channel
+  scanned 375/376 appended=0 last=skip_no_parent
+appended=0 skipped_seen=376 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T223509Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 00:35:09 paka done appended=0 rows=376 scanned=376 window_done=True skip={'skip_other_channel': 280, 'skip_no_parent': 28, 'skip_in_twenty': 27, 'skip_parent_not_in_twenty': 41}
+2026-09-05 00:35:14 counts people=28432 companies=1529 opp=3973
+2026-09-05 00:35:14 gosia@owocni.pl next offset 7033 → 7409
+2026-09-05 00:35:14 paka gosia@owocni.pl offset=7409 limit=25
+gosia@owocni.pl: BB window offset=7409 fetch=400 rows=377 target_append=25
+  scanned 25/377 appended=0 last=skip_other_channel
+  scanned 50/377 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/377 appended=0 last=skip_other_channel
+  scanned 100/377 appended=0 last=skip_other_channel
+  scanned 125/377 appended=0 last=skip_other_channel
+  scanned 150/377 appended=0 last=skip_other_channel
+  scanned 175/377 appended=0 last=skip_other_channel
+  scanned 200/377 appended=0 last=skip_other_channel
+  scanned 225/377 appended=0 last=skip_other_channel
+  scanned 250/377 appended=0 last=skip_parent_not_in_twenty
+  scanned 275/377 appended=0 last=skip_parent_not_in_twenty
+  scanned 300/377 appended=0 last=skip_other_channel
+  scanned 325/377 appended=0 last=skip_other_channel
+  scanned 350/377 appended=0 last=skip_other_channel
+  scanned 375/377 appended=0 last=skip_parent_not_in_twenty
+appended=0 skipped_seen=377 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T225948Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 00:59:48 paka done appended=0 rows=377 scanned=377 window_done=True skip={'skip_no_parent': 35, 'skip_other_channel': 274, 'skip_parent_not_in_twenty': 61, 'skip_in_twenty': 7}
+2026-09-05 00:59:53 counts people=28432 companies=1529 opp=3973
+2026-09-05 00:59:53 gosia@owocni.pl next offset 7409 → 7786
+2026-09-05 00:59:53 paka gosia@owocni.pl offset=7786 limit=25
+gosia@owocni.pl: BB window offset=7786 fetch=400 rows=370 target_append=25
+  scanned 25/370 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/370 appended=0 last=skip_other_channel
+  scanned 75/370 appended=0 last=skip_other_channel
+  scanned 100/370 appended=0 last=skip_other_channel
+  scanned 125/370 appended=0 last=skip_other_channel
+  scanned 150/370 appended=0 last=skip_parent_not_in_twenty
+  scanned 175/370 appended=0 last=skip_other_channel
+  scanned 200/370 appended=0 last=skip_no_parent
+  scanned 225/370 appended=0 last=skip_no_parent
+  scanned 250/370 appended=0 last=skip_other_channel
+  scanned 275/370 appended=0 last=skip_parent_not_in_twenty
+  scanned 300/370 appended=0 last=skip_other_channel
+  scanned 325/370 appended=0 last=skip_other_channel
+  scanned 350/370 appended=0 last=skip_parent_not_in_twenty
+appended=0 skipped_seen=370 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T232419Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 01:24:19 paka done appended=0 rows=370 scanned=370 window_done=True skip={'skip_other_channel': 277, 'skip_no_parent': 33, 'skip_parent_not_in_twenty': 48, 'skip_in_twenty': 12}
+2026-09-05 01:24:24 counts people=28432 companies=1529 opp=3973
+2026-09-05 01:24:24 gosia@owocni.pl next offset 7786 → 8156
+2026-09-05 01:24:24 paka gosia@owocni.pl offset=8156 limit=25
+gosia@owocni.pl: BB window offset=8156 fetch=400 rows=369 target_append=25
+  scanned 25/369 appended=0 last=skip_other_channel
+  scanned 50/369 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/369 appended=0 last=skip_no_parent
+  scanned 100/369 appended=0 last=skip_no_parent
+  scanned 125/369 appended=0 last=skip_other_channel
+  scanned 150/369 appended=0 last=skip_no_parent
+  scanned 175/369 appended=0 last=skip_other_channel
+  scanned 200/369 appended=0 last=skip_other_channel
+  scanned 225/369 appended=0 last=skip_other_channel
+  scanned 250/369 appended=0 last=skip_no_parent
+  scanned 275/369 appended=0 last=skip_other_channel
+  scanned 300/369 appended=0 last=skip_other_channel
+  scanned 325/369 appended=0 last=skip_other_channel
+  scanned 350/369 appended=0 last=skip_other_channel
+appended=0 skipped_seen=369 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T234522Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 01:45:22 paka done appended=0 rows=369 scanned=369 window_done=True skip={'skip_other_channel': 237, 'skip_parent_not_in_twenty': 69, 'skip_in_twenty': 22, 'skip_no_parent': 41}
+2026-09-05 01:45:27 counts people=28432 companies=1529 opp=3973
+2026-09-05 01:45:27 gosia@owocni.pl next offset 8156 → 8525
+2026-09-05 01:45:27 paka gosia@owocni.pl offset=8525 limit=25
+gosia@owocni.pl: BB window offset=8525 fetch=400 rows=362 target_append=25
+  scanned 25/362 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/362 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/362 appended=0 last=skip_other_channel
+  scanned 100/362 appended=0 last=skip_other_channel
+  scanned 125/362 appended=0 last=skip_other_channel
+  scanned 150/362 appended=0 last=skip_other_channel
+  scanned 175/362 appended=0 last=skip_parent_not_in_twenty
+  scanned 200/362 appended=0 last=skip_other_channel
+  scanned 225/362 appended=0 last=skip_no_parent
+  scanned 250/362 appended=0 last=skip_other_channel
+  scanned 275/362 appended=0 last=skip_in_twenty
+  scanned 300/362 appended=0 last=skip_other_channel
+  scanned 325/362 appended=0 last=skip_other_channel
+  scanned 350/362 appended=0 last=skip_other_channel
+appended=0 skipped_seen=362 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T000832Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 02:08:32 paka done appended=0 rows=362 scanned=362 window_done=True skip={'skip_parent_not_in_twenty': 69, 'skip_other_channel': 243, 'skip_in_twenty': 25, 'skip_no_parent': 25}
+2026-09-05 02:08:37 counts people=28432 companies=1529 opp=3973
+2026-09-05 02:08:37 gosia@owocni.pl next offset 8525 → 8887
+2026-09-05 02:08:37 paka gosia@owocni.pl offset=8887 limit=25
+gosia@owocni.pl: BB window offset=8887 fetch=400 rows=353 target_append=25
+  scanned 25/353 appended=0 last=skip_other_channel
+  scanned 50/353 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/353 appended=0 last=skip_other_channel
+  scanned 100/353 appended=0 last=skip_other_channel
+  scanned 125/353 appended=0 last=skip_other_channel
+  scanned 150/353 appended=0 last=skip_other_channel
+  scanned 175/353 appended=0 last=skip_parent_not_in_twenty
+  scanned 200/353 appended=0 last=skip_other_channel
+  scanned 225/353 appended=0 last=skip_other_channel
+  scanned 250/353 appended=0 last=skip_other_channel
+  scanned 275/353 appended=0 last=skip_parent_not_in_twenty
+  scanned 300/353 appended=0 last=skip_other_channel
+  scanned 325/353 appended=0 last=skip_no_parent
+  scanned 350/353 appended=0 last=skip_no_parent
+appended=0 skipped_seen=353 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T003017Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 02:30:17 paka done appended=0 rows=353 scanned=353 window_done=True skip={'skip_other_channel': 253, 'skip_parent_not_in_twenty': 34, 'skip_no_parent': 32, 'skip_in_twenty': 34}
+2026-09-05 02:30:22 counts people=28432 companies=1529 opp=3973
+2026-09-05 02:30:22 gosia@owocni.pl next offset 8887 → 9240
+2026-09-05 02:30:22 paka gosia@owocni.pl offset=9240 limit=25
+gosia@owocni.pl: BB window offset=9240 fetch=400 rows=378 target_append=25
+  scanned 25/378 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/378 appended=0 last=skip_other_channel
+  scanned 75/378 appended=0 last=skip_other_channel
+  scanned 100/378 appended=0 last=skip_other_channel
+  scanned 125/378 appended=0 last=skip_other_channel
+  scanned 150/378 appended=0 last=skip_parent_not_in_twenty
+  scanned 175/378 appended=0 last=skip_in_twenty
+  scanned 200/378 appended=0 last=skip_in_twenty
+  scanned 225/378 appended=0 last=skip_in_twenty
+  scanned 250/378 appended=0 last=skip_in_twenty
+  scanned 275/378 appended=0 last=skip_in_twenty
+  scanned 300/378 appended=0 last=skip_in_twenty
+  scanned 325/378 appended=0 last=skip_in_twenty
+  scanned 350/378 appended=0 last=skip_in_twenty
+  scanned 375/378 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=378 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T004715Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 02:47:15 paka done appended=0 rows=378 scanned=378 window_done=True skip={'skip_other_channel': 110, 'skip_no_parent': 24, 'skip_parent_not_in_twenty': 35, 'skip_in_twenty': 209}
+2026-09-05 02:47:20 counts people=28432 companies=1529 opp=3973
+2026-09-05 02:47:20 gosia@owocni.pl next offset 9240 → 9618
+2026-09-05 02:47:20 paka gosia@owocni.pl offset=9618 limit=25
+gosia@owocni.pl: BB window offset=9618 fetch=400 rows=400 target_append=25
+  scanned 25/400 appended=0 last=skip_in_twenty
+  scanned 50/400 appended=0 last=skip_in_twenty
+  scanned 75/400 appended=0 last=skip_in_twenty
+  scanned 100/400 appended=0 last=skip_in_twenty
+  scanned 125/400 appended=0 last=skip_in_twenty
+  scanned 150/400 appended=0 last=skip_in_twenty
+  scanned 175/400 appended=0 last=skip_in_twenty
+  scanned 200/400 appended=0 last=skip_in_twenty
+  scanned 225/400 appended=0 last=skip_in_twenty
+  scanned 250/400 appended=0 last=skip_in_twenty
+  scanned 275/400 appended=0 last=skip_in_twenty
+  scanned 300/400 appended=0 last=skip_in_twenty
+  scanned 325/400 appended=0 last=skip_in_twenty
+  scanned 350/400 appended=0 last=skip_in_twenty
+  scanned 375/400 appended=0 last=skip_in_twenty
+  scanned 400/400 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=400 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T005900Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 02:59:00 paka done appended=0 rows=400 scanned=400 window_done=True skip={'skip_in_twenty': 400}
+2026-09-05 02:59:05 counts people=28432 companies=1529 opp=3973
+2026-09-05 02:59:05 gosia@owocni.pl next offset 9618 → 10018
+2026-09-05 02:59:05 paka gosia@owocni.pl offset=10018 limit=25
+gosia@owocni.pl: BB window offset=10018 fetch=400 rows=399 target_append=25
+  scanned 25/399 appended=0 last=skip_in_twenty
+  scanned 50/399 appended=0 last=skip_in_twenty
+  scanned 75/399 appended=0 last=skip_in_twenty
+  scanned 100/399 appended=0 last=skip_in_twenty
+  scanned 125/399 appended=0 last=skip_in_twenty
+  scanned 150/399 appended=0 last=skip_in_twenty
+  scanned 175/399 appended=0 last=skip_in_twenty
+  scanned 200/399 appended=0 last=skip_in_twenty
+  scanned 225/399 appended=0 last=skip_in_twenty
+  scanned 250/399 appended=0 last=skip_in_twenty
+  scanned 275/399 appended=0 last=skip_in_twenty
+  scanned 300/399 appended=0 last=skip_in_twenty
+  scanned 325/399 appended=0 last=skip_in_twenty
+  scanned 350/399 appended=0 last=skip_in_twenty
+  scanned 375/399 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=399 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T011040Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 03:10:40 paka done appended=0 rows=399 scanned=399 window_done=True skip={'skip_in_twenty': 399}
+2026-09-05 03:10:45 counts people=28432 companies=1529 opp=3973
+2026-09-05 03:10:45 gosia@owocni.pl next offset 10018 → 10417
+2026-09-05 03:10:45 paka gosia@owocni.pl offset=10417 limit=25
+gosia@owocni.pl: BB window offset=10417 fetch=400 rows=138 target_append=25
+  scanned 25/138 appended=0 last=skip_in_twenty
+  scanned 50/138 appended=0 last=skip_in_twenty
+  scanned 75/138 appended=0 last=skip_in_twenty
+  scanned 100/138 appended=0 last=skip_in_twenty
+  scanned 125/138 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=138 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T011446Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 03:14:46 paka done appended=0 rows=138 scanned=138 window_done=True skip={'skip_in_twenty': 138}
+2026-09-05 03:14:51 counts people=28432 companies=1529 opp=3973
+2026-09-05 03:14:51 gosia@owocni.pl next offset 10417 → 10555
+2026-09-05 03:14:51 paka gosia@owocni.pl offset=10555 limit=25
+gosia@owocni.pl: BB window offset=10555 fetch=400 rows=0 target_append=25
+appended=0 skipped_seen=0 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260905T011452Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 03:14:52 paka done appended=0 rows=0 scanned=0 window_done=True skip={}
+2026-09-05 03:14:57 counts people=28432 companies=1529 opp=3973
+2026-09-05 03:14:57 gosia@owocni.pl exhausted (empty window at offset=10555)
+2026-09-05 03:14:57 paka marta@owocni.pl offset=0 limit=25
+marta@owocni.pl: BB window offset=0 fetch=400 rows=370 target_append=25
+APPEND bb:2057864 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Pawła:'
+APPEND bb:2057814 → marta@owocni.pl/BB Archive 'Re: Nowe logo CINEMA WORLD 360'
+APPEND bb:2057773 → marta@owocni.pl/BB Archive 'Dane dostępowe do strony:'
+APPEND bb:2057761 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Jana:'
+APPEND bb:2057687 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Jana:'
+APPEND bb:2057588 → marta@owocni.pl/BB Archive 'Do usłyszenia w przyszłym tygodniu:'
+APPEND bb:2057572 → marta@owocni.pl/BB Archive 'Re: Prawa do dodatkowego projektu logo:'
+APPEND bb:2057532 → marta@owocni.pl/BB Archive 'Re: Strona dla studia tańca Pani Joanny:'
+  scanned 25/370 appended=8 last=skip_other_channel
+APPEND bb:2057502 → marta@owocni.pl/BB Archive 'Idealne logo. Za symboliczną złotówkę.'
+APPEND bb:2057295 → marta@owocni.pl/BB Archive 'Re: Draft umowy:'
+  scanned 50/370 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2057217 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Radosława:'
+APPEND bb:2057006 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 6099'
+  scanned 75/370 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2056885 → marta@owocni.pl/BB Archive 'Przekazanie sprawy do działu wsparcia:'
+APPEND bb:2056878 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Radosława:'
+  scanned 100/370 appended=14 last=skip_other_channel
+APPEND bb:2056652 → marta@owocni.pl/BB Archive 'Re: Przebudowa strony spreek.pl'
+APPEND bb:2056443 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Karoliny:'
+  scanned 125/370 appended=16 last=skip_parent_not_in_twenty
+APPEND bb:2056433 → marta@owocni.pl/BB Archive 'Zapytanie'
+  scanned 150/370 appended=17 last=skip_parent_not_in_twenty
+APPEND bb:2056039 → marta@owocni.pl/BB Archive 'Re: Realizacja projektu Logo'
+APPEND bb:2056033 → marta@owocni.pl/BB Archive 'RE: Owocny hosting:'
+APPEND bb:2056023 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pana Mateusza:'
+  scanned 175/370 appended=20 last=skip_other_channel
+APPEND bb:2055799 → marta@owocni.pl/BB Archive 'Re: Owocne logo dla kancelarii Ausobsky & Zawadzki'
+  scanned 200/370 appended=21 last=skip_parent_not_in_twenty
+  scanned 225/370 appended=21 last=skip_parent_not_in_twenty
+APPEND bb:2055599 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Marzeny:'
+APPEND bb:2055535 → marta@owocni.pl/BB Archive 'Re: Uruchomienie logo / Strona internetowa'
+  scanned 250/370 appended=23 last=skip_parent_not_in_twenty
+APPEND bb:2055272 → marta@owocni.pl/BB Archive 'Re: Strona internetowa po logo dla Pana Damiana:'
+  scanned 275/370 appended=24 last=skip_other_channel
+APPEND bb:2055034 → marta@owocni.pl/BB Archive 'Re: Strona typu katalog dla Pana Łukasza:'
+appended=25 skipped_seen=270 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T013450Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 03:34:50 paka done appended=25 rows=370 scanned=295 window_done=False skip={'skip_parent_not_in_twenty': 148, 'skip_other_channel': 102, 'skip_in_twenty': 12, 'skip_no_parent': 5, 'skip_on_imap': 3}
+2026-09-05 03:34:50 Email Sync wait 600s for 25 APPEND
+2026-09-05 03:44:52 QA bb:2057864 pass 'Projekt logo dla Pana Pawła:'
+2026-09-05 03:44:54 QA bb:2057814 pass 'Re: Nowe logo CINEMA WORLD 360'
+2026-09-05 03:44:56 QA bb:2057773 pass 'Dane dostępowe do strony:'
+2026-09-05 03:44:58 QA bb:2057761 pass 'Re: Projekt logo dla Pana Jana:'
+2026-09-05 03:44:59 QA bb:2057687 pass 'Re: Projekt logo dla Pana Jana:'
+2026-09-05 03:45:01 QA bb:2057588 stitch_fail 'Do usłyszenia w przyszłym tygodniu:'
+2026-09-05 03:45:01 STOP: qa_stitch_fail:bb:2057588
+2026-09-05 05:28:25 resume: skip stitch_warn bb:2057588, QA remaining Marta paka
+2026-09-05 05:28:27 QA bb:2057572 pass 'Re: Prawa do dodatkowego projektu logo:'
+2026-09-05 05:28:29 QA bb:2057532 pass 'Re: Strona dla studia tańca Pani Joanny:'
+2026-09-05 05:28:31 QA bb:2057502 pass 'Idealne logo. Za symboliczną złotówkę.'
+2026-09-05 05:28:32 QA bb:2057295 pass 'Re: Draft umowy:'
+2026-09-05 05:28:34 QA bb:2057217 pass 'Re: Strona internetowa dla Pana Radosława:'
+2026-09-05 05:28:36 QA bb:2057006 pass 'Re: Finalizacja projektu &gt; fakturaproforma nr 6'
+2026-09-05 05:28:38 QA bb:2056885 pass 'Przekazanie sprawy do działu wsparcia:'
+2026-09-05 05:28:39 QA bb:2056878 pass 'Re: Strona internetowa dla Pana Radosława:'
+2026-09-05 05:28:41 QA bb:2056652 pass 'Re: Przebudowa strony spreek.pl'
+2026-09-05 05:28:43 QA bb:2056443 pass 'Re: Projekt logo dla Pani Karoliny:'
+2026-09-05 05:28:45 QA bb:2056433 pass 'Zapytanie'
+2026-09-05 05:28:46 QA bb:2056039 pass 'Re: Realizacja projektu Logo'
+2026-09-05 05:28:48 QA bb:2056033 pass 'RE: Owocny hosting:'
+2026-09-05 05:28:50 QA bb:2056023 pass 'Re: Nazwa i logo dla Pana Mateusza:'
+2026-09-05 05:28:52 QA bb:2055799 pass 'Re: Owocne logo dla kancelarii Ausobsky & Zawadzki'
+2026-09-05 05:28:53 QA bb:2055599 pass 'Re: Projekt logo dla Pani Marzeny:'
+2026-09-05 05:28:55 QA bb:2055535 pass 'Re: Uruchomienie logo / Strona internetowa'
+2026-09-05 05:28:57 QA bb:2055272 pass 'Re: Strona internetowa po logo dla Pana Damiana:'
+2026-09-05 05:28:59 QA bb:2055034 pass 'Re: Strona typu katalog dla Pana Łukasza:'
+2026-09-05 05:29:04 counts people=28432 companies=1529 opp=3973
+2026-09-05 05:29:35 loop start mailbox=marta@owocni.pl offset=0 limit=25
+2026-09-05 05:29:35 paka marta@owocni.pl offset=0 limit=25
+marta@owocni.pl: BB window offset=0 fetch=400 rows=370 target_append=25
+APPEND bb:2057590 → marta@owocni.pl/BB Archive 'Re: Strona dla studia tańca Pani Joanny:'
+  scanned 25/370 appended=1 last=skip_other_channel
+  scanned 50/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 100/370 appended=1 last=skip_other_channel
+  scanned 125/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 150/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 175/370 appended=1 last=skip_other_channel
+  scanned 200/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 225/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 250/370 appended=1 last=skip_parent_not_in_twenty
+  scanned 275/370 appended=1 last=skip_other_channel
+  scanned 300/370 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2054921 → marta@owocni.pl/BB Archive 'Re: Zmiana umowy na osobę fizyczną'
+  scanned 325/370 appended=2 last=skip_other_channel
+APPEND bb:2054789 → marta@owocni.pl/BB Archive 'Re: Strona typu katalog dla Pana Łukasza:'
+APPEND bb:2054695 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pani Izabeli:'
+APPEND bb:2054692 → marta@owocni.pl/BB Archive 'ODP: Konsultacja dotycząca nowej strony Audire - dziś 13:00'
+APPEND bb:2054678 → marta@owocni.pl/BB Archive 'Uruchomienie prac przy logo:'
+  scanned 350/370 appended=6 last=skip_other_channel
+APPEND bb:2054651 → marta@owocni.pl/BB Archive 'RE: Konsultacja dotycząca nowej strony www.almus.pl'
+appended=7 skipped_seen=363 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T035357Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 05:53:57 paka done appended=7 rows=370 scanned=370 window_done=True skip={'skip_parent_not_in_twenty': 190, 'skip_in_twenty': 37, 'skip_other_channel': 127, 'skip_no_parent': 6, 'skip_on_imap': 3}
+2026-09-05 05:53:57 Email Sync wait 600s for 7 APPEND
+2026-09-05 06:03:59 QA bb:2057590 pass 'Re: Strona dla studia tańca Pani Joanny:'
+2026-09-05 06:04:01 QA bb:2054921 missing 'Re: Zmiana umowy na osobę fizyczną'
+2026-09-05 06:04:03 QA bb:2054789 missing 'Re: Strona typu katalog dla Pana Łukasza:'
+2026-09-05 06:04:04 QA bb:2054695 missing 'Re: Nazwa dla Pani Izabeli:'
+2026-09-05 06:04:06 QA bb:2054692 missing 'ODP: Konsultacja dotycząca nowej strony Audire - d'
+2026-09-05 06:04:08 QA bb:2054678 missing 'Uruchomienie prac przy logo:'
+2026-09-05 06:04:10 QA bb:2054651 missing 'RE: Konsultacja dotycząca nowej strony www.almus.p'
+2026-09-05 06:04:10 STOP: qa_missing:6/7
+2026-09-05 07:51:54 resume: re-QA 6 previously missing (no halt on slow Email Sync)
+2026-09-05 07:51:56 QA bb:2054921 pass 'Re: Zmiana umowy na osobę fizyczną'
+2026-09-05 07:51:58 QA bb:2054789 pass 'Re: Strona typu katalog dla Pana Łukasza:'
+2026-09-05 07:52:00 QA bb:2054695 pass 'Re: Nazwa dla Pani Izabeli:'
+2026-09-05 07:52:01 QA bb:2054692 pass 'ODP: Konsultacja dotycząca nowej strony Audire - d'
+2026-09-05 07:52:03 QA bb:2054678 pass 'Uruchomienie prac przy logo:'
+2026-09-05 07:52:05 QA bb:2054651 pass 'RE: Konsultacja dotycząca nowej strony www.almus.p'
+2026-09-05 07:52:10 counts people=28432 companies=1529 opp=3973
+2026-09-05 07:52:17 loop start mailbox=marta@owocni.pl offset=370 limit=25
+2026-09-05 07:52:17 paka marta@owocni.pl offset=370 limit=25
+marta@owocni.pl: BB window offset=370 fetch=400 rows=373 target_append=25
+APPEND bb:2054675 → marta@owocni.pl/BB Archive 'RE: Konsultacja dotycząca nowej strony www.almus.pl'
+  scanned 25/373 appended=1 last=skip_other_channel
+APPEND bb:2054382 → marta@owocni.pl/BB Archive 'Uruchomienie prac:'
+  scanned 50/373 appended=2 last=skip_parent_not_in_twenty
+APPEND bb:2054076 → marta@owocni.pl/BB Archive 'Re: Zmiana umowy na osobę fizyczną'
+  scanned 75/373 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2053855 → marta@owocni.pl/BB Archive 'Re: Strona internetowa:'
+  scanned 100/373 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2053650 → marta@owocni.pl/BB Archive 'Re: Umowa do podpisu:'
+APPEND bb:2053646 → marta@owocni.pl/BB Archive 'Re: Strona internetowa:'
+APPEND bb:2053611 → marta@owocni.pl/BB Archive 'Re: Logo dla Pana Mateusza:'
+  scanned 125/373 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2053553 → marta@owocni.pl/BB Archive 'Re[2]: Konsultacja dotycząca  modernizacji strony fundacjakatarynka.pl'
+APPEND bb:2053545 → marta@owocni.pl/BB Archive 'Re: Dodatkowe landingi na stronie - draft aneksu'
+APPEND bb:2053422 → marta@owocni.pl/BB Archive 'Re: Dodatkowe landingi na stronie - draft aneksu'
+  scanned 150/373 appended=10 last=skip_other_channel
+APPEND bb:2053362 → marta@owocni.pl/BB Archive 'Re: Zapytanie w sprawie nowego logo'
+  scanned 175/373 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2053213 → marta@owocni.pl/BB Archive 'Odp: Rozmowa z owocnym ekspertem - środa:'
+APPEND bb:2053209 → marta@owocni.pl/BB Archive 'Re: Naklejki na autokary:'
+APPEND bb:2053103 → marta@owocni.pl/BB Archive 'Dokumenty do podpisu:'
+  scanned 200/373 appended=14 last=skip_other_channel
+APPEND bb:2053026 → marta@owocni.pl/BB Archive 'Odp: Rozmowa z owocnym ekspertem - środa:'
+APPEND bb:2052847 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem - środa:'
+APPEND bb:2052806 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Kacpra:'
+  scanned 225/373 appended=17 last=skip_other_channel
+APPEND bb:2052770 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Jana:'
+  scanned 250/373 appended=18 last=skip_parent_not_in_twenty
+APPEND bb:2052664 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Tomasza:'
+  scanned 275/373 appended=19 last=skip_parent_not_in_twenty
+  scanned 300/373 appended=19 last=skip_other_channel
+APPEND bb:2052487 → marta@owocni.pl/BB Archive 'Re: Strona dla Pana Wojciecha:'
+APPEND bb:2052469 → marta@owocni.pl/BB Archive 'Odp: Modyfikacja logo i papeterii:'
+  scanned 325/373 appended=21 last=skip_other_channel
+APPEND bb:2052449 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+APPEND bb:2052418 → marta@owocni.pl/BB Archive 'Re: Zapytanie o wycenę - Gabinet'
+  scanned 350/373 appended=23 last=skip_parent_not_in_twenty
+APPEND bb:2052386 → marta@owocni.pl/BB Archive 'Re: Kalendarz do strony'
+APPEND bb:2052327 → marta@owocni.pl/BB Archive 'Re: Zapytanie w sprawie nowego logo'
+appended=25 skipped_seen=336 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T061751Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 08:17:51 paka done appended=25 rows=373 scanned=361 window_done=False skip={'skip_in_twenty': 3, 'skip_parent_not_in_twenty': 188, 'skip_other_channel': 130, 'skip_no_parent': 13, 'skip_on_imap': 2}
+2026-09-05 08:17:51 Email Sync wait 600s for 25 APPEND
+2026-09-05 08:28:35 QA bb:2054675 pass 'RE: Konsultacja dotycząca nowej strony www.almus.p'
+2026-09-05 08:28:35 QA bb:2054382 pass 'Uruchomienie prac:'
+2026-09-05 08:28:35 QA bb:2054076 pass 'Re: Zmiana umowy na osobę fizyczną'
+2026-09-05 08:28:35 QA bb:2053855 pass 'Re: Strona internetowa:'
+2026-09-05 08:28:35 QA bb:2053650 pass 'Re: Umowa do podpisu:'
+2026-09-05 08:28:35 QA bb:2053646 pass 'Re: Strona internetowa:'
+2026-09-05 08:28:35 QA bb:2053611 pass 'Re: Logo dla Pana Mateusza:'
+2026-09-05 08:28:35 QA bb:2053553 pass 'Re[2]: Konsultacja dotycząca  modernizacji strony '
+2026-09-05 08:28:35 QA bb:2053545 pass 'Re: Dodatkowe landingi na stronie - draft aneksu'
+2026-09-05 08:28:35 QA bb:2053422 direction:None 'Re: Dodatkowe landingi na stronie - draft aneksu'
+2026-09-05 08:28:35 STOP: qa_direction:None:bb:2053422
+2026-09-05 08:47:09 resume: re-QA after direction:None halt
+2026-09-05 08:47:11 QA bb:2053422 pass 'Re: Dodatkowe landingi na stronie - draft aneksu'
+2026-09-05 08:47:13 QA bb:2053362 pass 'Re: Zapytanie w sprawie nowego logo'
+2026-09-05 08:47:14 QA bb:2053213 pass 'Odp: Rozmowa z owocnym ekspertem - środa:'
+2026-09-05 08:47:16 QA bb:2053209 pass 'Re: Naklejki na autokary:'
+2026-09-05 08:47:18 QA bb:2053103 pass 'Dokumenty do podpisu:'
+2026-09-05 08:47:20 QA bb:2053026 pass 'Odp: Rozmowa z owocnym ekspertem - środa:'
+2026-09-05 08:47:21 QA bb:2052847 pass 'RE: Rozmowa z owocnym ekspertem - środa:'
+2026-09-05 08:47:23 QA bb:2052806 pass 'Re: Projekt logo dla Pana Kacpra:'
+2026-09-05 08:47:25 QA bb:2052770 pass 'Projekt logo dla Pana Jana:'
+2026-09-05 08:47:27 QA bb:2052664 pass 'Projekt logo dla Pana Tomasza:'
+2026-09-05 08:47:28 QA bb:2052487 pass 'Re: Strona dla Pana Wojciecha:'
+2026-09-05 08:47:30 QA bb:2052469 pass 'Odp: Modyfikacja logo i papeterii:'
+2026-09-05 08:47:32 QA bb:2052449 pass 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 08:47:33 QA bb:2052418 pass 'Re: Zapytanie o wycenę - Gabinet'
+2026-09-05 08:47:35 QA bb:2052386 pass 'Re: Kalendarz do strony'
+2026-09-05 08:47:37 QA bb:2052327 pass 'Re: Zapytanie w sprawie nowego logo'
+2026-09-05 08:47:42 counts people=28432 companies=1529 opp=3973
+2026-09-05 08:47:53 loop start mailbox=marta@owocni.pl offset=370 limit=25
+2026-09-05 08:47:53 paka marta@owocni.pl offset=370 limit=25
+marta@owocni.pl: BB window offset=370 fetch=400 rows=373 target_append=25
+  scanned 25/373 appended=0 last=skip_other_channel
+APPEND bb:2054489 → marta@owocni.pl/BB Archive 'Re: Zapytanie w sprawie nowego logo'
+  scanned 50/373 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/373 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2053798 → marta@owocni.pl/BB Archive 'Re: Logo dla Pana Mateusza:'
+  scanned 100/373 appended=2 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2053651 → marta@owocni.pl/BB Archive 'Re: Umowa do podpisu:'
+  scanned 125/373 appended=3 last=skip_parent_not_in_twenty
+  scanned 150/373 appended=3 last=skip_other_channel
+APPEND bb:2053352 → marta@owocni.pl/BB Archive 'Re: Zapytanie w sprawie nowego logo'
+  scanned 175/373 appended=4 last=skip_parent_not_in_twenty
+  scanned 200/373 appended=4 last=skip_other_channel
+  scanned 225/373 appended=4 last=skip_other_channel
+APPEND bb:2052759 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Tomasza:'
+  scanned 250/373 appended=5 last=skip_parent_not_in_twenty
+  scanned 275/373 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2052588 → marta@owocni.pl/BB Archive 'Re: Strona dla Pana Wojciecha:'
+APPEND bb:2052587 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem - czwartek 2 lipca:'
+  scanned 300/373 appended=7 last=skip_other_channel
+  scanned 325/373 appended=7 last=skip_other_channel
+  scanned 350/373 appended=7 last=skip_parent_not_in_twenty
+appended=7 skipped_seen=366 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T071316Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 09:13:16 paka done appended=7 rows=373 scanned=373 window_done=True skip={'skip_in_twenty': 28, 'skip_parent_not_in_twenty': 182, 'skip_other_channel': 130, 'skip_no_parent': 24, 'skip_on_imap': 2}
+2026-09-05 09:13:16 Email Sync wait 600s for 7 APPEND
+2026-09-05 09:23:29 Email Sync extra wait 600s for 3 not ready
+2026-09-05 09:33:34 QA bb:2054489 pass 'Re: Zapytanie w sprawie nowego logo'
+2026-09-05 09:33:34 QA bb:2053798 pass 'Re: Logo dla Pana Mateusza:'
+2026-09-05 09:33:34 QA bb:2053651 pass 'Re: Umowa do podpisu:'
+2026-09-05 09:33:34 QA bb:2053352 pass 'Re: Zapytanie w sprawie nowego logo'
+2026-09-05 09:33:34 QA bb:2052759 missing 'Projekt logo dla Pana Tomasza:'
+2026-09-05 09:33:34 QA sync_warn bb:2052759 — not in Twenty yet, IMAP has it. continue
+2026-09-05 09:33:34 QA bb:2052588 missing 'Re: Strona dla Pana Wojciecha:'
+2026-09-05 09:33:34 QA sync_warn bb:2052588 — not in Twenty yet, IMAP has it. continue
+2026-09-05 09:33:34 QA bb:2052587 missing 'Re: Rozmowa z owocnym ekspertem - czwartek 2 lipca'
+2026-09-05 09:33:34 QA sync_warn bb:2052587 — not in Twenty yet, IMAP has it. continue
+2026-09-05 09:33:39 counts people=28433 companies=1529 opp=3974
+2026-09-05 09:33:44 sitko delta people 28432→28433,opportunities 3973→3974 new opp=1 people=1 companies=0
+2026-09-05 09:33:44 sitko allow opp 'k.huber@wp.pl · Strona · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-05 09:33:44 sitko allow person k.huber@wp.pl
+2026-09-05 09:33:44 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 09:33:44 marta@owocni.pl next offset 370 → 743
+2026-09-05 09:33:44 paka marta@owocni.pl offset=743 limit=25
+marta@owocni.pl: BB window offset=743 fetch=400 rows=365 target_append=25
+  scanned 25/365 appended=0 last=skip_no_parent
+  scanned 50/365 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2051930 → marta@owocni.pl/BB Archive 'Re: Umowa na opracowanie nazwy:'
+  scanned 75/365 appended=1 last=skip_other_channel
+  scanned 100/365 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2051222 → marta@owocni.pl/BB Archive 'Sv: Umowa do podpisu'
+  scanned 125/365 appended=2 last=skip_parent_not_in_twenty
+  scanned 150/365 appended=2 last=skip_other_channel
+APPEND bb:2050815 → marta@owocni.pl/BB Archive 'Sv: Umowa do podpisu'
+APPEND bb:2050448 → marta@owocni.pl/BB Archive 'Re: Draft umowy nazwa i logo:'
+  scanned 175/365 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2050343 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem dla Pana Jana:'
+APPEND bb:2050215 → marta@owocni.pl/BB Archive 'Podpisanie umowy'
+  scanned 200/365 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2050140 → marta@owocni.pl/BB Archive 'Strona typu katalog w branży medycznej:'
+APPEND bb:2050084 → marta@owocni.pl/BB Archive 'Sv: Strona ze sklepem dla Pana Pawła:'
+  scanned 225/365 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:2049975 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Tomasza:'
+  scanned 250/365 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2049620 → marta@owocni.pl/BB Archive 'Odp: Opracowanie graficzne pdf'
+  scanned 275/365 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2049584 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pani Mai:'
+  scanned 300/365 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2049143 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pani Izabeli:'
+  scanned 325/365 appended=12 last=skip_parent_not_in_twenty
+  scanned 350/365 appended=12 last=skip_other_channel
+APPEND bb:2048872 → marta@owocni.pl/BB Archive 'Odp: Uruchomienie prac przy logo:'
+APPEND bb:2048761 → marta@owocni.pl/BB Archive 'Re: Faktura nr 662/2026'
+appended=14 skipped_seen=351 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T075906Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 09:59:06 paka done appended=14 rows=365 scanned=365 window_done=True skip={'skip_parent_not_in_twenty': 240, 'skip_in_twenty': 12, 'skip_no_parent': 12, 'skip_other_channel': 87}
+2026-09-05 09:59:06 Email Sync wait 600s for 14 APPEND
+2026-09-05 10:09:30 QA bb:2051930 pass 'Re: Umowa na opracowanie nazwy:'
+2026-09-05 10:09:30 QA bb:2051222 pass 'Sv: Umowa do podpisu'
+2026-09-05 10:09:30 QA bb:2050815 pass 'Sv: Umowa do podpisu'
+2026-09-05 10:09:30 QA bb:2050448 pass 'Re: Draft umowy nazwa i logo:'
+2026-09-05 10:09:30 QA bb:2050343 pass 'Re: Strona ze sklepem dla Pana Jana:'
+2026-09-05 10:09:30 QA bb:2050215 pass 'Podpisanie umowy'
+2026-09-05 10:09:30 QA bb:2050140 pass 'Strona typu katalog w branży medycznej:'
+2026-09-05 10:09:30 QA bb:2050084 pass 'Sv: Strona ze sklepem dla Pana Pawła:'
+2026-09-05 10:09:30 QA bb:2049975 pass 'Re: Projekt logo dla Pana Tomasza:'
+2026-09-05 10:09:30 QA bb:2049620 pass 'Odp: Opracowanie graficzne pdf'
+2026-09-05 10:09:30 QA bb:2049584 pass 'Re: Strona internetowa dla Pani Mai:'
+2026-09-05 10:09:30 QA bb:2049143 pass 'Re: Nazwa i logo dla Pani Izabeli:'
+2026-09-05 10:09:30 QA bb:2048872 pass 'Odp: Uruchomienie prac przy logo:'
+2026-09-05 10:09:30 QA bb:2048761 pass 'Re: Faktura nr 662/2026'
+2026-09-05 10:09:35 counts people=28434 companies=1529 opp=3975
+2026-09-05 10:09:40 sitko delta people 28433→28434,opportunities 3974→3975 new opp=1 people=1 companies=0
+2026-09-05 10:09:40 sitko allow opp 'koszczynska.m@gmail.com · Logo · Nowe' src=OWOCNI_SORTOWNIA
+2026-09-05 10:09:40 sitko allow person koszczynska.m@gmail.com
+2026-09-05 10:09:40 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 10:09:40 marta@owocni.pl next offset 743 → 1108
+2026-09-05 10:09:40 paka marta@owocni.pl offset=1108 limit=25
+marta@owocni.pl: BB window offset=1108 fetch=400 rows=373 target_append=25
+  scanned 25/373 appended=0 last=skip_other_channel
+APPEND bb:2048720 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Filipa:'
+  scanned 50/373 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/373 appended=1 last=skip_other_channel
+APPEND bb:2048464 → marta@owocni.pl/BB Archive 'Strona dla Pani Pauliny:'
+  scanned 100/373 appended=2 last=skip_other_channel
+APPEND bb:2048291 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem - jutro 15:00 czasu polskiego'
+  scanned 125/373 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2048017 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem dla Pana Marcina:'
+  scanned 150/373 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2047907 → marta@owocni.pl/BB Archive 'Rozmowa z Ewą - dziś o 13:00'
+APPEND bb:2047854 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Piotra:'
+APPEND bb:2047844 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem dla Pani Patrycji:'
+APPEND bb:2047839 → marta@owocni.pl/BB Archive 'Re: Fakturaproforma nr 5966'
+  scanned 175/373 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:2047638 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo Bolesław'
+APPEND bb:2047545 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektu &gt; fakturaproforma nr 5879'
+  scanned 200/373 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2047424 → marta@owocni.pl/BB Archive 'Re: Dodatkowe landingi na stronie:'
+  scanned 225/373 appended=11 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+  scanned 250/373 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2046534 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem - piątek'
+APPEND bb:2046485 → marta@owocni.pl/BB Archive 'Re: Re: Re: Funkcjonalność sklepu'
+  scanned 275/373 appended=13 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 300/373 appended=13 last=skip_other_channel
+APPEND bb:2046226 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem - 9 kwietnia:'
+  scanned 325/373 appended=14 last=skip_parent_not_in_twenty
+  scanned 350/373 appended=14 last=skip_parent_not_in_twenty
+APPEND bb:2045878 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem:'
+appended=15 skipped_seen=358 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T083704Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 10:37:04 paka done appended=15 rows=373 scanned=373 window_done=True skip={'skip_parent_not_in_twenty': 243, 'skip_other_channel': 104, 'skip_in_twenty': 6, 'skip_no_parent': 5}
+2026-09-05 10:37:04 Email Sync wait 600s for 15 APPEND
+2026-09-05 10:47:30 Email Sync extra wait 600s for 15 not ready
+2026-09-05 10:57:55 QA bb:2048720 missing 'Re: Projekt logo dla Pana Filipa:'
+2026-09-05 10:57:55 QA sync_warn bb:2048720 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2048464 missing 'Strona dla Pani Pauliny:'
+2026-09-05 10:57:55 QA sync_warn bb:2048464 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2048291 missing 'Re: Rozmowa z owocnym ekspertem - jutro 15:00 czas'
+2026-09-05 10:57:55 QA sync_warn bb:2048291 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2048017 missing 'Re: Strona ze sklepem dla Pana Marcina:'
+2026-09-05 10:57:55 QA sync_warn bb:2048017 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047907 missing 'Rozmowa z Ewą - dziś o 13:00'
+2026-09-05 10:57:55 QA sync_warn bb:2047907 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047854 missing 'Re: Projekt logo dla Pana Piotra:'
+2026-09-05 10:57:55 QA sync_warn bb:2047854 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047844 missing 'Re: Strona ze sklepem dla Pani Patrycji:'
+2026-09-05 10:57:55 QA sync_warn bb:2047844 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047839 missing 'Re: Fakturaproforma nr 5966'
+2026-09-05 10:57:55 QA sync_warn bb:2047839 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047638 missing 'Re: Nazwa i logo Bolesław'
+2026-09-05 10:57:55 QA sync_warn bb:2047638 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047545 missing 'Re: Uruchomienie projektu &gt; fakturaproforma nr '
+2026-09-05 10:57:55 QA sync_warn bb:2047545 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2047424 missing 'Re: Dodatkowe landingi na stronie:'
+2026-09-05 10:57:55 QA sync_warn bb:2047424 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2046534 missing 'Re: Rozmowa z owocnym ekspertem - piątek'
+2026-09-05 10:57:55 QA sync_warn bb:2046534 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2046485 missing 'Re: Re: Re: Funkcjonalność sklepu'
+2026-09-05 10:57:55 QA sync_warn bb:2046485 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2046226 missing 'Re: Rozmowa z owocnym ekspertem - 9 kwietnia:'
+2026-09-05 10:57:55 QA sync_warn bb:2046226 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:57:55 QA bb:2045878 missing 'RE: Rozmowa z owocnym ekspertem:'
+2026-09-05 10:57:55 QA sync_warn bb:2045878 — not in Twenty yet, IMAP has it. continue
+2026-09-05 10:58:00 counts people=28435 companies=1529 opp=3976
+2026-09-05 10:58:05 sitko delta people 28434→28435,opportunities 3975→3976 new opp=1 people=1 companies=0
+2026-09-05 10:58:05 sitko allow opp 'elzbietakaszewska.dietetyk@gmail.com · Strona · Nowe · Ekspe' src=OWOCNI_SORTOWNIA
+2026-09-05 10:58:05 sitko allow person elzbietakaszewskadietetyk@gmail.com
+2026-09-05 10:58:05 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 10:58:05 marta@owocni.pl next offset 1108 → 1481
+2026-09-05 10:58:05 paka marta@owocni.pl offset=1481 limit=25
+marta@owocni.pl: BB window offset=1481 fetch=400 rows=366 target_append=25
+  scanned 25/366 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2045768 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+  scanned 50/366 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/366 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2045521 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektu logo &gt; fakturaproforma nr 5914'
+APPEND bb:2045455 → marta@owocni.pl/BB Archive 'Re: Dodatkowy zestaw plików:'
+APPEND bb:2045357 → marta@owocni.pl/BB Archive 'Re: Logo dla Pani Magdy- draft umowy:'
+  scanned 100/366 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2045250 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+  scanned 125/366 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2045020 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Szymona:'
+  scanned 150/366 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2044697 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Leszka:'
+APPEND bb:2044696 → marta@owocni.pl/BB Archive 'Uruchomienie projektu logo:'
+APPEND bb:2044672 → marta@owocni.pl/BB Archive 'Uruchomienie prac przy logo:'
+APPEND bb:2044650 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Maksymiliana:'
+  scanned 175/366 appended=10 last=skip_parent_not_in_twenty
+  scanned 200/366 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2044094 → marta@owocni.pl/BB Archive 'Re: Strona internetowa ze sklepem - etap II'
+APPEND bb:2044085 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+  scanned 225/366 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2043994 → marta@owocni.pl/BB Archive 'Nazwa i logo dla Pana Artura:'
+APPEND bb:2043983 → marta@owocni.pl/BB Archive 'Fwd: Rozmowa z owocnym ekspertem:'
+APPEND bb:2043900 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+APPEND bb:2043845 → marta@owocni.pl/BB Archive 'Re: Logo dla Pani Karoliny:'
+  scanned 250/366 appended=16 last=skip_other_channel
+  scanned 275/366 appended=16 last=skip_parent_not_in_twenty
+APPEND bb:2043546 → marta@owocni.pl/BB Archive 'Re: Dodatkowe landingi na stronie:'
+Twenty REST 429 — sleep 65.0s
+  scanned 300/366 appended=17 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2043408 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pana Michała:'
+APPEND bb:2043343 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Martyny:'
+APPEND bb:2043329 → marta@owocni.pl/BB Archive 'RE: Uruchomienie prac:'
+APPEND bb:2043295 → marta@owocni.pl/BB Archive 'Re: Konsultacja w sprawie strony:'
+APPEND bb:2043179 → marta@owocni.pl/BB Archive 'Re: Podpisanie umowy:'
+  scanned 350/366 appended=22 last=skip_parent_not_in_twenty
+APPEND bb:2043022 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Mariusza'
+appended=23 skipped_seen=343 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T092528Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 11:25:28 paka done appended=23 rows=366 scanned=366 window_done=True skip={'skip_parent_not_in_twenty': 222, 'skip_other_channel': 113, 'skip_on_imap': 1, 'skip_no_parent': 5, 'skip_in_twenty': 2}
+2026-09-05 11:25:28 Email Sync wait 600s for 23 APPEND
+2026-09-05 11:36:07 Email Sync extra wait 600s for 10 not ready
+2026-09-05 11:46:25 QA bb:2045768 pass 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 11:46:25 QA bb:2045521 direction_warn 'Re: Uruchomienie projektu logo &gt; fakturaproform'
+2026-09-05 11:46:25 QA direction_warn bb:2045521 — in Twenty, direction still empty. continue
+2026-09-05 11:46:25 QA bb:2045455 direction_warn 'Re: Dodatkowy zestaw plików:'
+2026-09-05 11:46:25 QA direction_warn bb:2045455 — in Twenty, direction still empty. continue
+2026-09-05 11:46:25 QA bb:2045357 direction_warn 'Re: Logo dla Pani Magdy- draft umowy:'
+2026-09-05 11:46:25 QA direction_warn bb:2045357 — in Twenty, direction still empty. continue
+2026-09-05 11:46:25 QA bb:2045250 direction_warn 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 11:46:25 QA direction_warn bb:2045250 — in Twenty, direction still empty. continue
+2026-09-05 11:46:25 QA bb:2045020 pass 'Re: Strona internetowa dla Pana Szymona:'
+2026-09-05 11:46:25 QA bb:2044697 stitch_warn 'Projekt logo dla Pana Leszka:'
+2026-09-05 11:46:25 QA stitch_warn bb:2044697 — mail in Twenty (date/OUT OK), new thread. continue
+2026-09-05 11:46:25 QA bb:2044696 pass 'Uruchomienie projektu logo:'
+2026-09-05 11:46:25 QA bb:2044672 pass 'Uruchomienie prac przy logo:'
+2026-09-05 11:46:25 QA bb:2044650 pass 'Re: Projekt logo dla Pana Maksymiliana:'
+2026-09-05 11:46:25 QA bb:2044094 pass 'Re: Strona internetowa ze sklepem - etap II'
+2026-09-05 11:46:25 QA bb:2044085 pass 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 11:46:25 QA bb:2043994 pass 'Nazwa i logo dla Pana Artura:'
+2026-09-05 11:46:25 QA bb:2043983 pass 'Fwd: Rozmowa z owocnym ekspertem:'
+2026-09-05 11:46:25 QA bb:2043900 pass 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 11:46:25 QA bb:2043845 pass 'Re: Logo dla Pani Karoliny:'
+2026-09-05 11:46:25 QA bb:2043546 pass 'Re: Dodatkowe landingi na stronie:'
+2026-09-05 11:46:25 QA bb:2043408 missing 'Re: Nazwa i logo dla Pana Michała:'
+2026-09-05 11:46:25 QA sync_warn bb:2043408 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:25 QA bb:2043343 missing 'Re: Projekt logo dla Pani Martyny:'
+2026-09-05 11:46:25 QA sync_warn bb:2043343 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:25 QA bb:2043329 missing 'RE: Uruchomienie prac:'
+2026-09-05 11:46:25 QA sync_warn bb:2043329 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:25 QA bb:2043295 missing 'Re: Konsultacja w sprawie strony:'
+2026-09-05 11:46:25 QA sync_warn bb:2043295 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:25 QA bb:2043179 missing 'Re: Podpisanie umowy:'
+2026-09-05 11:46:25 QA sync_warn bb:2043179 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:25 QA bb:2043022 missing 'Re: Projekt logo dla Pana Mariusza'
+2026-09-05 11:46:25 QA sync_warn bb:2043022 — not in Twenty yet, IMAP has it. continue
+2026-09-05 11:46:30 counts people=28435 companies=1529 opp=3976
+2026-09-05 11:46:30 marta@owocni.pl next offset 1481 → 1847
+2026-09-05 11:46:30 paka marta@owocni.pl offset=1847 limit=25
+marta@owocni.pl: BB window offset=1847 fetch=400 rows=372 target_append=25
+  scanned 25/372 appended=0 last=skip_other_channel
+APPEND bb:2042868 → marta@owocni.pl/BB Archive 'Re: Prośba o odpowiedź'
+  scanned 50/372 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2042621 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Tomasza:'
+APPEND bb:2042423 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Tomasza:'
+APPEND bb:2042412 → marta@owocni.pl/BB Archive 'Uruchomienie logo; strona internetowa po logo:'
+  scanned 75/372 appended=4 last=skip_parent_not_in_twenty
+  scanned 100/372 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2041654 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Mai:'
+  scanned 125/372 appended=5 last=skip_other_channel
+APPEND bb:2041381 → marta@owocni.pl/BB Archive 'Re: Re: Koniec polisy na lokal ul. Kościuszki'
+APPEND bb:2041012 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pani Karoliny:'
+  scanned 150/372 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2040536 → marta@owocni.pl/BB Archive 'Re: Projekt grafiki na opakowania:'
+  scanned 175/372 appended=8 last=skip_other_channel
+  scanned 200/372 appended=8 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2040008 → marta@owocni.pl/BB Archive 'Re: Wojtek (Recens)'
+APPEND bb:2040007 → marta@owocni.pl/BB Archive 'Poprawki RODO na stronie oraz brak zakładki „O nas”'
+APPEND bb:2039991 → marta@owocni.pl/BB Archive 'Re: Professional Logo & Brand Identity Offer for Genlocked'
+APPEND bb:2039986 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pani Pauliny:'
+  scanned 225/372 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2039513 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Karola:'
+APPEND bb:2039341 → marta@owocni.pl/BB Archive 'Logo dla Pana Michała:'
+  scanned 250/372 appended=14 last=skip_parent_not_in_twenty
+APPEND bb:2039081 → marta@owocni.pl/BB Archive 'Odp: Pd: Projekt logo dla Pani Agaty:'
+APPEND bb:2039047 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Piotra:'
+  scanned 300/372 appended=16 last=skip_other_channel
+  scanned 325/372 appended=16 last=skip_parent_not_in_twenty
+APPEND bb:2038752 → marta@owocni.pl/BB Archive 'RE: Grafika na pudełko:'
+APPEND bb:2038648 → marta@owocni.pl/BB Archive 'Re: Ulotki i banery:'
+APPEND bb:2038647 → marta@owocni.pl/BB Archive 'RE: Grafika na pudełko:'
+APPEND bb:2038564 → marta@owocni.pl/BB Archive 'Re: Zapytanie o współpracę'
+APPEND bb:2038563 → marta@owocni.pl/BB Archive 'Fwd: Reklamacja - brak możliwości edycji ułożenia produktów i kategorii w WooCom'
+APPEND bb:2038548 → marta@owocni.pl/BB Archive 'Re: Strona dla Pana Rafała:'
+APPEND bb:2038494 → marta@owocni.pl/BB Archive 'Nazwa i logo dla Pani Magdy:'
+  scanned 350/372 appended=23 last=skip_parent_not_in_twenty
+APPEND bb:2038461 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pani Jagienki:'
+appended=24 skipped_seen=348 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T101247Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 12:12:47 paka done appended=24 rows=372 scanned=372 window_done=True skip={'skip_other_channel': 109, 'skip_on_imap': 2, 'skip_parent_not_in_twenty': 233, 'skip_no_parent': 3, 'skip_in_twenty': 1}
+2026-09-05 12:12:47 Email Sync wait 600s for 24 APPEND
+2026-09-05 12:24:29 Email Sync extra wait 600s for 1 not ready
+2026-09-05 12:34:30 QA bb:2042868 pass 'Re: Prośba o odpowiedź'
+2026-09-05 12:34:30 QA bb:2042621 pass 'Re: Nazwa dla Pana Tomasza:'
+2026-09-05 12:34:30 QA bb:2042423 pass 'Re: Nazwa dla Pana Tomasza:'
+2026-09-05 12:34:30 QA bb:2042412 pass 'Uruchomienie logo; strona internetowa po logo:'
+2026-09-05 12:34:30 QA bb:2041654 pass 'Re: Projekt logo dla Pani Mai:'
+2026-09-05 12:34:30 QA bb:2041381 pass 'Re: Re: Koniec polisy na lokal ul. Kościuszki'
+2026-09-05 12:34:30 QA bb:2041012 pass 'Re: Strona internetowa dla Pani Karoliny:'
+2026-09-05 12:34:30 QA bb:2040536 pass 'Re: Projekt grafiki na opakowania:'
+2026-09-05 12:34:30 QA bb:2040008 pass 'Re: Wojtek (Recens)'
+2026-09-05 12:34:30 QA bb:2040007 pass 'Poprawki RODO na stronie oraz brak zakładki „O nas'
+2026-09-05 12:34:30 QA bb:2039991 pass 'Re: Professional Logo & Brand Identity Offer for G'
+2026-09-05 12:34:30 QA bb:2039986 pass 'Re: Nazwa i logo dla Pani Pauliny:'
+2026-09-05 12:34:30 QA bb:2039513 pass 'Re: Projekt logo dla Pana Karola:'
+2026-09-05 12:34:30 QA bb:2039341 pass 'Logo dla Pana Michała:'
+2026-09-05 12:34:30 QA bb:2039081 pass 'Odp: Pd: Projekt logo dla Pani Agaty:'
+2026-09-05 12:34:30 QA bb:2039047 direction_warn 'Re: Projekt logo dla Pana Piotra:'
+2026-09-05 12:34:30 QA direction_warn bb:2039047 — in Twenty, direction still empty. continue
+2026-09-05 12:34:30 QA bb:2038752 pass 'RE: Grafika na pudełko:'
+2026-09-05 12:34:30 QA bb:2038648 pass 'Re: Ulotki i banery:'
+2026-09-05 12:34:30 QA bb:2038647 pass 'RE: Grafika na pudełko:'
+2026-09-05 12:34:30 QA bb:2038564 pass 'Re: Zapytanie o współpracę'
+2026-09-05 12:34:30 QA bb:2038563 pass 'Fwd: Reklamacja - brak możliwości edycji ułożenia '
+2026-09-05 12:34:30 QA bb:2038548 pass 'Re: Strona dla Pana Rafała:'
+2026-09-05 12:34:30 QA bb:2038494 pass 'Nazwa i logo dla Pani Magdy:'
+2026-09-05 12:34:30 QA bb:2038461 pass 'Re: Nazwa dla Pani Jagienki:'
+2026-09-05 12:34:35 counts people=28436 companies=1529 opp=3977
+2026-09-05 12:34:40 sitko delta people 28435→28436,opportunities 3976→3977 new opp=1 people=1 companies=0
+2026-09-05 12:34:40 sitko allow opp 'angel2210rsi@gmail.com · Copywriting · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-05 12:34:40 sitko allow person angel2210rsi@gmail.com
+2026-09-05 12:34:40 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 12:34:40 marta@owocni.pl next offset 1847 → 2219
+2026-09-05 12:34:40 paka marta@owocni.pl offset=2219 limit=25
+marta@owocni.pl: BB window offset=2219 fetch=400 rows=380 target_append=25
+  scanned 25/380 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/380 appended=0 last=skip_other_channel
+  scanned 75/380 appended=0 last=skip_other_channel
+APPEND bb:2037950 → marta@owocni.pl/BB Archive 'RE: Zapytanie ofertowe - logo'
+  scanned 100/380 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2037938 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Jarosława:'
+APPEND bb:2037867 → marta@owocni.pl/BB Archive 'RE: Umowy do podpisu:'
+  scanned 125/380 appended=3 last=skip_other_channel
+APPEND bb:2037670 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem dla Pana Wojciecha:'
+  scanned 150/380 appended=4 last=skip_other_channel
+APPEND bb:2037584 → marta@owocni.pl/BB Archive 'Re: Draft umowy dla Pana Jakuba:'
+APPEND bb:2037583 → marta@owocni.pl/BB Archive 'Fwd: Dodanie do projektu prostego landinga - waitlist'
+APPEND bb:2037578 → marta@owocni.pl/BB Archive 'Re: Yosani'
+APPEND bb:2037527 → marta@owocni.pl/BB Archive 'Re: Logo dla Pani Violetty:'
+  scanned 175/380 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:2037442 → marta@owocni.pl/BB Archive 'Re: Przebieg prac przy stronie:'
+  scanned 200/380 appended=9 last=skip_parent_not_in_twenty
+  scanned 225/380 appended=9 last=skip_other_channel
+APPEND bb:2036970 → marta@owocni.pl/BB Archive 'Re: Samo logo:'
+APPEND bb:2036951 → marta@owocni.pl/BB Archive 'Strona internetowa dla Pani Weroniki:'
+APPEND bb:2036944 → marta@owocni.pl/BB Archive 'Re: Yosani'
+  scanned 250/380 appended=12 last=skip_parent_not_in_twenty
+  scanned 275/380 appended=12 last=skip_other_channel
+APPEND bb:2036746 → marta@owocni.pl/BB Archive 'RE: Strona ze sklepem dla Pani Marzeny:'
+  scanned 300/380 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2036469 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pana Macieja:'
+APPEND bb:2036443 → marta@owocni.pl/BB Archive 'Re: Re: podpisana umowa przeniesienia praw autorskich'
+  scanned 325/380 appended=15 last=skip_other_channel
+APPEND bb:2036317 → marta@owocni.pl/BB Archive 'ODP: Owocny sklep:'
+  scanned 350/380 appended=16 last=skip_parent_not_in_twenty
+APPEND bb:2036187 → marta@owocni.pl/BB Archive 'RE: Zapytanie o ofertę CMS – do 22.10.2025'
+  scanned 375/380 appended=17 last=skip_other_channel
+appended=17 skipped_seen=363 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T110457Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 13:04:57 paka done appended=17 rows=380 scanned=380 window_done=True skip={'skip_no_parent': 5, 'skip_in_twenty': 4, 'skip_other_channel': 137, 'skip_parent_not_in_twenty': 217}
+2026-09-05 13:04:57 Email Sync wait 600s for 17 APPEND
+Twenty REST 429 — sleep 65.0s
+2026-09-05 13:16:33 Email Sync extra wait 600s for 1 not ready
+2026-09-05 13:26:35 QA bb:2037950 pass 'RE: Zapytanie ofertowe - logo'
+2026-09-05 13:26:35 QA bb:2037938 pass 'Re: Strona internetowa dla Pana Jarosława:'
+2026-09-05 13:26:35 QA bb:2037867 pass 'RE: Umowy do podpisu:'
+2026-09-05 13:26:35 QA bb:2037670 direction_warn 'Re: Strona ze sklepem dla Pana Wojciecha:'
+2026-09-05 13:26:35 QA direction_warn bb:2037670 — in Twenty, direction still empty. continue
+2026-09-05 13:26:35 QA bb:2037584 pass 'Re: Draft umowy dla Pana Jakuba:'
+2026-09-05 13:26:35 QA bb:2037583 pass 'Fwd: Dodanie do projektu prostego landinga - waitl'
+2026-09-05 13:26:35 QA bb:2037578 pass 'Re: Yosani'
+2026-09-05 13:26:35 QA bb:2037527 pass 'Re: Logo dla Pani Violetty:'
+2026-09-05 13:26:35 QA bb:2037442 pass 'Re: Przebieg prac przy stronie:'
+2026-09-05 13:26:35 QA bb:2036970 pass 'Re: Samo logo:'
+2026-09-05 13:26:35 QA bb:2036951 pass 'Strona internetowa dla Pani Weroniki:'
+2026-09-05 13:26:35 QA bb:2036944 pass 'Re: Yosani'
+2026-09-05 13:26:35 QA bb:2036746 pass 'RE: Strona ze sklepem dla Pani Marzeny:'
+2026-09-05 13:26:35 QA bb:2036469 pass 'Re: Nazwa i logo dla Pana Macieja:'
+2026-09-05 13:26:35 QA bb:2036443 pass 'Re: Re: podpisana umowa przeniesienia praw autorsk'
+2026-09-05 13:26:35 QA bb:2036317 pass 'ODP: Owocny sklep:'
+2026-09-05 13:26:35 QA bb:2036187 pass 'RE: Zapytanie o ofertę CMS – do 22.10.2025'
+2026-09-05 13:26:40 counts people=28437 companies=1529 opp=3978
+2026-09-05 13:26:45 sitko delta people 28436→28437,opportunities 3977→3978 new opp=1 people=1 companies=0
+2026-09-05 13:26:45 sitko allow opp 'ksenia.buchholz@op.pl · Logo · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-05 13:26:45 sitko allow person ksenia.buchholz@op.pl
+2026-09-05 13:26:45 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 13:26:45 marta@owocni.pl next offset 2219 → 2599
+2026-09-05 13:26:45 paka marta@owocni.pl offset=2599 limit=25
+marta@owocni.pl: BB window offset=2599 fetch=400 rows=355 target_append=25
+  scanned 25/355 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/355 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/355 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2035245 → marta@owocni.pl/BB Archive 'Re: Dane do faktury:'
+APPEND bb:2035104 → marta@owocni.pl/BB Archive 'Odp: Dane do umowy i faktury:'
+APPEND bb:2035076 → marta@owocni.pl/BB Archive 'Re: Podpisanie umowy:'
+  scanned 125/355 appended=3 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2034865 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Arkadiusza:'
+APPEND bb:2034814 → marta@owocni.pl/BB Archive 'ODP: Projekt logo dla Pani Klaudii:'
+  scanned 150/355 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2034651 → marta@owocni.pl/BB Archive 'RE: Fwd: Witryna: dlafirm-plus.pl (BARBETTA MIKOŁAJ KAZUBEK)'
+APPEND bb:2034641 → marta@owocni.pl/BB Archive 'RE: Fwd: Witryna: dlafirm-plus.pl (BARBETTA MIKOŁAJ KAZUBEK)'
+APPEND bb:2034640 → marta@owocni.pl/BB Archive 'Zaciąganie danych z Esti:'
+  scanned 175/355 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:2034537 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 5689'
+APPEND bb:2034503 → marta@owocni.pl/BB Archive 'Re: Nowe zlecenie logo'
+APPEND bb:2034464 → marta@owocni.pl/BB Archive 'propozycja logo'
+  scanned 200/355 appended=11 last=skip_other_channel
+APPEND bb:2034266 → marta@owocni.pl/BB Archive 'Odp: Dane do umowy:'
+  scanned 225/355 appended=12 last=skip_other_channel
+APPEND bb:2034075 → marta@owocni.pl/BB Archive 'Odp: Dane do umowy:'
+  scanned 250/355 appended=13 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2033852 → marta@owocni.pl/BB Archive 'Odp: Logo dla Pana Michała – motyw kropli wody 💧'
+  scanned 275/355 appended=14 last=skip_parent_not_in_twenty
+  scanned 300/355 appended=14 last=skip_other_channel
+APPEND bb:2033087 → marta@owocni.pl/BB Archive 'Dostęp do panelu edycji strony'
+APPEND bb:2033085 → marta@owocni.pl/BB Archive 'Re: Logo dla usług sprzątania:'
+APPEND bb:2033072 → marta@owocni.pl/BB Archive 'Re: Wspołpraca'
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2032975 → marta@owocni.pl/BB Archive 'Re: Logo dla usług sprzątania:'
+APPEND bb:2032958 → marta@owocni.pl/BB Archive 'Re: Funkcjonalność sklepu'
+  scanned 325/355 appended=19 last=skip_parent_not_in_twenty
+  scanned 350/355 appended=19 last=skip_parent_not_in_twenty
+appended=19 skipped_seen=336 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T115354Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 13:53:54 paka done appended=19 rows=355 scanned=355 window_done=True skip={'skip_no_parent': 8, 'skip_parent_not_in_twenty': 216, 'skip_other_channel': 109, 'skip_in_twenty': 3}
+2026-09-05 13:53:54 Email Sync wait 600s for 19 APPEND
+2026-09-05 14:04:27 Email Sync extra wait 600s for 6 not ready
+2026-09-05 14:14:37 QA bb:2035245 pass 'Re: Dane do faktury:'
+2026-09-05 14:14:37 QA bb:2035104 pass 'Odp: Dane do umowy i faktury:'
+2026-09-05 14:14:37 QA bb:2035076 pass 'Re: Podpisanie umowy:'
+2026-09-05 14:14:37 QA bb:2034865 pass 'Re: Projekt logo dla Pana Arkadiusza:'
+2026-09-05 14:14:37 QA bb:2034814 pass 'ODP: Projekt logo dla Pani Klaudii:'
+2026-09-05 14:14:37 QA bb:2034651 pass 'RE: Fwd: Witryna: dlafirm-plus.pl (BARBETTA MIKOŁA'
+2026-09-05 14:14:37 QA bb:2034641 pass 'RE: Fwd: Witryna: dlafirm-plus.pl (BARBETTA MIKOŁA'
+2026-09-05 14:14:37 QA bb:2034640 pass 'Zaciąganie danych z Esti:'
+2026-09-05 14:14:37 QA bb:2034537 pass 'Re: Finalizacja projektu &gt; fakturaproforma nr 5'
+2026-09-05 14:14:37 QA bb:2034503 pass 'Re: Nowe zlecenie logo'
+2026-09-05 14:14:37 QA bb:2034464 pass 'propozycja logo'
+2026-09-05 14:14:37 QA bb:2034266 pass 'Odp: Dane do umowy:'
+2026-09-05 14:14:37 QA bb:2034075 pass 'Odp: Dane do umowy:'
+2026-09-05 14:14:37 QA bb:2033852 missing 'Odp: Logo dla Pana Michała – motyw kropli wody 💧'
+2026-09-05 14:14:37 QA sync_warn bb:2033852 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:37 QA bb:2033087 missing 'Dostęp do panelu edycji strony'
+2026-09-05 14:14:37 QA sync_warn bb:2033087 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:37 QA bb:2033085 missing 'Re: Logo dla usług sprzątania:'
+2026-09-05 14:14:37 QA sync_warn bb:2033085 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:37 QA bb:2033072 missing 'Re: Wspołpraca'
+2026-09-05 14:14:37 QA sync_warn bb:2033072 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:37 QA bb:2032975 missing 'Re: Logo dla usług sprzątania:'
+2026-09-05 14:14:37 QA sync_warn bb:2032975 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:37 QA bb:2032958 missing 'Re: Funkcjonalność sklepu'
+2026-09-05 14:14:37 QA sync_warn bb:2032958 — not in Twenty yet, IMAP has it. continue
+2026-09-05 14:14:42 counts people=28438 companies=1529 opp=3979
+2026-09-05 14:14:47 sitko delta people 28437→28438,opportunities 3978→3979 new opp=1 people=1 companies=0
+2026-09-05 14:14:47 sitko allow opp 'kontaktjjcestates@gmail.com · Logo · Nowe · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-05 14:14:47 sitko allow person kontaktjjcestates@gmail.com
+2026-09-05 14:14:47 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 14:14:47 marta@owocni.pl next offset 2599 → 2954
+2026-09-05 14:14:47 paka marta@owocni.pl offset=2954 limit=25
+marta@owocni.pl: BB window offset=2954 fetch=400 rows=370 target_append=25
+  scanned 25/370 appended=0 last=skip_other_channel
+  scanned 50/370 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2032519 → marta@owocni.pl/BB Archive 'Dane do faktury:'
+APPEND bb:2032510 → marta@owocni.pl/BB Archive 'Re: Nowa odsłona Financial Matter – porozmawiajmy o kierunku'
+APPEND bb:2032477 → marta@owocni.pl/BB Archive 'Odp: Strona internetowa dla Pani Katarzyny:'
+APPEND bb:2032384 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Iwony:'
+  scanned 75/370 appended=4 last=skip_other_channel
+APPEND bb:2032261 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Małgorzaty:'
+  scanned 100/370 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2032149 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Pawła:'
+  scanned 125/370 appended=6 last=skip_other_channel
+APPEND bb:2031896 → marta@owocni.pl/BB Archive 'Odp: Draft umowy dotyczącej projektu logo dla Pana Marka:'
+  scanned 150/370 appended=7 last=skip_in_twenty
+APPEND bb:2031735 → marta@owocni.pl/BB Archive 'Draft umowy:'
+  scanned 175/370 appended=8 last=skip_other_channel
+  scanned 200/370 appended=8 last=skip_other_channel
+APPEND bb:2031503 → marta@owocni.pl/BB Archive 'Re: Uruchomienie prac przy stronie:'
+  scanned 225/370 appended=9 last=skip_other_channel
+APPEND bb:2031248 → marta@owocni.pl/BB Archive 'Re: Re: Re: Strona internetowa dla Pana Mariusza:'
+APPEND bb:2031235 → marta@owocni.pl/BB Archive 'Re: Uruchomienie prac - podpis na umowie'
+APPEND bb:2031227 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pani Martyny:'
+  scanned 250/370 appended=12 last=skip_parent_not_in_twenty
+  scanned 275/370 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2030935 → marta@owocni.pl/BB Archive 'Re: Logo dla Pani Agi:'
+  scanned 300/370 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2030844 → marta@owocni.pl/BB Archive 'Re: Uruchomienie prac przy logo:'
+  scanned 325/370 appended=14 last=skip_parent_not_in_twenty
+APPEND bb:2030781 → marta@owocni.pl/BB Archive 'Owocna opieka nad stroną'
+APPEND bb:2030645 → marta@owocni.pl/BB Archive 'Uruchomienie projektu logo:'
+APPEND bb:2030644 → marta@owocni.pl/BB Archive 'Re: Draft umowy:'
+  scanned 350/370 appended=17 last=skip_parent_not_in_twenty
+appended=17 skipped_seen=353 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T123947Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 14:39:47 paka done appended=17 rows=370 scanned=370 window_done=True skip={'skip_parent_not_in_twenty': 210, 'skip_on_imap': 1, 'skip_other_channel': 131, 'skip_no_parent': 4, 'skip_in_twenty': 7}
+2026-09-05 14:39:47 Email Sync wait 600s for 17 APPEND
+2026-09-05 14:50:15 Email Sync extra wait 600s for 17 not ready
+2026-09-05 15:00:45 QA bb:2032519 pass 'Dane do faktury:'
+2026-09-05 15:00:45 QA bb:2032510 pass 'Re: Nowa odsłona Financial Matter – porozmawiajmy '
+2026-09-05 15:00:45 QA bb:2032477 pass 'Odp: Strona internetowa dla Pani Katarzyny:'
+2026-09-05 15:00:45 QA bb:2032384 pass 'Odp: Projekt logo dla Pani Iwony:'
+2026-09-05 15:00:45 QA bb:2032261 pass 'Re: Projekt logo dla Pani Małgorzaty:'
+2026-09-05 15:00:45 QA bb:2032149 pass 'Re: Projekt logo dla Pana Pawła:'
+2026-09-05 15:00:45 QA bb:2031896 pass 'Odp: Draft umowy dotyczącej projektu logo dla Pana'
+2026-09-05 15:00:45 QA bb:2031735 pass 'Draft umowy:'
+2026-09-05 15:00:45 QA bb:2031503 pass 'Re: Uruchomienie prac przy stronie:'
+2026-09-05 15:00:45 QA bb:2031248 stitch_warn 'Re: Re: Re: Strona internetowa dla Pana Mariusza:'
+2026-09-05 15:00:45 QA stitch_warn bb:2031248 — mail in Twenty (date/OUT OK), new thread. continue
+2026-09-05 15:00:45 QA bb:2031235 pass 'Re: Uruchomienie prac - podpis na umowie'
+2026-09-05 15:00:45 QA bb:2031227 pass 'Re: Strona internetowa dla Pani Martyny:'
+2026-09-05 15:00:45 QA bb:2030935 direction_warn 'Re: Logo dla Pani Agi:'
+2026-09-05 15:00:45 QA direction_warn bb:2030935 — in Twenty, direction still empty. continue
+2026-09-05 15:00:45 QA bb:2030844 direction_warn 'Re: Uruchomienie prac przy logo:'
+2026-09-05 15:00:45 QA direction_warn bb:2030844 — in Twenty, direction still empty. continue
+2026-09-05 15:00:45 QA bb:2030781 pass 'Owocna opieka nad stroną'
+2026-09-05 15:00:45 QA bb:2030645 stitch_warn 'Uruchomienie projektu logo:'
+2026-09-05 15:00:45 QA stitch_warn bb:2030645 — mail in Twenty (date/OUT OK), new thread. continue
+2026-09-05 15:00:45 QA bb:2030644 pass 'Re: Draft umowy:'
+2026-09-05 15:00:50 counts people=28438 companies=1529 opp=3979
+2026-09-05 15:00:50 marta@owocni.pl next offset 2954 → 3324
+2026-09-05 15:00:50 paka marta@owocni.pl offset=3324 limit=25
+marta@owocni.pl: BB window offset=3324 fetch=400 rows=372 target_append=25
+  scanned 25/372 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2030478 → marta@owocni.pl/BB Archive 'Draft umowy:'
+  scanned 50/372 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/372 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2029996 → marta@owocni.pl/BB Archive 'RE: Dane do podpisania umowy:'
+APPEND bb:2029980 → marta@owocni.pl/BB Archive 'Dane do faktury:'
+  scanned 100/372 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2029844 → marta@owocni.pl/BB Archive 'Wojtek Tłumaczenie na j. niemiecki'
+  scanned 125/372 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2029821 → marta@owocni.pl/BB Archive 'Re: Zakończenie prac przy stronie internetowej:'
+APPEND bb:2029756 → marta@owocni.pl/BB Archive 'Re: Zakończenie prac przy stronie internetowej:'
+APPEND bb:2029744 → marta@owocni.pl/BB Archive 'Dodatkowe prace graficzne:'
+APPEND bb:2029741 → marta@owocni.pl/BB Archive 'Strona internetowa: etap II - prace graficzne:'
+  scanned 150/372 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:2029644 → marta@owocni.pl/BB Archive 'Re: Finalizacja poszukiwań sloganu &gt; fakturaproforma nr 5321'
+APPEND bb:2029596 → marta@owocni.pl/BB Archive 'Re: Jakie prace mielibyśmy wykonać?'
+APPEND bb:2029449 → marta@owocni.pl/BB Archive 'Re: Materiały do strony:'
+  scanned 175/372 appended=11 last=skip_parent_not_in_twenty
+  scanned 200/372 appended=11 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+  scanned 225/372 appended=11 last=skip_parent_not_in_twenty
+  scanned 250/372 appended=11 last=skip_other_channel
+  scanned 275/372 appended=11 last=skip_parent_not_in_twenty
+  scanned 300/372 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2028494 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Teletorium'
+  scanned 325/372 appended=12 last=skip_other_channel
+APPEND bb:2028402 → marta@owocni.pl/BB Archive 'Re: strona'
+APPEND bb:2028398 → marta@owocni.pl/BB Archive 'Draft umowy'
+APPEND bb:2028291 → marta@owocni.pl/BB Archive 'Odp: Draft umowy na logo:'
+  scanned 350/372 appended=15 last=skip_other_channel
+APPEND bb:2028111 → marta@owocni.pl/BB Archive 'Odp: Draft umowy na logo:'
+appended=16 skipped_seen=356 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T132808Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 15:28:08 paka done appended=16 rows=372 scanned=372 window_done=True skip={'skip_parent_not_in_twenty': 219, 'skip_no_parent': 5, 'skip_in_twenty': 3, 'skip_other_channel': 129}
+2026-09-05 15:28:08 Email Sync wait 600s for 16 APPEND
+2026-09-05 15:38:35 Email Sync extra wait 600s for 16 not ready
+2026-09-05 15:49:02 QA bb:2030478 missing 'Draft umowy:'
+2026-09-05 15:49:02 QA sync_warn bb:2030478 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029996 missing 'RE: Dane do podpisania umowy:'
+2026-09-05 15:49:02 QA sync_warn bb:2029996 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029980 missing 'Dane do faktury:'
+2026-09-05 15:49:02 QA sync_warn bb:2029980 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029844 missing 'Wojtek Tłumaczenie na j. niemiecki'
+2026-09-05 15:49:02 QA sync_warn bb:2029844 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029821 missing 'Re: Zakończenie prac przy stronie internetowej:'
+2026-09-05 15:49:02 QA sync_warn bb:2029821 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029756 missing 'Re: Zakończenie prac przy stronie internetowej:'
+2026-09-05 15:49:02 QA sync_warn bb:2029756 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029744 missing 'Dodatkowe prace graficzne:'
+2026-09-05 15:49:02 QA sync_warn bb:2029744 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029741 missing 'Strona internetowa: etap II - prace graficzne:'
+2026-09-05 15:49:02 QA sync_warn bb:2029741 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029644 missing 'Re: Finalizacja poszukiwań sloganu &gt; fakturapro'
+2026-09-05 15:49:02 QA sync_warn bb:2029644 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029596 missing 'Re: Jakie prace mielibyśmy wykonać?'
+2026-09-05 15:49:02 QA sync_warn bb:2029596 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2029449 missing 'Re: Materiały do strony:'
+2026-09-05 15:49:02 QA sync_warn bb:2029449 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2028494 missing 'Re: Nazwa dla Teletorium'
+2026-09-05 15:49:02 QA sync_warn bb:2028494 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2028402 missing 'Re: strona'
+2026-09-05 15:49:02 QA sync_warn bb:2028402 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2028398 missing 'Draft umowy'
+2026-09-05 15:49:02 QA sync_warn bb:2028398 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2028291 missing 'Odp: Draft umowy na logo:'
+2026-09-05 15:49:02 QA sync_warn bb:2028291 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:02 QA bb:2028111 missing 'Odp: Draft umowy na logo:'
+2026-09-05 15:49:02 QA sync_warn bb:2028111 — not in Twenty yet, IMAP has it. continue
+2026-09-05 15:49:07 counts people=28438 companies=1529 opp=3979
+2026-09-05 15:49:07 marta@owocni.pl next offset 3324 → 3696
+2026-09-05 15:49:07 paka marta@owocni.pl offset=3696 limit=25
+marta@owocni.pl: BB window offset=3696 fetch=400 rows=383 target_append=25
+  scanned 25/383 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2028030 → marta@owocni.pl/BB Archive 'Re: Strona internetowa ze sklepem:'
+  scanned 50/383 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/383 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2027773 → marta@owocni.pl/BB Archive 'Fwd: Strona Lecher Professional - uwagi do umowy:'
+APPEND bb:2027706 → marta@owocni.pl/BB Archive 'Re: Strona internetowa ze sklepem dla Pana Macieja:'
+APPEND bb:2027651 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+APPEND bb:2027647 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pani Violetty:'
+APPEND bb:2027616 → marta@owocni.pl/BB Archive 'Odp: Linki do social media i wizytówki Google:'
+  scanned 125/383 appended=6 last=skip_other_channel
+  scanned 150/383 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2027371 → marta@owocni.pl/BB Archive 'Fwd: Strona Lecher Professional - uwagi do umowy:'
+APPEND bb:2027346 → marta@owocni.pl/BB Archive 'Re: Księga znaku:'
+APPEND bb:2027324 → marta@owocni.pl/BB Archive 'Strona internetowa'
+  scanned 175/383 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2027240 → marta@owocni.pl/BB Archive 'Re: logo dla EDUTRUST'
+APPEND bb:2027139 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Anity:'
+  scanned 200/383 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2027061 → marta@owocni.pl/BB Archive 'Umowa na realizację logo:'
+  scanned 225/383 appended=12 last=skip_parent_not_in_twenty
+  scanned 250/383 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2026718 → marta@owocni.pl/BB Archive 'Odp: Domena i hosting:'
+APPEND bb:2026644 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem - wtorek 26 sierpnia 11:30'
+  scanned 275/383 appended=14 last=skip_parent_not_in_twenty
+  scanned 300/383 appended=14 last=skip_other_channel
+APPEND bb:2026390 → marta@owocni.pl/BB Archive 'WSPÓŁPRACA - OGÓLNY'
+  scanned 350/383 appended=15 last=skip_parent_not_in_twenty
+  scanned 375/383 appended=15 last=skip_other_channel
+appended=15 skipped_seen=368 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T141529Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 16:15:29 paka done appended=15 rows=383 scanned=383 window_done=True skip={'skip_parent_not_in_twenty': 219, 'skip_other_channel': 144, 'skip_on_imap': 1, 'skip_no_parent': 3, 'skip_in_twenty': 1}
+2026-09-05 16:15:29 Email Sync wait 600s for 15 APPEND
+2026-09-05 16:25:54 Email Sync extra wait 600s for 15 not ready
+2026-09-05 16:36:22 QA bb:2028030 missing 'Re: Strona internetowa ze sklepem:'
+2026-09-05 16:36:22 QA sync_warn bb:2028030 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027773 missing 'Fwd: Strona Lecher Professional - uwagi do umowy:'
+2026-09-05 16:36:22 QA sync_warn bb:2027773 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027706 missing 'Re: Strona internetowa ze sklepem dla Pana Macieja'
+2026-09-05 16:36:22 QA sync_warn bb:2027706 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027651 missing 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 16:36:22 QA sync_warn bb:2027651 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027647 missing 'Re: Nazwa i logo dla Pani Violetty:'
+2026-09-05 16:36:22 QA sync_warn bb:2027647 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027616 missing 'Odp: Linki do social media i wizytówki Google:'
+2026-09-05 16:36:22 QA sync_warn bb:2027616 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027371 missing 'Fwd: Strona Lecher Professional - uwagi do umowy:'
+2026-09-05 16:36:22 QA sync_warn bb:2027371 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027346 missing 'Re: Księga znaku:'
+2026-09-05 16:36:22 QA sync_warn bb:2027346 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027324 missing 'Strona internetowa'
+2026-09-05 16:36:22 QA sync_warn bb:2027324 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027240 missing 'Re: logo dla EDUTRUST'
+2026-09-05 16:36:22 QA sync_warn bb:2027240 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027139 missing 'Re: Projekt logo dla Pani Anity:'
+2026-09-05 16:36:22 QA sync_warn bb:2027139 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2027061 missing 'Umowa na realizację logo:'
+2026-09-05 16:36:22 QA sync_warn bb:2027061 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2026718 missing 'Odp: Domena i hosting:'
+2026-09-05 16:36:22 QA sync_warn bb:2026718 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2026644 missing 'RE: Rozmowa z owocnym ekspertem - wtorek 26 sierpn'
+2026-09-05 16:36:22 QA sync_warn bb:2026644 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:22 QA bb:2026390 missing 'WSPÓŁPRACA - OGÓLNY'
+2026-09-05 16:36:22 QA sync_warn bb:2026390 — not in Twenty yet, IMAP has it. continue
+2026-09-05 16:36:28 counts people=28438 companies=1529 opp=3979
+2026-09-05 16:36:28 marta@owocni.pl next offset 3696 → 4079
+2026-09-05 16:36:28 paka marta@owocni.pl offset=4079 limit=25
+marta@owocni.pl: BB window offset=4079 fetch=400 rows=372 target_append=25
+APPEND bb:2026115 → marta@owocni.pl/BB Archive 'Re: Re: Projekt logo dla Pana Mariusza:'
+  scanned 25/372 appended=1 last=skip_other_channel
+APPEND bb:2026004 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Sebastiana:'
+  scanned 50/372 appended=2 last=skip_other_channel
+  scanned 75/372 appended=2 last=skip_other_channel
+APPEND bb:2025666 → marta@owocni.pl/BB Archive 'OD: Rozmowa o stronie z owocnym ekspertem'
+  scanned 100/372 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2025512 → marta@owocni.pl/BB Archive 'Odp: Odp: Odp: Odp: Logo dla marki kosmetycznej:'
+  scanned 125/372 appended=4 last=skip_parent_not_in_twenty
+  scanned 150/372 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2024837 → marta@owocni.pl/BB Archive 'Re: Strona internetowa po logo:'
+  scanned 175/372 appended=5 last=skip_other_channel
+APPEND bb:2024653 → marta@owocni.pl/BB Archive 'Logo dla Pani Agnieszki:'
+APPEND bb:2024623 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 5517'
+  scanned 200/372 appended=7 last=skip_parent_not_in_twenty
+  scanned 225/372 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2024220 → marta@owocni.pl/BB Archive 'Strona KUNDO'
+  scanned 250/372 appended=8 last=skip_parent_not_in_twenty
+  scanned 275/372 appended=8 last=skip_other_channel
+APPEND bb:2023836 → marta@owocni.pl/BB Archive 'Re: Logo dla Pani Barbary:'
+APPEND bb:2023823 → marta@owocni.pl/BB Archive 'Re: Fwd: Strona Lecher Professional'
+APPEND bb:2023731 → marta@owocni.pl/BB Archive 'Tekst na baner reklamowy'
+  scanned 300/372 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2023686 → marta@owocni.pl/BB Archive 'RE: Projekt logo dla Kaspol:'
+  scanned 325/372 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:2023436 → marta@owocni.pl/BB Archive 'Odp: Strona internetowa – makieta, która rozjaśni wszystko 🌿'
+  scanned 350/372 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2023273 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Karola - draft umowy'
+appended=14 skipped_seen=358 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T150139Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 17:01:40 paka done appended=14 rows=372 scanned=372 window_done=True skip={'skip_parent_not_in_twenty': 218, 'skip_other_channel': 138, 'skip_in_twenty': 1, 'skip_no_parent': 1}
+2026-09-05 17:01:40 Email Sync wait 600s for 14 APPEND
+2026-09-05 17:12:03 Email Sync extra wait 600s for 14 not ready
+2026-09-05 17:22:27 QA bb:2026115 missing 'Re: Re: Projekt logo dla Pana Mariusza:'
+2026-09-05 17:22:27 QA sync_warn bb:2026115 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2026004 missing 'Projekt logo dla Pana Sebastiana:'
+2026-09-05 17:22:27 QA sync_warn bb:2026004 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2025666 missing 'OD: Rozmowa o stronie z owocnym ekspertem'
+2026-09-05 17:22:27 QA sync_warn bb:2025666 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2025512 missing 'Odp: Odp: Odp: Odp: Logo dla marki kosmetycznej:'
+2026-09-05 17:22:27 QA sync_warn bb:2025512 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2024837 missing 'Re: Strona internetowa po logo:'
+2026-09-05 17:22:27 QA sync_warn bb:2024837 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2024653 missing 'Logo dla Pani Agnieszki:'
+2026-09-05 17:22:27 QA sync_warn bb:2024653 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2024623 missing 'Re: Finalizacja projektu &gt; fakturaproforma nr 5'
+2026-09-05 17:22:27 QA sync_warn bb:2024623 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2024220 missing 'Strona KUNDO'
+2026-09-05 17:22:27 QA sync_warn bb:2024220 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023836 missing 'Re: Logo dla Pani Barbary:'
+2026-09-05 17:22:27 QA sync_warn bb:2023836 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023823 missing 'Re: Fwd: Strona Lecher Professional'
+2026-09-05 17:22:27 QA sync_warn bb:2023823 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023731 missing 'Tekst na baner reklamowy'
+2026-09-05 17:22:27 QA sync_warn bb:2023731 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023686 missing 'RE: Projekt logo dla Kaspol:'
+2026-09-05 17:22:27 QA sync_warn bb:2023686 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023436 missing 'Odp: Strona internetowa – makieta, która rozjaśni '
+2026-09-05 17:22:27 QA sync_warn bb:2023436 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:27 QA bb:2023273 missing 'Re: Nazwa dla Pana Karola - draft umowy'
+2026-09-05 17:22:27 QA sync_warn bb:2023273 — not in Twenty yet, IMAP has it. continue
+2026-09-05 17:22:32 counts people=28438 companies=1529 opp=3979
+2026-09-05 17:22:32 marta@owocni.pl next offset 4079 → 4451
+2026-09-05 17:22:32 paka marta@owocni.pl offset=4451 limit=25
+marta@owocni.pl: BB window offset=4451 fetch=400 rows=371 target_append=25
+  scanned 25/371 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/371 appended=0 last=skip_other_channel
+APPEND bb:2023030 → marta@owocni.pl/BB Archive 'Odp: Strona internetowa:'
+APPEND bb:2023019 → marta@owocni.pl/BB Archive 'Re: Re: Projekt logo dla Pani Katarzyny:'
+  scanned 75/371 appended=2 last=skip_other_channel
+APPEND bb:2022814 → marta@owocni.pl/BB Archive 'Kundo - nowa strona'
+APPEND bb:2022759 → marta@owocni.pl/BB Archive 'Uruchomienie prac przy logo:'
+APPEND bb:2022673 → marta@owocni.pl/BB Archive 'Re: Strona internetowa: etap II z III &gt; fakturaproforma nr 5455'
+APPEND bb:2022657 → marta@owocni.pl/BB Archive 'Odp: Logo dla Pani Karoliny:'
+  scanned 125/371 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2022424 → marta@owocni.pl/BB Archive 'Re: Uruchomienie prac przy logo:'
+APPEND bb:2022365 → marta@owocni.pl/BB Archive 'Odp: Odp: 2 etap płatności za logo -  Weronika Nawrocka'
+APPEND bb:2022302 → marta@owocni.pl/BB Archive 'Re: Zapytanie - strona internetowa Stolarstwo'
+  scanned 150/371 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2022230 → marta@owocni.pl/BB Archive 'Re: Nazwa - taniej:'
+APPEND bb:2022180 → marta@owocni.pl/BB Archive 'Re: Projekt na opakowanie:'
+  scanned 175/371 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2022042 → marta@owocni.pl/BB Archive 'Re: Logo firmy'
+APPEND bb:2022002 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pani Joanny:'
+  scanned 200/371 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2021860 → marta@owocni.pl/BB Archive 'Re: Korekta faktur'
+APPEND bb:2021821 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Karoliny:'
+APPEND bb:2021810 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+  scanned 250/371 appended=16 last=skip_other_channel
+APPEND bb:2021673 → marta@owocni.pl/BB Archive 'Re: Re: Re: Re: Projekt strony dla Pani Sylwii - umowa:'
+  scanned 275/371 appended=17 last=skip_parent_not_in_twenty
+APPEND bb:2021499 → marta@owocni.pl/BB Archive 'Re: Dane do umowy:'
+  scanned 300/371 appended=18 last=skip_parent_not_in_twenty
+APPEND bb:2021389 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektu logo:'
+APPEND bb:2021380 → marta@owocni.pl/BB Archive 'RE: Dane do podpisania umowy:'
+  scanned 325/371 appended=20 last=skip_other_channel
+APPEND bb:2021116 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem - jutro 14:00'
+APPEND bb:2021083 → marta@owocni.pl/BB Archive 'Re: Owocna strona dla Pana Kamila - umowa:'
+appended=22 skipped_seen=349 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T154748Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 17:47:48 paka done appended=22 rows=371 scanned=371 window_done=True skip={'skip_other_channel': 150, 'skip_parent_not_in_twenty': 195, 'skip_on_imap': 1, 'skip_no_parent': 2, 'skip_in_twenty': 1}
+2026-09-05 17:47:48 Email Sync wait 600s for 22 APPEND
+2026-09-05 17:58:26 Email Sync extra wait 600s for 22 not ready
+2026-09-05 18:09:04 QA bb:2023030 missing 'Odp: Strona internetowa:'
+2026-09-05 18:09:04 QA sync_warn bb:2023030 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2023019 missing 'Re: Re: Projekt logo dla Pani Katarzyny:'
+2026-09-05 18:09:04 QA sync_warn bb:2023019 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022814 missing 'Kundo - nowa strona'
+2026-09-05 18:09:04 QA sync_warn bb:2022814 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022759 missing 'Uruchomienie prac przy logo:'
+2026-09-05 18:09:04 QA sync_warn bb:2022759 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022673 missing 'Re: Strona internetowa: etap II z III &gt; faktura'
+2026-09-05 18:09:04 QA sync_warn bb:2022673 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022657 missing 'Odp: Logo dla Pani Karoliny:'
+2026-09-05 18:09:04 QA sync_warn bb:2022657 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022424 missing 'Re: Uruchomienie prac przy logo:'
+2026-09-05 18:09:04 QA sync_warn bb:2022424 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022365 missing 'Odp: Odp: 2 etap płatności za logo -  Weronika Naw'
+2026-09-05 18:09:04 QA sync_warn bb:2022365 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022302 missing 'Re: Zapytanie - strona internetowa Stolarstwo'
+2026-09-05 18:09:04 QA sync_warn bb:2022302 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022230 missing 'Re: Nazwa - taniej:'
+2026-09-05 18:09:04 QA sync_warn bb:2022230 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022180 missing 'Re: Projekt na opakowanie:'
+2026-09-05 18:09:04 QA sync_warn bb:2022180 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022042 missing 'Re: Logo firmy'
+2026-09-05 18:09:04 QA sync_warn bb:2022042 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2022002 missing 'Re: Strona internetowa dla Pani Joanny:'
+2026-09-05 18:09:04 QA sync_warn bb:2022002 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021860 missing 'Re: Korekta faktur'
+2026-09-05 18:09:04 QA sync_warn bb:2021860 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021821 missing 'Odp: Projekt logo dla Pani Karoliny:'
+2026-09-05 18:09:04 QA sync_warn bb:2021821 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021810 missing 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 18:09:04 QA sync_warn bb:2021810 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021673 missing 'Re: Re: Re: Re: Projekt strony dla Pani Sylwii - u'
+2026-09-05 18:09:04 QA sync_warn bb:2021673 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021499 missing 'Re: Dane do umowy:'
+2026-09-05 18:09:04 QA sync_warn bb:2021499 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021389 missing 'Re: Uruchomienie projektu logo:'
+2026-09-05 18:09:04 QA sync_warn bb:2021389 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021380 missing 'RE: Dane do podpisania umowy:'
+2026-09-05 18:09:04 QA sync_warn bb:2021380 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021116 missing 'RE: Rozmowa z owocnym ekspertem - jutro 14:00'
+2026-09-05 18:09:04 QA sync_warn bb:2021116 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:04 QA bb:2021083 missing 'Re: Owocna strona dla Pana Kamila - umowa:'
+2026-09-05 18:09:04 QA sync_warn bb:2021083 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:09:09 counts people=28438 companies=1529 opp=3979
+2026-09-05 18:09:09 marta@owocni.pl next offset 4451 → 4822
+2026-09-05 18:09:09 paka marta@owocni.pl offset=4822 limit=25
+marta@owocni.pl: BB window offset=4822 fetch=400 rows=383 target_append=25
+  scanned 25/383 appended=0 last=skip_other_channel
+  scanned 50/383 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2020833 → marta@owocni.pl/BB Archive 'Re: Strona internetowa - etap II z III'
+APPEND bb:2020812 → marta@owocni.pl/BB Archive 'Odp.: Animacja Logo :: PełnoPolis'
+  scanned 75/383 appended=2 last=skip_parent_not_in_twenty
+APPEND bb:2020715 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Anny:'
+  scanned 100/383 appended=3 last=skip_other_channel
+  scanned 125/383 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2020390 → marta@owocni.pl/BB Archive 'RE: Projekt logo dla Fit and Fat'
+  scanned 150/383 appended=4 last=skip_other_channel
+  scanned 175/383 appended=4 last=skip_no_parent
+APPEND bb:2020080 → marta@owocni.pl/BB Archive 'Re: Aneks do umowy:'
+APPEND bb:2020065 → marta@owocni.pl/BB Archive 'strona'
+  scanned 200/383 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2020058 → marta@owocni.pl/BB Archive 'Re: Aneks do umowy:'
+  scanned 225/383 appended=7 last=skip_other_channel
+APPEND bb:2019821 → marta@owocni.pl/BB Archive 'Bannery na stronę internetową carats.pl'
+APPEND bb:2019816 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem po logo:'
+APPEND bb:2019771 → marta@owocni.pl/BB Archive 'Re: Uruchomienie prac:'
+APPEND bb:2019733 → marta@owocni.pl/BB Archive 'Odp: Odp: Odp: Logo dla marki kosmetycznej:'
+APPEND bb:2019620 → marta@owocni.pl/BB Archive 'Re: Strona z katalogiem produktów dla Pana Oskara:'
+APPEND bb:2019592 → marta@owocni.pl/BB Archive 'Re: Owocna sprawa - Numer 570'
+  scanned 275/383 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2019481 → marta@owocni.pl/BB Archive 'Re: Strona z katalogiem produktów dla Pana Oskara:'
+APPEND bb:2019467 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Marty:'
+APPEND bb:2019393 → marta@owocni.pl/BB Archive 'Re: Cesja domeny:'
+  scanned 300/383 appended=16 last=skip_other_channel
+APPEND bb:2019322 → marta@owocni.pl/BB Archive 'RE: Dane do podpisania umowy:'
+APPEND bb:2019237 → marta@owocni.pl/BB Archive 'Re: Re: Re: Re: Re: Projekt logo dla Pani Beaty:'
+APPEND bb:2019165 → marta@owocni.pl/BB Archive 'Re: Owocny sklep dla Pana Artura:'
+  scanned 325/383 appended=19 last=skip_other_channel
+APPEND bb:2019087 → marta@owocni.pl/BB Archive 'Uruchomienie prac nad stroną:'
+  scanned 350/383 appended=20 last=skip_parent_not_in_twenty
+APPEND bb:2018946 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektów &gt; fakturaproforma nr 5256'
+appended=21 skipped_seen=362 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T163511Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 18:35:11 paka done appended=21 rows=383 scanned=383 window_done=True skip={'skip_parent_not_in_twenty': 218, 'skip_other_channel': 136, 'skip_on_imap': 2, 'skip_no_parent': 6}
+2026-09-05 18:35:11 Email Sync wait 600s for 21 APPEND
+2026-09-05 18:45:47 Email Sync extra wait 600s for 21 not ready
+2026-09-05 18:56:22 QA bb:2020833 missing 'Re: Strona internetowa - etap II z III'
+2026-09-05 18:56:22 QA sync_warn bb:2020833 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020812 missing 'Odp.: Animacja Logo :: PełnoPolis'
+2026-09-05 18:56:22 QA sync_warn bb:2020812 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020715 missing 'Odp: Projekt logo dla Pani Anny:'
+2026-09-05 18:56:22 QA sync_warn bb:2020715 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020390 missing 'RE: Projekt logo dla Fit and Fat'
+2026-09-05 18:56:22 QA sync_warn bb:2020390 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020080 missing 'Re: Aneks do umowy:'
+2026-09-05 18:56:22 QA sync_warn bb:2020080 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020065 missing 'strona'
+2026-09-05 18:56:22 QA sync_warn bb:2020065 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2020058 missing 'Re: Aneks do umowy:'
+2026-09-05 18:56:22 QA sync_warn bb:2020058 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019821 missing 'Bannery na stronę internetową carats.pl'
+2026-09-05 18:56:22 QA sync_warn bb:2019821 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019816 missing 'Re: Strona ze sklepem po logo:'
+2026-09-05 18:56:22 QA sync_warn bb:2019816 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019771 missing 'Re: Uruchomienie prac:'
+2026-09-05 18:56:22 QA sync_warn bb:2019771 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019733 missing 'Odp: Odp: Odp: Logo dla marki kosmetycznej:'
+2026-09-05 18:56:22 QA sync_warn bb:2019733 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019620 missing 'Re: Strona z katalogiem produktów dla Pana Oskara:'
+2026-09-05 18:56:22 QA sync_warn bb:2019620 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019592 missing 'Re: Owocna sprawa - Numer 570'
+2026-09-05 18:56:22 QA sync_warn bb:2019592 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019481 missing 'Re: Strona z katalogiem produktów dla Pana Oskara:'
+2026-09-05 18:56:22 QA sync_warn bb:2019481 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019467 missing 'Odp: Projekt logo dla Pani Marty:'
+2026-09-05 18:56:22 QA sync_warn bb:2019467 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019393 missing 'Re: Cesja domeny:'
+2026-09-05 18:56:22 QA sync_warn bb:2019393 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019322 missing 'RE: Dane do podpisania umowy:'
+2026-09-05 18:56:22 QA sync_warn bb:2019322 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019237 missing 'Re: Re: Re: Re: Re: Projekt logo dla Pani Beaty:'
+2026-09-05 18:56:22 QA sync_warn bb:2019237 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019165 missing 'Re: Owocny sklep dla Pana Artura:'
+2026-09-05 18:56:22 QA sync_warn bb:2019165 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2019087 missing 'Uruchomienie prac nad stroną:'
+2026-09-05 18:56:22 QA sync_warn bb:2019087 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:22 QA bb:2018946 missing 'Re: Uruchomienie projektów &gt; fakturaproforma nr'
+2026-09-05 18:56:22 QA sync_warn bb:2018946 — not in Twenty yet, IMAP has it. continue
+2026-09-05 18:56:27 counts people=28438 companies=1529 opp=3979
+2026-09-05 18:56:27 marta@owocni.pl next offset 4822 → 5205
+2026-09-05 18:56:27 paka marta@owocni.pl offset=5205 limit=25
+marta@owocni.pl: BB window offset=5205 fetch=400 rows=382 target_append=25
+  scanned 25/382 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/382 appended=0 last=skip_other_channel
+APPEND bb:2018675 → marta@owocni.pl/BB Archive 'RE: Uruchomienie prac:'
+  scanned 75/382 appended=1 last=skip_other_channel
+  scanned 100/382 appended=1 last=skip_parent_not_in_twenty
+  scanned 125/382 appended=1 last=skip_other_channel
+APPEND bb:2018116 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+APPEND bb:2018068 → marta@owocni.pl/BB Archive 'Re: Strona internetowa - draft umowy'
+  scanned 150/382 appended=3 last=skip_other_channel
+  scanned 175/382 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2017871 → marta@owocni.pl/BB Archive 'Re: Animacja logo:'
+APPEND bb:2017867 → marta@owocni.pl/BB Archive 'Odp: Sklep internetowy dla Pana Dariusza:'
+APPEND bb:2017862 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem - piątek:'
+  scanned 200/382 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2017703 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pani Justyny:'
+  scanned 225/382 appended=7 last=skip_parent_not_in_twenty
+  scanned 250/382 appended=7 last=skip_parent_not_in_twenty
+  scanned 275/382 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2017235 → marta@owocni.pl/BB Archive 'Re: Nowa odsłona sklepu internetowego Pana Adriana:'
+APPEND bb:2017144 → marta@owocni.pl/BB Archive 'Dane do podpisania umowy:'
+  scanned 300/382 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2017009 → marta@owocni.pl/BB Archive 'Re: Strona dla Pani Anny:'
+APPEND bb:2016998 → marta@owocni.pl/BB Archive 'Projekt logo dla Pani Anny:'
+  scanned 325/382 appended=11 last=skip_other_channel
+  scanned 350/382 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2016803 → marta@owocni.pl/BB Archive 'RE: Prośba o wycenę'
+APPEND bb:2016713 → marta@owocni.pl/BB Archive 'Re: Falcon Construction - strona www'
+  scanned 375/382 appended=13 last=skip_parent_not_in_twenty
+appended=13 skipped_seen=369 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T172246Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 19:22:46 paka done appended=13 rows=382 scanned=382 window_done=True skip={'skip_other_channel': 153, 'skip_parent_not_in_twenty': 211, 'skip_on_imap': 1, 'skip_no_parent': 4}
+2026-09-05 19:22:46 Email Sync wait 600s for 13 APPEND
+2026-09-05 19:33:08 Email Sync extra wait 600s for 13 not ready
+2026-09-05 19:43:30 QA bb:2018675 missing 'RE: Uruchomienie prac:'
+2026-09-05 19:43:30 QA sync_warn bb:2018675 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2018116 missing 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 19:43:30 QA sync_warn bb:2018116 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2018068 missing 'Re: Strona internetowa - draft umowy'
+2026-09-05 19:43:30 QA sync_warn bb:2018068 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017871 missing 'Re: Animacja logo:'
+2026-09-05 19:43:30 QA sync_warn bb:2017871 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017867 missing 'Odp: Sklep internetowy dla Pana Dariusza:'
+2026-09-05 19:43:30 QA sync_warn bb:2017867 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017862 missing 'RE: Rozmowa z owocnym ekspertem - piątek:'
+2026-09-05 19:43:30 QA sync_warn bb:2017862 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017703 missing 'Re: Nazwa dla Pani Justyny:'
+2026-09-05 19:43:30 QA sync_warn bb:2017703 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017235 missing 'Re: Nowa odsłona sklepu internetowego Pana Adriana'
+2026-09-05 19:43:30 QA sync_warn bb:2017235 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017144 missing 'Dane do podpisania umowy:'
+2026-09-05 19:43:30 QA sync_warn bb:2017144 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2017009 missing 'Re: Strona dla Pani Anny:'
+2026-09-05 19:43:30 QA sync_warn bb:2017009 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2016998 missing 'Projekt logo dla Pani Anny:'
+2026-09-05 19:43:30 QA sync_warn bb:2016998 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2016803 missing 'RE: Prośba o wycenę'
+2026-09-05 19:43:30 QA sync_warn bb:2016803 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:30 QA bb:2016713 missing 'Re: Falcon Construction - strona www'
+2026-09-05 19:43:30 QA sync_warn bb:2016713 — not in Twenty yet, IMAP has it. continue
+2026-09-05 19:43:35 counts people=28438 companies=1529 opp=3979
+2026-09-05 19:43:35 marta@owocni.pl next offset 5205 → 5587
+2026-09-05 19:43:35 paka marta@owocni.pl offset=5587 limit=25
+marta@owocni.pl: BB window offset=5587 fetch=400 rows=374 target_append=25
+  scanned 25/374 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/374 appended=0 last=skip_parent_not_in_twenty
+  scanned 75/374 appended=0 last=skip_other_channel
+  scanned 100/374 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2015965 → marta@owocni.pl/BB Archive 'Re: Dodatkowy zestaw plików:'
+  scanned 125/374 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2015843 → marta@owocni.pl/BB Archive 'Odp: Odp: Projekt logo dla Pani Weroniki:'
+APPEND bb:2015827 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Krzysztofa:'
+  scanned 150/374 appended=3 last=skip_other_channel
+  scanned 175/374 appended=3 last=skip_other_channel
+APPEND bb:2015460 → marta@owocni.pl/BB Archive 'Re: Logo dla Pana Michała:'
+APPEND bb:2015453 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu strony &gt; faktura nr 520/2025 - do opłacenia'
+APPEND bb:2015446 → marta@owocni.pl/BB Archive 'Re: Owocne opisy produktów:'
+APPEND bb:2015445 → marta@owocni.pl/BB Archive 'Dane do faktury:'
+  scanned 200/374 appended=7 last=skip_other_channel
+  scanned 225/374 appended=7 last=skip_parent_not_in_twenty
+  scanned 250/374 appended=7 last=skip_parent_not_in_twenty
+  scanned 275/374 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2014712 → marta@owocni.pl/BB Archive 'RE: Projekt logo dla Pana Wojciecha:'
+  scanned 300/374 appended=8 last=skip_other_channel
+  scanned 325/374 appended=8 last=skip_other_channel
+APPEND bb:2014302 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+  scanned 350/374 appended=9 last=skip_other_channel
+appended=9 skipped_seen=365 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T180940Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 20:09:40 paka done appended=9 rows=374 scanned=374 window_done=True skip={'skip_on_imap': 1, 'skip_other_channel': 166, 'skip_parent_not_in_twenty': 194, 'skip_no_parent': 3, 'skip_in_twenty': 1}
+2026-09-05 20:09:40 Email Sync wait 600s for 9 APPEND
+2026-09-05 20:19:56 Email Sync extra wait 600s for 9 not ready
+2026-09-05 20:30:11 QA bb:2015965 missing 'Re: Dodatkowy zestaw plików:'
+2026-09-05 20:30:11 QA sync_warn bb:2015965 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015843 missing 'Odp: Odp: Projekt logo dla Pani Weroniki:'
+2026-09-05 20:30:11 QA sync_warn bb:2015843 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015827 missing 'Re: Nazwa dla Pana Krzysztofa:'
+2026-09-05 20:30:11 QA sync_warn bb:2015827 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015460 missing 'Re: Logo dla Pana Michała:'
+2026-09-05 20:30:11 QA sync_warn bb:2015460 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015453 missing 'Re: Finalizacja projektu strony &gt; faktura nr 52'
+2026-09-05 20:30:11 QA sync_warn bb:2015453 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015446 missing 'Re: Owocne opisy produktów:'
+2026-09-05 20:30:11 QA sync_warn bb:2015446 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2015445 missing 'Dane do faktury:'
+2026-09-05 20:30:11 QA sync_warn bb:2015445 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2014712 missing 'RE: Projekt logo dla Pana Wojciecha:'
+2026-09-05 20:30:11 QA sync_warn bb:2014712 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:11 QA bb:2014302 missing 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 20:30:11 QA sync_warn bb:2014302 — not in Twenty yet, IMAP has it. continue
+2026-09-05 20:30:16 counts people=28439 companies=1529 opp=3980
+2026-09-05 20:30:21 sitko delta people 28438→28439,opportunities 3979→3980 new opp=1 people=1 companies=0
+2026-09-05 20:30:21 sitko allow opp 'biuro@smartmaker.pl · Strona · Ekspert' src=OWOCNI_SORTOWNIA
+2026-09-05 20:30:21 sitko allow person biuro@smartmaker.pl
+2026-09-05 20:30:21 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 20:30:21 marta@owocni.pl next offset 5587 → 5961
+2026-09-05 20:30:21 paka marta@owocni.pl offset=5961 limit=25
+marta@owocni.pl: BB window offset=5961 fetch=400 rows=376 target_append=25
+  scanned 25/376 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2013937 → marta@owocni.pl/BB Archive 'Re: Drugi etap prac nad stroną internetową:'
+APPEND bb:2013817 → marta@owocni.pl/BB Archive 'Re: Owocne możliwości:'
+  scanned 50/376 appended=2 last=skip_other_channel
+  scanned 75/376 appended=2 last=skip_parent_not_in_twenty
+APPEND bb:2013675 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu logo &gt; fakturaproforma nr 4953'
+APPEND bb:2013565 → marta@owocni.pl/BB Archive 'Re: Strona dla Pani Anny:'
+  scanned 100/376 appended=4 last=skip_parent_not_in_twenty
+  scanned 125/376 appended=4 last=skip_other_channel
+APPEND bb:2013323 → marta@owocni.pl/BB Archive 'RE: Strona internetowa dla Pani Aleksandry:'
+  scanned 150/376 appended=5 last=skip_parent_not_in_twenty
+  scanned 175/376 appended=5 last=skip_other_channel
+APPEND bb:2013143 → marta@owocni.pl/BB Archive 'Umowa'
+  scanned 200/376 appended=6 last=skip_parent_not_in_twenty
+  scanned 225/376 appended=6 last=skip_parent_not_in_twenty
+  scanned 250/376 appended=6 last=skip_other_channel
+APPEND bb:2012489 → marta@owocni.pl/BB Archive 'Re: Sklep internetowy dla Pana Konrada:'
+  scanned 275/376 appended=7 last=skip_parent_not_in_twenty
+  scanned 300/376 appended=7 last=skip_parent_not_in_twenty
+  scanned 325/376 appended=7 last=skip_parent_not_in_twenty
+  scanned 350/376 appended=7 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2011931 → marta@owocni.pl/BB Archive 'RE: Rozmowa z owocnym ekspertem:'
+appended=8 skipped_seen=368 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T185700Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 20:57:00 paka done appended=8 rows=376 scanned=376 window_done=True skip={'skip_parent_not_in_twenty': 167, 'skip_other_channel': 196, 'skip_no_parent': 4, 'skip_in_twenty': 1}
+2026-09-05 20:57:00 Email Sync wait 600s for 8 APPEND
+2026-09-05 21:07:15 Email Sync extra wait 600s for 8 not ready
+2026-09-05 21:17:29 QA bb:2013937 direction_warn 'Re: Drugi etap prac nad stroną internetową:'
+2026-09-05 21:17:29 QA direction_warn bb:2013937 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2013817 direction_warn 'Re: Owocne możliwości:'
+2026-09-05 21:17:29 QA direction_warn bb:2013817 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2013675 direction_warn 'Re: Finalizacja projektu logo &gt; fakturaproforma'
+2026-09-05 21:17:29 QA direction_warn bb:2013675 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2013565 direction_warn 'Re: Strona dla Pani Anny:'
+2026-09-05 21:17:29 QA direction_warn bb:2013565 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2013323 direction_warn 'RE: Strona internetowa dla Pani Aleksandry:'
+2026-09-05 21:17:29 QA direction_warn bb:2013323 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2013143 direction_warn 'Umowa'
+2026-09-05 21:17:29 QA direction_warn bb:2013143 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2012489 direction_warn 'Re: Sklep internetowy dla Pana Konrada:'
+2026-09-05 21:17:29 QA direction_warn bb:2012489 — in Twenty, direction still empty. continue
+2026-09-05 21:17:29 QA bb:2011931 missing 'RE: Rozmowa z owocnym ekspertem:'
+2026-09-05 21:17:29 QA sync_warn bb:2011931 — not in Twenty yet, IMAP has it. continue
+2026-09-05 21:17:34 counts people=28439 companies=1529 opp=3980
+2026-09-05 21:17:34 marta@owocni.pl next offset 5961 → 6337
+2026-09-05 21:17:34 paka marta@owocni.pl offset=6337 limit=25
+marta@owocni.pl: BB window offset=6337 fetch=400 rows=379 target_append=25
+APPEND bb:2011927 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Janusza:'
+  scanned 25/379 appended=1 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+  scanned 50/379 appended=1 last=skip_other_channel
+  scanned 75/379 appended=1 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2011420 → marta@owocni.pl/BB Archive 'Re: Sklep internetowy dla Pana Konrada:'
+  scanned 100/379 appended=2 last=skip_parent_not_in_twenty
+APPEND bb:2011354 → marta@owocni.pl/BB Archive 'Uruchomienie prac przy logo:'
+APPEND bb:2011343 → marta@owocni.pl/BB Archive 'Re: Projekt logo:'
+  scanned 125/379 appended=4 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 150/379 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2010999 → marta@owocni.pl/BB Archive 'Re: grafika opakowania'
+  scanned 175/379 appended=5 last=skip_other_channel
+  scanned 200/379 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2010831 → marta@owocni.pl/BB Archive 'Re: Voucher:'
+APPEND bb:2010820 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 5046'
+APPEND bb:2010811 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz:'
+APPEND bb:2010713 → marta@owocni.pl/BB Archive 'Uruchomienie poszukiwań nazwy:'
+  scanned 225/379 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2010621 → marta@owocni.pl/BB Archive 'Re: Rozmowa z owocnym ekspertem:'
+APPEND bb:2010561 → marta@owocni.pl/BB Archive 'Re: Sklep internetowy dla Pani Karoliny:'
+  scanned 275/379 appended=11 last=skip_other_channel
+  scanned 300/379 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2010246 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz:'
+  scanned 325/379 appended=12 last=skip_other_channel
+  scanned 350/379 appended=12 last=skip_other_channel
+APPEND bb:2010075 → marta@owocni.pl/BB Archive 'Re: Strona dla Pana Adama:'
+APPEND bb:2010046 → marta@owocni.pl/BB Archive 'Re: Strona dla Pana Adama:'
+APPEND bb:2009988 → marta@owocni.pl/BB Archive 'Re: Re: Projekt strony dla Pani Sylwii:'
+  scanned 375/379 appended=15 last=skip_other_channel
+appended=15 skipped_seen=364 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T194933Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 21:49:33 paka done appended=15 rows=379 scanned=379 window_done=True skip={'skip_parent_not_in_twenty': 213, 'skip_other_channel': 144, 'skip_on_imap': 1, 'skip_no_parent': 6}
+2026-09-05 21:49:33 Email Sync wait 600s for 15 APPEND
+2026-09-05 21:59:59 Email Sync extra wait 600s for 15 not ready
+2026-09-05 22:10:25 QA bb:2011927 missing 'Projekt logo dla Pana Janusza:'
+2026-09-05 22:10:25 QA sync_warn bb:2011927 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2011420 missing 'Re: Sklep internetowy dla Pana Konrada:'
+2026-09-05 22:10:25 QA sync_warn bb:2011420 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2011354 missing 'Uruchomienie prac przy logo:'
+2026-09-05 22:10:25 QA sync_warn bb:2011354 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2011343 missing 'Re: Projekt logo:'
+2026-09-05 22:10:25 QA sync_warn bb:2011343 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010999 missing 'Re: grafika opakowania'
+2026-09-05 22:10:25 QA sync_warn bb:2010999 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010831 missing 'Re: Voucher:'
+2026-09-05 22:10:25 QA sync_warn bb:2010831 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010820 missing 'Re: Finalizacja projektu &gt; fakturaproforma nr 5'
+2026-09-05 22:10:25 QA sync_warn bb:2010820 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010811 missing 'Re: Strona internetowa dla Martuz:'
+2026-09-05 22:10:25 QA sync_warn bb:2010811 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010713 missing 'Uruchomienie poszukiwań nazwy:'
+2026-09-05 22:10:25 QA sync_warn bb:2010713 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010621 missing 'Re: Rozmowa z owocnym ekspertem:'
+2026-09-05 22:10:25 QA sync_warn bb:2010621 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010561 missing 'Re: Sklep internetowy dla Pani Karoliny:'
+2026-09-05 22:10:25 QA sync_warn bb:2010561 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010246 missing 'Re: Strona internetowa dla Martuz:'
+2026-09-05 22:10:25 QA sync_warn bb:2010246 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010075 missing 'Re: Strona dla Pana Adama:'
+2026-09-05 22:10:25 QA sync_warn bb:2010075 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2010046 missing 'Re: Strona dla Pana Adama:'
+2026-09-05 22:10:25 QA sync_warn bb:2010046 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:25 QA bb:2009988 missing 'Re: Re: Projekt strony dla Pani Sylwii:'
+2026-09-05 22:10:25 QA sync_warn bb:2009988 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:10:30 counts people=28439 companies=1529 opp=3980
+2026-09-05 22:10:30 marta@owocni.pl next offset 6337 → 6716
+2026-09-05 22:10:30 paka marta@owocni.pl offset=6716 limit=25
+marta@owocni.pl: BB window offset=6716 fetch=400 rows=379 target_append=25
+  scanned 25/379 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/379 appended=0 last=skip_other_channel
+APPEND bb:2009722 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz:'
+  scanned 75/379 appended=1 last=skip_no_parent
+APPEND bb:2009575 → marta@owocni.pl/BB Archive 'Re: Nazwa marki'
+  scanned 100/379 appended=2 last=skip_other_channel
+APPEND bb:2009447 → marta@owocni.pl/BB Archive 'Re: Sklep internetowy dla Pana Michała:'
+  scanned 125/379 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2009353 → marta@owocni.pl/BB Archive 'Re: Owocny sklep internetowy:'
+APPEND bb:2009325 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Margarity:'
+  scanned 150/379 appended=5 last=skip_other_channel
+APPEND bb:2009016 → marta@owocni.pl/BB Archive 'Re: Zarezerwujmy termin na stronę – maj tuż-tuż!'
+APPEND bb:2008977 → marta@owocni.pl/BB Archive 'Zarezerwujmy termin na stronę '
+  scanned 175/379 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2008958 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Pameli:'
+APPEND bb:2008954 → marta@owocni.pl/BB Archive 'Odp.: Logo po nazwie:'
+  scanned 200/379 appended=9 last=skip_parent_not_in_twenty
+  scanned 225/379 appended=9 last=skip_other_channel
+APPEND bb:2008716 → marta@owocni.pl/BB Archive 'Projekt logo dla Pana Łukasza:'
+  scanned 250/379 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2008649 → marta@owocni.pl/BB Archive 'Re: W sprawie strony'
+  scanned 275/379 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2008557 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Pawła:'
+  scanned 300/379 appended=12 last=skip_parent_not_in_twenty
+  scanned 325/379 appended=12 last=skip_other_channel
+APPEND bb:2008225 → marta@owocni.pl/BB Archive 'wzór - punkt wyjścia'
+APPEND bb:2008189 → marta@owocni.pl/BB Archive 'wzór - punkt wyjścia'
+  scanned 350/379 appended=14 last=skip_parent_not_in_twenty
+APPEND bb:2008154 → marta@owocni.pl/BB Archive 'Re: Zapytanie o ofertę – Logo i strona internetowa dla nowej pizzerii'
+Twenty REST 429 — sleep 65.0s
+  scanned 375/379 appended=15 last=skip_other_channel
+appended=15 skipped_seen=364 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T203721Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 22:37:21 paka done appended=15 rows=379 scanned=379 window_done=True skip={'skip_parent_not_in_twenty': 203, 'skip_on_imap': 2, 'skip_other_channel': 153, 'skip_no_parent': 5, 'skip_in_twenty': 1}
+2026-09-05 22:37:21 Email Sync wait 600s for 15 APPEND
+2026-09-05 22:47:48 Email Sync extra wait 600s for 13 not ready
+2026-09-05 22:58:10 QA bb:2009722 pass 'Re: Strona internetowa dla Martuz:'
+2026-09-05 22:58:10 QA bb:2009575 pass 'Re: Nazwa marki'
+2026-09-05 22:58:10 QA bb:2009447 missing 'Re: Sklep internetowy dla Pana Michała:'
+2026-09-05 22:58:10 QA sync_warn bb:2009447 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2009353 missing 'Re: Owocny sklep internetowy:'
+2026-09-05 22:58:10 QA sync_warn bb:2009353 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2009325 missing 'Re: Projekt logo dla Pani Margarity:'
+2026-09-05 22:58:10 QA sync_warn bb:2009325 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2009016 missing 'Re: Zarezerwujmy termin na stronę – maj tuż-tuż!'
+2026-09-05 22:58:10 QA sync_warn bb:2009016 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008977 missing 'Zarezerwujmy termin na stronę '
+2026-09-05 22:58:10 QA sync_warn bb:2008977 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008958 missing 'Re: Projekt logo dla Pani Pameli:'
+2026-09-05 22:58:10 QA sync_warn bb:2008958 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008954 missing 'Odp.: Logo po nazwie:'
+2026-09-05 22:58:10 QA sync_warn bb:2008954 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008716 missing 'Projekt logo dla Pana Łukasza:'
+2026-09-05 22:58:10 QA sync_warn bb:2008716 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008649 missing 'Re: W sprawie strony'
+2026-09-05 22:58:10 QA sync_warn bb:2008649 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008557 missing 'Re: Nazwa dla Pana Pawła:'
+2026-09-05 22:58:10 QA sync_warn bb:2008557 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008225 missing 'wzór - punkt wyjścia'
+2026-09-05 22:58:10 QA sync_warn bb:2008225 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008189 missing 'wzór - punkt wyjścia'
+2026-09-05 22:58:10 QA sync_warn bb:2008189 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:10 QA bb:2008154 missing 'Re: Zapytanie o ofertę – Logo i strona internetowa'
+2026-09-05 22:58:10 QA sync_warn bb:2008154 — not in Twenty yet, IMAP has it. continue
+2026-09-05 22:58:15 counts people=28440 companies=1529 opp=3981
+2026-09-05 22:58:20 sitko delta people 28439→28440,opportunities 3980→3981 new opp=1 people=1 companies=0
+2026-09-05 22:58:20 sitko allow opp 'biurowygadani@gmail.com · Strona · Nowe' src=OWOCNI_SORTOWNIA
+2026-09-05 22:58:20 sitko allow person biurowygadani@gmail.com
+2026-09-05 22:58:20 sitko: Sortownia only — baseline bumped, import continues
+2026-09-05 22:58:20 marta@owocni.pl next offset 6716 → 7095
+2026-09-05 22:58:20 paka marta@owocni.pl offset=7095 limit=25
+marta@owocni.pl: BB window offset=7095 fetch=400 rows=382 target_append=25
+  scanned 25/382 appended=0 last=skip_other_channel
+APPEND bb:2007900 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu strony'
+  scanned 50/382 appended=1 last=skip_parent_not_in_twenty
+  scanned 75/382 appended=1 last=skip_other_channel
+  scanned 100/382 appended=1 last=skip_other_channel
+APPEND bb:2007571 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 5049'
+APPEND bb:2007562 → marta@owocni.pl/BB Archive 'Logo po nazwie:'
+APPEND bb:2007553 → marta@owocni.pl/BB Archive 'Uruchomienie projektu logo:'
+  scanned 125/382 appended=4 last=skip_other_channel
+  scanned 150/382 appended=4 last=skip_parent_not_in_twenty
+  scanned 175/382 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2007219 → marta@owocni.pl/BB Archive 'Re: Umowa i pro forma:'
+APPEND bb:2007189 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pani Sandry:'
+  scanned 200/382 appended=6 last=skip_parent_not_in_twenty
+APPEND bb:2007153 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Pawła:'
+APPEND bb:2007075 → marta@owocni.pl/BB Archive 'Re: Sklep internetowy dla Pana Bartka:'
+  scanned 225/382 appended=8 last=skip_other_channel
+APPEND bb:2006928 → marta@owocni.pl/BB Archive 'Re: Owocne budżety:'
+APPEND bb:2006923 → marta@owocni.pl/BB Archive 'Re: Angielska wersja językowa strony'
+APPEND bb:2006922 → marta@owocni.pl/BB Archive 'Re: Umowa dotycząca praw do logo'
+  scanned 275/382 appended=11 last=skip_other_channel
+APPEND bb:2006810 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz:'
+APPEND bb:2006748 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz:'
+  scanned 300/382 appended=13 last=skip_other_channel
+  scanned 325/382 appended=13 last=skip_parent_not_in_twenty
+  scanned 350/382 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2006262 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Anny:'
+  scanned 375/382 appended=14 last=skip_other_channel
+appended=14 skipped_seen=368 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T212421Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-05 23:24:21 paka done appended=14 rows=382 scanned=382 window_done=True skip={'skip_parent_not_in_twenty': 187, 'skip_on_imap': 1, 'skip_other_channel': 172, 'skip_no_parent': 8}
+2026-09-05 23:24:21 Email Sync wait 600s for 14 APPEND
+2026-09-05 23:34:45 Email Sync extra wait 600s for 14 not ready
+2026-09-05 23:45:09 QA bb:2007900 missing 'Re: Finalizacja projektu strony'
+2026-09-05 23:45:09 QA sync_warn bb:2007900 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007571 missing 'Re: Finalizacja projektu &gt; fakturaproforma nr 5'
+2026-09-05 23:45:09 QA sync_warn bb:2007571 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007562 missing 'Logo po nazwie:'
+2026-09-05 23:45:09 QA sync_warn bb:2007562 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007553 missing 'Uruchomienie projektu logo:'
+2026-09-05 23:45:09 QA sync_warn bb:2007553 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007219 missing 'Re: Umowa i pro forma:'
+2026-09-05 23:45:09 QA sync_warn bb:2007219 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007189 missing 'Re: Nazwa dla Pani Sandry:'
+2026-09-05 23:45:09 QA sync_warn bb:2007189 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007153 missing 'Re: Projekt logo dla Pana Pawła:'
+2026-09-05 23:45:09 QA sync_warn bb:2007153 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2007075 missing 'Re: Sklep internetowy dla Pana Bartka:'
+2026-09-05 23:45:09 QA sync_warn bb:2007075 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006928 missing 'Re: Owocne budżety:'
+2026-09-05 23:45:09 QA sync_warn bb:2006928 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006923 missing 'Re: Angielska wersja językowa strony'
+2026-09-05 23:45:09 QA sync_warn bb:2006923 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006922 missing 'Re: Umowa dotycząca praw do logo'
+2026-09-05 23:45:09 QA sync_warn bb:2006922 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006810 missing 'Re: Strona internetowa dla Martuz:'
+2026-09-05 23:45:09 QA sync_warn bb:2006810 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006748 missing 'Re: Strona internetowa dla Martuz:'
+2026-09-05 23:45:09 QA sync_warn bb:2006748 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:09 QA bb:2006262 missing 'Odp: Projekt logo dla Pani Anny:'
+2026-09-05 23:45:09 QA sync_warn bb:2006262 — not in Twenty yet, IMAP has it. continue
+2026-09-05 23:45:14 counts people=28440 companies=1529 opp=3981
+2026-09-05 23:45:14 marta@owocni.pl next offset 7095 → 7477
+2026-09-05 23:45:14 paka marta@owocni.pl offset=7477 limit=25
+marta@owocni.pl: BB window offset=7477 fetch=400 rows=381 target_append=25
+  scanned 25/381 appended=0 last=skip_other_channel
+  scanned 50/381 appended=0 last=skip_other_channel
+APPEND bb:2005976 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Martuz - rozmowa '
+  scanned 75/381 appended=1 last=skip_other_channel
+  scanned 100/381 appended=1 last=skip_other_channel
+APPEND bb:2005692 → marta@owocni.pl/BB Archive 'Re: Wizualizacja:'
+APPEND bb:2005688 → marta@owocni.pl/BB Archive 'Odp: Pytanie przed współpracą z Panem Mariuszem:'
+APPEND bb:2005674 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Bartka:'
+APPEND bb:2005628 → marta@owocni.pl/BB Archive 'Re: logotyp'
+  scanned 150/381 appended=5 last=skip_no_parent
+APPEND bb:2005401 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pani Anety:'
+  scanned 175/381 appended=6 last=skip_other_channel
+APPEND bb:2005295 → marta@owocni.pl/BB Archive 'Re: Owocni - Przebudowa strony internetowej i wdrożenie funkcjonalności sklepu'
+  scanned 200/381 appended=7 last=skip_parent_not_in_twenty
+  scanned 225/381 appended=7 last=skip_parent_not_in_twenty
+  scanned 250/381 appended=7 last=skip_no_parent
+  scanned 275/381 appended=7 last=skip_other_channel
+APPEND bb:2004686 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Bartka:'
+APPEND bb:2004659 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Bartka:'
+  scanned 300/381 appended=9 last=skip_other_channel
+APPEND bb:2004500 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Anety:'
+APPEND bb:2004498 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Joanny:'
+  scanned 325/381 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2004333 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Bartka:'
+APPEND bb:2004297 → marta@owocni.pl/BB Archive 'Re: Faktura pro forma:'
+  scanned 350/381 appended=13 last=skip_parent_not_in_twenty
+APPEND bb:2004281 → marta@owocni.pl/BB Archive 'Aneks do umowy'
+APPEND bb:2004246 → marta@owocni.pl/BB Archive 'RE: Nazwa dla Pana Mateusza:'
+APPEND bb:2004243 → marta@owocni.pl/BB Archive 'RE: Kreacja nazwy dla Pana Mateusza:'
+APPEND bb:2004240 → marta@owocni.pl/BB Archive 'Re: Nowa strona dla Pani Pauliny:'
+APPEND bb:2004209 → marta@owocni.pl/BB Archive 'Uruchomienie projektu logo:'
+  scanned 375/381 appended=18 last=skip_parent_not_in_twenty
+appended=18 skipped_seen=363 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T221118Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 00:11:18 paka done appended=18 rows=381 scanned=381 window_done=True skip={'skip_on_imap': 1, 'skip_other_channel': 159, 'skip_parent_not_in_twenty': 193, 'skip_no_parent': 9, 'skip_in_twenty': 1}
+2026-09-06 00:11:18 Email Sync wait 600s for 18 APPEND
+2026-09-06 00:21:48 Email Sync extra wait 600s for 18 not ready
+2026-09-06 00:32:19 QA bb:2005976 missing 'Re: Strona internetowa dla Martuz - rozmowa '
+2026-09-06 00:32:19 QA sync_warn bb:2005976 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005692 missing 'Re: Wizualizacja:'
+2026-09-06 00:32:19 QA sync_warn bb:2005692 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005688 missing 'Odp: Pytanie przed współpracą z Panem Mariuszem:'
+2026-09-06 00:32:19 QA sync_warn bb:2005688 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005674 missing 'Re: Projekt logo dla Pana Bartka:'
+2026-09-06 00:32:19 QA sync_warn bb:2005674 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005628 missing 'Re: logotyp'
+2026-09-06 00:32:19 QA sync_warn bb:2005628 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005401 missing 'Odp: Projekt logo dla Pani Anety:'
+2026-09-06 00:32:19 QA sync_warn bb:2005401 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2005295 missing 'Re: Owocni - Przebudowa strony internetowej i wdro'
+2026-09-06 00:32:19 QA sync_warn bb:2005295 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004686 missing 'Re: Projekt logo dla Pana Bartka:'
+2026-09-06 00:32:19 QA sync_warn bb:2004686 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004659 missing 'Re: Projekt logo dla Pana Bartka:'
+2026-09-06 00:32:19 QA sync_warn bb:2004659 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004500 missing 'Re: Projekt logo dla Pani Anety:'
+2026-09-06 00:32:19 QA sync_warn bb:2004500 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004498 missing 'Re: Projekt logo dla Pani Joanny:'
+2026-09-06 00:32:19 QA sync_warn bb:2004498 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004333 missing 'Re: Projekt logo dla Pana Bartka:'
+2026-09-06 00:32:19 QA sync_warn bb:2004333 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004297 missing 'Re: Faktura pro forma:'
+2026-09-06 00:32:19 QA sync_warn bb:2004297 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004281 missing 'Aneks do umowy'
+2026-09-06 00:32:19 QA sync_warn bb:2004281 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004246 missing 'RE: Nazwa dla Pana Mateusza:'
+2026-09-06 00:32:19 QA sync_warn bb:2004246 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004243 missing 'RE: Kreacja nazwy dla Pana Mateusza:'
+2026-09-06 00:32:19 QA sync_warn bb:2004243 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004240 missing 'Re: Nowa strona dla Pani Pauliny:'
+2026-09-06 00:32:19 QA sync_warn bb:2004240 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:19 QA bb:2004209 missing 'Uruchomienie projektu logo:'
+2026-09-06 00:32:19 QA sync_warn bb:2004209 — not in Twenty yet, IMAP has it. continue
+2026-09-06 00:32:24 counts people=28440 companies=1529 opp=3981
+2026-09-06 00:32:24 marta@owocni.pl next offset 7477 → 7858
+2026-09-06 00:32:24 paka marta@owocni.pl offset=7858 limit=25
+marta@owocni.pl: BB window offset=7858 fetch=400 rows=396 target_append=25
+  scanned 25/396 appended=0 last=skip_other_channel
+APPEND bb:2004046 → marta@owocni.pl/BB Archive 'Re: Kreacja nazwy dla Pani Justyny:'
+APPEND bb:2003986 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Kacpra:'
+APPEND bb:2003956 → marta@owocni.pl/BB Archive 'Uruchomienie poszukiwań nazwy:'
+  scanned 50/396 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:2003924 → marta@owocni.pl/BB Archive 'Rezygnacja'
+APPEND bb:2003751 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektu logo:'
+  scanned 100/396 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:2003671 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Przemysława:'
+APPEND bb:2003513 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla Pana Artura:'
+  scanned 125/396 appended=7 last=skip_other_channel
+  scanned 150/396 appended=7 last=skip_parent_not_in_twenty
+APPEND bb:2003347 → marta@owocni.pl/BB Archive 'RE: Projekt logo dla Pana Piotra:'
+APPEND bb:2003314 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Marii:'
+  scanned 175/396 appended=9 last=skip_parent_not_in_twenty
+  scanned 200/396 appended=9 last=skip_other_channel
+  scanned 225/396 appended=9 last=skip_parent_not_in_twenty
+APPEND bb:2003030 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pani Agnieszki:'
+  scanned 250/396 appended=10 last=skip_parent_not_in_twenty
+APPEND bb:2002919 → marta@owocni.pl/BB Archive 'Re: Re: Strona ze sklepem dla Pani Karoliny:'
+  scanned 275/396 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:2002838 → marta@owocni.pl/BB Archive 'Re: Nazwa dla Pana Marcina:'
+  scanned 300/396 appended=12 last=skip_other_channel
+APPEND bb:2002703 → marta@owocni.pl/BB Archive 'Re: Uruchomienie projektu logo:'
+  scanned 325/396 appended=13 last=skip_other_channel
+APPEND bb:2002596 → marta@owocni.pl/BB Archive 'Re: Strona internetowa ze sklepem - etap II z III (prace graficzne)'
+  scanned 350/396 appended=14 last=skip_other_channel
+APPEND bb:2002516 → marta@owocni.pl/BB Archive 'Odp: Projekt logo dla  Koła Gospodyń Wiejskich '
+  scanned 375/396 appended=15 last=skip_other_channel
+APPEND bb:2002493 → marta@owocni.pl/BB Archive 'Strona internetowa'
+appended=16 skipped_seen=380 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260905T225930Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 00:59:30 paka done appended=16 rows=396 scanned=396 window_done=True skip={'skip_on_imap': 2, 'skip_other_channel': 196, 'skip_parent_not_in_twenty': 175, 'skip_in_twenty': 5, 'skip_no_parent': 2}
+2026-09-06 00:59:30 Email Sync wait 600s for 16 APPEND
+2026-09-06 01:09:57 Email Sync extra wait 600s for 16 not ready
+2026-09-06 01:20:25 QA bb:2004046 missing 'Re: Kreacja nazwy dla Pani Justyny:'
+2026-09-06 01:20:25 QA sync_warn bb:2004046 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003986 missing 'Re: Projekt logo dla Pana Kacpra:'
+2026-09-06 01:20:25 QA sync_warn bb:2003986 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003956 missing 'Uruchomienie poszukiwań nazwy:'
+2026-09-06 01:20:25 QA sync_warn bb:2003956 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003924 missing 'Rezygnacja'
+2026-09-06 01:20:25 QA sync_warn bb:2003924 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003751 missing 'Re: Uruchomienie projektu logo:'
+2026-09-06 01:20:25 QA sync_warn bb:2003751 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003671 missing 'Re: Projekt logo dla Pana Przemysława:'
+2026-09-06 01:20:25 QA sync_warn bb:2003671 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003513 missing 'Odp: Projekt logo dla Pana Artura:'
+2026-09-06 01:20:25 QA sync_warn bb:2003513 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003347 missing 'RE: Projekt logo dla Pana Piotra:'
+2026-09-06 01:20:25 QA sync_warn bb:2003347 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003314 missing 'Re: Projekt logo dla Pani Marii:'
+2026-09-06 01:20:25 QA sync_warn bb:2003314 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2003030 missing 'Re: Nazwa dla Pani Agnieszki:'
+2026-09-06 01:20:25 QA sync_warn bb:2003030 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002919 missing 'Re: Re: Strona ze sklepem dla Pani Karoliny:'
+2026-09-06 01:20:25 QA sync_warn bb:2002919 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002838 missing 'Re: Nazwa dla Pana Marcina:'
+2026-09-06 01:20:25 QA sync_warn bb:2002838 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002703 missing 'Re: Uruchomienie projektu logo:'
+2026-09-06 01:20:25 QA sync_warn bb:2002703 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002596 missing 'Re: Strona internetowa ze sklepem - etap II z III '
+2026-09-06 01:20:25 QA sync_warn bb:2002596 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002516 missing 'Odp: Projekt logo dla  Koła Gospodyń Wiejskich '
+2026-09-06 01:20:25 QA sync_warn bb:2002516 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:25 QA bb:2002493 missing 'Strona internetowa'
+2026-09-06 01:20:25 QA sync_warn bb:2002493 — not in Twenty yet, IMAP has it. continue
+2026-09-06 01:20:30 counts people=28440 companies=1529 opp=3981
+2026-09-06 01:20:30 marta@owocni.pl next offset 7858 → 8254
+2026-09-06 01:20:30 paka marta@owocni.pl offset=8254 limit=25
+marta@owocni.pl: BB window offset=8254 fetch=400 rows=385 target_append=25
+  scanned 25/385 appended=0 last=skip_other_channel
+  scanned 50/385 appended=0 last=skip_other_channel
+APPEND bb:2002132 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu logo &gt; fakturaproforma nr 4944'
+  scanned 75/385 appended=1 last=skip_other_channel
+  scanned 100/385 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2001860 → marta@owocni.pl/BB Archive 'Re: Owocna strona internetowa:'
+APPEND bb:2001828 → marta@owocni.pl/BB Archive 'Edicus Szkoły Amadeusz Poteralski'
+APPEND bb:2001777 → marta@owocni.pl/BB Archive 'Uruchomienie prac przy logo:'
+  scanned 125/385 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:2001719 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Artura:'
+  scanned 150/385 appended=5 last=skip_other_channel
+  scanned 175/385 appended=5 last=skip_other_channel
+APPEND bb:2001511 → marta@owocni.pl/BB Archive 'RE: Scenariusze do filmów:'
+  scanned 200/385 appended=6 last=skip_parent_not_in_twenty
+Twenty REST timeout (URLError) attempt 1/8 — sleep 8s
+  scanned 225/385 appended=6 last=skip_other_channel
+  scanned 250/385 appended=6 last=skip_parent_not_in_twenty
+  scanned 275/385 appended=6 last=skip_other_channel
+2026-09-06 01:41:20 STOP: apply_exception
+2026-09-06 01:41:20 Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/imaplib.py", line 1131, in _command
+    self.send(data + CRLF)
+    ~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/imaplib.py", line 418, in send
+    self.sock.sendall(data)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1263, in sendall
+    v = self.send(byte_view[count:])
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1232, in send
+    return self._sslobj.write(data)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+ssl.SSLZeroReturnError: TLS/SSL connection has been closed (EOF) (_ssl.c:2545)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_weekend_loop.py", line 378, in main
+    result = run_apply(
+        mailbox=inbox,
+    ...<4 lines>...
+        manifest_dir=OUT,
+    )
+  File "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/tools/bb_mail_cdelta_append.py", line 254, in run_apply
+    typ, resp = imap.append(f'"{folder}"', r"(\Seen)", internal, raw)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/imaplib.py", line 503, in append
+    return self._simple_command(name, mailbox, flags, date_time)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/imaplib.py", line 1370, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+                                        ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/imaplib.py", line 1133, in _command
+    raise self.abort('socket error: %s' % val)
+imaplib.IMAP4.abort: socket error: TLS/SSL connection has been closed (EOF) (_ssl.c:2545)
+
+2026-09-06 05:32:04 loop start mailbox=marta@owocni.pl offset=8254 limit=25
+2026-09-06 05:32:04 paka marta@owocni.pl offset=8254 limit=25
+marta@owocni.pl: BB window offset=8254 fetch=400 rows=385 target_append=25
+  scanned 25/385 appended=0 last=skip_other_channel
+  scanned 50/385 appended=0 last=skip_other_channel
+  scanned 75/385 appended=0 last=skip_other_channel
+  scanned 100/385 appended=0 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+  scanned 125/385 appended=0 last=skip_parent_not_in_twenty
+  scanned 150/385 appended=0 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 175/385 appended=0 last=skip_other_channel
+  scanned 200/385 appended=0 last=skip_parent_not_in_twenty
+  scanned 225/385 appended=0 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 250/385 appended=0 last=skip_parent_not_in_twenty
+  scanned 275/385 appended=0 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+APPEND bb:2000924 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 4924'
+  scanned 300/385 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:2000779 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Darka:'
+  scanned 325/385 appended=2 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 350/385 appended=2 last=skip_no_parent
+APPEND bb:2000523 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pani Julii:'
+  scanned 375/385 appended=3 last=skip_other_channel
+APPEND bb:2000413 → marta@owocni.pl/BB Archive 'ODP: Projekt logo dla Pani Julii:'
+APPEND bb:2000373 → marta@owocni.pl/BB Archive 'Re: Nowe logo'
+appended=5 skipped_seen=380 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T040425Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 06:04:25 paka done appended=5 rows=385 scanned=385 window_done=True skip={'skip_other_channel': 153, 'skip_parent_not_in_twenty': 209, 'skip_no_parent': 10, 'skip_in_twenty': 7, 'skip_on_imap': 1}
+2026-09-06 06:04:25 Email Sync wait 600s for 5 APPEND
+2026-09-06 06:14:34 Email Sync extra wait 600s for 5 not ready
+2026-09-06 06:24:43 QA bb:2000924 missing 'Re: Finalizacja projektu &gt; fakturaproforma nr 4'
+2026-09-06 06:24:43 QA sync_warn bb:2000924 — not in Twenty yet, IMAP has it. continue
+2026-09-06 06:24:43 QA bb:2000779 missing 'Re: Strona internetowa dla Pana Darka:'
+2026-09-06 06:24:43 QA sync_warn bb:2000779 — not in Twenty yet, IMAP has it. continue
+2026-09-06 06:24:43 QA bb:2000523 missing 'Re: Projekt logo dla Pani Julii:'
+2026-09-06 06:24:43 QA sync_warn bb:2000523 — not in Twenty yet, IMAP has it. continue
+2026-09-06 06:24:43 QA bb:2000413 missing 'ODP: Projekt logo dla Pani Julii:'
+2026-09-06 06:24:43 QA sync_warn bb:2000413 — not in Twenty yet, IMAP has it. continue
+2026-09-06 06:24:43 QA bb:2000373 missing 'Re: Nowe logo'
+2026-09-06 06:24:43 QA sync_warn bb:2000373 — not in Twenty yet, IMAP has it. continue
+2026-09-06 06:24:48 counts people=28440 companies=1529 opp=3981
+2026-09-06 06:24:48 marta@owocni.pl next offset 8254 → 8639
+2026-09-06 06:24:48 paka marta@owocni.pl offset=8639 limit=25
+marta@owocni.pl: BB window offset=8639 fetch=400 rows=385 target_append=25
+  scanned 25/385 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:2000292 → marta@owocni.pl/BB Archive 'Odp: Strona ze sklepem dla Pana Andrzeja:'
+APPEND bb:2000080 → marta@owocni.pl/BB Archive 'ODP: Projekt logo dla Pani Julii:'
+  scanned 50/385 appended=2 last=skip_other_channel
+APPEND bb:1999955 → marta@owocni.pl/BB Archive 'Re: Idealna nazwa. Za symboliczną złotówkę.'
+APPEND bb:1999949 → marta@owocni.pl/BB Archive 'Re: Dane do faktury - pilne:'
+  scanned 75/385 appended=4 last=skip_parent_not_in_twenty
+  scanned 100/385 appended=4 last=skip_parent_not_in_twenty
+APPEND bb:1999771 → marta@owocni.pl/BB Archive 'Re: Finalizacja projektu &gt; fakturaproforma nr 4899'
+  scanned 125/385 appended=5 last=skip_parent_not_in_twenty
+  scanned 150/385 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:1999626 → marta@owocni.pl/BB Archive 'Odp: Uruchomienie prac nad logo:'
+APPEND bb:1999547 → marta@owocni.pl/BB Archive 'ODP: Owocne treści dla Pana Marcina:'
+APPEND bb:1999537 → marta@owocni.pl/BB Archive 'Nazwa i logo - pakiet:'
+  scanned 175/385 appended=8 last=skip_parent_not_in_twenty
+APPEND bb:1999328 → marta@owocni.pl/BB Archive 'Re: Strona internetowa dla Pana Łukasza:'
+APPEND bb:1999298 → marta@owocni.pl/BB Archive 'Uruchomienie poszukiwań nazwy:'
+APPEND bb:1999285 → marta@owocni.pl/BB Archive 'Re: Projekt white paper:'
+  scanned 200/385 appended=11 last=skip_parent_not_in_twenty
+  scanned 225/385 appended=11 last=skip_parent_not_in_twenty
+  scanned 250/385 appended=11 last=skip_parent_not_in_twenty
+APPEND bb:1998919 → marta@owocni.pl/BB Archive 'Re: Projekt logo dla Pana Vasyla'
+  scanned 275/385 appended=12 last=skip_other_channel
+  scanned 300/385 appended=12 last=skip_parent_not_in_twenty
+APPEND bb:1998494 → marta@owocni.pl/BB Archive 'Dane do faktury:'
+  scanned 325/385 appended=13 last=skip_other_channel
+APPEND bb:1998253 → marta@owocni.pl/BB Archive 'Re: Strona ze sklepem dla Pana Marcina:'
+  scanned 350/385 appended=14 last=skip_parent_not_in_twenty
+APPEND bb:1998215 → marta@owocni.pl/BB Archive 'Tło'
+  scanned 375/385 appended=15 last=skip_other_channel
+APPEND bb:1998074 → marta@owocni.pl/BB Archive 'Re: Draft umowy:'
+appended=16 skipped_seen=369 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T045207Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 06:52:07 paka done appended=16 rows=385 scanned=385 window_done=True skip={'skip_other_channel': 150, 'skip_parent_not_in_twenty': 210, 'skip_on_imap': 2, 'skip_in_twenty': 1, 'skip_no_parent': 6}
+2026-09-06 06:52:07 Email Sync wait 600s for 16 APPEND
+2026-09-06 07:02:35 Email Sync extra wait 600s for 16 not ready
+2026-09-06 07:13:02 QA bb:2000292 missing 'Odp: Strona ze sklepem dla Pana Andrzeja:'
+2026-09-06 07:13:02 QA sync_warn bb:2000292 — not in Twenty yet, IMAP has it. continue
+2026-09-06 07:13:02 QA bb:2000080 missing 'ODP: Projekt logo dla Pani Julii:'
+2026-09-06 07:13:02 QA sync_warn bb:2000080 — not in Twenty yet, IMAP has it. continue
+2026-09-06 07:13:02 QA bb:1999955 missing 'Re: Idealna nazwa. Za symboliczną złotówkę.'
+2026-09-06 07:13:02 QA sync_warn bb:1999955 — not in Twenty yet, IMAP has it. continue
+2026-09-06 07:13:02 QA bb:1999949 direction_warn 'Re: Dane do faktury - pilne:'
+2026-09-06 07:13:02 QA direction_warn bb:1999949 — in Twenty, direction still empty. continue
+2026-09-06 07:13:02 QA bb:1999771 pass 'Re: Finalizacja projektu &gt; fakturaproforma nr 4'
+2026-09-06 07:13:02 QA bb:1999626 pass 'Odp: Uruchomienie prac nad logo:'
+2026-09-06 07:13:02 QA bb:1999547 pass 'ODP: Owocne treści dla Pana Marcina:'
+2026-09-06 07:13:02 QA bb:1999537 pass 'Nazwa i logo - pakiet:'
+2026-09-06 07:13:02 QA bb:1999328 pass 'Re: Strona internetowa dla Pana Łukasza:'
+2026-09-06 07:13:02 QA bb:1999298 pass 'Uruchomienie poszukiwań nazwy:'
+2026-09-06 07:13:02 QA bb:1999285 pass 'Re: Projekt white paper:'
+2026-09-06 07:13:02 QA bb:1998919 pass 'Re: Projekt logo dla Pana Vasyla'
+2026-09-06 07:13:02 QA bb:1998494 pass 'Dane do faktury:'
+2026-09-06 07:13:02 QA bb:1998253 pass 'Re: Strona ze sklepem dla Pana Marcina:'
+2026-09-06 07:13:02 QA bb:1998215 pass 'Tło'
+2026-09-06 07:13:02 QA bb:1998074 pass 'Re: Draft umowy:'
+2026-09-06 07:13:07 counts people=28440 companies=1529 opp=3981
+2026-09-06 07:13:07 marta@owocni.pl next offset 8639 → 9024
+2026-09-06 07:13:07 paka marta@owocni.pl offset=9024 limit=25
+marta@owocni.pl: BB window offset=9024 fetch=400 rows=374 target_append=25
+APPEND bb:1998104 → marta@owocni.pl/BB Archive 'Podpisana umowa:'
+APPEND bb:1997994 → marta@owocni.pl/BB Archive 'Re: Owocne możliwości:'
+  scanned 25/374 appended=2 last=skip_parent_not_in_twenty
+APPEND bb:1997698 → marta@owocni.pl/BB Archive 'Re: Pro forma - finał nazwy:'
+  scanned 50/374 appended=3 last=skip_other_channel
+  scanned 75/374 appended=3 last=skip_other_channel
+Twenty REST 429 — sleep 65.0s
+  scanned 100/374 appended=3 last=skip_parent_not_in_twenty
+APPEND bb:1997241 → marta@owocni.pl/BB Archive 'Re: Budowa strony ze sklepem - etap III z IV:'
+  scanned 125/374 appended=4 last=skip_other_channel
+APPEND bb:1996970 → marta@owocni.pl/BB Archive 'Budowa strony ze sklepem - etap III z IV:'
+Twenty REST 429 — sleep 65.0s
+  scanned 150/374 appended=5 last=skip_parent_not_in_twenty
+  scanned 175/374 appended=5 last=skip_parent_not_in_twenty
+Twenty REST 429 — sleep 65.0s
+  scanned 200/374 appended=5 last=skip_parent_not_in_twenty
+  scanned 225/374 appended=5 last=skip_parent_not_in_twenty
+  scanned 250/374 appended=5 last=skip_parent_not_in_twenty
+APPEND bb:1995819 → marta@owocni.pl/BB Archive 'Fwd: Owocna strona dla Pani Eli:'
+  scanned 275/374 appended=6 last=skip_other_channel
+  scanned 300/374 appended=6 last=skip_parent_not_in_twenty
+  scanned 325/374 appended=6 last=skip_no_parent
+  scanned 350/374 appended=6 last=skip_parent_not_in_twenty
+appended=6 skipped_seen=368 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T054336Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 07:43:36 paka done appended=6 rows=374 scanned=374 window_done=True skip={'skip_parent_not_in_twenty': 233, 'skip_other_channel': 108, 'skip_in_twenty': 2, 'skip_no_parent': 21, 'skip_on_imap': 4}
+2026-09-06 07:43:36 Email Sync wait 600s for 6 APPEND
+2026-09-06 07:53:47 Email Sync extra wait 600s for 6 not ready
+2026-09-06 08:04:00 QA bb:1998104 missing 'Podpisana umowa:'
+2026-09-06 08:04:00 QA sync_warn bb:1998104 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:00 QA bb:1997994 missing 'Re: Owocne możliwości:'
+2026-09-06 08:04:00 QA sync_warn bb:1997994 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:00 QA bb:1997698 missing 'Re: Pro forma - finał nazwy:'
+2026-09-06 08:04:00 QA sync_warn bb:1997698 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:00 QA bb:1997241 missing 'Re: Budowa strony ze sklepem - etap III z IV:'
+2026-09-06 08:04:00 QA sync_warn bb:1997241 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:00 QA bb:1996970 missing 'Budowa strony ze sklepem - etap III z IV:'
+2026-09-06 08:04:00 QA sync_warn bb:1996970 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:00 QA bb:1995819 missing 'Fwd: Owocna strona dla Pani Eli:'
+2026-09-06 08:04:00 QA sync_warn bb:1995819 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:04:06 counts people=28440 companies=1529 opp=3981
+2026-09-06 08:04:06 marta@owocni.pl next offset 9024 → 9398
+2026-09-06 08:04:06 paka marta@owocni.pl offset=9398 limit=25
+marta@owocni.pl: BB window offset=9398 fetch=400 rows=388 target_append=25
+  scanned 25/388 appended=0 last=skip_parent_not_in_twenty
+  scanned 50/388 appended=0 last=skip_parent_not_in_twenty
+APPEND bb:1995034 → marta@owocni.pl/BB Archive 'Uruchomienie prac nad logo:'
+  scanned 75/388 appended=1 last=skip_parent_not_in_twenty
+  scanned 100/388 appended=1 last=skip_parent_not_in_twenty
+APPEND bb:1994778 → marta@owocni.pl/BB Archive 'Re: Nazwa i logo dla Pana Piotra:'
+  scanned 125/388 appended=2 last=skip_parent_not_in_twenty
+  scanned 150/388 appended=2 last=skip_parent_not_in_twenty
+  scanned 175/388 appended=2 last=skip_on_imap
+  scanned 200/388 appended=2 last=skip_on_imap
+  scanned 225/388 appended=2 last=skip_on_imap
+  scanned 250/388 appended=2 last=skip_on_imap
+  scanned 275/388 appended=2 last=skip_on_imap
+  scanned 300/388 appended=2 last=skip_on_imap
+  scanned 325/388 appended=2 last=skip_on_imap
+  scanned 350/388 appended=2 last=skip_on_imap
+  scanned 375/388 appended=2 last=skip_in_twenty
+appended=2 skipped_seen=386 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T062511Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 08:25:11 paka done appended=2 rows=388 scanned=388 window_done=True skip={'skip_parent_not_in_twenty': 136, 'skip_other_channel': 4, 'skip_no_parent': 10, 'skip_on_imap': 204, 'skip_in_twenty': 32}
+2026-09-06 08:25:11 Email Sync wait 600s for 2 APPEND
+2026-09-06 08:35:14 Email Sync extra wait 600s for 2 not ready
+2026-09-06 08:45:18 QA bb:1995034 missing 'Uruchomienie prac nad logo:'
+2026-09-06 08:45:18 QA sync_warn bb:1995034 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:45:18 QA bb:1994778 missing 'Re: Nazwa i logo dla Pana Piotra:'
+2026-09-06 08:45:18 QA sync_warn bb:1994778 — not in Twenty yet, IMAP has it. continue
+2026-09-06 08:45:23 counts people=28440 companies=1529 opp=3981
+2026-09-06 08:45:23 marta@owocni.pl next offset 9398 → 9786
+2026-09-06 08:45:23 paka marta@owocni.pl offset=9786 limit=25
+marta@owocni.pl: BB window offset=9786 fetch=400 rows=399 target_append=25
+  scanned 25/399 appended=0 last=skip_on_imap
+  scanned 50/399 appended=0 last=skip_on_imap
+  scanned 75/399 appended=0 last=skip_on_imap
+  scanned 100/399 appended=0 last=skip_on_imap
+  scanned 125/399 appended=0 last=skip_in_twenty
+  scanned 150/399 appended=0 last=skip_on_imap
+  scanned 175/399 appended=0 last=skip_on_imap
+  scanned 200/399 appended=0 last=skip_on_imap
+  scanned 225/399 appended=0 last=skip_on_imap
+  scanned 250/399 appended=0 last=skip_in_twenty
+  scanned 275/399 appended=0 last=skip_in_twenty
+  scanned 300/399 appended=0 last=skip_on_imap
+  scanned 325/399 appended=0 last=skip_on_imap
+  scanned 350/399 appended=0 last=skip_on_imap
+  scanned 375/399 appended=0 last=skip_on_imap
+appended=0 skipped_seen=399 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T070147Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:01:47 paka done appended=0 rows=399 scanned=399 window_done=True skip={'skip_on_imap': 346, 'skip_in_twenty': 53}
+2026-09-06 09:01:52 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:01:52 marta@owocni.pl next offset 9786 → 10185
+2026-09-06 09:01:52 paka marta@owocni.pl offset=10185 limit=25
+marta@owocni.pl: BB window offset=10185 fetch=400 rows=367 target_append=25
+  scanned 25/367 appended=0 last=skip_on_imap
+  scanned 50/367 appended=0 last=skip_on_imap
+  scanned 75/367 appended=0 last=skip_on_imap
+  scanned 100/367 appended=0 last=skip_on_imap
+  scanned 125/367 appended=0 last=skip_on_imap
+  scanned 150/367 appended=0 last=skip_on_imap
+  scanned 175/367 appended=0 last=skip_on_imap
+  scanned 200/367 appended=0 last=skip_on_imap
+  scanned 225/367 appended=0 last=skip_on_imap
+  scanned 250/367 appended=0 last=skip_on_imap
+  scanned 275/367 appended=0 last=skip_on_imap
+  scanned 300/367 appended=0 last=skip_on_imap
+  scanned 325/367 appended=0 last=skip_on_imap
+  scanned 350/367 appended=0 last=skip_on_imap
+appended=0 skipped_seen=367 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T071711Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:17:11 paka done appended=0 rows=367 scanned=367 window_done=True skip={'skip_on_imap': 323, 'skip_in_twenty': 44}
+2026-09-06 09:17:17 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:17:17 marta@owocni.pl next offset 10185 → 10552
+2026-09-06 09:17:17 paka marta@owocni.pl offset=10552 limit=25
+marta@owocni.pl: BB window offset=10552 fetch=400 rows=0 target_append=25
+appended=0 skipped_seen=0 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_marta_20260906T071717Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:17:17 paka done appended=0 rows=0 scanned=0 window_done=True skip={}
+2026-09-06 09:17:23 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:17:23 marta@owocni.pl exhausted (empty window at offset=10552)
+2026-09-06 09:17:23 paka mariusz@owocni.pl offset=0 limit=25
+mariusz@owocni.pl: BB window offset=0 fetch=400 rows=53 target_append=25
+  scanned 25/53 appended=0 last=skip_other_channel
+  scanned 50/53 appended=0 last=skip_other_channel
+appended=0 skipped_seen=53 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_mariusz_20260906T072123Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:21:23 paka done appended=0 rows=53 scanned=53 window_done=True skip={'skip_parent_not_in_twenty': 17, 'skip_other_channel': 35, 'skip_no_parent': 1}
+2026-09-06 09:21:29 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:21:29 mariusz@owocni.pl next offset 0 → 53
+2026-09-06 09:21:29 paka mariusz@owocni.pl offset=53 limit=25
+mariusz@owocni.pl: BB window offset=53 fetch=400 rows=1 target_append=25
+appended=0 skipped_seen=1 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_mariusz_20260906T072134Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:21:34 paka done appended=0 rows=1 scanned=1 window_done=True skip={'skip_other_channel': 1}
+2026-09-06 09:21:39 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:21:39 mariusz@owocni.pl next offset 53 → 54
+2026-09-06 09:21:39 paka mariusz@owocni.pl offset=54 limit=25
+mariusz@owocni.pl: BB window offset=54 fetch=400 rows=0 target_append=25
+appended=0 skipped_seen=0 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_mariusz_20260906T072139Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).
+2026-09-06 09:21:39 paka done appended=0 rows=0 scanned=0 window_done=True skip={}
+2026-09-06 09:21:45 counts people=28440 companies=1529 opp=3981
+2026-09-06 09:21:45 mariusz@owocni.pl exhausted (empty window at offset=54)
+2026-09-06 09:21:45 STOP: queue_done
+2026-09-06 09:21:45 C-Δ same-mailbox queue finished (gosia → marta → mariusz).

@@ -1,6 +1,6 @@
 "use strict";
 
-const { describe, it, afterEach } = require("node:test");
+const { describe, it } = require("node:test");
 const assert = require("node:assert/strict");
 const {
   classifyLeadIntent,
@@ -175,17 +175,11 @@ describe("businessElapsedMs", () => {
 describe("isLeadDispatchFailoverEnabled", () => {
   const { isLeadDispatchFailoverEnabled } = require("../shared/config");
 
-  afterEach(() => {
+  it("stays off after Biorę retirement (env ignored)", () => {
     delete process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
-  });
-
-  it("defaults to on", () => {
-    delete process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
-    assert.equal(isLeadDispatchFailoverEnabled(), true);
-  });
-
-  it("pauses when false", () => {
-    process.env.LEAD_DISPATCH_FAILOVER_ENABLED = "false";
     assert.equal(isLeadDispatchFailoverEnabled(), false);
+    process.env.LEAD_DISPATCH_FAILOVER_ENABLED = "true";
+    assert.equal(isLeadDispatchFailoverEnabled(), false);
+    delete process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
   });
 });

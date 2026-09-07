@@ -1,0 +1,286 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 1467,
+  "bb_limit": 400,
+  "rows": 357,
+  "scanned": 357,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 278,
+    "skip_parent_not_in_twenty": 25,
+    "skip_no_parent": 23,
+    "skip_in_twenty": 30
+  },
+  "appended": [
+    {
+      "bb_id": 2042921,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona",
+      "sent_date": "2026-02-17T12:43:25.357+00:00",
+      "own": "<61ebb27d-b842-524e-d6e0-2560788b7c35@owocni.pl>",
+      "parent": "<CAE9ceK-hX7QDy3ydhwqmOhkLhrrfJ9Gp_4dDyXhKaFq1845piA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "fe43da50-34eb-4ceb-9518-1b8531b9b03a",
+      "parent_mailboxes": [
+        "GOSIA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 50196
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2041539,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-04T08:04:16.926+00:00",
+      "own": "<7baafe2a-c44a-f445-ec34-bd0fd480975c@owocni.pl>",
+      "parent": "<bfb8fe36b042db80749ddec153beb3d0@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "b2cdb606-be58-43ff-9e4e-4f00b4fd6c84",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041538,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Czy projekt strony jest nadal aktualny?",
+      "sent_date": "2026-02-04T08:03:02.418+00:00",
+      "own": "<8b74acd5-ea38-a8c2-784c-b0d1cbb74c09@owocni.pl>",
+      "parent": "<4c2ecfd8bd0faeb1b2692d2be086fe8d@kompas.travel.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d8a7b147-41a9-4c9f-913f-1477eb676fc2",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2041503,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Czy projekt strony jest nadal aktualny?",
+      "sent_date": "2026-02-03T15:20:10.761+00:00",
+      "own": "<c69208be-82a6-7069-d3c7-a7e909b5432b@owocni.pl>",
+      "parent": "<2f620268ade06aaa035e6aadde49d2af@kompas.travel.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2041502,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T15:18:31.178+00:00",
+      "own": "<e3c7c034-dd13-3261-c73a-99907d96b7e2@owocni.pl>",
+      "parent": "<1b0d0056aea41a9d0c917a2324dfc0a1@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "f1613971-8341-47ea-96e3-9ba389c36a7a",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041498,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa strona firmowa",
+      "sent_date": "2026-02-03T15:11:11.415+00:00",
+      "own": "<776292db-9388-fa8b-abc4-34c32f42bf64@owocni.pl>",
+      "parent": "<f1db84e9a48867a3456944cb894f4f73@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "6ec31666-706f-47e7-80e2-0d5dfae5d788",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041493,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2026-02-03T14:47:47.679+00:00",
+      "own": "<d9d1678b-cced-a648-dc7f-f285f00a222b@owocni.pl>",
+      "parent": "<367b83696a21f5237333f083fb5b6351@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "dedb728c-77dc-4076-86c8-e3edd6b8340c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041486,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocne logo",
+      "sent_date": "2026-02-03T14:27:44.241+00:00",
+      "own": "<63481a95-4fec-790d-5aea-b89c1b296a8f@owocni.pl>",
+      "parent": "<baf2441177a221485dfc356e7d5ef445@funia.eu>",
+      "status": "skip_other_channel",
+      "parent_thread": "be8befbd-473e-42e4-8864-7aec2aa746f2",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2041485,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2026-02-03T14:19:43.138+00:00",
+      "own": "<352451cc-d839-4b76-03cc-60549329e638@owocni.pl>",
+      "parent": "<88096bfdb084c07dc639a1dcad23704a@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "751e6d7a-de33-4038-9f32-2e31d0143cfe",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041476,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2026-02-03T13:10:12.992+00:00",
+      "own": "<16be3855-9e5e-60db-a11f-4eaf9741f323@owocni.pl>",
+      "parent": "<e3f9d6724ee25a0b6db6beb503baab55@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "adbe4d0b-50fb-4392-b1a3-f6c1374fa440",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041473,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Jakie prace mielibyśmy wykonać?",
+      "sent_date": "2026-02-03T12:57:58.063+00:00",
+      "own": "<61cea172-7b49-a2d7-c6b3-bc5a94776ef6@owocni.pl>",
+      "parent": "<9ae426357bbaace25fc1e1735e587c38@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "842f2299-aa2c-4bdc-9f69-bdf22d8d1c75",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041467,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Logo dla drugiej marki",
+      "sent_date": "2026-02-03T12:12:11.618+00:00",
+      "own": "<5e69536f-32ef-2b0a-5b22-fcd3b11bb7a2@owocni.pl>",
+      "parent": "<10fce0f9cca2173ba95982d7b911ad2e@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "53fa62ad-2914-41e5-95e7-89f55b93e361",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041466,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T12:08:56.595+00:00",
+      "own": "<59526625-40f2-2f6f-90b2-20373224bfeb@owocni.pl>",
+      "parent": "<5e316ad954f53006c1d72a0b91ce0c4f@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d3545e5b-723c-4939-b0d2-429f42ae0130",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041465,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Nowa strona firmowa",
+      "sent_date": "2026-02-03T12:05:02.818+00:00",
+      "own": "<eb0aec93-d908-6370-1396-200d8d1e9e6f@owocni.pl>",
+      "parent": "<002301dc9069$1f24e630$5d6eb290$@cedrus-ogrody.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d6b85f39-b7d9-4cde-aba4-296ac3d3d03e",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2041460,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2026-02-03T11:46:28.502+00:00",
+      "own": "<c99f2a56-a869-63bb-d8a6-b09307ed046b@owocni.pl>",
+      "parent": "<31d8f7af209197279c76e9c34109f918@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "6d093870-83ed-4b6a-af25-77983e8224db",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041459,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Odp: ODP: Animacja logo",
+      "sent_date": "2026-02-03T11:35:45.983+00:00",
+      "own": "<d0450a9c-f9fa-5535-f770-b84019f5da95@owocni.pl>",
+      "parent": "<bx.mail.698073e1.976c4a@novedo.bitrix24.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "f959d643-f979-4c7b-adf6-1d8434e6bf3b",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2041457,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T11:22:46.357+00:00",
+      "own": "<d60cdec3-0904-2f23-1690-6c6e0304b70a@owocni.pl>",
+      "parent": "<8340980f2aa81455fe926867bd41b55b@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "2c28aa24-d25c-43be-99ca-5d30485e9c56",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041456,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T11:21:15.957+00:00",
+      "own": "<c2c16edb-46ec-b5ba-f8fc-b257392bac16@owocni.pl>",
+      "parent": "<85710c1e371af4b6a0db35b46950c770@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "0d7ce1f8-e1da-4874-9370-6a18a00c47ac",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041453,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2026-02-03T11:07:09.168+00:00",
+      "own": "<b2524e0f-07c1-21c4-492e-a83ae256bb69@owocni.pl>",
+      "parent": "<7cf27809ac61a3cafbfe63efe84e5361@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "f0705c5e-aae6-4a8d-b3aa-6a76926bb263",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041451,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T11:05:21.028+00:00",
+      "own": "<e47a38e6-3226-1d9e-0d13-7ca474dedb75@owocni.pl>",
+      "parent": "<d3d5759fe184ad26954420163aba39e1@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "78f8b386-532d-4419-a8b6-cd7358d1c7ce",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2041448,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2026-02-03T11:00:47.675+00:00",
+      "own": "<38707c06-c5db-a73d-cc42-8dae815b9db1@owocni.pl>",
+      "parent": "<68bdebb399ea4039a48c9b3c3d402787@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "8c798643-ad3c-418c-ab54-12a9bcd3158c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

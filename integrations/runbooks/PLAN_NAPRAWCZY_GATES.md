@@ -30,7 +30,7 @@ Przy każdej naprawie, zanim wejdzie do roboty:
 
 Pozycja bez odpowiedzi na (2) nie ma zgłaszającego — inny mandat albo wypada.
 
-**Przyklepane (nie otwierać):** R-1 skrzynki/podglądy · R-2 odroczenie = przycisk + data/godzina, spec `ODROCZENIE_DECISION.md` · R-3 „Do odpisania” = kolejka roboty (nowe **i** piłka u nas) — **rewizja wieczór 3 IX, poranny zapis „nowe tylko w Nowych” wycofany** · R-4 przeliczenie po ostatniej wiadomości otwartej sprawy · R-5 scalanie bez ceremonii · R-6 historia od 1.01.2023 · R-7 Biorę / zegar jak 12 VIII · R-8 Maciek w puli gdy Marta+Gosia zapchane · R-9 D-2 bez okna szkody.
+**Przyklepane (nie otwierać):** R-1 skrzynki/podglądy · R-2 odroczenie = przycisk + data/godzina, spec `ODROCZENIE_DECISION.md` · R-3 „Do odpisania” = kolejka roboty (nowe **i** piłka u nas) — **rewizja wieczór 3 IX, poranny zapis „nowe tylko w Nowych” wycofany** · R-4 przeliczenie po ostatniej wiadomości otwartej sprawy · R-5 scalanie bez ceremonii · R-6 historia od 1.01.2023 · ~~R-7 Biorę / zegar~~ **R-7 wycofane 4 IX — bez Biorę, jeden przydział GCP (COPY→Maciej, parzysty idOid→Gosia, nieparzysty→Marta)** · R-8 Maciek w puli gdy Marta+Gosia zapchane · R-9 D-2 bez okna szkody.
 
 **Zamrożenie miękkie (do PASS G4):** nie dociągamy ręcznie *historycznych* przykładów Gosi/Marty/Maćka (kasuje dowód). Wyjątek: żywy lead, który **dziś** blokuje odpowiedź — można odblokować, ale zapisujemy który i dlaczego.
 
@@ -50,7 +50,7 @@ Pozycja bez odpowiedzi na (2) nie ma zgłaszającego — inny mandat albo wypada
 | **G5** | D-2 wątkowanie + stopka (jedno okno) | Szkoda u klienta; Marta F5 |
 | **G6** | Widoki i podglądy (P4) | Marta F6+F7, Maciek rano, „do wzięcia” |
 | **G7** | Worker (P2) — jedna rewizja | Kolejka, studio@ karta, kierunek, atrapa |
-| **G8** | Przycisk Biorę (P3) — poza godzinami | Marta A1, Maciek K7/K15 — **zegar dopiero po G0 i pierwszym kontakcie z każdego kanału** |
+| **G8** | Biorę / zegar — **RETIRED 4 IX** | Hash GCP only; przycisk i widok zdjęte |
 | **G9** | Operacje na danych (P5) — pojedynczo | Historia poczty, przeliczenie kolejki |
 | **G10** | Otwarte (O-1…O-6) — decyzje, nie kod | BB, skrzynki imienne, lista braków, „do wzięcia”, zakaz emisji, taryfa |
 
@@ -161,7 +161,7 @@ Jedno okno, jedno ogłoszenie, odbiór przez Martę, Gosię i Maćka.
 - `studio@` **zostaje w tym samym widoku** co własna skrzynka (Dawid, 3 IX, potwierdzone). Osobnej zakładki nie robimy.
 - Przestawić kryterium przynależności z uczestników na kanał — bez tego Marta nadal „jest przypisywana do wiadomości ze studio@”.
 - Test wycieku treści: adres podglądowy w kopii nie może odsłonić korespondencji handlowej całej firmie.
-- Byt „do wzięcia” = **widok tabeli** Opportunity `fc2d2e30-…` (ikona ręki, jak Biorę). Nie jest opcją etapu — usunięcie widoku **nie** zeruje kart. Przycisk Biorę to osobny pinned workflow; Twenty nie umie go schować po wykonaniu.
+- Byt „do wzięcia” **usunięty 4 IX** (widok `fc2d2e30-…`). Kart nie zerowano. Przycisk Biorę DEACTIVATED.
 
 **PASS:** Marta/Gosia/Ewa widzą własną + studio, `leads@` nigdzie. Maciek — `copywriting@` + studio, bez cudzych leadów w „moich”.
 
@@ -181,11 +181,11 @@ Nie w tym oknie: operacje masowe na historii (G9).
 
 ---
 
-## G8 — przycisk Biorę / zegar (P3)
+## G8 — przycisk Biorę / zegar (P3) — RETIRED 4 IX
 
-**3 IX:** oddawanie kart (failover Marta↔Gosia) **wstrzymane** (`LEAD_DISPATCH_FAILOVER_ENABLED=false`). Przydział przy nowym leadzie zostaje. Biorę zostaje. Dyskusja z zespołem, potem ewentualnie włączamy z powrotem.
+**4 IX:** mechanizm Biorę wycofany w całości. Workflow DEACTIVATED, widok „Do wzięcia” usunięty, sweep no-op, `LEAD_DISPATCHER_ENABLED` zawsze false. Istniejące ownery nietknięte. Nowy przydział tylko hash GCP.
 
-Build workera: `2026-09-03-failover-paused`.
+Build workera: `2026-09-04-retire-biore`.
 
 ---
 

@@ -83,20 +83,31 @@ def twenty_get_messages_by_msgid(msgid: str) -> list[dict]:
         "User-Agent": "owocni-cdelta/1.0",
     }
     last_err: Exception | None = None
-    for _attempt in range(6):
+    for attempt in range(8):
         req = urllib.request.Request(url, headers=headers)
         try:
-            with urllib.request.urlopen(req, timeout=60) as res:
+            with urllib.request.urlopen(req, timeout=90) as res:
                 data = json.loads(res.read().decode())
             time.sleep(REST_PACE_SEC)
             return (data.get("data") or {}).get("messages") or []
         except urllib.error.HTTPError as e:
             last_err = e
             if e.code == 429:
+                print(f"Twenty REST 429 — sleep {RATE_SLEEP_SEC}s", flush=True)
                 time.sleep(RATE_SLEEP_SEC)
                 continue
             raise
-    raise SystemExit(f"Twenty REST 429: {last_err}")
+        except (TimeoutError, urllib.error.URLError, OSError) as e:
+            last_err = e
+            wait = min(90.0, 8.0 * (2**attempt))
+            print(
+                f"Twenty REST timeout ({type(e).__name__}) attempt {attempt + 1}/8 "
+                f"— sleep {wait:.0f}s",
+                flush=True,
+            )
+            time.sleep(wait)
+            continue
+    raise SystemExit(f"Twenty REST failed: {last_err}")
 
 
 def classify_row(row: dict, *, inbox: str, imap, folders: list[str]) -> dict:
@@ -121,12 +132,12 @@ def classify_row(row: dict, *, inbox: str, imap, folders: list[str]) -> dict:
     if tos and all(OWOCNI.search(t) for t in tos):
         rec["status"] = "skip_internal"
         return rec
-    if search_msgid_anywhere(imap, folders, own):
-        rec["status"] = "skip_on_imap"
-        return rec
     own_msgs = twenty_get_messages_by_msgid(own)
     if own_msgs:
         rec["status"] = "skip_in_twenty"
+        return rec
+    if search_msgid_anywhere(imap, folders, own):
+        rec["status"] = "skip_on_imap"
         return rec
     if not parent:
         rec["status"] = "skip_no_parent"
@@ -157,13 +168,18 @@ def assert_mailbox(raw: str) -> str:
 def cmd_discover(args: argparse.Namespace) -> None:
     inbox = assert_mailbox(args.mailbox)
     load_bb_env()
-    rows = fetch_sent_candidates(inbox=inbox, limit=args.bb_limit)
+    rows = fetch_sent_candidates(
+        inbox=inbox, limit=args.bb_limit, offset=args.bb_offset
+    )
     user, password = imap_creds_for(inbox)
     imap = imap_login(user, password)
     classified: list[dict] = []
     try:
         folders = imap_list_folders(imap)
-        print(f"{inbox}: IMAP folders={len(folders)} BB Sent candidates={len(rows)}")
+        print(
+            f"{inbox}: IMAP folders={len(folders)} BB Sent candidates={len(rows)} "
+            f"offset={args.bb_offset}"
+        )
         for i, row in enumerate(rows, 1):
             rec = classify_row(row, inbox=inbox, imap=imap, folders=folders)
             classified.append(rec)
@@ -191,63 +207,134 @@ def cmd_discover(args: argparse.Namespace) -> None:
     print("counts", json.dumps(counts, ensure_ascii=False))
 
 
-def cmd_apply(args: argparse.Namespace) -> None:
-    inbox = assert_mailbox(args.mailbox)
-    if not args.yes:
-        raise SystemExit("Brak --yes (dry apply zabroniony — użyj discover)")
-    folder = args.folder or DEFAULT_FOLDER
+def run_apply(
+    *,
+    mailbox: str,
+    limit: int,
+    bb_limit: int,
+    bb_offset: int,
+    folder: str,
+    manifest_dir: Path,
+) -> dict:
+    inbox = assert_mailbox(mailbox)
+    folder = folder or DEFAULT_FOLDER
     load_bb_env()
-    rows = fetch_sent_candidates(inbox=inbox, limit=args.bb_limit)
+    rows = fetch_sent_candidates(
+        inbox=inbox, limit=bb_limit, offset=bb_offset
+    )
+    print(
+        f"{inbox}: BB window offset={bb_offset} fetch={bb_limit} "
+        f"rows={len(rows)} target_append={limit}",
+        flush=True,
+    )
     user, password = imap_creds_for(inbox)
     imap = imap_login(user, password)
     appended: list[dict] = []
     skipped: list[dict] = []
+    append_fail = False
     try:
         folders = imap_list_folders(imap)
         ensure_folder(imap, folder)
         folders = imap_list_folders(imap)
-        for row in rows:
-            if len(appended) >= args.limit:
+        for i, row in enumerate(rows, 1):
+            if len(appended) >= limit:
                 break
             rec = classify_row(row, inbox=inbox, imap=imap, folders=folders)
             if rec["status"] != "eligible":
                 skipped.append(rec)
+                if i % 25 == 0:
+                    print(
+                        f"  scanned {i}/{len(rows)} appended={len(appended)} last={rec['status']}",
+                        flush=True,
+                    )
                 continue
             full = load_bb_row(int(row["id"]))
             raw, dt = build_rfc822(full)
             internal = imaplib.Time2Internaldate(dt)
-            typ, resp = imap.append(f'"{folder}"', r"(\Seen)", internal, raw)
+            try:
+                typ, resp = imap.append(f'"{folder}"', r"(\Seen)", internal, raw)
+            except (imaplib.IMAP4.abort, OSError, TimeoutError) as e:
+                print(f"IMAP reconnect after {type(e).__name__}: {e}", flush=True)
+                try:
+                    imap.logout()
+                except Exception:
+                    pass
+                time.sleep(8)
+                imap = imap_login(user, password)
+                ensure_folder(imap, folder)
+                folders = imap_list_folders(imap)
+                typ, resp = imap.append(f'"{folder}"', r"(\Seen)", internal, raw)
             if typ != "OK":
                 rec["status"] = f"append_fail:{typ}"
                 skipped.append(rec)
-                print("APPEND FAIL", rec["bb_id"], typ, resp)
+                append_fail = True
+                print("APPEND FAIL", rec["bb_id"], typ, resp, flush=True)
                 break
             rec["status"] = "appended"
             rec["folder"] = folder
             rec["bytes"] = len(raw)
             appended.append(rec)
-            print(f"APPEND bb:{rec['bb_id']} → {inbox}/{folder} {rec['subject']!r}")
+            print(
+                f"APPEND bb:{rec['bb_id']} → {inbox}/{folder} {rec['subject']!r}",
+                flush=True,
+            )
             time.sleep(0.4)
     finally:
         try:
             imap.logout()
         except Exception:
             pass
-    out_dir = Path(args.manifest_dir)
+    skip_counts: dict[str, int] = {}
+    for rec in skipped:
+        skip_counts[rec["status"]] = skip_counts.get(rec["status"], 0) + 1
+    scanned = len(skipped) + len(appended)
+    hit_limit = len(appended) >= limit
+    window_done = (not append_fail) and scanned >= len(rows)
+    out_dir = Path(manifest_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     path = out_dir / f"apply_{inbox.split('@')[0]}_{stamp}.json"
+    result = {
+        "mailbox": inbox,
+        "folder": folder,
+        "bb_offset": bb_offset,
+        "bb_limit": bb_limit,
+        "rows": len(rows),
+        "scanned": scanned,
+        "hit_limit": hit_limit,
+        "window_done": window_done,
+        "append_fail": append_fail,
+        "skip_counts": skip_counts,
+        "appended": appended,
+        "skipped_sample": skipped[-20:],
+    }
     path.write_text(
-        json.dumps(
-            {"mailbox": inbox, "folder": folder, "appended": appended, "skipped_sample": skipped[-20:]},
-            indent=2,
-            ensure_ascii=False,
-        )
-        + "\n",
+        json.dumps(result, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    print(f"appended={len(appended)} skipped_seen={len(skipped)} manifest={path}")
-    print("Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).")
+    result["manifest"] = str(path)
+    print(
+        f"appended={len(appended)} skipped_seen={len(skipped)} manifest={path}",
+        flush=True,
+    )
+    print(
+        "Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).",
+        flush=True,
+    )
+    return result
+
+
+def cmd_apply(args: argparse.Namespace) -> None:
+    if not args.yes:
+        raise SystemExit("Brak --yes (dry apply zabroniony — użyj discover)")
+    run_apply(
+        mailbox=args.mailbox,
+        limit=args.limit,
+        bb_limit=args.bb_limit,
+        bb_offset=args.bb_offset,
+        folder=args.folder or DEFAULT_FOLDER,
+        manifest_dir=Path(args.manifest_dir),
+    )
 
 
 def main() -> None:
@@ -256,11 +343,13 @@ def main() -> None:
     d = sub.add_parser("discover")
     d.add_argument("--mailbox", required=True)
     d.add_argument("--bb-limit", type=int, default=60)
+    d.add_argument("--bb-offset", type=int, default=0)
     d.add_argument("--out", default="")
     a = sub.add_parser("apply")
     a.add_argument("--mailbox", required=True)
     a.add_argument("--limit", type=int, default=10)
     a.add_argument("--bb-limit", type=int, default=80)
+    a.add_argument("--bb-offset", type=int, default=0)
     a.add_argument("--folder", default=DEFAULT_FOLDER)
     a.add_argument("--yes", action="store_true")
     a.add_argument(

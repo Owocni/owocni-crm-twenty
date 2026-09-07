@@ -1,6 +1,6 @@
 "use strict";
 
-const CREATE_LEAD_BUILD_ID = "2026-09-03-failover-paused";
+const CREATE_LEAD_BUILD_ID = "2026-09-04-snooze-wake";
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -38,7 +38,57 @@ function getOwnerIds() {
     gosia: process.env.TWENTY_OWNER_GOSIA || "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
     ewa: process.env.TWENTY_OWNER_EWA || "b9e2b31e-0b4a-4936-9d2a-2e5b4a3e0b16",
     robert: process.env.TWENTY_OWNER_ROBERT || "23ac9976-0232-4097-b056-5dc391bf7c34",
+    /** UI „Owocni Owocni” — login owocni@gmail.com */
+    holding:
+      process.env.TWENTY_OWNER_HOLDING ||
+      process.env.TWENTY_OWNER_OWOCNI ||
+      "2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d",
   };
+}
+
+/** Tydzień testów: holding + quota 2/dzień na Martę/Gosię/Maćka. Robert bez limitu. */
+function isSampleWeekRoutingEnabled() {
+  const flag = process.env.LEAD_SAMPLE_WEEK_ENABLED;
+  return flag === "true" || flag === "1";
+}
+
+function getSampleWeekHoldingOwnerId() {
+  const owners = getOwnerIds();
+  const raw = process.env.LEAD_SAMPLE_WEEK_HOLDING_OWNER_ID;
+  return String(raw || owners.holding).trim();
+}
+
+function getSampleWeekDailyQuota() {
+  const n = Number(process.env.LEAD_SAMPLE_WEEK_DAILY_QUOTA || 2);
+  return Number.isFinite(n) && n >= 0 ? n : 2;
+}
+
+function getSampleWeekQuotaOwnerIds() {
+  const owners = getOwnerIds();
+  const raw = process.env.LEAD_SAMPLE_WEEK_QUOTA_OWNER_IDS;
+  if (raw && String(raw).trim()) {
+    return new Set(
+      String(raw)
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean),
+    );
+  }
+  return new Set([owners.marta, owners.gosia, owners.maciej]);
+}
+
+function getSampleWeekExemptOwnerIds() {
+  const owners = getOwnerIds();
+  const raw = process.env.LEAD_SAMPLE_WEEK_EXEMPT_OWNER_IDS;
+  if (raw && String(raw).trim()) {
+    return new Set(
+      String(raw)
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean),
+    );
+  }
+  return new Set([owners.robert]);
 }
 
 function getPhoneOwnerMap() {
@@ -75,18 +125,14 @@ function isContinuityRoutingEnabled() {
   return flag === "true" || flag === "1";
 }
 
+/** Retired 2026-09-04 — Biorę / least-loaded / failover. Env is ignored. */
 function isLeadDispatcherEnabled() {
-  const flag = process.env.LEAD_DISPATCHER_ENABLED;
-  return flag === "true" || flag === "1";
+  return false;
 }
 
-/** Owner handoff (Marta↔Gosia). Default on; set false to pause until the team agrees. */
+/** Retired with the dispatcher. Failover never runs. */
 function isLeadDispatchFailoverEnabled() {
-  const flag = process.env.LEAD_DISPATCH_FAILOVER_ENABLED;
-  if (flag === undefined || String(flag).trim() === "") {
-    return true;
-  }
-  return flag === "true" || flag === "1";
+  return false;
 }
 
 function getLeadDispatchPoolIds() {
@@ -174,6 +220,11 @@ module.exports = {
   getMetaRobertAllowlist,
   getContinuityOwnerIds,
   getLeadsAtMessageChannelId,
+  isSampleWeekRoutingEnabled,
+  getSampleWeekHoldingOwnerId,
+  getSampleWeekDailyQuota,
+  getSampleWeekQuotaOwnerIds,
+  getSampleWeekExemptOwnerIds,
   MAX_CREATE_LEAD_TASKS: Number(process.env.MAX_CREATE_LEAD_TASKS || 5),
   MAX_UPDATE_PERSON_TASKS: Number(process.env.MAX_UPDATE_PERSON_TASKS || 10),
   MAX_CALL_TRANSCRIPT_TASKS: Number(process.env.MAX_CALL_TRANSCRIPT_TASKS || 5),

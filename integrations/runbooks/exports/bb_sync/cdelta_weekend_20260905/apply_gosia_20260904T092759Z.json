@@ -1,0 +1,258 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 735,
+  "bb_limit": 400,
+  "rows": 362,
+  "scanned": 362,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_parent_not_in_twenty": 30,
+    "skip_other_channel": 270,
+    "skip_in_twenty": 39,
+    "skip_no_parent": 23
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 2047367,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2026-04-15T07:23:32.825+00:00",
+      "own": "<b74ea848-d9da-d073-2fcf-a459af30436c@owocni.pl>",
+      "parent": "<36e14bb0b5a03759e17c1c11d0ee68d9@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c6538b39-7b83-4b35-be03-56e23705f806",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047365,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Odp: projekt graficzny i branding opakowań (marka EIGER)",
+      "sent_date": "2026-04-15T07:07:30.775+00:00",
+      "own": "<0152fddd-f20b-e3c1-51d1-86d82efadb52@owocni.pl>",
+      "parent": "<PR2PR09MB306884B0C031D0C8148E8E9AF4252@PR2PR09MB3068.eurprd09.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "3e4e647d-09f8-4164-897e-d63d88da420b",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047361,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Re: dot. Przerysowania na nowo loga",
+      "sent_date": "2026-04-15T06:30:05+00:00",
+      "own": "<bx.mail.69df306b.21c412@novedo.bitrix24.com>",
+      "parent": "<CAO+GxtfDAPJnsiTuRa3kSOfV6ooc3bfUFbO357f6Wh5PLBvUxg@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047348,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2026-04-14T16:54:31.818+00:00",
+      "own": "<f3f06f47-64c3-4e55-0856-353427f1d503@owocni.pl>",
+      "parent": "<0c043b981aab5fc0f240f9ef25bc1f5a@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "886c055b-f6c8-4224-b32f-9065a56d2dfc",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047347,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne logo",
+      "sent_date": "2026-04-14T16:51:29.178+00:00",
+      "own": "<546d846d-56ee-bbc8-5238-de9e49eee1ac@owocni.pl>",
+      "parent": "<c9cd6cb661d43b69b3e47eab9ccbeb05@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d953555a-92e8-438b-9e76-53e4f20c44cd",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047328,
+      "inbox": "gosia@owocni.pl",
+      "subject": "AW: Owocne logo",
+      "sent_date": "2026-04-14T13:01:42.383+00:00",
+      "own": "<bca87c82-712f-1be0-3a39-689e385c6355@owocni.pl>",
+      "parent": "<LOAP302MB2236261B13DB47B564CABB07CE252@LOAP302MB2236.GBRP302.PROD.OUTLOOK.COM>",
+      "status": "skip_other_channel",
+      "parent_thread": "321d1760-80b5-4a72-8019-f579304b5bf5",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047327,
+      "inbox": "gosia@owocni.pl",
+      "subject": "dot. Przerysowania na nowo loga",
+      "sent_date": "2026-04-14T12:49:08.573+00:00",
+      "own": "<f5cea504-9bd9-cf2a-bd73-4bda5c641294@owocni.pl>",
+      "parent": "<CAO+Gxte_zdauXoubiis2q3DkH_KeYFdnHOavmrYOFBfnhY3ivQ@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047287,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2026-04-14T12:20:10.811+00:00",
+      "own": "<6ca444e9-41d1-e419-dfcd-59e3d64905ba@owocni.pl>",
+      "parent": "<246df77f6836c2fc9775d84fe0f3f893@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "178b1518-94fb-4930-be72-ebb0f2fd4b4b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047282,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa - konsultacja ze specjalistą",
+      "sent_date": "2026-04-14T11:59:05.942+00:00",
+      "own": "<e7ca87d6-b08a-cb3e-351b-de8b0c498458@owocni.pl>",
+      "parent": "<etPan.69de2baa.26ca2085.46c@isdvectis.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "08a3219e-8fcc-434e-bfde-18ad5ac1fcc4",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047279,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa strona firmowa - konsultacja ze specjalistą",
+      "sent_date": "2026-04-14T11:52:23.949+00:00",
+      "own": "<24fe33a3-db90-2c48-5a97-ef8b032dce29@owocni.pl>",
+      "parent": "<54a434647b8a2c52b5f330facb6f21f1@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "7ffe5b06-5aa9-4bf1-931b-46f702c80a9e",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047278,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona firmowa",
+      "sent_date": "2026-04-14T11:40:09.49+00:00",
+      "own": "<609a2fa6-001e-2e37-8e5a-43d848edc43e@owocni.pl>",
+      "parent": "<CACcYSbj0itTjytNAh1E49D1+zWojCzv30oQ_5Ahiiv1Ct1WqXw@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "7ef11772-b269-4a90-9c9c-c5f93207571c",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047272,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu >faktura pro forma nr 5956",
+      "sent_date": "2026-04-14T10:23:41.919+00:00",
+      "own": "<db003ba2-cf34-51a2-5ff4-f72f54d8520e@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047271,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2026-04-14T10:13:13.168+00:00",
+      "own": "<05861402-0eb4-8fec-e94f-1b38d67c5b35@owocni.pl>",
+      "parent": "<eb8428efda8610e96e1999d2946c95f3@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "08849891-658b-4bb9-b824-7dcfff47025b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047270,
+      "inbox": "gosia@owocni.pl",
+      "subject": "projekt graficzny i branding opakowań (marka EIGER)",
+      "sent_date": "2026-04-14T10:11:15.188+00:00",
+      "own": "<1bff4987-50fa-815f-f5cd-85638ad5bc23@owocni.pl>",
+      "parent": "<PR2PR09MB3068787954E8B3E6F827965BF4272@PR2PR09MB3068.eurprd09.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "3e4e647d-09f8-4164-897e-d63d88da420b",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047267,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocne logo",
+      "sent_date": "2026-04-14T10:03:08.467+00:00",
+      "own": "<ebaf81ef-7342-c4f0-df91-e10f08024a55@owocni.pl>",
+      "parent": "<LOAP302MB2236FF45100F74149F946D0ACE242@LOAP302MB2236.GBRP302.PROD.OUTLOOK.COM>",
+      "status": "skip_other_channel",
+      "parent_thread": "321d1760-80b5-4a72-8019-f579304b5bf5",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047265,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona",
+      "sent_date": "2026-04-14T09:47:51.267+00:00",
+      "own": "<6a0b5f19-5b4a-eb92-3cb4-074e6cfd0d87@owocni.pl>",
+      "parent": "<218502753df88f39b21a220a4cf0f4f4@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "4e1d080a-fd01-4822-b54c-742e437332b0",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047263,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja nazwy > faktura pro forma nr 5955",
+      "sent_date": "2026-04-14T09:43:09+00:00",
+      "own": "<crm.activity.68367-OIWOT9@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2047262,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa strona firmowa",
+      "sent_date": "2026-04-14T09:35:55.732+00:00",
+      "own": "<92bfecf0-5fd6-2104-db29-1c9d2115e0ca@owocni.pl>",
+      "parent": "<ce1539a188d3cda094eb50a52fb4f3c5@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "11980e88-a96c-4dc5-be23-398ca044857c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047260,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa strona firmowa - konsultacja ze specjalistą",
+      "sent_date": "2026-04-14T09:32:19.311+00:00",
+      "own": "<827019e8-0d74-f9a0-a750-ffdac89e24b5@owocni.pl>",
+      "parent": "<9d3ab31df42d7dde5bd82d1458b5155f@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c6386711-7c6a-48fb-8edc-464e9d318893",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2047214,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Umowa 16/03/26 na przekazanie praw autorskich",
+      "sent_date": "2026-04-13T17:32:04+00:00",
+      "own": "<bx.mail.69dd2893.34ea95@novedo.bitrix24.com>",
+      "parent": "<d7a84c4d-9bbb-48ae-9d16-60147f610a0b@dekonetka.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

@@ -68,38 +68,29 @@ yaml_escape() {
     echo "CONTINUITY_OWNER_IDS: $(yaml_escape "$CONTINUITY_OWNER_IDS")"
   fi
 
-  if [[ "${LEAD_DISPATCHER_ENABLED:-}" == "true" || "${LEAD_DISPATCHER_ENABLED:-}" == "1" ]]; then
-    echo "LEAD_DISPATCHER_ENABLED: 'true'"
+  # Retired 2026-09-04: Biorę / least-loaded / failover never go live again.
+  echo "LEAD_DISPATCHER_ENABLED: 'false'"
+  echo "LEAD_DISPATCHER_SWEEP_ON_POLL: 'false'"
+  echo "LEAD_DISPATCH_FAILOVER_ENABLED: 'false'"
+
+  # Tydzień testów BB → holding owocni@ + quota Marta/Gosia/Maciej
+  if [[ -n "${LEAD_SAMPLE_WEEK_ENABLED:-}" ]]; then
+    echo "LEAD_SAMPLE_WEEK_ENABLED: $(yaml_escape "$LEAD_SAMPLE_WEEK_ENABLED")"
   fi
-  if [[ -n "${LEAD_DISPATCH_FAILOVER_ENABLED:-}" ]]; then
-    echo "LEAD_DISPATCH_FAILOVER_ENABLED: $(yaml_escape "$LEAD_DISPATCH_FAILOVER_ENABLED")"
+  if [[ -n "${LEAD_SAMPLE_WEEK_DAILY_QUOTA:-}" ]]; then
+    echo "LEAD_SAMPLE_WEEK_DAILY_QUOTA: $(yaml_escape "$LEAD_SAMPLE_WEEK_DAILY_QUOTA")"
   fi
-  if [[ "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "true" || "${LEAD_DISPATCHER_SWEEP_ON_POLL:-}" == "1" ]]; then
-    echo "LEAD_DISPATCHER_SWEEP_ON_POLL: 'true'"
+  if [[ -n "${LEAD_SAMPLE_WEEK_HOLDING_OWNER_ID:-}" ]]; then
+    echo "LEAD_SAMPLE_WEEK_HOLDING_OWNER_ID: $(yaml_escape "$LEAD_SAMPLE_WEEK_HOLDING_OWNER_ID")"
   fi
-  if [[ -n "${LEAD_DISPATCH_MANAGER_EMAIL:-}" ]]; then
-    echo "LEAD_DISPATCH_MANAGER_EMAIL: $(yaml_escape "$LEAD_DISPATCH_MANAGER_EMAIL")"
+  if [[ -n "${LEAD_SAMPLE_WEEK_QUOTA_OWNER_IDS:-}" ]]; then
+    echo "LEAD_SAMPLE_WEEK_QUOTA_OWNER_IDS: $(yaml_escape "$LEAD_SAMPLE_WEEK_QUOTA_OWNER_IDS")"
   fi
-  if [[ -n "${LEAD_DISPATCH_POOL_IDS:-}" ]]; then
-    echo "LEAD_DISPATCH_POOL_IDS: $(yaml_escape "$LEAD_DISPATCH_POOL_IDS")"
+  if [[ -n "${LEAD_SAMPLE_WEEK_EXEMPT_OWNER_IDS:-}" ]]; then
+    echo "LEAD_SAMPLE_WEEK_EXEMPT_OWNER_IDS: $(yaml_escape "$LEAD_SAMPLE_WEEK_EXEMPT_OWNER_IDS")"
   fi
-  if [[ -n "${LEAD_DISPATCH_VACATION_IDS:-}" ]]; then
-    echo "LEAD_DISPATCH_VACATION_IDS: $(yaml_escape "$LEAD_DISPATCH_VACATION_IDS")"
-  fi
-  if [[ -n "${LEAD_DISPATCH_HOLIDAYS:-}" ]]; then
-    echo "LEAD_DISPATCH_HOLIDAYS: $(yaml_escape "$LEAD_DISPATCH_HOLIDAYS")"
-  fi
-  if [[ -n "${LEAD_DISPATCH_META_ROBERT_IDS:-}" ]]; then
-    echo "LEAD_DISPATCH_META_ROBERT_IDS: $(yaml_escape "$LEAD_DISPATCH_META_ROBERT_IDS")"
-  fi
-  if [[ -n "${LEAD_DISPATCH_MANAGER_WEBHOOK_URL:-}" ]]; then
-    echo "LEAD_DISPATCH_MANAGER_WEBHOOK_URL: $(yaml_escape "$LEAD_DISPATCH_MANAGER_WEBHOOK_URL")"
-  fi
-  if [[ -n "${LEAD_DISPATCH_MAX_OPEN:-}" ]]; then
-    echo "LEAD_DISPATCH_MAX_OPEN: $(yaml_escape "$LEAD_DISPATCH_MAX_OPEN")"
-  fi
-  if [[ -n "${LEAD_DISPATCH_SWEEP_LIMIT:-}" ]]; then
-    echo "LEAD_DISPATCH_SWEEP_LIMIT: $(yaml_escape "$LEAD_DISPATCH_SWEEP_LIMIT")"
+  if [[ -n "${TWENTY_OWNER_HOLDING:-}" ]]; then
+    echo "TWENTY_OWNER_HOLDING: $(yaml_escape "$TWENTY_OWNER_HOLDING")"
   fi
 
   if [[ -n "${ENRICH_COMPANY_PL_TOKEN:-}" ]]; then

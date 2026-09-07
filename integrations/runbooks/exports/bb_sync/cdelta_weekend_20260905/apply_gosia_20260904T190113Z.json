@@ -1,0 +1,264 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 4046,
+  "bb_limit": 400,
+  "rows": 365,
+  "scanned": 365,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 285,
+    "skip_in_twenty": 26,
+    "skip_no_parent": 27,
+    "skip_parent_not_in_twenty": 27
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 2024742,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Owocny projekt",
+      "sent_date": "2025-07-31T13:34:03.105+00:00",
+      "own": "<05afb30a-2523-a012-e6d3-1e0a00b5c844@owocni.pl>",
+      "parent": "<PAWPR08MB985589DE49C636113A13F2B6CD27A@PAWPR08MB9855.eurprd08.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1f0b8a99-9c14-44e5-8e5e-d7f2954dadcd",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024739,
+      "inbox": "gosia@owocni.pl",
+      "subject": "FInalizacja projektu logo i start strony > faktura pro forma nr 5529",
+      "sent_date": "2025-07-31T13:29:52.451+00:00",
+      "own": "<7c9f946f-3a9c-dddd-41c9-420316cb8cea@owocni.pl>",
+      "parent": "<ddfb3f8d-365d-7435-edbf-33df5ea560b8@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024733,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Lead",
+      "sent_date": "2025-07-31T13:06:31.793+00:00",
+      "own": "<a63d0196-a1e2-3247-f50d-d952129d39d3@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024732,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocny sklep",
+      "sent_date": "2025-07-31T12:54:45.753+00:00",
+      "own": "<b3583628-026f-81ca-0168-ff858c467833@owocni.pl>",
+      "parent": "<243b60ecb4f6feed2baef089da5bc8a7@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "80086a1d-fb0c-41d0-8571-e6c05d658e23",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024731,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Prace graficzne",
+      "sent_date": "2025-07-31T12:52:21.905+00:00",
+      "own": "<712a0856-7f09-675e-8345-d3458e880fab@owocni.pl>",
+      "parent": "<cf2a031cf45fa6ef277200d33c67eac9@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "86b0a556-ac18-4d31-a1c6-d27c580052b6",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024729,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Owocny projekt",
+      "sent_date": "2025-07-31T12:43:32.548+00:00",
+      "own": "<50e8dca4-3f01-5657-110f-b65b34275729@owocni.pl>",
+      "parent": "<PAWPR08MB98559A021FCCCAED213B29EACD27A@PAWPR08MB9855.eurprd08.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1f0b8a99-9c14-44e5-8e5e-d7f2954dadcd",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024728,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-07-31T12:38:16.526+00:00",
+      "own": "<bf8b0563-5255-8585-dbd2-69c487da4a3d@owocni.pl>",
+      "parent": "<c6b7fb6c991a1a1b58faf6aa65d2773c@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "39544c50-c9ac-4064-a394-3c4bf03211a0",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024720,
+      "inbox": "gosia@owocni.pl",
+      "subject": "ODP: Prośba o materiały do warsztatu",
+      "sent_date": "2025-07-31T12:18:44.51+00:00",
+      "own": "<39d10d26-a80b-a689-c96c-fdb8aeb13b36@owocni.pl>",
+      "parent": "<WA1P291MB017941A4A9DDDF2E536D3E2BE724A@WA1P291MB0179.POLP291.PROD.OUTLOOK.COM>",
+      "status": "skip_other_channel",
+      "parent_thread": "35861666-669e-4ef8-b76d-19bca05f2f5b",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024718,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-07-31T12:06:18.44+00:00",
+      "own": "<435926b9-2c7a-98da-cc8b-8b8afe1454d9@owocni.pl>",
+      "parent": "<a32aea6d6729d31d119789035d06c89b@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c37f94b8-3193-4d7b-96a8-cef9cf761851",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024717,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Owocny projekt",
+      "sent_date": "2025-07-31T11:48:48.556+00:00",
+      "own": "<23035b00-3ad6-d4cb-9b84-660271f0bfcb@owocni.pl>",
+      "parent": "<PAWPR08MB9855AE58A55A18F12D0F3789CD27A@PAWPR08MB9855.eurprd08.prod.outlook.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1f0b8a99-9c14-44e5-8e5e-d7f2954dadcd",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024707,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-07-31T10:37:13.999+00:00",
+      "own": "<f048203d-a7a5-2645-bb38-54f99106b1c9@owocni.pl>",
+      "parent": "<e049f38cbc789652520d0dcbf034f3d5@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "bbcbb691-108c-47f4-8002-cc9353b621e1",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024705,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-07-31T10:17:23.368+00:00",
+      "own": "<4718950d-977f-abfe-d689-3c4975bd051a@owocni.pl>",
+      "parent": "<e0e8347dc6d2dcac8e43aa5c2ce15d27@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "9c90b331-8cd0-491b-ac6d-32ca9cf20acf",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024699,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2025-07-31T10:02:36.664+00:00",
+      "own": "<0143cad4-62ac-c329-bcf9-ad39416cdb52@owocni.pl>",
+      "parent": "<9681eb66ca1c8c5706bceb21d7eb949b@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "663f6397-b275-4116-b857-d1cfdfa057dd",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024697,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa strona firmowa",
+      "sent_date": "2025-07-31T09:48:30.164+00:00",
+      "own": "<d7809c19-f926-cccd-c5c1-fe2ddde166aa@owocni.pl>",
+      "parent": "<74add9483f880678b006ca852c729d4d@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "9275464e-77ba-4b51-8907-2470a2552b7e",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024694,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa",
+      "sent_date": "2025-07-31T09:39:40.383+00:00",
+      "own": "<f16e22f0-6a39-5868-c496-b79b46427e57@owocni.pl>",
+      "parent": "<CAOFZ4WggsoT3b=hPQoL3sB-Ar+d=FuYHCzb25tWKJ2=vyT77Sg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "d41662e2-b059-4043-a83b-aea7e354afcf",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024691,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa",
+      "sent_date": "2025-07-31T09:33:39.433+00:00",
+      "own": "<43b1b4de-c8ff-b28a-2d47-2da35d30f906@owocni.pl>",
+      "parent": "<CAOFZ4WjGHOknit_RicdJ6YyZsv56W8954vQm6mq5GiYjMO2qiQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "d41662e2-b059-4043-a83b-aea7e354afcf",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2024681,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona",
+      "sent_date": "2025-07-31T08:47:52.662+00:00",
+      "own": "<48934216-985c-b607-9afe-e924a4b6c48f@owocni.pl>",
+      "parent": "<c1bdc118cdb2a84c600137beafa022b9@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d67af921-b333-4762-95af-ac7b85c1ccb3",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024680,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Nowa stona firmowa",
+      "sent_date": "2025-07-31T08:43:49.032+00:00",
+      "own": "<110b1707-4a93-c5c1-7d54-012f44ba376d@owocni.pl>",
+      "parent": "<29e8c8eeb649bdde644d67a4b49aec56@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "818f6f56-6829-4910-b47d-8f26ee3e9133",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024678,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona",
+      "sent_date": "2025-07-31T08:32:42.247+00:00",
+      "own": "<1be2fc43-bd91-fe2f-1467-c55c72a2fb4e@owocni.pl>",
+      "parent": "<c35b7bb01e1d186840a25d6e8c29060e@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "8127a00f-bdb0-4d70-95d3-16c111bdec2b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2024674,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocny sklep",
+      "sent_date": "2025-07-31T08:21:11.209+00:00",
+      "own": "<a74070cc-01c3-b9dc-1b6f-f0801da45104@owocni.pl>",
+      "parent": "<88a963455b4659088bf1f39b42c875e2@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c569bc00-5263-4f40-8dc9-adf71685c182",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

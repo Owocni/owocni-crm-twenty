@@ -1,0 +1,11 @@
+{
+  "run": "20260904T042844Z",
+  "holdingOwnerId": "2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d",
+  "counts": {
+    "marta": 248,
+    "gosia": 248,
+    "maciej": 61
+  },
+  "total": 557,
+  "mode": "dry-run"
+}

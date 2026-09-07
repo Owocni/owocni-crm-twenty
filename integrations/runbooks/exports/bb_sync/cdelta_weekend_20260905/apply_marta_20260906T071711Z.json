@@ -1,0 +1,238 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 10185,
+  "bb_limit": 400,
+  "rows": 367,
+  "scanned": 367,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_on_imap": 323,
+    "skip_in_twenty": 44
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1991085,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Sklep internetowy dla Pana Piotra:",
+      "sent_date": "2024-07-15T10:48:52+00:00",
+      "own": "<crm.activity.33703-EQX8XA@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991079,
+      "inbox": "marta@owocni.pl",
+      "subject": "Dane do pro formy",
+      "sent_date": "2024-07-15T10:44:04+00:00",
+      "own": "<bx.mail.6694fd73.ca820@novedo.bitrix24.com>",
+      "parent": "<CAE_RmgbetgO-944CozA_=_bGA0wr+pOL7acohizYpf2XgzPVjw@mail.gmail.com>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991084,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Sklep internetowy dla Pana Piotra:",
+      "sent_date": "2024-07-15T10:42:43+00:00",
+      "own": "<bx.mail.6694fd22.36db0a@novedo.bitrix24.com>",
+      "parent": "<CAE_RmgY6Uk=4x+nEadFcCW3mdVRgs3A8Lcc51y9Cqw9D3-BESQ@mail.gmail.com>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991082,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Sklep internetowy dla Pana Piotra:",
+      "sent_date": "2024-07-15T10:30:59+00:00",
+      "own": "<bx.mail.6694fa62.c18d1@novedo.bitrix24.com>",
+      "parent": "<CAE_RmgYwJqUQpVEHLuiVntorbnQLkHY0uB0Xn1EBo3hN9SVq3A@mail.gmail.com>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991081,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Anny:",
+      "sent_date": "2024-07-15T09:36:39+00:00",
+      "own": "<crm.activity.33661-2U72PF@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991078,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Sklep internetowy dla Pana Piotra:",
+      "sent_date": "2024-07-15T08:48:51+00:00",
+      "own": "<crm.activity.33649-R8KJCT@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991080,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna strona ze sklepem dla Pani Olgi:",
+      "sent_date": "2024-07-12T09:08:51+00:00",
+      "own": "<crm.activity.33345-1T03VQ@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991083,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pana Kamila:",
+      "sent_date": "2024-07-11T09:02:15+00:00",
+      "own": "<bx.mail.668f9f95.630c0a@novedo.bitrix24.com>",
+      "parent": "<e828c740-193b-4935-9ca3-059ebf4b8ac9@kifp.pl>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991076,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pana Kamila:",
+      "sent_date": "2024-07-11T07:58:44+00:00",
+      "own": "<crm.activity.33159-JIQBMK@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991077,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna strona internetowa:",
+      "sent_date": "2024-07-11T07:29:17+00:00",
+      "own": "<crm.activity.33149-U0T4GO@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991072,
+      "inbox": "marta@owocni.pl",
+      "subject": "Kreacja nazwy dla Pani Nikoletty:",
+      "sent_date": "2024-07-09T15:34:26+00:00",
+      "own": "<crm.activity.32817-8N4TYZ@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991068,
+      "inbox": "marta@owocni.pl",
+      "subject": "RE: Kreacja nazwy dla Pana Szymona:",
+      "sent_date": "2024-07-09T12:19:48+00:00",
+      "own": "<crm.activity.32767-C4TYGC@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991066,
+      "inbox": "marta@owocni.pl",
+      "subject": "Zapytanie: owocni.pl/cennik [Czas: 00:00:57]",
+      "sent_date": "2024-07-09T12:15:44+00:00",
+      "own": "<crm.activity.32765-T999JY@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991067,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Logo na przeźroczystm tle",
+      "sent_date": "2024-07-09T11:32:59+00:00",
+      "own": "<bx.mail.668d1fe9.212fcc@novedo.bitrix24.com>",
+      "parent": "<943665165.2288752.1720523531500@poczta.home.pl>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991071,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pana Roberta:",
+      "sent_date": "2024-07-09T11:26:32+00:00",
+      "own": "<crm.activity.32749-BLMUAH@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991073,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Logo na przeźroczystm tle",
+      "sent_date": "2024-07-09T09:51:05+00:00",
+      "own": "<crm.activity.32729-FZGOYE@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991070,
+      "inbox": "marta@owocni.pl",
+      "subject": "Kreacja nazwy dla Pani Joanny:",
+      "sent_date": "2024-07-09T08:09:12+00:00",
+      "own": "<crm.activity.32695-ZW2DOE@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991075,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Logo na przeźroczystm tle",
+      "sent_date": "2024-07-09T07:48:53+00:00",
+      "own": "<crm.activity.32691-R9A2B1@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991074,
+      "inbox": "marta@owocni.pl",
+      "subject": "RE: Kreacja nazwy dla Pana Szymona:",
+      "sent_date": "2024-07-09T07:22:03+00:00",
+      "own": "<crm.activity.32677-VQSFKR@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991069,
+      "inbox": "marta@owocni.pl",
+      "subject": "Logo na przeźroczystm tle",
+      "sent_date": "2024-07-09T07:01:30+00:00",
+      "own": "<crm.activity.32669-SBNY8Y@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

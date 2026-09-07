@@ -1,0 +1,30 @@
+{
+  "mailbox": "mariusz@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 53,
+  "bb_limit": 400,
+  "rows": 1,
+  "scanned": 1,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 1
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1996897,
+      "inbox": "mariusz@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 02:20:12]",
+      "sent_date": "2024-10-30T20:01:27.224+00:00",
+      "own": "<18e04675-8c2e-0270-87f8-3ba9b50a300a@owocni.pl>",
+      "parent": "<ecfd1f34ba2a28518c82f3aa42c51cdb@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "d0556184-93cd-449f-8d65-6c0137e29d46",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

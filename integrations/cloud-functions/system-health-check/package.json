@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test evaluate.test.js",
+    "test": "node --test evaluate.test.js formWitness.test.js",
     "start": "functions-framework --target=processSystemHealthCheck --port=8080"
   },
   "dependencies": {

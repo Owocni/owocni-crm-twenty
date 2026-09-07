@@ -1,0 +1,18 @@
+gosia@owocni.pl: BB window offset=374 fetch=400 rows=361 target_append=25
+  scanned 25/361 appended=0 last=skip_other_channel
+  scanned 50/361 appended=0 last=skip_other_channel
+  scanned 75/361 appended=0 last=skip_parent_not_in_twenty
+  scanned 100/361 appended=0 last=skip_other_channel
+APPEND bb:2052535 → gosia@owocni.pl/BB Archive 'Re: Nowa strona firmowa - konsultacja ze specjalistą'
+  scanned 125/361 appended=1 last=skip_other_channel
+  scanned 150/361 appended=1 last=skip_other_channel
+  scanned 175/361 appended=1 last=skip_no_parent
+  scanned 200/361 appended=1 last=skip_parent_not_in_twenty
+  scanned 225/361 appended=1 last=skip_other_channel
+  scanned 250/361 appended=1 last=skip_parent_not_in_twenty
+  scanned 275/361 appended=1 last=skip_parent_not_in_twenty
+  scanned 300/361 appended=1 last=skip_other_channel
+  scanned 325/361 appended=1 last=skip_other_channel
+  scanned 350/361 appended=1 last=skip_other_channel
+appended=1 skipped_seen=360 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T083139Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).

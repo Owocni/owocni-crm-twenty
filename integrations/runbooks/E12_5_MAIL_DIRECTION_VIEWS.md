@@ -505,6 +505,7 @@ Konwencja `DATA_MODEL` §5.4 — trzy rozłączne warstwy: **API name** (camelCa
 | 2026-07-16 | **v2.3 — kolumna `Text` z ukrytej na WIDOCZNĄ (fragment treści); NR-6 poprawione** | **Dawid (decyzja)** + Claude (kod) | **Korekta błędu v2.0–v2.1:** `Text` opisywany jako „nieczytelny HTML" — kod pokazuje **oczyszczony plaintext** (html-to-text + wycięte cytaty/podpisy). Komórka przycina się do wiersza (nie rozpycha), szerokość reguluje długość fragmentu. Haczyk zaakceptowany: szum z linków śledzących w mailach marketingowych. Nowy §5.3e + fakt do OPS_NOTES |
 | 2026-07-16 | **v2.4 — widok kontrolny przemianowany `🔧 Bez kierunku` → `🔧 Nieoznaczone — MA BYĆ 0`; opisany jako czujka PASYWNA** | **Dawid (decyzja: opcja A)** + Claude | Nazwa myliła („co to bez kierunku?"). Nazwa niesie teraz sens (nie-0 = alarm), bez stałego „UWAGA" (kłamałby w stanie zdrowym). **Fakt z kodu: Twenty nie pokazuje licznika rekordów w menu** (`NavigationDrawerItem` = label+ikona) → czujka wymaga zaglądania. Nowy krok 10c + OQ-10: właściciel i kadencja kontroli |
 | 2026-07-28 | **v2.5 — wdrożenie sandbox:** pole `Message.direction`; backfill `updateMessages`; 2 workflowy ACTIVE; 3 widoki + folder Poczta; SSOT (DATA_MODEL / OPS_NOTES / ADR #19) | Composer + Dawid | Korpus ≈ 24 k Message / 27 k MCMA (nie 188 k z v2.4 — stan instancji); OQ-2 PASS; rate limit Cloud = 100/min (API key); OQ-5 = wariant A; OQ-7/OQ-10 nadal na Dawida |
+| 2026-09-04 | **Widoki poczty: 1 skrzynka / osoba; `studio@` i `leads@` w folderze Poczta** | Dawid (decyzja) + Composer | Zdjęte unie STUDIO/LEADS z Marta/Gosia/Mariusz/Ewa. Widoki 📥/📤 studio@ i leads@ w Poczcie (jak osoby). Nested folder w Poczcie = MAX_DEPTH 2 — Twenty nie pozwala na podfolder z widokami. Soft filter, nie ACL. |
 
 ### Implementacja sandbox (2026-07-28) — kotwice
 
@@ -526,7 +527,7 @@ Konwencja `DATA_MODEL` §5.4 — trzy rozłączne warstwy: **API name** (camelCa
 | Artefakt | Wartość |
 |---|---|
 | Pole | `ourMailboxes` MULTI_SELECT (`4b2ecd47-…`) |
-| Reguła widoku | Marta/Gosia/Ewa = **własna** ∪ `STUDIO` (bez `LEADS`, 2026-09-03) · Robert = tylko `ROBERT` (LEADS nie było) · Mariusz = własna ∪ `STUDIO` ∪ `LEADS` |
+| Reguła widoku | **1 skrzynka / osoba** (Marta=`MARTA`, Gosia=`GOSIA`, Mariusz=`MARIUSZ`, Ewa=`EWA`, Robert=`ROBERT`, Maciej=`COPYWRITING`). `studio@` i `leads@` = widoki 📥/📤 **w folderze Poczta** (Twenty: max depth 2, nie da się zagnieździć folderu w Poczcie). Soft filter, nie ACL. |
 | Writer | `backfill_message_our_mailboxes.py` (żywe Message → participants) |
 | Live | **GCP worker** `messageDirectionEnrich` (workflow E12.5b DEACTIVATED — Message blocked for automation) |
 | Granica | **nie ACL** — to filtr widoku; da się zdjąć / obejść |

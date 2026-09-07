@@ -207,6 +207,19 @@ describe("evaluateLeadForm witness (incydent 2026-08-31)", () => {
     assert.match(result.detail, /cisza/);
   });
 
+  it("only JuicyLogos Zapytanie left after probe filter = OK (cisza)", () => {
+    const result = evaluateLeadForm(
+      workerOk,
+      {
+        lastFormMailAt: null,
+        lastFormMailSubject: null,
+        lastSortowniaAt: "2026-09-06T22:55:06.890Z",
+      },
+      Date.parse("2026-09-07T05:00:00Z"),
+    );
+    assert.equal(result.status, "OK");
+  });
+
   it("fresh Zapytanie within grace while Sortownia lags = OK", () => {
     const result = evaluateLeadForm(
       workerOk,

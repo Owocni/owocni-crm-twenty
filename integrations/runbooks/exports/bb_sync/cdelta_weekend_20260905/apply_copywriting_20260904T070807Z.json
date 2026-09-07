@@ -1,0 +1,279 @@
+{
+  "mailbox": "copywriting@owocni.pl",
+  "folder": "BB Archive",
+  "appended": [
+    {
+      "bb_id": 2030182,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "RE: Teksty dowożące do celu —",
+      "sent_date": "2025-10-01T08:45:53.186+00:00",
+      "own": "<998be2c6-0cde-380d-9553-4348f859d77a@owocni.pl>",
+      "parent": "<063601dc32af$3cb12460$b6136d20$@doltrans.pl>",
+      "status": "appended",
+      "parent_thread": "3dc9abb3-19ad-4fdd-980e-1789f3674cc9",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 57045
+    },
+    {
+      "bb_id": 2029592,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa jak dobry ogród —",
+      "sent_date": "2025-09-24T10:12:03.151+00:00",
+      "own": "<3f9bacf8-70bc-9e5a-1f92-fe31b2a6579c@owocni.pl>",
+      "parent": "<rnhcqarvwxfgnntrtfkv@yzzk>",
+      "status": "appended",
+      "parent_thread": "53dcd9a7-3d50-4bef-9afc-6c2eac1a058c",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 3994
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2028779,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocne teksty dla Alptec —",
+      "sent_date": "2025-09-15T12:46:54.77+00:00",
+      "own": "<02f3b4b5-29eb-9248-6b6f-a92f18f5869a@owocni.pl>",
+      "parent": "<CAKnWQbnJe4LZ=DAbQdazgb68uDxc5P_VobL7YaY74jCPDtqgbw@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "dad63b39-dc3b-4204-a352-974bb6fbb7ba",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028776,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla skutecznych produktów funkcjonalnych —",
+      "sent_date": "2025-09-15T12:40:42.772+00:00",
+      "own": "<56835f47-714a-0922-4827-e42db81c1b63@owocni.pl>",
+      "parent": "<54d9a7087f6d0fc02479324851c9e67d@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "5c6beb96-4368-45d8-9c50-a01d99c1e930",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028773,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla dostawcy porządnych domów —",
+      "sent_date": "2025-09-15T12:19:00.041+00:00",
+      "own": "<d7bd1b80-0d2e-9fb9-9f02-b28b2071427c@owocni.pl>",
+      "parent": "<b139926b1f6cdc1845dff6c7c3cfe9d2@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c30e84ed-665a-43c1-af02-94c5b88a116c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028772,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla oryginalnej agroturystyki —",
+      "sent_date": "2025-09-15T12:10:12.184+00:00",
+      "own": "<818a80a4-9663-c3f9-51a2-d2d5bcaffac2@owocni.pl>",
+      "parent": "<3e341b823f60e902ef4f4022601dbf36@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "4cb3bce1-6667-4ff1-b93a-2f4fa6338a4b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028766,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla osobistej marki projektowania wnętrz —",
+      "sent_date": "2025-09-15T11:53:16.52+00:00",
+      "own": "<97450663-3eec-1862-658d-07e6772adea3@owocni.pl>",
+      "parent": "<3bcfbe013ec33cb51135f45e1256d314@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "9bd8f3df-7cd1-418c-ad82-155d3e0d90d2",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028593,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocna nazwa dla salonu kosmetologicznego —",
+      "sent_date": "2025-09-12T10:08:02.126+00:00",
+      "own": "<15ddd012-628b-34fb-1958-652fd7a734f9@owocni.pl>",
+      "parent": "<8710b4aea1b2dbad0e580a0f2ada6671@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "228071a5-0d26-42c8-b1cf-4259f842d220",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028580,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocny slogan w branży mięsnej —",
+      "sent_date": "2025-09-12T09:07:50.972+00:00",
+      "own": "<f3ce9b39-5dca-1c66-0b7b-18afe3e26e3c@owocni.pl>",
+      "parent": "<16b8c48cac7b15cac7e11c5b5339ddda@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "c8ccd053-aee0-421f-a6df-5fd29746a363",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028573,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocna nazwa dla gabinetu psychologicznego —",
+      "sent_date": "2025-09-12T08:10:13.442+00:00",
+      "own": "<d136bdd0-5775-7f60-ff4b-41860a8c61f3@owocni.pl>",
+      "parent": "<CAH+e3sSEhpnVo6Egwhf_+fN-uc_=aYbYZnHcw6i4JH7DGAFOoQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "2f91c24b-836e-4c09-ac2c-4c2a72001843",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028571,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocna nazwa dla gabinetu psychologicznego —",
+      "sent_date": "2025-09-12T08:05:33.665+00:00",
+      "own": "<7e60c505-706f-5c7a-2268-ef7a3471a120@owocni.pl>",
+      "parent": "<CAH+e3sSYFc5-dhCZBWebGFA0KP_10_n6fvwZ8KNh5YN0qgbJLQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "2f91c24b-836e-4c09-ac2c-4c2a72001843",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028566,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocna nazwa dla gabinetu psychologicznego —",
+      "sent_date": "2025-09-12T07:47:47.714+00:00",
+      "own": "<8d0046ab-e26c-52db-5cb1-791bea8e0e74@owocni.pl>",
+      "parent": "<CAH+e3sRmJS7y-Gi93OyNgV82DpjFpSp0h_2QUNh5Qb7qgh8cUQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "2f91c24b-836e-4c09-ac2c-4c2a72001843",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028563,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocna nazwa dla gabinetu psychologicznego —",
+      "sent_date": "2025-09-12T07:38:03.074+00:00",
+      "own": "<7f513859-b8dd-5e9c-7c72-7a7f51fa9f47@owocni.pl>",
+      "parent": "<CAH+e3sS=GqVsG=itUe+1RTkdaBg8ZZcWwC_BYNJwYwBvEUN6Bg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "2f91c24b-836e-4c09-ac2c-4c2a72001843",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028561,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocna nazwa dla gabinetu psychologicznego —",
+      "sent_date": "2025-09-12T07:20:06.582+00:00",
+      "own": "<478fdc8b-c1a9-8b5c-0014-102ea009cfd2@owocni.pl>",
+      "parent": "<7e1caf58430ec99c33ec811055c10422@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "6e8661c3-276a-4a87-9018-97c7260b2010",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028560,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Zapytanie: copywriting.pl [Czas: 01:10:28]",
+      "sent_date": "2025-09-12T07:11:10.709+00:00",
+      "own": "<93372d5c-746c-910e-5ec2-0fc7d769ebd9@owocni.pl>",
+      "parent": "<3dd662ab885ce150bc50e71c2e9b4e5e@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "dc732118-66cf-4ea0-940b-a0a4e1752e95",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028533,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocne teksty dla Alptec —",
+      "sent_date": "2025-09-11T15:23:49.181+00:00",
+      "own": "<4700a949-aec4-bf54-7b11-9fb478ebdc66@owocni.pl>",
+      "parent": "<586A05A3-1E81-45AA-9300-9FCDD4DF53CE@gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "7e26141d-ddf8-4f39-83a6-90fc63d7cdd5",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028503,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocna nazwa marki dziecięcej :)",
+      "sent_date": "2025-09-11T13:19:45.053+00:00",
+      "own": "<4661f059-e777-bf22-dfe4-473c4cfa98bd@owocni.pl>",
+      "parent": "<82898d286b897c26b025c2a2c65b1859@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "97e55652-feb2-4115-a369-e77cd9c99c18",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2028432,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocne teksty dla Alptec —",
+      "sent_date": "2025-09-11T08:17:51.899+00:00",
+      "own": "<171ded3e-df33-54dd-bbb6-9ab9c7e8f783@owocni.pl>",
+      "parent": "<c8ea9cfa-e998-da70-ec0d-76b6c41481ad@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028342,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Owocne teksty dla Alptec —",
+      "sent_date": "2025-09-10T08:30:01.602+00:00",
+      "own": "<c8ea9cfa-e998-da70-ec0d-76b6c41481ad@owocni.pl>",
+      "parent": "<CAKnWQbk7kFLBwbx5ipbjw8WJZzWO_v56MZO9xibo1LJ4h=XhcA@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "dad63b39-dc3b-4204-a352-974bb6fbb7ba",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028285,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocne teksty dla Alptec —",
+      "sent_date": "2025-09-09T13:12:07.713+00:00",
+      "own": "<3d5dd070-298c-cdba-dbf8-5bc69fb5c3e6@owocni.pl>",
+      "parent": "<23A60FEF-2F33-4982-BEC3-2C1F7D65484A@gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2028283,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "test zapytanie Maciek",
+      "sent_date": "2025-09-09T12:49:33.784+00:00",
+      "own": "<0431f925-701b-ce92-a224-b5c1c1f0dfb4@owocni.pl>",
+      "parent": "<CAHRC3w0+BFZBdLMbdCrvQxiP5HFYCdHyQB6xmukOF+tf+wbLdg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "20e30b07-34a7-4392-9ca9-295b11878e53",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2027276,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Zapytanie: owocni.pl/v3?gtm_debug=1756386839061 [Czas: 00:15:50]",
+      "sent_date": "2025-08-28T15:05:43.504+00:00",
+      "own": "<d11a03d4-d91d-095e-2a65-f376a2e23e1f@owocni.pl>",
+      "parent": "<e779f635a2243e4cc617edad8903804b@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "be820c21-7c90-4aab-9753-2fa079011326",
+      "parent_mailboxes": [
+        "LEADS",
+        "ROBERT"
+      ]
+    }
+  ]
+}

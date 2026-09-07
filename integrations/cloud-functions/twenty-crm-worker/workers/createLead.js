@@ -6,11 +6,12 @@ const {
   getContinuityOwnerIds,
   getLeadsAtMessageChannelId,
   isContinuityRoutingEnabled,
-  isLeadDispatcherEnabled,
   isCreateLeadWriteEnabled,
-  getLeadDispatchPoolIds,
-  getLeadDispatchVacationIds,
-  getMetaRobertAllowlist,
+  isSampleWeekRoutingEnabled,
+  getSampleWeekHoldingOwnerId,
+  getSampleWeekDailyQuota,
+  getSampleWeekQuotaOwnerIds,
+  getSampleWeekExemptOwnerIds,
   MAX_CREATE_LEAD_TASKS,
   PENDING_WRITE_TTL_MS,
 } = require("../shared/config");
@@ -42,13 +43,9 @@ const {
   preferPersonId,
 } = require("../shared/gmailEmail");
 const {
-  classifyLeadIntent,
-  resolveRoutingRuleId,
-  pickLeastLoaded,
-  resolveTimeOnPageMs,
-  MAX_OPEN,
-} = require("../shared/leadDispatch");
-const { countOpenUncontacted } = require("./leadDispatchSweep");
+  decideSampleWeekOwner,
+  startOfWarsawDayIso,
+} = require("../shared/sampleWeekRouting");
 
 const ADAPTER_ID = "crm:twenty_create_lead";
 
@@ -387,13 +384,14 @@ function resolveTwentyBizProduct(taskData, answers) {
 
 function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
   const owners = getOwnerIds();
-  // Leady z FB (Instant Form / fbclid / utm) → zawsze Robert Mańk
+  // Copywriting first — regardless of source (FB / Meta included).
+  if (bizProductTwenty === "COPYWRITING") return owners.maciej;
+  // Leady z FB (Instant Form / fbclid / utm) → Robert Mańk
   if (taskData && mapBizSource(taskData) === "FACEBOOK") {
     return owners.robert;
   }
   // Marketing / strategia / konsultacje → Robert
   if (bizProductTwenty === "MARKETING") return owners.robert;
-  if (bizProductTwenty === "COPYWRITING") return owners.maciej;
   let hash = 0;
   const s = String(idOid);
   for (let i = 0; i < s.length; i++) hash += s.charCodeAt(i);
@@ -401,9 +399,9 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
 }
 
 /**
- * Continuity first (when enabled), else FACEBOOK/MARKETING/COPY/hash
- * — or full dispatcher v2.0 when LEAD_DISPATCHER_ENABLED.
- * @returns {Promise<string|{ownerId:string, routingRule:string, intentClass:string, timeOnPageMs:number}>}
+ * Continuity (returning client keeps owner) then COPY / FB / MARKETING / idOid hash.
+ * Dispatcher v2.0 (Biorę / least-loaded / failover) is retired — never used.
+ * Does not rewrite existing Opportunity owners.
  */
 async function resolveOwnerIdForNewOpportunity(
   personId,
@@ -411,21 +409,7 @@ async function resolveOwnerIdForNewOpportunity(
   bizProductTwenty,
   idOid,
   taskData,
-  kanbanFields,
-  answers,
 ) {
-  if (isLeadDispatcherEnabled()) {
-    return resolveDispatcherAssignment({
-      personId,
-      companyId,
-      bizProductTwenty,
-      idOid,
-      taskData,
-      kanbanFields,
-      answers,
-    });
-  }
-
   const continuityOwnerId = await resolveContinuityOwner({
     personId,
     companyId,
@@ -441,123 +425,66 @@ async function resolveOwnerIdForNewOpportunity(
   return resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData);
 }
 
-async function findLatestOwnedOpportunityByPersonId(personId) {
-  const id = String(personId || "").trim();
-  if (!id) return null;
-  const filter = `pointOfContactId[eq]:${id}`;
-  let path = buildTwentyListPath("opportunities", filter, 5);
-  path += "&order_by=createdAt[DescNullsLast]";
+async function countOwnerAssignmentsToday(ownerId) {
+  const id = String(ownerId || "").trim();
+  if (!id) return 0;
+  const since = startOfWarsawDayIso();
+  const filter = `ownerId[eq]:${id},createdAt[gte]:${since}`;
+  const path = buildTwentyListPath("opportunities", filter, 50);
   const res = await twentyRequest("GET", path);
-  if (res.statusCode < 200 || res.statusCode >= 300) return null;
-  const opps = parseTwentyListRecords("opportunities", res.body);
-  return opps.find((o) => o.ownerId || o.owner?.id) || null;
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    console.warn(
+      "sample-week count HTTP",
+      res.statusCode,
+      String(res.rawBody || "").slice(0, 120),
+    );
+    return 0;
+  }
+  return parseTwentyListRecords("opportunities", res.body).length;
 }
 
 /**
- * Dispatcher v2.0 assignment (LEAD_DISPATCHER_PLAN).
+ * After normal dispatcher/hash: divert surplus to holding (owocni@).
+ * Robert exempt. Marta/Gosia/Maciej: daily quota.
  */
-async function resolveDispatcherAssignment({
-  personId,
-  companyId,
-  bizProductTwenty,
-  idOid,
-  taskData,
-  kanbanFields,
-  answers,
-}) {
-  const owners = getOwnerIds();
-  const intentClass = classifyLeadIntent({
-    bizProductTwenty,
-    kanbanFields: kanbanFields || {},
-    answers: answers || {},
-    taskData,
-  });
-  const timeOnPageMs = resolveTimeOnPageMs(taskData);
+async function applySampleWeekOwnerOverride(assignment) {
+  if (!isSampleWeekRoutingEnabled()) return assignment;
 
-  // RULE-CONTINUITY: same person (email/phone reuse) → previous opp owner
-  const prior = await findLatestOwnedOpportunityByPersonId(personId);
-  const priorOwner = String(prior?.ownerId || prior?.owner?.id || "").trim();
-  if (priorOwner && getContinuityOwnerIds().has(priorOwner)) {
-    console.log("dispatch RULE-CONTINUITY", priorOwner, "person=", personId);
-    return {
-      ownerId: priorOwner,
-      routingRule: "RULE-CONTINUITY",
-      intentClass,
-      timeOnPageMs,
-    };
+  const base =
+    assignment && typeof assignment === "object"
+      ? { ...assignment }
+      : { ownerId: assignment || null };
+
+  const ownerId = base.ownerId ? String(base.ownerId).trim() : "";
+  let assignedToday = 0;
+  if (ownerId && getSampleWeekQuotaOwnerIds().has(ownerId)) {
+    assignedToday = await countOwnerAssignmentsToday(ownerId);
   }
 
-  // Optional account-owner continuity (existing flag)
-  const continuityOwnerId = await resolveContinuityOwner({
-    personId,
-    companyId,
-    enabled: isContinuityRoutingEnabled(),
-    allowedOwnerIds: getContinuityOwnerIds(),
-    getCompanyById,
-    findLatestSqlOpportunityByPersonId,
-  });
-  if (continuityOwnerId) {
-    return {
-      ownerId: continuityOwnerId,
-      routingRule: "RULE-CONTINUITY",
-      intentClass,
-      timeOnPageMs,
-    };
-  }
-
-  const allowlist = getMetaRobertAllowlist();
-  const { ruleId, ownerHint } = resolveRoutingRuleId({
-    bizProductTwenty,
-    bizSource: mapBizSource(taskData),
-    metaFormId:
-      taskData.meta_form_id || taskData.form_id || taskData.metaFormId || "",
-    metaCampaignId:
-      taskData.meta_campaign_id ||
-      taskData.campaign_id ||
-      taskData.metaCampaignId ||
-      "",
-    metaAllowlist: allowlist,
-    metaInterimAllFacebook: allowlist.length === 0,
+  const decided = decideSampleWeekOwner(base, {
+    enabled: true,
+    holdingOwnerId: getSampleWeekHoldingOwnerId(),
+    quotaOwnerIds: getSampleWeekQuotaOwnerIds(),
+    exemptOwnerIds: getSampleWeekExemptOwnerIds(),
+    dailyQuota: getSampleWeekDailyQuota(),
+    assignedToday,
   });
 
-  if (ownerHint && owners[ownerHint]) {
-    return {
-      ownerId: owners[ownerHint],
-      routingRule: ruleId,
-      intentClass,
-      timeOnPageMs,
-    };
-  }
+  console.log(
+    "sample-week",
+    decided.sampleWeek,
+    "from=",
+    ownerId || "(none)",
+    "to=",
+    decided.ownerId,
+    "today=",
+    assignedToday,
+    "/",
+    getSampleWeekDailyQuota(),
+  );
 
-  const pool = getLeadDispatchPoolIds();
-  const vacations = getLeadDispatchVacationIds();
-  const candidates = [];
-  for (const memberId of pool) {
-    const openCount = await countOpenUncontacted(memberId);
-    candidates.push({
-      id: memberId,
-      openCount,
-      vacation: vacations.has(memberId),
-      lastAssignedAt: null,
-    });
-  }
-  const picked = pickLeastLoaded(candidates, MAX_OPEN);
-  if (!picked) {
-    console.warn("dispatch: no pool capacity — leave unassigned", idOid);
-    return {
-      ownerId: null,
-      routingRule: "RULE-POOL-DEFAULT",
-      intentClass,
-      timeOnPageMs,
-      unassigned: true,
-    };
-  }
-  return {
-    ownerId: picked,
-    routingRule: "RULE-POOL-DEFAULT",
-    intentClass,
-    timeOnPageMs,
-  };
+  const { sampleWeek, ...rest } = decided;
+  return rest;
 }
 
 async function resolvePersonCompanyId(personId) {
@@ -1321,13 +1248,12 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
     bizProductTwenty,
     idOid,
     taskData,
-    kanbanFields,
-    answers,
   );
-  const dispatch =
+  const dispatch = await applySampleWeekOwnerOverride(
     ownerResolved && typeof ownerResolved === "object"
       ? ownerResolved
-      : { ownerId: ownerResolved };
+      : { ownerId: ownerResolved },
+  );
 
   const body = {
     name: buildOpportunityName(taskData),
@@ -1363,12 +1289,9 @@ async function createOpportunityRecord(taskData, idOid, personId, companyId) {
   ]) {
     if (kanbanFields[key]) body[key] = kanbanFields[key];
   }
-  if (isLeadDispatcherEnabled()) {
-    if (dispatch.intentClass) body.bizLeadIntentClass = dispatch.intentClass;
+  if (isSampleWeekRoutingEnabled()) {
     body.bizAssignedAt = new Date().toISOString();
     if (dispatch.routingRule) body.bizRoutingRule = dispatch.routingRule;
-    body.bizFailoverCount = 0;
-    if (dispatch.timeOnPageMs > 0) body.bizTimeOnPageMs = dispatch.timeOnPageMs;
   }
   const res = await twentyRequest("POST", "/opportunities", body);
   if (res.statusCode < 200 || res.statusCode >= 300) {

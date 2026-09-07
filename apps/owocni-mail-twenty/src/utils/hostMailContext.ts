@@ -65,6 +65,45 @@ export function collectHostHrefs(): string[] {
   return hrefs;
 }
 
+export type HostRecordSurface = 'show' | 'index' | 'unknown';
+
+function pathnameFromHref(href: string): string {
+  try {
+    return new URL(href).pathname;
+  } catch {
+    return href;
+  }
+}
+
+/** First href wins — pass top/parent before iframe so kanban side panel stays 'index'. */
+export function hostRecordSurfaceFromHrefs(hrefs: string[]): HostRecordSurface {
+  for (const href of hrefs) {
+    const pathname = pathnameFromHref(href);
+    if (/\/objects\//i.test(pathname) || /\/objects\//i.test(href)) {
+      return 'index';
+    }
+    if (OBJECT_PATH_RE.test(pathname) || OBJECT_PATH_RE.test(href)) {
+      return 'show';
+    }
+  }
+
+  return 'unknown';
+}
+
+export function readHostRecordSurface(): HostRecordSurface {
+  const hrefs: string[] = [];
+  for (const href of [
+    safeReadHref(globalThis.top?.location),
+    safeReadHref(globalThis.parent?.location),
+    safeReadHref(globalThis.location),
+  ]) {
+    if (href && !hrefs.includes(href)) {
+      hrefs.push(href);
+    }
+  }
+  return hostRecordSurfaceFromHrefs(hrefs);
+}
+
 export function extractRecordIdFromHref(href: string): string | null {
   const match = href.match(OBJECT_PATH_RE);
   return match?.[2] ?? null;
@@ -254,6 +293,175 @@ export function writeCachedMailContext(
   } catch {
     // ignore
   }
+}
+
+const COMPOSE_INTENT_KEY = 'owocni-mail-compose-intent-v1';
+/** Only the hop after Odpowiedz — leftover must not survive the next card click. */
+export const COMPOSE_NAV_WINDOW_MS = 20_000;
+export const MAIL_COMPOSE_QUERY_PARAM = 'owocniCompose';
+/** Lejek Owocni — breadcrumb Opportunities reads this viewId from the record URL. */
+export const LEJEK_OWOCNI_VIEW_ID = 'ba6ac841-c293-4744-855b-3a99ee135743';
+export const VIEW_ID_QUERY_PARAM = 'viewId';
+
+/** Same tab UUID as the Mail page-layout tab — hash focuses it on the full page. */
+export const OPPORTUNITY_MAIL_TAB_HASH = 'ccf6a315-7856-471d-8ed6-125f27d8ff96';
+
+export function buildOpportunityRecordShowPath(recordId: string): string {
+  const params = new URLSearchParams({
+    [MAIL_COMPOSE_QUERY_PARAM]: '1',
+    [VIEW_ID_QUERY_PARAM]: LEJEK_OWOCNI_VIEW_ID,
+  });
+  return `/object/opportunity/${recordId}?${params.toString()}#${OPPORTUNITY_MAIL_TAB_HASH}`;
+}
+
+export function buildOpportunityRecordShowUrl(
+  origin: string,
+  recordId: string,
+): string {
+  const base = origin.replace(/\/$/, '');
+  return `${base}${buildOpportunityRecordShowPath(recordId)}`;
+}
+
+/**
+ * Side panel is typically ~400–500px. Full record Mail canvas is much wider.
+ * Opaque-origin FCs often cannot read `/objects/` vs `/object/` — width is
+ * the reliable signal. Unknown + no width defaults to side panel so we never
+ * dump the composer into the drawer.
+ */
+export const MAIL_FULL_PAGE_MIN_PX = 720;
+
+export function isSidePanelMailSurface(args: {
+  surface: HostRecordSurface;
+  width: number;
+  fullPageMinPx?: number;
+}): boolean {
+  if (args.surface === 'index') {
+    return true;
+  }
+  if (args.surface === 'show') {
+    return false;
+  }
+  const min = args.fullPageMinPx ?? MAIL_FULL_PAGE_MIN_PX;
+  return args.width < min;
+}
+
+/**
+ * Break out of the side-panel iframe/surface onto the host tab.
+ * `window.open(_top)` is often blocked; a same-gesture `<a target="_top">`
+ * is what browsers treat as user-initiated top navigation.
+ */
+export function breakOutToHostUrl(url: string): boolean {
+  if (typeof document === 'undefined' || !url) {
+    return false;
+  }
+
+  try {
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.target = '_top';
+    anchor.rel = 'noopener';
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function hostIsKanbanIndex(): boolean {
+  return readHostRecordSurface() === 'index';
+}
+
+export function hostWindowWantsMailCompose(): boolean {
+  const hrefs: string[] = [];
+  for (const href of [
+    safeReadHref(globalThis.top?.location),
+    safeReadHref(globalThis.parent?.location),
+    safeReadHref(globalThis.location),
+  ]) {
+    if (href && !hrefs.includes(href)) {
+      hrefs.push(href);
+    }
+  }
+  if (hostRecordSurfaceFromHrefs(hrefs) === 'index') {
+    return false;
+  }
+  return hostHrefsWantMailCompose(hrefs);
+}
+
+type MailComposeIntent = {
+  recordId: string;
+  at: number;
+};
+
+export function markMailComposeIntent(recordId: string): void {
+  try {
+    globalThis.sessionStorage?.setItem(
+      COMPOSE_INTENT_KEY,
+      JSON.stringify({ recordId, at: Date.now() } satisfies MailComposeIntent),
+    );
+  } catch {
+    // ignore
+  }
+}
+
+export function clearMailComposeIntent(): void {
+  try {
+    globalThis.sessionStorage?.removeItem(COMPOSE_INTENT_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+function readStoredComposeIntent(): MailComposeIntent | null {
+  try {
+    const raw = globalThis.sessionStorage?.getItem(COMPOSE_INTENT_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw) as MailComposeIntent;
+    if (!parsed?.recordId || typeof parsed.recordId !== 'string') {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * One-shot: the full record page after Odpowiedz may consume this.
+ * Opening a lead later (side panel) drops leftovers and stays in peek.
+ */
+export function consumeMailComposeIntent(recordId: string | null): boolean {
+  if (!recordId) {
+    return false;
+  }
+
+  const stored = readStoredComposeIntent();
+  if (!stored) {
+    return false;
+  }
+
+  if (stored.recordId !== recordId) {
+    clearMailComposeIntent();
+    return false;
+  }
+
+  clearMailComposeIntent();
+
+  const age = Date.now() - Number(stored.at || 0);
+  return age >= 0 && age <= COMPOSE_NAV_WINDOW_MS;
+}
+
+export function hostHrefsWantMailCompose(hrefs: string[]): boolean {
+  return hrefs.some(
+    (href) =>
+      href.includes(`${MAIL_COMPOSE_QUERY_PARAM}=1`) ||
+      href.includes(`${MAIL_COMPOSE_QUERY_PARAM}=true`),
+  );
 }
 
 // Silence unused — kept for potential future URL body scans.

@@ -1,0 +1,240 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 9240,
+  "bb_limit": 400,
+  "rows": 378,
+  "scanned": 378,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 110,
+    "skip_no_parent": 24,
+    "skip_parent_not_in_twenty": 35,
+    "skip_in_twenty": 209
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1993923,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2024-09-16T12:24:59+00:00",
+      "own": "<crm.activity.48859-AX71ZC@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993917,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona",
+      "sent_date": "2024-09-16T12:18:31+00:00",
+      "own": "<crm.activity.48857-BWEWF1@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993922,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona firmowa",
+      "sent_date": "2024-09-16T11:56:42+00:00",
+      "own": "<crm.activity.48845-F430J8@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993925,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Aw: Re: Finalizacja projektu logo > faktura pro forma nr 4678",
+      "sent_date": "2024-09-16T11:31:25+00:00",
+      "own": "<bx.mail.66e81708.1971bb@novedo.bitrix24.com>",
+      "parent": "<1168279772.66761.1726484394947@mailbusiness.ionos.de>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993918,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo:",
+      "sent_date": "2024-09-16T11:00:04+00:00",
+      "own": "<crm.activity.48817-9SZ6BM@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993921,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma nr 4750",
+      "sent_date": "2024-09-16T10:56:28+00:00",
+      "own": "<bx.mail.66e80eda.4694a8@novedo.bitrix24.com>",
+      "parent": "<bx.mail.66a10dda.dd9ba7@novedo.bitrix24.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993926,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Aw: Re: Finalizacja projektu logo > faktura pro forma nr 4678",
+      "sent_date": "2024-09-16T10:45:36+00:00",
+      "own": "<bx.mail.66e80c4d.9b6a60@novedo.bitrix24.com>",
+      "parent": "<241620678.58686.1726482183219@mailbusiness.ionos.de>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993924,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Aw: Re: Finalizacja projektu logo > faktura pro forma nr 4678",
+      "sent_date": "2024-09-16T09:44:19+00:00",
+      "own": "<bx.mail.66e7fdf0.414d0@novedo.bitrix24.com>",
+      "parent": "<1508667825.3222.1726466922793@mailbusiness.ionos.de>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993919,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt logo:",
+      "sent_date": "2024-09-16T09:29:28+00:00",
+      "own": "<bx.mail.66e7fa77.fef5df@novedo.bitrix24.com>",
+      "parent": "<c99d7355-1b1f-4155-aad4-a52cfa6bb245@gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993920,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-09-16T08:28:17+00:00",
+      "own": "<crm.activity.48765-8YKQMM@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993915,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo:",
+      "sent_date": "2024-09-16T08:08:37+00:00",
+      "own": "<crm.activity.48753-KY4TF9@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993907,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2024-09-16T07:23:57+00:00",
+      "own": "<crm.activity.48745-GKD9T6@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993912,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Jakie prace mielibyśmy wykonać?",
+      "sent_date": "2024-09-16T07:14:30+00:00",
+      "own": "<crm.activity.48739-KPOXFP@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993911,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne projekty",
+      "sent_date": "2024-09-16T07:09:30+00:00",
+      "own": "<crm.activity.48737-S5BRPU@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993913,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona firmowa",
+      "sent_date": "2024-09-16T07:06:33+00:00",
+      "own": "<bx.mail.66e7d8f7.e8d653@novedo.bitrix24.com>",
+      "parent": "<CAJgN4WxM8H2Rj=r9F4XYPOGHHu+BkFA6NQ+AvhZyic0ZnfqeMg@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993910,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna nazwa:",
+      "sent_date": "2024-09-16T07:06:01+00:00",
+      "own": "<bx.mail.66e7d8d6.99b148@novedo.bitrix24.com>",
+      "parent": "<CAK5edLVbr2R+K6UpoyKRc2Af5nkYN1pg_UCvb-7xW523g7Ex_A@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993914,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo:",
+      "sent_date": "2024-09-13T13:58:58+00:00",
+      "own": "<crm.activity.48493-4P0OMV@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993916,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Aw: Re: Finalizacja projektu logo > faktura pro forma nr 4678",
+      "sent_date": "2024-09-13T13:17:39+00:00",
+      "own": "<bx.mail.66e43b70.1f5094@novedo.bitrix24.com>",
+      "parent": "<1542722852.251808.1726232204733@mailbusiness.ionos.de>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993908,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Kreacja nazwy:",
+      "sent_date": "2024-09-13T13:12:55+00:00",
+      "own": "<crm.activity.48479-DOFD4S@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993909,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona firmowa:",
+      "sent_date": "2024-09-13T13:12:02+00:00",
+      "own": "<crm.activity.48477-QRQPZ6@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

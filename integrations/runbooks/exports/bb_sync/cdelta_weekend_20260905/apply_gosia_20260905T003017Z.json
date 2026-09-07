@@ -1,0 +1,248 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 8887,
+  "bb_limit": 400,
+  "rows": 353,
+  "scanned": 353,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 253,
+    "skip_parent_not_in_twenty": 34,
+    "skip_no_parent": 32,
+    "skip_in_twenty": 34
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1996195,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Fwd: Wpłata za III etap strony",
+      "sent_date": "2024-10-25T07:22:31.694+00:00",
+      "own": "<f907f512-73cd-350f-6dc5-edb2557ce0f9@owocni.pl>",
+      "parent": "<CAHbfr7wcjSvfna9znjwkLwU5r4MnPzoECuSigzA-fSNCfyf1fQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1e7dda97-b2a0-441a-82c5-70ed55350932",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996194,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: strona www",
+      "sent_date": "2024-10-25T07:06:57.558+00:00",
+      "own": "<c8639c7a-9ace-cc18-df4d-41336ee1ee4d@owocni.pl>",
+      "parent": "<CAEEUmBT0Md-YD5Vh0=M5amcGvm0=LhFGm9MQAEtnFL+ZxzrsFw@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "41536251-ea0f-4d82-8884-3c40dfc072e0",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996192,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: STRONA INTERNETOWA SOULAB STUDIO TAŃCA",
+      "sent_date": "2024-10-25T06:59:08.302+00:00",
+      "own": "<0b45fb08-75a3-c980-9285-b45467b83cf5@owocni.pl>",
+      "parent": "<CA+nSXbS9MzQjc0OHzX25zzwq3YgE0ROkW+phDaeJfp5Eoaw96Q@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "e78db5d5-d5d2-4d85-981a-4fcf99bf3c54",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996191,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Roll-up i ulotka",
+      "sent_date": "2024-10-25T06:56:45.068+00:00",
+      "own": "<dc77f9a3-815d-e423-6c61-dc73b570aeeb@owocni.pl>",
+      "parent": "<019a01db261a$ee9f63f0$cbde2bd0$@micro-clima.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996167,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Zmiana grafiki ukończonej strony",
+      "sent_date": "2024-10-24T13:50:51.741+00:00",
+      "own": "<11f76d7e-06ee-44a4-6832-25b3228cd477@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996165,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocne logo dla marki Spedcom",
+      "sent_date": "2024-10-24T13:43:17+00:00",
+      "own": "<bx.mail.671a4ef3.8bfc3a@novedo.bitrix24.com>",
+      "parent": "<CAPLQo50Uq7orz6U5PBC2=tSpzUoT5EqAnB-4SyScVjNU5HDZug@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996163,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma 4839",
+      "sent_date": "2024-10-24T13:23:11.45+00:00",
+      "own": "<fbb3750a-36b6-ab0c-a51d-5711f9bd0313@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996159,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocne artykuły",
+      "sent_date": "2024-10-24T13:13:17.715+00:00",
+      "own": "<330ac0d9-55cc-7be2-23ff-eaab3803070c@owocni.pl>",
+      "parent": "<CAGcuxpTjhjE-MLyQHPpGv0TZbG8qpUG=XTd0MbsQ3SuxccwpFQ@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "c94f959a-c381-4649-aaf3-f9a37a3cd601",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996157,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocne logo dla marki Spedcom",
+      "sent_date": "2024-10-24T13:08:50+00:00",
+      "own": "<bx.mail.671a46e0.601b09@novedo.bitrix24.com>",
+      "parent": "<CAPLQo52iW_O=v_oB9M2xjVQWt_onROFJkP+8bq+EtfC8tqEq1Q@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996152,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy i logo dla Pani Moniki:",
+      "sent_date": "2024-10-24T12:31:48.265+00:00",
+      "own": "<24812a82-6a08-fd5b-0cb4-4307170e9bec@owocni.pl>",
+      "parent": "<d718aa81780f9403732eaec4466cee0d@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "cc5392c2-5e33-48f3-a4cd-aaab46b3184c",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996151,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Finalizacja projektu logo > faktura pro forma nr 4837",
+      "sent_date": "2024-10-24T12:28:44.027+00:00",
+      "own": "<cc19731d-ae68-ed3f-9398-f1c52e6fb33f@owocni.pl>",
+      "parent": "<CABySwk8K53JkUSkn8QDQYzRj4PiPwDh3+sByu93-8+b5RmiorA@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "c9c71dc4-596b-4814-a1da-91c48e88e7d1",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996148,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Konsultacja ze specjalistą",
+      "sent_date": "2024-10-24T12:19:43.507+00:00",
+      "own": "<408a4044-388b-5c43-95f1-4fbafea9d95b@owocni.pl>",
+      "parent": "<DB8PR10MB3657F8693AA22A0DD5683456F84E2@DB8PR10MB3657.EURPRD10.PROD.OUTLOOK.COM>",
+      "status": "skip_other_channel",
+      "parent_thread": "6805938a-ef45-44a1-bd58-132529cc42d4",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996141,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Finalizacja projektu logo > faktura pro forma nr 4836",
+      "sent_date": "2024-10-24T12:07:06.819+00:00",
+      "own": "<84ed405d-28ae-417b-a2c0-8903a8e2c143@owocni.pl>",
+      "parent": "<CAF_sYvL7q_xx6HS2fiqBVPXxRixo8xzmbhyycz_o788XqcSdgg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "305f176b-8cd0-4c39-857b-de3e81a231d0",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996138,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Konsultacja ze specjalistą",
+      "sent_date": "2024-10-24T12:02:10.712+00:00",
+      "own": "<2e4b25b5-6c71-b2b2-abe8-3b780c1ae6d1@owocni.pl>",
+      "parent": "<71fd48acd0f736d08301d5821cf3439f@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "17eee69a-8e7a-4e71-a3b5-ea6c71930c8d",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996136,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Wpłata za III etap strony",
+      "sent_date": "2024-10-24T11:48:38.818+00:00",
+      "own": "<215daf90-308a-4235-d311-aade4600b992@owocni.pl>",
+      "parent": "<CABGzmNdb6zJfRqHS624P3EMJvhFF3Q=TzWZ+XzTM_M8+-=sDwg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "1e7dda97-b2a0-441a-82c5-70ed55350932",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996135,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma nr 4837",
+      "sent_date": "2024-10-24T11:44:01.515+00:00",
+      "own": "<a69de8db-5241-e9c3-e8b8-e13b6ead8d03@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996133,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma nr 4836",
+      "sent_date": "2024-10-24T11:14:18.216+00:00",
+      "own": "<f27b60d0-a510-d9a2-d496-b3c87b8f2a1e@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996132,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma nr 4835",
+      "sent_date": "2024-10-24T11:09:11.686+00:00",
+      "own": "<ceba1591-3bf1-af17-9539-14ce0a013687@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1996131,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-10-24T10:55:46.901+00:00",
+      "own": "<1235f21c-fe97-1b3b-488b-e57c859039b7@owocni.pl>",
+      "parent": "<6137a383505782d2bcfd5b40bee7c207@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "625c7ea3-5e8c-44da-a251-5d51ba648d1d",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1996127,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo:",
+      "sent_date": "2024-10-24T10:45:40.661+00:00",
+      "own": "<f7b355a3-8ee4-cfad-0ec5-8edbfcd94380@owocni.pl>",
+      "parent": "<5bf3d8f386632b88b73b7af34f5024ee@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a880a948-01fb-4776-ac04-70dd5a24d09b",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    }
+  ]
+}

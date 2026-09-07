@@ -5,7 +5,7 @@ layer: ops
 status: active
 edit_scope: content_and_structure
 owner: "Dawid (techniczny) / Właściciel (priorytety SLO)"
-last_verified: 2026-09-01
+last_verified: 2026-09-07
 recheck_trigger: "nowy dodatek Owocni w Twenty / nowy scheduler / nowy workflow krytyczny / incydent ciszy kanału / wdrożenie zakładki"
 default_trust: D:CORE
 related:
@@ -59,7 +59,7 @@ related:
 
 | ID | Zakaz | Powód | Konsekwencja | Odmraża | Gdzie |
 |---|---|---|---|---|---|
-| NR-1 | **NIE traktuj braku nowych rekordów jako DOWN.** Cisza biznesowa (weekend, brak reklam, brak submitów) ≠ awaria. **Wyjątek H-LEAD-FORM:** jest świadek — INCOMING mail na `leads@` z tematem zaczynającym się od `Zapytanie` — a nie ma nowszej Opportunity `OWOCNI_SORTOWNIA` po oknie 45 min → **DOWN**. Scheduler workera 200 nie wystarcza (sGTM może nie pisać). | Weekend / DROP D-15 vs martwa Sortownia przy żywych formularzach. | Fałszywe alarmy albo ślepa cisza. | Właściciel + SLO §5.3 | §5.3, H-LEAD-FORM |
+| NR-1 | **NIE traktuj braku nowych rekordów jako DOWN.** Cisza biznesowa (weekend, brak reklam, brak submitów) ≠ awaria. **Wyjątek H-LEAD-FORM:** jest świadek — INCOMING mail formularza **Owocni** (`Zapytanie z formularza owocni.pl` / `Zapytanie z strony:` / `Zapytanie:` + host owocni.pl\|copywriting.pl\|logofirmowe.pl) — a nie ma nowszej Opportunity `OWOCNI_SORTOWNIA` po oknie 45 min → **DOWN**. **Nie** każde `Zapytanie*` (JuicyLogos `Zapytanie ze strony kontakt.` nie jest świadkiem). Scheduler workera 200 nie wystarcza (sGTM może nie pisać). | Weekend / DROP D-15 vs martwa Sortownia przy żywych formularzach. | Fałszywe alarmy albo ślepa cisza. | Właściciel + SLO §5.3 | §5.3, H-LEAD-FORM |
 | NR-2 | **NIE buduj zakładki na workflow HTTP Twenty ani na credits.** Probe = logika poza Twenty (GCP / logic function App) albo odczyt rekordów. | Limit credits Pro (`OPS_NOTES`). | Wyczerpanie puli, cisza eventów. | ADR | CONSTITUTION Prawo 7 / ARCHITECTURE NR-3 |
 | NR-3 | **NIE twórz custom object Deal / równoległego pipeline** „żeby mieć health”. Opportunity zostaje natywna. | Prawo 3a. | Dwa pipeline'y. | ADR | CONSTITUTION |
 | NR-4 | **NIE mieszaj pickera szablonów z panelem ops w jednym front component.** Health = osobna strona nawigacji (osobna app lub osobny page layout). | Inny user (handlowiec vs admin), inny cykl awarii. | Sales psuje ops, ops psuje mail. | Dawid przy Faza 1 | §5.5 |
@@ -185,11 +185,11 @@ Każda nowa integracja Owocni = nowy wiersz. Kolumna **Prio:** P0 = „CRM wydaj
 | **Łańcuch** | Formularz → GTM/sGTM Sortownia (`oid_init` → `generate_lead`) → `crm:twenty_create_lead` → worker `createLead` → Person + Opportunity NEW. Równolegle backup Sheets/Make (**nie** ten sam tor). |
 | **Kod / SSOT** | `ARCHITECTURE.md` §5.3 · `BUILD_CRM_TWENTY_CREATE_LEAD.md` · `workers/createLead.js` |
 | **Heartbeat** | sGTM/Stape żywy; worker poll `*/5`; ostatni task `crm:twenty_create_lead` nie w nieskończonym retry. |
-| **Świadek (twardy, 2026-09-01)** | GET Message `subject[startsWith]:Zapytanie` + GET Opportunity `srcSystem=OWOCNI_SORTOWNIA`. Formularz **zawsze** wysyła mail na `leads@` (równolegle do Sortowni). Mail bez nowszej karty po 45 min = Sortownia/API_KEY/sGTM padły, nie „cisza reklam”. |
+| **Świadek (twardy, 2026-09-01; filtr 2026-09-07)** | GET Message `subject[startsWith]:Zapytanie` + allowlist Owocni (`formWitness.js`) + GET Opportunity `srcSystem=OWOCNI_SORTOWNIA`. Formularz Owocni **zawsze** wysyła mail na `leads@` (równolegle do Sortowni). Mail Owocni bez nowszej karty po 45 min = Sortownia/API_KEY/sGTM padły, nie „cisza reklam”. **Nie** `Zapytanie ze strony kontakt.` (JuicyLogos). |
 | **Freshness** | ostatnia Opportunity z kanału paid/form (nie `PIPEDRIVE_LEGACY`) — miękka **tylko** gdy brak świadka. |
 | **Zależność** | H-WF `lead · formularz · powiadom owner v3` — brak **powiadomienia** ≠ brak rekordu. Rozróżniaj. |
 | **Backup** | Mail `Zapytanie` na `leads@` → worker `formMailWitness` (GCP `*/5`) enqueue `crm:twenty_create_lead` gdy sGTM milczy. Sheets/Make nadal równolegle. |
-| **Typowe awarie** | **2026-09-03:** Scheduler last-fail (code 13) przy jobie ENABLED = poll 500 z `leadDispatchSweep` HTTP 429 — create_lead już 200, karta żywa. Pager H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON z jednego last-fail. Najpierw świadek mail/karta, nie Sortownia. |
+| **Typowe awarie** | **2026-09-03:** Scheduler last-fail (code 13) przy jobie ENABLED = poll 500 z `leadDispatchSweep` HTTP 429 — create_lead już 200, karta żywa. Pager H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON z jednego last-fail. Najpierw świadek mail/karta, nie Sortownia. **2026-09-07:** `Zapytanie ze strony kontakt.` (JuicyLogos, HTML-only) ≠ formularz Owocni — fałszywy DOWN; filtr w `formWitness.js`. |
 
 ##### H-LEAD-MAIL — Leady z `leads@` (Email Sync + workflow)
 
@@ -331,7 +331,7 @@ Zasada: **heartbeat twardy, freshness miękka, okno = godziny pracy PL (pn–pt 
 |---|---|---|---|
 | H-CALL | Job + n8n ACTIVE + worker poll &lt; 15 min | Godziny pracy i brak nowego CallTranscript **oraz** w Play są nowe nagrania | Job nie startuje / n8n OFF / **n8n nie podpięte (brak API)** / ingest disabled / kolejka stoi &gt; 30 min przy pending |
 | H-MISSED | Poller + worker | — | Poller/worker DOWN (n8n ignoruj) |
-| H-LEAD-FORM | Worker poll **oraz** świadek: ostatni mail `Zapytanie` ma nowszą (lub ≤45 min starszą) kartę `OWOCNI_SORTOWNIA` | Probe świadka HTTP ≠ 2xx | Scheduler worker DOWN **albo** mail Zapytanie ≥45 min bez nowszej karty Sortowni |
+| H-LEAD-FORM | Worker poll **oraz** świadek: ostatni mail formularza **Owocni** ma nowszą (lub ≤45 min starszą) kartę `OWOCNI_SORTOWNIA` | Probe świadka HTTP ≠ 2xx | Scheduler worker DOWN **albo** mail Owocni ≥45 min bez nowszej karty Sortowni |
 | H-LEAD-MAIL | Sync + workflow ACTIVE | Mail w Twenty, brak Opportunity/notify | Sync error albo workflow DEACTIVATED poza gate |
 | H-LEAD-META | Poll 200 | 0 push Meta, poll łapie leady | Poll fail **i** brak ingest |
 | H-MAIL-TPL | App zainstalowana, count szablonów &gt; 0, readiness canSend | canSend=false (SMTP) / część szablonów pusta | App brak / obiekt brak / 401 logic functions |
@@ -366,8 +366,8 @@ Wspólne narzędzia: Twenty MCP `find_many_*` / `group_by_*` (limit 10 + filtr d
 #### B. „Nie ma leadów z formularza”
 
 1. Czy submit w ogóle doszedł? Mail `Zapytanie` na `leads@` (Twenty Message) / arkusz backup / Make.
-2. Mail jest, Opportunity `OWOCNI_SORTOWNIA` starsza o ≥45 min → **H-LEAD-FORM DOWN** (tag sGTM / pusty `API_KEY` / Stape). Nie ufaj samemu schedulerowi workera.
-2b. Trzy maile naraz (H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON) z detail `twenty-crm-worker-sandbox: ENABLED` → last HTTP workera ≠ 2xx (często 429 sweep). Sprawdź świadek i log `lead_dispatch_sweep list FAIL` zanim ruszysz Sortownię.
+2. Mail **Owocni** jest, Opportunity `OWOCNI_SORTOWNIA` starsza o ≥45 min → **H-LEAD-FORM DOWN** (tag sGTM / pusty `API_KEY` / Stape). Nie ufaj samemu schedulerowi workera. `Zapytanie ze strony kontakt.` (JuicyLogos) **nie** jest świadkiem — ignoruj, szukaj `Zapytanie z formularza owocni.pl` / `Zapytanie:` + host Owocni.
+2b. Trzy maile naraz (H-LEAD-FORM + H-MAIL-DIR + H-UPDATE-PERSON) z detail `twenty-crm-worker-sandbox: ENABLED` → last HTTP workera ≠ 2xx. **Sweep dyspozytora wycofany 4 IX** (`retired_biore`) — nie szukaj `lead_dispatch_sweep list FAIL` jako przyczyny. Sprawdź świadek formularza vs kartę.
 3. Jest w Twenty, nikt nie dostał maila → H-WF pozycja 1, nie worker.
 4. `srcSystem=PIPEDRIVE_LEGACY` nie liczy się jako live form.
 
@@ -459,7 +459,7 @@ Gdy zadanie brzmi „zrób zakładkę / zaimplementuj Stan systemu”:
 
 | Źródło | Zakaz | Co zamiast | Szacunek |
 |---|---|---|---|
-| Twenty workflow credits | HTTP/Code w workflow, zapis rekordów health | tylko GET REST (`/workflows`, `/mailTemplates?limit=1`, `/webhooks`, `/opportunities?limit=1` Sortownia, `/messages?limit=5` Zapytanie) | ~6 GET × instancja × ~49 runów/dzień |
+| Twenty workflow credits | HTTP/Code w workflow, zapis rekordów health | tylko GET REST (`/workflows`, `/mailTemplates?limit=1`, `/webhooks`, `/opportunities?limit=1` Sortownia, `/messages?limit=20` Zapytanie, filtr Owocni) | ~6 GET × instancja × ~49 runów/dzień |
 | n8n | nowy workflow / cron / execution | 1× GET API `active`. **Brak klucza / nieaktywne = H-CALL DOWN** (fail-closed). | 49 wywołań/dzień gdy klucz jest; 0 executions |
 | GCP / Stape | nowy job `*/5`; HTTP do worker/Robot/Play | 1 CF min-instances=0, **co 30 min** + **08:00**; odczyt listy **istniejących** Scheduler jobs | ~49 cold-startów/dzień, 256 MiB, timeout 60 s |
 | Twenty write | obiekt ping, Notes, Opportunity | snapshot GCS `system-health/last.json` | 2 ops GCS / run |

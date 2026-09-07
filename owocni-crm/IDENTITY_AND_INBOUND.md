@@ -146,6 +146,7 @@ Po normalizacji (`normalize_email` §5.8.1, `normalizePhone` E.164 — ta sama l
 |---|---|---|---|
 | Formularz **paid** (web, gclid/fbc) | Sortownia (real-time) | **automat** (Sortownia) | Nie dotyka — paid path |
 | Formularz **nie-paid** / organic | Sortownia `generate_lead` jeśli event jest | automat jeśli event | T1–T3 jeśli przez Twenty |
+| **Meta Instant Form** (Lead Ads) | GCP poll `meta-lead-poll-every-5min` (**SoR**); webhook Page `leadgen` = bonus | **automat** w `ingest_meta_lead` (ULID gdy brak); klucz kanału `metaLeadgenId` | Wejście omija Resolver T1–T5. `create_lead`: `bizSource=FACEBOOK`, `srcSystem=OWOCNI_SORTOWNIA`, owner = Robert Mańk. CAPI SQL ≠ ten tor (`META-PODLACZENIE.md`) |
 | Mail → **`leads@`** | Twenty Email Sync | Resolver T1–T4 | T3 dla nowego nadawcy |
 | Mail → **`studio@`** | Twenty Email Sync | Resolver | T3/T4 |
 | Mail → **skrzynki handlowców** (`marta@`, `gosia@`, `mariusz@`, `copywriting@`, `pomoc@`) | Twenty Email Sync (Etap 1.2) | Resolver | T3/T4 |
@@ -195,6 +196,8 @@ Wdrożenie: Metadata override command menu + Owocni Mail (`findSendableEmailAcco
 
 **Formularz paid:** `Formularz → Sortownia (oid_init → generate_lead) → id_oid + verified + vbb_eligible → adapter crm:twenty_create_lead → Twenty`. Sortownia Etap A: **nie przepisujemy** logiki Owner / Akt / 90 dni.
 
+**Meta Instant Form:** Graph (poll co 5 min, SoR) albo push `leadgen` → CF `meta-lead-webhook` → worker `ingest_meta_lead` → `crm:twenty_create_lead`. Idempotencja `metaLeadgenId`. Owner zawsze Robert. Szczegóły łańcucha: `SYSTEM_HEALTH.md` H-LEAD-META · `META_LEAD_WEBHOOK_PHASE_B.md`.
+
 **Mail (Twenty Email Sync + Resolver):** mail → Email Sync (~5 min) → Person/Opportunity → webhook → Resolver → lookup Stape (by_email[from], opcjonalnie by_phone tylko z pola, nie z body) → T1/T2/T3 zapis id_oid + wskaźniki; T4 → flaga „Tożsamość do rozstrzygnięcia". Handlowiec **nie przepisuje** leada od zera — człowiek tylko przy T4.
 
 **Telefon (ręczny):** handlowiec wpisuje numer (+ email jeśli zna) → webhook field updated → Resolver (ta sama macierz §5.3). Bez integracji telefonii — resolver działa w momencie zapisu pola.
@@ -206,6 +209,7 @@ Wdrożenie: Metadata override command menu + Owocni Mail (`findSendableEmailAcco
 | Kanał | Dziś | Docelowo |
 |---|---|---|
 | Formularze strony | Sortownia + często mail na `leads@` | Sortownia → Twenty; paid bez zmian |
+| Meta Instant Form | Poll Graph + `ingest_meta_lead` → karta `FACEBOOK` / Robert | Bez zmian — osobny tor od formularza www |
 | Mail `leads@` | julia362 → GPT → auto-lead Supabase | Twenty sync + Resolver (T1–T3 auto, T4 człowiek) |
 | Mail `studio@` itd. | Mail zapisany; brak auto-leada dla nowego klienta | Twenty sync + T3 auto_mint dla nowego nadawcy |
 | `kontakt@` | Osobna skrzynka, spam; nie obsługujemy | Bez zmian — poza CRM |
@@ -399,6 +403,7 @@ Bramka w **adapterach Robot**, nie w Sortowni paid.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-09-07 | §5.4–5.7: wiersz **Meta Instant Form** (poll SoR, `metaLeadgenId`, owner Robert) | Dawid | Kanał żył w kodzie i danych, lista milczała |
 | 2026-07-15 | Free-mail v1: exact match 918 domen; **KILL substring**; zakotwiczone patterns (opt-in); `never_block`; canary | Właściciel | livechat.com / acme.com / terravita.pl |
 | 2026-06-08 | Merge policy v2.0: propozycje corporate, zakaz auto-merge i free-mail; §5.8.1 normalize_email; §5.8.2 company_domain_key + PSL | Właściciel | Asystent+szef ta sama firma |
 

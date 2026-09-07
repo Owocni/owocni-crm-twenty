@@ -100,7 +100,7 @@ def has_body(body: str | None) -> bool:
     return bool(t) and t.lower() != "error"
 
 
-def fetch_sent_candidates(*, inbox: str, limit: int = 15) -> list[dict]:
+def fetch_sent_candidates(*, inbox: str, limit: int = 15, offset: int = 0) -> list[dict]:
     load_bb_env()
     rows = bb_get(
         "email_message",
@@ -113,6 +113,7 @@ def fetch_sent_candidates(*, inbox: str, limit: int = 15) -> list[dict]:
             "inbox": f"eq.{inbox}",
             "order": "sent_date.desc",
             "limit": str(limit),
+            "offset": str(offset),
         },
     )
     out = []

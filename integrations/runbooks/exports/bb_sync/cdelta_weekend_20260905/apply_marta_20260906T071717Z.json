@@ -1,0 +1,14 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 10552,
+  "bb_limit": 400,
+  "rows": 0,
+  "scanned": 0,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {},
+  "appended": [],
+  "skipped_sample": []
+}

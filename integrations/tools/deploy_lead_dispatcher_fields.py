@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
-"""Deploy Lead Dispatcher v2.0 fields to Twenty Metadata API (idempotent).
+"""RETIRED 2026-09-04 — Lead Dispatcher fields are historical archive on Opportunity.
 
-Opportunity (CRM-only orchestration — never ad payloads):
-  bizLeadIntentClass SELECT HOT_FIT / STANDARD / LOW_INTENT
-  bizAssignedAt DATE_TIME
-  bizAckAt DATE_TIME
-  bizFirstAttemptAt DATE_TIME
-  bizFirstAttemptChannel SELECT EMAIL / MANUAL
-  bizFailoverCount NUMBER
-  bizManagerAlertedAt DATE_TIME
-  bizRoutingRule TEXT
-  bizTimeOnPageMs NUMBER
+Does not create fields. Does not enable Biorę / dispatcher.
+Pola zostają: bizAckAt, bizAssignedAt, bizLeadIntentClass, …
 
 Usage:
   python3 integrations/tools/deploy_lead_dispatcher_fields.py
@@ -184,10 +176,13 @@ def opt(value: str, label: str, color: str, position: int) -> dict:
 
 
 def main() -> int:
+    print("=== Lead Dispatcher fields — ARCHIVE ONLY (retired 2026-09-04) ===")
+    print("Pola bizAckAt / bizAssignedAt / bizLeadIntentClass zostają na Opportunity.")
+    print("Nie tworzę nowych pól. Nie włączam dyspozytora. Biorę wycofane.")
+    return 0
+
+    # Unreachable — dispatcher field install retired. Historical ensure_* kept below as archive.
     load_dotenv_local()
-    ids = object_ids()
-    if "opportunity" not in ids:
-        raise SystemExit("Brak obiektu opportunity")
 
     oid = ids["opportunity"]
     print("=== Lead Dispatcher fields (Opportunity) ===")
@@ -291,8 +286,7 @@ def main() -> int:
             field_type=ftype,
         )
 
-    print("=== DONE ===")
-    print("Następnie: LEAD_DISPATCHER_ENABLED=true w workerze po smoke.")
+    print("=== DONE (archive path unused) ===")
     return 0
 
 

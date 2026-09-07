@@ -1,0 +1,237 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 10018,
+  "bb_limit": 400,
+  "rows": 399,
+  "scanned": 399,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_in_twenty": 399
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 1993162,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T12:02:36+00:00",
+      "own": "<crm.activity.33749-EP27Q6@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993148,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Zapytanie ofertowe - Rebranding i zmiana komunikacji dla Centrum Handlowego Plej",
+      "sent_date": "2024-07-15T11:40:56+00:00",
+      "own": "<crm.activity.33731-2ZDX5B@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993153,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Owocna strona firmowa",
+      "sent_date": "2024-07-15T11:38:27+00:00",
+      "own": "<crm.activity.33729-RJV4F7@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993150,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa:",
+      "sent_date": "2024-07-15T11:37:37+00:00",
+      "own": "<crm.activity.33727-JLOVNW@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993152,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2024-07-15T10:35:16+00:00",
+      "own": "<crm.activity.33693-5ZQTDX@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993147,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne możliwości:",
+      "sent_date": "2024-07-15T10:19:25+00:00",
+      "own": "<crm.activity.33675-771C1Z@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993149,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocna strona firmowa",
+      "sent_date": "2024-07-15T09:57:21+00:00",
+      "own": "<crm.activity.33669-XWRDH2@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993146,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Nowa strona firmowa:",
+      "sent_date": "2024-07-15T09:11:06+00:00",
+      "own": "<crm.activity.33655-5IGR42@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993145,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt logo:",
+      "sent_date": "2024-07-15T09:07:32+00:00",
+      "own": "<crm.activity.33651-OIE5Y7@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993154,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T08:35:13+00:00",
+      "own": "<crm.activity.33639-O55QAC@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993151,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Re: Projekt logo:",
+      "sent_date": "2024-07-15T08:21:18+00:00",
+      "own": "<crm.activity.33635-CXQIKJ@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993142,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne teksty",
+      "sent_date": "2024-07-15T08:19:31+00:00",
+      "own": "<crm.activity.33633-6HGW5A@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993143,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne możliwości:",
+      "sent_date": "2024-07-15T08:15:06+00:00",
+      "own": "<crm.activity.33625-KHUX10@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993139,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T08:11:55+00:00",
+      "own": "<crm.activity.33623-2NSL2N@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993135,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T07:59:52+00:00",
+      "own": "<crm.activity.33619-KPJTQB@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993136,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo:",
+      "sent_date": "2024-07-15T07:52:28+00:00",
+      "own": "<crm.activity.33617-JM35Y1@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993144,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T07:43:14+00:00",
+      "own": "<crm.activity.33613-QKPWXN@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993138,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T07:40:28+00:00",
+      "own": "<crm.activity.33611-SLIEBI@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993141,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy:",
+      "sent_date": "2024-07-15T07:37:03+00:00",
+      "own": "<crm.activity.33609-X6NU71@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1993137,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Owocne sklep internetowy:",
+      "sent_date": "2024-07-12T13:44:21+00:00",
+      "own": "<crm.activity.33429-H18DEA@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 doc_id: LEAD_DISPATCHER_PLAN
-title: "Rozdzielanie leadów — v2.0 model dyspozytora (TIME TO LEAD)"
+title: "Rozdzielanie leadów — v2.0 model dyspozytora (TIME TO LEAD) — ARCHIWUM"
 layer: runbook
-status: approved_for_impl
+status: retired
 owner: "Mariusz (biznes) / Dawid (wdrożenie)"
-last_verified: 2026-08-25
+last_verified: 2026-09-04
 related:
   - LEAD_OWNER_ROUTING_PLAN.md
   - CUTOVER_TWENTY_TEAM_PLAN.md
@@ -16,8 +16,13 @@ supersedes:
   - "Rozdzielanie-leadow-wstep.md v1.3 (claim/puli — ODRZUCONE)"
   - "LEAD_DISPATCHER_PLAN draft 2026-08-20 (skrót zespołowy — scalony tu)"
 audience: "zespół handlowy + LLM / agent wdrożeniowy"
-source: "v2.0 Red Team 2026-08-12 + decyzje właściciela 2026-08-12…25"
+source: "v2.0 Red Team 2026-08-12 + decyzje właściciela 2026-08-12…25; wycofane 2026-09-04"
 ---
+
+> **RETIRED 2026-09-04.** Biorę, zegar failover, limit 3, least-loaded, alerty managera — wycofane.  
+> **SSOT przydziału nowych kart:** `createLead.js` `resolveOpportunityOwnerId` (copywriting → Maciej; parzysty idOid → Gosia; nieparzysty → Marta).  
+> Ten plik zostaje jako archiwum modelu. Nie uruchamiaj `start_lead_dispatcher.sh go`.
+
 
 # Rozdzielanie leadów — v2.0 (model dyspozytora)
 
@@ -324,7 +329,7 @@ Przy wdrożeniu: wyłączyć assign z WF v7/v12 (zostaje co najwyżej powiadomie
 
 ## 14. Checklist wdrożenia (kolejność)
 
-**One-shot:** `./integrations/tools/start_lead_dispatcher.sh go` — szczegóły w `LEAD_DISPATCHER_START.md`.
+**One-shot (RETIRED):** `./integrations/tools/start_lead_dispatcher.sh retire` — nie `go`.
 
 1. Pola §9 w Twenty + `DATA_MODEL`  
 2. Klasyfikacja §4 w workerze (+ `bizTimeOnPageMs`)  

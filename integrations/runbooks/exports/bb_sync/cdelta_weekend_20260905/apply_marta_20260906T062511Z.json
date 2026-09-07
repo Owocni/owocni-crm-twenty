@@ -1,0 +1,272 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 9398,
+  "bb_limit": 400,
+  "rows": 388,
+  "scanned": 388,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_parent_not_in_twenty": 136,
+    "skip_other_channel": 4,
+    "skip_no_parent": 10,
+    "skip_on_imap": 204,
+    "skip_in_twenty": 32
+  },
+  "appended": [
+    {
+      "bb_id": 1995034,
+      "inbox": "marta@owocni.pl",
+      "subject": "Uruchomienie prac nad logo:",
+      "sent_date": "2024-10-14T15:05:09.854+00:00",
+      "own": "<953aeff7-88c2-f629-660c-388d632e1fd9@owocni.pl>",
+      "parent": "<GV1P193MB20569F28FC4586278E5BF1DCFE792@GV1P193MB2056.EURP193.PROD.OUTLOOK.COM>",
+      "status": "appended",
+      "parent_thread": "7cb27939-2419-4262-b1a2-ce5925de71d3",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 25172
+    },
+    {
+      "bb_id": 1994778,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Nazwa i logo dla Pana Piotra:",
+      "sent_date": "2024-10-11T13:11:25.366+00:00",
+      "own": "<3be14b60-8653-6366-4011-7a02e32cbf95@owocni.pl>",
+      "parent": "<27EABF37-F966-4C4A-BC49-E70ED0578354@gmail.com>",
+      "status": "appended",
+      "parent_thread": "d2498097-ca21-4588-aca9-e0b5a9f1baea",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 70158
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 1991841,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Odp: Opieka nad stroną:",
+      "sent_date": "2024-09-18T13:15:55+00:00",
+      "own": "<crm.activity.49285-0R2KZ1@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991839,
+      "inbox": "marta@owocni.pl",
+      "subject": "Opieka nad stroną:",
+      "sent_date": "2024-09-18T12:00:05+00:00",
+      "own": "<crm.activity.49271-2I4C5O@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991838,
+      "inbox": "marta@owocni.pl",
+      "subject": "Jak pracujemy nad projektem logo?",
+      "sent_date": "2024-09-18T11:53:44+00:00",
+      "own": "<crm.activity.49269-E79TKG@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991840,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Owocna opieka nad stroną:",
+      "sent_date": "2024-09-18T11:45:09+00:00",
+      "own": "<crm.activity.49267-XKAK9Y@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991828,
+      "inbox": "marta@owocni.pl",
+      "subject": "Jak pracujemy nad projektem logo?",
+      "sent_date": "2024-09-18T10:26:45+00:00",
+      "own": "<crm.activity.49251-CVRP33@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991835,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-09-18T10:22:24+00:00",
+      "own": "<crm.activity.49249-4GBR2X@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991834,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-09-18T08:26:54+00:00",
+      "own": "<crm.activity.49235-34HO86@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991829,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-09-18T08:11:07+00:00",
+      "own": "<crm.activity.49229-94LI90@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991833,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-09-18T07:40:22+00:00",
+      "own": "<crm.activity.49223-Z2V3O5@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991837,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna strona internetowa:",
+      "sent_date": "2024-09-17T14:39:31+00:00",
+      "own": "<crm.activity.49123-CWW13R@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991832,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna opieka nad stroną:",
+      "sent_date": "2024-09-17T14:20:49+00:00",
+      "own": "<crm.activity.49119-XXXQ9Y@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991836,
+      "inbox": "marta@owocni.pl",
+      "subject": "Uruchomienie projektu logo:",
+      "sent_date": "2024-09-17T13:43:44+00:00",
+      "own": "<crm.activity.49105-ZD9U9Z@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991831,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Odp: Pytanie:",
+      "sent_date": "2024-09-17T11:54:04+00:00",
+      "own": "<crm.activity.49087-B9FGLL@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991830,
+      "inbox": "marta@owocni.pl",
+      "subject": "Nazwa i logo - zniżka na pakiet:",
+      "sent_date": "2024-09-17T10:27:20+00:00",
+      "own": "<crm.activity.49069-GSIHZ5@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991827,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Fwd: Re: Projekt logo dla Pani Justyny:",
+      "sent_date": "2024-09-17T10:19:48+00:00",
+      "own": "<crm.activity.49067-YYQPJB@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991824,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Pytanie przed współpracą z Panem Krzysztofem:",
+      "sent_date": "2024-09-17T10:16:26+00:00",
+      "own": "<crm.activity.49063-EDHA90@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991820,
+      "inbox": "marta@owocni.pl",
+      "subject": "Opieka nad stroną:",
+      "sent_date": "2024-09-17T10:08:34+00:00",
+      "own": "<crm.activity.49057-VOD0XU@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991818,
+      "inbox": "marta@owocni.pl",
+      "subject": "Opieka nad stroną:",
+      "sent_date": "2024-09-17T09:55:56+00:00",
+      "own": "<crm.activity.49049-PM3U24@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991825,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Owocna strona internetowa:",
+      "sent_date": "2024-09-17T09:40:45+00:00",
+      "own": "<crm.activity.49045-NY772B@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1991819,
+      "inbox": "marta@owocni.pl",
+      "subject": "Opieka nad stroną:",
+      "sent_date": "2024-09-17T08:28:58+00:00",
+      "own": "<crm.activity.49027-OA3KK5@novedo.bitrix24.com>",
+      "parent": "",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

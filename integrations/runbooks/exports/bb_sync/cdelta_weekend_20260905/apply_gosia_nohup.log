@@ -1,0 +1,19 @@
+gosia@owocni.pl: BB window offset=0 fetch=400 rows=374 target_append=25
+(eval):1: command not found: setsid
+gosia@owocni.pl: BB window offset=0 fetch=400 rows=374 target_append=25
+  scanned 25/374 appended=0 last=skip_in_twenty
+  scanned 50/374 appended=0 last=skip_other_channel
+  scanned 75/374 appended=0 last=skip_in_twenty
+  scanned 100/374 appended=0 last=skip_parent_not_in_twenty
+  scanned 125/374 appended=0 last=skip_in_twenty
+  scanned 150/374 appended=0 last=skip_other_channel
+  scanned 175/374 appended=0 last=skip_in_twenty
+  scanned 200/374 appended=0 last=skip_other_channel
+  scanned 225/374 appended=0 last=skip_other_channel
+  scanned 250/374 appended=0 last=skip_other_channel
+  scanned 275/374 appended=0 last=skip_in_twenty
+  scanned 300/374 appended=0 last=skip_other_channel
+  scanned 325/374 appended=0 last=skip_other_channel
+  scanned 350/374 appended=0 last=skip_in_twenty
+appended=0 skipped_seen=374 manifest=/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_weekend_20260905/apply_gosia_20260904T075758Z.json
+Czekaj 10 min, potem sprawdź 2 Message-ID w Twenty (ten sam wątek co parent).

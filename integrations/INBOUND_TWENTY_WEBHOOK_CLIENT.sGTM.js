@@ -71,7 +71,7 @@ runContainer(
     twenty_webhook_raw_body: rawBody || "",
     twenty_webhook_signature: sig,
     twenty_webhook_timestamp: ts,
-    runtime_environment: "prod",
+    runtime_environment: "sandbox",
     adapter_id: "inbound:twenty_webhook",
     event_name: "inbound_twenty_webhook",
   },

@@ -144,28 +144,24 @@ Pola **CRM-only** (NR-5 w `METRICS.md`) — wypełnia workflow / GCP worker; zap
 
 Kanon formuł → `METRICS.md`. Kontrakty → `../workflows/track-stage-time.contract.md`, `../workflows/first-outbound-response.contract.md`.
 
-#### Lead dispatcher v2.0 (TIME TO LEAD) — OPEN / wdrożenie za flagą
+#### Lead dispatcher v2.0 — RETIRED 2026-09-04 (pola = archiwum)
 
-**SSOT:** `integrations/runbooks/LEAD_DISPATCHER_PLAN.md` (scalone 2026-08-25).  
-**Semantyka:** CRM-only / orkiestracja — **NIGDY do payloadów eventów reklamowych** (NR-5).  
-**Nie mylić:** `bizIntent` (CENNIK/EKSPERT) ≠ `bizLeadIntentClass` (HOT_FIT/STANDARD/LOW_INTENT) ≠ native `engagement` (HOT/COLD).  
-**Flag:** `LEAD_DISPATCHER_ENABLED` (worker) — default OFF do smoke po Metadata deploy.
+**Przydział nowych kart:** `createLead.js` — COPYWRITING → Maciej; parzysty hash `idOid` → Gosia; nieparzysty → Marta. Copywriting ma pierwszeństwo niezależnie od źródła.  
+**Nie przeliczamy** istniejących ownerów. Pola poniżej zostają na Opportunity; nic ich już nie zapisuje (poza sample-week `bizAssignedAt` / `bizRoutingRule`).
 
 | Field (API) | Type | Owner | Empty | Used by | Freeze? | Description |
 |---|---|---|---|---|---|---|
-| `bizLeadIntentClass` | SELECT | createLead (dispatcher) | null | Failover/eskalacja | OPEN | `HOT_FIT` / `STANDARD` / `LOW_INTENT` |
-| `bizAssignedAt` | DATETIME | createLead / sweep | null | Start zegara | OPEN | Przydział / restart po failoverze |
-| `bizAckAt` | DATETIME | WF „Biorę” | null | Stop failover | OPEN | Deklaracja handlowca |
-| `bizFirstAttemptAt` | DATETIME | M2 / stage hook / sweep | null | Wyjście z pętli; metryka TTL | OPEN | Mail OUT lub MANUAL |
+| `bizLeadIntentClass` | SELECT | archive | null | — | ARCHIVE | HOT/STANDARD/LOW — nieaktywne |
+| `bizAssignedAt` | DATETIME | archive / sample-week | null | — | ARCHIVE | historyczny start zegara |
+| `bizAckAt` | DATETIME | archive (WF Biorę) | null | — | ARCHIVE | historyczna deklaracja |
+| `bizFirstAttemptAt` | DATETIME | advanceNewToContacted | null | metryka TTL | OPEN | Mail OUT lub MANUAL |
 | `bizFirstAttemptChannel` | SELECT | j.w. | null | Audyt | OPEN | `EMAIL` / `MANUAL` |
-| `bizFailoverCount` | NUMBER | sweep | 0 | Kalibracja | OPEN | Ile failoverów |
-| `bizManagerAlertedAt` | DATETIME | sweep | null | Eskalacja raz | OPEN | Mail → `maciej@owocni.pl` |
-| `bizRoutingRule` | TEXT | createLead | null | Audyt | OPEN | np. `RULE-CONTINUITY`, `RULE-META-INTERIM` |
-| `bizTimeOnPageMs` | NUMBER | createLead | null | Klasyfikacja HOT | OPEN | Surowy ms z formularza |
+| `bizFailoverCount` | NUMBER | archive | 0 | — | ARCHIVE | ile failoverów (historyczne) |
+| `bizManagerAlertedAt` | DATETIME | archive | null | — | ARCHIVE | eskalacje (historyczne) |
+| `bizRoutingRule` | TEXT | archive / sample-week | null | Audyt | ARCHIVE | np. RULE-CONTINUITY |
+| `bizTimeOnPageMs` | NUMBER | archive | null | — | ARCHIVE | surowy ms z formularza |
 
-**Capacity v1 (env, nie pola WM):** `LEAD_DISPATCH_POOL_IDS`, `LEAD_DISPATCH_VACATION_IDS`, `LEAD_DISPATCH_HOLIDAYS`, `LEAD_DISPATCH_MANAGER_EMAIL`.  
-**Deploy Metadata:** `integrations/tools/deploy_lead_dispatcher_fields.py`.  
-**Wycięte (nie tworzyć):** claim/reservation/*, sloty per klasa, `bizRepAvailability` (odrzucony v1.3).
+**Nie wdrażać ponownie:** `LEAD_DISPATCHER_ENABLED`, `start_lead_dispatcher.sh go`, `deploy_workflow_lead_ack.py` (teraz tylko deaktywuje).
 
 #### Message — kierunek (CRM-only, ADR #19 / E12.5)
 
@@ -174,7 +170,7 @@ Pole **CRM-only** na obiekcie systemowym Message — materializacja reguły firm
 | Field (API) | Type | Owner | Empty | Used by | Freeze? | Description (Twenty UI) |
 |---|---|---|---|---|---|---|
 | `direction` | SELECT | Writer backfill + GCP `messageDirectionEnrich` (MCMA webhook/poll) | null (maile bez MCMA) | Widoki 📥/📤/🔧 | OPEN (wartości 1:1 z enumem platformy) | **UI:** Kierunek. Wartości API: `INCOMING` → „Przychodzący", `OUTGOING` → „Wychodzący". Reguła: OUTGOING jeśli **jakakolwiek** asocjacja ma OUTGOING, inaczej INCOMING. Workflow UPDATE Message = zablokowany (`Object cannot be updated by automation`). |
-| `ourMailboxes` | MULTI_SELECT | Writer backfill + GCP `messageDirectionEnrich` | [] | Widoki 📥/📤 Marta·Gosia·Mariusz·Robert·Ewa·Maciej (soft filter) | OPEN | **UI:** Nasze skrzynki. Wartości: MARTA/GOSIA/MARIUSZ/STUDIO/LEADS/COPYWRITING/POMOC/OBSLUGA/ROBERT/EWA. Źródło: `MessageParticipant.handle` ∈ naszych adresów. **Nie ACL** — filtr widoku, da się zdjąć. |
+| `ourMailboxes` | MULTI_SELECT | Writer backfill + GCP `messageDirectionEnrich` | [] | Widoki 📥/📤 per skrzynka w folderze Poczta (osoba = 1 chip; studio@ i leads@ też tam) | OPEN | **UI:** Nasze skrzynki. Wartości: MARTA/GOSIA/MARIUSZ/STUDIO/LEADS/COPYWRITING/POMOC/OBSLUGA/ROBERT/EWA. Źródło: `MessageParticipant.handle` ∈ naszych adresów. **Nie ACL** — filtr widoku, da się zdjąć. |
 
 Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECISION_REGISTER.md` #19.
 

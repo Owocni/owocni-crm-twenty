@@ -9,7 +9,9 @@ from __future__ import annotations
 import hashlib
 import json
 import mimetypes
+import os
 import pathlib
+import subprocess
 import sys
 import time
 import urllib.error
@@ -294,6 +296,13 @@ def main() -> None:
     info = app["data"]["findOneApplication"]
     print(f"Done. Server version={info['version']} checksum={info['packageJsonChecksum']}")
     print(json.dumps(applied["data"]["syncApplication"].get("actions", {}), indent=2)[:1500])
+    # App sync drops FIELDS widget viewId; re-pin full page + field groups + action order.
+    pin_script = pathlib.Path(__file__).with_name("deploy_opportunity_record_page.py")
+    if os.environ.get("SKIP_RECORD_PAGE_PIN") == "1":
+        print("Skipping opportunity record page pin (SKIP_RECORD_PAGE_PIN=1)")
+    else:
+        print("Re-applying opportunity record page (full page + fields + actions)…")
+        subprocess.check_call([sys.executable, str(pin_script)])
 
 
 if __name__ == "__main__":

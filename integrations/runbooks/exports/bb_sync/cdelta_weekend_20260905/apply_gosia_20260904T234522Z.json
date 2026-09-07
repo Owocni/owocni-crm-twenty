@@ -1,0 +1,248 @@
+{
+  "mailbox": "gosia@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 8156,
+  "bb_limit": 400,
+  "rows": 369,
+  "scanned": 369,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 237,
+    "skip_parent_not_in_twenty": 69,
+    "skip_in_twenty": 22,
+    "skip_no_parent": 41
+  },
+  "appended": [],
+  "skipped_sample": [
+    {
+      "bb_id": 2000013,
+      "inbox": "gosia@owocni.pl",
+      "subject": "RE: Finalizacja projektu logo > faktura pro forma nr 4906",
+      "sent_date": "2024-11-28T09:52:36.529+00:00",
+      "own": "<fd8ceac5-66f9-f5f5-52b9-be791da24423@owocni.pl>",
+      "parent": "<007a01db417b$16f09510$44d1bf30$@powermat.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "2b1c91a2-fb67-4210-a523-0b0ffdc68bcc",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2000008,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Zapytanie z strony: https://www.owocni.pl/kontakt",
+      "sent_date": "2024-11-28T09:46:40.372+00:00",
+      "own": "<97a4fe6e-e854-eea5-44dc-99ee5b712644@owocni.pl>",
+      "parent": "<15fa4be590ba386cc961e26a0fac9eff@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "90b18d43-581f-438c-9de1-bcd99e9d3d12",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2000006,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Finalizacja projektu tekstów",
+      "sent_date": "2024-11-28T09:41:39+00:00",
+      "own": "<bx.mail.67483ad1.9e65cb@novedo.bitrix24.com>",
+      "parent": "<CAGx0u6YO-MFfMK60sjH0JOKJjezyB-CpEvo96GeDrysH8+MGjg@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2000001,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Idealne logo. Za symboliczną złotówkę.",
+      "sent_date": "2024-11-28T09:28:39.01+00:00",
+      "own": "<a4096414-97c6-4cc6-751a-1581c660e2a2@owocni.pl>",
+      "parent": "<616872cf-ca43-9285-c6c4-62788906e7e7@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999999,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2024-11-28T09:23:32.721+00:00",
+      "own": "<9b1c6b84-493f-b426-c83e-9f4c5259eef7@owocni.pl>",
+      "parent": "<0ecd8d6c586a18551e44213d03210974@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "cda6fbce-7293-4462-bf2a-91022ae35d5e",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1999997,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Kreacja nazwy dla Pana Rafała:",
+      "sent_date": "2024-11-28T09:16:18.058+00:00",
+      "own": "<750df2f5-c6df-94cb-3a37-dacd5be6253d@owocni.pl>",
+      "parent": "<a3d35ad9412752def467d6d7dd6fbd08@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "dcedb306-39bc-468e-a070-980a437a1f7a",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1999995,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Ekspert Okien i drzwi pozyska klienci indywidualni , architekcI B2B",
+      "sent_date": "2024-11-28T09:12:27+00:00",
+      "own": "<bx.mail.674833f9.502aea@novedo.bitrix24.com>",
+      "parent": "<CAN0OhZAjtsKYOR4NgGXjxcb+D+GNJwz2O0u2q-reEPH35apJdw@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999993,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Strona - Idealnie na wymiar. ",
+      "sent_date": "2024-11-28T09:08:45.918+00:00",
+      "own": "<1c0b603c-d0a7-964d-b962-01cd87e9e43f@owocni.pl>",
+      "parent": "<5e605fd0-7094-1245-fd08-09c1695e90bf@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999992,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt logo",
+      "sent_date": "2024-11-28T09:04:31.817+00:00",
+      "own": "<0eea2fd4-e18c-7424-2927-44b2641f6343@owocni.pl>",
+      "parent": "<866DE93D-5184-462A-A437-44B0AC7A6C63@gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "97b7c5f2-667a-43e0-91c5-b9c5fe76aa54",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999991,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Idealne logo. Za symboliczną złotówkę.",
+      "sent_date": "2024-11-28T09:02:32.441+00:00",
+      "own": "<d5bd026b-4a40-9275-ee39-69e8d38e8691@owocni.pl>",
+      "parent": "<CADWH9iyRvd_SXGJHPqUDpTg3AC74GRsRgh_sshPu97xa2hrWNg@mail.gmail.com>",
+      "status": "skip_other_channel",
+      "parent_thread": "e88d5b09-e37d-454a-a74a-a42a4107f9c8",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999986,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Wykreślenie z mailingu",
+      "sent_date": "2024-11-28T08:49:08.809+00:00",
+      "own": "<6b574798-f083-4a80-92e4-ce04019a64e4@owocni.pl>",
+      "parent": "<c08d654d-2fa8-e3f5-6490-ebddb025955d@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999985,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Wykreślenie z mailingu",
+      "sent_date": "2024-11-28T08:44:57.164+00:00",
+      "own": "<c08d654d-2fa8-e3f5-6490-ebddb025955d@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999952,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Re: Projekt etykiety",
+      "sent_date": "2024-11-27T15:25:16.732+00:00",
+      "own": "<e94c7147-041d-bf70-73b3-fd4edf69566c@owocni.pl>",
+      "parent": "<bbbd93d8-087c-47af-8589-2ff0bf65545d@apf.ie>",
+      "status": "skip_other_channel",
+      "parent_thread": "85d560fb-45ee-4d5b-bc3d-ac5a5cce9b45",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999951,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2024-11-27T15:22:46.715+00:00",
+      "own": "<6aaf4738-be33-54a1-426c-3595adad3862@owocni.pl>",
+      "parent": "<12d616a102d6ebd0227490cb54b0916d@form2020.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "90411e0c-d3aa-4be9-bcf6-ff37fb37c16a",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 1999947,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Finalizacja projektu logo > faktura pro forma nr 4906",
+      "sent_date": "2024-11-27T15:12:48.349+00:00",
+      "own": "<8641b9b4-ff57-f68e-a6e2-192c610993f5@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999939,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Odp: Projekt logo",
+      "sent_date": "2024-11-27T14:50:04.651+00:00",
+      "own": "<746f15b5-6c23-c121-89fa-7060506ed281@owocni.pl>",
+      "parent": "<7d02fb0ba30f476a9b7334b74f40dc6f@grupawp.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "a5c63c64-5fa9-45b1-99d0-ae0a66f11847",
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999933,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Idealna nazwa. Za symboliczną złotówkę.",
+      "sent_date": "2024-11-27T14:28:56.192+00:00",
+      "own": "<644c72a5-2908-3457-fab1-ea35fe75b990@owocni.pl>",
+      "parent": "<1982ec16-f946-d6cd-c738-6771cdb5f353@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999931,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Idealna nazwa. Za symboliczną złotówkę.",
+      "sent_date": "2024-11-27T14:13:48.761+00:00",
+      "own": "<b13a6966-ed71-2274-75a6-c2f5454e40d4@owocni.pl>",
+      "parent": "<e7471193-b2a1-afcf-eeed-efeb1f30fe9e@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999928,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Idealna nazwa. Za symboliczną złotówkę.",
+      "sent_date": "2024-11-27T14:04:11.287+00:00",
+      "own": "<a700161b-5166-18e2-1269-c3aeaa05c7cb@owocni.pl>",
+      "parent": "<7ef6a832-3842-95c2-f27a-71e4ceb89fae@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 1999926,
+      "inbox": "gosia@owocni.pl",
+      "subject": "Projekt logo",
+      "sent_date": "2024-11-27T13:52:06.572+00:00",
+      "own": "<2ac7994a-9e18-3b0d-2a79-9a60ccc369e3@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

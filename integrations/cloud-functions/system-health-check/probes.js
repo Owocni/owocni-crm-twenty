@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const { listSchedulerJobs, gcsReadJson, gcsWriteJson } = require("./gcp");
+const { pickFormWitnessMessage } = require("./formWitness");
 
 function parseJsonEnv(name, fallback) {
   const raw = process.env[name];
@@ -148,7 +149,7 @@ async function probeFormFlow(restUrl, apiKey) {
   const msgPath =
     "/messages?filter=" +
     encodeURIComponent("subject[startsWith]:Zapytanie") +
-    "&order_by=receivedAt[DescNullsLast]&limit=5";
+    "&order_by=receivedAt[DescNullsLast]&limit=20";
 
   try {
     const [oppRes, msgRes] = await Promise.all([
@@ -164,9 +165,7 @@ async function probeFormFlow(restUrl, apiKey) {
     const opps = collection(oppRes.body, "opportunities");
     const msgs = collection(msgRes.body, "messages");
     const opp = opps[0] || null;
-    const mail =
-      msgs.find((m) => String(m.direction || "").toUpperCase() !== "OUTGOING") ||
-      null;
+    const mail = pickFormWitnessMessage(msgs);
     return {
       lastFormMailAt: mail?.receivedAt || mail?.createdAt || null,
       lastFormMailSubject: mail?.subject || null,

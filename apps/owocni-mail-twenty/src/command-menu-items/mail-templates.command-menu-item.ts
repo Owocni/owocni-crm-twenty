@@ -8,6 +8,8 @@ export const MAIL_TEMPLATES_COMMAND_MENU_ITEM_UNIVERSAL_IDENTIFIER =
 /**
  * ADR #22: normal reply from own mailbox (default free compose).
  * Native Twenty Reply on leads@ threads stays broken — use this instead.
+ * Archive: kanban side panel uses opportunity-mail-panel (RECORD_PAGE).
+ * This command item stays as rollback / fallback composer.
  */
 export default defineCommandMenuItem({
   universalIdentifier: MAIL_TEMPLATES_COMMAND_MENU_ITEM_UNIVERSAL_IDENTIFIER,

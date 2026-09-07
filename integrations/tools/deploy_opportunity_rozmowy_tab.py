@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Add Opportunity record tab „Rozmowy” — linked CallTranscript table (not Notes).
 
-Idempotent: skips if a tab titled „Rozmowy” already exists on the default Opportunity layout.
+Idempotent: skips if a tab titled „Rozmowy” already exists on the target layout.
+Prefers the Owocni Mail RECORD_PAGE (name „Owocni Opportunity”) when installed;
+otherwise the first (system) layout — rollback path.
 
 Usage:
   export TWENTY_API_KEY=eyJ...
@@ -28,6 +30,7 @@ CALL_TRANSCRIPTS_FIELD_ID = "047184ce-e269-4459-b268-119c1b5a9cd8"
 # breaks parent-record scoping and shows empty.
 TAB_TITLE = "Rozmowy"
 TAB_POSITION = 1.5
+TAB_POSITION_OWOCNI = 20.0
 TAB_ICON = "IconPhone"
 
 
@@ -108,14 +111,18 @@ def find_opportunity_layout() -> dict:
     layouts = data["data"]["getPageLayouts"]
     if not layouts:
         raise RuntimeError("Brak layoutu RECORD_PAGE dla Opportunity")
-    layout = layouts[0]
+    owocni = next(
+        (item for item in layouts if item.get("name") == "Owocni Opportunity"),
+        None,
+    )
+    layout = owocni or layouts[0]
     for tab in layout.get("tabs") or []:
         if tab.get("title") == TAB_TITLE:
             return {"layout": layout, "existing_tab": tab}
     return {"layout": layout, "existing_tab": None}
 
 
-def create_tab(page_layout_id: str) -> str:
+def create_tab(page_layout_id: str, position: float = TAB_POSITION) -> str:
     data = gql(
         """
         mutation CreateTab($input: CreatePageLayoutTabInput!) {
@@ -126,7 +133,7 @@ def create_tab(page_layout_id: str) -> str:
             "input": {
                 "pageLayoutId": page_layout_id,
                 "title": TAB_TITLE,
-                "position": TAB_POSITION,
+                "position": position,
                 "layoutMode": "CANVAS",
             }
         },
@@ -155,12 +162,7 @@ def create_widget(tab_id: str) -> str:
                 "pageLayoutTabId": tab_id,
                 "title": TAB_TITLE,
                 "type": "FIELD",
-                "gridPosition": {
-                    "row": 0,
-                    "column": 0,
-                    "rowSpan": 12,
-                    "columnSpan": 12,
-                },
+                "position": {"layoutMode": "CANVAS"},
                 "configuration": {
                     "configurationType": "FIELD",
                     "fieldMetadataId": CALL_TRANSCRIPTS_FIELD_ID,
@@ -220,9 +222,15 @@ def main() -> None:
                 print(f"OK — zakładka „{TAB_TITLE}” (tab={existing['id']}, widget={w['id']})")
         return
 
-    tab_id = create_tab(layout["id"])
+    tab_id = create_tab(
+        layout["id"],
+        TAB_POSITION_OWOCNI if layout.get("name") == "Owocni Opportunity" else TAB_POSITION,
+    )
     widget_id = create_widget(tab_id)
-    print(f"Utworzono zakładkę „{TAB_TITLE}”: tab={tab_id}, widget={widget_id}")
+    print(
+        f"Utworzono zakładkę „{TAB_TITLE}”: tab={tab_id}, widget={widget_id} "
+        f"(layout={layout.get('name')})"
+    )
 
 
 if __name__ == "__main__":
