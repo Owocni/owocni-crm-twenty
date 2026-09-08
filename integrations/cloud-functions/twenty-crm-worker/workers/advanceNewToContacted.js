@@ -12,15 +12,20 @@ const {
   parseTwentyListRecords,
   patchTwentyRecord,
   buildTwentyListPath,
+  findPersonByEmail,
 } = require("../shared/twentyRest");
 const { resolveForwardLastContactAt } = require("../shared/lastContact");
 const {
   shouldApplyFollowUpFlag,
   resolveFollowUpFlag,
 } = require("../shared/followUp");
+const {
+  resolveEmailContactKind,
+  selectExternalClientParticipant,
+  pickResolvedOpportunity,
+} = require("../shared/emailContactKind");
 
 const PROCESSED_PREFIX = "email_contact_processed_";
-const INTERNAL_DOMAIN = "@owocni.pl";
 const NOTIFY_SUBJECT_PREFIX = "Nowy lead:";
 const CLOSED_STAGES = new Set(["WON", "LOST"]);
 
@@ -108,16 +113,68 @@ async function fetchClientParticipant(messageId, role) {
     throw new Error(`list participants HTTP ${res.statusCode}`);
   }
   const parts = parseTwentyListRecords("messageParticipants", res.body);
-  for (const part of parts) {
-    const handle = String(part.handle || "").toLowerCase();
-    if (!part.personId) continue;
-    if (handle.includes(INTERNAL_DOMAIN)) continue;
-    return part;
+  return selectExternalClientParticipant(parts);
+}
+
+function normalizeEmail(email) {
+  return String(email || "")
+    .trim()
+    .toLowerCase();
+}
+
+async function findNewestOpenOpportunityByCardEmail(emailRaw) {
+  const email = normalizeEmail(emailRaw);
+  if (!email || !email.includes("@")) return null;
+  const path = buildTwentyListPath(
+    "opportunities",
+    `bizCardEmail[eq]:${email}`,
+    20,
+  );
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`list opportunities by card email HTTP ${res.statusCode}`);
   }
-  return null;
+  const opps = parseTwentyListRecords("opportunities", res.body).filter(
+    (opp) =>
+      normalizeEmail(opp.bizCardEmail) === email &&
+      !CLOSED_STAGES.has(String(opp.stage || "").toUpperCase()),
+  );
+  if (!opps.length) return null;
+  opps.sort((a, b) => {
+    const ta = Date.parse(a.updatedAt || a.createdAt || 0);
+    const tb = Date.parse(b.updatedAt || b.createdAt || 0);
+    return tb - ta;
+  });
+  return opps[0];
+}
+
+async function resolveOpenOpportunity(participant, threadOpp) {
+  let byLinkedPersonId = null;
+  let byEmailPerson = null;
+  let byCardEmail = null;
+  if (participant?.personId) {
+    byLinkedPersonId = await findNewestOpenOpportunity(participant.personId);
+  }
+  const handle = participant?.handle;
+  if (handle && !byLinkedPersonId) {
+    const person = await findPersonByEmail(handle);
+    if (person?.id) {
+      byEmailPerson = await findNewestOpenOpportunity(person.id);
+    }
+    if (!byEmailPerson) {
+      byCardEmail = await findNewestOpenOpportunityByCardEmail(handle);
+    }
+  }
+  return pickResolvedOpportunity({
+    byLinkedPersonId,
+    byEmailPerson,
+    byCardEmail,
+    byThread: threadOpp,
+  });
 }
 
 async function findNewestOpenOpportunity(personId) {
+  if (!personId) return null;
   const path = buildTwentyListPath(
     "opportunities",
     `pointOfContactId[eq]:${personId}`,
@@ -155,21 +212,59 @@ async function markProcessed(associationId, opportunityId, messageId, meta) {
   });
 }
 
-async function touchContactFields(opp, contactIso, outboundIso, mailDirection) {
+async function findOpenOpportunityFromThreadTarget(threadId) {
+  if (!threadId) return null;
+  const path = buildTwentyListPath(
+    "messageThreadTargets",
+    `messageThreadId[eq]:${threadId}`,
+    10,
+  );
+  const res = await twentyRequest("GET", path);
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`list messageThreadTargets HTTP ${res.statusCode}`);
+  }
+  const targets = parseTwentyListRecords("messageThreadTargets", res.body);
+  for (const target of targets) {
+    const opportunityId = target.targetOpportunityId;
+    if (!opportunityId) continue;
+    const oppRes = await twentyRequest(
+      "GET",
+      `/opportunities/${encodeURIComponent(opportunityId)}`,
+    );
+    if (oppRes.statusCode === 404) continue;
+    if (oppRes.statusCode < 200 || oppRes.statusCode >= 300) {
+      throw new Error(`get opportunity HTTP ${oppRes.statusCode}`);
+    }
+    const opp = oppRes.body?.data?.opportunity || oppRes.body?.data || null;
+    if (!opp?.id) continue;
+    if (CLOSED_STAGES.has(String(opp.stage || "").toUpperCase())) continue;
+    return opp;
+  }
+  return null;
+}
+
+async function touchContactFields(
+  opp,
+  contactIso,
+  outboundIso,
+  mailDirection,
+  options = {},
+) {
   const patch = {};
+  const applyMetrics = options.metrics !== false;
   const forward = resolveForwardLastContactAt(opp.lastContactAt, contactIso);
-  if (forward.advanced && forward.lastContactAt) {
+  if (applyMetrics && forward.advanced && forward.lastContactAt) {
     patch.lastContactAt = forward.lastContactAt;
     patch.bizLastContactLabel = buildContactLabelFresh();
   }
-  if (!hasFirstResponseMetrics(opp) && outboundIso) {
+  if (applyMetrics && !hasFirstResponseMetrics(opp) && outboundIso) {
     const hours = computeHoursToFirstResponse(opp.createdAt, outboundIso);
     if (hours !== null) {
       patch.firstResponseAt = outboundIso;
       patch.hoursToFirstResponse = hours;
     }
   }
-  if (outboundIso && !opp.bizFirstAttemptAt) {
+  if (applyMetrics && outboundIso && !opp.bizFirstAttemptAt) {
     patch.bizFirstAttemptAt = outboundIso;
     patch.bizFirstAttemptChannel = "EMAIL";
   }
@@ -214,11 +309,26 @@ async function processOutgoingAssociation(assoc) {
   }
 
   const participant = await fetchClientParticipant(messageId, "TO");
-  if (!participant) {
+  const threadOpp = await findOpenOpportunityFromThreadTarget(
+    message.messageThreadId,
+  );
+  const kind = resolveEmailContactKind({
+    clientParticipant: participant,
+    threadOpportunityId: threadOpp?.id || null,
+    direction: "OUTGOING",
+    subject: message.subject,
+  });
+  if (kind === "SKIP") {
     return { skipped: "no_client_to" };
   }
+  if (kind === "INTERNAL_OUT") {
+    await markProcessed(associationId, threadOpp.id, messageId, {
+      skipped: "internal_handoff_out",
+    });
+    return { skipped: "internal_handoff_out", opportunityId: threadOpp.id };
+  }
 
-  const opp = await findNewestOpenOpportunity(participant.personId);
+  const opp = await resolveOpenOpportunity(participant, threadOpp);
   if (!opp) {
     return { skipped: "no_open_opp" };
   }
@@ -288,27 +398,41 @@ async function processIncomingAssociation(assoc) {
   }
 
   const participant = await fetchClientParticipant(messageId, "FROM");
-  if (!participant) {
+  const threadOpp = await findOpenOpportunityFromThreadTarget(
+    message.messageThreadId,
+  );
+  const kind = resolveEmailContactKind({
+    clientParticipant: participant,
+    threadOpportunityId: threadOpp?.id || null,
+    direction: "INCOMING",
+    subject: message.subject,
+  });
+  if (kind === "SKIP") {
     return { skipped: "no_client_from" };
   }
 
-  const opp = await findNewestOpenOpportunity(participant.personId);
+  const opp =
+    kind === "INTERNAL_IN"
+      ? threadOpp
+      : await resolveOpenOpportunity(participant, threadOpp);
   if (!opp) {
     return { skipped: "no_open_opp" };
   }
 
   const contactIso = messageContactIso(message, assoc);
-  await touchContactFields(opp, contactIso, null, "INCOMING");
+  await touchContactFields(opp, contactIso, null, "INCOMING", {
+    metrics: kind !== "INTERNAL_IN",
+  });
   await markProcessed(associationId, opp.id, messageId, {
     direction: "INCOMING",
+    internalHandoff: kind === "INTERNAL_IN",
   });
 
   console.log(
     "EMAIL_CONTACT: INCOMING OK",
     opp.id,
     opp.name,
-    "person=",
-    participant.personId,
+    kind === "INTERNAL_IN" ? "internal_handoff" : `person=${participant.personId}`,
     "msg=",
     messageId,
   );
@@ -317,7 +441,8 @@ async function processIncomingAssociation(assoc) {
     contactUpdated: true,
     opportunityId: opp.id,
     opportunityName: opp.name,
-    personId: participant.personId,
+    personId: participant?.personId || null,
+    internalHandoff: kind === "INTERNAL_IN",
     messageId,
   };
 }

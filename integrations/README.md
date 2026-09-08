@@ -9,7 +9,7 @@
 1. **Plan wdrożenia Twenty (T1→smoke):** [`runbooks/TWENTY_ROLLOUT_MASTER.md`](runbooks/TWENTY_ROLLOUT_MASTER.md)
 2. **Mapa ścieżek Twenty:** [`TWENTY_PATHS.md`](TWENTY_PATHS.md)
 3. **Parity docs ↔ kod:** [`INTEGRATIONS_PARITY.md`](INTEGRATIONS_PARITY.md)
-4. **Stan dodatków / cisza kanału / maile health:** [`../owocni-crm/ops/SYSTEM_HEALTH.md`](../owocni-crm/ops/SYSTEM_HEALTH.md) — diagnostyka LLM; UI zakładki = Faza 0; probe+maile = Faza A (`cloud-functions/system-health-check/`)
+4. **Stan dodatków / cisza kanału / maile health:** [`../owocni-crm/ops/SYSTEM_HEALTH.md`](../owocni-crm/ops/SYSTEM_HEALTH.md) — diagnostyka LLM; UI Faza 2 = `apps/owocni-ops/` (semafory z `ui.json`; screenshot OPEN); probe+maile = Faza A (`cloud-functions/system-health-check/`)
 5. **Kolejność faz (po Etap 1.1):** [`runbooks/NEXT_STEPS.md`](runbooks/NEXT_STEPS.md) → **G-PAR** + kanał telefon + merge
 6. **Kanał telefon (Play → n8n → Twenty):** [`runbooks/CALL_CHANNEL_ARCHITECTURE.md`](runbooks/CALL_CHANNEL_ARCHITECTURE.md) · kontrakt [`CALL_INGEST_N8N.contract.md`](runbooks/CALL_INGEST_N8N.contract.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](runbooks/BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md)
 7. **Nieodebrane (Play CDR MISSED):** [`runbooks/MISSED_CALLS_PLAY.contract.md`](runbooks/MISSED_CALLS_PLAY.contract.md)

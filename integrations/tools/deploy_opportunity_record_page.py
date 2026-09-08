@@ -28,6 +28,9 @@ ACTIONS_WIDGET_ID = "5da88580-ad5f-4090-932b-fac1cf94773c"
 FIELDS_VIEW_ID = "2cee1990-6596-47e3-9dbd-5738c89617a3"
 LEJEK_VIEW_ID = "ba6ac841-c293-4744-855b-3a99ee135743"
 ALL_OPPORTUNITIES_VIEW_ID = "54df245b-2500-4e6e-9b6e-2cdb9543042e"
+# Canonical sidebar pin of the kanban. The old OBJECT „Wszystkie leady”
+# (WSZYSTKIE_LEADY_NAV_ID) was rewritten to the same view and duplicated it.
+LEJEK_NAV_ID = "180a0420-732f-4651-81e8-2d5559793731"
 WSZYSTKIE_LEADY_NAV_ID = "6cab4f40-6afc-4511-803e-b91e5c9ac76f"
 
 GROUP_LEAD_ID = "cde2ffdd-da06-4c8f-9250-6af0ed580ead"
@@ -220,11 +223,10 @@ def pin_side_panel(url: str, token: str) -> None:
 
 
 def pin_lejek_as_landing(url: str, token: str) -> None:
-    """Kanban click / Opportunities nav should not dump people on All Opportunities.
+    """One sidebar pin for Lejek Owocni. All Opportunities stays last in the picker.
 
-    INDEX view cannot be swapped via UpdateViewInput. Convert the OBJECT nav item
-    „Wszystkie leady” into a VIEW pin of Lejek Owocni, and park All Opportunities
-    at the end of the picker.
+    Do not convert other Opportunity nav items into a second Lejek pin — that
+    produced two identical „Lejek Owocni” entries in the workspace bar.
     """
     gql(
         url,
@@ -238,62 +240,52 @@ def pin_lejek_as_landing(url: str, token: str) -> None:
     )
     print("  All Opportunities position=99")
 
-    item = gql(
+    listed = gql(
         url,
         token,
         """
-        query($id: UUID!) {
-          navigationMenuItem(id: $id) {
-            id name type viewId targetObjectMetadataId position
+        query {
+          navigationMenuItems {
+            id name type viewId position folderId
           }
         }
         """,
-        {"id": WSZYSTKIE_LEADY_NAV_ID},
     )
-    current = (item.get("data") or {}).get("navigationMenuItem")
-    if not current:
-        print("  nav 'Wszystkie leady' missing — skip")
-        return
-    if current.get("type") == "VIEW" and current.get("viewId") == LEJEK_VIEW_ID:
-        print("  nav 'Wszystkie leady' already points at Lejek Owocni")
+    items = listed.get("data", {}).get("navigationMenuItems") or []
+    lejek_pins = [
+        item
+        for item in items
+        if item.get("type") == "VIEW"
+        and item.get("viewId") == LEJEK_VIEW_ID
+        and not item.get("folderId")
+    ]
+    if len(lejek_pins) <= 1:
+        name = (lejek_pins[0].get("name") if lejek_pins else None) or "Lejek Owocni"
+        print(f"  sidebar {name!r}: {len(lejek_pins)} pin")
         return
 
-    gql(
-        url,
-        token,
-        """
-        mutation($id: UUID!) {
-          deleteNavigationMenuItem(id: $id) { id }
-        }
-        """,
-        {"id": WSZYSTKIE_LEADY_NAV_ID},
+    keep_id = (
+        LEJEK_NAV_ID
+        if any(item.get("id") == LEJEK_NAV_ID for item in lejek_pins)
+        else sorted(lejek_pins, key=lambda item: float(item.get("position") or 0))[0]["id"]
     )
-    created = gql(
-        url,
-        token,
-        """
-        mutation($input: CreateNavigationMenuItemInput!) {
-          createNavigationMenuItem(input: $input) {
-            id name type viewId position
-          }
-        }
-        """,
-        {
-            "input": {
-                "id": WSZYSTKIE_LEADY_NAV_ID,
-                "type": "VIEW",
-                "viewId": LEJEK_VIEW_ID,
-                "name": "Lejek Owocni",
-                "icon": "IconLayoutKanban",
-                "position": float(current.get("position") or 12),
+    for item in lejek_pins:
+        if item.get("id") == keep_id:
+            continue
+        gql(
+            url,
+            token,
+            """
+            mutation($id: UUID!) {
+              deleteNavigationMenuItem(id: $id) { id }
             }
-        },
-    )
-    print(
-        "  nav",
-        created["data"]["createNavigationMenuItem"]["name"],
-        "→ Lejek Owocni",
-    )
+            """,
+            {"id": item["id"]},
+        )
+        print(
+            f"  removed duplicate Lejek Owocni nav {item.get('id')} "
+            f"(kept {keep_id})"
+        )
 
 
 def rename_groups(url: str, token: str) -> None:

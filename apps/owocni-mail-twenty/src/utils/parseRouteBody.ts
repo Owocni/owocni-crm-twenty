@@ -64,6 +64,31 @@ export function readStringField(
   return '';
 }
 
+export function readNumberField(
+  payload: Record<string, unknown>,
+  ...keys: string[]
+): number {
+  for (const object of payloadObjects(payload)) {
+    for (const key of keys) {
+      const value = object[key];
+
+      if (typeof value === 'number' && Number.isFinite(value)) {
+        return value;
+      }
+
+      if (typeof value === 'string' && value.trim()) {
+        const parsed = Number(value);
+
+        if (Number.isFinite(parsed)) {
+          return parsed;
+        }
+      }
+    }
+  }
+
+  return 0;
+}
+
 function decodeBase64Utf8(value: string): string {
   try {
     return Buffer.from(value, 'base64').toString('utf8');

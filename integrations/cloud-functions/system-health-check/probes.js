@@ -215,6 +215,16 @@ async function probeSchedulers() {
 }
 
 const STATE_OBJECT = "system-health/last.json";
+const UI_OBJECT = "ui.json";
+
+function toUiSnapshot(state) {
+  return {
+    savedAt: state.savedAt,
+    mode: state.mode,
+    overall: state.overall,
+    items: state.items,
+  };
+}
 
 async function loadState() {
   const local = process.env.HEALTH_STATE_FILE;
@@ -242,8 +252,13 @@ async function saveState(state) {
     return;
   }
   const bucket = process.env.HEALTH_GCS_BUCKET;
-  if (!bucket) return;
-  await gcsWriteJson(bucket, STATE_OBJECT, state);
+  if (bucket) {
+    await gcsWriteJson(bucket, STATE_OBJECT, state);
+  }
+  const uiBucket = process.env.HEALTH_GCS_UI_BUCKET;
+  if (uiBucket) {
+    await gcsWriteJson(uiBucket, UI_OBJECT, toUiSnapshot(state));
+  }
 }
 
 module.exports = {
@@ -255,4 +270,7 @@ module.exports = {
   probeSchedulers,
   loadState,
   saveState,
+  toUiSnapshot,
+  STATE_OBJECT,
+  UI_OBJECT,
 };

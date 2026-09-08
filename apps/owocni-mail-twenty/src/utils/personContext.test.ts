@@ -4,6 +4,9 @@ import {
   directionFromFromParticipant,
   directionFromMessage,
   extractEmailFromHandle,
+  isInternalMailbox,
+  mailboxFromDisplay,
+  personFromParticipants,
 } from './personContext';
 
 describe('extractEmailFromHandle', () => {
@@ -124,5 +127,105 @@ describe('directionFromMessage', () => {
         },
       }),
     ).toBe('in');
+  });
+});
+
+describe('isInternalMailbox', () => {
+  it('treats studio@ as internal', () => {
+    expect(isInternalMailbox('studio@owocni.pl')).toBe(true);
+    expect(isInternalMailbox('Marta <marta@owocni.pl>')).toBe(true);
+  });
+
+  it('treats a client address as external', () => {
+    expect(isInternalMailbox('biuro@tela.pl')).toBe(false);
+  });
+});
+
+describe('personFromParticipants', () => {
+  it('does not pick Marta/studio@ when the client is also on the mail', () => {
+    const person = personFromParticipants([
+      {
+        role: 'to',
+        handle: 'studio@owocni.pl',
+        workspaceMemberId: 'wm-marta',
+        person: {
+          id: 'marta',
+          name: { firstName: 'Marta', lastName: 'Słowik' },
+          emails: { primaryEmail: 'studio@owocni.pl' },
+        },
+      },
+      {
+        role: 'from',
+        handle: 'biuro@tela.pl',
+        workspaceMemberId: null,
+      },
+    ]);
+
+    expect(person?.email).toBe('biuro@tela.pl');
+  });
+
+  it('prefers the client Person over an internal Person', () => {
+    const person = personFromParticipants([
+      {
+        role: 'to',
+        handle: 'studio@owocni.pl',
+        person: {
+          emails: { primaryEmail: 'studio@owocni.pl' },
+          name: { firstName: 'Marta', lastName: 'Słowik' },
+        },
+      },
+      {
+        role: 'from',
+        handle: 'biuro@tela.pl',
+        person: {
+          emails: { primaryEmail: 'biuro@tela.pl' },
+          name: { firstName: 'TELA', lastName: 'Group' },
+        },
+      },
+    ]);
+
+    expect(person?.email).toBe('biuro@tela.pl');
+    expect(person?.firstName).toBe('TELA');
+  });
+});
+
+describe('mailboxFromDisplay', () => {
+  it('shows studio@ not the CRM person Marta', () => {
+    expect(
+      mailboxFromDisplay({
+        handle: 'studio@owocni.pl',
+        person: {
+          name: { firstName: 'Marta', lastName: 'Słowik' },
+          emails: { primaryEmail: 'studio@owocni.pl' },
+        },
+      }),
+    ).toEqual({
+      fromEmail: 'studio@owocni.pl',
+      fromLabel: 'studio@owocni.pl',
+    });
+  });
+
+  it('strips a display name on an internal handle', () => {
+    expect(
+      mailboxFromDisplay({
+        handle: 'Marta <studio@owocni.pl>',
+        person: { name: { firstName: 'Marta', lastName: 'Słowik' } },
+      }),
+    ).toEqual({
+      fromEmail: 'studio@owocni.pl',
+      fromLabel: 'studio@owocni.pl',
+    });
+  });
+
+  it('keeps the client name for an external FROM', () => {
+    expect(
+      mailboxFromDisplay({
+        handle: 'biuro@tela.pl',
+        person: { name: { firstName: 'Jan', lastName: 'Kowalski' } },
+      }),
+    ).toEqual({
+      fromEmail: 'biuro@tela.pl',
+      fromLabel: 'Jan Kowalski',
+    });
   });
 });

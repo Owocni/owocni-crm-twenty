@@ -72,6 +72,16 @@ async function gcsWriteJson(bucket, objectPath, data) {
   if (!res.ok) {
     throw new Error(`gcs write HTTP ${res.status}: ${res.text.slice(0, 200)}`);
   }
+  const metaUrl = gcsObjectUrl(bucket, objectPath, false);
+  await gcpFetch(metaUrl, {
+    method: "PATCH",
+    token,
+    contentType: "application/json",
+    body: JSON.stringify({
+      cacheControl: "no-store, max-age=0",
+      contentType: "application/json",
+    }),
+  });
 }
 
 module.exports = {

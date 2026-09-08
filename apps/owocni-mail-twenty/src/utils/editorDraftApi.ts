@@ -61,6 +61,31 @@ export function resolveAppOrigin(): string {
   return '';
 }
 
+/**
+ * Logic-function POSTs must use the same host as RestApiClient (`TWENTY_API_URL`).
+ * `resolveAppOrigin()` prefers the CRM iframe parent — keepalive to that host
+ * hits the SPA, not `/s/mail/send-template`.
+ */
+export function resolveRestApiUrl(path: string): string {
+  const suffix = path.startsWith('/') ? path : `/${path}`;
+
+  try {
+    const apiUrl = globalThis.process?.env?.TWENTY_API_URL?.trim() ?? '';
+    if (isHttpOrigin(apiUrl)) {
+      return `${apiUrl.replace(/\/$/, '')}${suffix}`;
+    }
+  } catch {
+    // ignore
+  }
+
+  const origin = resolveAppOrigin();
+  if (origin) {
+    return `${origin}${suffix}`;
+  }
+
+  return suffix;
+}
+
 export function resolveEditorDraftUrl(): string {
   const origin = resolveAppOrigin();
 

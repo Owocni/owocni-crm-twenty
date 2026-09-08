@@ -2,10 +2,10 @@
 doc_id: E12_3_EMAIL_SIGNATURES_DECISION
 title: "Decyzja Mariusz — stałe stopki maili w odpowiedziach z Twenty"
 layer: runbook
-status: option_a_accepted — live i git Owocni Mail **0.1.61** (2026-09-03). Stopka: `apps/owocni-mail-twenty/src/utils/mailSignature.ts`. Wątkowanie D-2: nie kopiować workspace-latest do `In-Reply-To`. Numer **0.1.58** z wcześniejszej wersji tego dokumentu nigdy nie istniał w git.
+status: option_a_accepted — live i git Owocni Mail **0.1.88**. Wejście: lista Stopki maili → klik w **imię** (nie ołówek przy treści). Edytor HTML w zakładce Stopka.
 owner: "Dawid"
 audience: "Mariusz"
-last_verified: 2026-09-03
+last_verified: 2026-09-07
 related:
   - E12_3_EMAIL_TEMPLATES_AND_TRAINING.md
   - E12_3_EMAIL_TEMPLATE_STRATEGY.md
@@ -31,6 +31,21 @@ source: "pytanie operacyjne 31.08.2026 + research Twenty Cloud + eksport BB 16.0
 3. Szablony (20 szt.) to **treść oferty**, nie podpis. Wklejenie stopki do każdego szablonu nie załatwia wolnej odpowiedzi ani odpowiedzi bez szablonu.
 4. **Opcja A — przyjęta 31.08:** jedna stopka na skrzynkę. **Zawsze widać ją na końcu edytora** (wstawiona jako treść, jak w Thunderbirdzie). **Wychodzi dokładnie to, co jest w edytorze — nic ponadto.** System **nie** dokleja stopki przy wysyłce. Skasujesz w edytorze → klient jej nie dostanie.
 5. Stopki z BB (Marta, Gosia, pomoc) zostają. Brakującym (Maciej, Ewa, Robert, Mariusz) skopiowano układ Marty, zmieniono imię/mail. **Telefonów nie zgadywano** — dopisz, jeśli mają być. Poniżej szkice do Twojego przeglądu.
+
+---
+
+## Jak edytować stopkę (od 0.1.88)
+
+**Nie w Szablonach maili.** Menu: **Stopki maili**.
+
+**Nie klikać ołówka przy „Treść stopki”** — to edytor Twenty, psuje HTML i kolory.
+
+1. Otwórz **Stopki maili**.
+2. Kliknij **imię** w wierszu (Marta, Gosia…).
+3. Otworzy się zakładka **Stopka** z edytorem (kolory + Kod HTML).
+4. **Zapisz stopkę**. Kolejna odpowiedź weźmie nową treść.
+
+Kod `mailSignature.ts` zostaje jako **fallback**, gdy rekord CRM nie istnieje albo obiekt jeszcze nie jest zaseedowany. Seed: `python3 integrations/tools/seed_mail_signatures_to_twenty.py` (po deployu apki).
 
 ---
 

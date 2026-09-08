@@ -3,6 +3,7 @@ import { MetadataApiClient } from 'twenty-client-sdk/metadata';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
+import { getEditorDraft, getEditorDraftFresh, saveEditorDraft } from 'src/logic-functions/editor-draft-store';
 import {
   findSendableEmailAccount,
   mapSendEmailError,
@@ -10,8 +11,7 @@ import {
 } from 'src/utils/findSendableEmailAccount';
 import {
   parseRouteBody,
-  payloadHasClientBody,
-  readClientHtmlBody,
+  readNumberField,
   readStringField,
 } from 'src/utils/parseRouteBody';
 import {
@@ -19,7 +19,26 @@ import {
   resolvePersonContext,
 } from 'src/utils/personContext';
 import { decideInReplyTo } from 'src/utils/replyThreading';
+import { resolveSendHtmlBody } from 'src/utils/resolveSendHtmlBody';
+import {
+  assertInternalHandoffRecipients,
+  handoffPendingDraftKey,
+  injectHandoffMarker,
+  toInternalHandoffSubject,
+} from 'src/utils/internalHandoff';
+import { attachInternalHandoffThread } from 'src/utils/attachInternalHandoffThread';
+import {
+  clampDelayMs,
+  isSendJobTerminal,
+  sendJobDraftKey,
+  waitUnlessCancelled,
+} from 'src/utils/delayedSend';
 import { readAttachmentRefs } from 'src/utils/uploadEmailAttachment';
+import {
+  emailsExcluding,
+  formatEmailList,
+  parseEmailList,
+} from 'src/utils/parseEmailList';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -49,19 +68,91 @@ function formatError(error: unknown): string {
   return mapSendEmailError(String(error));
 }
 
+function looksLikeUnknownCcBccField(error: unknown): boolean {
+  const text = formatError(error).toLowerCase();
+  return (
+    (text.includes('cc') || text.includes('bcc')) &&
+    (text.includes('unknown') ||
+      text.includes('not defined') ||
+      text.includes('cannot query field') ||
+      text.includes('field undefined'))
+  );
+}
+
 const handler = async (event: RoutePayload) => {
   try {
     const payload = parseRouteBody(event);
+    const action = readStringField(payload, 'action');
+    // Only explicit jobId — draftSessionId is the HTML store and must not
+    // inherit a cancelled flag from „Wyślij teraz”.
+    const jobId = readStringField(payload, 'jobId');
+
+    if (action === 'cancel') {
+      if (!jobId) {
+        return { ok: false, error: 'jobId is required' };
+      }
+
+      await saveEditorDraft(sendJobDraftKey(jobId), 'cancelled');
+      return { ok: true, cancelled: true };
+    }
+
+    if (jobId) {
+      const jobStatus = (await getEditorDraftFresh(sendJobDraftKey(jobId)))?.trim();
+
+      if (jobStatus === 'cancelled') {
+        return { ok: true, cancelled: true };
+      }
+
+      if (jobStatus === 'sent') {
+        return { ok: true, alreadySent: true };
+      }
+    }
+
+    const delayMs = clampDelayMs(readNumberField(payload, 'delayMs'));
+
+    if (jobId && delayMs > 0) {
+      const waited = await waitUnlessCancelled({
+        delayMs,
+        isCancelled: async () =>
+          isSendJobTerminal(
+            await getEditorDraftFresh(sendJobDraftKey(jobId)),
+          ),
+      });
+
+      if (waited === 'cancelled') {
+        return { ok: true, cancelled: true };
+      }
+
+      const afterWait = (await getEditorDraftFresh(sendJobDraftKey(jobId)))?.trim();
+
+      if (afterWait === 'cancelled') {
+        return { ok: true, cancelled: true };
+      }
+
+      if (afterWait === 'sent') {
+        return { ok: true, alreadySent: true };
+      }
+    }
 
     const templateId = readStringField(payload, 'templateId');
     const recordId = readStringField(payload, 'recordId');
     const customSubject = readStringField(payload, 'subject');
-    const customBody = readClientHtmlBody(payload);
     const customTo = readStringField(payload, 'to');
     const requestedAccountId = readStringField(payload, 'connectedAccountId');
     const inReplyToMessageId = readStringField(payload, 'inReplyToMessageId');
+    const sendMode = readStringField(payload, 'mode', 'sendMode');
+    const opportunityId = readStringField(
+      payload,
+      'opportunityId',
+      'opportunityRecordId',
+    );
+    const internalHandoff = sendMode === 'internal';
+    const isForward = sendMode === 'forward';
     const attachmentFiles = readAttachmentRefs(payload);
-    const clientSentBody = payloadHasClientBody(payload);
+    const ccRaw = readStringField(payload, 'cc', 'ccEmails');
+    const bccRaw = readStringField(payload, 'bcc', 'bccEmails');
+    const { html: customBody, clientSent: clientSentBody } =
+      await resolveSendHtmlBody(payload, getEditorDraft);
 
     if (!recordId && !customTo) {
       return { ok: false, error: 'recordId or to is required' };
@@ -88,13 +179,46 @@ const handler = async (event: RoutePayload) => {
 
     const person = await resolvePersonContext(coreClient, {
       recordId,
-      email: customTo,
+      email: internalHandoff ? undefined : customTo,
     });
-    const email = customTo || person?.email?.trim();
+    const email = internalHandoff
+      ? customTo
+      : customTo || person?.email?.trim();
 
     if (!email) {
       return { ok: false, error: 'Person has no primary email' };
     }
+
+    if (internalHandoff) {
+      const gate = assertInternalHandoffRecipients({
+        to: email,
+        cc: ccRaw,
+        bcc: bccRaw,
+        clientEmail: person?.email,
+      });
+      if (!gate.ok) {
+        return { ok: false, error: gate.error };
+      }
+      if (!opportunityId) {
+        return {
+          ok: false,
+          error: 'Przekazanie wewnętrzne tylko z karty leada.',
+        };
+      }
+    }
+
+    const cc = formatEmailList(
+      emailsExcluding(parseEmailList(ccRaw), email),
+    );
+    const bcc = formatEmailList(
+      emailsExcluding(parseEmailList(bccRaw), email).filter(
+        (address) => !parseEmailList(cc).includes(address),
+      ),
+    );
+    const copies = {
+      ...(cc ? { cc } : {}),
+      ...(bcc ? { bcc } : {}),
+    };
 
     // Client-composed body always wins — never reload template from DB when htmlBody was sent.
     if (clientSentBody || customBody) {
@@ -168,13 +292,21 @@ const handler = async (event: RoutePayload) => {
       return { ok: false, error: 'Email body is empty' };
     }
 
+    if (internalHandoff) {
+      subject = toInternalHandoffSubject(subject);
+      htmlBody = injectHandoffMarker(htmlBody, opportunityId);
+    }
+
     let continuationHandles: string[] = [];
 
     try {
-      continuationHandles = await resolveContinuationHandles(coreClient, {
-        recordId,
-        recipientEmail: email,
-      });
+      continuationHandles =
+        internalHandoff || isForward
+          ? []
+          : await resolveContinuationHandles(coreClient, {
+              recordId,
+              recipientEmail: email,
+            });
     } catch {
       continuationHandles = [];
     }
@@ -204,7 +336,7 @@ const handler = async (event: RoutePayload) => {
 
     let inReplyTo: string | undefined;
 
-    if (inReplyToMessageId) {
+    if (inReplyToMessageId && !internalHandoff && !isForward) {
       try {
         const messageResult = await coreClient.query({
           message: {
@@ -249,8 +381,17 @@ const handler = async (event: RoutePayload) => {
     }
 
     let sendResult;
+    let copiesDropped = false;
 
     const sendInputBase = {
+      connectedAccountId: connectedAccount.id,
+      to: email,
+      subject: subject || '(brak tematu)',
+      body: htmlBody,
+      ...copies,
+      ...(attachmentFiles.length > 0 ? { files: attachmentFiles } : {}),
+    };
+    const sendInputWithoutCopies = {
       connectedAccountId: connectedAccount.id,
       to: email,
       subject: subject || '(brak tematu)',
@@ -258,43 +399,48 @@ const handler = async (event: RoutePayload) => {
       ...(attachmentFiles.length > 0 ? { files: attachmentFiles } : {}),
     };
 
-    try {
-      sendResult = await metadataClient.mutation({
+    const mutateSend = (input: Record<string, unknown>) =>
+      metadataClient.mutation({
         sendEmail: {
-          __args: {
-            input: {
-              ...sendInputBase,
-              ...(inReplyTo ? { inReplyTo } : {}),
-            },
-          },
+          __args: { input },
           success: true,
           error: true,
         },
       });
+
+    try {
+      sendResult = await mutateSend({
+        ...sendInputBase,
+        ...(inReplyTo ? { inReplyTo } : {}),
+      });
     } catch (sendError) {
-      // Older Twenty builds may reject unknown inReplyTo — retry without threading.
       if (inReplyTo) {
         try {
-          sendResult = await metadataClient.mutation({
-            sendEmail: {
-              __args: {
-                input: sendInputBase,
-              },
-              success: true,
-              error: true,
-            },
-          });
+          sendResult = await mutateSend(sendInputBase);
         } catch (retryError) {
-          return {
-            ok: false,
-            error: formatError(retryError),
-          };
+          if (Object.keys(copies).length > 0 && looksLikeUnknownCcBccField(retryError)) {
+            copiesDropped = true;
+            try {
+              sendResult = await mutateSend(sendInputWithoutCopies);
+            } catch (droppedError) {
+              return { ok: false, error: formatError(droppedError) };
+            }
+          } else {
+            return { ok: false, error: formatError(retryError) };
+          }
+        }
+      } else if (
+        Object.keys(copies).length > 0 &&
+        looksLikeUnknownCcBccField(sendError)
+      ) {
+        copiesDropped = true;
+        try {
+          sendResult = await mutateSend(sendInputWithoutCopies);
+        } catch (droppedError) {
+          return { ok: false, error: formatError(droppedError) };
         }
       } else {
-        return {
-          ok: false,
-          error: formatError(sendError),
-        };
+        return { ok: false, error: formatError(sendError) };
       }
     }
 
@@ -307,14 +453,46 @@ const handler = async (event: RoutePayload) => {
       };
     }
 
+    if (jobId) {
+      await saveEditorDraft(sendJobDraftKey(jobId), 'sent');
+    }
+
+    let threadAttached = false;
+    if (internalHandoff && opportunityId) {
+      await saveEditorDraft(
+        handoffPendingDraftKey(opportunityId),
+        JSON.stringify({
+          subject: subject || '(brak tematu)',
+          to: email,
+          from: connectedAccount.handle,
+          sentAt: new Date().toISOString(),
+        }),
+      );
+      const attached = await attachInternalHandoffThread({
+        coreClient,
+        opportunityId,
+        subject: subject || '(brak tematu)',
+        to: email,
+        from: connectedAccount.handle,
+      });
+      threadAttached = attached.attached;
+      if (threadAttached) {
+        await saveEditorDraft(handoffPendingDraftKey(opportunityId), 'attached');
+      }
+    }
+
     return {
       ok: true,
       to: email,
+      cc: copiesDropped ? '' : cc,
+      bcc: copiesDropped ? '' : bcc,
+      copiesDropped,
       subject,
       templateName,
       from: connectedAccount.handle,
       bodySource: clientSentBody || customBody ? 'client' : 'template',
       bodyLength: htmlBody.length,
+      ...(internalHandoff ? { internalHandoff: true, threadAttached } : {}),
     };
   } catch (unexpectedError) {
     return {

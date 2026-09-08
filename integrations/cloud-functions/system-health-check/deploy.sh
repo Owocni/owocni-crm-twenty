@@ -23,6 +23,7 @@ fi
 
 FUNCTION_NAME="${FUNCTION_NAME:-system-health-check}"
 HEALTH_GCS_BUCKET="${HEALTH_GCS_BUCKET:-owocni-system-health}"
+HEALTH_GCS_UI_BUCKET="${HEALTH_GCS_UI_BUCKET:-owocni-system-health-ui}"
 HEALTH_SMTP_PORT="${HEALTH_SMTP_PORT:-587}"
 echo "Deploying ${FUNCTION_NAME} to ${GCP_PROJECT} (${GCP_REGION})..."
 
@@ -40,7 +41,20 @@ if ! gcloud storage buckets describe "gs://${HEALTH_GCS_BUCKET}" >/dev/null 2>&1
     --uniform-bucket-level-access
 fi
 
-ENV_VARS="GCP_PROJECT=${GCP_PROJECT},GCP_REGION=${GCP_REGION},HEALTH_GCS_BUCKET=${HEALTH_GCS_BUCKET},HEALTH_ALERT_TO=${HEALTH_ALERT_TO},HEALTH_SMTP_HOST=${HEALTH_SMTP_HOST},HEALTH_SMTP_PORT=${HEALTH_SMTP_PORT},HEALTH_SMTP_USER=${HEALTH_SMTP_USER},HEALTH_SMTP_PASS=${HEALTH_SMTP_PASS},TWENTY_API_KEY_SANDBOX=${TWENTY_API_KEY_SANDBOX},TWENTY_REST_URL_SANDBOX=${TWENTY_REST_URL_SANDBOX:-https://api.twenty.com/rest}"
+if ! gcloud storage buckets describe "gs://${HEALTH_GCS_UI_BUCKET}" >/dev/null 2>&1; then
+  gcloud storage buckets create "gs://${HEALTH_GCS_UI_BUCKET}" \
+    --project="$GCP_PROJECT" \
+    --location="$GCP_REGION" \
+    --uniform-bucket-level-access
+fi
+gcloud storage buckets update "gs://${HEALTH_GCS_UI_BUCKET}" \
+  --cors-file="${SCRIPT_DIR}/cors-ui.json"
+gcloud storage buckets add-iam-policy-binding "gs://${HEALTH_GCS_UI_BUCKET}" \
+  --member="allUsers" \
+  --role="roles/storage.objectViewer" \
+  --quiet || true
+
+ENV_VARS="GCP_PROJECT=${GCP_PROJECT},GCP_REGION=${GCP_REGION},HEALTH_GCS_BUCKET=${HEALTH_GCS_BUCKET},HEALTH_GCS_UI_BUCKET=${HEALTH_GCS_UI_BUCKET},HEALTH_ALERT_TO=${HEALTH_ALERT_TO},HEALTH_SMTP_HOST=${HEALTH_SMTP_HOST},HEALTH_SMTP_PORT=${HEALTH_SMTP_PORT},HEALTH_SMTP_USER=${HEALTH_SMTP_USER},HEALTH_SMTP_PASS=${HEALTH_SMTP_PASS},TWENTY_API_KEY_SANDBOX=${TWENTY_API_KEY_SANDBOX},TWENTY_REST_URL_SANDBOX=${TWENTY_REST_URL_SANDBOX:-https://api.twenty.com/rest}"
 
 if [[ -n "${HEALTH_SMTP_FROM:-}" ]]; then
   ENV_VARS="${ENV_VARS},HEALTH_SMTP_FROM=${HEALTH_SMTP_FROM}"
@@ -81,6 +95,10 @@ PROJECT_NUMBER="$(gcloud projects describe "$GCP_PROJECT" --format='value(projec
 COMPUTE_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 
 gcloud storage buckets add-iam-policy-binding "gs://${HEALTH_GCS_BUCKET}" \
+  --member="serviceAccount:${COMPUTE_SA}" \
+  --role="roles/storage.objectAdmin" \
+  --quiet || true
+gcloud storage buckets add-iam-policy-binding "gs://${HEALTH_GCS_UI_BUCKET}" \
   --member="serviceAccount:${COMPUTE_SA}" \
   --role="roles/storage.objectAdmin" \
   --quiet || true
@@ -131,4 +149,5 @@ create_job "system-health-digest-daily-0800" "0 8 * * *" '{"mode":"digest"}'
 echo ""
 echo "URL: $URI"
 echo "Jobs: system-health-probe-every-30min  system-health-digest-daily-0800"
+echo "UI snapshot: https://storage.googleapis.com/${HEALTH_GCS_UI_BUCKET}/ui.json"
 echo "Smoke: gcloud scheduler jobs run system-health-digest-daily-0800 --location=${GCP_REGION}"

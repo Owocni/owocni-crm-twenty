@@ -14,6 +14,13 @@ import {
   resolveEditorDraftUrl,
 } from 'src/utils/editorDraftApi';
 import { resolveAccessToken } from 'src/utils/resolveAccessToken';
+import {
+  buildVisualEditorSrcDoc,
+  EMPTY_EDITOR_BODY,
+  MAIL_FLUSH,
+  MAIL_SET_AUTH,
+  MAIL_SET_HTML,
+} from 'src/utils/visualEditorRuntime';
 
 /**
  * Diagnostics proved:
@@ -26,10 +33,7 @@ import { resolveAccessToken } from 'src/utils/resolveAccessToken';
  * Never use blob: URLs in this host.
  */
 
-const EMPTY_BODY = '<p><br></p>';
-const MAIL_FLUSH = 'owocni-mail-flush';
-const MAIL_SET_AUTH = 'owocni-mail-set-auth';
-const MAIL_SET_HTML = 'owocni-mail-set-html';
+const EMPTY_BODY = EMPTY_EDITOR_BODY;
 
 type EditorMode = 'visual' | 'html';
 
@@ -45,52 +49,6 @@ export type MailBodyEditorHandle = {
   flushHtmlAsync: () => Promise<string>;
   setHtml: (html: string) => void;
 };
-
-type ToolbarButtonProps = {
-  label: string;
-  title: string;
-  onClick: () => void;
-  disabled?: boolean;
-  bold?: boolean;
-  italic?: boolean;
-  underline?: boolean;
-};
-
-const ToolbarButton = ({
-  label,
-  title,
-  onClick,
-  disabled,
-  bold,
-  italic,
-  underline,
-}: ToolbarButtonProps) => (
-  <button
-    type="button"
-    title={title}
-    disabled={disabled}
-    onMouseDown={(event) => {
-      event.preventDefault();
-    }}
-    onClick={onClick}
-    style={{
-      minWidth: 28,
-      height: 28,
-      padding: '0 6px',
-      border: '1px solid #ddd',
-      borderRadius: 4,
-      background: disabled ? '#f5f5f5' : '#fff',
-      cursor: disabled ? 'not-allowed' : 'pointer',
-      fontSize: 13,
-      fontWeight: bold ? 700 : 400,
-      fontStyle: italic ? 'italic' : 'normal',
-      textDecoration: underline ? 'underline' : 'none',
-      color: '#333',
-    }}
-  >
-    {label}
-  </button>
-);
 
 function scheduleDelayPromise(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -128,14 +86,6 @@ function isEffectivelyEmpty(html: string): boolean {
   return stripped.length === 0;
 }
 
-function sanitizeBodyHtml(html: string): string {
-  return html
-    .replace(/<\/body>/gi, '')
-    .replace(/<body\b[^>]*>/gi, '')
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<\/?script\b[^>]*>/gi, '');
-}
-
 function logEditorDiag(
   step: string,
   detail: Record<string, unknown> = {},
@@ -165,146 +115,6 @@ function pickEdited(
   }
 
   return null;
-}
-
-function buildEditorSrcDoc(
-  bodyHtml: string,
-  sessionId: string,
-  draftSaveUrl: string,
-  accessToken: string,
-): string {
-  const content = sanitizeBodyHtml(bodyHtml.trim() || EMPTY_BODY);
-
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <base target="_blank">
-  <style>
-    html {
-      margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff;
-    }
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      height: 100%;
-      max-height: 100%;
-      padding: 12px;
-      outline: none;
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #222;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      caret-color: #222;
-    }
-    p { margin: 0 0 0.75em; }
-    ul, ol { margin: 0 0 0.75em; padding-left: 1.5em; }
-  </style>
-</head>
-<body contenteditable="true">${content}</body>
-<script>
-(function () {
-  var sessionId = ${JSON.stringify(sessionId)};
-  var draftSaveUrl = ${JSON.stringify(draftSaveUrl)};
-  var accessToken = ${JSON.stringify(accessToken)};
-  var flushMessage = ${JSON.stringify(MAIL_FLUSH)};
-  var setAuthMessage = ${JSON.stringify(MAIL_SET_AUTH)};
-  var setHtmlMessage = ${JSON.stringify(MAIL_SET_HTML)};
-  var saveTimer;
-  var lastSaved = '';
-
-  function toBase64(text) {
-    try {
-      var bytes = new TextEncoder().encode(text);
-      var binary = '';
-      for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-      return btoa(binary);
-    } catch (e) {
-      return '';
-    }
-  }
-
-  function saveDraftToServer(html) {
-    if (!sessionId || !draftSaveUrl || !accessToken) return;
-    if (html === lastSaved) return;
-    lastSaved = html;
-    try {
-      fetch(draftSaveUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken
-        },
-        body: JSON.stringify({
-          sessionId: sessionId,
-          htmlBase64: toBase64(html),
-          html: String(html).slice(0, 50000)
-        })
-      }).catch(function () {});
-    } catch (e) {}
-  }
-
-  function publishHtml() {
-    saveDraftToServer(document.body.innerHTML);
-  }
-
-  function schedulePublish() {
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () {
-      saveTimer = undefined;
-      publishHtml();
-    }, 120);
-  }
-
-  document.body.addEventListener('input', schedulePublish);
-  document.body.addEventListener('keyup', schedulePublish);
-  document.body.addEventListener('blur', publishHtml);
-  document.body.addEventListener('paste', function () {
-    setTimeout(function () {
-      try {
-        document.body.scrollTop = document.body.scrollHeight;
-      } catch (e) {}
-    }, 0);
-  });
-  document.body.addEventListener('paste', schedulePublish);
-
-  new MutationObserver(schedulePublish).observe(document.body, {
-    childList: true, subtree: true, characterData: true, attributes: true
-  });
-
-  window.addEventListener('message', function (event) {
-    if (!event.data || typeof event.data !== 'object') return;
-    if (event.data.type === flushMessage) {
-      publishHtml();
-      return;
-    }
-    if (event.data.type === setAuthMessage && typeof event.data.token === 'string') {
-      accessToken = event.data.token;
-      publishHtml();
-      return;
-    }
-    if (event.data.type === setHtmlMessage && typeof event.data.html === 'string') {
-      document.body.innerHTML = event.data.html.trim()
-        ? event.data.html
-        : ${JSON.stringify(EMPTY_BODY)};
-      publishHtml();
-      return;
-    }
-    if (event.data.type === 'owocni-mail-exec') {
-      try {
-        document.execCommand(event.data.command, false, event.data.arg);
-      } catch (e) {}
-      publishHtml();
-    }
-  });
-
-  publishHtml();
-})();
-</script>
-</html>`;
 }
 
 async function writeServerDraft(
@@ -442,7 +252,12 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
     const mountSrcDoc = useCallback(
       (html: string, token: string) => {
         const draftUrl = resolveEditorDraftUrl();
-        const doc = buildEditorSrcDoc(html, sessionId, draftUrl, token);
+        const doc = buildVisualEditorSrcDoc({
+          bodyHtml: html,
+          sessionId,
+          draftSaveUrl: draftUrl,
+          accessToken: token,
+        });
         setSrcDoc(doc);
         logEditorDiag('srcDoc:mounted', {
           htmlLen: html.length,
@@ -535,18 +350,6 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sessionId, value.length > 0 ? 'has-content' : 'empty']);
 
-    const postExec = (command: string, arg: string | null = null) => {
-      try {
-        iframeRef.current?.contentWindow?.postMessage(
-          { type: 'owocni-mail-exec', command, arg },
-          '*',
-        );
-      } catch {
-        // ignore
-      }
-      requestIframeFlush();
-    };
-
     const switchMode = async (next: EditorMode) => {
       if (next === mode || switching) {
         return;
@@ -630,60 +433,6 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
             background: '#fff',
           }}
         >
-          {mode === 'visual' ? (
-            <div
-              style={{
-                display: 'flex',
-                gap: 4,
-                padding: '6px 8px',
-                borderBottom: '1px solid #eee',
-                background: '#fafafa',
-                flexWrap: 'wrap',
-                flexShrink: 0,
-              }}
-            >
-              <ToolbarButton
-                label="B"
-                title="Pogrubienie"
-                bold
-                disabled={disabled}
-                onClick={() => postExec('bold')}
-              />
-              <ToolbarButton
-                label="I"
-                title="Kursywa"
-                italic
-                disabled={disabled}
-                onClick={() => postExec('italic')}
-              />
-              <ToolbarButton
-                label="U"
-                title="Podkreślenie"
-                underline
-                disabled={disabled}
-                onClick={() => postExec('underline')}
-              />
-              <ToolbarButton
-                label="•"
-                title="Lista punktowana"
-                disabled={disabled}
-                onClick={() => postExec('insertUnorderedList')}
-              />
-              <ToolbarButton
-                label="1."
-                title="Lista numerowana"
-                disabled={disabled}
-                onClick={() => postExec('insertOrderedList')}
-              />
-              <ToolbarButton
-                label="¶"
-                title="Akapit"
-                disabled={disabled}
-                onClick={() => postExec('formatBlock', 'p')}
-              />
-            </div>
-          ) : null}
-
           {srcDoc ? (
             <div
               style={{
@@ -698,6 +447,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
                 ref={iframeRef}
                 title="Edytor treści maila"
                 srcDoc={srcDoc}
+                tabIndex={0}
                 onLoad={() => {
                   logEditorDiag('iframe:load');
                   requestIframeFlush();

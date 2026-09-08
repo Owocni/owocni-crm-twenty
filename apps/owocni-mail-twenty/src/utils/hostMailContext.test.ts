@@ -9,6 +9,7 @@ import {
   hostRecordSurfaceFromHrefs,
   isSidePanelMailSurface,
   markMailComposeIntent,
+  stripMailComposeQueryFromHref,
 } from './hostMailContext';
 
 describe('hostRecordSurfaceFromHrefs', () => {
@@ -107,6 +108,24 @@ describe('hostHrefsWantMailCompose', () => {
         'https://app.twenty.com/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?owocniCompose=1',
       ]),
     ).toBe(true);
+  });
+});
+
+describe('stripMailComposeQueryFromHref', () => {
+  it('drops owocniCompose and keeps viewId plus mail tab hash', () => {
+    expect(
+      stripMailComposeQueryFromHref(
+        'https://app.twenty.com/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?owocniCompose=1&viewId=ba6ac841-c293-4744-855b-3a99ee135743#ccf6a315-7856-471d-8ed6-125f27d8ff96',
+      ),
+    ).toBe(
+      'https://app.twenty.com/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?viewId=ba6ac841-c293-4744-855b-3a99ee135743#ccf6a315-7856-471d-8ed6-125f27d8ff96',
+    );
+  });
+
+  it('leaves URLs without the compose flag unchanged', () => {
+    const href =
+      'https://app.twenty.com/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee';
+    expect(stripMailComposeQueryFromHref(href)).toBe(href);
   });
 });
 

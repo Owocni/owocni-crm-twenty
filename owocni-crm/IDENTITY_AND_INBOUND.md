@@ -194,7 +194,7 @@ Wdrożenie: Metadata override command menu + Owocni Mail (`findSendableEmailAcco
 
 ### 5.6 Przepływy per kanał
 
-**Formularz paid:** `Formularz → Sortownia (oid_init → generate_lead) → id_oid + verified + vbb_eligible → adapter crm:twenty_create_lead → Twenty`. Sortownia Etap A: **nie przepisujemy** logiki Owner / Akt / 90 dni.
+**Formularz paid:** `Formularz → Sortownia (oid_init → generate_lead) → id_oid + verified + vbb_eligible → adapter crm:twenty_create_lead → Twenty`. Sortownia Etap A: **nie przepisujemy** logiki Owner / Akt / 90 dni. **Sitko token-spam (2026-09-08):** worker `createLead` nie tworzy Person/Opp, gdy cała `biz_message` to jeden losowy token `[A-Za-z0-9]{12,}` z ≥3 wielkimi i ≥3 małymi literami (np. `VxIvkhPmufoiYZhTVdds`). Mail `leads@` / `TWENTY_EMAIL` — **bez** tego sitka.
 
 **Meta Instant Form:** Graph (poll co 5 min, SoR) albo push `leadgen` → CF `meta-lead-webhook` → worker `ingest_meta_lead` → `crm:twenty_create_lead`. Idempotencja `metaLeadgenId`. Owner zawsze Robert. Szczegóły łańcucha: `SYSTEM_HEALTH.md` H-LEAD-META · `META_LEAD_WEBHOOK_PHASE_B.md`.
 

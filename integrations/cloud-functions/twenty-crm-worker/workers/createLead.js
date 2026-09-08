@@ -1058,6 +1058,19 @@ function normalizeFormMessageText(taskData) {
   return s.trim();
 }
 
+/**
+ * Bot inquiry whose entire message is one random alnum token
+ * (e.g. VxIvkhPmufoiYZhTVdds). Direct email is never cut.
+ */
+function isFormInquiryTokenSpam(taskData) {
+  if (isLeadsAtEmailTask(taskData)) return false;
+  const text = normalizeFormMessageText(taskData);
+  if (!text || !/^[A-Za-z0-9]{12,}$/.test(text)) return false;
+  const uppers = (text.match(/[A-Z]/g) || []).length;
+  const lowers = (text.match(/[a-z]/g) || []).length;
+  return uppers >= 3 && lowers >= 3;
+}
+
 function formatFormInquiryMarkdown(taskData) {
   const contact = resolveTaskContactFields(taskData);
   const text = normalizeFormMessageText(taskData);
@@ -1452,6 +1465,20 @@ async function processOneTask(task, audit, allPending) {
     return;
   }
 
+  if (isFormInquiryTokenSpam(taskData)) {
+    const token = normalizeFormMessageText(taskData);
+    console.log(
+      "SKIP — form token spam",
+      idOid,
+      "email=",
+      String(taskData.biz_email || "").trim(),
+      "token=",
+      token.slice(0, 40),
+    );
+    await updateTaskDone(task.key, taskData, "skipped_form_token_spam", audit);
+    return;
+  }
+
   console.log(
     ADAPTER_ID,
     "task",
@@ -1634,6 +1661,7 @@ module.exports = {
   isLeadsAtEmailTask,
   shouldSeedFormInquiryEmail,
   normalizeFormMessageText,
+  isFormInquiryTokenSpam,
   FORM_INQUIRY_EMAIL_SUBJECT,
   addFormInquiryToParticipant,
   attachMessageToLeadsChannel,

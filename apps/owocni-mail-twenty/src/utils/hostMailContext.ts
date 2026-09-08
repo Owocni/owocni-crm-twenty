@@ -464,5 +464,52 @@ export function hostHrefsWantMailCompose(hrefs: string[]): boolean {
   );
 }
 
+/** Drop `owocniCompose` so a remount after send does not reopen the editor. */
+export function stripMailComposeQueryFromHref(href: string): string {
+  try {
+    const absolute = /^[a-z][a-z0-9+.-]*:/i.test(href);
+    const url = new URL(href, 'https://owocni.local');
+    if (!url.searchParams.has(MAIL_COMPOSE_QUERY_PARAM)) {
+      return href;
+    }
+    url.searchParams.delete(MAIL_COMPOSE_QUERY_PARAM);
+    if (absolute) {
+      return url.toString();
+    }
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return href;
+  }
+}
+
+export function clearMailComposeFromHostUrl(): void {
+  const tryReplace = (
+    loc: Location | undefined,
+    hist: History | undefined,
+  ) => {
+    if (!loc || !hist) {
+      return;
+    }
+    try {
+      const next = stripMailComposeQueryFromHref(loc.href);
+      if (next === loc.href) {
+        return;
+      }
+      const url = new URL(next, loc.origin);
+      hist.replaceState(
+        hist.state,
+        '',
+        `${url.pathname}${url.search}${url.hash}`,
+      );
+    } catch {
+      // opaque origin / cross-origin iframe
+    }
+  };
+
+  tryReplace(globalThis.top?.location, globalThis.top?.history);
+  tryReplace(globalThis.parent?.location, globalThis.parent?.history);
+  tryReplace(globalThis.location, globalThis.history);
+}
+
 // Silence unused — kept for potential future URL body scans.
 void UUID_ONLY_RE;

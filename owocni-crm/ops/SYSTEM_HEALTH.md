@@ -18,12 +18,13 @@ related:
   - ../integrations/runbooks/META_LEAD_WEBHOOK_PHASE_B.md
   - ../integrations/runbooks/E12_3_EMAIL_TEMPLATE_STRATEGY.md
   - ../integrations/cloud-functions/system-health-check/
+  - ../apps/owocni-ops/
 ---
 
 # SYSTEM_HEALTH — stan funkcjonowania dodatków Owocni
 
-**Stan zakładki w Twenty:** `[D:OPEN]` — **nie zbudowana**.  
-**Stan maili / probe GCP:** `[D:OPEN]` kod w repo (`system-health-check`); **deploy wymaga GO** (SMTP + Scheduler). Ten plik jest specyfikacją produktu **oraz** obowiązkową instrukcją dla LLM. UI zakładki = osobne zadanie (NR-7).
+**Stan zakładki w Twenty:** Faza 2 **kod + apply sandbox** — app `Stan systemu` czyta publiczny snapshot GCS `ui.json` (fallback: GET `/s/health/snapshot`, bez live probe). Screenshot UI `[D:OPEN]` (bramka logowania).  
+**Stan maili / probe GCP:** Faza A wdrożona. Ten plik jest specyfikacją produktu **oraz** obowiązkową instrukcją dla LLM.
 
 ---
 
@@ -218,7 +219,7 @@ Każda nowa integracja Owocni = nowy wiersz. Kolumna **Prio:** P0 = „CRM wydaj
 | | |
 |---|---|
 | **Objaw** | Brak pozycji Szablony / pusta lista / „wyślij” pada / composer nie dostaje treści. |
-| **Łańcuch** | Twenty App `apps/owocni-mail-twenty/` → obiekt `mailTemplate` + `mailEditorDraft` → nav / command menu / tab Opportunity → front `template-picker` → logic functions (`list-mail-picker-data`, `get-mail-template`, `send-template-email`, `mail-send-readiness`). |
+| **Łańcuch** | Twenty App `apps/owocni-mail-twenty/` → obiekt `mailTemplate` + `mailSignature` + `mailEditorDraft` → nav / command menu / tab Opportunity → front `template-picker` → logic functions (`list-mail-picker-data`, `get-mail-template`, `send-template-email`, `mail-send-readiness`). |
 | **SSOT** | ADR #17 · `E12_3_EMAIL_TEMPLATE_STRATEGY.md` · `E12_4_OWOCNI_MAIL_RESET_PLAN.md` |
 | **Heartbeat** | App **zainstalowana i opublikowana** na instancji; `find_many_mailTemplates` zwraca seed (~19); `mail-send-readiness` `canSend=true` dla usera. |
 | **Typowe awarie** | App zniknęła po release Twenty; brak SMTP / sync na `studio@`/`leads@` (konto wspólne `owocni@gmail.com`); logic function 401; puste subject w części szablonów (T9 — to treść, nie DOWN). |
@@ -405,11 +406,11 @@ Wspólne narzędzia: Twenty MCP `find_many_*` / `group_by_*` (limit 10 + filtr d
 |---|---|---|---|
 | **0** | Ten dokument + wpisy navigatora | **teraz** | — |
 | **A** | Probe GCP + maile (§5.8). Kod: `system-health-check`. UI **nie**. | **wdrożone 2026-08-17** (SMTP PASS, pierwszy digest) | n8n API później |
-| **1** | Sidebar „Stan systemu”: lista H-\* **statyczna** albo odczyt snapshotu GCS (zero probe'ów przy page-load). Osobny page layout — **nie** w `template-picker`. App: nowa `owocni-ops` **albo** drugi layout w Mail App (NR-4). | `[D:OPEN]` | osobne zadanie |
-| **2** | Semafory w UI z ostatniego snapshotu GCS (Faza A), nie z live logic function przy każdym otwarciu. | `[D:OPEN]` | po Faza 1 + działającym probe |
+| **1** | Sidebar „Stan systemu”: lista H-\* **statyczna** (zero probe'ów przy page-load). Osobna app `apps/owocni-ops/` (NR-4, nie Mail App). | **DONE** sandbox (nav + layout) | GO 2026-09-07 |
+| **2** | Semafory w UI z ostatniego snapshotu GCS (`owocni-system-health-ui/ui.json`), nie z live probe przy page-load. Fallback LF GET `/health/snapshot` (też tylko JSON). | kod + apply; **screenshot `[D:OPEN]`** | GO 2026-09-07 Faza 2 |
 | **3** | Obiekt `systemHealthPing` w Twenty — **nie robimy** (NR-13 / OQ-H4 = GCS). | **odrzucone** | ADR tylko jeśli GCS nie wystarczy |
 
-**Preferencja Faza 1–2:** Twenty Apps (`yarn twenty dev:add` navigationMenuItem + pageLayout + frontComponent + logicFunction). Wzorzec: `apps/owocni-mail-twenty/src/page-layouts/main-page.page-layout.ts`.
+**Faza 1–2:** app `apps/owocni-ops/` — `PAGE_LAYOUT` + `STANDALONE_PAGE` (`VERTICAL_LIST`) + front `system-status`. Wzorzec nawigacji: `create-twenty-app` / Mail `main-page.page-layout.ts` (layoutMode: nie kopiować Mail `CANVAS`).
 
 **Zakaz Faza 1–A:** workflow HTTP co 5 min; custom Deal; sekrety w Code Action; eventy Sortowni; dashboard sprzedaży jako substytut; n8n cron na health; HTTP do workera jako probe.
 
@@ -439,7 +440,7 @@ Wspólne narzędzia: Twenty MCP `find_many_*` / `group_by_*` (limit 10 + filtr d
 
 Gdy zadanie brzmi „zrób zakładkę / zaimplementuj Stan systemu”:
 
-1. Potwierdź Fazę (1 lub 2). Domyślnie **tylko Faza 1**, jeśli nie powiedziano inaczej. Maile = Faza A (§5.8), nie UI.
+1. Potwierdź Fazę (1 lub 2). Faza 1 = inwentarz; Faza 2 = semafory ze snapshotu. Maile = Faza A (§5.8), nie UI.
 2. PLAN: pliki w `apps/` (nowa app vs drugi layout), universal UUID v4, role odczytu, **zero** zmian EVENT_CONTRACT / DATA_MODEL (Faza 1).
 3. Semafory w UI czytają snapshot GCS z Fazy A — **nie** live probe przy page-load.
 4. Nie wrzucaj health do `template-picker.tsx`.
@@ -462,7 +463,7 @@ Gdy zadanie brzmi „zrób zakładkę / zaimplementuj Stan systemu”:
 | Twenty workflow credits | HTTP/Code w workflow, zapis rekordów health | tylko GET REST (`/workflows`, `/mailTemplates?limit=1`, `/webhooks`, `/opportunities?limit=1` Sortownia, `/messages?limit=20` Zapytanie, filtr Owocni) | ~6 GET × instancja × ~49 runów/dzień |
 | n8n | nowy workflow / cron / execution | 1× GET API `active`. **Brak klucza / nieaktywne = H-CALL DOWN** (fail-closed). | 49 wywołań/dzień gdy klucz jest; 0 executions |
 | GCP / Stape | nowy job `*/5`; HTTP do worker/Robot/Play | 1 CF min-instances=0, **co 30 min** + **08:00**; odczyt listy **istniejących** Scheduler jobs | ~49 cold-startów/dzień, 256 MiB, timeout 60 s |
-| Twenty write | obiekt ping, Notes, Opportunity | snapshot GCS `system-health/last.json` | 2 ops GCS / run |
+| Twenty write | obiekt ping, Notes, Opportunity | snapshot GCS `last.json` (prywatny) + publiczny `ui.json` (bez sekretów) | ~4 ops GCS / run (write+cacheControl × 2) |
 
 Nie dokładamy `*/5` — istniejące schedulery już palą budżet; health je **czyta**, nie dubluje.
 
@@ -488,6 +489,8 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 
 `deploy.sh` w katalogu funkcji. **Nie odpalać bez GO.** Wymaga: `HEALTH_SMTP_*`, klucze Twenty per instancja (brak prod = SKIP, nie DOWN). `N8N_API_KEY` — dopóki pusty, H-CALL = DOWN. Scheduler OIDC, funkcja **bez** `allow-unauthenticated`.
 
+**UI Faza 2:** bucket `owocni-system-health-ui`, obiekt `ui.json`, CORS GET `*`, `allUsers` objectViewer. Publiczny JSON = statusy i nazwy jobów — **bez** kluczy. Strona Twenty: fetch tego URL, a gdy CORS/proxy padnie — authenticated GET `/s/health/snapshot` (kopia, nadal bez probe).
+
 ---
 
 ## 6. CROSS-REFERENCES
@@ -504,6 +507,7 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 | Eventy | `EVENT_CONTRACT.md` |
 | Anti-wpadki deploy | `LLM_ANTI_WPADKI_GO_NO_GO.md` |
 | Probe + maile (Faza A) | `integrations/cloud-functions/system-health-check/` |
+| UI „Stan systemu” (Faza 1–2) | `apps/owocni-ops/` |
 
 ---
 
@@ -511,7 +515,7 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 
 | ID | Pytanie | Owner | Blocks | Gdzie |
 |---|---|---|---|---|
-| OQ-H1 | Faza 1: nowa app `owocni-ops` vs drugi page layout w Mail App? | Dawid | Faza 1 UI | implementacja |
+| OQ-H1 | Faza 1: nowa app `owocni-ops` vs drugi page layout w Mail App? | Dawid | — | **nowa app** `apps/owocni-ops/` (2026-09-07, NR-4) |
 | OQ-H2 | Czy handlowcy widzą pełną listę H-\*, czy tylko semafor P0? | Właściciel | Faza 1 UX | ten plik §5.1 |
 | OQ-H3 | Kalibracja SLO freshness (godziny/cisza weekend) | Właściciel | Faza 2 UI | §5.3 |
 | OQ-H4 | Obiekt `systemHealthPing`? | Dawid | — | **nie** — GCS (NR-13), 2026-08-17 |
@@ -526,7 +530,8 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 |---|---|---|---|
 | §5.2 pokrywa każdy dodatek Owocni na instancji | przy nowym workerze/app/obiekcie | LLM + Dawid | wiersz H-\* w tym samym PR |
 | Playbook A–F zgadza się z ostatnim incydentem | po incydencie | Dawid | `OPS_NOTES` §5.4 + ewentualny dopisek „Typowe awarie” |
-| Faza 1 nie istnieje na instancji, dopóki ten plik mówi OPEN | teraz | — | brak nav item „Stan systemu” = zgodne |
+| Faza 1 live na sandbox (`Stan systemu` w sidebarze) | po `yarn twenty apply` | Dawid + LLM | **API 2026-09-07:** app `579ba58d-…` zainstalowana; nav `PAGE_LAYOUT` → layout `STANDALONE_PAGE` „Stan systemu”. Screenshot UI = OPEN (login) |
+| Faza 2 semafory ze snapshotu | po deploy CF `ui.json` + apply `owocni-ops` 0.1.1 | Dawid + LLM | **API 2026-09-07:** GET `/s/health/snapshot` `ok` overall=`OK` (probe 10:00Z); publiczny `ui.json` CORS GET. Screenshot UI = OPEN (login) |
 | MUST_ON = ACTIVE poza oknem gate | po każdym bulk-op | wykonawca | `OPS_NOTES` §5.3 `--apply-on` |
 | Daily digest 08:00 na dawidnowak@ | po deploy Fazy A | Dawid | mail w skrzynce; brak maila = DOWN monitoringu |
 | `evaluate.test.js` PASS | przy zmianie matcherów H-\* | LLM | `npm test` w `system-health-check` |
@@ -537,6 +542,8 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-09-07 | Faza 2: UI czyta `ui.json` (GCS publiczny) + LF fallback; probe zapisuje kopię bez sekretów. Screenshot nadal OPEN. | Composer | GO „faza druga” |
+| 2026-09-07 | Faza 1 start: app `owocni-ops` (STANDALONE + inwentarz H-\*, bez live probe). OQ-H1 = nowa app. Live sandbox nadal OPEN. | Composer | GO „wdrażamy A” |
 | 2026-08-17 | Fail-closed: n8n nie podpięte / brak schedulera = DOWN (nie UNKNOWN/OK) | Composer | n8n nieopłacone; nie malować H-CALL na zielono |
 | 2026-08-17 | Utworzenie pliku (Faza 0): inwentarz, semafory, playbook LLM, spec zakładki | Composer | cisze kanałów (n8n/leady/szablony); docs przed UI |
 
@@ -545,5 +552,5 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 ## LEGENDA ZNACZNIKÓW
 
 - `[D:CORE]` — inwentarz łańcuchów i zakazy (ten plik, o ile nie oznaczono wiersza).
-- `[D:OPEN]` — UI zakładki, SLO freshness, wybór app vs layout (OQ-H1–H3). Deploy maili: GO 2026-08-17 (SMTP w `.env.deploy`).
+- `[D:OPEN]` — live UI Fazy 1 na sandbox, SLO freshness, OQ-H2–H3. OQ-H1 zamknięte (nowa app). Deploy maili: GO 2026-08-17.
 - `[D:VERIFIED]` — fakty platformy **nie** żyją tutaj; idź do `OPS_NOTES.md`.

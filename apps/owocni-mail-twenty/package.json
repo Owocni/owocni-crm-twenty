@@ -1,6 +1,6 @@
 {
   "name": "owocni-mail",
-    "version": "0.1.80",
+    "version": "0.1.102",
   "license": "MIT",
   "engines": {
     "node": "^24.5.0",

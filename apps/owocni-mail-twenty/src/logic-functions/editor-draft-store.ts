@@ -132,7 +132,11 @@ async function getFromDb(sessionId: string): Promise<string | null> {
 
   if (existing.updatedAt) {
     const updatedMs = Date.parse(existing.updatedAt);
-    if (!Number.isNaN(updatedMs) && Date.now() - updatedMs > DRAFT_TTL_MS) {
+    const ttl =
+      sessionId.startsWith('handoff-pending:')
+        ? 24 * 60 * 60 * 1000
+        : DRAFT_TTL_MS;
+    if (!Number.isNaN(updatedMs) && Date.now() - updatedMs > ttl) {
       return null;
     }
   }
@@ -171,6 +175,23 @@ export async function getEditorDraft(
   } catch {
     return null;
   }
+}
+
+/** Always re-read DB so a cancel on another isolate wins over stale memory. */
+export async function getEditorDraftFresh(
+  sessionId: string,
+): Promise<string | null> {
+  try {
+    const fromDb = await getFromDb(sessionId);
+    if (fromDb !== null) {
+      saveMemory(sessionId, fromDb);
+      return fromDb;
+    }
+  } catch {
+    // fall through to memory
+  }
+
+  return getMemory(sessionId);
 }
 
 export async function clearEditorDraft(sessionId: string): Promise<void> {

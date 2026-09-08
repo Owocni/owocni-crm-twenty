@@ -20,6 +20,7 @@ export type ReplyMessagePreview = {
 
 export type ThreadMessage = ReplyMessagePreview & {
   direction: 'in' | 'out';
+  channel: 'client' | 'internal';
 };
 
 export type MailResolveContext = {
@@ -28,6 +29,8 @@ export type MailResolveContext = {
   replySubject: string | null;
   /** Plaintext body of the message being replied to (when available). */
   replyMessage: ReplyMessagePreview | null;
+  /** Twenty MessageThread id when opened from Poczta / a message. */
+  threadId: string | null;
   contextKind:
     | 'person'
     | 'opportunity'
@@ -72,6 +75,7 @@ const MESSAGE_PREVIEW_FIELDS = {
   subject: true,
   text: true,
   receivedAt: true,
+  messageThreadId: true,
   messageParticipants: {
     edges: {
       node: PARTICIPANT_FIELDS,
@@ -91,6 +95,7 @@ type MessagePreviewNode = {
   text?: string | null;
   receivedAt?: string | null;
   direction?: unknown;
+  messageThreadId?: string | null;
   messageParticipants?: {
     edges?: Array<{ node: ParticipantNode }>;
   };
@@ -101,23 +106,43 @@ function emptyResolve(): MailResolveContext {
     person: null,
     replySubject: null,
     replyMessage: null,
+    threadId: null,
     contextKind: null,
   };
 }
 
-function participantLabel(node: ParticipantNode | null | undefined): string {
-  if (!node) {
-    return '';
+function personDisplayName(
+  person: PersonRow | null | undefined,
+): string {
+  const firstName = person?.name?.firstName ?? '';
+  const lastName = person?.name?.lastName ?? '';
+  return [firstName, lastName].filter(Boolean).join(' ').trim();
+}
+
+/**
+ * FROM line in history: the mailbox that actually sent.
+ * Shared inboxes (studio@) are often linked to a Person (Marta) in CRM —
+ * never substitute that name for an internal address.
+ */
+export function mailboxFromDisplay(input: {
+  handle?: string | null;
+  person?: PersonRow | null;
+}): { fromEmail: string | null; fromLabel: string | null } {
+  const fromEmail = extractEmailFromHandle(input.handle) || null;
+  if (!fromEmail) {
+    const name = personDisplayName(input.person);
+    return { fromEmail: name || null, fromLabel: name || null };
   }
 
-  const firstName = node.person?.name?.firstName ?? '';
-  const lastName = node.person?.name?.lastName ?? '';
-  const name = [firstName, lastName].filter(Boolean).join(' ').trim();
-  if (name) {
-    return name;
+  if (isInternalMailbox(fromEmail)) {
+    return { fromEmail, fromLabel: fromEmail };
   }
 
-  return node.handle?.trim() ?? '';
+  const name = personDisplayName(input.person);
+  return {
+    fromEmail,
+    fromLabel: name || fromEmail,
+  };
 }
 
 function previewFromMessage(
@@ -149,9 +174,14 @@ function previewFromMessage(
       !node.workspaceMemberId &&
       !isInternalMailbox(node.handle),
   );
-  const from = fromExternal ?? anyExternal;
-  const fromEmail = from?.handle?.trim().toLowerCase() ?? null;
-  const fromLabel = participantLabel(from) || fromEmail;
+  const fromInternal = nodes.find(
+    (node) =>
+      participantRole(node.role) === 'FROM' &&
+      typeof node.handle === 'string' &&
+      extractEmailFromHandle(node.handle).includes('@'),
+  );
+  const from = fromExternal ?? anyExternal ?? fromInternal;
+  const { fromEmail, fromLabel } = mailboxFromDisplay(from ?? {});
 
     return {
       messageId: message.id,
@@ -174,9 +204,18 @@ function threadMessageFromNode(
 
   const nodes =
     message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
+  const hasParticipants = nodes.some(
+    (node) => typeof node.handle === 'string' && node.handle.includes('@'),
+  );
+  const internal =
+    hasParticipants &&
+    nodes.every(
+      (node) => !node.handle || participantIsInternal(node),
+    );
 
   return {
     ...preview,
+    channel: internal ? 'internal' : 'client',
     direction: directionFromMessage({
       direction: message.direction,
       participants: nodes,
@@ -254,7 +293,7 @@ export function extractEmailFromHandle(
   return (email?.[0] ?? raw).toLowerCase();
 }
 
-function isInternalMailbox(handle: string): boolean {
+export function isInternalMailbox(handle: string): boolean {
   const email = extractEmailFromHandle(handle);
   return (
     email.endsWith('@owocni.pl') ||
@@ -324,14 +363,34 @@ export function directionFromMessage(input: {
   return 'in';
 }
 
-function personFromParticipants(
+function participantIsInternal(node: ParticipantNode): boolean {
+  if (node.workspaceMemberId) {
+    return true;
+  }
+  if (node.handle && isInternalMailbox(node.handle)) {
+    return true;
+  }
+  const personEmail = node.person?.emails?.primaryEmail;
+  return Boolean(personEmail && isInternalMailbox(personEmail));
+}
+
+export function personFromParticipants(
   nodes: ParticipantNode[],
   recordId?: string | null,
 ): PersonContext | null {
-  const withPerson = nodes.find((node) => node.person);
+  const fromExternalPerson = nodes.find(
+    (node) =>
+      participantRole(node.role) === 'FROM' &&
+      node.person &&
+      !participantIsInternal(node),
+  );
+  const anyExternalPerson = nodes.find(
+    (node) => node.person && !participantIsInternal(node),
+  );
+  const withPerson = fromExternalPerson ?? anyExternalPerson;
   if (withPerson?.person) {
     const person = toPersonContext(withPerson.person);
-    if (person?.email) {
+    if (person?.email && !isInternalMailbox(person.email)) {
       return person;
     }
   }
@@ -341,16 +400,14 @@ function personFromParticipants(
       participantRole(node.role) === 'FROM' &&
       typeof node.handle === 'string' &&
       extractEmailFromHandle(node.handle).includes('@') &&
-      !node.workspaceMemberId &&
-      !isInternalMailbox(node.handle),
+      !participantIsInternal(node),
   );
 
   const anyExternal = nodes.find(
     (node) =>
       typeof node.handle === 'string' &&
       node.handle.includes('@') &&
-      !node.workspaceMemberId &&
-      !isInternalMailbox(node.handle),
+      !participantIsInternal(node),
   );
 
   const handle =
@@ -359,11 +416,7 @@ function personFromParticipants(
     null;
 
   if (handle) {
-    return emailOnlyContext(handle.toLowerCase(), recordId);
-  }
-
-  if (withPerson?.person) {
-    return toPersonContext(withPerson.person);
+    return emailOnlyContext(extractEmailFromHandle(handle), recordId);
   }
 
   return null;
@@ -508,6 +561,7 @@ async function findPersonFromMessage(
   person: PersonContext | null;
   replySubject: string | null;
   replyMessage: ReplyMessagePreview | null;
+  threadId: string | null;
 }> {
   try {
     const result = await coreClient.query({
@@ -522,10 +576,16 @@ async function findPersonFromMessage(
     const message = result.message as MessagePreviewNode | null | undefined;
 
     if (!message) {
-      return { person: null, replySubject: null, replyMessage: null };
+      return {
+        person: null,
+        replySubject: null,
+        replyMessage: null,
+        threadId: null,
+      };
     }
 
     const replyMessage = previewFromMessage(message);
+    const threadId = message.messageThreadId?.trim() || null;
     const nodes =
       message.messageParticipants?.edges?.map((edge) => edge.node) ?? [];
     const person = personFromParticipants(nodes, messageId);
@@ -536,6 +596,7 @@ async function findPersonFromMessage(
         person: byEmail ?? person,
         replySubject: message.subject?.trim() || null,
         replyMessage,
+        threadId,
       };
     }
 
@@ -543,9 +604,15 @@ async function findPersonFromMessage(
       person,
       replySubject: message.subject?.trim() || null,
       replyMessage,
+      threadId,
     };
   } catch {
-    return { person: null, replySubject: null, replyMessage: null };
+    return {
+      person: null,
+      replySubject: null,
+      replyMessage: null,
+      threadId: null,
+    };
   }
 }
 
@@ -560,6 +627,7 @@ async function findPersonFromMessageThread(
   person: PersonContext | null;
   replySubject: string | null;
   replyMessage: ReplyMessagePreview | null;
+  threadId: string | null;
 }> {
   try {
     const threadResult = await coreClient.query({
@@ -578,7 +646,12 @@ async function findPersonFromMessageThread(
       | undefined;
 
     if (!thread?.id) {
-      return { person: null, replySubject: null, replyMessage: null };
+      return {
+        person: null,
+        replySubject: null,
+        replyMessage: null,
+        threadId: null,
+      };
     }
 
     const replySubject = thread.subject?.trim() || null;
@@ -628,6 +701,7 @@ async function findPersonFromMessageThread(
             person: byEmail ?? person,
             replySubject: replySubject || message.subject?.trim() || null,
             replyMessage,
+            threadId: thread.id,
           };
         }
 
@@ -635,13 +709,19 @@ async function findPersonFromMessageThread(
           person,
           replySubject: replySubject || message.subject?.trim() || null,
           replyMessage,
+          threadId: thread.id,
         };
       }
     }
 
-    return { person: null, replySubject, replyMessage };
+    return { person: null, replySubject, replyMessage, threadId: thread.id };
   } catch {
-    return { person: null, replySubject: null, replyMessage: null };
+    return {
+      person: null,
+      replySubject: null,
+      replyMessage: null,
+      threadId: null,
+    };
   }
 }
 
@@ -666,6 +746,7 @@ export async function resolveMailContext(
         person: byEmail,
         replySubject,
         replyMessage: null,
+        threadId: null,
         contextKind: 'email',
       };
     }
@@ -680,6 +761,7 @@ export async function resolveMailContext(
         person: asPerson,
         replySubject,
         replyMessage: null,
+        threadId: null,
         contextKind: 'person',
       };
     } else {
@@ -692,6 +774,7 @@ export async function resolveMailContext(
           person: asOpportunity,
           replySubject,
           replyMessage: null,
+          threadId: null,
           contextKind: 'opportunity',
         };
       } else {
@@ -705,6 +788,7 @@ export async function resolveMailContext(
             person: asMessage.person,
             replySubject: asMessage.replySubject,
             replyMessage: asMessage.replyMessage,
+            threadId: asMessage.threadId,
             contextKind: 'message',
           };
         } else {
@@ -718,6 +802,7 @@ export async function resolveMailContext(
               person: asThread.person,
               replySubject: asThread.replySubject,
               replyMessage: asThread.replyMessage,
+              threadId: asThread.threadId ?? recordId,
               contextKind: 'messageThread',
             };
           } else if (asPerson) {
@@ -725,6 +810,7 @@ export async function resolveMailContext(
               person: asPerson,
               replySubject: null,
               replyMessage: null,
+              threadId: null,
               contextKind: 'person',
             };
           } else if (asOpportunity) {
@@ -732,6 +818,7 @@ export async function resolveMailContext(
               person: asOpportunity,
               replySubject: null,
               replyMessage: null,
+              threadId: null,
               contextKind: 'opportunity',
             };
           }
@@ -746,6 +833,7 @@ export async function resolveMailContext(
       person: emailOnlyContext(email, recordId),
       replySubject,
       replyMessage: null,
+      threadId: null,
       contextKind: 'email',
     };
   }
@@ -896,6 +984,127 @@ export async function listThreadMessagesByEmail(
   return messages;
 }
 
+export async function listThreadMessagesByThreadId(
+  coreClient: CoreApiClient,
+  threadId: string,
+  limit = 40,
+): Promise<ThreadMessage[]> {
+  const id = threadId.trim();
+  if (!id) {
+    return [];
+  }
+
+  try {
+    const messagesResult = await coreClient.query({
+      messages: {
+        __args: {
+          filter: { messageThreadId: { eq: id } },
+          first: limit,
+          orderBy: [{ receivedAt: 'DescNullsLast' }],
+        },
+        edges: {
+          node: MESSAGE_THREAD_FIELDS,
+        },
+      },
+    });
+
+    const messages: ThreadMessage[] = [];
+    const seen = new Set<string>();
+    const nodes =
+      (
+        messagesResult.messages as {
+          edges?: Array<{ node: MessagePreviewNode }>;
+        } | null
+      )?.edges?.map((edge) => edge.node) ?? [];
+
+    for (const message of nodes) {
+      if (!message?.id || seen.has(message.id)) {
+        continue;
+      }
+      const threadMessage = threadMessageFromNode(message);
+      if (!threadMessage?.messageId) {
+        continue;
+      }
+      seen.add(message.id);
+      messages.push(threadMessage);
+    }
+
+    return messages;
+  } catch {
+    return [];
+  }
+}
+
+export async function listInternalThreadMessagesForOpportunity(
+  coreClient: CoreApiClient,
+  opportunityId: string,
+  limit = 20,
+): Promise<ThreadMessage[]> {
+  const id = opportunityId.trim();
+  if (!id) {
+    return [];
+  }
+
+  try {
+    const targetsResult = await coreClient.query({
+      messageThreadTargets: {
+        __args: {
+          filter: { targetOpportunityId: { eq: id } },
+          first: limit,
+        },
+        edges: {
+          node: {
+            messageThreadId: true,
+          },
+        },
+      },
+    } as never);
+
+    const threadIds = [
+      ...new Set(
+        (
+          (
+            targetsResult as {
+              messageThreadTargets?: {
+                edges?: Array<{
+                  node?: { messageThreadId?: string | null };
+                }>;
+              };
+            }
+          ).messageThreadTargets?.edges ?? []
+        )
+          .map((edge) => edge.node?.messageThreadId?.trim())
+          .filter((threadId): threadId is string => Boolean(threadId)),
+      ),
+    ];
+
+    const messages: ThreadMessage[] = [];
+    const seen = new Set<string>();
+    for (const threadId of threadIds) {
+      const threadMessages = await listThreadMessagesByThreadId(
+        coreClient,
+        threadId,
+      );
+      for (const message of threadMessages) {
+        if (!message.messageId || seen.has(message.messageId)) {
+          continue;
+        }
+        seen.add(message.messageId);
+        messages.push({ ...message, channel: 'internal' });
+      }
+    }
+
+    messages.sort((left, right) => {
+      const leftAt = left.receivedAt ? Date.parse(left.receivedAt) : 0;
+      const rightAt = right.receivedAt ? Date.parse(right.receivedAt) : 0;
+      return rightAt - leftAt;
+    });
+    return messages;
+  } catch {
+    return [];
+  }
+}
+
 async function enrichReplyMessage(
   coreClient: CoreApiClient,
   context: MailResolveContext,
@@ -904,8 +1113,12 @@ async function enrichReplyMessage(
     return context;
   }
 
+  if (context.contextKind === 'message' || context.contextKind === 'messageThread') {
+    return context;
+  }
+
   const email = context.person?.email?.trim().toLowerCase();
-  if (!email) {
+  if (!email || isInternalMailbox(email)) {
     return context;
   }
 

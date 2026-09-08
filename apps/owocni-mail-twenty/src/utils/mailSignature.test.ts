@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 
 import {
   applySignatureForNewBody,
+  catalogFromCrmRows,
   hasSignatureMarker,
   isEmptyComposeHtml,
+  mergeSignatureCatalog,
   signatureHtmlForHandle,
   swapSignatureOnFromChange,
 } from './mailSignature';
@@ -14,6 +16,42 @@ describe('mailSignature', () => {
 
     expect(html).toContain('Marta Słowik');
     expect(html).toContain('+48 660 970 980');
+  });
+
+  it('prefers CRM catalog over the hardcoded fallback', () => {
+    const html = signatureHtmlForHandle('marta@owocni.pl', {
+      'marta@owocni.pl': '<p>Nowa stopka Marty</p>',
+    });
+
+    expect(html).toBe('<p>Nowa stopka Marty</p>');
+  });
+
+  it('maps comma-separated mailbox handles onto one CRM row', () => {
+    const catalog = catalogFromCrmRows([
+      {
+        mailboxHandle: 'copywriting@owocni.pl, maciej@owocni.pl',
+        bodyHtml: '<p>Maciej CRM</p>',
+      },
+    ]);
+    const merged = mergeSignatureCatalog(catalog);
+
+    expect(merged['copywriting@owocni.pl']).toBe('<p>Maciej CRM</p>');
+    expect(merged['maciej@owocni.pl']).toBe('<p>Maciej CRM</p>');
+    expect(merged['marta@owocni.pl']).toContain('Marta Słowik');
+  });
+
+  it('ignores BlockNote markdown without HTML tags and keeps the default', () => {
+    const catalog = catalogFromCrmRows([
+      {
+        mailboxHandle: 'studio@owocni.pl, leads@owocni.pl',
+        bodyHtml: 'Pozdrawiamy,\\\n**Owocni.pl**\\\n*Wierzymy w małe firmy!*\n',
+      },
+    ]);
+    const merged = mergeSignatureCatalog(catalog);
+
+    expect(merged['studio@owocni.pl']).toContain('<p>');
+    expect(merged['studio@owocni.pl']).toContain('Owocni.pl');
+    expect(merged['studio@owocni.pl']).not.toContain('**Owocni.pl**');
   });
 
   it('injects signature into empty compose without duplicating', () => {

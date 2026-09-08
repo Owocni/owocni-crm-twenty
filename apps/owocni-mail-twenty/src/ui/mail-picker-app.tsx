@@ -17,6 +17,8 @@ import {
 } from 'src/front-components/mail-body-editor';
 import {
   buildOpportunityRecordShowPath,
+  clearMailComposeFromHostUrl,
+  clearMailComposeIntent,
   consumeMailComposeIntent,
   extractRecordIdFromHostUrl,
   hostIsKanbanIndex,
@@ -31,6 +33,17 @@ import {
   writeCachedMailContext,
 } from 'src/utils/hostMailContext';
 import type { PersonContext, ReplyMessagePreview, ThreadMessage } from 'src/utils/personContext';
+import {
+  INTERNAL_HANDOFF_TO_PLACEHOLDER,
+  quoteClientMessageHtml,
+  threadChannelLabel,
+  toInternalHandoffSubject,
+} from 'src/utils/internalHandoff';
+import {
+  FORWARD_TO_PLACEHOLDER,
+  quoteForwardedMessageHtml,
+  toForwardSubject,
+} from 'src/utils/forwardMessage';
 import { createId } from 'src/utils/createId';
 import { buildAttachmentPickerSrcDoc } from 'src/utils/attachmentPickerFrame';
 import {
@@ -40,21 +53,40 @@ import {
   parseAttachmentFrameMessage,
   type EmailAttachmentRef,
 } from 'src/utils/emailAttachmentShared';
+import {
+  armedSendJson,
+  buildDelayedSendBody,
+  buildUnmountSendBody,
+  SEND_TEMPLATE_PATH,
+  type ArmedSendPayload,
+} from 'src/utils/armedSend';
 import { resolveAccessToken } from 'src/utils/resolveAccessToken';
-import { resolveAppOrigin } from 'src/utils/editorDraftApi';
+import { resolveRestApiUrl } from 'src/utils/editorDraftApi';
 import { resolveSendSubject, toReplySubject } from 'src/utils/replySubject';
 import {
+  emailsExcluding,
+  formatEmailList,
+  formatSendReceipt,
+  invalidEmailsInList,
+  parseEmailList,
+} from 'src/utils/parseEmailList';
+import {
   applySignatureForNewBody,
+  DEFAULT_SIGNATURE_BY_HANDLE,
   hasSignatureMarker,
   isEmptyComposeHtml,
   swapSignatureOnFromChange,
+  type SignatureCatalog,
 } from 'src/utils/mailSignature';
 
 export const TEMPLATE_PICKER_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER =
   '2d49aa61-2a83-485b-856d-c3d26885cae5';
 
-/** Command menu keeps the old composer. Record page is peek vs two-column. */
-export type MailPickerSurface = 'command-menu' | 'record-page';
+/** Command menu / Poczta peek first. Opportunity record page is peek vs two-column. */
+export type MailPickerSurface =
+  | 'command-menu'
+  | 'record-page'
+  | 'mailbox-record';
 
 type TemplatePickerProps = {
   surface?: MailPickerSurface;
@@ -62,16 +94,17 @@ type TemplatePickerProps = {
 
 const SEND_COUNTDOWN_MS = 15000;
 
-type ArmedSendPayload = {
-  recordId?: string;
-  to: string;
-  subject: string;
-  htmlBodyBase64: string;
-  templateId?: string;
-  connectedAccountId?: string;
-  inReplyToMessageId?: string;
-  files: Array<{ id: string; name: string }>;
-  accessToken: string;
+type DelayedSendResult = {
+  ok?: boolean;
+  cancelled?: boolean;
+  alreadySent?: boolean;
+  error?: string;
+  to?: string;
+  cc?: string;
+  copiesDropped?: boolean;
+  bodySource?: string;
+  threadAttached?: boolean;
+  internalHandoff?: boolean;
 };
 
 /** Synthetic selection — free reply / compose (ADR #22), not a DB template. */
@@ -118,6 +151,7 @@ type RecipientSearchHit = {
 
 type PickerDataResponse = {
   templates: MailTemplateSummary[];
+  signatureByHandle?: SignatureCatalog;
   person: PersonContext | null;
   replySubject?: string | null;
   replyMessage?: ReplyMessagePreview | null;
@@ -356,10 +390,18 @@ function threadMessageToPreview(
 type ThreadPaneProps = {
   messages: ThreadMessage[];
   featured: boolean;
+  loading?: boolean;
+  loadingLabel?: string;
   onSelect?: (message: ThreadMessage) => void;
 };
 
-const ThreadPane = ({ messages, featured, onSelect }: ThreadPaneProps) => {
+const ThreadPane = ({
+  messages,
+  featured,
+  loading = false,
+  loadingLabel = 'Trwa ładowanie wątku…',
+  onSelect,
+}: ThreadPaneProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selected =
     messages.find((message) => message.messageId === selectedId) ??
@@ -395,11 +437,16 @@ const ThreadPane = ({ messages, featured, onSelect }: ThreadPaneProps) => {
               style={{
                 fontSize: 11,
                 fontWeight: 700,
-                color: selected.direction === 'out' ? '#1d4ed8' : '#166534',
+                color:
+                  selected.channel === 'internal'
+                    ? '#6d28d9'
+                    : selected.direction === 'out'
+                      ? '#1d4ed8'
+                      : '#166534',
                 marginBottom: 6,
               }}
             >
-              {selected.direction === 'out' ? 'Od nas' : 'Do nas'}
+              {threadChannelLabel(selected.channel, selected.direction)}
             </div>
             <OriginalMessageBody
               replyMessage={threadMessageToPreview(selected)}
@@ -408,8 +455,13 @@ const ThreadPane = ({ messages, featured, onSelect }: ThreadPaneProps) => {
             />
           </>
         ) : (
-          <div style={{ fontSize: 13, color: '#64748b', padding: 12 }}>
-            Brak wiadomości w wątku — możesz i tak odpowiedzieć.
+          <div
+            style={{ fontSize: 13, color: '#64748b', padding: 12 }}
+            aria-live="polite"
+          >
+            {loading
+              ? loadingLabel
+              : 'Brak wiadomości w wątku — możesz i tak odpowiedzieć.'}
           </div>
         )}
       </div>
@@ -458,10 +510,15 @@ const ThreadPane = ({ messages, featured, onSelect }: ThreadPaneProps) => {
                 <span
                   style={{
                     fontWeight: 700,
-                    color: message.direction === 'out' ? '#1d4ed8' : '#166534',
+                    color:
+                      message.channel === 'internal'
+                        ? '#6d28d9'
+                        : message.direction === 'out'
+                          ? '#1d4ed8'
+                          : '#166534',
                   }}
                 >
-                  {message.direction === 'out' ? 'Od nas' : 'Do nas'}
+                  {threadChannelLabel(message.channel, message.direction)}
                 </span>
                 {message.receivedAt ? (
                   <span style={{ color: '#64748b' }}>
@@ -487,6 +544,140 @@ const ThreadPane = ({ messages, featured, onSelect }: ThreadPaneProps) => {
     </div>
   );
 };
+
+const COPY_TOGGLE_BUTTON_STYLE = {
+  fontSize: 11,
+  padding: '1px 7px',
+  border: '1px solid #ddd',
+  borderRadius: 4,
+  background: '#fff',
+  color: '#555',
+  cursor: 'pointer',
+} as const;
+
+const RECIPIENT_INPUT_STYLE = {
+  padding: '6px 8px',
+  border: '1px solid #ddd',
+  borderRadius: 5,
+  fontSize: 13,
+} as const;
+
+const COPY_FIELD_LABEL_STYLE = {
+  fontWeight: 600,
+  fontSize: 12,
+  color: '#666',
+} as const;
+
+function CopyToggleButtons({
+  showCc,
+  showBcc,
+  disabled,
+  onShowCc,
+  onShowBcc,
+}: {
+  showCc: boolean;
+  showBcc: boolean;
+  disabled: boolean;
+  onShowCc: () => void;
+  onShowBcc: () => void;
+}) {
+  return (
+    <>
+      {!showCc ? (
+        <button
+          type="button"
+          title="DW — kopia (wspólnik, rodzina, ktoś z zespołu)"
+          disabled={disabled}
+          onClick={onShowCc}
+          style={COPY_TOGGLE_BUTTON_STYLE}
+        >
+          DW
+        </button>
+      ) : null}
+      {!showBcc ? (
+        <button
+          type="button"
+          title="UDW — ukryta kopia"
+          disabled={disabled}
+          onClick={onShowBcc}
+          style={COPY_TOGGLE_BUTTON_STYLE}
+        >
+          UDW
+        </button>
+      ) : null}
+    </>
+  );
+}
+
+function CopyAddressFields({
+  showCc,
+  showBcc,
+  ccEmail,
+  bccEmail,
+  disabled,
+  onCcChange,
+  onBccChange,
+}: {
+  showCc: boolean;
+  showBcc: boolean;
+  ccEmail: string;
+  bccEmail: string;
+  disabled: boolean;
+  onCcChange: (value: string) => void;
+  onBccChange: (value: string) => void;
+}) {
+  const showCcField = showCc || Boolean(ccEmail.trim());
+  const showBccField = showBcc || Boolean(bccEmail.trim());
+
+  if (!showCcField && !showBccField) {
+    return null;
+  }
+
+  return (
+    <>
+      {showCcField ? (
+        <label
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+            flex: '1 1 100%',
+            minWidth: 160,
+          }}
+        >
+          <span style={COPY_FIELD_LABEL_STYLE}>DW</span>
+          <input
+            style={RECIPIENT_INPUT_STYLE}
+            value={ccEmail}
+            onChange={(event) => onCcChange(event.target.value)}
+            placeholder="wspólnik@firma.pl, gosia@owocni.pl"
+            disabled={disabled}
+          />
+        </label>
+      ) : null}
+      {showBccField ? (
+        <label
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+            flex: '1 1 100%',
+            minWidth: 160,
+          }}
+        >
+          <span style={COPY_FIELD_LABEL_STYLE}>UDW</span>
+          <input
+            style={RECIPIENT_INPUT_STYLE}
+            value={bccEmail}
+            onChange={(event) => onBccChange(event.target.value)}
+            placeholder="ukryta kopia, kolejny@…"
+            disabled={disabled}
+          />
+        </label>
+      ) : null}
+    </>
+  );
+}
 
 const HEADER_ACTION_BUTTON_STYLE = {
   fontSize: 12,
@@ -756,6 +947,13 @@ export const TemplatePicker = ({
     }
     return resolvedContext.scrapedEmail || '';
   });
+  const [ccEmail, setCcEmail] = useState('');
+  const [bccEmail, setBccEmail] = useState('');
+  const [showCc, setShowCc] = useState(false);
+  const [showBcc, setShowBcc] = useState(false);
+  const [internalHandoff, setInternalHandoff] = useState(false);
+  const [externalForward, setExternalForward] = useState(false);
+  const [handoffTo, setHandoffTo] = useState('');
   const [canSendEmail, setCanSendEmail] = useState(false);
   const [sendBlockedReason, setSendBlockedReason] = useState<string | null>(null);
   const [connectedAccountHandle, setConnectedAccountHandle] = useState<
@@ -778,6 +976,12 @@ export const TemplatePicker = ({
   const [editorSessionId, setEditorSessionId] = useState(() => createId());
   const editorRef = useRef<MailBodyEditorHandle>(null);
   const signatureSeededForSessionRef = useRef<string | null>(null);
+  const signatureCatalogRef = useRef<SignatureCatalog>(
+    DEFAULT_SIGNATURE_BY_HANDLE,
+  );
+  const [signatureCatalog, setSignatureCatalog] = useState<SignatureCatalog>(
+    DEFAULT_SIGNATURE_BY_HANDLE,
+  );
   const replySubjectRef = useRef<string | null>(null);
   const editSubjectRef = useRef('');
   const subjectTouchedRef = useRef(false);
@@ -796,7 +1000,13 @@ export const TemplatePicker = ({
     null,
   );
   const armedSendRef = useRef<ArmedSendPayload | null>(null);
+  const delayedSendPromiseRef = useRef<Promise<DelayedSendResult> | null>(
+    null,
+  );
   const sendDeadlineRef = useRef<number | null>(null);
+  const threadRefreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const [threadMessages, setThreadMessages] = useState<ThreadMessage[]>([]);
   const [composeRequested, setComposeRequested] = useState(false);
   const [panelWidth, setPanelWidth] = useState(0);
@@ -814,8 +1024,11 @@ export const TemplatePicker = ({
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
   const [attachmentToken, setAttachmentToken] = useState('');
   const [composerExpanded, setComposerExpanded] = useState(false);
+  const [mailboxComposing, setMailboxComposing] = useState(false);
+  const userDismissedFullscreenRef = useRef(false);
   const overlayRootRef = useRef<HTMLDivElement | null>(null);
   const isRecordPage = surface === 'record-page';
+  const isMailboxRecordPage = surface === 'mailbox-record';
   const opportunityRecordId =
     selectedRecordIds[0] ||
     executionRecordId ||
@@ -823,8 +1036,17 @@ export const TemplatePicker = ({
     null;
   const isRecordCompose = isRecordPage && composeRequested;
   const isRecordPeek = isRecordPage && !isRecordCompose;
+  const isMailboxPeek = !isRecordPage && !mailboxComposing;
+  const isPeek = isRecordPeek || isMailboxPeek;
 
   const personEmail = recipientEmail.trim() || person?.email?.trim() || '';
+  const usesCustomTo = internalHandoff || externalForward;
+  const sendToEmail = usesCustomTo ? handoffTo.trim() : personEmail;
+  const canHandoff =
+    contextKind === 'opportunity' && Boolean(opportunityRecordId);
+  const canForward = Boolean(
+    replyMessage?.text || replyMessage?.subject || replySubject,
+  );
   const displayRecipientEmail =
     recipientEmail.trim() || person?.email?.trim() || '';
   const effectiveRecordId =
@@ -837,7 +1059,7 @@ export const TemplatePicker = ({
   editSubjectRef.current = editSubject;
 
   useLayoutEffect(() => {
-    if (!isRecordPage) {
+    if (!isRecordPage && !isMailboxRecordPage) {
       return;
     }
     const el = overlayRootRef.current;
@@ -857,7 +1079,24 @@ export const TemplatePicker = ({
     const observer = new ResizeObserver(apply);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [isRecordPage, isRecordPeek]);
+  }, [isRecordPage, isMailboxRecordPage, isRecordPeek]);
+
+  const mailboxRecordKey =
+    selectedRecordIds[0] || (isMailboxRecordPage ? recordId : '') || '';
+  const prevMailboxRecordKeyRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (isRecordPage) {
+      return;
+    }
+    const prev = prevMailboxRecordKeyRef.current;
+    prevMailboxRecordKeyRef.current = mailboxRecordKey;
+    if (prev && mailboxRecordKey && prev !== mailboxRecordKey) {
+      setMailboxComposing(false);
+      setComposerExpanded(false);
+      userDismissedFullscreenRef.current = false;
+    }
+  }, [isRecordPage, mailboxRecordKey]);
 
   useLayoutEffect(() => {
     if (!isRecordPage || !opportunityRecordId) {
@@ -888,19 +1127,6 @@ export const TemplatePicker = ({
     }
     setRecipientEmail(resolved);
   }, [person?.email, recipientEmail]);
-
-  const applyThreadMessage = (message: ThreadMessage) => {
-    setReplyMessage(threadMessageToPreview(message));
-    if (message.messageId) {
-      setReplyMessageId(message.messageId);
-    }
-    if (message.subject) {
-      setReplySubject(message.subject);
-      if (!subjectTouchedRef.current) {
-        setEditSubject(toReplySubject(message.subject));
-      }
-    }
-  };
 
   const openOpportunityRecordPage = (
     event?: { preventDefault: () => void },
@@ -959,16 +1185,107 @@ export const TemplatePicker = ({
     return templates.find((template) => template.id === selectedId) ?? null;
   }, [templates, selectedId]);
 
+  const setComposerFullscreen = (open: boolean, fromUser = false) => {
+    if (fromUser) {
+      userDismissedFullscreenRef.current = !open;
+    }
+    setComposerExpanded(open);
+  };
+
+  const adoptSignatureCatalog = (next?: SignatureCatalog | null) => {
+    if (!next || Object.keys(next).length === 0) {
+      return;
+    }
+
+    const prev = signatureCatalogRef.current;
+    const unchanged =
+      Object.keys(next).length === Object.keys(prev).length &&
+      Object.keys(next).every((key) => next[key] === prev[key]);
+
+    signatureCatalogRef.current = next;
+
+    if (!unchanged) {
+      setSignatureCatalog(next);
+    }
+  };
+
+  const applySig = (
+    html: string,
+    handle: string | null | undefined,
+  ): string =>
+    applySignatureForNewBody(html, handle, signatureCatalogRef.current);
+
+  const swapSig = (
+    html: string,
+    handle: string | null | undefined,
+  ): string =>
+    swapSignatureOnFromChange(html, handle, signatureCatalogRef.current);
+
+  const seedQuotedCompose = (
+    source: ReplyMessagePreview | ThreadMessage | null,
+    mode: 'internal' | 'forward',
+  ) => {
+    const subjectSource = source?.subject || replySubjectRef.current || '';
+    subjectTouchedRef.current = true;
+    setEditSubject(
+      mode === 'internal'
+        ? toInternalHandoffSubject(subjectSource)
+        : toForwardSubject(subjectSource),
+    );
+    const quoted =
+      mode === 'internal'
+        ? quoteClientMessageHtml({
+            fromLabel: source?.fromLabel,
+            fromEmail: source?.fromEmail,
+            subject: source?.subject || replySubjectRef.current,
+            text: source?.text,
+          })
+        : quoteForwardedMessageHtml({
+            fromLabel: source?.fromLabel,
+            fromEmail: source?.fromEmail,
+            subject: source?.subject || replySubjectRef.current,
+            receivedAt: source?.receivedAt,
+            text: source?.text,
+          });
+    const nextSessionId = createId();
+    signatureSeededForSessionRef.current = connectedAccountHandle
+      ? nextSessionId
+      : null;
+    setEditorSessionId(nextSessionId);
+    setEditBodyHtml(applySig(quoted, connectedAccountHandle));
+  };
+
+  const applyThreadMessage = (message: ThreadMessage) => {
+    setReplyMessage(threadMessageToPreview(message));
+    if (message.messageId) {
+      setReplyMessageId(message.messageId);
+    }
+    if (message.subject) {
+      setReplySubject(message.subject);
+    }
+    if (internalHandoff) {
+      seedQuotedCompose(message, 'internal');
+      return;
+    }
+    if (externalForward) {
+      seedQuotedCompose(message, 'forward');
+      return;
+    }
+    if (message.subject && !subjectTouchedRef.current) {
+      setEditSubject(toReplySubject(message.subject));
+    }
+  };
+
   const enterFreeCompose = (subjectHint?: string | null) => {
+    setInternalHandoff(false);
+    setExternalForward(false);
     subjectTouchedRef.current = false;
     setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
     const nextSessionId = createId();
     signatureSeededForSessionRef.current = connectedAccountHandle
       ? nextSessionId
       : null;
-    setEditBodyHtml(
-      applySignatureForNewBody('<p><br></p>', connectedAccountHandle),
-    );
+    setEditBodyHtml(applySig('<p><br></p>', connectedAccountHandle));
     setEditorSessionId(nextSessionId);
     setLoadingDraft(false);
     setDraftError(null);
@@ -981,6 +1298,57 @@ export const TemplatePicker = ({
       setEditSubject('');
     }
     setSubjectFromTemplate(false);
+  };
+
+  const startMailboxCompose = () => {
+    setMailboxComposing(true);
+    setComposerExpanded(true);
+    enterFreeCompose(replySubject);
+  };
+
+  const enterInternalHandoff = () => {
+    if (!canHandoff || !opportunityRecordId) {
+      void enqueueSnackbar({
+        message: 'Przekazanie wewnętrzne tylko z karty leada.',
+        variant: 'warning',
+      });
+      return;
+    }
+
+    enterFreeCompose(null);
+    setInternalHandoff(true);
+    setHandoffTo('');
+    setCcEmail('');
+    setBccEmail('');
+    setShowCc(false);
+    setShowBcc(false);
+    if (!isRecordPage) {
+      setComposerExpanded(true);
+    }
+    seedQuotedCompose(replyMessage, 'internal');
+  };
+
+  const enterForward = () => {
+    const source = replyMessage;
+    if (!source?.text && !source?.subject && !replySubjectRef.current) {
+      void enqueueSnackbar({
+        message: 'Nie ma wiadomości do przekazania — wybierz mail z historii.',
+        variant: 'warning',
+      });
+      return;
+    }
+
+    enterFreeCompose(null);
+    setExternalForward(true);
+    setHandoffTo('');
+    setCcEmail('');
+    setBccEmail('');
+    setShowCc(false);
+    setShowBcc(false);
+    if (!isRecordPage) {
+      setComposerExpanded(true);
+    }
+    seedQuotedCompose(source, 'forward');
   };
 
   // Prefill Re:/Odp: from the thread. Never overwrite a subject the user already typed.
@@ -1062,6 +1430,7 @@ export const TemplatePicker = ({
         }
 
         setTemplates(data.templates ?? []);
+        adoptSignatureCatalog(data.signatureByHandle);
 
         // Try other candidate record IDs until we get an email or reply subject.
         for (let i = 1; i < candidates.length; i += 1) {
@@ -1311,12 +1680,16 @@ export const TemplatePicker = ({
           signatureSeededForSessionRef.current = connectedAccountHandle
             ? nextSessionId
             : null;
-          setEditBodyHtml(
-            applySignatureForNewBody('<p><br></p>', connectedAccountHandle),
-          );
+          setEditBodyHtml(applySig('<p><br></p>', connectedAccountHandle));
           setEditorSessionId(nextSessionId);
           setLoadingDraft(false);
           setDraftError(null);
+          setAttachments([]);
+          setAttachmentError(null);
+          setCcEmail('');
+          setBccEmail('');
+          setShowCc(false);
+          setShowBcc(false);
           setSubjectFromTemplate(false);
           if (replyHint) {
             setEditSubject(toReplySubject(replyHint));
@@ -1416,10 +1789,7 @@ export const TemplatePicker = ({
     setEditBodyHtml((current) => {
       if (hasSignatureMarker(current)) {
         signatureSeededForSessionRef.current = editorSessionId;
-        const swapped = swapSignatureOnFromChange(
-          current,
-          connectedAccountHandle,
-        );
+        const swapped = swapSig(current, connectedAccountHandle);
 
         if (swapped !== current) {
           queueMicrotask(() => {
@@ -1434,7 +1804,7 @@ export const TemplatePicker = ({
         return current;
       }
 
-      const next = applySignatureForNewBody(current, connectedAccountHandle);
+      const next = applySig(current, connectedAccountHandle);
       signatureSeededForSessionRef.current = editorSessionId;
 
       if (next !== current) {
@@ -1450,7 +1820,7 @@ export const TemplatePicker = ({
 
       return next;
     });
-  }, [connectedAccountHandle, editorSessionId]);
+  }, [connectedAccountHandle, editorSessionId, signatureCatalog]);
 
   const handleSelectTemplate = async (template: MailTemplateSummary) => {
     const nextSessionId = createId();
@@ -1525,10 +1895,7 @@ export const TemplatePicker = ({
             : (draft.subject ?? ''),
       });
 
-      const signedBody = applySignatureForNewBody(
-        bodyHtml,
-        connectedAccountHandle,
-      );
+      const signedBody = applySig(bodyHtml, connectedAccountHandle);
       signatureSeededForSessionRef.current = connectedAccountHandle
         ? nextSessionId
         : null;
@@ -1593,6 +1960,8 @@ export const TemplatePicker = ({
         },
       });
 
+      adoptSignatureCatalog(data.signatureByHandle);
+
       if (data.person) {
         setPerson(data.person);
       } else {
@@ -1650,17 +2019,179 @@ export const TemplatePicker = ({
     setSendCountdown(null);
   };
 
-  const armedSendJson = (payload: ArmedSendPayload) =>
-    JSON.stringify({
-      recordId: payload.recordId,
-      to: payload.to,
-      subject: payload.subject,
-      htmlBodyBase64: payload.htmlBodyBase64,
-      templateId: payload.templateId,
-      connectedAccountId: payload.connectedAccountId,
-      inReplyToMessageId: payload.inReplyToMessageId,
-      files: payload.files,
+  const refreshThreadMessages = async () => {
+    const recordId = opportunityRecordId || contextRecordId;
+    if (!recordId) {
+      return;
+    }
+
+    try {
+      const client = new RestApiClient();
+      const data = await client.get<PickerDataResponse>('/s/mail/picker-data', {
+        query: {
+          skipRecent: '1',
+          recordId,
+          ...(personEmail ? { email: personEmail } : {}),
+        },
+      });
+
+      adoptSignatureCatalog(data.signatureByHandle);
+
+      if (data.threadMessages && data.threadMessages.length > 0) {
+        setThreadMessages(data.threadMessages);
+      }
+
+      if (data.replyMessage) {
+        setReplyMessage(data.replyMessage);
+        if (data.replyMessage.messageId) {
+          setReplyMessageId(data.replyMessage.messageId);
+        }
+      }
+    } catch {
+      // keep the thread we already have
+    }
+  };
+
+  const scheduleThreadRefreshAfterSend = () => {
+    void refreshThreadMessages();
+    [8_000, 25_000, 50_000].forEach((delayMs) => {
+      globalThis.setTimeout(() => {
+        void refreshThreadMessages();
+      }, delayMs);
     });
+  };
+
+  const exitComposerAfterSuccessfulSend = () => {
+    clearMailComposeIntent();
+    clearMailComposeFromHostUrl();
+    setComposerExpanded(false);
+    setMailboxComposing(false);
+    setCcEmail('');
+    setBccEmail('');
+    setShowCc(false);
+    setShowBcc(false);
+    enterFreeCompose(replySubjectRef.current);
+    setComposeRequested(false);
+    scheduleThreadRefreshAfterSend();
+    void closeSidePanel().catch(() => undefined);
+  };
+
+  const startDelayedSend = (armed: ArmedSendPayload) => {
+    const url = resolveRestApiUrl(SEND_TEMPLATE_PATH);
+    const body = buildDelayedSendBody(armed, SEND_COUNTDOWN_MS);
+
+    delayedSendPromiseRef.current = fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${armed.accessToken}`,
+      },
+      body,
+      keepalive: true,
+    })
+      .then(async (response) => {
+        try {
+          return (await response.json()) as DelayedSendResult;
+        } catch {
+          return {
+            ok: false,
+            error: 'Nie udało się odczytać odpowiedzi wysyłki.',
+          };
+        }
+      })
+      .catch((error: unknown) => ({
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+      }));
+  };
+
+  const cancelDelayedJob = async (armed: ArmedSendPayload | null) => {
+    const jobId = armed?.draftSessionId;
+
+    if (!jobId) {
+      return;
+    }
+
+    try {
+      const client = new RestApiClient();
+      await client.post(SEND_TEMPLATE_PATH, {
+        action: 'cancel',
+        jobId,
+        draftSessionId: jobId,
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('[OwocniMail] cancel delayed send failed', error);
+    }
+  };
+
+  const finishDelayedSend = async () => {
+    const armed = armedSendRef.current;
+    const pending = delayedSendPromiseRef.current;
+    armedSendRef.current = null;
+    delayedSendPromiseRef.current = null;
+    clearSendCountdown();
+
+    if (!pending) {
+      if (armed) {
+        armedSendRef.current = armed;
+        await fireArmedSend(false);
+      }
+      return;
+    }
+
+    setSending(true);
+
+    try {
+      const result = await pending;
+
+      if (result.cancelled) {
+        return;
+      }
+
+      if (!result.ok && !result.alreadySent) {
+        throw new Error(result.error ?? 'Nie udało się wysłać maila.');
+      }
+
+      await enqueueSnackbar({
+        message: formatSendReceipt(
+          result.to ?? armed?.to ?? '',
+          result.copiesDropped ? '' : result.cc ?? armed?.cc,
+          result.copiesDropped ? '' : armed?.bcc,
+        ),
+        variant: result.copiesDropped ? 'warning' : 'success',
+        duration: result.copiesDropped ? 12000 : 6000,
+      });
+      if (result.copiesDropped) {
+        await enqueueSnackbar({
+          message:
+            'DW/UDW nie zostały przyjęte przez serwer — mail poszedł tylko do pola Do.',
+          variant: 'warning',
+          duration: 12000,
+        });
+      }
+      if (
+        (result.internalHandoff || armed?.mode === 'internal') &&
+        result.threadAttached === false
+      ) {
+        await enqueueSnackbar({
+          message:
+            'Mail wyszedł. Historia na leadzie pojawi się po zsynchronizowaniu skrzynki (Settings → Advanced → General → Security → Sync Internal Emails).',
+          variant: 'warning',
+          duration: 12000,
+        });
+      }
+      exitComposerAfterSuccessfulSend();
+    } catch (sendError) {
+      await enqueueSnackbar({
+        message: getApiErrorMessage(sendError),
+        variant: 'error',
+        duration: 12000,
+      });
+    } finally {
+      setSending(false);
+    }
+  };
 
   const fireArmedSend = async (fromUnmount: boolean) => {
     const armed = armedSendRef.current;
@@ -1672,10 +2203,7 @@ export const TemplatePicker = ({
     clearSendCountdown();
 
     if (fromUnmount) {
-      const origin = resolveAppOrigin();
-      const url = origin
-        ? `${origin}/s/mail/send-template`
-        : '/s/mail/send-template';
+      const url = resolveRestApiUrl(SEND_TEMPLATE_PATH);
       try {
         void fetch(url, {
           method: 'POST',
@@ -1683,11 +2211,22 @@ export const TemplatePicker = ({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${armed.accessToken}`,
           },
-          body: armedSendJson(armed),
+          body: buildUnmountSendBody(armed),
           keepalive: true,
+        }).catch((error: unknown) => {
+          // eslint-disable-next-line no-console
+          console.error('[OwocniMail] send-on-close fetch failed', error);
         });
-      } catch {
-        // panel/tab already gone
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('[OwocniMail] send-on-close keepalive rejected', error);
+        try {
+          const client = new RestApiClient();
+          void client.post(SEND_TEMPLATE_PATH, JSON.parse(armedSendJson(armed)));
+        } catch (fallbackError) {
+          // eslint-disable-next-line no-console
+          console.error('[OwocniMail] send-on-close fallback failed', fallbackError);
+        }
       }
       return;
     }
@@ -1698,36 +2237,65 @@ export const TemplatePicker = ({
       const client = new RestApiClient();
       const result = await client.post<{
         ok?: boolean;
+        cancelled?: boolean;
+        alreadySent?: boolean;
         error?: string;
         to?: string;
+        cc?: string;
+        copiesDropped?: boolean;
         bodySource?: string;
         bodyLength?: number;
         from?: string;
-      }>('/s/mail/send-template', {
-        recordId: armed.recordId,
-        to: armed.to,
-        subject: armed.subject,
-        htmlBodyBase64: armed.htmlBodyBase64,
-        templateId: armed.templateId,
-        connectedAccountId: armed.connectedAccountId,
-        inReplyToMessageId: armed.inReplyToMessageId,
-        files: armed.files,
-      });
+        threadAttached?: boolean;
+        internalHandoff?: boolean;
+      }>('/s/mail/send-template', JSON.parse(armedSendJson(armed)));
 
-      if (!result.ok) {
+      if (result.cancelled) {
+        throw new Error('Wysyłka została anulowana.');
+      }
+
+      if (!result.ok && !result.alreadySent) {
         throw new Error(result.error ?? 'Nie udało się wysłać maila.');
       }
 
-      const fromEditor = result.bodySource === 'client';
+      const fromEditor =
+        result.alreadySent || result.bodySource === 'client';
       await enqueueSnackbar({
         message: fromEditor
-          ? `Wysłano do ${result.to ?? armed.to}.`
+          ? formatSendReceipt(
+              result.to ?? armed.to,
+              result.copiesDropped ? '' : result.cc ?? armed.cc,
+              result.copiesDropped ? '' : armed.bcc,
+            )
           : `Wysłano do ${result.to ?? armed.to} (szablon z bazy — edycja nie dotarła!).`,
-        variant: fromEditor ? 'success' : 'warning',
-        duration: fromEditor ? 6000 : 12000,
+        variant: fromEditor
+          ? result.copiesDropped
+            ? 'warning'
+            : 'success'
+          : 'warning',
+        duration: fromEditor && !result.copiesDropped ? 6000 : 12000,
       });
+      if (fromEditor && result.copiesDropped) {
+        await enqueueSnackbar({
+          message:
+            'DW/UDW nie zostały przyjęte przez serwer — mail poszedł tylko do pola Do.',
+          variant: 'warning',
+          duration: 12000,
+        });
+      }
+      if (
+        (result.internalHandoff || armed.mode === 'internal') &&
+        result.threadAttached === false
+      ) {
+        await enqueueSnackbar({
+          message:
+            'Mail wyszedł. Historia na leadzie pojawi się po zsynchronizowaniu skrzynki (Settings → Advanced → General → Security → Sync Internal Emails).',
+          variant: 'warning',
+          duration: 12000,
+        });
+      }
 
-      await closeSidePanel();
+      exitComposerAfterSuccessfulSend();
     } catch (sendError) {
       await enqueueSnackbar({
         message: getApiErrorMessage(sendError),
@@ -1740,8 +2308,27 @@ export const TemplatePicker = ({
   };
 
   const armSendPayload = async (): Promise<ArmedSendPayload | null> => {
-    if (!selected || !personEmail) {
+    if (!selected || !sendToEmail) {
       return null;
+    }
+
+    if (internalHandoff) {
+      if (!canHandoff || !opportunityRecordId) {
+        await enqueueSnackbar({
+          message: 'Przekazanie wewnętrzne tylko z karty leada.',
+          variant: 'warning',
+        });
+        return null;
+      }
+      const client = person?.email?.trim().toLowerCase() || '';
+      if (client && sendToEmail.toLowerCase() === client) {
+        await enqueueSnackbar({
+          message: 'Klient nie może być odbiorcą — ten mail jest tylko wewnętrzny.',
+          variant: 'warning',
+          duration: 8000,
+        });
+        return null;
+      }
     }
 
     const flushed = (await editorRef.current?.flushHtmlAsync()) ?? '';
@@ -1751,10 +2338,13 @@ export const TemplatePicker = ({
       setEditBodyHtml(bodyHtml);
     }
 
-    const subject = resolveSendSubject(
-      editSubjectRef.current,
-      replySubjectRef.current,
-    );
+    const subject = externalForward
+      ? editSubjectRef.current.trim() ||
+        toForwardSubject(replySubjectRef.current)
+      : resolveSendSubject(
+          editSubjectRef.current,
+          replySubjectRef.current,
+        );
 
     if (!bodyHtml) {
       await enqueueSnackbar({
@@ -1775,19 +2365,77 @@ export const TemplatePicker = ({
       return null;
     }
 
+    const invalidCopies = [
+      ...invalidEmailsInList(ccEmail),
+      ...invalidEmailsInList(bccEmail),
+    ];
+    if (invalidCopies.length > 0) {
+      await enqueueSnackbar({
+        message: `Niepoprawny adres w DW/UDW: ${invalidCopies.join(', ')}`,
+        variant: 'warning',
+        duration: 8000,
+      });
+      return null;
+    }
+
+    const cc = formatEmailList(
+      emailsExcluding(
+        emailsExcluding(parseEmailList(ccEmail), sendToEmail),
+        internalHandoff ? person?.email : null,
+      ),
+    );
+    const bcc = formatEmailList(
+      emailsExcluding(
+        emailsExcluding(parseEmailList(bccEmail), sendToEmail),
+        internalHandoff ? person?.email : null,
+      ).filter((address) => !parseEmailList(cc).includes(address)),
+    );
+
     const accessToken = await resolveAccessToken();
+    const htmlBodyBase64 = encodeHtmlBodyBase64(bodyHtml);
+    const draftSessionId = editorSessionId
+      ? `send:${editorSessionId}`
+      : undefined;
+
+    if (draftSessionId) {
+      try {
+        const client = new RestApiClient();
+        await client.post('/s/mail/editor-draft', {
+          sessionId: draftSessionId,
+          htmlBase64: htmlBodyBase64,
+          html: bodyHtml.slice(0, 50_000),
+        });
+      } catch (draftError) {
+        // eslint-disable-next-line no-console
+        console.error('[OwocniMail] armed draft save failed', draftError);
+      }
+    }
 
     return {
       recordId: effectiveRecordId ?? undefined,
-      to: personEmail,
-      subject,
-      htmlBodyBase64: encodeHtmlBodyBase64(bodyHtml),
+      to: sendToEmail,
+      ...(cc ? { cc } : {}),
+      ...(bcc ? { bcc } : {}),
+      subject: internalHandoff ? toInternalHandoffSubject(subject) : subject,
+      htmlBodyBase64,
       templateId:
         selected.id === FREE_COMPOSE_TEMPLATE_ID ? undefined : selected.id,
       connectedAccountId: connectedAccountId ?? undefined,
-      inReplyToMessageId: replyMessageId ?? undefined,
+      inReplyToMessageId:
+        internalHandoff || externalForward
+          ? undefined
+          : (replyMessageId ?? undefined),
+      ...(internalHandoff
+        ? {
+            mode: 'internal' as const,
+            opportunityId: opportunityRecordId ?? undefined,
+          }
+        : externalForward
+          ? { mode: 'forward' as const }
+          : {}),
       files: attachments.map(({ id, name }) => ({ id, name })),
       accessToken,
+      draftSessionId,
     };
   };
 
@@ -1990,7 +2638,7 @@ export const TemplatePicker = ({
   const startSendCountdown = () => {
     if (
       !selected ||
-      !personEmail ||
+      !sendToEmail ||
       sending ||
       sendPreparing ||
       sendCountdown !== null ||
@@ -2021,6 +2669,7 @@ export const TemplatePicker = ({
         }
 
         armedSendRef.current = armed;
+        startDelayedSend(armed);
         sendDeadlineRef.current = Date.now() + SEND_COUNTDOWN_MS;
 
         const tick = () => {
@@ -2036,7 +2685,7 @@ export const TemplatePicker = ({
               sendCountdownTimerRef.current = null;
             }
             setSendCountdown(null);
-            void fireArmedSend(false);
+            void finishDelayedSend();
             return;
           }
 
@@ -2059,23 +2708,32 @@ export const TemplatePicker = ({
   };
 
   const cancelSendCountdown = () => {
+    const armed = armedSendRef.current;
     armedSendRef.current = null;
+    delayedSendPromiseRef.current = null;
     clearSendCountdown();
+    void cancelDelayedJob(armed);
   };
 
   const sendNow = () => {
-    if (armedSendRef.current) {
-      void fireArmedSend(false);
+    const armed = armedSendRef.current;
+    delayedSendPromiseRef.current = null;
+
+    if (armed) {
+      void (async () => {
+        await cancelDelayedJob(armed);
+        await fireArmedSend(false);
+      })();
       return;
     }
 
     clearSendCountdown();
     void (async () => {
-      const armed = await armSendPayload();
-      if (!armed) {
+      const nextArmed = await armSendPayload();
+      if (!nextArmed) {
         return;
       }
-      armedSendRef.current = armed;
+      armedSendRef.current = nextArmed;
       await fireArmedSend(false);
     })();
   };
@@ -2086,11 +2744,13 @@ export const TemplatePicker = ({
         clearInterval(sendCountdownTimerRef.current);
         sendCountdownTimerRef.current = null;
       }
-      if (armedSendRef.current) {
-        void fireArmedSend(true);
+      if (threadRefreshTimerRef.current) {
+        globalThis.clearTimeout(threadRefreshTimerRef.current);
+        threadRefreshTimerRef.current = null;
       }
+      // Send already started at arm with keepalive — leaving the list must not start a second one.
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- unmount-only; refs hold the payload
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- unmount-only
   }, []);
 
   useLayoutEffect(() => {
@@ -2139,7 +2799,7 @@ export const TemplatePicker = ({
       }
       event.preventDefault();
       event.stopPropagation();
-      setComposerExpanded(false);
+      setComposerFullscreen(false, true);
     };
 
     window.addEventListener('keydown', onKeyDown, true);
@@ -2157,9 +2817,25 @@ export const TemplatePicker = ({
     templates.some((template) => template.category === category),
   );
 
+  const peekMessages =
+    threadMessages.length > 0
+      ? threadMessages
+      : replyMessage
+        ? [
+            {
+              ...replyMessage,
+              direction: 'in' as const,
+              channel: 'client' as const,
+            },
+          ]
+        : [];
+
   const showOriginalPane = Boolean(
     (composerExpanded || isRecordCompose) &&
-      (replyMessage?.text || isReplyContext || threadMessages.length > 0),
+      (replyMessage?.text ||
+        isReplyContext ||
+        threadMessages.length > 0 ||
+        (composerExpanded && !isRecordPage)),
   );
   const useWideSplit =
     isRecordCompose ||
@@ -2167,7 +2843,7 @@ export const TemplatePicker = ({
       (typeof window === 'undefined' || window.innerWidth >= 860));
   const rootClassName = composerExpanded
     ? 'owocni-mail-fs-root'
-    : isRecordPage
+    : isRecordPage || isMailboxRecordPage
       ? 'owocni-mail-record-root'
       : undefined;
   const composeSplitClassName = composerExpanded
@@ -2186,7 +2862,7 @@ export const TemplatePicker = ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        minHeight: 0,
+        minHeight: isPeek && !isRecordPage ? 360 : 0,
         overflow: 'hidden',
         ...(composerExpanded ? COMPOSE_FULLSCREEN_ROOT_STYLE : null),
       }}
@@ -2205,12 +2881,18 @@ export const TemplatePicker = ({
           Szablony niedostępne ({listError}). Możesz pisać od zera.
         </div>
       ) : null}
-      {isRecordPeek ? (
+      {isPeek ? (
         <>
           <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
             <ThreadPane
               featured
-              messages={threadMessages}
+              loading={loadingList}
+              loadingLabel={
+                isRecordPage
+                  ? 'Trwa ładowanie wątków z leadem'
+                  : 'Trwa ładowanie wątku…'
+              }
+              messages={peekMessages}
               onSelect={applyThreadMessage}
             />
           </div>
@@ -2222,42 +2904,67 @@ export const TemplatePicker = ({
               background: '#fff',
             }}
           >
-            <a
-              href={
-                opportunityRecordId
-                  ? buildOpportunityRecordShowPath(opportunityRecordId)
-                  : undefined
-              }
-              target="_top"
-              rel="noopener"
-              style={{
-                display: 'block',
-                boxSizing: 'border-box',
-                width: '100%',
-                minHeight: 52,
-                padding: '16px 18px',
-                background: opportunityRecordId ? '#4f46e5' : '#999',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 8,
-                cursor: opportunityRecordId ? 'pointer' : 'not-allowed',
-                fontWeight: 700,
-                fontSize: 16,
-                letterSpacing: 0.2,
-                textAlign: 'center',
-                textDecoration: 'none',
-              }}
-              aria-disabled={!opportunityRecordId}
-              onClick={(event) => {
-                openOpportunityRecordPage(event);
-              }}
-            >
-              Odpowiedz
-            </a>
+            {isRecordPeek ? (
+              <a
+                href={
+                  opportunityRecordId
+                    ? buildOpportunityRecordShowPath(opportunityRecordId)
+                    : undefined
+                }
+                target="_top"
+                rel="noopener"
+                style={{
+                  display: 'block',
+                  boxSizing: 'border-box',
+                  width: '100%',
+                  minHeight: 52,
+                  padding: '16px 18px',
+                  background: opportunityRecordId ? '#4f46e5' : '#999',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 8,
+                  cursor: opportunityRecordId ? 'pointer' : 'not-allowed',
+                  fontWeight: 700,
+                  fontSize: 16,
+                  letterSpacing: 0.2,
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                }}
+                aria-disabled={!opportunityRecordId}
+                onClick={(event) => {
+                  openOpportunityRecordPage(event);
+                }}
+              >
+                Odpowiedz
+              </a>
+            ) : (
+              <button
+                type="button"
+                style={{
+                  display: 'block',
+                  boxSizing: 'border-box',
+                  width: '100%',
+                  minHeight: 52,
+                  padding: '16px 18px',
+                  background: '#4f46e5',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  fontSize: 16,
+                  letterSpacing: 0.2,
+                  textAlign: 'center',
+                }}
+                onClick={startMailboxCompose}
+              >
+                Odpowiedz
+              </button>
+            )}
           </div>
         </>
       ) : null}
-      {!isRecordPeek ? (
+      {!isPeek ? (
       <>
       <div
         style={{
@@ -2270,7 +2977,13 @@ export const TemplatePicker = ({
           flexShrink: 0,
         }}
       >
-        <strong>Odpowiedz</strong>
+        <strong>
+          {internalHandoff
+            ? 'Przekaż wewnątrz'
+            : externalForward
+              ? 'Przekaż'
+              : 'Odpowiedz'}
+        </strong>
         {connectedAccountHandle ? (
           <span
             style={{
@@ -2284,7 +2997,7 @@ export const TemplatePicker = ({
             From: {connectedAccountHandle}
           </span>
         ) : null}
-        {isReplyContext ? (
+        {isReplyContext && !internalHandoff && !externalForward ? (
           <span
             style={{
               fontSize: 11,
@@ -2297,12 +3010,42 @@ export const TemplatePicker = ({
             Odpowiedź
           </span>
         ) : null}
-        {personEmail ? (
+        {internalHandoff ? (
+          <span
+            style={{
+              fontSize: 11,
+              color: '#6d28d9',
+              background: '#f3e8ff',
+              padding: '2px 8px',
+              borderRadius: 999,
+            }}
+          >
+            Klient nie dostaje tego maila
+          </span>
+        ) : null}
+        {externalForward ? (
+          <span
+            style={{
+              fontSize: 11,
+              color: '#0f766e',
+              background: '#ccfbf1',
+              padding: '2px 8px',
+              borderRadius: 999,
+            }}
+          >
+            Odbiorca dostaje ten mail
+          </span>
+        ) : null}
+        {sendToEmail ? (
           <span style={{ fontSize: 11, color: '#666' }}>
-            → {personEmail}
-            {replySubject
-              ? ` · ${toReplySubject(replySubject).slice(0, 36)}`
-              : ''}
+            → {sendToEmail}
+            {internalHandoff
+              ? ` · ${toInternalHandoffSubject(replySubject || '').slice(0, 36)}`
+              : externalForward
+                ? ` · ${toForwardSubject(replySubject || '').slice(0, 36)}`
+                : replySubject
+                  ? ` · ${toReplySubject(replySubject).slice(0, 36)}`
+                  : ''}
           </span>
         ) : !contextRecordId && !resolvedRecordId ? (
           <span style={{ fontSize: 11, color: '#b45309', maxWidth: 480 }}>
@@ -2337,10 +3080,52 @@ export const TemplatePicker = ({
                 cursor: sending ? 'not-allowed' : 'pointer',
               }}
               disabled={sending}
-              onClick={() => setComposerExpanded((open) => !open)}
+              onClick={() => setComposerFullscreen(!composerExpanded, true)}
             >
               {composerExpanded ? 'Zamknij pełne okno' : 'Pełne okno'}
             </button>
+            ) : null}
+            {canForward && !internalHandoff && !externalForward ? (
+              <button
+                type="button"
+                style={{
+                  ...HEADER_ACTION_BUTTON_STYLE,
+                  background: '#f0fdfa',
+                  borderColor: '#5eead4',
+                  color: '#0f766e',
+                  fontWeight: 600,
+                }}
+                disabled={sending}
+                onClick={enterForward}
+              >
+                Przekaż
+              </button>
+            ) : null}
+            {canHandoff && !internalHandoff && !externalForward ? (
+              <button
+                type="button"
+                style={{
+                  ...HEADER_ACTION_BUTTON_STYLE,
+                  background: '#faf5ff',
+                  borderColor: '#c4b5fd',
+                  color: '#6d28d9',
+                  fontWeight: 600,
+                }}
+                disabled={sending}
+                onClick={enterInternalHandoff}
+              >
+                Przekaż wewnątrz
+              </button>
+            ) : null}
+            {internalHandoff || externalForward ? (
+              <button
+                type="button"
+                style={HEADER_ACTION_BUTTON_STYLE}
+                disabled={sending}
+                onClick={() => enterFreeCompose(replySubject)}
+              >
+                {internalHandoff ? 'Do klienta' : 'Odpowiedz'}
+              </button>
             ) : null}
             {selected.id === FREE_COMPOSE_TEMPLATE_ID ? (
               <button
@@ -2348,8 +3133,10 @@ export const TemplatePicker = ({
                 style={HEADER_ACTION_BUTTON_STYLE}
                 disabled={sending}
                 onClick={() => {
-                  setComposerExpanded(false);
+                  setComposerFullscreen(false);
                   setSelectedId(null);
+                  setInternalHandoff(false);
+                  setExternalForward(false);
                 }}
               >
                 Wstaw szablon
@@ -2443,8 +3230,68 @@ export const TemplatePicker = ({
         >
           Pisz od zera (ze swojej skrzynki)
         </button>
+        {canForward ? (
+          <button
+            type="button"
+            style={{
+              width: '100%',
+              padding: '10px 12px',
+              background: '#fff',
+              color: '#0f766e',
+              border: '1px solid #5eead4',
+              borderRadius: 6,
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: 14,
+              marginBottom: 4,
+            }}
+            disabled={sending}
+            onClick={enterForward}
+          >
+            Przekaż
+          </button>
+        ) : null}
+        {canHandoff ? (
+          <button
+            type="button"
+            style={{
+              width: '100%',
+              padding: '10px 12px',
+              background: '#fff',
+              color: '#6d28d9',
+              border: '1px solid #c4b5fd',
+              borderRadius: 6,
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: 14,
+              marginBottom: 4,
+            }}
+            disabled={sending}
+            onClick={enterInternalHandoff}
+          >
+            Przekaż wewnątrz
+          </button>
+        ) : null}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>Do</span>
+          <span
+            style={{
+              fontWeight: 600,
+              fontSize: 12,
+              color: '#666',
+              display: 'flex',
+              gap: 6,
+              alignItems: 'center',
+            }}
+          >
+            Do
+            <CopyToggleButtons
+              showCc={showCc}
+              showBcc={showBcc}
+              disabled={sending}
+              onShowCc={() => setShowCc(true)}
+              onShowBcc={() => setShowBcc(true)}
+            />
+          </span>
           <input
             style={{
               flex: 1,
@@ -2508,6 +3355,15 @@ export const TemplatePicker = ({
             </select>
           ) : null}
         </div>
+        <CopyAddressFields
+          showCc={showCc}
+          showBcc={showBcc}
+          ccEmail={ccEmail}
+          bccEmail={bccEmail}
+          disabled={sending}
+          onCcChange={setCcEmail}
+          onBccChange={setBccEmail}
+        />
         {!personEmail ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <input
@@ -2674,9 +3530,15 @@ export const TemplatePicker = ({
                     }
               }
             >
-              {isRecordCompose ? (
+              {isRecordCompose || threadMessages.length > 0 ? (
                 <ThreadPane
                   featured
+                  loading={loadingList}
+                  loadingLabel={
+                    isRecordPage
+                      ? 'Trwa ładowanie wątków z leadem'
+                      : 'Trwa ładowanie wątku…'
+                  }
                   messages={threadMessages}
                   onSelect={applyThreadMessage}
                 />
@@ -2718,7 +3580,7 @@ export const TemplatePicker = ({
           <div
             style={{
               flexShrink: 0,
-              maxHeight: composerExpanded ? undefined : '42%',
+              maxHeight: isRecordCompose || !composerExpanded ? '34%' : undefined,
               overflowY: 'auto',
               overflowX: 'hidden',
               WebkitOverflowScrolling: 'touch',
@@ -2732,7 +3594,41 @@ export const TemplatePicker = ({
               gap: 8,
             }}
           >
-          {displayRecipientEmail ? (
+          {internalHandoff ? (
+            <div
+              style={{
+                padding: composerExpanded ? '6px 10px' : '8px 10px',
+                borderRadius: 6,
+                background: '#faf5ff',
+                border: '1px solid #c4b5fd',
+                fontSize: 13,
+                color: '#5b21b6',
+              }}
+            >
+              <strong>Przekazanie wewnętrzne</strong>
+              <span style={{ color: '#6d28d9' }}>
+                {' '}
+                — klient tego maila nie dostaje, flaga „Do odpisania” zostaje
+              </span>
+            </div>
+          ) : externalForward ? (
+            <div
+              style={{
+                padding: composerExpanded ? '6px 10px' : '8px 10px',
+                borderRadius: 6,
+                background: '#f0fdfa',
+                border: '1px solid #5eead4',
+                fontSize: 13,
+                color: '#115e59',
+              }}
+            >
+              <strong>Przekazanie</strong>
+              <span style={{ color: '#0f766e' }}>
+                {' '}
+                — zwykły mail, odbiorca dostaje treść wiadomości
+              </span>
+            </div>
+          ) : displayRecipientEmail ? (
             <div
               style={{
                 padding: composerExpanded ? '6px 10px' : '8px 10px',
@@ -2794,36 +3690,89 @@ export const TemplatePicker = ({
               alignItems: 'flex-start',
             }}
           >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 8,
+                flex: 1,
+                minWidth: 160,
+              }}
+            >
             <label
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 4,
-                flex: 1,
-                minWidth: 160,
               }}
             >
-              <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
+              <span
+                style={{
+                  fontWeight: 600,
+                  fontSize: 12,
+                  color: '#666',
+                  display: 'flex',
+                  gap: 6,
+                  alignItems: 'center',
+                }}
+              >
                 Do
+                <CopyToggleButtons
+                  showCc={showCc}
+                  showBcc={showBcc}
+                  disabled={sending || sendCountdown !== null}
+                  onShowCc={() => setShowCc(true)}
+                  onShowBcc={() => setShowBcc(true)}
+                />
               </span>
               <input
                 style={{
-                  padding: '6px 8px',
-                  border: `1px solid ${personEmail ? '#ddd' : '#f87171'}`,
-                  borderRadius: 5,
-                  fontSize: 13,
+                  ...RECIPIENT_INPUT_STYLE,
+                  border: `1px solid ${sendToEmail ? '#ddd' : '#f87171'}`,
                 }}
-                value={displayRecipientEmail}
-                onChange={(event) => setRecipientEmail(event.target.value)}
-                placeholder="email@klienta.pl"
+                value={usesCustomTo ? handoffTo : displayRecipientEmail}
+                onChange={(event) => {
+                  if (usesCustomTo) {
+                    setHandoffTo(event.target.value);
+                    return;
+                  }
+                  setRecipientEmail(event.target.value);
+                }}
+                placeholder={
+                  internalHandoff
+                    ? INTERNAL_HANDOFF_TO_PLACEHOLDER
+                    : externalForward
+                      ? FORWARD_TO_PLACEHOLDER
+                      : 'email@klienta.pl'
+                }
                 disabled={sending || sendCountdown !== null}
               />
-              {!personEmail ? (
+              {!usesCustomTo && !personEmail ? (
                 <span style={{ fontSize: 11, color: '#b00020' }}>
                   Nie wykryto emaila — wybierz z listy ostatnich albo wpisz ręcznie.
                 </span>
               ) : null}
+              {internalHandoff && !handoffTo.trim() ? (
+                <span style={{ fontSize: 11, color: '#6d28d9' }}>
+                  Wpisz dowolny adres oprócz klienta — freelancer też OK.
+                </span>
+              ) : null}
+              {externalForward && !handoffTo.trim() ? (
+                <span style={{ fontSize: 11, color: '#0f766e' }}>
+                  Wpisz adres, na który ma pójść ta wiadomość.
+                </span>
+              ) : null}
             </label>
+            <CopyAddressFields
+              showCc={showCc}
+              showBcc={showBcc}
+              ccEmail={ccEmail}
+              bccEmail={bccEmail}
+              disabled={sending || sendCountdown !== null}
+              onCcChange={setCcEmail}
+              onBccChange={setBccEmail}
+            />
+            </div>
 
             {allowedSendAccounts.length > 0 ? (
               <label
@@ -2857,10 +3806,7 @@ export const TemplatePicker = ({
                     setConnectedAccountId(nextId);
                     setConnectedAccountHandle(nextHandle);
                     setEditBodyHtml((current) => {
-                      const next = swapSignatureOnFromChange(
-                        current,
-                        nextHandle,
-                      );
+                      const next = swapSig(current, nextHandle);
 
                       if (next !== current) {
                         queueMicrotask(() => {
@@ -2893,6 +3839,10 @@ export const TemplatePicker = ({
               </span>
             ) : null}
           </div>
+          <p style={{ fontSize: 11, color: '#888', margin: '4px 0 0' }}>
+            Swoją stopkę: menu <strong>Stopki maili</strong> → kliknij imię
+            (nie ołówek).
+          </p>
 
           {!personEmail && recentRecipients.length > 0 ? (
             <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -3022,7 +3972,8 @@ export const TemplatePicker = ({
               padding: '12px 16px 16px',
               borderTop: '1px solid #eee',
               background: '#fff',
-              position: 'relative',
+              position: isRecordCompose ? 'sticky' : 'relative',
+              bottom: isRecordCompose ? 0 : undefined,
               zIndex: 5,
               boxShadow: '0 -4px 12px rgba(0,0,0,0.06)',
               display: 'flex',
@@ -3121,7 +4072,7 @@ export const TemplatePicker = ({
                 Wysyłka za {sendCountdown}s · Anuluj
               </span>
               <span style={{ fontSize: 12, color: '#9a3412' }}>
-                Zamknięcie panelu wyśle wiadomość.
+                Zamknięcie karty nie anuluje wysyłki — mail i tak wyjdzie.
               </span>
               {editSubject.trim() ? (
                 <span style={{ fontSize: 12, color: '#9a3412' }}>
@@ -3222,10 +4173,14 @@ export const TemplatePicker = ({
                     sendPreparing ||
                     !canSendEmail ||
                     loadingDraft ||
-                    !personEmail ||
+                    !sendToEmail ||
                     uploadingAttachments
                       ? '#999'
-                      : '#4f46e5',
+                      : internalHandoff
+                        ? '#6d28d9'
+                        : externalForward
+                          ? '#0f766e'
+                          : '#4f46e5',
                   color: '#fff',
                   border: 'none',
                   borderRadius: 6,
@@ -3233,7 +4188,7 @@ export const TemplatePicker = ({
                     sending ||
                     !canSendEmail ||
                     loadingDraft ||
-                    !personEmail ||
+                    !sendToEmail ||
                     uploadingAttachments
                       ? 'not-allowed'
                       : 'pointer',
@@ -3245,7 +4200,7 @@ export const TemplatePicker = ({
                   sendPreparing ||
                   !canSendEmail ||
                   loadingDraft ||
-                  !personEmail ||
+                  !sendToEmail ||
                   uploadingAttachments
                 }
                 onClick={startSendCountdown}
@@ -3256,9 +4211,13 @@ export const TemplatePicker = ({
                     ? 'Dodaję plik…'
                     : sending
                       ? 'Wysyłanie…'
-                      : attachments.length > 0
-                        ? `Wyślij email (${attachments.length})`
-                        : 'Wyślij email'}
+                      : internalHandoff
+                        ? 'Przekaż wewnątrz'
+                        : externalForward
+                          ? 'Przekaż'
+                          : attachments.length > 0
+                            ? `Wyślij email (${attachments.length})`
+                            : 'Wyślij email'}
               </button>
             </div>
           )}
