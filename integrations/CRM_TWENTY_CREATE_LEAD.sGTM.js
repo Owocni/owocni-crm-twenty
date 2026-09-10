@@ -347,15 +347,16 @@ function resolveTwentyBizProduct(taskData, answers) {
   return mapBizProductToTwenty(resolveEffectiveBizProductSlug(taskData, answers));
 }
 function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
+  // Copywriting + naming (nazwa / nazwy / name) → Maciej, also over FB/Meta.
+  if (bizProductTwenty === "COPYWRITING" || bizProductTwenty === "NAME") {
+    return OWNER_MACIEJ;
+  }
   // Leady z FB → zawsze Robert Mańk (nie Marta/Gosia)
   if (taskData && mapBizSource(taskData) === "FACEBOOK") {
     return OWNER_ROBERT;
   }
   if (bizProductTwenty === "MARKETING") {
     return OWNER_ROBERT;
-  }
-  if (bizProductTwenty === "COPYWRITING") {
-    return OWNER_MACIEJ;
   }
   var hash = 0;
   var s = makeString(idOid);

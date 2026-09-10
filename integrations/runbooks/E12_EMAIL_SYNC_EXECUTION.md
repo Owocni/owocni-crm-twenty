@@ -139,13 +139,13 @@ Skrzynki tylko na koncie głównym = podgląd OK, send u handlowca NIE. Osobiste
 
 **Override:** natywne Reply/Send Email w command menu są wyłączone w sandboxie. **Odpowiedz** = Owocni Mail (From = własna skrzynka). Native Reply wiązał send z kanałem odbioru (`leads@`) — stąd był martwy u handlowca.
 
-Mapowanie: Marta→`marta@`, Gosia→`gosia@`, Maciej→`copywriting@`, Mariusz→`mariusz@`.
+Mapowanie: Marta→`marta@`, Gosia→`gosia@`, Maciej→`maciejwysocki@` (login `maciej@`; `copywriting@` = odbiór, nie From), Mariusz→`mariusz@`.
 
 ---
 
 ## FAZA 2 — Podłączenie skrzynek (E12.1)
 
-**Zakres** (`IDENTITY` §5.5): 7 skrzynek. **`kontakt@owocni.pl` — NIE.**
+**Zakres** (`IDENTITY` §5.5): 7 skrzynek startowych + `maciejwysocki@` (10.09). **`kontakt@owocni.pl` — NIE.** `pomoc@` — nie podpinamy do helpdesku.
 
 **Kolejność:** najpierw skrzynki handlowców (julia362 **nie** auto-tworzy z nich leadów), **`leads@` na końcu** (największe nakładanie się z julia362). Zgodne z `IMPLEMENTATION_PLAN` §1.2.1 (wszystkie skrzynki) i ADR #13 (julia362 zostaje do końca).
 
@@ -156,6 +156,7 @@ Plik: `better-bitrix-main/.env` (repo siostrzane, **nie** `owocni-crm-github`).
 | # | Skrzynka | Zmienna user | Zmienna hasło |
 |---|----------|--------------|---------------|
 | 1 | `copywriting@owocni.pl` | `SMTP_USER_MACIEJ` | `STMP_PASSWORD_MACIEJ` |
+| 1b | `maciejwysocki@owocni.pl` | (hasło nowej skrzynki w `.env` / Settings IMAP) | podpięta 10.09 pod login Maćka; From sprzedaży |
 | 2 | `pomoc@owocni.pl` | `SMTP_USER_POMOC` | `STMP_PASSWORD_POMOC` |
 | 3 | `marta@owocni.pl` | `SMTP_USER_MARTA` | `STMP_PASSWORD_MARTA` |
 | 4 | `gosia@owocni.pl` | `SMTP_USER_GOSIA` | `STMP_PASSWORD_GOSIA` |

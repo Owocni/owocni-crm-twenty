@@ -121,6 +121,20 @@ describe("selectExternalClientParticipant", () => {
       null,
     );
   });
+
+  it("skips mailer-daemon so a bounce is not a client FROM", () => {
+    assert.equal(
+      selectExternalClientParticipant([
+        {
+          handle: "mailer-daemon@d28.thecamels.org",
+          displayName: "Mail Delivery System",
+          personId: "ghost",
+        },
+        { handle: "gosia@owocni.pl", personId: null },
+      ]),
+      null,
+    );
+  });
 });
 
 describe("pickResolvedOpportunity", () => {

@@ -42,7 +42,7 @@ export default defineObject({
       type: FieldType.TEXT,
       label: 'Skrzynki',
       description:
-        'Adres Od, do którego należy stopka. Kilka skrzynek: rozdziel przecinkiem (np. copywriting@owocni.pl, maciej@owocni.pl)',
+        'Adres Od, do którego należy stopka. Kilka skrzynek: rozdziel przecinkiem (np. studio@owocni.pl, leads@owocni.pl)',
       icon: 'IconMail',
     },
     {

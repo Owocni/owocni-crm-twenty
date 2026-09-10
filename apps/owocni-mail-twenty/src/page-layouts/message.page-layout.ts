@@ -12,9 +12,8 @@ import {
 } from 'src/constants/universal-identifiers';
 
 /**
- * Message has no system RECORD_PAGE. CANVAS without a full-height widget
- * shows Twenty's empty-grid "Brak danych" when opening the row via ↗.
- * Deploy converts CANVAS+gridPosition to GRID so the panel fills.
+ * Same pattern as Opportunity Mail tab: CANVAS + FRONT_COMPONENT, no grid.
+ * GRID on a record page is an empty dashboard and shows «Brak danych».
  */
 export default definePageLayout({
   universalIdentifier: MESSAGE_RECORD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIER,
@@ -36,7 +35,6 @@ export default definePageLayout({
           universalIdentifier: MESSAGE_MAIL_WIDGET_UNIVERSAL_IDENTIFIER,
           title: ' ',
           type: 'FRONT_COMPONENT',
-          gridPosition: { row: 0, column: 0, rowSpan: 12, columnSpan: 12 },
           configuration: {
             configurationType: 'FRONT_COMPONENT',
             frontComponentUniversalIdentifier:

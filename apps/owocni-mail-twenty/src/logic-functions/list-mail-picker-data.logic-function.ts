@@ -19,6 +19,7 @@ import {
   type ReplyMessagePreview,
   type ThreadMessage,
 } from 'src/utils/personContext';
+import { classifyBounceReason, isBounceMessage } from 'src/utils/mailBounce';
 import { getEditorDraft, saveEditorDraft } from 'src/logic-functions/editor-draft-store';
 import { ensureInternalHandoffAttached } from 'src/utils/attachInternalHandoffThread';
 import { handoffPendingDraftKey } from 'src/utils/internalHandoff';
@@ -211,13 +212,24 @@ const handler = async (event: RoutePayload) => {
     }
 
     if (threadMessages.length === 0 && replyMessage?.messageId) {
+      const bounce = isBounceMessage({
+        subject: replyMessage.subject,
+        text: replyMessage.text,
+        fromHandle: replyMessage.fromEmail,
+        fromDisplayName: replyMessage.fromLabel,
+      });
       threadMessages = [
         {
           ...replyMessage,
           direction: 'in',
-          channel: isInternalMailbox(replyMessage.fromEmail ?? '')
-            ? 'internal'
-            : 'client',
+          channel: bounce
+            ? 'bounce'
+            : isInternalMailbox(replyMessage.fromEmail ?? '')
+              ? 'internal'
+              : 'client',
+          bounceReason: bounce
+            ? classifyBounceReason(replyMessage.text)
+            : undefined,
         },
       ];
     }

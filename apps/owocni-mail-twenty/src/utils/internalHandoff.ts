@@ -1,4 +1,6 @@
 import { invalidEmailsInList, parseEmailList } from 'src/utils/parseEmailList';
+import { bounceChannelLabel } from 'src/utils/mailBounce';
+import type { MailThreadChannel } from 'src/utils/personContext';
 
 export const INTERNAL_HANDOFF_SUBJECT_PREFIX = '[Wewnętrzne]';
 export const INTERNAL_HANDOFF_TO_PLACEHOLDER = 'email@adres.pl';
@@ -81,9 +83,13 @@ export function assertInternalHandoffRecipients(input: {
 }
 
 export function threadChannelLabel(
-  channel: 'client' | 'internal' | undefined,
+  channel: MailThreadChannel | undefined,
   direction: 'in' | 'out',
+  bounceReason?: 'invalid' | 'undelivered' | null,
 ): string {
+  if (channel === 'bounce') {
+    return bounceChannelLabel(bounceReason);
+  }
   if (channel === 'internal') {
     return direction === 'out'
       ? 'Wewnętrzny · od nas'

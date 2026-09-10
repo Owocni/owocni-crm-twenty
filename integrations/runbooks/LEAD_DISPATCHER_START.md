@@ -15,7 +15,7 @@ audience: "wdrożenie + LLM / agent"
 
 **Nie włączaj ponownie.** `go` / `prepare` usunięte ze skryptu, żeby kolejny deploy nie odtworzył Biorę.
 
-Jedyny przydział nowych klientów: GCP `createLead.js` → copywriting=Maciej, parzysty `idOid`=Gosia, nieparzysty=Marta.
+Jedyny przydział nowych klientów: GCP `createLead.js` → copywriting+NAME=Maciej, parzysty `idOid`=Gosia, nieparzysty=Marta.
 
 ```bash
 # Jedyna dozwolona komenda (deaktywuje WF Biorę, jeśli wróciłby):

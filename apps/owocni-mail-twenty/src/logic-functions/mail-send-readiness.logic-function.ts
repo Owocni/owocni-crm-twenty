@@ -43,7 +43,7 @@ const handler = async (event: RoutePayload) => {
       const email = readiness.currentUserEmail;
       const maciejHint =
         email === 'maciej@owocni.pl'
-          ? ' Dla Macieja From = copywriting@owocni.pl (nie maciej@) — skrzynka musi być podpięta pod jego konto z sync + SMTP.'
+          ? ' Dla Macieja From = maciejwysocki@owocni.pl (nie copywriting@ i nie maciej@) — skrzynka musi być podpięta pod jego konto z sync + SMTP.'
           : '';
 
       return {

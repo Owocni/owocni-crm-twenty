@@ -29,14 +29,14 @@ describe('mailSignature', () => {
   it('maps comma-separated mailbox handles onto one CRM row', () => {
     const catalog = catalogFromCrmRows([
       {
-        mailboxHandle: 'copywriting@owocni.pl, maciej@owocni.pl',
+        mailboxHandle: 'maciejwysocki@owocni.pl, alpha@owocni.pl',
         bodyHtml: '<p>Maciej CRM</p>',
       },
     ]);
     const merged = mergeSignatureCatalog(catalog);
 
-    expect(merged['copywriting@owocni.pl']).toBe('<p>Maciej CRM</p>');
-    expect(merged['maciej@owocni.pl']).toBe('<p>Maciej CRM</p>');
+    expect(merged['maciejwysocki@owocni.pl']).toBe('<p>Maciej CRM</p>');
+    expect(merged['alpha@owocni.pl']).toBe('<p>Maciej CRM</p>');
     expect(merged['marta@owocni.pl']).toContain('Marta Słowik');
   });
 

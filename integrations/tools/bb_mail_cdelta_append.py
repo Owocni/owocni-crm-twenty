@@ -46,6 +46,7 @@ CHIP = {
     "marta@owocni.pl": "MARTA",
     "gosia@owocni.pl": "GOSIA",
     "copywriting@owocni.pl": "COPYWRITING",
+    "maciejwysocki@owocni.pl": "MACIEJ",
     "mariusz@owocni.pl": "MARIUSZ",
     "pomoc@owocni.pl": "POMOC",
 }

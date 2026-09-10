@@ -38,6 +38,7 @@ HANDLE_TO_VALUE = {
     "studio@owocni.pl": "STUDIO",
     "leads@owocni.pl": "LEADS",
     "copywriting@owocni.pl": "COPYWRITING",
+    "maciejwysocki@owocni.pl": "MACIEJ",
     "pomoc@owocni.pl": "POMOC",
     "obsluga@owocni.pl": "OBSLUGA",
     "robertmank@owocni.pl": "ROBERT",

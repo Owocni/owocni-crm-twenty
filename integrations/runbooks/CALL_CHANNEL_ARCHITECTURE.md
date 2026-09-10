@@ -10,7 +10,7 @@ Status: **SSOT 2026-07-27** · near-realtime GCP **2026-07-24**
 
 | Skrót | Znaczenie |
 |---|---|
-| **STT** | Speech-to-Text — zamiana nagrania audio na tekst (u nas: OpenAI `gpt-4o-transcribe` w Cloud Run Job) |
+| **STT** | Speech-to-Text — zamiana nagrania audio na tekst (u nas: ElevenLabs Scribe v2 w Cloud Run Job, diaryzacja 2 mówców) |
 | **D-15** | Bramka „kontakt zaszedł” — wyłącznie w n8n przed zapisem do Twenty; poczta głosowa / monolog → DROP |
 | **Poller** | Cloud Run Job `telefony-play-poller`, Scheduler `*/5`, okno Play `hoursBack=2`, kursor dedup w GCS |
 | **Parking** | Widok Twenty **Rozmowy → Do przypięcia** (`matchStatus=UNMATCHED`) |
@@ -31,10 +31,10 @@ Cloud Scheduler */5 (Europe/Warsaw)
        │                      → worker → licznik + notatka na leadzie
        │
        └─ nowe nagranie ──► download/decrypt (Play CMS)
-                              → ffmpeg → STT (OpenAI)
+                              → ffmpeg → STT (ElevenLabs Scribe v2, diaryzacja)
                               → POST n8n webhook (tylko gdy jest tekst)
                                    → D-15 filtr
-                                   → (opcjonalnie) summary LLM
+                                   → prompt 2 (role + metryki) + prompt 3 (mirroring)
                                    → POST GCP enqueue_call_transcript
                                         → Stape task_queue
                                         → worker poll */5
@@ -75,7 +75,7 @@ Cloud Scheduler */5 (Europe/Warsaw)
 |---|---|
 | Cloud Scheduler + Run Job | co 5 min (pusty poll = sekundy CPU) |
 | Play API | co poll (2 numery) |
-| OpenAI STT | tylko **nowe** nagrania |
+| ElevenLabs Scribe | tylko **nowe** nagrania |
 | n8n | tylko webhook z **nowym** transkryptem |
 | Stape Store | enqueue + poll CRM/Robot (zoptymalizowane `*/5`) |
 | sGTM strony | **ten sam kontener Stape** — rozważyć osobny plan/kontener |

@@ -127,7 +127,7 @@ Jeśli ktoś potrzebuje drugiej stopki (np. „piszę za Gosię”), to osobna d
 |---|---|---|---|---|
 | `marta@owocni.pl` | Marta Słowik | BB, bez zmian | Pozdrawiam, Marta Słowik · Owocni.pl · *Wierzymy w małe firmy!* · +48 660 970 980 · studio@owocni.pl · www · RODO | telefon, studio@ jako kontakt firmowy |
 | `gosia@owocni.pl` | Małgorzata Zielińska | BB, bez zmian | Pozdrawiam, Małgorzata Zielińska · … · +48 570 704 470 · studio@owocni.pl · www · RODO | j.w. |
-| `copywriting@owocni.pl` | Maciej Wysocki | **nowa** (układ Marty) | Pozdrawiam, Maciej Wysocki · Owocni.pl · slogan · copywriting@owocni.pl · www · RODO | **brak telefonu** · mail = From, nie studio@ |
+| `maciejwysocki@owocni.pl` | Maciej Wysocki | **From sprzedaży od 10.09** | Pozdrawiam, Maciej Wysocki · Owocni.pl · slogan · maciejwysocki@owocni.pl · www · RODO | **brak telefonu** · mail = From; `copywriting@` nie jest nadawcą |
 | `ewamalanowska@owocni.pl` | Ewa Malanowska | **nowa** | Pozdrawiam, Ewa Malanowska · … · ewamalanowska@owocni.pl · www · RODO | **brak telefonu** |
 | `robertmank@owocni.pl` | Robert Mańk | **nowa** | Pozdrawiam, Robert Mańk · … · robertmank@owocni.pl · www · RODO | **brak telefonu** |
 | `mariusz@owocni.pl` | Mariusz Słowik | **nowa** | Pozdrawiam, Mariusz Słowik · … · mariusz@owocni.pl · www · RODO | **brak telefonu** · login CRM to `owocni@gmail.com`, From i tak `mariusz@` jeśli wyśle z tej skrzynki |
@@ -167,7 +167,7 @@ Blok RODO: TAK u sprzedaży (Marta/Gosia + szkice Maciej/Ewa/Robert/Mariusz);
 Mapa:
   marta@            → BB Marta Słowik
   gosia@            → BB Małgorzata Zielińska
-  copywriting@      → nowa Maciej Wysocki (szkic)
+  maciejwysocki@    → Maciej Wysocki (From sprzedaży; copywriting@ odbiór)
   pomoc@            → BB „Owocni, zawsze pomocni”
   mariusz@          → nowa Mariusz Słowik (szkic)
   robertmank@       → nowa Robert Mańk (szkic)

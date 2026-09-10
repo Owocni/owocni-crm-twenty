@@ -109,7 +109,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
 | `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
 | `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę (główny) |
-| `isFollowUp` | BOOLEAN | GCP `email_contact_sync` / createLead / odroczenie | **true** (metadata default + POST createLead; istniejące NEW backfill 31.08) | Widok „Do odpisania” | OPEN | **UI label:** „Do odpisania”. CRM-only (NR-5). ON = kolejka roboty: nowy lead **albo** mail od klienta (piłka u nas). NEW = zawsze ON — **celowe** (Mariusz 3.09; PDF 31.08 formularz→OFF wycofany). OFF po naszej odpowiedzi **albo** po geście Odroczenie. IN w trakcie snooze → znowu ON. API name zostaje `isFollowUp`. Słowo „follow-up” zarezerwowane na zaplanowaną wysyłkę. Guard: flaga z maila tylko gdy `receivedAt >= CUTOVER_AT`. Spec: `ODROCZENIE_DECISION.md`. |
+| `isFollowUp` | BOOLEAN | GCP `email_contact_sync` / createLead / odroczenie / **bounce DSN** | **true** (metadata default + POST createLead; istniejące NEW backfill 31.08) | Widok „Do odpisania” | OPEN | **UI label:** „Do odpisania”. CRM-only (NR-5). ON = kolejka roboty: nowy lead **albo** mail od klienta **albo zwrotka (DSN)** — piłka u nas. Bounce **nie** rusza `lastContactAt` / M2 / NEW→CONTACTED (to nie jest kontakt). NEW = zawsze ON. OFF po naszej odpowiedzi **albo** po geście Odroczenie. IN w trakcie snooze → znowu ON. Guard: flaga z maila tylko gdy `receivedAt >= CUTOVER_AT`. Spec: `ODROCZENIE_DECISION.md`. |
 | `snoozeUntil` | DATETIME | Gest „Odroczenie” / job budzenia / IN | null | Ukrycie w „Do odpisania” do chwili | OPEN | **UI label docelowa:** „Odroczenie do” (dziś w instancji „Odlozony do”). Przyszła data + `isFollowUp=false` → karta znika. Job: otwarte + data minęła → flaga ON, pole puste. IN kasuje datę. OUT **nie** kasuje. Zamknięte (WON/LOST) nie budzić. |
 | `bizAdditionalEmails` | EMAILS | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; **nie** zastępuje `bizCardEmail`. Po `merge_leads` — kontakty z leada loser |
 | `bizAdditionalPhones` | PHONES | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; j.w. dla telefonów |
@@ -146,7 +146,7 @@ Kanon formuł → `METRICS.md`. Kontrakty → `../workflows/track-stage-time.con
 
 #### Lead dispatcher v2.0 — RETIRED 2026-09-04 (pola = archiwum)
 
-**Przydział nowych kart:** `createLead.js` — COPYWRITING → Maciej; parzysty hash `idOid` → Gosia; nieparzysty → Marta. Copywriting ma pierwszeństwo niezależnie od źródła.  
+**Przydział nowych kart:** `createLead.js` — COPYWRITING i NAME → Maciej; parzysty hash `idOid` → Gosia; nieparzysty → Marta. Copywriting i naming mają pierwszeństwo niezależnie od źródła.  
 **Nie przeliczamy** istniejących ownerów. Pola poniżej zostają na Opportunity; nic ich już nie zapisuje (poza sample-week `bizAssignedAt` / `bizRoutingRule`).
 
 | Field (API) | Type | Owner | Empty | Used by | Freeze? | Description |

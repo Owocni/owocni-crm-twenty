@@ -1,5 +1,11 @@
 import type { CoreApiClient } from 'twenty-client-sdk/core';
 
+import { emailBodyToDisplayText } from 'src/utils/emailBodyText';
+import {
+  classifyBounceReason,
+  isBounceMessage,
+} from 'src/utils/mailBounce';
+
 export type PersonContext = {
   id: string | null;
   firstName: string;
@@ -18,10 +24,25 @@ export type ReplyMessagePreview = {
   text: string;
 };
 
+export type MailThreadChannel = 'client' | 'internal' | 'bounce';
+
 export type ThreadMessage = ReplyMessagePreview & {
   direction: 'in' | 'out';
-  channel: 'client' | 'internal';
+  channel: MailThreadChannel;
+  bounceReason?: 'invalid' | 'undelivered';
 };
+
+/** Reading pane: a DSN is the thing to look at, even if our outbound is 1s newer. */
+export function preferredThreadMessage(
+  messages: ThreadMessage[],
+): ThreadMessage | null {
+  if (!messages.length) {
+    return null;
+  }
+  return (
+    messages.find((message) => message.channel === 'bounce') ?? messages[0]
+  );
+}
 
 export type MailResolveContext = {
   person: PersonContext | null;
@@ -152,7 +173,7 @@ function previewFromMessage(
     return null;
   }
 
-  const text = message.text?.trim() ?? '';
+  const text = emailBodyToDisplayText(message.text);
   const subject = message.subject?.trim() || null;
   if (!text && !subject) {
     return null;
@@ -183,15 +204,24 @@ function previewFromMessage(
   const from = fromExternal ?? anyExternal ?? fromInternal;
   const { fromEmail, fromLabel } = mailboxFromDisplay(from ?? {});
 
-    return {
-      messageId: message.id,
-      fromEmail,
-      fromLabel,
-      subject,
-      receivedAt: message.receivedAt ?? null,
-      text,
-    };
-  }
+  return {
+    messageId: message.id,
+    fromEmail,
+    fromLabel,
+    subject,
+    receivedAt: message.receivedAt ?? null,
+    text,
+  };
+}
+
+function bounceFromPreview(preview: ReplyMessagePreview): boolean {
+  return isBounceMessage({
+    subject: preview.subject,
+    text: preview.text,
+    fromHandle: preview.fromEmail,
+    fromDisplayName: preview.fromLabel,
+  });
+}
 
 function threadMessageFromNode(
   message: MessagePreviewNode,
@@ -212,6 +242,16 @@ function threadMessageFromNode(
     nodes.every(
       (node) => !node.handle || participantIsInternal(node),
     );
+
+  if (bounceFromPreview(preview)) {
+    const bounceReason = classifyBounceReason(preview.text);
+    return {
+      ...preview,
+      channel: 'bounce',
+      bounceReason,
+      direction: 'in',
+    };
+  }
 
   return {
     ...preview,
@@ -1090,7 +1130,10 @@ export async function listInternalThreadMessagesForOpportunity(
           continue;
         }
         seen.add(message.messageId);
-        messages.push({ ...message, channel: 'internal' });
+        messages.push({
+          ...message,
+          channel: message.channel === 'bounce' ? 'bounce' : 'internal',
+        });
       }
     }
 

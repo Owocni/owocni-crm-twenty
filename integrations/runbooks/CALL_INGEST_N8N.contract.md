@@ -1,6 +1,6 @@
 # CALL_INGEST_N8N — kontrakt (Play PBX → n8n → GCP → Twenty)
 
-Status: **MVP aktywny (2026-07-21)** · Play wysyła surowy transkrypt · n8n filtruje i forwarduje · worker zapisuje do Twenty.
+Status: **Scribe v2 (2026-09-10)** · Job transkrybuje ElevenLabs Scribe (diaryzacja) · n8n: D-15 + prompt 2/3 · worker zapisuje do Twenty.
 
 **Powiązane:** architektura [`CALL_CHANNEL_ARCHITECTURE.md`](./CALL_CHANNEL_ARCHITECTURE.md) · schema [`BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md`](./BUILD_CALL_TRANSCRIPT_TWENTY_SCHEMA.md) · mapa [`../TWENTY_PATHS.md`](../TWENTY_PATHS.md) §4.4 · kod Play: sibling `telefony/` (poza tym repo).
 
@@ -21,7 +21,12 @@ Near-realtime GCP: sibling `telefony/docs/GCP_NEAR_REALTIME.md`.
   "transcript": "...",
   "recordingApiUrl": "...",
   "recordingWebUrl": "...",
-  "environment": "prod"
+  "environment": "prod",
+  "employeeFromPhone": "Marta Słowik",
+  "transcriptionId": "...",
+  "audioDurationSecs": 512.4,
+  "turns": [{ "speaker_id": "speaker_0", "timestamp": "[00:00]", "text": "..." }],
+  "talkTime": { "speaker_0": 120.5, "speaker_1": 80.2 }
 }
 ```
 
@@ -41,8 +46,10 @@ DROP jeśli:
 
 DROP: zapisz log + opcjonalnie archiwum (Google Drive / GCS).
 
-### Krok C — Summary (LLM)
-3–5 zdań po polsku → pole `summary`.
+### Krok C — Prompty (edytowalne w n8n)
+- **Prompt 2:** identyfikacja Sprzedawca/Klient (lista zamknięta Marta/Gosia/Ewa/Maciej). Czas mówienia i turny liczy kod w Jobie, nie model.
+- **Prompt 3:** podsumowanie faktów + mirroring języka klienta.
+- `summary` = wynik Prompt 3. `transcript` = Prompt 3 + pełny transkrypt z rolami i timestampami.
 
 ### Krok D — Normalizacja numerów
 - klient = numer spoza `{48660970980, 48570704470}`

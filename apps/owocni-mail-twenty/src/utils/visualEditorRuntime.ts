@@ -544,10 +544,51 @@ ${toolbarHtml()}
   editor.addEventListener('keyup', function () { rememberSelection(true); schedulePublish(); });
   editor.addEventListener('input', schedulePublish);
   editor.addEventListener('blur', publishHtml);
+
+  function caretClientRect() {
+    try {
+      var sel = document.getSelection();
+      if (!sel || sel.rangeCount === 0) return null;
+      var range = sel.getRangeAt(0).cloneRange();
+      range.collapse(false);
+      var rect = range.getBoundingClientRect();
+      if (rect && (rect.height || rect.width || rect.top || rect.bottom)) return rect;
+      var marker = document.createElement('span');
+      marker.appendChild(document.createTextNode('\u200b'));
+      range.insertNode(marker);
+      rect = marker.getBoundingClientRect();
+      if (marker.parentNode) marker.parentNode.removeChild(marker);
+      return rect;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function scrollCaretIntoEditor() {
+    var rect = caretClientRect();
+    if (!rect || !editor) return;
+    try {
+      var editorRect = editor.getBoundingClientRect();
+      var padding = 24;
+      if (rect.bottom > editorRect.bottom - padding) {
+        editor.scrollTop += rect.bottom - editorRect.bottom + padding;
+      } else if (rect.top < editorRect.top + padding) {
+        editor.scrollTop -= editorRect.top - rect.top + padding;
+      }
+    } catch (e) {}
+  }
+
   editor.addEventListener('paste', function () {
-    setTimeout(function () {
-      try { editor.scrollTop = editor.scrollHeight; } catch (e) {}
-    }, 0);
+    var frames = 0;
+    function followPasteCaret() {
+      scrollCaretIntoEditor();
+      rememberSelection(true);
+      frames += 1;
+      if (frames < 8) {
+        try { requestAnimationFrame(followPasteCaret); } catch (e2) {}
+      }
+    }
+    setTimeout(followPasteCaret, 0);
     schedulePublish();
   });
 

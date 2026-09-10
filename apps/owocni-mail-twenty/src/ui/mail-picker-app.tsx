@@ -16,6 +16,7 @@ import {
   type MailBodyEditorHandle,
 } from 'src/front-components/mail-body-editor';
 import {
+  buildMailboxRecordShowPath,
   buildOpportunityRecordShowPath,
   clearMailComposeFromHostUrl,
   clearMailComposeIntent,
@@ -32,7 +33,14 @@ import {
   scrapeHostMailContext,
   writeCachedMailContext,
 } from 'src/utils/hostMailContext';
-import type { PersonContext, ReplyMessagePreview, ThreadMessage } from 'src/utils/personContext';
+import { emailBodyToDisplayText } from 'src/utils/emailBodyText';
+import {
+  preferredThreadMessage,
+  type PersonContext,
+  type ReplyMessagePreview,
+  type ThreadMessage,
+} from 'src/utils/personContext';
+import { classifyBounceReason, isBounceMessage } from 'src/utils/mailBounce';
 import {
   INTERNAL_HANDOFF_TO_PLACEHOLDER,
   quoteClientMessageHtml,
@@ -288,7 +296,12 @@ const COMPOSE_FULLSCREEN_CSS = `
 .owocni-mail-record-root {
   container-type: inline-size;
   height: 100%;
+  max-height: 100%;
   min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 `;
 
@@ -303,7 +316,8 @@ const OriginalMessageBody = ({
   replySubject,
   fillHeight = false,
 }: OriginalMessageBodyProps) => {
-  if (!replyMessage?.text) {
+  const displayText = emailBodyToDisplayText(replyMessage?.text);
+  if (!displayText) {
     return (
       <div
         style={{
@@ -362,13 +376,15 @@ const OriginalMessageBody = ({
           minHeight: 0,
           overflowY: 'auto',
           whiteSpace: 'pre-wrap',
+          overflowWrap: 'break-word',
+          wordBreak: 'break-word',
           padding: '10px 12px',
           borderRadius: 4,
           background: '#fff',
           border: '1px solid #e2e8f0',
         }}
       >
-        {replyMessage.text}
+        {displayText}
       </div>
     </div>
   );
@@ -395,6 +411,13 @@ type ThreadPaneProps = {
   onSelect?: (message: ThreadMessage) => void;
 };
 
+function threadChannelColor(message: ThreadMessage): string {
+  if (message.channel === 'bounce') return '#c2410c';
+  if (message.channel === 'internal') return '#6d28d9';
+  if (message.direction === 'out') return '#1d4ed8';
+  return '#166534';
+}
+
 const ThreadPane = ({
   messages,
   featured,
@@ -403,10 +426,24 @@ const ThreadPane = ({
   onSelect,
 }: ThreadPaneProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const seenMessageIdsRef = useRef(new Set<string>());
   const selected =
     messages.find((message) => message.messageId === selectedId) ??
-    messages[0] ??
-    null;
+    preferredThreadMessage(messages);
+
+  useEffect(() => {
+    const bounce = messages.find((message) => message.channel === 'bounce');
+    const bounceId = bounce?.messageId ?? null;
+    const isNewBounce = Boolean(bounceId && !seenMessageIdsRef.current.has(bounceId));
+    for (const message of messages) {
+      if (message.messageId) {
+        seenMessageIdsRef.current.add(message.messageId);
+      }
+    }
+    if (isNewBounce && bounceId) {
+      setSelectedId(bounceId);
+    }
+  }, [messages]);
 
   const selectMessage = (message: ThreadMessage) => {
     setSelectedId(message.messageId);
@@ -437,17 +474,33 @@ const ThreadPane = ({
               style={{
                 fontSize: 11,
                 fontWeight: 700,
-                color:
-                  selected.channel === 'internal'
-                    ? '#6d28d9'
-                    : selected.direction === 'out'
-                      ? '#1d4ed8'
-                      : '#166534',
+                color: threadChannelColor(selected),
                 marginBottom: 6,
               }}
             >
-              {threadChannelLabel(selected.channel, selected.direction)}
+              {threadChannelLabel(
+                selected.channel,
+                selected.direction,
+                selected.bounceReason,
+              )}
             </div>
+            {selected.channel === 'bounce' ? (
+              <div
+                style={{
+                  marginBottom: 8,
+                  padding: '8px 10px',
+                  borderRadius: 6,
+                  background: '#fff7ed',
+                  border: '1px solid #fdba74',
+                  color: '#9a3412',
+                  fontSize: 12,
+                  lineHeight: 1.45,
+                }}
+              >
+                To nie jest odpowiedź leada. Mail nie doszedł — popraw adres
+                na karcie albo zadzwoń.
+              </div>
+            ) : null}
             <OriginalMessageBody
               replyMessage={threadMessageToPreview(selected)}
               replySubject={selected.subject}
@@ -510,15 +563,14 @@ const ThreadPane = ({
                 <span
                   style={{
                     fontWeight: 700,
-                    color:
-                      message.channel === 'internal'
-                        ? '#6d28d9'
-                        : message.direction === 'out'
-                          ? '#1d4ed8'
-                          : '#166534',
+                    color: threadChannelColor(message),
                   }}
                 >
-                  {threadChannelLabel(message.channel, message.direction)}
+                  {threadChannelLabel(
+                    message.channel,
+                    message.direction,
+                    message.bounceReason,
+                  )}
                 </span>
                 {message.receivedAt ? (
                   <span style={{ color: '#64748b' }}>
@@ -534,7 +586,7 @@ const ThreadPane = ({
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {(message.subject || message.text || '').slice(0, 80)}
+                  {(message.subject || emailBodyToDisplayText(message.text) || '').slice(0, 80)}
                 </div>
               </button>
             );
@@ -1035,6 +1087,8 @@ export const TemplatePicker = ({
     contextRecordId ||
     null;
   const isRecordCompose = isRecordPage && composeRequested;
+  const isMailboxCompose = isMailboxRecordPage && mailboxComposing;
+  const isPageCompose = isRecordCompose || isMailboxCompose;
   const isRecordPeek = isRecordPage && !isRecordCompose;
   const isMailboxPeek = !isRecordPage && !mailboxComposing;
   const isPeek = isRecordPeek || isMailboxPeek;
@@ -1302,9 +1356,76 @@ export const TemplatePicker = ({
 
   const startMailboxCompose = () => {
     setMailboxComposing(true);
-    setComposerExpanded(true);
+    if (!isMailboxRecordPage) {
+      setComposerExpanded(true);
+    }
     enterFreeCompose(replySubject);
   };
+
+  const mailboxObjectName =
+    contextKind === 'messageThread' ? 'messageThread' : 'message';
+
+  const openMailboxRecordPage = (
+    event?: { preventDefault: () => void },
+  ) => {
+    const targetId = opportunityRecordId;
+    if (!targetId) {
+      event?.preventDefault();
+      void enqueueSnackbar({
+        message: 'Brak wiadomości — wybierz wątek z listy.',
+        variant: 'warning',
+      });
+      return;
+    }
+
+    markMailComposeIntent(targetId);
+
+    const width = overlayRootRef.current?.clientWidth || panelWidth;
+    const alreadyOnFullPage = !isSidePanelMailSurface({
+      surface: readHostRecordSurface(),
+      width,
+    });
+
+    if (alreadyOnFullPage) {
+      event?.preventDefault();
+      startMailboxCompose();
+      return;
+    }
+
+    globalThis.setTimeout(() => {
+      startMailboxCompose();
+    }, 0);
+
+    void navigate(
+      AppPath.RecordShowPage,
+      {
+        objectNameSingular: mailboxObjectName,
+        objectRecordId: targetId,
+      },
+      { [MAIL_COMPOSE_QUERY_PARAM]: '1' },
+      { surface: 'main' } as never,
+    );
+    void closeSidePanel().catch(() => undefined);
+  };
+
+  useLayoutEffect(() => {
+    if (!isMailboxRecordPage || !opportunityRecordId) {
+      return;
+    }
+    const hostSurface = readHostRecordSurface();
+    if (hostSurface === 'index' || hostIsKanbanIndex()) {
+      setMailboxComposing(false);
+      setComposerExpanded(false);
+      return;
+    }
+    if (
+      hostSurface === 'show' ||
+      hostWindowWantsMailCompose() ||
+      consumeMailComposeIntent(opportunityRecordId)
+    ) {
+      setMailboxComposing(true);
+    }
+  }, [isMailboxRecordPage, opportunityRecordId]);
 
   const enterInternalHandoff = () => {
     if (!canHandoff || !opportunityRecordId) {
@@ -1322,7 +1443,7 @@ export const TemplatePicker = ({
     setBccEmail('');
     setShowCc(false);
     setShowBcc(false);
-    if (!isRecordPage) {
+    if (!isRecordPage && !isMailboxRecordPage) {
       setComposerExpanded(true);
     }
     seedQuotedCompose(replyMessage, 'internal');
@@ -1345,7 +1466,7 @@ export const TemplatePicker = ({
     setBccEmail('');
     setShowCc(false);
     setShowBcc(false);
-    if (!isRecordPage) {
+    if (!isRecordPage && !isMailboxRecordPage) {
       setComposerExpanded(true);
     }
     seedQuotedCompose(source, 'forward');
@@ -2054,7 +2175,7 @@ export const TemplatePicker = ({
 
   const scheduleThreadRefreshAfterSend = () => {
     void refreshThreadMessages();
-    [8_000, 25_000, 50_000].forEach((delayMs) => {
+    [8_000, 25_000, 50_000, 120_000, 240_000, 360_000].forEach((delayMs) => {
       globalThis.setTimeout(() => {
         void refreshThreadMessages();
       }, delayMs);
@@ -2754,7 +2875,7 @@ export const TemplatePicker = ({
   }, []);
 
   useLayoutEffect(() => {
-    if (isRecordPage || !composerExpanded) {
+    if (isRecordPage || isMailboxRecordPage || !composerExpanded) {
       closeComposePopover(overlayRootRef.current);
       return;
     }
@@ -2786,7 +2907,7 @@ export const TemplatePicker = ({
       }
       closeComposePopover(overlayRootRef.current);
     };
-  }, [composerExpanded]);
+  }, [composerExpanded, isRecordPage, isMailboxRecordPage]);
 
   useEffect(() => {
     if (!composerExpanded) {
@@ -2817,6 +2938,14 @@ export const TemplatePicker = ({
     templates.some((template) => template.category === category),
   );
 
+  const peekBounce = replyMessage
+    ? isBounceMessage({
+        subject: replyMessage.subject,
+        text: replyMessage.text,
+        fromHandle: replyMessage.fromEmail,
+        fromDisplayName: replyMessage.fromLabel,
+      })
+    : false;
   const peekMessages =
     threadMessages.length > 0
       ? threadMessages
@@ -2825,32 +2954,37 @@ export const TemplatePicker = ({
             {
               ...replyMessage,
               direction: 'in' as const,
-              channel: 'client' as const,
+              channel: (peekBounce ? 'bounce' : 'client') as ThreadMessage['channel'],
+              bounceReason: peekBounce
+                ? classifyBounceReason(replyMessage.text)
+                : undefined,
             },
           ]
         : [];
 
   const showOriginalPane = Boolean(
-    (composerExpanded || isRecordCompose) &&
+    (composerExpanded || isPageCompose) &&
       (replyMessage?.text ||
         isReplyContext ||
         threadMessages.length > 0 ||
-        (composerExpanded && !isRecordPage)),
+        (composerExpanded && !isRecordPage && !isMailboxRecordPage)),
   );
   const useWideSplit =
-    isRecordCompose ||
+    isPageCompose ||
     (showOriginalPane &&
       (typeof window === 'undefined' || window.innerWidth >= 860));
-  const rootClassName = composerExpanded
+  const useComposeOverlay = composerExpanded && !isMailboxRecordPage;
+  const rootClassName = useComposeOverlay
     ? 'owocni-mail-fs-root'
     : isRecordPage || isMailboxRecordPage
       ? 'owocni-mail-record-root'
       : undefined;
-  const composeSplitClassName = composerExpanded
-    ? showOriginalPane
-      ? 'owocni-mail-fs-split'
-      : 'owocni-mail-fs-stacked'
-    : undefined;
+  const composeSplitClassName =
+    useComposeOverlay || isPageCompose
+      ? showOriginalPane
+        ? 'owocni-mail-fs-split'
+        : 'owocni-mail-fs-stacked'
+      : undefined;
 
   return (
     <div
@@ -2862,9 +2996,11 @@ export const TemplatePicker = ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        minHeight: isPeek && !isRecordPage ? 360 : 0,
+        minHeight: isPeek && !isRecordPage && !isMailboxRecordPage ? 360 : 0,
         overflow: 'hidden',
-        ...(composerExpanded ? COMPOSE_FULLSCREEN_ROOT_STYLE : null),
+        maxWidth: '100%',
+        boxSizing: 'border-box',
+        ...(useComposeOverlay ? COMPOSE_FULLSCREEN_ROOT_STYLE : null),
       }}
     >
       <style>{COMPOSE_FULLSCREEN_CSS}</style>
@@ -2935,31 +3071,44 @@ export const TemplatePicker = ({
                   openOpportunityRecordPage(event);
                 }}
               >
-                Odpowiedz
+                Odpowiedz / szczegóły
               </a>
             ) : (
-              <button
-                type="button"
+              <a
+                href={
+                  opportunityRecordId
+                    ? buildMailboxRecordShowPath(
+                        opportunityRecordId,
+                        mailboxObjectName,
+                      )
+                    : undefined
+                }
+                target="_top"
+                rel="noopener"
                 style={{
                   display: 'block',
                   boxSizing: 'border-box',
                   width: '100%',
                   minHeight: 52,
                   padding: '16px 18px',
-                  background: '#4f46e5',
+                  background: opportunityRecordId ? '#4f46e5' : '#999',
                   color: '#fff',
                   border: 'none',
                   borderRadius: 8,
-                  cursor: 'pointer',
+                  cursor: opportunityRecordId ? 'pointer' : 'not-allowed',
                   fontWeight: 700,
                   fontSize: 16,
                   letterSpacing: 0.2,
                   textAlign: 'center',
+                  textDecoration: 'none',
                 }}
-                onClick={startMailboxCompose}
+                aria-disabled={!opportunityRecordId}
+                onClick={(event) => {
+                  openMailboxRecordPage(event);
+                }}
               >
                 Odpowiedz
-              </button>
+              </a>
             )}
           </div>
         </>
@@ -3063,7 +3212,7 @@ export const TemplatePicker = ({
               alignItems: 'center',
             }}
           >
-            {!isRecordPage ? (
+            {!isRecordPage && !isMailboxRecordPage ? (
             <button
               type="button"
               title={
@@ -3530,7 +3679,7 @@ export const TemplatePicker = ({
                     }
               }
             >
-              {isRecordCompose || threadMessages.length > 0 ? (
+              {isRecordCompose || isMailboxCompose || threadMessages.length > 0 ? (
                 <ThreadPane
                   featured
                   loading={loadingList}
@@ -3566,7 +3715,7 @@ export const TemplatePicker = ({
             </div>
           ) : null}
           <div
-            className={composerExpanded ? 'owocni-mail-fs-right' : undefined}
+            className={useComposeOverlay || isPageCompose ? 'owocni-mail-fs-right' : undefined}
             style={{
               flex: useWideSplit ? '1 1 58%' : 1,
               minHeight: 0,
@@ -3574,13 +3723,13 @@ export const TemplatePicker = ({
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
-              background: composerExpanded ? '#fff' : undefined,
+              background: useComposeOverlay || isPageCompose ? '#fff' : undefined,
             }}
           >
           <div
             style={{
               flexShrink: 0,
-              maxHeight: isRecordCompose || !composerExpanded ? '34%' : undefined,
+              maxHeight: isPageCompose || !composerExpanded ? '34%' : undefined,
               overflowY: 'auto',
               overflowX: 'hidden',
               WebkitOverflowScrolling: 'touch',
@@ -3650,7 +3799,7 @@ export const TemplatePicker = ({
             </div>
           ) : null}
           {!composerExpanded &&
-          !isRecordCompose &&
+          !isPageCompose &&
           (replyMessage?.text || isReplyContext) ? (
             <details
               open={false}
@@ -3972,8 +4121,8 @@ export const TemplatePicker = ({
               padding: '12px 16px 16px',
               borderTop: '1px solid #eee',
               background: '#fff',
-              position: isRecordCompose ? 'sticky' : 'relative',
-              bottom: isRecordCompose ? 0 : undefined,
+              position: isPageCompose ? 'sticky' : 'relative',
+              bottom: isPageCompose ? 0 : undefined,
               zIndex: 5,
               boxShadow: '0 -4px 12px rgba(0,0,0,0.06)',
               display: 'flex',

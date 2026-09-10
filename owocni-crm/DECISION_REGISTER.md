@@ -169,7 +169,7 @@ Reguła właściciela: **przychodzi na ogólne (`leads@` itd.) → handlowiec od
 Evidence: decyzja Dawida 24.08; Metadata sandbox override; IDENTITY §5.5; E12. Do domknięcia: `yarn twenty apply` app **0.1.46** + smoke Marta **Odpowiedz** na „Strona · Dawiddd” (From=`marta@`) + szkolenie.
 
 **ADR #23 (Lead Dispatcher v2.0) — retired 2026-09-04, `blocks: none`, `implementation_status: withdrawn`.**
-Biorę / least-loaded / failover / sweep / limit 3 wycofane. Jedyny przydział nowych kart: GCP hash (COPY→Maciej, parzysty idOid→Gosia, nieparzysty→Marta). Pola `bizAckAt` itd. zostają jako archiwum. Skrypty `go` / `prepare` usunięte.
+Biorę / least-loaded / failover / sweep / limit 3 wycofane. Jedyny przydział nowych kart: GCP hash (COPY+NAME→Maciej, parzysty idOid→Gosia, nieparzysty→Marta). Pola `bizAckAt` itd. zostają jako archiwum. Skrypty `go` / `prepare` usunięte.
 Evidence: worker build `2026-09-04-retire-biore`; WF Biorę DEACTIVATED; widok „Do wzięcia” usunięty.
 
 ### 5.8 USTALENIA WŁAŚCICIELA — **potwierdzone 2026-06-08 (review PASS)**

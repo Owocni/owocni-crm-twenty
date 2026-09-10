@@ -20,7 +20,7 @@ const OWOCINI_FIRM_HTML =
   '<p>Pozdrawiamy,<br><strong>Owocni.pl</strong><br><em style="color: rgb(56, 118, 29);">Wierzymy w małe firmy!</em></p>';
 
 const MACIEJ_HTML =
-  '<div style="font-size: 13.0px;"><br></div><div style="">Pozdrawiam,<br>Maciej Wysocki</div><div style=""><br></div><div style=""><strong style=""><br></strong></div><div style=""><strong style="">Owocni.pl</strong><br><em style=""><span style="color: green;">Wierzymy w małe firmy!</span></em><br><br><a class="moz-txt-link-abbreviated" href="mailto:copywriting@owocni.pl" style="">copywriting@owocni.pl</a><br><a class="moz-txt-link-abbreviated" href="http://www.owocni.pl/" style="">www.owocni.pl</a> <br><br><span style="color: gray;">Bezpieczeństwo klientów zawsze jest dla nas najważniejsze.<br>W związku z rozporządzeniem o ochronie danych osobowych<br>(RODO) 25 V 2018 r. ulegają zmianie polityka prywatności<br>oraz polityka bezpieczeństwa danych osobowych w Owocnych.<br>Szczegóły — <a href="https://www.owocni.pl/polityka-prywatnosci" style="">https://www.owocni.pl/polityka-prywatnosci</a></span></div>';
+  '<div style="font-size: 13.0px;"><br></div><div style="">Pozdrawiam,<br>Maciej Wysocki</div><div style=""><br></div><div style=""><strong style=""><br></strong></div><div style=""><strong style="">Owocni.pl</strong><br><em style=""><span style="color: green;">Wierzymy w małe firmy!</span></em><br><br><a class="moz-txt-link-abbreviated" href="mailto:maciejwysocki@owocni.pl" style="">maciejwysocki@owocni.pl</a><br><a class="moz-txt-link-abbreviated" href="http://www.owocni.pl/" style="">www.owocni.pl</a> <br><br><span style="color: gray;">Bezpieczeństwo klientów zawsze jest dla nas najważniejsze.<br>W związku z rozporządzeniem o ochronie danych osobowych<br>(RODO) 25 V 2018 r. ulegają zmianie polityka prywatności<br>oraz polityka bezpieczeństwa danych osobowych w Owocnych.<br>Szczegóły — <a href="https://www.owocni.pl/polityka-prywatnosci" style="">https://www.owocni.pl/polityka-prywatnosci</a></span></div>';
 
 const EWA_HTML =
   '<div style="font-size: 13.0px;"><br></div><div style="">Pozdrawiam,<br>Ewa Malanowska</div><div style=""><br></div><div style=""><strong style=""><br></strong></div><div style=""><strong style="">Owocni.pl</strong><br><em style=""><span style="color: green;">Wierzymy w małe firmy!</span></em><br><br><a class="moz-txt-link-abbreviated" href="mailto:ewamalanowska@owocni.pl" style="">ewamalanowska@owocni.pl</a><br><a class="moz-txt-link-abbreviated" href="http://www.owocni.pl/" style="">www.owocni.pl</a> <br><br><span style="color: gray;">Bezpieczeństwo klientów zawsze jest dla nas najważniejsze.<br>W związku z rozporządzeniem o ochronie danych osobowych<br>(RODO) 25 V 2018 r. ulegają zmianie polityka prywatności<br>oraz polityka bezpieczeństwa danych osobowych w Owocnych.<br>Szczegóły — <a href="https://www.owocni.pl/polityka-prywatnosci" style="">https://www.owocni.pl/polityka-prywatnosci</a></span></div>';
@@ -52,7 +52,7 @@ export const DEFAULT_SIGNATURE_RECORDS: SignatureSeedRecord[] = [
   },
   {
     name: 'Maciej Wysocki',
-    mailboxHandle: 'copywriting@owocni.pl, maciej@owocni.pl',
+    mailboxHandle: 'maciejwysocki@owocni.pl',
     bodyHtml: MACIEJ_HTML,
   },
   {

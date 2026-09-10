@@ -20,7 +20,7 @@ source: "v2.0 Red Team 2026-08-12 + decyzje właściciela 2026-08-12…25; wycof
 ---
 
 > **RETIRED 2026-09-04.** Biorę, zegar failover, limit 3, least-loaded, alerty managera — wycofane.  
-> **SSOT przydziału nowych kart:** `createLead.js` `resolveOpportunityOwnerId` (copywriting → Maciej; parzysty idOid → Gosia; nieparzysty → Marta).  
+> **SSOT przydziału nowych kart:** `createLead.js` `resolveOpportunityOwnerId` (copywriting + NAME → Maciej; parzysty idOid → Gosia; nieparzysty → Marta).  
 > Ten plik zostaje jako archiwum modelu. Nie uruchamiaj `start_lead_dispatcher.sh go`.
 
 

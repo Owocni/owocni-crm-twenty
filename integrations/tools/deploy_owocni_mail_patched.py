@@ -92,6 +92,127 @@ def patch_manifest(manifest: dict) -> dict:
     return m
 
 
+def pin_mailbox_record_widgets(url: str, token: str) -> None:
+    """Record-page FRONT_COMPONENT must be CANVAS (GRID shows «Brak danych»)."""
+    objects = gql(
+        url,
+        token,
+        """
+          query {
+            objects(paging: { first: 80 }) {
+              edges { node { id nameSingular } }
+            }
+          }
+        """,
+    )["data"]["objects"]["edges"]
+    by_name = {edge["node"]["nameSingular"]: edge["node"]["id"] for edge in objects}
+    for object_name, layout_name in (
+        ("message", "Owocni Poczta"),
+        ("messageThread", "Owocni Wątek"),
+    ):
+        object_id = by_name.get(object_name)
+        if not object_id:
+            continue
+        layouts = gql(
+            url,
+            token,
+            """
+              query Get($objectMetadataId: String!, $pageLayoutType: PageLayoutType!) {
+                getPageLayouts(objectMetadataId: $objectMetadataId, pageLayoutType: $pageLayoutType) {
+                  name
+                  tabs {
+                    id
+                    layoutMode
+                    widgets { id type }
+                  }
+                }
+              }
+            """,
+            {"objectMetadataId": object_id, "pageLayoutType": "RECORD_PAGE"},
+        )["data"]["getPageLayouts"]
+        layout = next((item for item in layouts if item.get("name") == layout_name), None)
+        if not layout:
+            continue
+        for tab in layout.get("tabs") or []:
+            widgets = [
+                w
+                for w in (tab.get("widgets") or [])
+                if w.get("type") == "FRONT_COMPONENT"
+            ]
+            if tab.get("layoutMode") != "CANVAS" and widgets:
+                for widget in widgets:
+                    gql(
+                        url,
+                        token,
+                        "mutation($id: String!) { destroyPageLayoutWidget(id: $id) }",
+                        {"id": widget["id"]},
+                    )
+                gql(
+                    url,
+                    token,
+                    """
+                      mutation($id: String!, $input: UpdatePageLayoutTabInput!) {
+                        updatePageLayoutTab(id: $id, input: $input) { id }
+                      }
+                    """,
+                    {"id": tab["id"], "input": {"layoutMode": "CANVAS"}},
+                )
+                fc_id = gql(
+                    url,
+                    token,
+                    "query { frontComponents { id universalIdentifier } }",
+                )["data"]["frontComponents"]
+                fc = next(
+                    (
+                        item["id"]
+                        for item in fc_id
+                        if item.get("universalIdentifier")
+                        == "85d08a17-7f14-460b-b583-f5467a3ee9c9"
+                    ),
+                    None,
+                )
+                if not fc:
+                    raise RuntimeError("mailbox-mail-panel front component missing")
+                gql(
+                    url,
+                    token,
+                    """
+                      mutation($input: CreatePageLayoutWidgetInput!) {
+                        createPageLayoutWidget(input: $input) { id }
+                      }
+                    """,
+                    {
+                        "input": {
+                            "pageLayoutTabId": tab["id"],
+                            "title": " ",
+                            "type": "FRONT_COMPONENT",
+                            "position": {"layoutMode": "CANVAS"},
+                            "configuration": {
+                                "configurationType": "FRONT_COMPONENT",
+                                "frontComponentId": fc,
+                            },
+                        }
+                    },
+                )
+                print(f"  {layout_name} recreated as CANVAS")
+                continue
+            for widget in widgets:
+                gql(
+                    url,
+                    token,
+                    """
+                      mutation($id: String!, $input: UpdatePageLayoutWidgetInput!) {
+                        updatePageLayoutWidget(id: $id, input: $input) { id }
+                      }
+                    """,
+                    {
+                        "id": widget["id"],
+                        "input": {"position": {"layoutMode": "CANVAS"}},
+                    },
+                )
+                print(f"  {layout_name} widget {widget['id'][:8]}… CANVAS")
+
+
 def file_checksum(path: pathlib.Path, algo: str) -> str:
     h = hashlib.new(algo)
     h.update(path.read_bytes())
@@ -296,6 +417,8 @@ def main() -> None:
     info = app["data"]["findOneApplication"]
     print(f"Done. Server version={info['version']} checksum={info['packageJsonChecksum']}")
     print(json.dumps(applied["data"]["syncApplication"].get("actions", {}), indent=2)[:1500])
+    print("Pinning Poczta record-page widgets to CANVAS…")
+    pin_mailbox_record_widgets(metadata_url, token)
     # App sync drops FIELDS widget viewId; re-pin full page + field groups + action order.
     pin_script = pathlib.Path(__file__).with_name("deploy_opportunity_record_page.py")
     if os.environ.get("SKIP_RECORD_PAGE_PIN") == "1":

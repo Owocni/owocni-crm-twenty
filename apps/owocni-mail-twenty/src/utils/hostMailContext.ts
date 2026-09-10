@@ -305,6 +305,9 @@ export const VIEW_ID_QUERY_PARAM = 'viewId';
 
 /** Same tab UUID as the Mail page-layout tab — hash focuses it on the full page. */
 export const OPPORTUNITY_MAIL_TAB_HASH = 'ccf6a315-7856-471d-8ed6-125f27d8ff96';
+export const MESSAGE_MAIL_TAB_HASH = 'c823756a-d8a5-465f-83bf-533561a8f008';
+export const MESSAGE_THREAD_MAIL_TAB_HASH =
+  '6ea1d510-10cb-486e-b990-69b03573272e';
 
 export function buildOpportunityRecordShowPath(recordId: string): string {
   const params = new URLSearchParams({
@@ -312,6 +315,20 @@ export function buildOpportunityRecordShowPath(recordId: string): string {
     [VIEW_ID_QUERY_PARAM]: LEJEK_OWOCNI_VIEW_ID,
   });
   return `/object/opportunity/${recordId}?${params.toString()}#${OPPORTUNITY_MAIL_TAB_HASH}`;
+}
+
+export function buildMailboxRecordShowPath(
+  recordId: string,
+  objectNameSingular: 'message' | 'messageThread' = 'message',
+): string {
+  const params = new URLSearchParams({
+    [MAIL_COMPOSE_QUERY_PARAM]: '1',
+  });
+  const hash =
+    objectNameSingular === 'messageThread'
+      ? MESSAGE_THREAD_MAIL_TAB_HASH
+      : MESSAGE_MAIL_TAB_HASH;
+  return `/object/${objectNameSingular}/${recordId}?${params.toString()}#${hash}`;
 }
 
 export function buildOpportunityRecordShowUrl(

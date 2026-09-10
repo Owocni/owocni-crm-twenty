@@ -12,8 +12,7 @@ import {
 } from 'src/constants/universal-identifiers';
 
 /**
- * Replaces native EMAIL_THREAD (often "Brak danych" in the side panel)
- * with the same Owocni peek + Odpowiedz as Message / leads.
+ * Same as Message / Opportunity Mail: CANVAS, not GRID.
  */
 export default definePageLayout({
   universalIdentifier: MESSAGE_THREAD_RECORD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIER,
@@ -35,7 +34,6 @@ export default definePageLayout({
           universalIdentifier: MESSAGE_THREAD_MAIL_WIDGET_UNIVERSAL_IDENTIFIER,
           title: ' ',
           type: 'FRONT_COMPONENT',
-          gridPosition: { row: 0, column: 0, rowSpan: 12, columnSpan: 12 },
           configuration: {
             configurationType: 'FRONT_COMPONENT',
             frontComponentUniversalIdentifier:

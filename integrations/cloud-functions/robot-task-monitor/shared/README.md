@@ -5,7 +5,7 @@ Wspólne stałe i helpery **dla dokumentacji LLM** oraz runtime **Node (Robot)**
 | Plik | Runtime | Rola |
 |------|---------|------|
 | `ssotPaths.js` | Node (+ kopia const w tagach Stape) | Nazwy adapterów, kolekcje Stape Store, kanon eventów |
-| `envGuard.js` | Node (`GoogleCloudRobot.js`) | `sandbox` → bez prod Ads/Meta/GA4 MP |
+| `envGuard.js` | Node (`GoogleCloudRobot.js`) | `sandbox` → bez prod Ads/Meta/GA4 MP; furtka Insta Form CAPI za `META_INSTA_FORM_CAPI_FROM_SANDBOX` |
 | `pricingProductAliases.js` | Node (`GoogleCloudRobot.js`) | Aliasy produktu Pricing_Config: Twenty `WEB` ↔ Sortownia `strony`/`strona`, analogicznie LOGO/NAME/… |
 | `metaCapi.js` | Node (`GoogleCloudRobot.js`) | Payload Graph CAPI: SQL=`QualifiedLead`, WON=`Purchase`; Instant Form = `lead_id` + `system_generated` |
 | `isFreeMail.js` / `is_free_mail.py` | Node / Python | `company_domain_key` gate — exact match SSOT v1 (bez substring) |

@@ -116,6 +116,8 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 
 | Data | Operacja | Zakres | `no_emit` | Wykonał | Wynik |
 |---|---|---|---|---|---|
+| 2026-09-10 | **Zwrotki: test `wymyslonyadresss.pl`** | DSN wszedł IMAP ~4 min później, worker dopiął (`isFollowUp=true`, ten sam wątek co OUT). UI **0.1.113**: default pane = bounce (OUT był 1 s nowszy), `Unrouteable` = niepoprawny adres, refresh po wysyłce do 6 min. | **TAK** | Composer | Karta: odśwież Mail — „Zwrotka · niepoprawny adres”, nie osobny wątek. |
+| 2026-09-10 | `maciejwysocki@` pod login Maćka; From sprzedaży; `copywriting@` receive-only | Enum `ourMailboxes` +MACIEJ; widoki 📥/📤 Maciej = COPYWRITING\|MACIEJ; stopka rekord `dd96f94e` → `maciejwysocki@`; Owocni Mail **0.1.106**; worker `00071-sir` / build `2026-09-10-maciejwysocki` | **TAK** | Composer | T1=0. Auto-create na nowym kanale było SENT — **przestawić na Brak w UI**. Hard refresh przed T2. |
 | 2026-09-04 | Widoki poczty: 1 skrzynka / osoba; `studio@` i `leads@` w folderze Poczta | 8 filtrów `ourMailboxes` (Marta/Gosia/Mariusz/Ewa IN+OUT) → tylko własna. Nowe widoki 📥/📤 studio@ + leads@ **w Poczcie**. Osobne foldery top-level usunięte (Twenty MAX_DEPTH 2). | **TAK** | Composer | Soft filter, nie ACL. |
 | 2026-09-04 | C-Δ preflight sitko | Auto-create **None** na 6 skrzynkach. Webhooki bez `message.*` / `*.*`. Failover `false`. `CUTOVER_AT=2026-08-31`. | **TAK (konstrukcja)** | Dawid + Composer | S1–S8 PASS przed APPEND. |
 | 2026-09-04 | C-Δ paka copywriting offset 852 | **2 APPEND** (koniec okna Sent). QA 2/2. | **TAK (konstrukcja)** | Composer | copywriting C-Δ same-mailbox **31 łącznie**. Dalej: gosia@. |
@@ -159,6 +161,8 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-09-07 | **Owocni Mail deploy 0.1.87** | Rekord Stopki: własny edytor HTML (kolory + Kod HTML), nie BlockNote Twenty. | **TAK** | Composer | Live `version=0.1.87` checksum `cabde7d36bd96e0881694199e02d1556`. Hard refresh; klik w osobę → Zapisz stopkę. |
 | 2026-09-07 | **Owocni Mail deploy 0.1.88** | Klik w imię otwiera stronę rekordu (nie ołówek/BlockNote). Markdown bez HTML nie nadpisuje stopki. Przywrócona treść firmowa. | **TAK** | Composer | Live `version=0.1.88` checksum `23fd35771b3b90e0891ab89ac7103b46`. Hard refresh; Stopki maili → imię → Zapisz stopkę. |
 | 2026-09-08 | **createLead: token-spam skip** | Cała `biz_message` = jeden losowy token (≥12 alnum, ≥3 A-Z i ≥3 a-z) → brak Person/Opp. Mail `leads@` nietknięty. | **TAK** | Composer | Live `twenty-crm-worker-sandbox` rev `00069-gij`, build `2026-09-08-form-token-spam`. |
+| 2026-09-10 | **Furtka Insta Form → Meta CAPI** | Twenty zostaje sandbox. Flaga `META_INSTA_FORM_CAPI_FROM_SANDBOX=true` na Robocie: SQL/WON/rejected Instant Form (`lead_id`) idą na prod Meta. Google Ads / GA4 / reszta Twenty / BB nietknięte. | **NIE** | Composer | Decyzja właściciela 10 IX. Payload bez PII (`metaCapi.js`). Smoke: Piotr w Ads Manager. |
+| 2026-09-10 | **Replay 3 sygnałów Insta Form z okna sandbox** | 1× SQL hexy (4 IX) + 1× SQL i 1× WON neoneo (8 IX). Meta CAPI `events_received=3`. Google Ads nietknięte. | **NIE** | Composer | `replay_insta_form_capi_sandbox.js`. Robot `00071` 06:10 UTC. |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
 
@@ -171,6 +175,7 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-09-03 | Failover dyspozytora wstrzymany (G8) | Sweep nie zmienia ownera do ustaleń z zespołem. Przydział przy create zostaje. | `decision` | `LEAD_DISPATCH_FAILOVER_ENABLED=false`. Build `2026-09-03-failover-paused`. |
 | 2026-09-04 | Biorę / dyspozytor wycofany | Brak przycisku, brak sweep, brak ponownego przydziału istniejących kart. | `decision` | Hash GCP only. `2026-09-04-retire-biore`. |
 | 2026-09-04 | Tydzień BB: Ads z Twenty sandbox; sprzedaż w BB; sample routing w Twenty | SQL/WON z Twenty nie na Ads; surplus leadów → holding owocni@ | `decision` | `SAMPLE_WEEK_BB_TWENTY.md`. Build worker `2026-09-04-sample-week`. |
+| 2026-09-10 | Insta Form SQL/WON/rejected z Twenty sandbox znowu na Meta CAPI | Robertowe leady Insta Form nie mają kart w BB; od 4 IX Meta nie dostawała SQL | `decision` | Flaga `META_INSTA_FORM_CAPI_FROM_SANDBOX` na `robot-task-monitor`. Google/BB nietknięte. |
 | 2026-09-07 | H-LEAD-FORM DOWN: `Zapytanie ze strony kontakt.` (JuicyLogos) bez karty Sortowni | Fałszywy pager; formularze Owocni z kartami | `incident` | Allowlist świadka w `formWitness.js` (build `2026-09-07-health-form-witness-owocni`). Quota 2/dzień nie blokuje kart. |
 
 ---

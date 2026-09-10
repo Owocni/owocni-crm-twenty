@@ -33,10 +33,17 @@ DEPLOY_ARGS=(
 
 if [[ -n "${META_PIXEL_ID:-}" && -n "${META_CAPI_ACCESS_TOKEN:-}" ]]; then
   UPDATE_ENV="META_PIXEL_ID=${META_PIXEL_ID},META_CAPI_ACCESS_TOKEN=${META_CAPI_ACCESS_TOKEN},META_GRAPH_API_VERSION=${META_GRAPH_API_VERSION:-v21.0}"
+  if [[ -n "${META_INSTA_FORM_CAPI_FROM_SANDBOX:-}" ]]; then
+    UPDATE_ENV+=",META_INSTA_FORM_CAPI_FROM_SANDBOX=${META_INSTA_FORM_CAPI_FROM_SANDBOX}"
+  fi
   echo "Updating Meta CAPI env (pixel ${META_PIXEL_ID})..."
   DEPLOY_ARGS+=(--update-env-vars="$UPDATE_ENV")
 else
   echo "META_PIXEL_ID / META_CAPI_ACCESS_TOKEN not in env — Cloud Run keeps existing Meta vars (if any)."
+  if [[ -n "${META_INSTA_FORM_CAPI_FROM_SANDBOX:-}" ]]; then
+    echo "Updating META_INSTA_FORM_CAPI_FROM_SANDBOX=${META_INSTA_FORM_CAPI_FROM_SANDBOX}"
+    DEPLOY_ARGS+=(--update-env-vars="META_INSTA_FORM_CAPI_FROM_SANDBOX=${META_INSTA_FORM_CAPI_FROM_SANDBOX}")
+  fi
 fi
 
 gcloud run deploy robot-task-monitor "${DEPLOY_ARGS[@]}"

@@ -17,11 +17,16 @@ const SHARED_OPERATOR_EMAILS = ['owocni@gmail.com'] as const;
 
 /**
  * Workspace login → personal OUT mailbox when they differ.
- * Maciej logs in as maciej@ but sends from copywriting@ (E12 / ADR #22).
+ * Maciej logs in as maciej@ but sends from maciejwysocki@ (login ≠ skrzynka).
  */
 const LOGIN_TO_PERSONAL_SEND_HANDLES: Record<string, readonly string[]> = {
-  'maciej@owocni.pl': ['copywriting@owocni.pl'],
+  'maciej@owocni.pl': ['maciejwysocki@owocni.pl'],
 };
+
+/** Connected for receive/history; never offered as From. */
+const RECEIVE_ONLY_SEND_HANDLES: readonly string[] = [
+  'copywriting@owocni.pl',
+];
 
 function personalSendHandlesForLogin(
   loginEmail: string | null,
@@ -47,6 +52,7 @@ const OUR_MAILBOX_VALUE_TO_HANDLE: Record<string, string> = {
   STUDIO: 'studio@owocni.pl',
   LEADS: 'leads@owocni.pl',
   COPYWRITING: 'copywriting@owocni.pl',
+  MACIEJ: 'maciejwysocki@owocni.pl',
   POMOC: 'pomoc@owocni.pl',
   OBSLUGA: 'obsluga@owocni.pl',
   ROBERT: 'robertmank@owocni.pl',
@@ -145,7 +151,7 @@ function isOwnedByCurrentUser(
   const handles = accountHandles(account);
 
   // Shared Settings → Accounts lists everyone's mailboxes for the whole team.
-  // Ownership: login email match OR mapped personal send mailbox (maciej→copywriting).
+  // Ownership: login email match OR mapped personal send mailbox (maciej→maciejwysocki).
   if (handles.includes(currentUserEmail)) {
     return true;
   }
@@ -155,10 +161,18 @@ function isOwnedByCurrentUser(
   );
 }
 
+function isReceiveOnlyHandle(handle: string): boolean {
+  return (RECEIVE_ONLY_SEND_HANDLES as readonly string[]).includes(handle);
+}
+
 function isAllowedForUser(
   account: AccountRow,
   currentUserEmail: string | null,
 ): boolean {
+  if (accountHandles(account).some(isReceiveOnlyHandle)) {
+    return false;
+  }
+
   if (isOwnedByCurrentUser(account, currentUserEmail)) {
     return true;
   }

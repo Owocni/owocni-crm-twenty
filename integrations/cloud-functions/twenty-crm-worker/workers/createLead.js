@@ -382,10 +382,16 @@ function resolveTwentyBizProduct(taskData, answers) {
   return mapBizProductToTwenty(resolveEffectiveBizProductSlug(taskData, answers));
 }
 
+function isMaciejProduct(bizProductTwenty) {
+  return bizProductTwenty === "COPYWRITING" || bizProductTwenty === "NAME";
+}
+
 function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
   const owners = getOwnerIds();
-  // Copywriting first — regardless of source (FB / Meta included).
-  if (bizProductTwenty === "COPYWRITING") return owners.maciej;
+  // Copywriting + naming (nazwa / nazwy / name) → Maciej, also over FB/Meta.
+  if (isMaciejProduct(bizProductTwenty)) {
+    return owners.maciej;
+  }
   // Leady z FB (Instant Form / fbclid / utm) → Robert Mańk
   if (taskData && mapBizSource(taskData) === "FACEBOOK") {
     return owners.robert;
@@ -399,7 +405,7 @@ function resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData) {
 }
 
 /**
- * Continuity (returning client keeps owner) then COPY / FB / MARKETING / idOid hash.
+ * COPY/NAME → Maciej (no continuity). Else continuity, then FB / MARKETING / idOid hash.
  * Dispatcher v2.0 (Biorę / least-loaded / failover) is retired — never used.
  * Does not rewrite existing Opportunity owners.
  */
@@ -410,6 +416,9 @@ async function resolveOwnerIdForNewOpportunity(
   idOid,
   taskData,
 ) {
+  if (isMaciejProduct(bizProductTwenty)) {
+    return resolveOpportunityOwnerId(bizProductTwenty, idOid, taskData);
+  }
   const continuityOwnerId = await resolveContinuityOwner({
     personId,
     companyId,
@@ -1665,6 +1674,7 @@ module.exports = {
   FORM_INQUIRY_EMAIL_SUBJECT,
   addFormInquiryToParticipant,
   attachMessageToLeadsChannel,
+  isMaciejProduct,
   resolveOpportunityOwnerId,
   resolveOwnerIdForNewOpportunity,
   preferPersonId,

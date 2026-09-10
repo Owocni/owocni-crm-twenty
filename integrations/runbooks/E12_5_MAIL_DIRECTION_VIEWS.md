@@ -527,7 +527,7 @@ Konwencja `DATA_MODEL` §5.4 — trzy rozłączne warstwy: **API name** (camelCa
 | Artefakt | Wartość |
 |---|---|
 | Pole | `ourMailboxes` MULTI_SELECT (`4b2ecd47-…`) |
-| Reguła widoku | **1 skrzynka / osoba** (Marta=`MARTA`, Gosia=`GOSIA`, Mariusz=`MARIUSZ`, Ewa=`EWA`, Robert=`ROBERT`, Maciej=`COPYWRITING`). `studio@` i `leads@` = widoki 📥/📤 **w folderze Poczta** (Twenty: max depth 2, nie da się zagnieździć folderu w Poczcie). Soft filter, nie ACL. |
+| Reguła widoku | **1 skrzynka / osoba**, wyjątek Maciej: `COPYWRITING` **lub** `MACIEJ` (Marta=`MARTA`, Gosia=`GOSIA`, Mariusz=`MARIUSZ`, Ewa=`EWA`, Robert=`ROBERT`). `studio@` i `leads@` = widoki 📥/📤 **w folderze Poczta** (Twenty: max depth 2, nie da się zagnieździć folderu w Poczcie). Soft filter, nie ACL. |
 | Writer | `backfill_message_our_mailboxes.py` (żywe Message → participants) |
 | Live | **GCP worker** `messageDirectionEnrich` (workflow E12.5b DEACTIVATED — Message blocked for automation) |
 | Granica | **nie ACL** — to filtr widoku; da się zdjąć / obejść |

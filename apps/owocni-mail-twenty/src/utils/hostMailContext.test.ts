@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import {
   breakOutToHostUrl,
+  buildMailboxRecordShowPath,
   buildOpportunityRecordShowPath,
   buildOpportunityRecordShowUrl,
   consumeMailComposeIntent,
@@ -36,6 +37,14 @@ describe('hostRecordSurfaceFromHrefs', () => {
         'https://zany-maroon-panther.twenty.com/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee',
       ]),
     ).toBe('index');
+  });
+
+  it('treats /object/message/:id as the full record page', () => {
+    expect(
+      hostRecordSurfaceFromHrefs([
+        'https://zany-maroon-panther.twenty.com/object/message/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee',
+      ]),
+    ).toBe('show');
   });
 
   it('treats the full record page as show when that href is first', () => {
@@ -156,6 +165,30 @@ describe('buildOpportunityRecordShowUrl', () => {
       ),
     ).toBe(
       '/object/opportunity/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?owocniCompose=1&viewId=ba6ac841-c293-4744-855b-3a99ee135743#ccf6a315-7856-471d-8ed6-125f27d8ff96',
+    );
+  });
+});
+
+describe('buildMailboxRecordShowPath', () => {
+  it('opens the message record with compose query', () => {
+    expect(
+      buildMailboxRecordShowPath(
+        'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee',
+        'message',
+      ),
+    ).toBe(
+      '/object/message/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?owocniCompose=1#c823756a-d8a5-465f-83bf-533561a8f008',
+    );
+  });
+
+  it('opens the thread record with compose query', () => {
+    expect(
+      buildMailboxRecordShowPath(
+        'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee',
+        'messageThread',
+      ),
+    ).toBe(
+      '/object/messageThread/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee?owocniCompose=1#6ea1d510-10cb-486e-b990-69b03573272e',
     );
   });
 });

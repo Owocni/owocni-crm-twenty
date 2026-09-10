@@ -5,6 +5,8 @@ const {
   partitionTasksByEnvironment,
   logSandboxPlatformSkip,
   getSpreadsheetId,
+  selectMetaCapiTasks,
+  META_INSTA_FORM_CAPI_FLAG,
 } = require("./shared/envGuard");
 const pricingAliases = require("./shared/pricingProductAliases");
 const { buildMetaCapiEvent } = require("./shared/metaCapi");
@@ -457,8 +459,15 @@ functions.http("processTaskQueue", async (req, res) => {
     const metaAppended = await appendMetaEventsToSheets(metaEvents);
     console.log(`✅ Appended ${metaAppended} Meta events to Meta_Events sheet`);
 
-    // KROK 6b: Wyślij do Meta Conversions API (tylko prod)
-    const metaCapiSent = await sendToMetaCapi(prodTasks, pricingConfigProd);
+    // KROK 6b: Wyślij do Meta Conversions API (prod + opcjonalna furtka Insta Form)
+    const { tasks: metaCapiTasks, sandboxInstaFormAllowed } =
+      selectMetaCapiTasks(prodTasks, sandboxTasks);
+    if (sandboxInstaFormAllowed > 0) {
+      console.log(
+        `✅ env-guard: ${sandboxInstaFormAllowed} sandbox Instant Form event(s) → Meta CAPI (${META_INSTA_FORM_CAPI_FLAG})`,
+      );
+    }
+    const metaCapiSent = await sendToMetaCapi(metaCapiTasks, pricingConfigProd);
     console.log(`✅ Sent ${metaCapiSent} Meta events to Conversions API (prod only)`);
 
     // KROK 7: Google Ads Events (imitacja) — routing arkusza

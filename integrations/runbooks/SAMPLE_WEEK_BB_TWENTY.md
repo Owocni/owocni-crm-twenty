@@ -20,6 +20,7 @@ related:
 | Warstwa | Stan |
 |---|---|
 | Twenty inbound `RUNTIME_ENVIRONMENT` | **sandbox** (SQL/WON nie na Ads) |
+| Robot `META_INSTA_FORM_CAPI_FROM_SANDBOX` | **true** od 10.09 — tylko Instant Form SQL/WON/rejected → Meta CAPI (`lead_id`). Reszta Twenty nadal sandbox. |
 | BB `/api/analytics/lead` | **prod** (po deployu BB) |
 | Worker `LEAD_SAMPLE_WEEK_ENABLED` | **true** |
 | Holding owner | `owocni@gmail.com` (`2d65d0e6-…`) |

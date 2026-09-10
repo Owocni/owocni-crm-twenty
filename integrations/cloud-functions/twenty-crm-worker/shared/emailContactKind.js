@@ -1,5 +1,7 @@
 "use strict";
 
+const { isBounceSender } = require("./mailBounce");
+
 const INTERNAL_DOMAIN = "@owocni.pl";
 const HANDOFF_SUBJECT_MARK = "[wewnętrzne]";
 
@@ -16,6 +18,7 @@ function selectExternalClientParticipant(parts) {
     const handle = String(part.handle || "").toLowerCase();
     if (!handle) continue;
     if (handle.includes(INTERNAL_DOMAIN)) continue;
+    if (isBounceSender(part.handle, part.displayName)) continue;
     return part;
   }
   return null;

@@ -24,6 +24,7 @@ MAILBOXES = [
     "STUDIO",
     "LEADS",
     "COPYWRITING",
+    "MACIEJ",
     "POMOC",
     "OBSLUGA",
     "ROBERT",

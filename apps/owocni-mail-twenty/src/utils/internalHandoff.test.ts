@@ -70,6 +70,15 @@ describe('threadChannelLabel', () => {
     expect(threadChannelLabel('internal', 'in')).toBe('Wewnętrzny · do nas');
     expect(threadChannelLabel('client', 'out')).toBe('Od nas');
   });
+
+  it('labels a bounce so it is not a client reply', () => {
+    expect(threadChannelLabel('bounce', 'in', 'invalid')).toBe(
+      'Zwrotka · niepoprawny adres',
+    );
+    expect(threadChannelLabel('bounce', 'in', 'undelivered')).toBe(
+      'Zwrotka · nie dostarczono',
+    );
+  });
 });
 
 describe('handoff marker', () => {

@@ -166,7 +166,7 @@ PASS: SQL/WON/rejected z BB wracają na platformy.
 | Zostaw | Dlaczego |
 |---|---|
 | Sortownia / Web GTM / `generate_lead` | Lead z formularza ma iść jak dziś |
-| `robot-task-monitor` kod | Guard już działa; zmieniamy tylko env na tasku |
+| `robot-task-monitor` kod | Guard zostaje. Jedyny wyjątek: flaga `META_INSTA_FORM_CAPI_FROM_SANDBOX` puszcza SQL/WON/rejected Instant Form na Meta CAPI (`lead_id`), bez Google Ads / GA4. Domyślnie OFF. |
 | Webhook Twenty (URL, HMAC, Stape path) | Inbound ma dalej działać, tylko sandbox |
 | BB `/helpdesk` | Osobny SoR obsługi |
 | Conversion actions w Ads/Meta | Brief: bez nowych zdarzeń |
@@ -183,6 +183,8 @@ PASS: SQL/WON/rejected z BB wracają na platformy.
 | Helpdesk | BB, bez zmian |
 
 Jeśli sprzedaż ma zostać w Twenty, ten rollback **nie naprawia** sygnału reklamowego — tylko go wyłącza z Twenty. Wtedy jedyna opcja to zostać na Twenty=prod (stan po 28.08) albo naprawić jakość SQL, nie cofać env.
+
+**Wyjątek Insta Form (10 IX 2026):** kart Roberta z Instant Form nie ma w BB, więc ścieżka BB ich nie pokrywa. Robot może odesłać SQL/WON/rejected tych kart na Meta CAPI przy `META_INSTA_FORM_CAPI_FROM_SANDBOX=true`. Reszta Twenty zostaje sandbox. Google Ads nietknięte. Payload = `lead_id`. Roll-forward całego inboundu na prod **nie** jest tą furtką.
 
 ---
 

@@ -13,25 +13,49 @@ const {
   patchTwentyRecord,
   buildTwentyListPath,
   findPersonByEmail,
+  extractCreatedId,
 } = require("../shared/twentyRest");
 const { resolveForwardLastContactAt } = require("../shared/lastContact");
 const {
   shouldApplyFollowUpFlag,
   resolveFollowUpFlag,
+  getCutoverAtMs,
 } = require("../shared/followUp");
 const {
   resolveEmailContactKind,
   selectExternalClientParticipant,
   pickResolvedOpportunity,
 } = require("../shared/emailContactKind");
+const {
+  isBounceMessage,
+  extractBouncedRecipients,
+  classifyBounceReason,
+  bounceFollowUpLabel,
+} = require("../shared/mailBounce");
 
 const PROCESSED_PREFIX = "email_contact_processed_";
+const BOUNCE_PROCESSED_PREFIX = "email_bounce_processed_";
 const NOTIFY_SUBJECT_PREFIX = "Nowy lead:";
 const CLOSED_STAGES = new Set(["WON", "LOST"]);
 
 function lookbackIso() {
   const minutes = Number(process.env.OUTGOING_CONTACT_LOOKBACK_MINUTES || 45);
   return new Date(Date.now() - minutes * 60 * 1000).toISOString();
+}
+
+function bounceLookbackIso() {
+  const minutes = Number(process.env.BOUNCE_LOOKBACK_MINUTES || 10080);
+  const floor = getCutoverFloorIso();
+  const since = new Date(Date.now() - minutes * 60 * 1000).toISOString();
+  return since > floor ? since : floor;
+}
+
+function getCutoverFloorIso() {
+  try {
+    return new Date(getCutoverAtMs()).toISOString();
+  } catch {
+    return "2026-08-31T00:00:00.000Z";
+  }
 }
 
 function isEnabled() {
@@ -102,17 +126,20 @@ async function fetchMessage(messageId) {
   return res.body?.data?.message || res.body?.data || null;
 }
 
-async function fetchClientParticipant(messageId, role) {
-  const path = buildTwentyListPath(
-    "messageParticipants",
-    `messageId[eq]:${messageId},role[eq]:${role}`,
-    5,
-  );
+async function fetchParticipants(messageId, role) {
+  const filter = role
+    ? `messageId[eq]:${messageId},role[eq]:${role}`
+    : `messageId[eq]:${messageId}`;
+  const path = buildTwentyListPath("messageParticipants", filter, 20);
   const res = await twentyRequest("GET", path);
   if (res.statusCode < 200 || res.statusCode >= 300) {
     throw new Error(`list participants HTTP ${res.statusCode}`);
   }
-  const parts = parseTwentyListRecords("messageParticipants", res.body);
+  return parseTwentyListRecords("messageParticipants", res.body);
+}
+
+async function fetchClientParticipant(messageId, role) {
+  const parts = await fetchParticipants(messageId, role);
   return selectExternalClientParticipant(parts);
 }
 
@@ -197,19 +224,38 @@ async function findNewestOpenOpportunity(personId) {
 }
 
 async function wasProcessed(associationId) {
+  if (!associationId) return false;
   const doc = await readTwentyStateDocument(PROCESSED_PREFIX + associationId);
   return Boolean(doc && doc.processed === true);
 }
 
+async function wasBounceProcessed(messageId) {
+  if (!messageId) return false;
+  const doc = await readTwentyStateDocument(BOUNCE_PROCESSED_PREFIX + messageId);
+  return Boolean(doc && doc.processed === true);
+}
+
 async function markProcessed(associationId, opportunityId, messageId, meta) {
-  await putTwentyStateDocument(PROCESSED_PREFIX + associationId, {
-    processed: true,
-    association_id: associationId,
-    message_id: messageId,
-    opportunity_id: opportunityId,
-    updated_at: Date.now(),
-    ...meta,
-  });
+  if (associationId) {
+    await putTwentyStateDocument(PROCESSED_PREFIX + associationId, {
+      processed: true,
+      association_id: associationId,
+      message_id: messageId,
+      opportunity_id: opportunityId,
+      updated_at: Date.now(),
+      ...meta,
+    });
+  }
+  if (meta?.bounce && messageId) {
+    await putTwentyStateDocument(BOUNCE_PROCESSED_PREFIX + messageId, {
+      processed: true,
+      association_id: associationId || null,
+      message_id: messageId,
+      opportunity_id: opportunityId,
+      updated_at: Date.now(),
+      ...meta,
+    });
+  }
 }
 
 async function findOpenOpportunityFromThreadTarget(threadId) {
@@ -241,6 +287,264 @@ async function findOpenOpportunityFromThreadTarget(threadId) {
     return opp;
   }
   return null;
+}
+
+async function ensureBounceParticipant(messageId, email, personId) {
+  const existing = await fetchParticipants(messageId);
+  const already = (existing || []).some(
+    (part) =>
+      String(part.handle || "").trim().toLowerCase() === email &&
+      String(part.role || "").toUpperCase() === "TO",
+  );
+  if (already) return { skipped: "already_associated" };
+
+  const body = {
+    role: "TO",
+    handle: email,
+    displayName: email,
+    messageId,
+  };
+  if (personId) body.personId = personId;
+  const res = await twentyRequest("POST", "/messageParticipants", body);
+  if (res.statusCode === 400 || res.statusCode === 409) {
+    return { skipped: "already_associated", statusCode: res.statusCode };
+  }
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(
+      `POST bounce messageParticipants HTTP ${res.statusCode} ${res.rawBody?.slice?.(0, 200)}`,
+    );
+  }
+  return { id: extractCreatedId("messageParticipants", res.body) };
+}
+
+async function ensureThreadTarget(threadId, { opportunityId, personId }) {
+  if (!threadId || (!opportunityId && !personId)) return null;
+
+  async function postTarget(body) {
+    const existingFilter = body.targetOpportunityId
+      ? `messageThreadId[eq]:${threadId},targetOpportunityId[eq]:${body.targetOpportunityId}`
+      : `messageThreadId[eq]:${threadId},targetPersonId[eq]:${body.targetPersonId}`;
+    const existingPath = buildTwentyListPath(
+      "messageThreadTargets",
+      existingFilter,
+      1,
+    );
+    const existingRes = await twentyRequest("GET", existingPath);
+    if (existingRes.statusCode >= 200 && existingRes.statusCode < 300) {
+      const rows = parseTwentyListRecords(
+        "messageThreadTargets",
+        existingRes.body,
+      );
+      if (rows.length) return rows[0].id;
+    }
+    const res = await twentyRequest("POST", "/messageThreadTargets", {
+      position: "last",
+      isAutomaticallyAssigned: true,
+      isManuallyAssigned: false,
+      messageThreadId: threadId,
+      ...body,
+    });
+    if (res.statusCode === 400 || res.statusCode === 409) return null;
+    if (res.statusCode < 200 || res.statusCode >= 300) {
+      console.warn(
+        "bounce thread target warn",
+        res.statusCode,
+        res.rawBody?.slice?.(0, 200),
+      );
+      return null;
+    }
+    return extractCreatedId("messageThreadTargets", res.body);
+  }
+
+  const ids = [];
+  if (personId) {
+    ids.push(await postTarget({ targetPersonId: personId }));
+  }
+  if (opportunityId) {
+    ids.push(await postTarget({ targetOpportunityId: opportunityId }));
+  }
+  return ids.filter(Boolean);
+}
+
+async function resolveOpportunityForBouncedEmails(emails, threadOpp) {
+  for (const email of emails) {
+    const participant = { handle: email };
+    const person = await findPersonByEmail(email);
+    if (person?.id) participant.personId = person.id;
+    const opp = await resolveOpenOpportunity(participant, null);
+    if (opp) {
+      return { opp, person, email };
+    }
+  }
+  if (threadOpp) {
+    return { opp: threadOpp, person: null, email: emails[0] || null };
+  }
+  return { opp: null, person: null, email: emails[0] || null };
+}
+
+async function processBounce({
+  associationId,
+  messageId,
+  message,
+  fromPart,
+  createdAt,
+}) {
+  if (associationId && (await wasProcessed(associationId))) {
+    return { skipped: "already_processed" };
+  }
+  if (await wasBounceProcessed(messageId)) {
+    return { skipped: "already_processed" };
+  }
+
+  const bounceMeta = {
+    bounce: true,
+    direction: "INCOMING",
+  };
+
+  if (
+    !isBounceMessage({
+      subject: message?.subject,
+      text: message?.text,
+      fromHandle: fromPart?.handle,
+      fromDisplayName: fromPart?.displayName,
+    })
+  ) {
+    await markProcessed(associationId, null, messageId, {
+      ...bounceMeta,
+      skipped: "not_dsn",
+    });
+    return { skipped: "not_dsn" };
+  }
+
+  const emails = extractBouncedRecipients(message?.text);
+  if (!emails.length) {
+    await markProcessed(associationId, null, messageId, {
+      ...bounceMeta,
+      skipped: "bounce_no_recipient",
+    });
+    return { skipped: "bounce_no_recipient" };
+  }
+
+  const threadOpp = await findOpenOpportunityFromThreadTarget(
+    message.messageThreadId,
+  );
+  const resolved = await resolveOpportunityForBouncedEmails(emails, threadOpp);
+  if (!resolved.opp) {
+    await markProcessed(associationId, null, messageId, {
+      ...bounceMeta,
+      skipped: "bounce_no_open_opp",
+      bouncedEmail: resolved.email,
+    });
+    return { skipped: "bounce_no_open_opp", bouncedEmail: resolved.email };
+  }
+
+  const reason = classifyBounceReason(message?.text);
+  await ensureBounceParticipant(
+    messageId,
+    resolved.email,
+    resolved.person?.id || null,
+  );
+  if (message.messageThreadId) {
+    await ensureThreadTarget(message.messageThreadId, {
+      opportunityId: resolved.opp.id,
+      personId: resolved.person?.id || null,
+    });
+  }
+
+  const contactIso = messageContactIso(message, { createdAt });
+  await touchContactFields(resolved.opp, contactIso, null, "INCOMING", {
+    metrics: false,
+  });
+  await markProcessed(associationId, resolved.opp.id, messageId, {
+    ...bounceMeta,
+    bouncedEmail: resolved.email,
+    bounceReason: reason,
+    label: bounceFollowUpLabel(reason),
+  });
+
+  console.log(
+    "EMAIL_CONTACT: BOUNCE OK",
+    resolved.opp.id,
+    resolved.opp.name,
+    "email=",
+    resolved.email,
+    "reason=",
+    reason,
+    "msg=",
+    messageId,
+  );
+  return {
+    direction: "INCOMING",
+    bounce: true,
+    bounceReason: reason,
+    contactUpdated: true,
+    opportunityId: resolved.opp.id,
+    opportunityName: resolved.opp.name,
+    bouncedEmail: resolved.email,
+    personId: resolved.person?.id || null,
+    messageId,
+  };
+}
+
+async function listRecentBounceMessages() {
+  const since = bounceLookbackIso();
+  const patterns = [
+    "%Undelivered Mail%",
+    "%Mail delivery failed%",
+    "%Delivery Status Notification%",
+    "%Returned mail%",
+    "%Undeliverable%",
+    "%Niedostarcz%",
+  ];
+  const seen = new Set();
+  const out = [];
+  for (const pattern of patterns) {
+    const filter = `subject[ilike]:${pattern},receivedAt[gte]:${since}`;
+    const path = buildTwentyListPath("messages", filter, 20);
+    const res = await twentyRequest("GET", path);
+    if (res.statusCode < 200 || res.statusCode >= 300) {
+      console.warn(
+        "bounce sweep list warn",
+        pattern,
+        res.statusCode,
+        res.rawBody?.slice?.(0, 160),
+      );
+      continue;
+    }
+    for (const message of parseTwentyListRecords("messages", res.body)) {
+      if (!message?.id || seen.has(message.id)) continue;
+      seen.add(message.id);
+      out.push(message);
+    }
+  }
+  return out;
+}
+
+async function sweepRecentBounces() {
+  const messages = await listRecentBounceMessages();
+  const results = [];
+  for (const message of messages) {
+    try {
+      if (await wasBounceProcessed(message.id)) {
+        results.push({ messageId: message.id, skipped: "already_processed" });
+        continue;
+      }
+      const full = (await fetchMessage(message.id)) || message;
+      const fromParts = await fetchParticipants(full.id, "FROM");
+      const result = await processBounce({
+        associationId: null,
+        messageId: full.id,
+        message: full,
+        fromPart: fromParts[0] || null,
+        createdAt: full.receivedAt || full.createdAt,
+      });
+      results.push({ messageId: message.id, ...result });
+    } catch (err) {
+      console.error("EMAIL_CONTACT: BOUNCE SWEEP FAIL", message.id, err.message);
+      results.push({ messageId: message.id, error: err.message });
+    }
+  }
+  return results;
 }
 
 async function touchContactFields(
@@ -396,8 +700,30 @@ async function processIncomingAssociation(assoc) {
   if (!message) {
     return { skipped: "message_not_found" };
   }
+  if (await wasBounceProcessed(messageId)) {
+    return { skipped: "already_processed" };
+  }
 
-  const participant = await fetchClientParticipant(messageId, "FROM");
+  const fromParts = await fetchParticipants(messageId, "FROM");
+  const fromPart = fromParts[0] || null;
+  if (
+    isBounceMessage({
+      subject: message.subject,
+      text: message.text,
+      fromHandle: fromPart?.handle,
+      fromDisplayName: fromPart?.displayName,
+    })
+  ) {
+    return processBounce({
+      associationId,
+      messageId,
+      message,
+      fromPart,
+      createdAt: assoc.createdAt,
+    });
+  }
+
+  const participant = selectExternalClientParticipant(fromParts);
   const threadOpp = await findOpenOpportunityFromThreadTarget(
     message.messageThreadId,
   );
@@ -519,13 +845,20 @@ async function runAdvanceNewToContactedWorker() {
     }
   }
 
+  const bounceSweep = await sweepRecentBounces();
+  const bounceUpdated = bounceSweep.filter((row) => row.contactUpdated).length;
+
   console.log(
     "email_contact_sync done contactUpdated=",
     contactUpdated,
     "advanced=",
     advanced,
+    "bounceUpdated=",
+    bounceUpdated,
     "scanned=",
     outgoing.length + incoming.length,
+    "bounceScanned=",
+    bounceSweep.length,
   );
   return {
     enabled: true,
@@ -534,6 +867,9 @@ async function runAdvanceNewToContactedWorker() {
     incoming: incoming.length,
     contactUpdated,
     advanced,
+    bounceScanned: bounceSweep.length,
+    bounceUpdated,
+    bounceSweep,
     results,
   };
 }

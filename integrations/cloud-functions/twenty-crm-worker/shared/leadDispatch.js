@@ -2,7 +2,7 @@
 
 /**
  * Retired 2026-09-04 — Lead Dispatcher v2.0 helpers kept as inactive archive.
- * Production assignment is COPY → Maciej + idOid hash in createLead.js.
+ * Production assignment is COPY/NAME → Maciej + idOid hash in createLead.js.
  * sampleWeekRouting still uses warsawMinutesSinceMidnight.
  *
  * Spec (archive): integrations/runbooks/LEAD_DISPATCHER_PLAN.md

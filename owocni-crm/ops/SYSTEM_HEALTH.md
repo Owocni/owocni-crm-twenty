@@ -160,7 +160,7 @@ Każda nowa integracja Owocni = nowy wiersz. Kolumna **Prio:** P0 = „CRM wydaj
 | | |
 |---|---|
 | **Objaw** | Nie pojawiają się nowe `CallTranscript` / „Rozmowy”. |
-| **Łańcuch** | Cloud Scheduler `*/5` → Cloud Run Job `telefony-play-poller` (GCS cursor, `hoursBack=2`) → STT OpenAI → **n8n** webhook `play-pbx-ingest` (tylko gdy jest nowy tekst) → filtr D-15 + summary → `POST` worker `enqueue_call_transcript` → Stape `task_queue` → poll worker `*/5` → upsert `CallTranscript` |
+| **Łańcuch** | Cloud Scheduler `*/5` → Cloud Run Job `telefony-play-poller` (GCS cursor, `hoursBack=2`) → STT ElevenLabs Scribe v2 → **n8n** webhook `play-pbx-ingest` (tylko gdy jest nowy tekst) → filtr D-15 + prompt 2/3 → `POST` worker `enqueue_call_transcript` → Stape `task_queue` → poll worker `*/5` → upsert `CallTranscript` |
 | **Kod / kontrakt** | sibling `telefony/` · `CALL_CHANNEL_ARCHITECTURE.md` · `CALL_INGEST_N8N.contract.md` · `workers/callTranscriptIngest.js` |
 | **Heartbeat** | Job poller zakończony (nawet `n8nTriggered=0`); n8n workflow **Play PBX → GCP CallTranscript** ACTIVE; worker `CALL_TRANSCRIPT_INGEST_ENABLED=true`; ostatni poll worker 200. |
 | **Freshness** | `CallTranscript.startedAt` max — **miękki**. DROP D-15 (poczta głosowa, transkrypt &lt; 100 znaków) = cisza **zamierzona**. |

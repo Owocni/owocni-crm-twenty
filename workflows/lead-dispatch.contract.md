@@ -5,7 +5,7 @@
 Przydział „Biorę” / least-loaded / failover / sweep / limit 3 / alerty managera — **wycofane**.
 
 **Jedyny przydział (nowe karty, GCP `createLead.js`):**
-1. Copywriting → Maciej (pierwszeństwo niezależnie od źródła, w tym FB).
+1. Copywriting i NAME (naming) → Maciej (pierwszeństwo niezależnie od źródła, w tym FB).
 2. FACEBOOK / MARKETING → Robert (jak wcześniej w hash).
 3. Pozostali: suma `charCode` `idOid` parzysta → Gosia, nieparzysta → Marta.
 4. Continuity (`CONTINUITY_ROUTING_ENABLED`) — powrót klienta **nie** przelicza ownera istniejącej karty; nowa karta może dostać poprzedniego ownera SQL.

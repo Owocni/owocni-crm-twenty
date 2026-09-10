@@ -2,7 +2,11 @@
 
 const { describe, it } = require("node:test");
 const assert = require("node:assert/strict");
-const { resolveOpportunityOwnerId } = require("./createLead");
+const {
+  isMaciejProduct,
+  resolveOpportunityOwnerId,
+  resolveOwnerIdForNewOpportunity,
+} = require("./createLead");
 
 const MARTA = "4704e0c0-8d77-4640-ad1e-1875294294df";
 const GOSIA = "ccac533d-a34b-4cfc-a036-9e75ee3f8910";
@@ -20,6 +24,40 @@ describe("resolveOpportunityOwnerId — GCP hash (Biorę retired)", () => {
 
   it("COPYWRITING → Maciej for organic", () => {
     assert.equal(resolveOpportunityOwnerId("COPYWRITING", "any-oid", {}), MACIEJ);
+  });
+
+  it("NAME → Maciej for organic", () => {
+    assert.equal(resolveOpportunityOwnerId("NAME", "any-oid", {}), MACIEJ);
+  });
+
+  it("NAME → Maciej regardless of Facebook source", () => {
+    const owner = resolveOpportunityOwnerId("NAME", "x", {
+      src_action_source: "meta_instant_form",
+      lead_id: "123",
+    });
+    assert.equal(owner, MACIEJ);
+  });
+
+  it("NAME with even idOid still → Maciej, not Gosia hash", () => {
+    assert.equal(resolveOpportunityOwnerId("NAME", "aa", {}), MACIEJ);
+  });
+
+  it("isMaciejProduct covers copywriting and naming family", () => {
+    assert.equal(isMaciejProduct("COPYWRITING"), true);
+    assert.equal(isMaciejProduct("NAME"), true);
+    assert.equal(isMaciejProduct("LOGO"), false);
+    assert.equal(isMaciejProduct("WEB"), false);
+  });
+
+  it("NAME skips continuity — even a Gosia-shaped person still → Maciej", async () => {
+    const owner = await resolveOwnerIdForNewOpportunity(
+      "person-gosia-client",
+      "company-gosia",
+      "NAME",
+      "aa",
+      {},
+    );
+    assert.equal(owner, MACIEJ);
   });
 
   it("even idOid hash → Gosia", () => {

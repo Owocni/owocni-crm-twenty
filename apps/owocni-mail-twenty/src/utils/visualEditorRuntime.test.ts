@@ -29,6 +29,21 @@ describe('buildVisualEditorSrcDoc', () => {
     expect(html).toContain('<p>cześć</p>');
     expect(html).toContain('contenteditable="true"');
   });
+
+  it('follows the caret after paste instead of jumping to the mail end', () => {
+    const html = buildVisualEditorSrcDoc({
+      bodyHtml: '<p>cześć</p>',
+      sessionId: 'sess',
+      draftSaveUrl: 'https://example.com/s/mail/editor-draft',
+      accessToken: 'tok',
+    });
+
+    expect(html).toContain("addEventListener('paste'");
+    expect(html).toContain('followPasteCaret');
+    expect(html).toContain('scrollCaretIntoEditor');
+    expect(html).not.toContain('editor.scrollTop = editor.scrollHeight');
+    expect(html).not.toContain('previousScrollTop');
+  });
 });
 
 describe('EDITOR_FONT_SIZES', () => {

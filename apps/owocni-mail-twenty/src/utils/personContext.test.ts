@@ -7,6 +7,7 @@ import {
   isInternalMailbox,
   mailboxFromDisplay,
   personFromParticipants,
+  preferredThreadMessage,
 } from './personContext';
 
 describe('extractEmailFromHandle', () => {
@@ -227,5 +228,32 @@ describe('mailboxFromDisplay', () => {
       fromEmail: 'biuro@tela.pl',
       fromLabel: 'Jan Kowalski',
     });
+  });
+});
+
+describe('preferredThreadMessage', () => {
+  it('picks a bounce over a newer outbound in the same thread', () => {
+    const outbound = {
+      messageId: 'out',
+      fromEmail: 'studio@owocni.pl',
+      fromLabel: 'studio@owocni.pl',
+      subject: 'test',
+      receivedAt: '2026-09-10T11:58:02.309Z',
+      text: 'test',
+      direction: 'out' as const,
+      channel: 'client' as const,
+    };
+    const bounce = {
+      messageId: 'bounce',
+      fromEmail: 'mailer-daemon@d28.thecamels.org',
+      fromLabel: 'Mail Delivery System',
+      subject: 'Mail delivery failed: returning message to sender',
+      receivedAt: '2026-09-10T11:58:01.000Z',
+      text: 'Unrouteable address',
+      direction: 'in' as const,
+      channel: 'bounce' as const,
+      bounceReason: 'invalid' as const,
+    };
+    expect(preferredThreadMessage([outbound, bounce])?.messageId).toBe('bounce');
   });
 });
