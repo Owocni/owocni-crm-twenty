@@ -170,7 +170,10 @@ def cmd_discover(args: argparse.Namespace) -> None:
     inbox = assert_mailbox(args.mailbox)
     load_bb_env()
     rows = fetch_sent_candidates(
-        inbox=inbox, limit=args.bb_limit, offset=args.bb_offset
+        inbox=inbox,
+        limit=args.bb_limit,
+        offset=args.bb_offset,
+        since=args.since or None,
     )
     user, password = imap_creds_for(inbox)
     imap = imap_login(user, password)
@@ -216,12 +219,13 @@ def run_apply(
     bb_offset: int,
     folder: str,
     manifest_dir: Path,
+    since: str | None = None,
 ) -> dict:
     inbox = assert_mailbox(mailbox)
     folder = folder or DEFAULT_FOLDER
     load_bb_env()
     rows = fetch_sent_candidates(
-        inbox=inbox, limit=bb_limit, offset=bb_offset
+        inbox=inbox, limit=bb_limit, offset=bb_offset, since=since or None
     )
     print(
         f"{inbox}: BB window offset={bb_offset} fetch={bb_limit} "
@@ -335,6 +339,7 @@ def cmd_apply(args: argparse.Namespace) -> None:
         bb_offset=args.bb_offset,
         folder=args.folder or DEFAULT_FOLDER,
         manifest_dir=Path(args.manifest_dir),
+        since=args.since or None,
     )
 
 
@@ -345,12 +350,22 @@ def main() -> None:
     d.add_argument("--mailbox", required=True)
     d.add_argument("--bb-limit", type=int, default=60)
     d.add_argument("--bb-offset", type=int, default=0)
+    d.add_argument(
+        "--since",
+        default="",
+        help="ISO sent_date >= (np. 2026-09-06T07:21:00Z)",
+    )
     d.add_argument("--out", default="")
     a = sub.add_parser("apply")
     a.add_argument("--mailbox", required=True)
     a.add_argument("--limit", type=int, default=10)
     a.add_argument("--bb-limit", type=int, default=80)
     a.add_argument("--bb-offset", type=int, default=0)
+    a.add_argument(
+        "--since",
+        default="",
+        help="ISO sent_date >= (np. 2026-09-06T07:21:00Z)",
+    )
     a.add_argument("--folder", default=DEFAULT_FOLDER)
     a.add_argument("--yes", action="store_true")
     a.add_argument(

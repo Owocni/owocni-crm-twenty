@@ -55,6 +55,8 @@ BB_TO_TWENTY_STAGE = {
     "excited": "CONTACTED",
     "blackday": "CONTACTED",
     "error": "NEW",
+    "lead_won": "WON",
+    "lead_lost": "LOST",
 }
 
 PRODUCT_MAP = {
@@ -229,10 +231,15 @@ def plan_row(bb: dict, by_bb: dict, by_email: dict) -> dict:
 
 def cmd_export(args: argparse.Namespace) -> None:
     rd = run_dir(args.run)
-    leads = fetch_bb_leads(days=args.days, owner_ids=[257, 259, 79])
+    leads = fetch_bb_leads(
+        days=args.days,
+        owner_ids=[257, 259, 79],
+        include_closed=args.include_closed,
+    )
     out = {
         "exportedAt": datetime.now(timezone.utc).isoformat(),
         "days": args.days,
+        "includeClosed": bool(args.include_closed),
         "count": len(leads),
         "leads": leads,
     }
@@ -396,10 +403,11 @@ def cmd_apply(args: argparse.Namespace) -> None:
                 r["emails"] = [e for e in r["emails"].split(";") if e]
             rows.append(r)
 
+    allowed = {a.strip() for a in (args.actions or "patch,create").split(",") if a.strip()}
     if args.limit:
-        actionable = [r for r in rows if r["action"] in ("patch", "create")][: args.limit]
+        actionable = [r for r in rows if r["action"] in allowed][: args.limit]
     else:
-        actionable = [r for r in rows if r["action"] in ("patch", "create")]
+        actionable = [r for r in rows if r["action"] in allowed]
 
     manifest = {
         "applyStartedAt": datetime.now(timezone.utc).isoformat(),
@@ -540,6 +548,16 @@ def main() -> None:
     ap.add_argument("--days", type=int, default=30)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--pace", type=float, default=0.35)
+    ap.add_argument(
+        "--include-closed",
+        action="store_true",
+        help="Dołącz lead_won / lead_lost (domyślnie wycięte)",
+    )
+    ap.add_argument(
+        "--actions",
+        default="patch,create",
+        help="Apply: które akcje z planu (np. patch). Domyślnie patch,create",
+    )
     args = ap.parse_args()
     cmds = {
         "export": cmd_export,

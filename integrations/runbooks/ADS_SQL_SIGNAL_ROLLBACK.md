@@ -209,6 +209,8 @@ Odwróć **kolejność**:
 5. Smoke: SQL w Twenty idzie na Ads (Piotr).
 6. `.env.deploy`: `RUNTIME_ENVIRONMENT=prod`, żeby następny inbound deploy nie zepsuł stanu.
 
+Playbook wieczór 11 IX (dane BB→Twenty **przed** tym §8, sample-week OFF, furtka Meta OFF): [`ROLLFORWARD_20260911.md`](./ROLLFORWARD_20260911.md).
+
 ---
 
 ## 9. Log operacji

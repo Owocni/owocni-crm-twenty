@@ -100,21 +100,30 @@ def has_body(body: str | None) -> bool:
     return bool(t) and t.lower() != "error"
 
 
-def fetch_sent_candidates(*, inbox: str, limit: int = 15, offset: int = 0) -> list[dict]:
+def fetch_sent_candidates(
+    *,
+    inbox: str,
+    limit: int = 15,
+    offset: int = 0,
+    since: str | None = None,
+) -> list[dict]:
     load_bb_env()
+    params: dict[str, str] = {
+        "select": (
+            "id,message_id,in_reply_to,references,subject,from,to,cc,"
+            "sent_date,folder_path,inbox,body,is_archived"
+        ),
+        "folder_path": "eq.Sent",
+        "inbox": f"eq.{inbox}",
+        "order": "sent_date.desc",
+        "limit": str(limit),
+        "offset": str(offset),
+    }
+    if since:
+        params["sent_date"] = f"gte.{since}"
     rows = bb_get(
         "email_message",
-        params={
-            "select": (
-                "id,message_id,in_reply_to,references,subject,from,to,cc,"
-                "sent_date,folder_path,inbox,body,is_archived"
-            ),
-            "folder_path": "eq.Sent",
-            "inbox": f"eq.{inbox}",
-            "order": "sent_date.desc",
-            "limit": str(limit),
-            "offset": str(offset),
-        },
+        params=params,
     )
     out = []
     for r in rows:

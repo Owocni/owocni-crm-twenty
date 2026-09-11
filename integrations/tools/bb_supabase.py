@@ -84,6 +84,7 @@ def fetch_bb_leads(
     modified_since: str | None = None,
     days: int = 30,
     exclude_stages: frozenset[str] | None = DEFAULT_PIPELINE_EXCLUDE,
+    include_closed: bool = False,
 ) -> list[dict]:
     """Active pipeline leads from leads_extended_materialized."""
     load_bb_env()
@@ -92,7 +93,6 @@ def fetch_bb_leads(
 
     params: dict[str, str] = {
         "assigned_user_id": f"in.({ids})",
-        "stage_name": f"not.in.({','.join(sorted(CLOSED_STAGES))})",
         "is_archived": "eq.false",
         "select": (
             "id,title,stage_name,assigned_user_id,primary_product,created_at,"
@@ -100,6 +100,8 @@ def fetch_bb_leads(
         ),
         "order": "last_modified_at.desc",
     }
+    if not include_closed:
+        params["stage_name"] = f"not.in.({','.join(sorted(CLOSED_STAGES))})"
     if modified_since:
         params["last_modified_at"] = f"gte.{modified_since}"
     elif days > 0:

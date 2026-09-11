@@ -15,8 +15,10 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import pathlib
 import sys
+import time
 import urllib.request
 from typing import Any
 
@@ -116,16 +118,50 @@ UNPIN_COMMAND_IDS = [
 ]
 
 CONFIG_PATH = pathlib.Path.home() / ".twenty" / "config.json"
+WORKER_ENV_PATH = (
+    pathlib.Path(__file__).resolve().parents[1]
+    / "cloud-functions"
+    / "twenty-crm-worker"
+    / ".env.deploy"
+)
 USER_AGENT = "owocni-crm-deploy-opportunity-record-page/1.0"
+
+
+def _jwt_expired(token: str) -> bool:
+    try:
+        payload = token.split(".")[1]
+        payload += "=" * (-len(payload) % 4)
+        data = json.loads(__import__("base64").urlsafe_b64decode(payload))
+        exp = data.get("exp")
+        return isinstance(exp, (int, float)) and exp < time.time() + 30
+    except Exception:
+        return False
+
+
+def _worker_env_api_key() -> str:
+    if not WORKER_ENV_PATH.exists():
+        return ""
+    for line in WORKER_ENV_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if line.startswith("TWENTY_API_KEY="):
+            return line.split("=", 1)[1].strip().strip("'").strip('"')
+    return ""
 
 
 def load_oauth() -> tuple[str, str]:
     cfg = json.loads(CONFIG_PATH.read_text())
     remote = cfg["remotes"][cfg["defaultRemote"]]
-    token = remote.get("twentyCLIAccessToken") or remote.get("accessToken")
+    token = remote.get("twentyCLIAccessToken") or remote.get("accessToken") or ""
+    api_url = remote["apiUrl"].rstrip("/")
+    if not token or _jwt_expired(token):
+        token = (
+            os.environ.get("TWENTY_METADATA_TOKEN")
+            or os.environ.get("TWENTY_API_KEY")
+            or _worker_env_api_key()
+        ).strip()
     if not token:
-        raise SystemExit("No OAuth token in ~/.twenty/config.json")
-    return token, remote["apiUrl"].rstrip("/") + "/metadata"
+        raise SystemExit("No OAuth token in ~/.twenty/config.json — run `yarn twenty remote:add`")
+    return token, f"{api_url}/metadata"
 
 
 def gql(url: str, token: str, query: str, variables: dict | None = None) -> dict:

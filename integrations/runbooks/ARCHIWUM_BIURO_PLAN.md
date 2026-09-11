@@ -157,19 +157,19 @@ Przeglądarka → Open Archiver → w wyszukiwarkę nazwa / adres / fragment tre
 
 ## 6. Kolejność robót (po eksporcie Firmao)
 
-Eksport na T5 zostawiamy jako kanon surowych PDF-ów (`faktury/SPRZEDAZ/RRRR/MM/…`). Na komputerze biurowym budujemy widok dla ludzi.
+Eksport na T5 zostawiamy jako kanon surowych PDF-ów (`faktury/SPRZEDAZ/RRRR/MM/…`). Widok dla ludzi: `ARCHIWUM-FIRMAO/Dla_ludzi/` (11.09). Na PC biurowym w przyszłym tygodniu: SMB + Open Archiver.
 
-| # | Co | Kto |
-|---|---|---|
-| 1 | Dokończyć PDF-y + `podsumowanie.txt` (liczba OK = 15 377) | skrypt, T5 |
-| 2 | Kopia 2 całego `ARCHIWUM-FIRMAO` na T5 zostaje; nie kasować | Dawid |
-| 3 | Włączyć SMB na PC biurowym, przetestować z Maca Marty i Windowsa Kingi | Dawid + Kinga |
-| 4 | Skopiować kanon faktur na PC (wg roku) | Dawid |
-| 5 | Skrypt: foldery `wg_klienta` + hardlinki z manifestu + `INDEKS_FAKTUR.xlsx` + `_NIEOPLACONE` | Dawid |
-| 6 | Docker: Open Archiver na PC biurowym; konto admin + Marta (read/search) | Dawid |
-| 7 | Ingest IMAP `studio@` (kopia, bez delete) albo import mbox — **nie ruszać folderów w Thunderbirdzie** | Dawid |
-| 8 | 15 min z Martą: FV po kliencie, FV po numerze, mail po nazwie klienta w Open Archiver | Marta |
-| 9 | Po roku: skasować najstarszy rocznik **tylko z kopii roboczej**, jeśli kanon 5 lat jest na T5 | Mariusz |
+| # | Co | Kto | Stan 11.09 |
+|---|---|---|---|
+| 1 | PDF-y + odbiór w panelu | skrypt / Dawid | **DONE** — 15 377 OK. Zakupy pusto. Brak zakładki usunięte. |
+| 2 | Druga kopia całego `ARCHIWUM-FIRMAO` | Dawid | do zrobienia (nie ten sam dysk) |
+| 3 | SMB na PC biurowym | Dawid + Kinga | przyszły tydzień |
+| 4 | Skopiować `Dla_ludzi/` + kanon `faktury/` na PC | Dawid | przyszły tydzień |
+| 5 | Widok klienta + `INDEKS_FAKTUR.xlsx` + `_NIEOPLACONE` | skrypt `zbuduj_widok_ludzi.py` | **DONE** na T5 (`Dla_ludzi/`) |
+| 6 | Docker: Open Archiver; konta read/search | Dawid | przyszły tydzień |
+| 7 | Ingest IMAP `studio@` (kopia, bez delete) | Dawid | przyszły tydzień |
+| 8 | 15 min z Martą | Marta | po komputerze-archiwum |
+| 9 | Po roku: najstarszy rocznik z kopii roboczej | Mariusz | później |
 
 Krok 7 świadomie **nie** idzie przez produkcyjny Thunderbird. Marta ma 4809 nieodebranych; przenoszenie do podfolderów psuje zasysanie. Open Archiver zaciąga kopię IMAP; skrzynka produkcyjna nietknięta.
 

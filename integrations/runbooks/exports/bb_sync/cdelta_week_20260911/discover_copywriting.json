@@ -1,0 +1,145 @@
+{
+  "mailbox": "copywriting@owocni.pl",
+  "chip": "COPYWRITING",
+  "counts": {
+    "skip_in_twenty": 5,
+    "eligible": 1,
+    "skip_other_channel": 3,
+    "skip_parent_not_in_twenty": 1
+  },
+  "eligible": [
+    {
+      "bb_id": 2058106,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Narodziny nazwy :)",
+      "sent_date": "2026-09-09T05:36:36.759+00:00",
+      "own": "<bbd63d74-668c-0c93-7a71-1fdd7a2ac992@owocni.pl>",
+      "parent": "<mgpvlrgvfsfugbrflobp@webt>",
+      "status": "eligible",
+      "parent_thread": "8e9da62e-199b-40f6-a3e3-3f8ff7c6564c",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ]
+    }
+  ],
+  "all": [
+    {
+      "bb_id": 2058148,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Celna nazwa — akcesoria do broni palnej:",
+      "sent_date": "2026-09-09T12:16:35+00:00",
+      "own": "<cca3d04a-dcf2-b44b-0251-8eb203c43c98@owocni.pl>",
+      "parent": "<f65be4eb5453bc70dfe028ef84114aba@form.owocni.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058127,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Krótka nazwa na długie lata — budowlanka i tereny zielone:",
+      "sent_date": "2026-09-09T09:19:34+00:00",
+      "own": "<d25b876d-f01e-6300-ab10-00f0e319a89a@owocni.pl>",
+      "parent": "<a47690e96ffb88.87c72d7c33d008@fortis7.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058108,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Fwd: Krótka nazwa na długie lata — budowlanka i tereny zielone:",
+      "sent_date": "2026-09-09T05:51:19+00:00",
+      "own": "<6ce1100a-49b7-02f5-8057-627d0ff7cb64@owocni.pl>",
+      "parent": "",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058107,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Krótka nazwa na długie lata — budowlanka i tereny zielone:",
+      "sent_date": "2026-09-09T05:47:38+00:00",
+      "own": "<d80f03e1-d715-bc50-d783-41845f0e2a90@owocni.pl>",
+      "parent": "<b6bc09f3f9f97b11388a403524f98122@form.owocni.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058106,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Narodziny nazwy :)",
+      "sent_date": "2026-09-09T05:36:36.759+00:00",
+      "own": "<bbd63d74-668c-0c93-7a71-1fdd7a2ac992@owocni.pl>",
+      "parent": "<mgpvlrgvfsfugbrflobp@webt>",
+      "status": "eligible",
+      "parent_thread": "8e9da62e-199b-40f6-a3e3-3f8ff7c6564c",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ]
+    },
+    {
+      "bb_id": 2058042,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Odp: Test zapytania i spamu Maciek",
+      "sent_date": "2026-09-08T06:07:23+00:00",
+      "own": "<5b275218-fd7b-ca7a-de6e-d1dde40f66f2@owocni.pl>",
+      "parent": "<e03332468817479fbedf62e607c39ca6@grupawp.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057973,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa i logo dla agencji od wyjątkowych eventów i marketingu:",
+      "sent_date": "2026-09-07T08:42:08.772+00:00",
+      "own": "<21817284-4842-6a89-0b51-31791ab8880f@owocni.pl>",
+      "parent": "<b1d2f49783ae2347958e1d3aa6946a35@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "eb07df9f-5991-4c69-b674-22e625b85eec",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2057955,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa wyróżniająca firmę transportową —",
+      "sent_date": "2026-09-07T06:44:08.93+00:00",
+      "own": "<00695ffc-cc40-8251-ddab-6448e7eafb4e@owocni.pl>",
+      "parent": "<423fbf3cba2efd77ed5c22d242aa780d@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "84aa06db-851b-443b-94f7-e737fe1b3161",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2057954,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa wyróżniająca nas na rynku okołosportowym —",
+      "sent_date": "2026-09-07T06:36:56.051+00:00",
+      "own": "<61eb5cbe-0973-f8c4-a621-cbe23dad2caa@owocni.pl>",
+      "parent": "<d1536ae5c965d34cb3815bed01cb6854@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "91afe972-5fb7-4600-a25e-cbd55647d446",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2057949,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-07T06:20:24.532+00:00",
+      "own": "<909f0f3b-df15-8e9a-912c-0232ff29da01@owocni.pl>",
+      "parent": "<dfc83c21-6fd8-1291-e14c-1f8bb21f75c5@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

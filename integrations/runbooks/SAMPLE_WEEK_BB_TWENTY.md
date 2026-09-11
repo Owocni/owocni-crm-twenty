@@ -7,8 +7,9 @@ owner: "Dawid"
 audience: "Dawid + Mariusz"
 last_verified: 2026-09-04
 related:
-  - ADS_SQL_SIGNAL_ROLLBACK.md
-  - PLAN_NAPRAWCZY_GATES.md
+    - ADS_SQL_SIGNAL_ROLLBACK.md
+    - ROLLFORWARD_20260911.md
+    - PLAN_NAPRAWCZY_GATES.md
 ---
 
 # Tydzień BB + Twenty w trybie testowym
@@ -64,7 +65,7 @@ LEAD_SAMPLE_WEEK_ENABLED=false
 cd integrations/cloud-functions/twenty-crm-worker && bash deploy.sh
 ```
 
-Ads roll-forward (Twenty z powrotem prod, BB sandbox): `ADS_SQL_SIGNAL_ROLLBACK.md` §8.
+Ads roll-forward (Twenty z powrotem prod, BB sandbox): wieczór 11 IX — [`ROLLFORWARD_20260911.md`](./ROLLFORWARD_20260911.md) (kolejność + maile + sync etapów). Mechanika env: `ADS_SQL_SIGNAL_ROLLBACK.md` §8.
 
 ## Deploy BB (wymagane ręcznie)
 
