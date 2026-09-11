@@ -25,7 +25,177 @@ export type OpportunityActionStatus = {
   rejectionReason: string | null;
   isFollowUp: boolean;
   snoozeUntil: string | null;
+  companyId: string | null;
+  companyName: string | null;
+  nip: string | null;
+  hasNip: boolean;
+  invoiceReady: boolean;
+  enrichHint: string | null;
+  enrichLabel: string;
+  issueHint: string | null;
 };
+
+export type InvoiceCompanyInput = {
+  name?: string | null;
+  nip?: string | null;
+  legalName?: string | null;
+  registeredAddress?: {
+    addressStreet1?: string | null;
+    addressStreet2?: string | null;
+    addressCity?: string | null;
+    addressPostcode?: string | null;
+  } | null;
+};
+
+export const ENRICH_LABEL_FILL = 'Uzupełnij dane (GUS/KRS)';
+export const ENRICH_LABEL_REFRESH = 'Nadpisz dane (GUS/KRS)';
+
+export function emptyInvoiceStatus(): Pick<
+  OpportunityActionStatus,
+  | 'companyId'
+  | 'companyName'
+  | 'nip'
+  | 'hasNip'
+  | 'invoiceReady'
+  | 'enrichHint'
+  | 'enrichLabel'
+  | 'issueHint'
+> {
+  return {
+    companyId: null,
+    companyName: null,
+    nip: null,
+    hasNip: false,
+    invoiceReady: false,
+    enrichHint: 'uzupełnij NIP',
+    enrichLabel: ENRICH_LABEL_FILL,
+    issueHint: 'Najpierw uzupełnij dane',
+  };
+}
+
+export function normalizeNip(raw: string | null | undefined): string {
+  return String(raw || '').replace(/\D/g, '');
+}
+
+export function hasValidNip(raw: string | null | undefined): boolean {
+  return /^\d{10}$/.test(normalizeNip(raw));
+}
+
+export function pickInvoiceNip(
+  opportunityNip: string | null | undefined,
+  companyNip: string | null | undefined,
+): string {
+  const fromLead = normalizeNip(opportunityNip);
+  if (hasValidNip(fromLead)) {
+    return fromLead;
+  }
+  const fromCompany = normalizeNip(companyNip);
+  if (hasValidNip(fromCompany)) {
+    return fromCompany;
+  }
+  return '';
+}
+
+function addressText(
+  addr: InvoiceCompanyInput['registeredAddress'] | null | undefined,
+): string {
+  if (!addr || typeof addr !== 'object') {
+    return '';
+  }
+  return [
+    addr.addressStreet1,
+    addr.addressStreet2,
+    addr.addressCity,
+    addr.addressPostcode,
+  ]
+    .map((part) => String(part || '').trim())
+    .filter(Boolean)
+    .join(' ');
+}
+
+export function companyInvoiceMissing(company: InvoiceCompanyInput): string[] {
+  const missing: string[] = [];
+  if (!hasValidNip(company.nip)) {
+    missing.push('nip');
+  }
+  if (!String(company.legalName || company.name || '').trim()) {
+    missing.push('legalName');
+  }
+  if (!addressText(company.registeredAddress)) {
+    missing.push('registeredAddress');
+  }
+  return missing;
+}
+
+export function invoiceActionHints(params: {
+  companyId: string | null;
+  companyName?: string | null;
+  company?: InvoiceCompanyInput | null;
+  opportunityNip?: string | null;
+}): Pick<
+  OpportunityActionStatus,
+  | 'companyId'
+  | 'companyName'
+  | 'nip'
+  | 'hasNip'
+  | 'invoiceReady'
+  | 'enrichHint'
+  | 'enrichLabel'
+  | 'issueHint'
+> {
+  const nip = pickInvoiceNip(params.opportunityNip, params.company?.nip) || null;
+  const hasNip = hasValidNip(nip);
+  const companyForMissing: InvoiceCompanyInput = {
+    name: params.company?.name,
+    nip,
+    legalName: params.company?.legalName,
+    registeredAddress: params.company?.registeredAddress,
+  };
+  const missing = params.company
+    ? companyInvoiceMissing(companyForMissing)
+    : hasNip
+      ? ['company']
+      : ['nip'];
+  const invoiceReady = Boolean(
+    params.companyId && params.company && missing.length === 0,
+  );
+
+  return {
+    companyId: params.companyId ?? null,
+    companyName: params.companyName ?? null,
+    nip,
+    hasNip,
+    invoiceReady,
+    enrichHint: hasNip ? null : 'uzupełnij NIP',
+    enrichLabel: invoiceReady ? ENRICH_LABEL_REFRESH : ENRICH_LABEL_FILL,
+    issueHint: invoiceReady ? null : 'Najpierw uzupełnij dane',
+  };
+}
+
+export function mergeOpportunityActionStatus(
+  recordId: string,
+  data: Partial<OpportunityActionStatus>,
+): OpportunityActionStatus {
+  const invoice = emptyInvoiceStatus();
+  return {
+    recordId,
+    bizSqlConfirmed: Boolean(data.bizSqlConfirmed),
+    bizSqlConfirmedAt: data.bizSqlConfirmedAt ?? null,
+    campaignRejected: Boolean(data.campaignRejected),
+    rejectionReason: data.rejectionReason ?? null,
+    isFollowUp: Boolean(data.isFollowUp),
+    snoozeUntil: data.snoozeUntil ?? null,
+    companyId: data.companyId ?? invoice.companyId,
+    companyName: data.companyName ?? invoice.companyName,
+    nip: data.nip ?? invoice.nip,
+    hasNip: Boolean(data.hasNip),
+    invoiceReady: Boolean(data.invoiceReady),
+    // null from the API means "no note" — do not fall back to empty-state copy
+    enrichHint: data.enrichHint !== undefined ? data.enrichHint : invoice.enrichHint,
+    enrichLabel: data.enrichLabel || invoice.enrichLabel,
+    issueHint: data.issueHint !== undefined ? data.issueHint : invoice.issueHint,
+  };
+}
 
 export type ReplyQueueKind = 'needs_reply' | 'snoozed' | 'waiting';
 

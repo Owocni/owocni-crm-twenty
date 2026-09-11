@@ -1,4 +1,5 @@
 import { CoreApiClient } from 'twenty-client-sdk/core';
+import { MetadataApiClient } from 'twenty-client-sdk/metadata';
 
 import { isTruthyFlag } from 'src/utils/opportunityActions';
 
@@ -16,8 +17,23 @@ export type OpportunityActionRecord = {
   idOid: string | null;
   bizProduct: string | null;
   pointOfContactId: string | null;
+  companyId: string | null;
   isFollowUp: boolean;
   snoozeUntil: string | null;
+  nip: string | null;
+};
+
+export type InvoiceCompanyRecord = {
+  id: string;
+  name: string | null;
+  nip: string | null;
+  legalName: string | null;
+  registeredAddress: {
+    addressStreet1?: string | null;
+    addressCity?: string | null;
+    addressPostcode?: string | null;
+  } | null;
+  enrichedAt: string | null;
 };
 
 type OpportunityQueryRow = {
@@ -34,8 +50,19 @@ type OpportunityQueryRow = {
   idOid?: string | null;
   bizProduct?: string | null;
   pointOfContactId?: string | null;
+  companyId?: string | null;
   isFollowUp?: boolean | null;
   snoozeUntil?: string | null;
+  nip?: string | null;
+};
+
+type CompanyQueryRow = {
+  id?: string;
+  name?: string | null;
+  nip?: string | null;
+  legalName?: string | null;
+  registeredAddress?: InvoiceCompanyRecord['registeredAddress'];
+  enrichedAt?: string | null;
 };
 
 const OPPORTUNITY_ACTION_FIELDS = {
@@ -53,10 +80,98 @@ const OPPORTUNITY_ACTION_FIELDS = {
     rejectionReason: true,
     idOid: true,
     bizProduct: true,
+    companyId: true,
     isFollowUp: true,
     snoozeUntil: true,
+    nip: true,
   } as Record<string, unknown>),
 };
+
+const COMPANY_INVOICE_QUERY = `
+query CompanyForInvoice($id: UUID!) {
+  company(filter: { id: { eq: $id } }) {
+    id
+    name
+    nip
+    legalName
+    registeredAddress {
+      addressStreet1
+      addressStreet2
+      addressCity
+      addressPostcode
+      addressCountry
+    }
+    enrichedAt
+  }
+}
+`;
+
+type CoreGraphqlClient = {
+  executeGraphqlRequestWithOptionalRefresh: (args: {
+    operation: { query: string; variables?: Record<string, unknown> };
+  }) => Promise<{
+    data?: Record<string, unknown>;
+    errors?: Array<{ message?: string }>;
+  }>;
+};
+
+async function coreGraphql<T>(
+  coreClient: CoreApiClient,
+  query: string,
+  variables?: Record<string, unknown>,
+): Promise<T | null> {
+  const client = coreClient as unknown as CoreGraphqlClient;
+  if (typeof client.executeGraphqlRequestWithOptionalRefresh === 'function') {
+    const payload = await client.executeGraphqlRequestWithOptionalRefresh({
+      operation: { query, variables },
+    });
+    if (payload?.errors?.length) {
+      throw new Error(
+        payload.errors.map((error) => error.message).filter(Boolean).join('; '),
+      );
+    }
+    return (payload?.data as T) ?? null;
+  }
+
+  const url = `${String(process.env.TWENTY_API_URL || '').replace(/\/$/, '')}/graphql`;
+  const token =
+    process.env.TWENTY_APP_ACCESS_TOKEN || process.env.TWENTY_API_KEY || '';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+  const payload = (await response.json()) as {
+    data?: T;
+    errors?: Array<{ message?: string }>;
+  };
+  if (payload?.errors?.length) {
+    throw new Error(
+      payload.errors.map((error) => error.message).filter(Boolean).join('; '),
+    );
+  }
+  return payload?.data ?? null;
+}
+
+export async function findCompanyForInvoice(
+  coreClient: CoreApiClient,
+  companyId: string,
+): Promise<InvoiceCompanyRecord | null> {
+  try {
+    const data = await coreGraphql<{ company?: CompanyQueryRow | null }>(
+      coreClient,
+      COMPANY_INVOICE_QUERY,
+      { id: companyId },
+    );
+    return toCompany(data?.company);
+  } catch {
+    return null;
+  }
+}
 
 function toRecord(row: OpportunityQueryRow | null | undefined): OpportunityActionRecord | null {
   if (!row?.id || !row.createdAt) {
@@ -77,8 +192,27 @@ function toRecord(row: OpportunityQueryRow | null | undefined): OpportunityActio
     idOid: row.idOid ?? null,
     bizProduct: row.bizProduct ?? null,
     pointOfContactId: row.pointOfContactId ?? null,
+    companyId: row.companyId ?? null,
     isFollowUp: isTruthyFlag(row.isFollowUp),
     snoozeUntil: row.snoozeUntil ?? null,
+    nip: row.nip ?? null,
+  };
+}
+
+function toCompany(
+  row: CompanyQueryRow | null | undefined,
+): InvoiceCompanyRecord | null {
+  if (!row?.id) {
+    return null;
+  }
+
+  return {
+    id: row.id,
+    name: row.name ?? null,
+    nip: row.nip ?? null,
+    legalName: row.legalName ?? null,
+    registeredAddress: row.registeredAddress ?? null,
+    enrichedAt: row.enrichedAt ?? null,
   };
 }
 
@@ -119,4 +253,22 @@ export async function updateOpportunityForActions(
     (result as { updateOpportunity?: OpportunityQueryRow | null })
       .updateOpportunity,
   );
+}
+
+export async function getCurrentWorkspaceMemberId(): Promise<string | null> {
+  try {
+    const result = await new MetadataApiClient().query({
+      currentUser: {
+        workspaceMember: {
+          id: true,
+        },
+      },
+    });
+    const id = (
+      result.currentUser as { workspaceMember?: { id?: string | null } | null }
+    )?.workspaceMember?.id;
+    return id || null;
+  } catch {
+    return null;
+  }
 }

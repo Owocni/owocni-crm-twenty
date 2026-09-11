@@ -44,6 +44,27 @@ export function preferredThreadMessage(
   );
 }
 
+export function mergeThreadMessages(
+  primary: ThreadMessage[],
+  extra: ThreadMessage[],
+): ThreadMessage[] {
+  const seen = new Set(
+    primary.map((message) => message.messageId).filter(Boolean),
+  );
+  const merged = [
+    ...primary,
+    ...extra.filter(
+      (message) => message.messageId && !seen.has(message.messageId),
+    ),
+  ];
+  merged.sort((left, right) => {
+    const leftAt = left.receivedAt ? Date.parse(left.receivedAt) : 0;
+    const rightAt = right.receivedAt ? Date.parse(right.receivedAt) : 0;
+    return rightAt - leftAt;
+  });
+  return merged;
+}
+
 export type MailResolveContext = {
   person: PersonContext | null;
   /** Original thread/message subject when opened from email Reply context. */
@@ -91,17 +112,23 @@ const PARTICIPANT_FIELDS = {
   person: PERSON_FIELDS,
 } as const;
 
-const MESSAGE_PREVIEW_FIELDS = {
+const MESSAGE_PARTICIPANT_EDGES = {
+  edges: {
+    node: PARTICIPANT_FIELDS,
+  },
+} as const;
+
+const MESSAGE_LIST_FIELDS = {
   id: true,
   subject: true,
-  text: true,
   receivedAt: true,
   messageThreadId: true,
-  messageParticipants: {
-    edges: {
-      node: PARTICIPANT_FIELDS,
-    },
-  },
+  messageParticipants: MESSAGE_PARTICIPANT_EDGES,
+} as const;
+
+const MESSAGE_PREVIEW_FIELDS = {
+  ...MESSAGE_LIST_FIELDS,
+  text: true,
 } as const;
 
 /** Same preview plus CRM-only Message.direction (ADR #19). */
@@ -109,6 +136,20 @@ const MESSAGE_THREAD_FIELDS = {
   ...MESSAGE_PREVIEW_FIELDS,
   direction: true,
 };
+
+const MESSAGE_LIST_WITH_DIRECTION_FIELDS = {
+  ...MESSAGE_LIST_FIELDS,
+  direction: true,
+} as const;
+
+export type ThreadMessageListOptions = {
+  includeText?: boolean;
+};
+
+function messageQueryFields(options?: ThreadMessageListOptions) {
+  const includeText = options?.includeText !== false;
+  return includeText ? MESSAGE_THREAD_FIELDS : MESSAGE_LIST_WITH_DIRECTION_FIELDS;
+}
 
 type MessagePreviewNode = {
   id?: string;
@@ -928,8 +969,14 @@ async function queryThreadParticipantMessages(
   coreClient: CoreApiClient,
   email: string,
   limit: number,
-  includeDirection: boolean,
+  options: { includeDirection: boolean; includeText: boolean },
 ) {
+  const messageFields = options.includeDirection
+    ? messageQueryFields({ includeText: options.includeText })
+    : options.includeText
+      ? MESSAGE_PREVIEW_FIELDS
+      : MESSAGE_LIST_FIELDS;
+
   return coreClient.query({
     messageParticipants: {
       __args: {
@@ -942,9 +989,7 @@ async function queryThreadParticipantMessages(
           role: true,
           handle: true,
           workspaceMemberId: true,
-          message: includeDirection
-            ? MESSAGE_THREAD_FIELDS
-            : MESSAGE_PREVIEW_FIELDS,
+          message: messageFields,
         },
       },
     },
@@ -955,11 +1000,14 @@ export async function listThreadMessagesByEmail(
   coreClient: CoreApiClient,
   email: string,
   limit = 40,
+  options?: ThreadMessageListOptions,
 ): Promise<ThreadMessage[]> {
   const normalized = email.trim().toLowerCase();
   if (!normalized) {
     return [];
   }
+
+  const includeText = options?.includeText !== false;
 
   let result: { messageParticipants?: unknown };
   try {
@@ -967,7 +1015,7 @@ export async function listThreadMessagesByEmail(
       coreClient,
       normalized,
       limit,
-      true,
+      { includeDirection: true, includeText },
     );
   } catch {
     try {
@@ -975,7 +1023,7 @@ export async function listThreadMessagesByEmail(
         coreClient,
         normalized,
         limit,
-        false,
+        { includeDirection: false, includeText },
       );
     } catch {
       return [];
@@ -1028,6 +1076,7 @@ export async function listThreadMessagesByThreadId(
   coreClient: CoreApiClient,
   threadId: string,
   limit = 40,
+  options?: ThreadMessageListOptions,
 ): Promise<ThreadMessage[]> {
   const id = threadId.trim();
   if (!id) {
@@ -1043,7 +1092,7 @@ export async function listThreadMessagesByThreadId(
           orderBy: [{ receivedAt: 'DescNullsLast' }],
         },
         edges: {
-          node: MESSAGE_THREAD_FIELDS,
+          node: messageQueryFields(options),
         },
       },
     });
@@ -1079,6 +1128,7 @@ export async function listInternalThreadMessagesForOpportunity(
   coreClient: CoreApiClient,
   opportunityId: string,
   limit = 20,
+  options?: ThreadMessageListOptions,
 ): Promise<ThreadMessage[]> {
   const id = opportunityId.trim();
   if (!id) {
@@ -1118,13 +1168,15 @@ export async function listInternalThreadMessagesForOpportunity(
       ),
     ];
 
+    const perThread = await Promise.all(
+      threadIds.map((threadId) =>
+        listThreadMessagesByThreadId(coreClient, threadId, 40, options),
+      ),
+    );
+
     const messages: ThreadMessage[] = [];
     const seen = new Set<string>();
-    for (const threadId of threadIds) {
-      const threadMessages = await listThreadMessagesByThreadId(
-        coreClient,
-        threadId,
-      );
+    for (const threadMessages of perThread) {
       for (const message of threadMessages) {
         if (!message.messageId || seen.has(message.messageId)) {
           continue;
@@ -1146,6 +1198,107 @@ export async function listInternalThreadMessagesForOpportunity(
   } catch {
     return [];
   }
+}
+
+export type MailThreadListResult = {
+  person: PersonContext | null;
+  replySubject: string | null;
+  replyMessage: ReplyMessagePreview | null;
+  threadMessages: ThreadMessage[];
+  contextKind: MailResolveContext['contextKind'];
+  contextRecordId: string | null;
+};
+
+/**
+ * First-paint path: Opportunity (or thread) list without message bodies.
+ * Skips identity waterfall, templates, signatures, and handoff attach.
+ */
+export async function listMailThreadList(
+  coreClient: CoreApiClient,
+  options: { recordId?: string | null; email?: string | null },
+): Promise<MailThreadListResult> {
+  const recordId = options.recordId?.trim() || null;
+  const email = options.email?.trim().toLowerCase() || null;
+  const listOptions: ThreadMessageListOptions = { includeText: false };
+
+  const empty: MailThreadListResult = {
+    person: null,
+    replySubject: null,
+    replyMessage: null,
+    threadMessages: [],
+    contextKind: null,
+    contextRecordId: recordId,
+  };
+
+  if (recordId) {
+    const person = await findPersonFromOpportunity(coreClient, recordId);
+    const threadEmail = person?.email?.trim().toLowerCase() || email;
+    const [byEmail, internal] = await Promise.all([
+      threadEmail && !isInternalMailbox(threadEmail)
+        ? listThreadMessagesByEmail(coreClient, threadEmail, 40, listOptions)
+        : Promise.resolve([]),
+      listInternalThreadMessagesForOpportunity(
+        coreClient,
+        recordId,
+        20,
+        listOptions,
+      ),
+    ]);
+
+    let threadMessages = mergeThreadMessages(byEmail, internal);
+
+    if (threadMessages.length === 0 && !person) {
+      threadMessages = await listThreadMessagesByThreadId(
+        coreClient,
+        recordId,
+        40,
+        listOptions,
+      );
+      if (threadMessages.length > 0) {
+        const featured = preferredThreadMessage(threadMessages);
+        return {
+          person,
+          replySubject: featured?.subject ?? null,
+          replyMessage: featured,
+          threadMessages,
+          contextKind: 'messageThread',
+          contextRecordId: recordId,
+        };
+      }
+    }
+
+    if (person || threadMessages.length > 0) {
+      const featured = preferredThreadMessage(threadMessages);
+      return {
+        person,
+        replySubject: featured?.subject ?? null,
+        replyMessage: featured,
+        threadMessages,
+        contextKind: 'opportunity',
+        contextRecordId: recordId,
+      };
+    }
+  }
+
+  if (email && !isInternalMailbox(email)) {
+    const threadMessages = await listThreadMessagesByEmail(
+      coreClient,
+      email,
+      40,
+      listOptions,
+    );
+    const featured = preferredThreadMessage(threadMessages);
+    return {
+      person: null,
+      replySubject: featured?.subject ?? null,
+      replyMessage: featured,
+      threadMessages,
+      contextKind: 'email',
+      contextRecordId: recordId,
+    };
+  }
+
+  return empty;
 }
 
 async function enrichReplyMessage(

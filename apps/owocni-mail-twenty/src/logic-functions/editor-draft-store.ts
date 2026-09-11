@@ -1,5 +1,14 @@
 import { CoreApiClient } from 'twenty-client-sdk/core';
 
+import {
+  COMPOSE_DRAFT_TTL_MS,
+  isComposeDraftKey,
+  mergeComposeDraft,
+  parseComposeDraft,
+  serializeComposeDraft,
+  type ComposeDraftEnvelope,
+} from 'src/utils/composeDraft';
+
 /**
  * Draft store: in-memory Map (same worker) + durable mailEditorDraft (DB).
  * Memory is primary for read-after-write within a request/worker;
@@ -7,6 +16,19 @@ import { CoreApiClient } from 'twenty-client-sdk/core';
  */
 
 const DRAFT_TTL_MS = 30 * 60 * 1000;
+const HANDOFF_PENDING_TTL_MS = 24 * 60 * 60 * 1000;
+
+export function draftTtlMs(sessionId: string): number {
+  if (isComposeDraftKey(sessionId)) {
+    return COMPOSE_DRAFT_TTL_MS;
+  }
+
+  if (sessionId.startsWith('handoff-pending:')) {
+    return HANDOFF_PENDING_TTL_MS;
+  }
+
+  return DRAFT_TTL_MS;
+}
 
 type DraftEntry = {
   html: string;
@@ -61,7 +83,7 @@ function getMemory(sessionId: string): string | null {
   if (!entry) {
     return null;
   }
-  if (Date.now() - entry.updatedAt > DRAFT_TTL_MS) {
+  if (Date.now() - entry.updatedAt > draftTtlMs(sessionId)) {
     getMemoryMap().delete(sessionId);
     return null;
   }
@@ -132,10 +154,7 @@ async function getFromDb(sessionId: string): Promise<string | null> {
 
   if (existing.updatedAt) {
     const updatedMs = Date.parse(existing.updatedAt);
-    const ttl =
-      sessionId.startsWith('handoff-pending:')
-        ? 24 * 60 * 60 * 1000
-        : DRAFT_TTL_MS;
+    const ttl = draftTtlMs(sessionId);
     if (!Number.isNaN(updatedMs) && Date.now() - updatedMs > ttl) {
       return null;
     }
@@ -177,7 +196,7 @@ export async function getEditorDraft(
   }
 }
 
-/** Always re-read DB so a cancel on another isolate wins over stale memory. */
+/** Always re-read DB so a cancel/delete on another isolate wins over stale memory. */
 export async function getEditorDraftFresh(
   sessionId: string,
 ): Promise<string | null> {
@@ -187,11 +206,20 @@ export async function getEditorDraftFresh(
       saveMemory(sessionId, fromDb);
       return fromDb;
     }
+    getMemoryMap().delete(sessionId);
+    return null;
   } catch {
-    // fall through to memory
+    return getMemory(sessionId);
   }
+}
 
-  return getMemory(sessionId);
+export async function upsertComposeDraft(
+  sessionId: string,
+  patch: Partial<ComposeDraftEnvelope>,
+): Promise<{ memory: true; db: boolean; dbError?: string }> {
+  const existing = parseComposeDraft(await getEditorDraftFresh(sessionId));
+  const next = mergeComposeDraft(existing, patch);
+  return saveEditorDraft(sessionId, serializeComposeDraft(next));
 }
 
 export async function clearEditorDraft(sessionId: string): Promise<void> {

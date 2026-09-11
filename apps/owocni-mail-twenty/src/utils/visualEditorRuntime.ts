@@ -60,6 +60,7 @@ type BuildVisualEditorSrcDocParams = {
   sessionId: string;
   draftSaveUrl: string;
   accessToken: string;
+  durableSessionId?: string;
 };
 
 export const EDITOR_TEXT_COLORS = [
@@ -110,6 +111,7 @@ export function buildVisualEditorSrcDoc({
   sessionId,
   draftSaveUrl,
   accessToken,
+  durableSessionId = '',
 }: BuildVisualEditorSrcDocParams): string {
   const content = sanitizeEditorBodyHtml(
     bodyHtml.trim() || EMPTY_EDITOR_BODY,
@@ -231,6 +233,7 @@ ${toolbarHtml()}
 <script>
 (function () {
   var sessionId = ${JSON.stringify(sessionId)};
+  var durableSessionId = ${JSON.stringify(durableSessionId)};
   var draftSaveUrl = ${JSON.stringify(draftSaveUrl)};
   var accessToken = ${JSON.stringify(accessToken)};
   var flushMessage = ${JSON.stringify(MAIL_FLUSH)};
@@ -275,6 +278,7 @@ ${toolbarHtml()}
         },
         body: JSON.stringify({
           sessionId: sessionId,
+          durableSessionId: durableSessionId || undefined,
           htmlBase64: toBase64(html),
           html: String(html).slice(0, 50000)
         })

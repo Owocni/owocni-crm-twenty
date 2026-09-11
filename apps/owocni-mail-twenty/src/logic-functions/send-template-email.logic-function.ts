@@ -3,7 +3,7 @@ import { MetadataApiClient } from 'twenty-client-sdk/metadata';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
-import { getEditorDraft, getEditorDraftFresh, saveEditorDraft } from 'src/logic-functions/editor-draft-store';
+import { getEditorDraft, getEditorDraftFresh, saveEditorDraft, clearEditorDraft } from 'src/logic-functions/editor-draft-store';
 import {
   findSendableEmailAccount,
   mapSendEmailError,
@@ -148,6 +148,7 @@ const handler = async (event: RoutePayload) => {
     );
     const internalHandoff = sendMode === 'internal';
     const isForward = sendMode === 'forward';
+    const composeDraftKey = readStringField(payload, 'composeDraftKey');
     const attachmentFiles = readAttachmentRefs(payload);
     const ccRaw = readStringField(payload, 'cc', 'ccEmails');
     const bccRaw = readStringField(payload, 'bcc', 'bccEmails');
@@ -455,6 +456,10 @@ const handler = async (event: RoutePayload) => {
 
     if (jobId) {
       await saveEditorDraft(sendJobDraftKey(jobId), 'sent');
+    }
+
+    if (composeDraftKey) {
+      await clearEditorDraft(composeDraftKey);
     }
 
     let threadAttached = false;

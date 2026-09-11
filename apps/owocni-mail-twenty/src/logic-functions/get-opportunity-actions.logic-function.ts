@@ -2,7 +2,11 @@ import { CoreApiClient } from 'twenty-client-sdk/core';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
-import { findOpportunityForActions } from 'src/utils/opportunityActionApi';
+import {
+  findCompanyForInvoice,
+  findOpportunityForActions,
+} from 'src/utils/opportunityActionApi';
+import { invoiceActionHints } from 'src/utils/opportunityActions';
 
 const handler = async (event: RoutePayload) => {
   const recordId =
@@ -23,6 +27,9 @@ const handler = async (event: RoutePayload) => {
     return { ok: false, error: 'opportunity not found' };
   }
 
+  const company = opportunity.companyId
+    ? await findCompanyForInvoice(new CoreApiClient(), opportunity.companyId)
+    : null;
   return {
     ok: true,
     recordId: opportunity.id,
@@ -32,13 +39,19 @@ const handler = async (event: RoutePayload) => {
     rejectionReason: opportunity.rejectionReason,
     isFollowUp: opportunity.isFollowUp,
     snoozeUntil: opportunity.snoozeUntil,
+    ...invoiceActionHints({
+      companyId: opportunity.companyId,
+      companyName: company?.name ?? null,
+      company,
+      opportunityNip: opportunity.nip,
+    }),
   };
 };
 
 export default defineLogicFunction({
   universalIdentifier: 'd19d627f-10c4-43e6-81af-62a2d3709fc5',
   name: 'get-opportunity-actions',
-  description: 'SQL / reject status for the Opportunity record-page strip',
+  description: 'SQL / reject / GUS / faktura status for the Opportunity strip',
   timeoutSeconds: 20,
   handler,
   httpRouteTriggerSettings: {

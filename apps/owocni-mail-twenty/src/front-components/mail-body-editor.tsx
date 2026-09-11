@@ -42,6 +42,7 @@ type MailBodyEditorProps = {
   onChange: (html: string) => void;
   disabled?: boolean;
   sessionId: string;
+  durableSessionId?: string;
 };
 
 export type MailBodyEditorHandle = {
@@ -120,6 +121,7 @@ function pickEdited(
 async function writeServerDraft(
   sessionId: string,
   html: string,
+  durableSessionId?: string,
 ): Promise<{ ok: boolean; db?: boolean; error?: string }> {
   if (!html.trim()) {
     return { ok: false, error: 'empty' };
@@ -134,6 +136,7 @@ async function writeServerDraft(
       error?: string;
     }>(EDITOR_DRAFT_PATH, {
       sessionId,
+      ...(durableSessionId ? { durableSessionId } : {}),
       htmlBase64: encodeBase64Utf8(html),
       html: html.slice(0, 50_000),
     });
@@ -172,7 +175,7 @@ async function fetchDraftFromServer(sessionId: string): Promise<string | null> {
 
 export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorProps>(
   function MailBodyEditor(
-    { value, onChange, disabled = false, sessionId },
+    { value, onChange, disabled = false, sessionId, durableSessionId },
     ref,
   ) {
     const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -255,6 +258,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
         const doc = buildVisualEditorSrcDoc({
           bodyHtml: html,
           sessionId,
+          durableSessionId,
           draftSaveUrl: draftUrl,
           accessToken: token,
         });
@@ -267,13 +271,17 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
           appOrigin: resolveAppOrigin(),
         });
       },
-      [sessionId],
+      [sessionId, durableSessionId],
     );
 
     const setHtml = useCallback(
       (html: string) => {
         const normalized = applyHtml(html);
-        void writeServerDraft(sessionId, normalized || EMPTY_BODY);
+        void writeServerDraft(
+          sessionId,
+          normalized || EMPTY_BODY,
+          durableSessionId,
+        );
         try {
           iframeRef.current?.contentWindow?.postMessage(
             { type: MAIL_SET_HTML, html: normalized || EMPTY_BODY },
@@ -286,7 +294,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
           mountSrcDoc(normalized || EMPTY_BODY, token);
         });
       },
-      [applyHtml, mountSrcDoc, sessionId],
+      [applyHtml, mountSrcDoc, sessionId, durableSessionId],
     );
 
     useImperativeHandle(
@@ -317,7 +325,11 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
       mountSrcDoc(value, '');
 
       const boot = async () => {
-        const seed = await writeServerDraft(sessionId, value);
+        const seed = await writeServerDraft(
+          sessionId,
+          value,
+          durableSessionId,
+        );
         if (cancelled) {
           return;
         }
@@ -348,7 +360,7 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
         cancelled = true;
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sessionId, value.length > 0 ? 'has-content' : 'empty']);
+    }, [sessionId, durableSessionId, value.length > 0 ? 'has-content' : 'empty']);
 
     const switchMode = async (next: EditorMode) => {
       if (next === mode || switching) {
@@ -486,7 +498,11 @@ export const MailBodyEditor = forwardRef<MailBodyEditorHandle, MailBodyEditorPro
               disabled={disabled}
               onChange={(event) => {
                 applyHtml(event.target.value);
-                void writeServerDraft(sessionId, event.target.value);
+                void writeServerDraft(
+                  sessionId,
+                  event.target.value,
+                  durableSessionId,
+                );
               }}
               spellCheck={false}
               aria-label="Kod HTML maila"

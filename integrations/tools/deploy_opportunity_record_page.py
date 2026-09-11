@@ -51,6 +51,7 @@ LEAD_FIELDS = [
     "pointOfContact",
     "bizCardEmail",
     "bizCardPhone",
+    "nip",
     "company",
     "owner",
     "closeDate",
@@ -97,8 +98,6 @@ OWOCNI_MAIL_APPLICATION_ID = "50ae173b-ddda-496f-83e1-1fc3692ce454"
 # Native SQL/reject stay unpinned — they cannot hide after the field is set.
 ACTION_ORDER = [
     ("9244c456-43c6-4ff4-9e05-69b5a4582074", 0.01, True, "Odpowiedz"),
-    ("3ecc17a4-ea44-4d88-a29a-2e7ad9d73f5d", 0.03, True, "Opportunity · Wystaw dokument"),
-    ("a17d3a9c-43e7-441c-9ee3-0393ff4cb5ea", 0.04, True, "Global · Wystaw fakturę"),
     ("4764d3cb-022e-483f-8d0c-5e85c17bc684", 0.06, True, "Scal z leadem"),
 ]
 APP_ACTION_LABELS = [
@@ -107,10 +106,13 @@ APP_ACTION_LABELS = [
 ]
 # Same FC as the opportunity-scoped Odpowiedz — would duplicate on the lead card.
 # Native SQL / Odrzuć — always-visible workflow buttons, replaced by app items.
+# Invoice workflows — replaced by the Home-tab strip (GUS + Wystaw dokument).
 UNPIN_COMMAND_IDS = [
     "eb0435cc-af83-48b6-bd81-75a1606d16c1",  # Odpowiedz, no object scope
     "4793020a-3da3-44d8-b2f1-4f0e559a087d",  # native Przyjmij jako SQL
     "6612f8e6-0a1e-4797-b8be-13a03361a86b",  # native Odrzuć leada
+    "3ecc17a4-ea44-4d88-a29a-2e7ad9d73f5d",  # Opportunity · Wystaw dokument
+    "a17d3a9c-43e7-441c-9ee3-0393ff4cb5ea",  # Global · Wystaw fakturę
 ]
 
 CONFIG_PATH = pathlib.Path.home() / ".twenty" / "config.json"

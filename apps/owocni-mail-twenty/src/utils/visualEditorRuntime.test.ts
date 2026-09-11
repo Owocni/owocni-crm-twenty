@@ -30,6 +30,19 @@ describe('buildVisualEditorSrcDoc', () => {
     expect(html).toContain('contenteditable="true"');
   });
 
+  it('dual-writes typed HTML to the durable compose key', () => {
+    const html = buildVisualEditorSrcDoc({
+      bodyHtml: '<p>cześć</p>',
+      sessionId: 'sess',
+      durableSessionId: 'compose:marta%40owocni.pl:opp-1',
+      draftSaveUrl: 'https://example.com/s/mail/editor-draft',
+      accessToken: 'tok',
+    });
+
+    expect(html).toContain('compose:marta%40owocni.pl:opp-1');
+    expect(html).toContain('durableSessionId');
+  });
+
   it('follows the caret after paste instead of jumping to the mail end', () => {
     const html = buildVisualEditorSrcDoc({
       bodyHtml: '<p>cześć</p>',

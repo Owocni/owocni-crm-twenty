@@ -12,6 +12,7 @@ const {
   patchTwentyRecord,
   buildTwentyListPath,
   parseTwentyListRecords,
+  getCompanyById,
 } = require("../shared/twentyRest");
 const { fetchGusEnrichment, isSandboxKey } = require("../shared/gusBir");
 
@@ -52,7 +53,7 @@ function pendingKey(companyId) {
   return `${companyId}:${todayYmd()}`;
 }
 
-async function createNoteOnCompany(companyId, title, markdown) {
+async function createNoteOnCompany(companyId, title, markdown, opportunityId) {
   const noteRes = await twentyRequest("POST", "/notes", {
     title,
     bodyV2: { markdown },
@@ -63,11 +64,135 @@ async function createNoteOnCompany(companyId, title, markdown) {
   }
   const noteId = extractCreatedId("notes", noteRes.body);
   if (!noteId) return null;
-  await twentyRequest("POST", "/noteTargets", {
-    noteId,
-    companyId,
-  }).catch((err) => console.error("enrich noteTarget failed", err.message));
+  if (companyId) {
+    await twentyRequest("POST", "/noteTargets", {
+      noteId,
+      companyId,
+    }).catch((err) => console.error("enrich noteTarget failed", err.message));
+  }
+  if (opportunityId) {
+    await twentyRequest("POST", "/noteTargets", {
+      noteId,
+      opportunityId,
+    }).catch((err) => console.error("enrich opp noteTarget failed", err.message));
+  }
   return noteId;
+}
+
+function pickPreferredNip(...candidates) {
+  for (const raw of candidates) {
+    const n = normalizeId(raw);
+    if (n && nipChecksumOk(n)) return n;
+  }
+  return "";
+}
+
+async function getOpportunityById(opportunityId) {
+  const id = String(opportunityId || "").trim();
+  if (!id) return null;
+  const res = await twentyRequest(
+    "GET",
+    `/opportunities/${encodeURIComponent(id)}`,
+  );
+  if (res.statusCode === 404) return null;
+  if (res.statusCode < 200 || res.statusCode >= 300) {
+    throw new Error(`get opportunity HTTP ${res.statusCode} ${res.rawBody}`);
+  }
+  return res.body?.data?.opportunity || res.body?.data || null;
+}
+
+async function createCompanyWithNip(nip) {
+  const res = await twentyRequest("POST", "/companies", {
+    name: `NIP ${nip}`,
+    nip,
+  });
+  if (res.statusCode >= 200 && res.statusCode < 300) {
+    const id =
+      res.body?.data?.createCompany?.id ||
+      res.body?.data?.company?.id ||
+      extractCreatedId("companies", res.body);
+    if (id) return id;
+    throw new Error(`create company: no id ${res.rawBody}`);
+  }
+  const matches = await findCompanyByNip(nip);
+  if (matches[0]?.id) return matches[0].id;
+  throw new Error(`create company HTTP ${res.statusCode} ${res.rawBody}`);
+}
+
+/**
+ * Lead NIP wins when valid. No company → find-or-create by NIP and attach.
+ * Attached company with a different NIP → attach the taxpayer for the lead NIP
+ * instead of overwriting the existing company.
+ */
+async function resolveCompanyForLead(record) {
+  const opportunityId = String(record.opportunityId || "").trim();
+  let companyId = String(record.companyId || record.id || "").trim();
+  let opportunity = null;
+  if (opportunityId) {
+    opportunity = await getOpportunityById(opportunityId);
+    if (!companyId) {
+      companyId = String(
+        opportunity?.companyId || opportunity?.company?.id || "",
+      ).trim();
+    }
+  }
+  const company = companyId ? await getCompanyById(companyId) : null;
+  const nip = pickPreferredNip(opportunity?.nip, record.nip, company?.nip);
+  if (!nip) {
+    return {
+      ok: false,
+      skipped: "no_identifier",
+      error: "uzupełnij NIP",
+      companyId: companyId || null,
+      opportunityId: opportunityId || null,
+    };
+  }
+
+  const matches = await findCompanyByNip(nip);
+  const existing = matches[0] || null;
+  const companyNip = company ? normalizeId(company.nip) : "";
+  const companyNipOk = Boolean(companyNip && nipChecksumOk(companyNip));
+
+  let targetId = companyId;
+  let created = false;
+  let relinked = false;
+
+  if (!targetId) {
+    targetId = existing?.id || (await createCompanyWithNip(nip));
+    created = !existing;
+    if (opportunityId) {
+      await patchTwentyRecord("opportunities", opportunityId, {
+        companyId: targetId,
+      });
+      relinked = true;
+    }
+  } else if (existing && existing.id !== targetId) {
+    targetId = existing.id;
+    if (opportunityId) {
+      await patchTwentyRecord("opportunities", opportunityId, {
+        companyId: targetId,
+      });
+    }
+    relinked = true;
+  } else if (companyNipOk && companyNip !== nip) {
+    targetId = existing?.id || (await createCompanyWithNip(nip));
+    created = !existing;
+    if (opportunityId) {
+      await patchTwentyRecord("opportunities", opportunityId, {
+        companyId: targetId,
+      });
+    }
+    relinked = true;
+  }
+
+  return {
+    ok: true,
+    companyId: targetId,
+    nip,
+    opportunityId: opportunityId || null,
+    created,
+    relinked,
+  };
 }
 
 function mapVatStatus(raw) {
@@ -190,20 +315,23 @@ async function findCompanyByNip(nip) {
 
 async function enrichOne(record) {
   const companyId = String(record.companyId || record.id || "").trim();
+  const opportunityId = String(record.opportunityId || "").trim() || null;
   if (!companyId) return { ok: false, error: "missing companyId" };
 
   const nip = normalizeId(record.nip);
   const regon = normalizeId(record.regon);
   const krs = normalizeId(record.krs);
   const hasIdentifier = Boolean(nip || regon || krs);
+  const company = await getCompanyById(companyId);
 
   if (!hasIdentifier) {
     await createNoteOnCompany(
       companyId,
       "Enrich: brak identyfikatora",
-      "Uzupełnij **NIP** (z maila / faktury) i kliknij ponownie „Uzupełnij dane (GUS/KRS)”.",
+      "Uzupełnij **NIP** na leadzie (albo na Firmie) i kliknij ponownie „Uzupełnij dane (GUS/KRS)”.",
+      opportunityId,
     );
-    return { ok: false, skipped: "no_identifier", companyId };
+    return { ok: false, skipped: "no_identifier", companyId, opportunityId };
   }
 
   if (nip && !nipChecksumOk(nip)) {
@@ -211,13 +339,14 @@ async function enrichOne(record) {
       companyId,
       "Enrich: błędny NIP",
       `NIP \`${nip}\` nie przechodzi sumy kontrolnej. Popraw i kliknij ponownie.`,
+      opportunityId,
     );
-    return { ok: false, skipped: "bad_nip", companyId, nip };
+    return { ok: false, skipped: "bad_nip", companyId, nip, opportunityId };
   }
 
   const pk = pendingKey(companyId);
   if (PENDING.has(pk)) {
-    return { ok: true, skipped: "pending_today", companyId };
+    return { ok: true, skipped: "pending_today", companyId, opportunityId };
   }
   PENDING.set(pk, true);
 
@@ -233,9 +362,10 @@ async function enrichOne(record) {
         companyId,
         "Enrich: konflikt NIP",
         `NIP \`${nip}\` już istnieje na rekordzie [${other.name || other.id}](/object/company/${other.id}). Scal ręcznie — zero auto-merge.`,
+        opportunityId,
       );
       PENDING.delete(pk);
-      return { ok: false, skipped: "nip_unique_conflict", companyId, nip, otherId: other.id };
+      return { ok: false, skipped: "nip_unique_conflict", companyId, nip, otherId: other.id, opportunityId };
     }
     patch.nip = nip;
   }
@@ -322,6 +452,12 @@ async function enrichOne(record) {
   const day = todayYmd();
   patch.enrichedAt = new Date().toISOString();
   patch.enrichmentSource = `gov-direct ${day}${sources.length ? ` [${sources.join(",")}]` : ""}`;
+  if (patch.legalName) {
+    const currentName = String(company?.name || "").trim();
+    if (!currentName || currentName === nip || currentName === `NIP ${nip}`) {
+      patch.name = patch.legalName;
+    }
+  }
 
   try {
     await patchTwentyRecord("companies", companyId, patch);
@@ -331,8 +467,9 @@ async function enrichOne(record) {
       companyId,
       "Enrich FAILED",
       `Zapis do Twenty nieudany: ${err.message}`,
+      opportunityId,
     );
-    return { ok: false, error: err.message, companyId };
+    return { ok: false, error: err.message, companyId, opportunityId };
   }
 
   if (notes.length) {
@@ -340,12 +477,14 @@ async function enrichOne(record) {
       companyId,
       "Enrich: uwagi",
       notes.map((n) => `- ${n}`).join("\n"),
+      opportunityId,
     );
   }
 
   return {
     ok: true,
     companyId,
+    opportunityId,
     fields: Object.keys(patch),
     notes,
     sources,
@@ -354,7 +493,8 @@ async function enrichOne(record) {
 
 /**
  * HTTP entry: action enrich_company_pl
- * Body: { records: [{ companyId, nip?, regon?, krs? }], mode?: single|bulk }
+ * Body: { records: [{ companyId?, opportunityId?, nip?, regon?, krs? }], mode?: single|bulk }
+ * Lead NIP (opportunity.nip) wins over Company.nip. Missing company → find-or-create by NIP.
  */
 async function handleEnrichCompanyPl(req) {
   if (!enrichTokenOk(req)) {
@@ -363,7 +503,7 @@ async function handleEnrichCompanyPl(req) {
 
   const body = req.body && typeof req.body === "object" ? req.body : {};
   let records = Array.isArray(body.records) ? body.records : null;
-  if (!records && (body.companyId || body.id)) {
+  if (!records && (body.companyId || body.id || body.opportunityId)) {
     records = [body];
   }
   if (!records || !records.length) {
@@ -378,11 +518,26 @@ async function handleEnrichCompanyPl(req) {
   const results = [];
   for (const rec of capped) {
     try {
-      results.push(await enrichOne(rec));
+      const resolved = await resolveCompanyForLead(rec);
+      if (!resolved.ok) {
+        results.push(resolved);
+      } else {
+        const enriched = await enrichOne({
+          companyId: resolved.companyId,
+          nip: resolved.nip,
+          opportunityId: resolved.opportunityId,
+        });
+        results.push({
+          ...enriched,
+          created: resolved.created,
+          relinked: resolved.relinked,
+        });
+      }
     } catch (err) {
       results.push({
         ok: false,
         companyId: rec.companyId || rec.id,
+        opportunityId: rec.opportunityId,
         error: err.message,
       });
     }
@@ -404,6 +559,8 @@ async function handleEnrichCompanyPl(req) {
 module.exports = {
   handleEnrichCompanyPl,
   enrichOne,
+  resolveCompanyForLead,
+  pickPreferredNip,
   nipChecksumOk,
   normalizeId,
 };

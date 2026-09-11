@@ -74,6 +74,16 @@ describe('buildUnmountSendBody', () => {
     expect(body.to).toBe('test234@fastman.eu');
     expect(buildUnmountSendBody(huge).length).toBeLessThan(KEEPALIVE_BODY_LIMIT);
   });
+
+  it('forwards composeDraftKey so a successful send can drop the reply draft', () => {
+    const body = JSON.parse(
+      armedSendJson(
+        sampleArmed({ composeDraftKey: 'compose:marta%40owocni.pl:opp-1' }),
+      ),
+    ) as { composeDraftKey?: string };
+
+    expect(body.composeDraftKey).toBe('compose:marta%40owocni.pl:opp-1');
+  });
 });
 
 describe('buildDelayedSendBody', () => {

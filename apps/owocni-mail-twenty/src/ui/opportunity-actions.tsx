@@ -11,6 +11,7 @@ import {
 
 import {
   REJECTION_REASONS,
+  mergeOpportunityActionStatus,
   rejectedChipLabel,
   sqlConfirmedChipLabel,
   type OpportunityActionStatus,
@@ -19,10 +20,14 @@ import {
 
 export const OPPORTUNITY_ACTIONS_PATH = '/s/mail/opportunity-actions';
 
+type InvoiceKind = 'proforma' | 'vat';
+
 type ActionResponse = OpportunityActionStatus & {
   ok?: boolean;
   error?: string;
   alreadyDone?: boolean;
+  invoiceNumber?: string;
+  invoiceUrl?: string;
 };
 
 function readError(error: unknown): string {
@@ -47,42 +52,27 @@ async function loadStatus(recordId: string): Promise<OpportunityActionStatus> {
     throw new Error(data?.error || 'Nie udało się wczytać statusu');
   }
 
-  return {
-    recordId,
-    bizSqlConfirmed: Boolean(data.bizSqlConfirmed),
-    bizSqlConfirmedAt: data.bizSqlConfirmedAt ?? null,
-    campaignRejected: Boolean(data.campaignRejected),
-    rejectionReason: data.rejectionReason ?? null,
-    isFollowUp: Boolean(data.isFollowUp),
-    snoozeUntil: data.snoozeUntil ?? null,
-  };
+  return mergeOpportunityActionStatus(recordId, data);
 }
 
 async function runAction(
   recordId: string,
-  action: 'sql' | 'reject',
-  rejectionReason?: RejectionReason,
-): Promise<OpportunityActionStatus> {
+  action: 'sql' | 'reject' | 'enrich' | 'issue',
+  extra?: { rejectionReason?: RejectionReason; kind?: InvoiceKind },
+): Promise<ActionResponse> {
   const client = new RestApiClient();
   const data = await client.post<ActionResponse>(OPPORTUNITY_ACTIONS_PATH, {
     recordId,
     action,
-    ...(rejectionReason ? { rejectionReason } : {}),
+    ...(extra?.rejectionReason ? { rejectionReason: extra.rejectionReason } : {}),
+    ...(extra?.kind ? { kind: extra.kind } : {}),
   });
 
   if (!data?.ok) {
     throw new Error(data?.error || 'Nie udało się zapisać');
   }
 
-  return {
-    recordId,
-    bizSqlConfirmed: Boolean(data.bizSqlConfirmed),
-    bizSqlConfirmedAt: data.bizSqlConfirmedAt ?? null,
-    campaignRejected: Boolean(data.campaignRejected),
-    rejectionReason: data.rejectionReason ?? null,
-    isFollowUp: Boolean(data.isFollowUp),
-    snoozeUntil: data.snoozeUntil ?? null,
-  };
+  return { ...mergeOpportunityActionStatus(recordId, data), ...data };
 }
 
 const chipStyle = (dark: boolean, disabled: boolean): CSSProperties => ({
@@ -169,7 +159,9 @@ export const RejectLeadForm = () => {
 
     setBusy(true);
     try {
-      const result = await runAction(recordId, 'reject', reason);
+      const result = await runAction(recordId, 'reject', {
+        rejectionReason: reason,
+      });
       await enqueueSnackbar({
         message: rejectedChipLabel(result.rejectionReason),
         variant: 'success',
@@ -248,8 +240,11 @@ export const OpportunityActionsStrip = () => {
   const dark = useColorScheme() === 'dark';
   const recordId = useSelectedRecordIds()[0] ?? null;
   const [status, setStatus] = useState<OpportunityActionStatus | null>(null);
-  const [busy, setBusy] = useState<'sql' | 'reject' | null>(null);
+  const [busy, setBusy] = useState<'sql' | 'reject' | 'enrich' | 'issue' | null>(
+    null,
+  );
   const [reason, setReason] = useState<RejectionReason>('BUDGET');
+  const [kind, setKind] = useState<InvoiceKind>('proforma');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -326,10 +321,72 @@ export const OpportunityActionsStrip = () => {
 
     setBusy('reject');
     try {
-      const next = await runAction(recordId, 'reject', reason);
+      const next = await runAction(recordId, 'reject', {
+        rejectionReason: reason,
+      });
       setStatus(next);
       await enqueueSnackbar({
         message: rejectedChipLabel(next.rejectionReason),
+        variant: 'success',
+      });
+    } catch (caught) {
+      setError(readError(caught));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const onEnrich = async () => {
+    if (!recordId || busy || !status?.hasNip) {
+      return;
+    }
+
+    setBusy('enrich');
+    try {
+      const next = await runAction(recordId, 'enrich');
+      setStatus(next);
+      setError(null);
+      await enqueueSnackbar({
+        message: next.invoiceReady
+          ? 'Dane firmy uzupełnione — można wystawić dokument'
+          : 'Dane dociągnięte. Sprawdź NIP / adres na Firmie.',
+        variant: 'success',
+      });
+    } catch (caught) {
+      setError(readError(caught));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const onIssue = async () => {
+    if (!recordId || busy || !status?.invoiceReady) {
+      return;
+    }
+
+    const kindLabel = kind === 'vat' ? 'Fakturę VAT' : 'Proformę';
+    const confirmed = await openCommandConfirmationModal({
+      title: `Wystaw ${kindLabel.toLowerCase()}`,
+      subtitle:
+        kind === 'vat'
+          ? 'Dokument powstanie w Fakturowni. KSeF DEMO — nie idzie do urzędu. Wysyłka dopiero po zatwierdzeniu w Fakturowni.'
+          : 'Proforma w Fakturowni, bez KSeF. Po opłaceniu konwersja do VAT w Fakturowni.',
+      confirmButtonText: `Wystaw ${kindLabel.toLowerCase()}`,
+    });
+    if (confirmed !== 'confirm') {
+      return;
+    }
+
+    setBusy('issue');
+    try {
+      const next = await runAction(recordId, 'issue', { kind });
+      setStatus(next);
+      setError(null);
+      const number = next.invoiceNumber || 'dokument';
+      await enqueueSnackbar({
+        message: next.invoiceUrl
+          ? `Wystawiono ${number} — otwórz w Fakturowni z notatki na karcie`
+          : `Wystawiono ${number}`,
         variant: 'success',
       });
     } catch (caught) {
@@ -410,6 +467,88 @@ export const OpportunityActionsStrip = () => {
             </button>
           </div>
         )}
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 8,
+          alignItems: 'center',
+        }}
+      >
+        <button
+          type="button"
+          disabled={busy !== null || !status?.hasNip}
+          onClick={() => void onEnrich()}
+          title={
+            status?.enrichHint ||
+            (status?.invoiceReady
+              ? 'Ponownie dociąga GUS / KRS / MF na Firmę'
+              : 'Dociąga GUS / KRS / MF na Firmę')
+          }
+          style={chipStyle(dark, busy !== null || !status?.hasNip)}
+        >
+          {busy === 'enrich'
+            ? 'Dociągam…'
+            : status?.enrichLabel || 'Uzupełnij dane (GUS/KRS)'}
+        </button>
+        {status?.enrichHint ? (
+          <span
+            style={{
+              fontSize: 12,
+              color: dark ? '#a1a1aa' : '#71717a',
+            }}
+          >
+            {status.enrichHint}
+          </span>
+        ) : null}
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 8,
+          alignItems: 'center',
+        }}
+      >
+        <select
+          value={kind}
+          onChange={(event) => setKind(event.target.value as InvoiceKind)}
+          disabled={busy !== null || !status?.invoiceReady}
+          style={{
+            height: 32,
+            borderRadius: 8,
+            border: `1px solid ${dark ? '#3f3f46' : '#d4d4d8'}`,
+            background: dark ? '#18181b' : '#fff',
+            color: dark ? '#fafafa' : '#18181b',
+            padding: '0 8px',
+            fontSize: 12,
+          }}
+        >
+          <option value="proforma">Proforma</option>
+          <option value="vat">Faktura VAT</option>
+        </select>
+        <button
+          type="button"
+          disabled={busy !== null || !status?.invoiceReady}
+          onClick={() => void onIssue()}
+          title={status?.issueHint || 'Tworzy dokument w Fakturowni'}
+          style={chipStyle(dark, busy !== null || !status?.invoiceReady)}
+        >
+          {busy === 'issue' ? 'Wystawiam…' : 'Wystaw dokument'}
+        </button>
+        {status?.issueHint ? (
+          <span
+            style={{
+              fontSize: 12,
+              color: dark ? '#a1a1aa' : '#71717a',
+            }}
+          >
+            {status.issueHint}
+          </span>
+        ) : null}
       </div>
       {error ? (
         <div style={{ fontSize: 12, color: '#b91c1c' }}>{error}</div>

@@ -6,6 +6,7 @@ import {
   extractEmailFromHandle,
   isInternalMailbox,
   mailboxFromDisplay,
+  mergeThreadMessages,
   personFromParticipants,
   preferredThreadMessage,
 } from './personContext';
@@ -255,5 +256,42 @@ describe('preferredThreadMessage', () => {
       bounceReason: 'invalid' as const,
     };
     expect(preferredThreadMessage([outbound, bounce])?.messageId).toBe('bounce');
+  });
+});
+
+describe('mergeThreadMessages', () => {
+  const client = {
+    messageId: 'client-1',
+    fromEmail: 'biuro@tela.pl',
+    fromLabel: 'Tela',
+    subject: 'Zapytanie',
+    receivedAt: '2026-09-10T12:00:00.000Z',
+    text: '',
+    direction: 'in' as const,
+    channel: 'client' as const,
+  };
+  const internal = {
+    messageId: 'int-1',
+    fromEmail: 'gosia@owocni.pl',
+    fromLabel: 'gosia@owocni.pl',
+    subject: '[Wewnętrzne] wątek leada',
+    receivedAt: '2026-09-10T13:00:00.000Z',
+    text: '',
+    direction: 'out' as const,
+    channel: 'internal' as const,
+  };
+
+  it('keeps client mail and appends a newer internal thread', () => {
+    const merged = mergeThreadMessages([client], [internal]);
+    expect(merged.map((message) => message.messageId)).toEqual([
+      'int-1',
+      'client-1',
+    ]);
+  });
+
+  it('does not duplicate the same messageId', () => {
+    const merged = mergeThreadMessages([client], [{ ...client, text: 'full' }]);
+    expect(merged).toHaveLength(1);
+    expect(merged[0]?.text).toBe('');
   });
 });

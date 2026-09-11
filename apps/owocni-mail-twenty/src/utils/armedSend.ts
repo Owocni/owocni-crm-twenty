@@ -18,6 +18,7 @@ export type ArmedSendPayload = {
   files: Array<{ id: string; name: string }>;
   accessToken: string;
   draftSessionId?: string;
+  composeDraftKey?: string;
 };
 
 export function armedSendFields(payload: ArmedSendPayload) {
@@ -33,6 +34,9 @@ export function armedSendFields(payload: ArmedSendPayload) {
     ...(payload.mode ? { mode: payload.mode } : {}),
     ...(payload.opportunityId ? { opportunityId: payload.opportunityId } : {}),
     files: payload.files,
+    ...(payload.composeDraftKey
+      ? { composeDraftKey: payload.composeDraftKey }
+      : {}),
   };
 }
 

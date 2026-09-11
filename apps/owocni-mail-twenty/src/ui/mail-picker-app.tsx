@@ -33,6 +33,7 @@ import {
   scrapeHostMailContext,
   writeCachedMailContext,
 } from 'src/utils/hostMailContext';
+import { shouldUseStagedThreadLoad } from 'src/utils/stagedThreadLoad';
 import { emailBodyToDisplayText } from 'src/utils/emailBodyText';
 import {
   preferredThreadMessage,
@@ -69,7 +70,12 @@ import {
   type ArmedSendPayload,
 } from 'src/utils/armedSend';
 import { resolveAccessToken } from 'src/utils/resolveAccessToken';
-import { resolveRestApiUrl } from 'src/utils/editorDraftApi';
+import { EDITOR_DRAFT_PATH, resolveRestApiUrl } from 'src/utils/editorDraftApi';
+import {
+  composeDraftKey,
+  isMeaningfulComposeDraft,
+  parseComposeDraft,
+} from 'src/utils/composeDraft';
 import { resolveSendSubject, toReplySubject } from 'src/utils/replySubject';
 import {
   emailsExcluding,
@@ -309,30 +315,21 @@ type OriginalMessageBodyProps = {
   replyMessage: ReplyMessagePreview | null;
   replySubject: string | null;
   fillHeight?: boolean;
+  bodyLoading?: boolean;
 };
 
 const OriginalMessageBody = ({
   replyMessage,
   replySubject,
   fillHeight = false,
+  bodyLoading = false,
 }: OriginalMessageBodyProps) => {
   const displayText = emailBodyToDisplayText(replyMessage?.text);
-  if (!displayText) {
-    return (
-      <div
-        style={{
-          marginTop: fillHeight ? 0 : 8,
-          fontSize: 12,
-          color: '#64748b',
-          lineHeight: 1.45,
-          padding: fillHeight ? 12 : 0,
-        }}
-      >
-        Treść wiadomości nie jest dostępna w CRM
-        {fillHeight ? '.' : ' — sprawdź wątek maili po lewej stronie.'}
-      </div>
-    );
-  }
+  const emptyHint = bodyLoading
+    ? 'Ładuję treść…'
+    : fillHeight
+      ? 'Treść wiadomości nie jest dostępna w CRM.'
+      : 'Treść wiadomości nie jest dostępna w CRM — sprawdź wątek maili po lewej stronie.';
 
   return (
     <div
@@ -349,7 +346,7 @@ const OriginalMessageBody = ({
         boxSizing: 'border-box',
       }}
     >
-      {replyMessage.fromLabel || replyMessage.fromEmail ? (
+      {replyMessage?.fromLabel || replyMessage?.fromEmail ? (
         <div style={{ marginBottom: 4, flexShrink: 0 }}>
           <strong>Od:</strong> {replyMessage.fromLabel}
           {replyMessage.fromEmail &&
@@ -358,34 +355,47 @@ const OriginalMessageBody = ({
             : ''}
         </div>
       ) : null}
-      {replyMessage.receivedAt ? (
+      {replyMessage?.receivedAt ? (
         <div style={{ marginBottom: 4, flexShrink: 0 }}>
           <strong>Data:</strong> {formatMessageDate(replyMessage.receivedAt)}
         </div>
       ) : null}
-      {(replyMessage.subject || replySubject) && (
+      {(replyMessage?.subject || replySubject) && (
         <div style={{ marginBottom: 8, flexShrink: 0 }}>
           <strong>Temat:</strong>{' '}
-          {replyMessage.subject || toReplySubject(replySubject ?? '')}
+          {replyMessage?.subject || toReplySubject(replySubject ?? '')}
         </div>
       )}
-      <div
-        style={{
-          maxHeight: fillHeight ? undefined : 220,
-          flex: fillHeight ? 1 : undefined,
-          minHeight: 0,
-          overflowY: 'auto',
-          whiteSpace: 'pre-wrap',
-          overflowWrap: 'break-word',
-          wordBreak: 'break-word',
-          padding: '10px 12px',
-          borderRadius: 4,
-          background: '#fff',
-          border: '1px solid #e2e8f0',
-        }}
-      >
-        {displayText}
-      </div>
+      {displayText ? (
+        <div
+          style={{
+            maxHeight: fillHeight ? undefined : 220,
+            flex: fillHeight ? 1 : undefined,
+            minHeight: 0,
+            overflowY: 'auto',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'break-word',
+            wordBreak: 'break-word',
+            padding: '10px 12px',
+            borderRadius: 4,
+            background: '#fff',
+            border: '1px solid #e2e8f0',
+          }}
+        >
+          {displayText}
+        </div>
+      ) : (
+        <div
+          style={{
+            fontSize: 12,
+            color: '#64748b',
+            lineHeight: 1.45,
+          }}
+          aria-live="polite"
+        >
+          {emptyHint}
+        </div>
+      )}
     </div>
   );
 };
@@ -407,6 +417,7 @@ type ThreadPaneProps = {
   messages: ThreadMessage[];
   featured: boolean;
   loading?: boolean;
+  bodyLoading?: boolean;
   loadingLabel?: string;
   onSelect?: (message: ThreadMessage) => void;
 };
@@ -422,6 +433,7 @@ const ThreadPane = ({
   messages,
   featured,
   loading = false,
+  bodyLoading = false,
   loadingLabel = 'Trwa ładowanie wątku…',
   onSelect,
 }: ThreadPaneProps) => {
@@ -505,6 +517,7 @@ const ThreadPane = ({
               replyMessage={threadMessageToPreview(selected)}
               replySubject={selected.subject}
               fillHeight={featured}
+              bodyLoading={bodyLoading}
             />
           </>
         ) : (
@@ -1011,6 +1024,7 @@ export const TemplatePicker = ({
   const [connectedAccountHandle, setConnectedAccountHandle] = useState<
     string | null
   >(null);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const [connectedAccountId, setConnectedAccountId] = useState<string | null>(
     null,
   );
@@ -1044,6 +1058,7 @@ export const TemplatePicker = ({
   const [resolvedRecordId, setResolvedRecordId] = useState<string | null>(null);
   const [subjectFromTemplate, setSubjectFromTemplate] = useState(false);
   const [loadingList, setLoadingList] = useState(true);
+  const [hydratingBody, setHydratingBody] = useState(false);
   const [loadingDraft, setLoadingDraft] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendPreparing, setSendPreparing] = useState(false);
@@ -1063,6 +1078,7 @@ export const TemplatePicker = ({
   const [composeRequested, setComposeRequested] = useState(false);
   const [panelWidth, setPanelWidth] = useState(0);
   const [draftError, setDraftError] = useState<string | null>(null);
+  const [durableReady, setDurableReady] = useState(false);
   const [listError, setListError] = useState<string | null>(null);
   const [replyMessageId, setReplyMessageId] = useState<string | null>(null);
   const [replyMessage, setReplyMessage] = useState<ReplyMessagePreview | null>(
@@ -1086,6 +1102,11 @@ export const TemplatePicker = ({
     executionRecordId ||
     contextRecordId ||
     null;
+  const restoringDraftRef = useRef(false);
+  const restoredComposeKeyRef = useRef<string | null>(null);
+  const prevComposeRecordIdRef = useRef<string | null>(null);
+  const editBodyHtmlRef = useRef(editBodyHtml);
+  editBodyHtmlRef.current = editBodyHtml;
   const isRecordCompose = isRecordPage && composeRequested;
   const isMailboxCompose = isMailboxRecordPage && mailboxComposing;
   const isPageCompose = isRecordCompose || isMailboxCompose;
@@ -1107,6 +1128,11 @@ export const TemplatePicker = ({
     person?.id && person.id !== 'scraped'
       ? person.id
       : resolvedRecordId || contextRecordId;
+  const composeRecordId = opportunityRecordId || effectiveRecordId || null;
+  const composeDraftKeyValue = composeDraftKey(
+    composeRecordId,
+    currentUserEmail,
+  );
   const isReplyContext = Boolean(replySubject);
 
   replySubjectRef.current = replySubject;
@@ -1359,7 +1385,6 @@ export const TemplatePicker = ({
     if (!isMailboxRecordPage) {
       setComposerExpanded(true);
     }
-    enterFreeCompose(replySubject);
   };
 
   const mailboxObjectName =
@@ -1526,7 +1551,11 @@ export const TemplatePicker = ({
 
     const loadList = async () => {
       setLoadingList(true);
+      setHydratingBody(false);
       setListError(null);
+      if (isRecordPage || isMailboxRecordPage) {
+        setThreadMessages([]);
+      }
 
       try {
         const client = new RestApiClient();
@@ -1535,16 +1564,82 @@ export const TemplatePicker = ({
           ...resolvedContext.candidateRecordIds,
         ].filter((id, index, all): id is string => Boolean(id) && all.indexOf(id) === index);
 
-        // Fast path: templates first (no mailbox scan).
-        let data = await client.get<PickerDataResponse>('/s/mail/picker-data', {
-          query: {
-            skipRecent: '1',
-            ...(candidates[0] ? { recordId: candidates[0] } : {}),
-            ...(resolvedContext.scrapedEmail
-              ? { email: resolvedContext.scrapedEmail }
-              : {}),
-          },
+        const listQuery = {
+          skipRecent: '1',
+          ...(candidates[0] ? { recordId: candidates[0] } : {}),
+          ...(resolvedContext.scrapedEmail
+            ? { email: resolvedContext.scrapedEmail }
+            : {}),
+        };
+
+        const staged = shouldUseStagedThreadLoad({
+          onRecordSurface: isRecordPage || isMailboxRecordPage,
         });
+
+        const fullPromise = client.get<PickerDataResponse>(
+          '/s/mail/picker-data',
+          { query: listQuery },
+        );
+
+        if (
+          staged &&
+          (listQuery.recordId || listQuery.email)
+        ) {
+          try {
+            const preview = await client.get<PickerDataResponse>(
+              '/s/mail/thread-list',
+              {
+                query: {
+                  ...(listQuery.recordId
+                    ? { recordId: listQuery.recordId }
+                    : {}),
+                  ...(listQuery.email ? { email: listQuery.email } : {}),
+                },
+              },
+            );
+            if (
+              !cancelled &&
+              ((preview.threadMessages && preview.threadMessages.length > 0) ||
+                preview.person?.email)
+            ) {
+              if (preview.person) {
+                setPerson(preview.person);
+              }
+              if (preview.contextKind) {
+                setContextKind(preview.contextKind);
+              }
+              if (preview.person?.email) {
+                setRecipientEmail(preview.person.email);
+              }
+              if (preview.threadMessages && preview.threadMessages.length > 0) {
+                setThreadMessages(preview.threadMessages);
+                const featured =
+                  preferredThreadMessage(preview.threadMessages) ??
+                  preview.threadMessages[0];
+                if (featured) {
+                  setReplyMessage(threadMessageToPreview(featured));
+                  if (featured.messageId) {
+                    setReplyMessageId(featured.messageId);
+                  }
+                  if (featured.subject) {
+                    setReplySubject(featured.subject);
+                  }
+                }
+              } else if (preview.replySubject) {
+                setReplySubject(preview.replySubject);
+              }
+              setHydratingBody(true);
+            }
+          } catch {
+            // Missing LF / error → picker-data is the rollback path.
+          }
+        }
+
+        if (cancelled) {
+          return;
+        }
+
+        let data = await fullPromise;
 
         if (cancelled) {
           return;
@@ -1789,33 +1884,6 @@ export const TemplatePicker = ({
         } catch {
           // optional dropdown only
         }
-
-        // ADR #22: default = free reply from own mailbox (not template picker).
-        if (!cancelled) {
-          const replyHint =
-            data.replySubject?.trim() ||
-            resolvedContext.scrapedSubject?.trim() ||
-            null;
-          setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
-          const nextSessionId = createId();
-          signatureSeededForSessionRef.current = connectedAccountHandle
-            ? nextSessionId
-            : null;
-          setEditBodyHtml(applySig('<p><br></p>', connectedAccountHandle));
-          setEditorSessionId(nextSessionId);
-          setLoadingDraft(false);
-          setDraftError(null);
-          setAttachments([]);
-          setAttachmentError(null);
-          setCcEmail('');
-          setBccEmail('');
-          setShowCc(false);
-          setShowBcc(false);
-          setSubjectFromTemplate(false);
-          if (replyHint) {
-            setEditSubject(toReplySubject(replyHint));
-          }
-        }
       } catch (loadError) {
         if (cancelled) {
           return;
@@ -1833,6 +1901,7 @@ export const TemplatePicker = ({
       } finally {
         if (!cancelled) {
           setLoadingList(false);
+          setHydratingBody(false);
         }
       }
     };
@@ -1847,6 +1916,8 @@ export const TemplatePicker = ({
     resolvedContext.source,
     resolvedContext.scrapedEmail,
     mergedSelectedIds.join(','),
+    isRecordPage,
+    isMailboxRecordPage,
   ]);
 
   useEffect(() => {
@@ -1883,6 +1954,7 @@ export const TemplatePicker = ({
         setSendBlockedReason(readiness.reason ?? null);
         setConnectedAccountHandle(readiness.accountHandle ?? null);
         setConnectedAccountId(readiness.connectedAccountId ?? null);
+        setCurrentUserEmail(readiness.currentUserEmail ?? null);
       } catch (loadError) {
         if (!cancelled) {
           setCanSendEmail(false);
@@ -1901,6 +1973,181 @@ export const TemplatePicker = ({
       cancelled = true;
     };
   }, [effectiveRecordId, personEmail]);
+
+  useEffect(() => {
+    const prev = prevComposeRecordIdRef.current;
+    prevComposeRecordIdRef.current = composeRecordId ?? null;
+
+    if (!prev || prev === composeRecordId) {
+      return;
+    }
+
+    restoredComposeKeyRef.current = null;
+    setDurableReady(false);
+    enterFreeCompose(replySubjectRef.current);
+  }, [composeRecordId]);
+
+  useEffect(() => {
+    if (!composeDraftKeyValue) {
+      setDurableReady(false);
+      return;
+    }
+
+    if (restoredComposeKeyRef.current === composeDraftKeyValue) {
+      setDurableReady(true);
+      return;
+    }
+
+    let cancelled = false;
+    restoringDraftRef.current = true;
+    setDurableReady(false);
+
+    const restore = async () => {
+      try {
+        const client = new RestApiClient();
+        const result = await client.post<{
+          ok?: boolean;
+          found?: boolean;
+          html?: string;
+        }>(EDITOR_DRAFT_PATH, {
+          sessionId: composeDraftKeyValue,
+          action: 'read',
+        });
+
+        if (cancelled) {
+          return;
+        }
+
+        restoredComposeKeyRef.current = composeDraftKeyValue;
+        const envelope = parseComposeDraft(result.html);
+        const bodyStillEmpty = isEmptyComposeHtml(editBodyHtmlRef.current);
+
+        if (
+          result.found &&
+          envelope &&
+          isMeaningfulComposeDraft(envelope) &&
+          bodyStillEmpty
+        ) {
+          const nextSessionId = createId();
+          signatureSeededForSessionRef.current = connectedAccountHandle
+            ? nextSessionId
+            : null;
+          setEditorSessionId(nextSessionId);
+          setEditBodyHtml(envelope.html);
+          if (envelope.subject.trim()) {
+            subjectTouchedRef.current = true;
+            setEditSubject(envelope.subject);
+          }
+          if (envelope.cc) {
+            setCcEmail(envelope.cc);
+            setShowCc(true);
+          }
+          if (envelope.bcc) {
+            setBccEmail(envelope.bcc);
+            setShowBcc(true);
+          }
+          if (envelope.mode === 'internal') {
+            setInternalHandoff(true);
+            setExternalForward(false);
+            setHandoffTo(envelope.handoffTo || envelope.to || '');
+          } else if (envelope.mode === 'forward') {
+            setExternalForward(true);
+            setInternalHandoff(false);
+            setHandoffTo(envelope.handoffTo || envelope.to || '');
+          }
+          if (
+            envelope.selectedId &&
+            envelope.selectedId !== FREE_COMPOSE_TEMPLATE_ID &&
+            templates.some((template) => template.id === envelope.selectedId)
+          ) {
+            setSelectedId(envelope.selectedId);
+          } else {
+            setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
+          }
+          if (envelope.replyMessageId) {
+            setReplyMessageId(envelope.replyMessageId);
+          }
+          setAttachments([]);
+          setAttachmentError(null);
+          setDraftError(null);
+          setLoadingDraft(false);
+        }
+      } catch {
+        if (!cancelled) {
+          restoredComposeKeyRef.current = composeDraftKeyValue;
+        }
+      } finally {
+        restoringDraftRef.current = false;
+        if (!cancelled) {
+          setDurableReady(true);
+        }
+      }
+    };
+
+    void restore();
+
+    return () => {
+      cancelled = true;
+      restoringDraftRef.current = false;
+    };
+    // Restore once per lead+user. Later template-list updates must not wipe a restored body.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [composeDraftKeyValue]);
+
+  useEffect(() => {
+    if (!durableReady || !composeDraftKeyValue || restoringDraftRef.current) {
+      return;
+    }
+
+    const persistMeta = () => {
+      void (async () => {
+        try {
+          const client = new RestApiClient();
+          await client.post(EDITOR_DRAFT_PATH, {
+            sessionId: composeDraftKeyValue,
+            composeDraft: {
+              subject: editSubject,
+              to: sendToEmail,
+              cc: ccEmail,
+              bcc: bccEmail,
+              selectedId: selectedId ?? '',
+              mode: internalHandoff
+                ? 'internal'
+                : externalForward
+                  ? 'forward'
+                  : 'reply',
+              handoffTo: usesCustomTo ? handoffTo : '',
+              replyMessageId: replyMessageId ?? '',
+            },
+          });
+        } catch {
+          // best-effort — iframe still saves the HTML
+        }
+      })();
+    };
+
+    const timer = globalThis.setTimeout(persistMeta, 400);
+    const onHide = () => persistMeta();
+    globalThis.addEventListener('pagehide', onHide);
+
+    return () => {
+      globalThis.clearTimeout(timer);
+      globalThis.removeEventListener('pagehide', onHide);
+    };
+  }, [
+    durableReady,
+    composeDraftKeyValue,
+    editSubject,
+    sendToEmail,
+    ccEmail,
+    bccEmail,
+    selectedId,
+    internalHandoff,
+    externalForward,
+    handoffTo,
+    replyMessageId,
+    usesCustomTo,
+  ]);
 
   useEffect(() => {
     if (!connectedAccountHandle) {
@@ -2183,6 +2430,20 @@ export const TemplatePicker = ({
   };
 
   const exitComposerAfterSuccessfulSend = () => {
+    if (composeDraftKeyValue) {
+      restoredComposeKeyRef.current = composeDraftKeyValue;
+      void (async () => {
+        try {
+          const client = new RestApiClient();
+          await client.post(EDITOR_DRAFT_PATH, {
+            sessionId: composeDraftKeyValue,
+            action: 'delete',
+          });
+        } catch {
+          // server send path also deletes
+        }
+      })();
+    }
     clearMailComposeIntent();
     clearMailComposeFromHostUrl();
     setComposerExpanded(false);
@@ -2557,6 +2818,9 @@ export const TemplatePicker = ({
       files: attachments.map(({ id, name }) => ({ id, name })),
       accessToken,
       draftSessionId,
+      ...(composeDraftKeyValue
+        ? { composeDraftKey: composeDraftKeyValue }
+        : {}),
     };
   };
 
@@ -3023,6 +3287,7 @@ export const TemplatePicker = ({
             <ThreadPane
               featured
               loading={loadingList}
+              bodyLoading={hydratingBody}
               loadingLabel={
                 isRecordPage
                   ? 'Trwa ładowanie wątków z leadem'
@@ -3683,6 +3948,7 @@ export const TemplatePicker = ({
                 <ThreadPane
                   featured
                   loading={loadingList}
+                  bodyLoading={hydratingBody}
                   loadingLabel={
                     isRecordPage
                       ? 'Trwa ładowanie wątków z leadem'
@@ -4108,6 +4374,9 @@ export const TemplatePicker = ({
               <MailBodyEditor
                 ref={editorRef}
                 sessionId={editorSessionId}
+                durableSessionId={
+                  durableReady ? composeDraftKeyValue ?? undefined : undefined
+                }
                 value={editBodyHtml}
                 onChange={setEditBodyHtml}
                 disabled={sending || sendPreparing || sendCountdown !== null}

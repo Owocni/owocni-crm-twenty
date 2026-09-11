@@ -80,6 +80,16 @@ Kolejność akcji: Odpowiedz → Przyjmij jako SQL → Wystaw dokument → Wysta
 | `record-page` | `opportunity-mail-panel.tsx` | wąski panel = wątek + Odpowiedz; szeroka strona = dwie kolumny + composer |
 | `command-menu` | `template-picker.tsx` (archiwum) | dotychczasowy composer w command panelu |
 
+## Ładowanie wątków (dwufazowe)
+
+Na karcie Mail (side panel / pełna strona) lista schodzi z `GET /s/mail/thread-list` (bez ciał, szablonów, podpisów, handoffu). Pełny `GET /s/mail/picker-data` leci równolegle i dogrywa treści.
+
+**Odwrót do stanu sprzed tego:**
+
+1. Szybki (bez redeploy): dopisać `?owocniMailLoad=full` do URL lejka / karty.
+2. Trwały: w `apps/owocni-mail-twenty/src/utils/stagedThreadLoad.ts` ustawić `STAGED_THREAD_LOAD = false`, zastosować apkę. `picker-data` jest nietknięty.
+3. Awaryjny: gdy `/mail/thread-list` nie wstanie, front sam czeka na `picker-data` (zachowanie jak wcześniej).
+
 Id rekordu: `useSelectedRecordIds()[0]`. **Odpowiedz w sidebarze** to hostowy `<a href="/object/opportunity/:id?owocniCompose=1" target="_top">`. Intent `owocni-mail-compose-intent-v1` jest zjadany na pełnej karcie (także gdy URL jest nieczytelny). Nie blokować composera szerokością — w sandboxie `clientWidth` zostaje 0 i edytor nigdy nie wstaje. Na pełnej karcie klik Odpowiedz robi `setComposeRequested(true)`.
 
 ## Wysyłka 15 s (v1)
@@ -88,7 +98,7 @@ Uzbrojenie po `flushHtmlAsync()` + `resolveAccessToken()`. Deadline `Date.now() 
 
 ## Smoke
 
-1. Kanban → klik kartę → **side panel** na Mail (wątek + duży Odpowiedz), nie pełna strona.
+1. Kanban → klik kartę → **side panel** na Mail: lista wątku pojawia się zanim wczyta się pełna treść („Ładuję treść…”). `?owocniMailLoad=full` wraca do jednego requestu.
 2. Ostatnia wiadomość na górze (podświetlona na liście wątku); klik innej podmienia górę, lista zostaje kompletna.
 3. Duży **Odpowiedz** w panelu → pełna strona z composerem. Natywny kwadrat (expand) → ta sama pełna strona **z edytorem**; Odpowiedz na niej otwiera composer w miejscu, nie nawiguje w próżnię. Kanban = tylko wątek, bez okna odpowiedzi.
 4. Lead z rozmową → zakładka Rozmowy. Notes, Timeline i Tasks na karcie Owocni.

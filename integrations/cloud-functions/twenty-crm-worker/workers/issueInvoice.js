@@ -331,6 +331,11 @@ async function handleIssueInvoice(req) {
     };
   }
 
+  const leadNip = String(opportunity?.nip || "").replace(/\D/g, "");
+  if (/^\d{10}$/.test(leadNip)) {
+    company.nip = leadNip;
+  }
+
   const ready = companyReadyForInvoice(company);
   if (!ready.ok) {
     await createNote(

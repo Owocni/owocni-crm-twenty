@@ -8,6 +8,6 @@ const OpportunityActions = () => <OpportunityActionsStrip />;
 export default defineFrontComponent({
   universalIdentifier: OPPORTUNITY_ACTIONS_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER,
   name: 'opportunity-actions',
-  description: 'Przyjmij SQL / odrzuć leada — znika albo robi się nieaktywny',
+  description: 'SQL / odrzut / GUS / wystaw dokument na karcie leada',
   component: OpportunityActions,
 });

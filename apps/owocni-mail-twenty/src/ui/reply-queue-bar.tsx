@@ -6,6 +6,7 @@ import {
   datetimeLocalToIso,
   defaultSnoozeLocalValue,
   isFutureSnooze,
+  mergeOpportunityActionStatus,
   replyQueueStatus,
   toDatetimeLocalValue,
   type OpportunityActionStatus,
@@ -39,15 +40,7 @@ async function loadQueue(recordId: string): Promise<OpportunityActionStatus> {
   if (!data?.ok) {
     throw new Error(data?.error || 'Nie udało się wczytać kolejki');
   }
-  return {
-    recordId,
-    bizSqlConfirmed: Boolean(data.bizSqlConfirmed),
-    bizSqlConfirmedAt: data.bizSqlConfirmedAt ?? null,
-    campaignRejected: Boolean(data.campaignRejected),
-    rejectionReason: data.rejectionReason ?? null,
-    isFollowUp: Boolean(data.isFollowUp),
-    snoozeUntil: data.snoozeUntil ?? null,
-  };
+  return mergeOpportunityActionStatus(recordId, data);
 }
 
 async function saveSnooze(
@@ -63,15 +56,10 @@ async function saveSnooze(
   if (!data?.ok) {
     throw new Error(data?.error || 'Nie udało się odroczyć');
   }
-  return {
-    recordId,
-    bizSqlConfirmed: Boolean(data.bizSqlConfirmed),
-    bizSqlConfirmedAt: data.bizSqlConfirmedAt ?? null,
-    campaignRejected: Boolean(data.campaignRejected),
-    rejectionReason: data.rejectionReason ?? null,
-    isFollowUp: Boolean(data.isFollowUp),
+  return mergeOpportunityActionStatus(recordId, {
+    ...data,
     snoozeUntil: data.snoozeUntil ?? snoozeUntil,
-  };
+  });
 }
 
 export const ReplyQueueBar = ({ recordId }: ReplyQueueBarProps) => {

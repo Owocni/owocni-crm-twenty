@@ -109,6 +109,7 @@ Kontrakt pól krytycznych (systemowych / eventowych / integracyjnych) na natywny
 | `bizSqlConfirmedAt` | DATETIME | Workflow SQL | null | raport / audyt | OPEN | Timestamp potwierdzenia SQL |
 | `bizLastNonSqlStage` | TEXT/SELECT | Workflow Track Stage Time | null | guard odrzuconego leada | OPEN | Ostatni etap przed SQL — cel cofnięcia przy próbie QUALIFIED/WON na `campaignRejected=true` |
 | `bizCardEmail` / `bizCardPhone` | TEXT | Adapter | Kanban kafelek | OPEN | Denormalizacja kontaktu na kartę (główny) |
+| `nip` | TEXT | Handlowiec | GUS enrich / faktura | OPEN | NIP na leadzie. **Nie unique** (wiele leadów → jedna Firma). Priorytet nad `Company.nip` przy GUS i FV; puste → NIP z firmy. Worker find-or-create Company po NIP i podpina do leada. |
 | `isFollowUp` | BOOLEAN | GCP `email_contact_sync` / createLead / odroczenie / **bounce DSN** | **true** (metadata default + POST createLead; istniejące NEW backfill 31.08) | Widok „Do odpisania” | OPEN | **UI label:** „Do odpisania”. CRM-only (NR-5). ON = kolejka roboty: nowy lead **albo** mail od klienta **albo zwrotka (DSN)** — piłka u nas. Bounce **nie** rusza `lastContactAt` / M2 / NEW→CONTACTED (to nie jest kontakt). NEW = zawsze ON. OFF po naszej odpowiedzi **albo** po geście Odroczenie. IN w trakcie snooze → znowu ON. Guard: flaga z maila tylko gdy `receivedAt >= CUTOVER_AT`. Spec: `ODROCZENIE_DECISION.md`. |
 | `snoozeUntil` | DATETIME | Gest „Odroczenie” / job budzenia / IN | null | Ukrycie w „Do odpisania” do chwili | OPEN | **UI label docelowa:** „Odroczenie do” (dziś w instancji „Odlozony do”). Przyszła data + `isFollowUp=false` → karta znika. Job: otwarte + data minęła → flaga ON, pole puste. IN kasuje datę. OUT **nie** kasuje. Zamknięte (WON/LOST) nie budzić. |
 | `bizAdditionalEmails` | EMAILS | Handlowiec | Komitet / po merge | OPEN | Do 5 wartości; **nie** zastępuje `bizCardEmail`. Po `merge_leads` — kontakty z leada loser |
@@ -193,7 +194,7 @@ Runbook → `integrations/runbooks/E12_5_MAIL_DIRECTION_VIEWS.md`. ADR → `DECI
 |---|---|---|---|---|---|
 | `accountOwner` / `accountOwnerId` | RELATION → WorkspaceMember (natywne Twenty) | NO | Workflow SQL → stempel; continuity routing odczyt | null | OPEN — **semantyka Owocni:** sprzedawca, który doprowadził relację do SQL. **Nie Ewa.** Ustawiane tylko gdy puste (nie nadpisujemy). Continuity: nowy lead firmy / Person wraca do tego ownera (kill-switch `CONTINUITY_ROUTING_ENABLED`). |
 | `pipedriveId` | TEXT | NO | Import PD | null | OPEN — System ID org z Pipedrive (rollback). |
-| `nip` | TEXT | **YES** | Enrichment worker (GUS) / handlowiec | null | OPEN — klucz enrichmentu + KSeF; unique od utworzenia (⛔N14). |
+| `nip` | TEXT | **YES** | Enrichment worker (GUS) / handlowiec | null | OPEN — klucz enrichmentu + KSeF; unique od utworzenia (⛔N14). GUS z leada: `Opportunity.nip` wygrywa gdy wypełniony. |
 | `regon` | TEXT | NO | Enrichment worker (GUS) | null | OPEN |
 | `krs` | TEXT | NO | Enrichment worker (GUS/KRS) | null | OPEN — puste dla JDG. |
 | `registrationDate` | DATE | NO | Enrichment worker (GUS raport) | null | OPEN — data założenia. |

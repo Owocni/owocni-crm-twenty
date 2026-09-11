@@ -23,6 +23,16 @@ APP_DIR = pathlib.Path(__file__).resolve().parents[2] / "apps" / "owocni-mail-tw
 OUTPUT_DIR = APP_DIR / ".twenty" / "output"
 MANIFEST_PATH = OUTPUT_DIR / "manifest.json"
 CONFIG_PATH = pathlib.Path.home() / ".twenty" / "config.json"
+WORKER_ENV_PATH = (
+    pathlib.Path(__file__).resolve().parents[1]
+    / "cloud-functions"
+    / "twenty-crm-worker"
+    / ".env.deploy"
+)
+WORKER_SECRET_PLACEHOLDERS = {
+    "__ENRICH_COMPANY_PL_TOKEN__": "ENRICH_COMPANY_PL_TOKEN",
+    "__X_INVOICE_TOKEN__": "X_INVOICE_TOKEN",
+}
 
 KEEP_FIELD_TYPES = {
     "TEXT",
@@ -37,14 +47,41 @@ KEEP_FIELD_TYPES = {
 }
 
 
+def _jwt_expired(token: str) -> bool:
+    try:
+        payload = token.split(".")[1]
+        payload += "=" * (-len(payload) % 4)
+        data = json.loads(__import__("base64").urlsafe_b64decode(payload))
+        exp = data.get("exp")
+        return isinstance(exp, (int, float)) and exp < time.time() + 30
+    except Exception:
+        return False
+
+
+def _worker_env_api_key() -> str:
+    if not WORKER_ENV_PATH.exists():
+        return ""
+    for line in WORKER_ENV_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if line.startswith("TWENTY_API_KEY="):
+            return line.split("=", 1)[1].strip().strip("'").strip('"')
+    return ""
+
+
 def load_oauth() -> tuple[str, str]:
     cfg = json.loads(CONFIG_PATH.read_text())
     remote_name = cfg.get("defaultRemote")
     remote = cfg["remotes"][remote_name]
-    token = remote.get("twentyCLIAccessToken") or remote.get("accessToken")
+    token = remote.get("twentyCLIAccessToken") or remote.get("accessToken") or ""
+    api_url = remote["apiUrl"].rstrip("/")
+    if not token or _jwt_expired(token):
+        token = (
+            os.environ.get("TWENTY_METADATA_TOKEN")
+            or os.environ.get("TWENTY_API_KEY")
+            or _worker_env_api_key()
+        ).strip()
     if not token:
         raise SystemExit("No OAuth token in ~/.twenty/config.json — run `yarn twenty remote:add`")
-    api_url = remote["apiUrl"].rstrip("/")
     return token, f"{api_url}/metadata"
 
 
@@ -317,6 +354,43 @@ def upload_file(
         raise last_error
 
 
+def load_worker_env() -> dict[str, str]:
+    env: dict[str, str] = {}
+    if not WORKER_ENV_PATH.exists():
+        raise SystemExit(f"Missing {WORKER_ENV_PATH}")
+    for raw in WORKER_ENV_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        env[key.strip()] = value.strip().strip("'").strip('"')
+    return env
+
+
+def inject_worker_secrets() -> None:
+    env = load_worker_env()
+    patched = 0
+    for path in OUTPUT_DIR.rglob("*"):
+        if path.suffix not in {".js", ".mjs", ".cjs"}:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        updated = text
+        for placeholder, key in WORKER_SECRET_PLACEHOLDERS.items():
+            if placeholder not in updated:
+                continue
+            value = env.get(key, "")
+            if not value:
+                raise SystemExit(f"Missing {key} in {WORKER_ENV_PATH}")
+            updated = updated.replace(placeholder, value)
+        if updated != text:
+            path.write_text(updated, encoding="utf-8")
+            patched += 1
+    print(f"Injected worker tokens into {patched} bundle file(s)")
+
+
 def update_checksums(manifest: dict) -> dict:
     m = patch_manifest(manifest)
     for fc in m.get("frontComponents", []):
@@ -349,6 +423,8 @@ def update_checksums(manifest: dict) -> dict:
 def main() -> None:
     if not MANIFEST_PATH.exists():
         raise SystemExit(f"Missing {MANIFEST_PATH} — run `yarn twenty dev:build` first")
+
+    inject_worker_secrets()
 
     raw = json.loads(MANIFEST_PATH.read_text())
     version = raw.get("application", {}).get("version", "?")

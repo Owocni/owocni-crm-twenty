@@ -10,6 +10,9 @@ describe('looksLikeHtml', () => {
   it('detects tags', () => {
     expect(looksLikeHtml('<div>Cześć</div>')).toBe(true);
     expect(looksLikeHtml('Dzień dobry Pani Małgosiu')).toBe(false);
+    expect(
+      looksLikeHtml('Gosia z Owocnych <gosia@owocni.pl> napisał(a):'),
+    ).toBe(false);
   });
 });
 
@@ -54,8 +57,39 @@ describe('emailBodyToDisplayText', () => {
       'Dzień dobry Pani Małgosiu, w załączeniu potwierdzenie.',
       'Pozdrawiam serdecznie',
       'Agnieszka Wójcik',
+      '',
       'Dnia 07 września 2026, 12:04, Małgorzata napisał(a):',
       'Poprzednia treść',
     ]);
+  });
+
+  it('restores paragraphs in WP plaintext that Twenty already flattened', () => {
+    const mashed =
+      'Dzień dobry Pani Małgosiu, W załączeniu potwierdzenie przelewu.  ' +
+      'Pozdrawiam, Agnieszka Wójcik  ' +
+      'Dnia 07 września 2026 15:18    Gosia z Owocnych  &lt; gosia@owocni.pl &gt;  napisał(a): ' +
+      'Dzień dobry Pani Agnieszko, Robert przekazał mi, że chciałaby Pani rozpocząć działania nad stroną.  ' +
+      'W tym celu prosimy o opłacenie projektu.';
+    const text = emailBodyToDisplayText(mashed);
+    expect(text).toBe(
+      [
+        'Dzień dobry Pani Małgosiu,',
+        'W załączeniu potwierdzenie przelewu.',
+        'Pozdrawiam,',
+        'Agnieszka Wójcik',
+        '',
+        'Dnia 07 września 2026 15:18 Gosia z Owocnych <gosia@owocni.pl> napisał(a):',
+        'Dzień dobry Pani Agnieszko,',
+        'Robert przekazał mi, że chciałaby Pani rozpocząć działania nad stroną.',
+        'W tym celu prosimy o opłacenie projektu.',
+      ].join('\n'),
+    );
+  });
+
+  it('is stable when applied twice', () => {
+    const mashed =
+      'Dzień dobry Pani Małgosiu, W załączeniu potwierdzenie.  Pozdrawiam, Agnieszka Wójcik';
+    const once = emailBodyToDisplayText(mashed);
+    expect(emailBodyToDisplayText(once)).toBe(once);
   });
 });
