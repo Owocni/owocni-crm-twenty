@@ -1,4 +1,5 @@
 export const EDITOR_DRAFT_PATH = '/s/mail/editor-draft';
+/** Closed in 0.1.139 — public unauthenticated editor HTML is gone. */
 export const EDITOR_FRAME_PATH = '/s/mail/editor-frame';
 
 function isHttpOrigin(value: string): boolean {

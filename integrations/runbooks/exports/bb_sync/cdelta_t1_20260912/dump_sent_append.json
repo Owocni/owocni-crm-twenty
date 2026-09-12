@@ -1,0 +1,47 @@
+{
+  "dump_sent_n": 4,
+  "appended": [],
+  "skipped": [
+    {
+      "bb_id": 2056670,
+      "inbox": "studio@owocni.pl",
+      "status": "skip_forbidden_or_unknown_inbox",
+      "client": "info@invitely.in"
+    },
+    {
+      "bb_id": 2055908,
+      "inbox": "studio@owocni.pl",
+      "status": "skip_forbidden_or_unknown_inbox",
+      "client": "info@invitely.in"
+    },
+    {
+      "bb_id": 2052600,
+      "inbox": "marta@owocni.pl",
+      "subject": "RE: Projekt logo dla Pana Tomasza:",
+      "sent_date": "2026-06-29T14:03:06.363+00:00",
+      "own": "<d8e85785-60ce-11ce-be86-42106d1ce156@owocni.pl>",
+      "parent": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": [],
+      "client": "skitomasz@gmail.com"
+    },
+    {
+      "bb_id": 2052599,
+      "inbox": "marta@owocni.pl",
+      "subject": "RE: Projekt logo dla Pana Tomasza:",
+      "sent_date": "2026-06-29T13:57:56.532+00:00",
+      "own": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+      "parent": "<048301dd07cb$85d00160$91700420$@gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": [],
+      "client": "skitomasz@gmail.com"
+    }
+  ],
+  "skip_counts": {
+    "skip_forbidden_or_unknown_inbox": 2,
+    "skip_parent_not_in_twenty": 2
+  },
+  "append_n": 0
+}

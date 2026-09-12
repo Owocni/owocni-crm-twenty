@@ -1,0 +1,171 @@
+{
+  "before": {
+    "A": {
+      "http": 200,
+      "before": {
+        "id": "53081308-5f1c-4f2f-9113-0e575160dc4f",
+        "name": "p.brzdek@bhp-nord.pl · INNE",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "bizRoutingRule": "",
+        "isFollowUp": true,
+        "lastContactAt": null,
+        "createdAt": "2026-07-03T11:56:04.483Z",
+        "idOid": "J5ADX3E78K50MZ13DTAC5XENQK",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "f76547c6-7a77-4d9b-98ba-93a5e3cd9016",
+        "bizCardEmail": ""
+      }
+    },
+    "B": {
+      "http": 200,
+      "before": {
+        "id": "2cb65973-3284-425b-b73d-5a77d4f79486",
+        "name": "dunlapcharissaum50@gmail.com · INNE",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "bizRoutingRule": "",
+        "isFollowUp": true,
+        "lastContactAt": null,
+        "createdAt": "2026-07-04T05:02:04.816Z",
+        "idOid": "AVMQHNK77QV3TTEBKXZ7302SP1",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "692a1caf-2384-4adc-9ffb-b7c5dd31d237",
+        "bizCardEmail": ""
+      }
+    },
+    "C": {
+      "http": 200,
+      "before": {
+        "id": "67e969b4-1033-424e-8899-10e3f3e5b92e",
+        "name": "bloodynekt1@gmail.com · INNE",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "INNE",
+        "bizSource": "GOOGLE_ADS",
+        "bizRoutingRule": "",
+        "isFollowUp": true,
+        "lastContactAt": null,
+        "createdAt": "2026-07-03T15:46:04.934Z",
+        "idOid": "VZ7Q0F645TQTMX8CYE6ZHG8QTS",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "d9f9c8b8-8a73-48bc-9b8e-15053d481a2e",
+        "bizCardEmail": ""
+      }
+    },
+    "A_robert_dup": {
+      "http": 200,
+      "before": {
+        "id": "35e5dbd6-54d1-413c-a584-1f590695facb",
+        "name": "Paweł BHP-Nord",
+        "stage": "PROPOSAL",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "srcSystem": "PIPEDRIVE_LEGACY",
+        "bizProduct": "INNE",
+        "bizSource": "PIPEDRIVE_IMPORT",
+        "bizRoutingRule": "",
+        "isFollowUp": null,
+        "lastContactAt": "2026-07-20T07:02:06.000Z",
+        "createdAt": "2026-07-06T06:56:33.000Z",
+        "idOid": "",
+        "pipedriveId": "6830",
+        "bitrixDealId": "",
+        "pointOfContactId": "f76547c6-7a77-4d9b-98ba-93a5e3cd9016",
+        "bizCardEmail": "p.brzdek@bhp-nord.pl"
+      }
+    }
+  },
+  "apply": [
+    {
+      "id": "A",
+      "patch_http": 200,
+      "note": {
+        "note_http": 201,
+        "note_id": "770b1fa1-8b70-43eb-8569-fbdfd5defbb2",
+        "target_http": 201
+      },
+      "after": {
+        "id": "53081308-5f1c-4f2f-9113-0e575160dc4f",
+        "name": "p.brzdek@bhp-nord.pl · INNE",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "bizRoutingRule": "",
+        "isFollowUp": false,
+        "lastContactAt": null,
+        "createdAt": "2026-07-03T11:56:04.483Z",
+        "idOid": "J5ADX3E78K50MZ13DTAC5XENQK",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "f76547c6-7a77-4d9b-98ba-93a5e3cd9016",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "id": "B",
+      "patch_http": 200,
+      "note": {
+        "note_http": 201,
+        "note_id": "46a47ef5-e2d1-4b50-bdd4-aa75d7d700b7",
+        "target_http": 201
+      },
+      "after": {
+        "id": "2cb65973-3284-425b-b73d-5a77d4f79486",
+        "name": "dunlapcharissaum50@gmail.com · INNE",
+        "stage": "NEW",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "bizRoutingRule": "",
+        "isFollowUp": false,
+        "lastContactAt": null,
+        "createdAt": "2026-07-04T05:02:04.816Z",
+        "idOid": "AVMQHNK77QV3TTEBKXZ7302SP1",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "692a1caf-2384-4adc-9ffb-b7c5dd31d237",
+        "bizCardEmail": ""
+      }
+    },
+    {
+      "id": "C",
+      "patch_http": 200,
+      "note": {
+        "note_http": 201,
+        "note_id": "45f4f522-5b07-4b54-aaf5-9bebfcba35d7",
+        "target_http": 201
+      },
+      "after": {
+        "id": "67e969b4-1033-424e-8899-10e3f3e5b92e",
+        "name": "bloodynekt1@gmail.com · INNE",
+        "stage": "NEW",
+        "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bizProduct": "COPYWRITING",
+        "bizSource": "GOOGLE_ADS",
+        "bizRoutingRule": "",
+        "isFollowUp": true,
+        "lastContactAt": null,
+        "createdAt": "2026-07-03T15:46:04.934Z",
+        "idOid": "VZ7Q0F645TQTMX8CYE6ZHG8QTS",
+        "pipedriveId": "",
+        "bitrixDealId": "",
+        "pointOfContactId": "d9f9c8b8-8a73-48bc-9b8e-15053d481a2e",
+        "bizCardEmail": ""
+      }
+    }
+  ]
+}

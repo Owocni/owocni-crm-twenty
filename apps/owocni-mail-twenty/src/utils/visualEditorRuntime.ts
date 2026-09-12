@@ -1,8 +1,25 @@
+import {
+  composerV2BarHtml,
+  composerV2BootScript,
+  composerV2Css,
+  composerV2EnvelopeHtml,
+  composerV2IdleBootScript,
+  composerV2RuntimeScript,
+  MAIL_V2_ENVELOPE,
+  MAIL_V2_SENT,
+  MAIL_V2_STATUS,
+  type ComposerV2SrcDocConfig,
+} from 'src/utils/composerV2Iframe';
+
 export const EMPTY_EDITOR_BODY = '<p><br></p>';
 export const MAIL_FLUSH = 'owocni-mail-flush';
+export const MAIL_FLUSH_RESULT = 'owocni-mail-flush-result';
+export const MAIL_HTML_CHANGED = 'owocni-mail-html-changed';
 export const MAIL_SET_AUTH = 'owocni-mail-set-auth';
 export const MAIL_SET_HTML = 'owocni-mail-set-html';
 export const MAIL_EXEC = 'owocni-mail-exec';
+export { MAIL_V2_ENVELOPE, MAIL_V2_SENT, MAIL_V2_STATUS };
+export type { ComposerV2Envelope } from 'src/utils/composerV2Iframe';
 
 export function sanitizeEditorBodyHtml(html: string): string {
   return html
@@ -10,6 +27,36 @@ export function sanitizeEditorBodyHtml(html: string): string {
     .replace(/<body\b[^>]*>/gi, '')
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/<\/?script\b[^>]*>/gi, '');
+}
+
+/** Put the caret in the reply lead-in, not inside the signature block. */
+export function placeCaretBeforeSignature(editor: HTMLElement): void {
+  const doc = editor.ownerDocument;
+  const sig = editor.querySelector('[data-owocni-signature]');
+
+  if (sig && editor.firstChild === sig) {
+    const lead = doc.createElement('p');
+    lead.innerHTML = '<br>';
+    editor.insertBefore(lead, sig);
+  }
+
+  try {
+    editor.focus();
+    const range = doc.createRange();
+    const sel = doc.getSelection();
+    const start =
+      editor.firstChild && editor.firstChild !== sig
+        ? editor.firstChild
+        : editor;
+    range.setStart(start, 0);
+    range.collapse(true);
+    if (sel) {
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  } catch {
+    // Selection APIs can throw in a detached document.
+  }
 }
 
 /** http(s) / mailto only. Bare domains get https://. javascript: is rejected. */
@@ -61,6 +108,7 @@ type BuildVisualEditorSrcDocParams = {
   draftSaveUrl: string;
   accessToken: string;
   durableSessionId?: string;
+  composerV2?: ComposerV2SrcDocConfig;
 };
 
 export const EDITOR_TEXT_COLORS = [
@@ -112,10 +160,20 @@ export function buildVisualEditorSrcDoc({
   draftSaveUrl,
   accessToken,
   durableSessionId = '',
+  composerV2,
 }: BuildVisualEditorSrcDocParams): string {
   const content = sanitizeEditorBodyHtml(
     bodyHtml.trim() || EMPTY_EDITOR_BODY,
   );
+  const v2Css = composerV2 ? composerV2Css() : '';
+  const v2Envelope = composerV2
+    ? composerV2EnvelopeHtml(composerV2.envelope)
+    : '';
+  const v2Bar = composerV2 ? composerV2BarHtml() : '';
+  const v2Boot = composerV2
+    ? composerV2BootScript(composerV2)
+    : composerV2IdleBootScript();
+  const v2Runtime = composerV2 ? composerV2RuntimeScript() : '';
 
   return `<!DOCTYPE html>
 <html>
@@ -225,18 +283,24 @@ export function buildVisualEditorSrcDoc({
     #editor p { margin: 0 0 0.75em; }
     #editor ul, #editor ol { margin: 0 0 0.75em; padding-left: 1.5em; }
     #editor a { color: #1155cc; text-decoration: underline; }
+    ${v2Css}
   </style>
 </head>
 <body>
+${v2Envelope}
 ${toolbarHtml()}
 <div id="editor" contenteditable="true">${content}</div>
+${v2Bar}
 <script>
 (function () {
+${v2Boot}
   var sessionId = ${JSON.stringify(sessionId)};
   var durableSessionId = ${JSON.stringify(durableSessionId)};
   var draftSaveUrl = ${JSON.stringify(draftSaveUrl)};
   var accessToken = ${JSON.stringify(accessToken)};
   var flushMessage = ${JSON.stringify(MAIL_FLUSH)};
+  var flushResultMessage = ${JSON.stringify(MAIL_FLUSH_RESULT)};
+  var htmlChangedMessage = ${JSON.stringify(MAIL_HTML_CHANGED)};
   var setAuthMessage = ${JSON.stringify(MAIL_SET_AUTH)};
   var setHtmlMessage = ${JSON.stringify(MAIL_SET_HTML)};
   var execMessage = ${JSON.stringify(MAIL_EXEC)};
@@ -265,6 +329,31 @@ ${toolbarHtml()}
     return editor ? editor.innerHTML : '';
   }
 
+  function placeCaretInReply() {
+    if (!editor) return;
+    try {
+      var sig = editor.querySelector('[data-owocni-signature]');
+      if (sig && editor.firstChild === sig) {
+        var lead = document.createElement('p');
+        lead.innerHTML = '<br>';
+        editor.insertBefore(lead, sig);
+      }
+      editor.focus();
+      var range = document.createRange();
+      var sel = document.getSelection();
+      var start = editor.firstChild && editor.firstChild !== sig
+        ? editor.firstChild
+        : editor;
+      range.setStart(start, 0);
+      range.collapse(true);
+      if (sel) {
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      savedRange = range.cloneRange();
+    } catch (e) {}
+  }
+
   function saveDraftToServer(html) {
     if (!sessionId || !draftSaveUrl || !accessToken) return;
     if (html === lastSaved) return;
@@ -286,8 +375,28 @@ ${toolbarHtml()}
     } catch (e) {}
   }
 
-  function publishHtml() {
-    saveDraftToServer(editorHtml());
+  function notifyParent(html, requestId) {
+    try {
+      parent.postMessage({
+        type: htmlChangedMessage,
+        html: html,
+        sessionId: sessionId
+      }, '*');
+      if (requestId) {
+        parent.postMessage({
+          type: flushResultMessage,
+          html: html,
+          sessionId: sessionId,
+          requestId: requestId
+        }, '*');
+      }
+    } catch (e) {}
+  }
+
+  function publishHtml(requestId) {
+    var html = editorHtml();
+    notifyParent(html, requestId);
+    saveDraftToServer(html);
   }
 
   function schedulePublish() {
@@ -696,25 +805,34 @@ ${toolbarHtml()}
   window.addEventListener('message', function (event) {
     if (!event.data || typeof event.data !== 'object') return;
     if (event.data.type === flushMessage) {
-      publishHtml();
+      publishHtml(event.data.requestId || 'flush');
       return;
     }
     if (event.data.type === setAuthMessage && typeof event.data.token === 'string') {
       accessToken = event.data.token;
+      v2UpdateHint();
       publishHtml();
       return;
     }
     if (event.data.type === setHtmlMessage && typeof event.data.html === 'string') {
       editor.innerHTML = event.data.html.trim() ? event.data.html : emptyBody;
+      placeCaretInReply();
       publishHtml();
       return;
     }
     if (event.data.type === execMessage && typeof event.data.command === 'string') {
       runCommand(event.data.command, event.data.arg);
+      return;
+    }
+    if (event.data.type === envelopeMessage && event.data.envelope && typeof event.data.envelope === 'object') {
+      v2MergeEnvelope(event.data.envelope);
     }
   });
 
+${v2Runtime}
+
   publishHtml();
+  placeCaretInReply();
 })();
 </script>
 </body>

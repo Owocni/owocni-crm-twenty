@@ -3,6 +3,7 @@ import {
   readClientHtmlBody,
   readStringField,
 } from 'src/utils/parseRouteBody';
+import { isComposerV2Payload } from 'src/utils/composerV2Flag';
 
 export async function resolveSendHtmlBody(
   payload: Record<string, unknown>,
@@ -12,6 +13,10 @@ export async function resolveSendHtmlBody(
 
   if (customBody) {
     return { html: customBody, clientSent: true };
+  }
+
+  if (isComposerV2Payload(payload)) {
+    return { html: '', clientSent: payloadHasClientBody(payload) };
   }
 
   const draftSessionId = readStringField(payload, 'draftSessionId');

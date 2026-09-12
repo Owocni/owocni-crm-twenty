@@ -1,0 +1,337 @@
+{
+  "wave": "leftover37",
+  "startedAt": "2026-09-12T12:59:05.362749+00:00",
+  "records": [
+    {
+      "bb_id": 9309,
+      "action": "patch",
+      "twenty_opp_id": "130857ff-3a91-4304-9574-c533e7e5422c",
+      "twenty_stage": "CONTACTED",
+      "patch_stage": "CONTACTED",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9309",
+      "twenty_stage_before": "LOST",
+      "twenty_owner_before": "23ac9976-0232-4097-b056-5dc391bf7c34",
+      "note": "BB inquiry live vs Robert LOST — reopen + owner Gosia",
+      "appliedAt": "2026-09-12T12:59:05.362960+00:00",
+      "status": "patched",
+      "http_status": 200,
+      "patched_fields": [
+        "bitrixDealId",
+        "isFollowUp",
+        "ownerId",
+        "stage"
+      ],
+      "rollback": {
+        "opportunity_id": "130857ff-3a91-4304-9574-c533e7e5422c",
+        "stage": "LOST",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "bitrixDealId": null,
+        "isFollowUp": false,
+        "srcSystem": "OWOCNI_SORTOWNIA"
+      }
+    },
+    {
+      "bb_id": 5066,
+      "action": "patch",
+      "twenty_opp_id": "b5bca414-e976-4450-8151-5aca4bd9bc08",
+      "twenty_stage": "PROPOSAL",
+      "patch_stage": "PROPOSAL",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:5066",
+      "twenty_stage_before": "LOST",
+      "twenty_owner_before": "23ac9976-0232-4097-b056-5dc391bf7c34",
+      "note": "BB negotiations vs Robert PD LOST — reopen + owner Gosia",
+      "appliedAt": "2026-09-12T12:59:06.278956+00:00",
+      "status": "patched",
+      "http_status": 200,
+      "patched_fields": [
+        "bitrixDealId",
+        "isFollowUp",
+        "ownerId",
+        "stage"
+      ],
+      "rollback": {
+        "opportunity_id": "b5bca414-e976-4450-8151-5aca4bd9bc08",
+        "stage": "LOST",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "bitrixDealId": null,
+        "isFollowUp": null,
+        "srcSystem": "PIPEDRIVE_LEGACY"
+      }
+    },
+    {
+      "bb_id": 6511,
+      "action": "patch_link_only",
+      "twenty_opp_id": "3264e4a1-ff75-4720-9cdf-1aa0250d14bc",
+      "status": "patched",
+      "http_status": 200,
+      "note": "Robert WON — nie cofamy do PAYING, tylko bb:6511",
+      "rollback": {
+        "opportunity_id": "3264e4a1-ff75-4720-9cdf-1aa0250d14bc",
+        "bitrixDealId": ""
+      }
+    },
+    {
+      "bb_id": 8424,
+      "action": "create",
+      "twenty_stage": "PAYING",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "bitrix_deal_id": "bb:8424",
+      "emails": [
+        "zuzanna.kucharska@comekoprojekt.pl"
+      ],
+      "appliedAt": "2026-09-12T12:59:08.773270+00:00",
+      "status": "created",
+      "twenty_opp_id": "d998a2bd-8e4c-4e7b-b3ab-fe61f505cf88",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "d998a2bd-8e4c-4e7b-b3ab-fe61f505cf88",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 6155,
+      "action": "create",
+      "twenty_stage": "LOST",
+      "twenty_owner_id": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "bitrix_deal_id": "bb:6155",
+      "emails": [
+        "panporzadek@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:09.857776+00:00",
+      "status": "created",
+      "twenty_opp_id": "70a1383d-07fa-4953-b59c-780ff235a79c",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "70a1383d-07fa-4953-b59c-780ff235a79c",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 6157,
+      "action": "create",
+      "twenty_stage": "LOST",
+      "twenty_owner_id": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "bitrix_deal_id": "bb:6157",
+      "emails": [
+        "projektwysocki@wp.pl"
+      ],
+      "appliedAt": "2026-09-12T12:59:11.300452+00:00",
+      "status": "created",
+      "twenty_opp_id": "e6fc62f3-45bf-477b-90ec-c6860342d54f",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "e6fc62f3-45bf-477b-90ec-c6860342d54f",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 33783,
+      "action": "create",
+      "twenty_stage": "WON",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "bitrix_deal_id": "bb:33783",
+      "emails": [
+        "artur.lignarski@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:12.290727+00:00",
+      "status": "created",
+      "twenty_opp_id": "a4298f65-b8aa-4635-b987-fcda1211a925",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "a4298f65-b8aa-4635-b987-fcda1211a925",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9342,
+      "action": "create",
+      "twenty_stage": "PROPOSAL",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "bitrix_deal_id": "bb:9342",
+      "emails": [
+        "mateusz@europlyta.com.pl"
+      ],
+      "appliedAt": "2026-09-12T12:59:14.040639+00:00",
+      "status": "created",
+      "twenty_opp_id": "a7c3c504-623e-4741-8c09-83500a8ed2bc",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "a7c3c504-623e-4741-8c09-83500a8ed2bc",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9339,
+      "action": "create",
+      "twenty_stage": "CONTACTED",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9339",
+      "emails": [
+        "biuro@biurorachunkowe451.pl"
+      ],
+      "appliedAt": "2026-09-12T12:59:15.714932+00:00",
+      "status": "created",
+      "twenty_opp_id": "a563b838-d69a-492d-bd61-e0d5c97d5f61",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "a563b838-d69a-492d-bd61-e0d5c97d5f61",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9340,
+      "action": "create",
+      "twenty_stage": "CONTACTED",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "bitrix_deal_id": "bb:9340",
+      "emails": [
+        "ania.burkiewicz@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:17.386364+00:00",
+      "status": "created",
+      "twenty_opp_id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9337,
+      "action": "create",
+      "twenty_stage": "CONTACTED",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9337",
+      "emails": [
+        "anunakissss666@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:19.064634+00:00",
+      "status": "created",
+      "twenty_opp_id": "5a5ed62d-9b37-46d5-bd88-d5120c869d67",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "5a5ed62d-9b37-46d5-bd88-d5120c869d67",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9301,
+      "action": "create",
+      "twenty_stage": "WON",
+      "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "bitrix_deal_id": "bb:9301",
+      "emails": [
+        "booking@coreomusic.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:20.127912+00:00",
+      "status": "created",
+      "twenty_opp_id": "27d2bce3-5295-4774-a443-606e50c82540",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "27d2bce3-5295-4774-a443-606e50c82540",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9297,
+      "action": "create",
+      "twenty_stage": "CONTACTED",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9297",
+      "emails": [
+        "h.melotto@melottogroup.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:21.879265+00:00",
+      "status": "created",
+      "twenty_opp_id": "0caa9faa-a0a3-4434-879f-91f9870ae7aa",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "0caa9faa-a0a3-4434-879f-91f9870ae7aa",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9296,
+      "action": "create",
+      "twenty_stage": "CONTACTED",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9296",
+      "emails": [
+        "bbarber@referral-station.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:23.130100+00:00",
+      "status": "created",
+      "twenty_opp_id": "8efe4fb2-6de8-4cf3-bcb6-5477650e7066",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "8efe4fb2-6de8-4cf3-bcb6-5477650e7066",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9272,
+      "action": "create",
+      "twenty_stage": "LOST",
+      "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "bitrix_deal_id": "bb:9272",
+      "emails": [
+        "brownie.elblag@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:24.836077+00:00",
+      "status": "created",
+      "twenty_opp_id": "66f248c9-d7f3-4d7b-b599-d330a51a364d",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "66f248c9-d7f3-4d7b-b599-d330a51a364d",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    },
+    {
+      "bb_id": 9139,
+      "action": "create",
+      "twenty_stage": "WON",
+      "twenty_owner_id": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "bitrix_deal_id": "bb:9139",
+      "emails": [
+        "malgorzata.lato@gmail.com"
+      ],
+      "appliedAt": "2026-09-12T12:59:26.534978+00:00",
+      "status": "created",
+      "twenty_opp_id": "d091f9e7-9b97-4ab3-a343-25cad7cef817",
+      "http_status": 201,
+      "rollback": {
+        "opportunity_id": "d091f9e7-9b97-4ab3-a343-25cad7cef817",
+        "action": "delete",
+        "created": true
+      },
+      "note": "create missing BB card BETTER_BITRIX_LEGACY"
+    }
+  ],
+  "completedAt": "2026-09-12T12:59:28.887165+00:00"
+}

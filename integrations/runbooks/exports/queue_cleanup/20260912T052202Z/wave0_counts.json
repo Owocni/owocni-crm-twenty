@@ -1,0 +1,110 @@
+{
+  "stamp": "20260912T052202Z",
+  "counts": {
+    "marta": {
+      "all": 246,
+      "open": 205,
+      "stages": {
+        "PROPOSAL": 114,
+        "QUALIFIED": 5,
+        "NEW": 55,
+        "CONTACTED": 27,
+        "PAYING": 4
+      },
+      "src": {
+        "BETTER_BITRIX_LEGACY": 58,
+        "OWOCNI_SORTOWNIA": 137,
+        "∅": 3,
+        "TWENTY_EMAIL": 5,
+        "TWENTY_UI": 2
+      },
+      "new_followup": 54
+    },
+    "gosia": {
+      "all": 319,
+      "open": 288,
+      "stages": {
+        "CONTACTED": 118,
+        "PROPOSAL": 69,
+        "NEW": 100,
+        "PAYING": 1
+      },
+      "src": {
+        "BETTER_BITRIX_LEGACY": 72,
+        "TWENTY_EMAIL": 7,
+        "OWOCNI_SORTOWNIA": 205,
+        "TWENTY_UI": 2,
+        "∅": 2
+      },
+      "new_followup": 31
+    },
+    "maciej": {
+      "all": 76,
+      "open": 65,
+      "stages": {
+        "CONTACTED": 28,
+        "PROPOSAL": 24,
+        "NEW": 12,
+        "CONTRACT_SENT": 1
+      },
+      "src": {
+        "OWOCNI_SORTOWNIA": 34,
+        "BETTER_BITRIX_LEGACY": 31
+      },
+      "new_followup": 12
+    },
+    "holding": {
+      "all": 374,
+      "open": 101,
+      "stages": {
+        "NEW": 29,
+        "PAYING": 62,
+        "QUALIFIED": 4,
+        "CONTACTED": 4,
+        "CONTRACT_SENT": 1,
+        "PROPOSAL": 1
+      },
+      "src": {
+        "PIPEDRIVE_LEGACY": 85,
+        "OWOCNI_SORTOWNIA": 14,
+        "∅": 2
+      },
+      "new_followup": 27
+    },
+    "robert": {
+      "all": 2570,
+      "open": 125,
+      "stages": {
+        "CONTRACT_SENT": 10,
+        "CONTACTED": 28,
+        "PROPOSAL": 39,
+        "NEW": 41,
+        "QUALIFIED": 7
+      },
+      "src": {
+        "∅": 10,
+        "OWOCNI_SORTOWNIA": 38,
+        "PIPEDRIVE_LEGACY": 76,
+        "TWENTY_EMAIL": 1
+      },
+      "new_followup": 41
+    },
+    "null": {
+      "all": 427,
+      "open": 394,
+      "stages": {
+        "PROPOSAL": 314,
+        "CONTACTED": 4,
+        "NEW": 57,
+        "CONTRACT_SENT": 18,
+        "QUALIFIED": 1
+      },
+      "src": {
+        "PIPEDRIVE_LEGACY": 355,
+        "OWOCNI_SORTOWNIA": 38,
+        "TWENTY_UI": 1
+      },
+      "new_followup": 57
+    }
+  }
+}

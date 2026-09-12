@@ -1,0 +1,80 @@
+{
+  "run": "20260912T182500Z",
+  "no_emit": true,
+  "appliedAt": "2026-09-12T18:34:48.340545+00:00",
+  "note": "Live leads/view: BB our-turn missing from MV; restore Twenty isFollowUp + link bb:id",
+  "patched": [
+    {
+      "id": "38136c04-e0a3-4007-a35d-2ff8400d5111",
+      "email": "malaga82@op.pl",
+      "bb_id": 9389,
+      "owner": "Gosia",
+      "why": "bb_our_turn_live_not_in_mv",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": false,
+        "bitrixDealId": "",
+        "stage": "NEW"
+      },
+      "after": {
+        "isFollowUp": true,
+        "bitrixDealId": "bb:9389",
+        "stage": "NEW"
+      },
+      "rollback": {
+        "opportunity_id": "38136c04-e0a3-4007-a35d-2ff8400d5111",
+        "isFollowUp": false,
+        "bitrixDealId": null
+      }
+    },
+    {
+      "id": "f896db76-40ec-41b0-b177-8d84361dd52f",
+      "email": "afis@onet.pl",
+      "bb_id": 9388,
+      "owner": "Marta",
+      "why": "bb_our_turn_live_not_in_mv",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": false,
+        "bitrixDealId": "",
+        "stage": "NEW"
+      },
+      "after": {
+        "isFollowUp": true,
+        "bitrixDealId": "bb:9388",
+        "stage": "NEW"
+      },
+      "rollback": {
+        "opportunity_id": "f896db76-40ec-41b0-b177-8d84361dd52f",
+        "isFollowUp": false,
+        "bitrixDealId": null
+      }
+    },
+    {
+      "id": "1c2729a0-a9b5-449e-b947-f6ac1a3dc344",
+      "email": "e.arcaba@gmail.com",
+      "bb_id": 9332,
+      "owner": "Marta",
+      "why": "bb_our_turn_live_fu_false",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": false,
+        "bitrixDealId": "bb:9332",
+        "stage": "PROPOSAL"
+      },
+      "after": {
+        "isFollowUp": true,
+        "bitrixDealId": "bb:9332",
+        "stage": "PROPOSAL"
+      },
+      "rollback": {
+        "opportunity_id": "1c2729a0-a9b5-449e-b947-f6ac1a3dc344",
+        "isFollowUp": false,
+        "bitrixDealId": "bb:9332"
+      }
+    }
+  ]
+}

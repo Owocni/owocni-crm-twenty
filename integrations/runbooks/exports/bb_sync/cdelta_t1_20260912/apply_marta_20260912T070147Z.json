@@ -1,0 +1,122 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 0,
+  "bb_limit": 80,
+  "rows": 8,
+  "scanned": 8,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_other_channel": 1,
+    "skip_in_twenty": 3,
+    "skip_parent_not_in_twenty": 1
+  },
+  "appended": [
+    {
+      "bb_id": 2058393,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pana Roberta",
+      "sent_date": "2026-09-11T18:23:19.846+00:00",
+      "own": "<9a2d2a53-dc09-3548-b580-2ec9b3dc40fa@owocni.pl>",
+      "parent": "<149ce3a2-cbb3-8340-296a-3599d2b46f10@owocni.pl>",
+      "status": "appended",
+      "parent_thread": "77d1af1d-ebfd-4a80-bc67-6f4211520d0d",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 47452
+    },
+    {
+      "bb_id": 2058392,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Strona dla studia tańca Pani Joanny:",
+      "sent_date": "2026-09-11T18:15:55.515+00:00",
+      "own": "<109996f7-5f2e-7502-cc8b-86d9faf3d735@owocni.pl>",
+      "parent": "<651339cf-24e7-14d0-f3c4-1ff9342ff3aa@owocni.pl>",
+      "status": "appended",
+      "parent_thread": "45beabed-d660-4461-98b0-6923eb934100",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 19713
+    },
+    {
+      "bb_id": 2058391,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Do usłyszenia w przyszłym tygodniu:",
+      "sent_date": "2026-09-11T18:13:32.079+00:00",
+      "own": "<924b1f04-860b-14d2-182e-e619ddb72f90@owocni.pl>",
+      "parent": "<1aebc04b-253a-d948-adf1-7a8d8774f7f0@owocni.pl>",
+      "status": "appended",
+      "parent_thread": "738e511e-18a9-4b2b-8c8d-16e789723566",
+      "parent_mailboxes": [
+        "MARTA"
+      ],
+      "folder": "BB Archive",
+      "bytes": 9066
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2058396,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pani Moniki",
+      "sent_date": "2026-09-11T18:46:21.554+00:00",
+      "own": "<6d135a02-9d4b-2756-8371-84cd875504e5@owocni.pl>",
+      "parent": "<01da4aeac77ae4b53ec2bd21f80b5678@form.owocni.pl>",
+      "status": "skip_other_channel",
+      "parent_thread": "9562a02e-596e-42df-83b5-ef4427fdb734",
+      "parent_mailboxes": [
+        "LEADS"
+      ]
+    },
+    {
+      "bb_id": 2058395,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Konsultacja dotycząca strony 2015 Security",
+      "sent_date": "2026-09-11T18:35:40.125+00:00",
+      "own": "<e946d5bc-8995-f4ec-22f9-36e7eba9e2db@owocni.pl>",
+      "parent": "<1057140083.121196.1789132489358@email.ionos.co.uk>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058394,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pana Jana:",
+      "sent_date": "2026-09-11T18:29:03+00:00",
+      "own": "<3e8dfd51-eeba-55c6-fb1c-ccf3da14576f@owocni.pl>",
+      "parent": "<dd4b6983-8ea2-66b8-7203-c2bde9a948c7@owocni.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058390,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Konsultacja dotycząca rozwoju sklepu NATURALEXPERT.pl",
+      "sent_date": "2026-09-11T16:11:55.901+00:00",
+      "own": "<aca70896-a6fb-5509-ab18-bf4be688954b@owocni.pl>",
+      "parent": "<b813f5a1-be43-8ab1-d2e1-743636fe768c@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2058387,
+      "inbox": "marta@owocni.pl",
+      "subject": "Stopki firmowe:",
+      "sent_date": "2026-09-11T15:39:13+00:00",
+      "own": "<36072fcb-538c-c486-57d4-d28d99a7b510@owocni.pl>",
+      "parent": "<CAF=LHO2UuhGRo7inrwqYDk=Qe=iXrAwrRVgFuWkZdGmzOgzC4g@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

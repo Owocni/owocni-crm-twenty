@@ -231,4 +231,17 @@ describe('resolveSendHtmlBody', () => {
 
     expect(result).toEqual({ html: '<p>ze szkicu</p>', clientSent: true });
   });
+
+  it('does not resurrect a draft on the composer v2 send path', async () => {
+    const result = await resolveSendHtmlBody(
+      {
+        composerV2: true,
+        draftSessionId: 'send:abc',
+        to: 'test9959058@fastman.eu',
+      },
+      async () => '<p>stary szkic</p>',
+    );
+
+    expect(result).toEqual({ html: '', clientSent: false });
+  });
 });

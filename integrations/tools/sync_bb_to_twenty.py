@@ -39,6 +39,10 @@ from twenty_rest import http_json, load_env, paginate  # noqa: E402
 
 UA = "owocni-sync-bb-to-twenty/1.0"
 RUNS = Path(__file__).resolve().parents[1] / "runbooks" / "exports" / "bb_sync" / "runs"
+HOLDING_OWNER = "2d65d0e6-8a7f-4e6b-868f-07a6c4fd1f7d"
+# Nie cofamy SQL / wpłaty / wygranej samym inquiry z BB.
+PROTECTED_TWENTY_STAGES = frozenset({"QUALIFIED", "CONTRACT_SENT", "PAYING", "WON"})
+BB_AHEAD_STAGES = frozenset({"WON", "LOST", "PAYING"})
 
 BB_TO_TWENTY_STAGE = {
     "unsorted": "NEW",
@@ -133,12 +137,28 @@ def prefetch_twenty_index(owner_ids: list[str]) -> tuple[dict[str, dict], dict[s
     """bitrixDealId → opp; email → list opps (open only)."""
     by_bb: dict[str, dict] = {}
     by_email: dict[str, list[dict]] = {}
-    open_stages = {"NEW", "CONTACTED", "QUALIFIED", "PROPOSAL", "CONTRACT_SENT", "PAYING"}
+    # WON/LOST też — inaczej zamknięte karty z BB wychodzą jako fałszywe create.
+    index_stages = {
+        "NEW",
+        "CONTACTED",
+        "QUALIFIED",
+        "PROPOSAL",
+        "CONTRACT_SENT",
+        "PAYING",
+        "WON",
+        "LOST",
+    }
+    seen: set[str] = set()
     for oid in owner_ids:
         opps = paginate("opportunities", "opportunities", f"ownerId[eq]:{oid}", user_agent=UA, pace=0.35)
         for o in opps:
-            if o.get("stage") not in open_stages:
+            if o.get("stage") not in index_stages:
                 continue
+            rid = o.get("id")
+            if rid and rid in seen:
+                continue
+            if rid:
+                seen.add(rid)
             bid = (o.get("bitrixDealId") or "").strip()
             if bid:
                 by_bb[bid] = o
@@ -177,6 +197,30 @@ def resolve_match(bb: dict, by_bb: dict, by_email: dict) -> tuple[str | None, st
             return "review", "email_other_owner_or_dup", None
     if not emails:
         return "review", "no_email", None
+    # Karta na innym ownerze / puste bizCardEmail — szukaj po Person.
+    found: list[dict] = []
+    for em in emails:
+        pid = find_person_by_email(em)
+        if not pid:
+            continue
+        extra = paginate(
+            "opportunities",
+            "opportunities",
+            f"pointOfContactId[eq]:{pid}",
+            user_agent=UA,
+            pace=0.2,
+            limit=50,
+        )
+        found.extend(extra)
+    uniq: dict[str, dict] = {}
+    for o in found:
+        if o.get("id"):
+            uniq[o["id"]] = o
+    found = list(uniq.values())
+    if len(found) == 1:
+        return "patch", "person_single", found[0]
+    if len(found) > 1:
+        return "review", "person_ambiguous", None
     return "create", "no_match", None
 
 
@@ -219,10 +263,19 @@ def plan_row(bb: dict, by_bb: dict, by_email: dict) -> dict:
         "twenty_opp_name_before": tw.get("name") if tw else None,
         "twenty_stage_before": tw.get("stage") if tw else None,
         "twenty_owner_before": tw.get("ownerId") if tw else None,
+        "stage_hold": False,
+        "patch_stage": stage,
+        "needs_patch": False,
     }
     if action == "patch" and tw and stage and owner:
+        tw_stage = tw.get("stage") or ""
+        hold_stage = (
+            tw_stage in PROTECTED_TWENTY_STAGES and stage not in BB_AHEAD_STAGES
+        )
+        row["stage_hold"] = hold_stage
+        row["patch_stage"] = tw_stage if hold_stage else stage
         row["needs_patch"] = (
-            tw.get("stage") != stage
+            (not hold_stage and tw_stage != stage)
             or tw.get("ownerId") != owner
             or not (tw.get("bitrixDealId") or "").strip()
         )
@@ -256,7 +309,9 @@ def cmd_plan(args: argparse.Namespace) -> None:
         raise SystemExit(f"Brak {src} — najpierw export")
     leads = json.loads(src.read_text(encoding="utf-8"))["leads"]
     print("prefetch Twenty index…", flush=True)
-    by_bb, by_email = prefetch_twenty_index(list(OWNER_TWENTY.values()))
+    by_bb, by_email = prefetch_twenty_index(
+        list(OWNER_TWENTY.values()) + [HOLDING_OWNER]
+    )
 
     rows = [plan_row(bb, by_bb, by_email) for bb in leads]
     review = [r for r in rows if r["action"] == "review"]
@@ -304,9 +359,20 @@ def apply_one(row: dict, bb_by_id: dict, *, pace: float) -> dict:
 
     if row["action"] == "patch":
         oid = row["twenty_opp_id"]
-        body: dict = {"stage": stage, "ownerId": owner, "bitrixDealId": row["bitrix_deal_id"]}
+        patch_stage = row.get("patch_stage") or stage
+        body: dict = {
+            "stage": patch_stage,
+            "ownerId": owner,
+            "bitrixDealId": row["bitrix_deal_id"],
+        }
+        if patch_stage in ("WON", "LOST", "PAYING", "PROPOSAL", "CONTACTED"):
+            body["isFollowUp"] = False
+        if patch_stage == "WON":
+            # inbound SKIP_LEGACY_IMPORT — zero purchase na historycznym WON
+            body["srcSystem"] = "BETTER_BITRIX_LEGACY"
         # Stamp idOid from Person so later create_lead / mail path dedupes on same oid.
         st_p, res_p = http_json("GET", f"/opportunities/{oid}", user_agent=UA)
+        opp_now = {}
         if st_p == 200:
             opp_now = (res_p.get("data") or {}).get("opportunity") or {}
             poc = opp_now.get("pointOfContactId")
@@ -316,16 +382,23 @@ def apply_one(row: dict, bb_by_id: dict, *, pace: float) -> dict:
                     person = (res_pe.get("data") or {}).get("person") or {}
                     if person.get("idOid"):
                         body["idOid"] = person["idOid"]
+            tw_now = opp_now.get("stage") or ""
+            if tw_now in PROTECTED_TWENTY_STAGES and patch_stage not in BB_AHEAD_STAGES:
+                body.pop("stage", None)
+                body.pop("srcSystem", None)
         st, res = http_json("PATCH", f"/opportunities/{oid}", body, user_agent=UA)
         result["status"] = "patched" if st in (200, 201) else "patch_failed"
         result["http_status"] = st
+        result["patched_fields"] = sorted(body.keys())
         if st not in (200, 201):
             result["error"] = res.get("error")
         result["rollback"] = {
             "opportunity_id": oid,
-            "stage": row.get("twenty_stage_before"),
-            "ownerId": row.get("twenty_owner_before"),
-            "bitrixDealId": None,
+            "stage": row.get("twenty_stage_before") or opp_now.get("stage"),
+            "ownerId": row.get("twenty_owner_before") or opp_now.get("ownerId"),
+            "bitrixDealId": opp_now.get("bitrixDealId") or None,
+            "isFollowUp": opp_now.get("isFollowUp"),
+            "srcSystem": opp_now.get("srcSystem"),
         }
         time.sleep(pace)
         return result
@@ -351,6 +424,7 @@ def apply_one(row: dict, bb_by_id: dict, *, pace: float) -> dict:
         "bitrixDealId": row["bitrix_deal_id"],
         "bizProduct": map_product(bb.get("primary_product")),
         "campaignRejected": False,
+        "isFollowUp": False,
     }
     if emails:
         opp_body["bizCardEmail"] = emails[0]

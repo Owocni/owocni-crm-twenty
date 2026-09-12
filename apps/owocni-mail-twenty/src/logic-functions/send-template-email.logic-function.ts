@@ -39,6 +39,18 @@ import {
   formatEmailList,
   parseEmailList,
 } from 'src/utils/parseEmailList';
+import { isComposerV2Payload } from 'src/utils/composerV2Flag';
+import { isUnintendedEmptyReply } from 'src/utils/mailSignature';
+import {
+  composerV2EnvelopeKey,
+  parseComposerV2EnvelopeJson,
+} from 'src/utils/composerV2Iframe';
+import {
+  composerSendAttemptKey,
+  hashSendBody,
+  parseComposerSendAttempt,
+  serializeComposerSendAttempt,
+} from 'src/utils/composerSendAttempt';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -108,7 +120,10 @@ const handler = async (event: RoutePayload) => {
       }
     }
 
-    const delayMs = clampDelayMs(readNumberField(payload, 'delayMs'));
+    const composerV2 = isComposerV2Payload(payload);
+    const delayMs = composerV2
+      ? 0
+      : clampDelayMs(readNumberField(payload, 'delayMs'));
 
     if (jobId && delayMs > 0) {
       const waited = await waitUnlessCancelled({
@@ -149,11 +164,37 @@ const handler = async (event: RoutePayload) => {
     const internalHandoff = sendMode === 'internal';
     const isForward = sendMode === 'forward';
     const composeDraftKey = readStringField(payload, 'composeDraftKey');
-    const attachmentFiles = readAttachmentRefs(payload);
+    let attachmentFiles = readAttachmentRefs(payload);
     const ccRaw = readStringField(payload, 'cc', 'ccEmails');
     const bccRaw = readStringField(payload, 'bcc', 'bccEmails');
+
+    if (composerV2 && attachmentFiles.length === 0) {
+      const editorSessionId = readStringField(
+        payload,
+        'editorSessionId',
+        'sessionId',
+      );
+      if (editorSessionId) {
+        const stored = parseComposerV2EnvelopeJson(
+          await getEditorDraftFresh(composerV2EnvelopeKey(editorSessionId)),
+        );
+        if (stored) {
+          attachmentFiles = readAttachmentRefs(
+            stored as Record<string, unknown>,
+          );
+        }
+      }
+    }
     const { html: customBody, clientSent: clientSentBody } =
-      await resolveSendHtmlBody(payload, getEditorDraft);
+      await resolveSendHtmlBody(payload, composerV2 ? undefined : getEditorDraft);
+
+    if (composerV2 && isUnintendedEmptyReply(customBody)) {
+      return {
+        ok: false,
+        error:
+          'Treść maila jest pusta (sama stopka, cytat albo placeholder).',
+      };
+    }
 
     if (!recordId && !customTo) {
       return { ok: false, error: 'recordId or to is required' };
@@ -169,6 +210,26 @@ const handler = async (event: RoutePayload) => {
         error:
           'Treść z edytora nie dotarła (pusta). Spróbuj przełączyć na „Kod HTML”, sprawdź treść i wyślij ponownie.',
       };
+    }
+
+    const attemptId = readStringField(payload, 'attemptId');
+    const bodyHash = hashSendBody(customBody);
+    if (composerV2 && attemptId) {
+      const attemptKey = composerSendAttemptKey(attemptId);
+      const existing = parseComposerSendAttempt(
+        await getEditorDraftFresh(attemptKey),
+      );
+      if (existing?.status === 'sent') {
+        return {
+          ok: true,
+          alreadySent: true,
+          bodyHash: existing.bodyHash,
+        };
+      }
+      await saveEditorDraft(
+        attemptKey,
+        serializeComposerSendAttempt('sending', bodyHash),
+      );
     }
 
     const coreClient = new CoreApiClient();
@@ -486,6 +547,13 @@ const handler = async (event: RoutePayload) => {
       }
     }
 
+    if (composerV2 && attemptId) {
+      await saveEditorDraft(
+        composerSendAttemptKey(attemptId),
+        serializeComposerSendAttempt('sent', bodyHash),
+      );
+    }
+
     return {
       ok: true,
       to: email,
@@ -497,6 +565,7 @@ const handler = async (event: RoutePayload) => {
       from: connectedAccount.handle,
       bodySource: clientSentBody || customBody ? 'client' : 'template',
       bodyLength: htmlBody.length,
+      bodyHash,
       ...(internalHandoff ? { internalHandoff: true, threadAttached } : {}),
     };
   } catch (unexpectedError) {

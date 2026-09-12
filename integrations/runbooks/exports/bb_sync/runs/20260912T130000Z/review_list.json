@@ -1,0 +1,107 @@
+[
+  {
+    "bb_id": 6511,
+    "bb_title": "Nazwa dla Outsourcingu Kadrowo-Płacowego w HR",
+    "bb_stage": "pays",
+    "twenty_stage": "PAYING",
+    "bb_owner": "Gosia",
+    "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "emails": [
+      "agnieszkawojcik.80@wp.pl"
+    ],
+    "bitrix_deal_id": "bb:6511",
+    "action": "review",
+    "match_reason": "person_ambiguous",
+    "twenty_opp_id": null,
+    "twenty_opp_name_before": null,
+    "twenty_stage_before": null,
+    "twenty_owner_before": null,
+    "stage_hold": false,
+    "patch_stage": "PAYING",
+    "needs_patch": false
+  },
+  {
+    "bb_id": 5541,
+    "bb_title": "Nazwa dla Gabinetu Psychologicznego Dzieci i Młodzieży",
+    "bb_stage": "lead_won",
+    "twenty_stage": "WON",
+    "bb_owner": "Marta",
+    "twenty_owner_id": "4704e0c0-8d77-4640-ad1e-1875294294df",
+    "emails": [
+      "md.marcyniuk@gmail.com"
+    ],
+    "bitrix_deal_id": "bb:5541",
+    "action": "review",
+    "match_reason": "person_ambiguous",
+    "twenty_opp_id": null,
+    "twenty_opp_name_before": null,
+    "twenty_stage_before": null,
+    "twenty_owner_before": null,
+    "stage_hold": false,
+    "patch_stage": "WON",
+    "needs_patch": false
+  },
+  {
+    "bb_id": 8935,
+    "bb_title": "Marketing Międzynarodowy dla Startującej Firmy",
+    "bb_stage": "inquiry",
+    "twenty_stage": "CONTACTED",
+    "bb_owner": "Gosia",
+    "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "emails": [
+      "klara.sztyler@gmail.com"
+    ],
+    "bitrix_deal_id": "bb:8935",
+    "action": "review",
+    "match_reason": "person_ambiguous",
+    "twenty_opp_id": null,
+    "twenty_opp_name_before": null,
+    "twenty_stage_before": null,
+    "twenty_owner_before": null,
+    "stage_hold": false,
+    "patch_stage": "CONTACTED",
+    "needs_patch": false
+  },
+  {
+    "bb_id": 729,
+    "bb_title": "Strona Wizytówka dla Firmy BHP Nord",
+    "bb_stage": "analysis",
+    "twenty_stage": "PROPOSAL",
+    "bb_owner": "Gosia",
+    "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "emails": [
+      "p.brzdek@bhp-nord.pl"
+    ],
+    "bitrix_deal_id": "bb:729",
+    "action": "review",
+    "match_reason": "person_ambiguous",
+    "twenty_opp_id": null,
+    "twenty_opp_name_before": null,
+    "twenty_stage_before": null,
+    "twenty_owner_before": null,
+    "stage_hold": false,
+    "patch_stage": "PROPOSAL",
+    "needs_patch": false
+  },
+  {
+    "bb_id": 8848,
+    "bb_title": "Marketing dla marki odzieżowej Ink Flow Collective",
+    "bb_stage": "inquiry",
+    "twenty_stage": "CONTACTED",
+    "bb_owner": "Gosia",
+    "twenty_owner_id": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "emails": [
+      "info@inkflowcollective.com"
+    ],
+    "bitrix_deal_id": "bb:8848",
+    "action": "review",
+    "match_reason": "person_ambiguous",
+    "twenty_opp_id": null,
+    "twenty_opp_name_before": null,
+    "twenty_stage_before": null,
+    "twenty_owner_before": null,
+    "stage_hold": false,
+    "patch_stage": "CONTACTED",
+    "needs_patch": false
+  }
+]

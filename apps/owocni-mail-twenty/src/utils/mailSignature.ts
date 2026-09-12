@@ -190,15 +190,98 @@ export function stripSignatureBlock(html: string): string {
   return html.replace(SIGNATURE_BLOCK_RE, '').trim();
 }
 
-export function isEmptyComposeHtml(html: string): boolean {
-  const withoutSignature = stripSignatureBlock(html);
-  const text = withoutSignature
-    .replace(/<br\s*\/?>/gi, '')
-    .replace(/&nbsp;/gi, '')
-    .replace(/<[^>]+>/g, '')
+function htmlToPlain(html: string): string {
+  return html
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, '');
+}
 
-  return text.length === 0;
+export function isEmptyComposeHtml(html: string): boolean {
+  return htmlToPlain(stripSignatureBlock(html)).length === 0;
+}
+
+/**
+ * Quoted original of a reply — not a template that happens to use <blockquote>
+ * for layout. Only strip known mail-quote wrappers.
+ */
+export function stripQuotedReplyHtml(html: string): string {
+  return html
+    .replace(/<div[^>]*class="[^"]*gmail_quote[^"]*"[\s\S]*$/i, '')
+    .replace(/<div[^>]*class="[^"]*moz-cite-prefix[^"]*"[\s\S]*$/i, '')
+    .replace(
+      /<blockquote\b[^>]*>[\s\S]*?napisał\(a\):[\s\S]*?<\/blockquote>/gi,
+      '',
+    );
+}
+
+function extraTextInsideSignature(html: string): string {
+  const match =
+    /<section([^>]*)data-owocni-signature="1"([^>]*)>([\s\S]*?)<\/section>/i.exec(
+      html,
+    );
+
+  if (!match) {
+    return '';
+  }
+
+  const attrs = `${match[1]}${match[2]}`;
+  const handle =
+    /data-owocni-handle="([^"]*)"/.exec(attrs)?.[1] ?? '';
+  const innerPlain = htmlToPlain(match[3] ?? '');
+  const expected = signatureHtmlForHandle(handle);
+  const expectedPlain = expected ? htmlToPlain(expected) : '';
+
+  if (expectedPlain && innerPlain.includes(expectedPlain)) {
+    return innerPlain.replace(expectedPlain, '');
+  }
+
+  if (expectedPlain && innerPlain.length > expectedPlain.length + 4) {
+    return innerPlain;
+  }
+
+  return '';
+}
+
+/**
+ * Placeholder, whitespace, stock signature-only, or quoted-mail-only.
+ * Text typed into the signature block still counts — the caret often lands there.
+ * Template <blockquote> styling is not treated as a quote.
+ */
+export function isUnintendedEmptyReply(html: string): boolean {
+  if (!html.trim()) {
+    return true;
+  }
+
+  const withoutQuote = stripQuotedReplyHtml(html);
+
+  if (!isEmptyComposeHtml(withoutQuote)) {
+    return false;
+  }
+
+  return extraTextInsideSignature(withoutQuote).length === 0;
+}
+
+/** First candidate that is a real reply. Does not prefer longer HTML. */
+export function pickSendableBodyHtml(
+  candidates: Array<string | null | undefined>,
+): string {
+  for (const raw of candidates) {
+    const html = (raw ?? '').trim();
+    if (html && !isUnintendedEmptyReply(html)) {
+      return html;
+    }
+  }
+
+  for (const raw of candidates) {
+    const html = (raw ?? '').trim();
+    if (html) {
+      return html;
+    }
+  }
+
+  return '';
 }
 
 /** New compose or freshly loaded template — put this mailbox's signature at the end. */

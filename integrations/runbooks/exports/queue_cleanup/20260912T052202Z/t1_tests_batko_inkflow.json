@@ -1,0 +1,3179 @@
+{
+  "block1_delete_tests": {
+    "startedAt": "2026-09-12T06:42:18.499460+00:00",
+    "op": "t1_delete_tests_fakturownia",
+    "no_emit": true,
+    "count_planned": 8,
+    "keep_id": "a88aa583-646d-41f2-944f-20c988f63e3f",
+    "keep_before": {
+      "id": "a88aa583-646d-41f2-944f-20c988f63e3f",
+      "name": "test9959058@fastman.eu · Strona",
+      "stage": "CONTACTED",
+      "ownerId": null,
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "9QJNMC21E0ZZN41Y819R4WXGVT",
+      "pointOfContactId": "2fd6a5d1-5fe6-448f-b347-4c481d2eb996",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "isFollowUp": false,
+      "createdAt": "2026-06-29T09:24:05.679Z",
+      "updatedAt": "2026-09-12T06:39:58.508Z",
+      "http_status": 200
+    },
+    "keep_after": {
+      "id": "a88aa583-646d-41f2-944f-20c988f63e3f",
+      "name": "test9959058@fastman.eu · Strona",
+      "stage": "CONTACTED",
+      "ownerId": null,
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "9QJNMC21E0ZZN41Y819R4WXGVT",
+      "pointOfContactId": "2fd6a5d1-5fe6-448f-b347-4c481d2eb996",
+      "bizCardEmail": "",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "isFollowUp": false,
+      "createdAt": "2026-06-29T09:24:05.679Z",
+      "updatedAt": "2026-09-12T06:39:58.508Z",
+      "http_status": 200
+    },
+    "rows": [
+      {
+        "id": "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+        "name": "verify-create-lead-liimendf@example.com · Strona",
+        "before": {
+          "id": "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+          "name": "verify-create-lead-liimendf@example.com · Strona",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "01VERIFYCLLIIMENDF",
+          "pointOfContactId": "d8b541f3-3ba8-4cc6-ba92-a8a343dc01a2",
+          "bizCardEmail": "",
+          "bizProduct": "WEB",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T07:42:22.950Z",
+          "updatedAt": "2026-08-31T07:04:09.026Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "d8b541f3-3ba8-4cc6-ba92-a8a343dc01a2",
+          "name": {
+            "firstName": "Verify",
+            "lastName": "CreateLead"
+          },
+          "emails": [
+            "verify-create-lead-liimendf@example.com"
+          ],
+          "idOid": "01VERIFYCLLIIMENDF",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+        "name": "test858ggaf@fastman.eu · INNE",
+        "before": {
+          "id": "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+          "name": "test858ggaf@fastman.eu · INNE",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "1YCXSZKBYFMGR9B10HPBC2SV7A",
+          "pointOfContactId": "a78376b8-b4ae-41a8-bfda-a27a2d9310e0",
+          "bizCardEmail": "",
+          "bizProduct": "INNE",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T10:06:04.421Z",
+          "updatedAt": "2026-08-31T07:04:09.026Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "a78376b8-b4ae-41a8-bfda-a27a2d9310e0",
+          "name": {
+            "firstName": "test",
+            "lastName": "9945"
+          },
+          "emails": [
+            "test858ggaf@fastman.eu"
+          ],
+          "idOid": "1YCXSZKBYFMGR9B10HPBC2SV7A",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "82739981-f35b-4e25-bc21-fbdfc97a9519",
+        "name": "verify-create-lead-llmkbjml@example.com · Strona",
+        "before": {
+          "id": "82739981-f35b-4e25-bc21-fbdfc97a9519",
+          "name": "verify-create-lead-llmkbjml@example.com · Strona",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "01VERIFYCLLLMKBJML",
+          "pointOfContactId": "dc9d1c3c-cd11-4ec2-9dd5-ab74391fd8ea",
+          "bizCardEmail": "",
+          "bizProduct": "WEB",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-26T05:48:19.884Z",
+          "updatedAt": "2026-08-31T07:04:10.168Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "dc9d1c3c-cd11-4ec2-9dd5-ab74391fd8ea",
+          "name": {
+            "firstName": "Verify",
+            "lastName": "CreateLead"
+          },
+          "emails": [
+            "verify-create-lead-llmkbjml@example.com"
+          ],
+          "idOid": "01VERIFYCLLLMKBJML",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "97c956f1-c372-47c4-805b-bb27204fa0ad",
+        "name": "tjagurtn489@fastman.eu · INNE",
+        "before": {
+          "id": "97c956f1-c372-47c4-805b-bb27204fa0ad",
+          "name": "tjagurtn489@fastman.eu · INNE",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "C226PHEG9ZR00SANA4VXCA1J7H",
+          "pointOfContactId": "cb58e628-2694-4c75-9031-a4297ad59a5e",
+          "bizCardEmail": "",
+          "bizProduct": "INNE",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T08:15:07.182Z",
+          "updatedAt": "2026-08-31T07:04:11.398Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "cb58e628-2694-4c75-9031-a4297ad59a5e",
+          "name": {
+            "firstName": "945919nnff",
+            "lastName": ""
+          },
+          "emails": [
+            "tjagurtn489@fastman.eu"
+          ],
+          "idOid": "C226PHEG9ZR00SANA4VXCA1J7H",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+        "name": "v4-test-test@fastman.eu · INNE",
+        "before": {
+          "id": "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+          "name": "v4-test-test@fastman.eu · INNE",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "XGG1Z4NWMGAFZAFTQFGCZSNZF3",
+          "pointOfContactId": "d31fb42d-bdda-4f0e-b1d7-42390225c173",
+          "bizCardEmail": "",
+          "bizProduct": "INNE",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T09:12:04.392Z",
+          "updatedAt": "2026-08-31T07:04:12.537Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "d31fb42d-bdda-4f0e-b1d7-42390225c173",
+          "name": {
+            "firstName": "t99595",
+            "lastName": ""
+          },
+          "emails": [
+            "v4-test-test@fastman.eu"
+          ],
+          "idOid": "XGG1Z4NWMGAFZAFTQFGCZSNZF3",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+        "name": "test120gagafg@fastman.eu · INNE",
+        "before": {
+          "id": "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+          "name": "test120gagafg@fastman.eu · INNE",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "JT3DHN6VPGEQ31TMK88D21VDB3",
+          "pointOfContactId": "ae83ada4-0c84-4701-ab94-779e639ea26f",
+          "bizCardEmail": "",
+          "bizProduct": "INNE",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T10:24:05.241Z",
+          "updatedAt": "2026-08-31T07:04:12.537Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "ae83ada4-0c84-4701-ab94-779e639ea26f",
+          "name": {
+            "firstName": "test",
+            "lastName": ""
+          },
+          "emails": [
+            "test120gagafg@fastman.eu"
+          ],
+          "idOid": "JT3DHN6VPGEQ31TMK88D21VDB3",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "f6503cba-c0cb-4b5c-8199-26b57b702612",
+        "name": "15ffjfj949@fastman.eu · INNE",
+        "before": {
+          "id": "f6503cba-c0cb-4b5c-8199-26b57b702612",
+          "name": "15ffjfj949@fastman.eu · INNE",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "OWOCNI_SORTOWNIA",
+          "bitrixDealId": "",
+          "idOid": "YKW9HPSH614WD1421S6HNVTRAN",
+          "pointOfContactId": "308a825b-45bc-479d-a2a2-c6ed1824e185",
+          "bizCardEmail": "",
+          "bizProduct": "INNE",
+          "bizSource": "FORM",
+          "isFollowUp": true,
+          "createdAt": "2026-06-29T10:18:05.050Z",
+          "updatedAt": "2026-08-31T07:04:12.537Z",
+          "http_status": 200
+        },
+        "person_before": {
+          "id": "308a825b-45bc-479d-a2a2-c6ed1824e185",
+          "name": {
+            "firstName": "Test",
+            "lastName": ""
+          },
+          "emails": [
+            "15ffjfj949@fastman.eu"
+          ],
+          "idOid": "YKW9HPSH614WD1421S6HNVTRAN",
+          "http_status": 200
+        },
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "person_remaining_opps": [],
+        "delete_person_http": 200,
+        "delete_person_ok": true
+      },
+      {
+        "id": "c6d3fb6d-7601-4e09-89b1-099a86e18f64",
+        "name": "TEST Fakturownia DEMO",
+        "before": {
+          "id": "c6d3fb6d-7601-4e09-89b1-099a86e18f64",
+          "name": "TEST Fakturownia DEMO",
+          "stage": "NEW",
+          "ownerId": null,
+          "srcSystem": "TWENTY_UI",
+          "bitrixDealId": "",
+          "idOid": "BW8QEP3EA8TF19RTNTFK8RJ2ZM",
+          "pointOfContactId": null,
+          "bizCardEmail": "",
+          "bizProduct": "WEB",
+          "bizSource": null,
+          "isFollowUp": true,
+          "createdAt": "2026-09-11T06:17:19.234Z",
+          "updatedAt": "2026-09-11T06:20:04.667Z",
+          "http_status": 200
+        },
+        "person_before": {},
+        "delete_opp_http": 200,
+        "delete_opp_ok": true
+      }
+    ],
+    "verify_gone": [
+      {
+        "id": "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "82739981-f35b-4e25-bc21-fbdfc97a9519",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "97c956f1-c372-47c4-805b-bb27204fa0ad",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "f6503cba-c0cb-4b5c-8199-26b57b702612",
+        "http": 404,
+        "gone": true
+      },
+      {
+        "id": "c6d3fb6d-7601-4e09-89b1-099a86e18f64",
+        "http": 404,
+        "gone": true
+      }
+    ],
+    "delete_opp_ok": 8,
+    "delete_person_ok": 7
+  },
+  "block2_batko": {
+    "email": "lech.batko@poczta.fm",
+    "twenty_id": "34b12db0-9f97-47ec-9b8c-508028eaa94a",
+    "twenty": {
+      "http": 200,
+      "id": "34b12db0-9f97-47ec-9b8c-508028eaa94a",
+      "name": "lech.batko@poczta.fm · Logo · Nowe",
+      "stage": "NEW",
+      "ownerId": null,
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "BDYSD3QAQ7V0CHAF00CKD2GBR2",
+      "createdAt": "2026-08-30T17:10:05.927Z",
+      "bizSource": "GOOGLE",
+      "bizProduct": "LOGO"
+    },
+    "bb": {
+      "hit": false,
+      "scan_n": 11673,
+      "tried": [
+        {
+          "filter": {
+            "company": "cs.{\"emails\":[\"lech.batko@poczta.fm\"]}"
+          },
+          "ok": false,
+          "err": "HTTP Error 404: Not Found"
+        },
+        {
+          "filter": {
+            "or": "(title.ilike.*lech.batko@poczta.fm*)"
+          },
+          "n": 0,
+          "ok": true
+        }
+      ],
+      "rows": [
+        {
+          "id": 1085,
+          "title": "Strona Internetowa dla Firmy Budowlanej",
+          "stage_name": "negotiations",
+          "assigned_user_id": 257,
+          "owner_label": "Gosia",
+          "created_at": "2025-01-04T18:17:05.281415+00:00",
+          "last_modified_at": "2025-01-08T10:07:10.40346+00:00",
+          "emails": [
+            "j.batko@gmx.ch"
+          ],
+          "is_archived": false,
+          "primary_product": "strona"
+        }
+      ],
+      "hit_exact_email": false,
+      "near_miss_other_batko": [
+        {
+          "id": 1085,
+          "title": "Strona Internetowa dla Firmy Budowlanej",
+          "stage_name": "negotiations",
+          "assigned_user_id": 257,
+          "owner_label": "Gosia",
+          "created_at": "2025-01-04T18:17:05.281415+00:00",
+          "last_modified_at": "2025-01-08T10:07:10.40346+00:00",
+          "emails": [
+            "j.batko@gmx.ch"
+          ],
+          "is_archived": false,
+          "primary_product": "strona"
+        }
+      ]
+    },
+    "pipedrive": {
+      "person_hit": false,
+      "persons": [],
+      "deals": [],
+      "name_search": [],
+      "item_search_v1_n": 0
+    },
+    "action": "none — no delete, no assign"
+  },
+  "block3_inkflow_merge": {
+    "no_emit": true,
+    "choice": {
+      "survivor": "3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8",
+      "loser": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+      "alt_not_chosen": "a86bb2fa-f7b9-4e75-94b1-714f7717ed15",
+      "why": "pełniejszy WON: amount 4900 PLN, pipedriveId 6819, nazwa zapytania z owocni.pl/kontakt. Alt a86bb2fa nowszy (7 VII) ale pusta kwota i nazwa Nikodem."
+    },
+    "before": {
+      "loser": {
+        "http": 200,
+        "id": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+        "name": "info@inkflowcollective.com · INNE",
+        "stage": "CONTACTED",
+        "ownerId": null,
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "idOid": "W9SY88VMW56MVASQJFEJJ68D51",
+        "pipedriveId": "",
+        "createdAt": "2026-07-01T08:52:04.507Z",
+        "updatedAt": "2026-08-28T04:30:29.654Z",
+        "closeDate": null,
+        "amount": {
+          "amountMicros": null,
+          "currencyCode": null
+        },
+        "rejectionReason": null,
+        "lossDescription": "",
+        "pointOfContactId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "bizCardEmail": "",
+        "bizAdditionalEmails": {
+          "primaryEmail": "",
+          "additionalEmails": []
+        }
+      },
+      "survivor": {
+        "http": 200,
+        "id": "3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8",
+        "name": "Zapytanie z strony: https://www.owocni.pl/kontakt",
+        "stage": "WON",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "srcSystem": "PIPEDRIVE_LEGACY",
+        "idOid": "",
+        "pipedriveId": "6819",
+        "createdAt": "2026-07-01T09:01:10.000Z",
+        "updatedAt": "2026-08-04T13:55:36.269Z",
+        "closeDate": "2026-07-07T12:22:00.000Z",
+        "amount": {
+          "amountMicros": 4900000000,
+          "currencyCode": "PLN"
+        },
+        "rejectionReason": null,
+        "lossDescription": "",
+        "pointOfContactId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "bizCardEmail": "info@inkflowcollective.com",
+        "bizAdditionalEmails": {
+          "primaryEmail": "",
+          "additionalEmails": []
+        }
+      },
+      "alt_won": {
+        "http": 200,
+        "id": "a86bb2fa-f7b9-4e75-94b1-714f7717ed15",
+        "name": "Nikodem",
+        "stage": "WON",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "srcSystem": "PIPEDRIVE_LEGACY",
+        "idOid": "",
+        "pipedriveId": "6835",
+        "createdAt": "2026-07-07T12:22:03.000Z",
+        "updatedAt": "2026-09-10T10:18:03.857Z",
+        "closeDate": "2026-07-07T12:22:00.000Z",
+        "amount": {
+          "amountMicros": null,
+          "currencyCode": null
+        },
+        "rejectionReason": null,
+        "lossDescription": "",
+        "pointOfContactId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "bizCardEmail": "info@inkflowcollective.com",
+        "bizAdditionalEmails": {
+          "primaryEmail": "",
+          "additionalEmails": []
+        }
+      }
+    },
+    "worker_http": 200,
+    "worker": {
+      "ok": true,
+      "build_id": "2026-09-11-lead-nip-enrich",
+      "mode": "merge_leads",
+      "merge": {
+        "ok": true,
+        "survivorOpportunityId": "3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8",
+        "loserOpportunityId": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+        "survivorIdOid": null,
+        "loserIdOid": "W9SY88VMW56MVASQJFEJJ68D51",
+        "survivorPersonId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "transcriptsMoved": 0,
+        "participantsPatched": 0,
+        "emailsMoved": 0,
+        "contactMerge": {
+          "emailAdded": false,
+          "phoneAdded": false,
+          "samePerson": true
+        },
+        "opportunityContactMerge": {
+          "patch": {},
+          "emailsAdded": 0,
+          "phonesAdded": 0
+        },
+        "stape": {
+          "aliasedKeys": [
+            "W9SY88VMW56MVASQJFEJJ68D51",
+            "info@inkflowcollective.com",
+            "48781480031",
+            "781480031"
+          ],
+          "mergedAt": 1789195459882
+        },
+        "auditKey": "merge_00fad7e0-ffb3-40f8-afa2-ffbb9704f394_3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8"
+      }
+    },
+    "after": {
+      "loser": {
+        "http": 200,
+        "id": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+        "name": "info@inkflowcollective.com · INNE",
+        "stage": "LOST",
+        "ownerId": null,
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "idOid": "W9SY88VMW56MVASQJFEJJ68D51",
+        "pipedriveId": "",
+        "createdAt": "2026-07-01T08:52:04.507Z",
+        "updatedAt": "2026-09-12T06:44:20.390Z",
+        "closeDate": null,
+        "amount": {
+          "amountMicros": null,
+          "currencyCode": null
+        },
+        "rejectionReason": "DUPLICATE",
+        "lossDescription": "Scalony z leadem Zapytanie z strony: https://www.owocni.pl/kontakt (3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8). loser idOid=W9SY88VMW56MVASQJFEJJ68D51 → survivor idOid=—. Powód: Inkflow: Sortownia CONTACTED duplikat WON Roberta PIPEDRIVE_LEGACY (PD 6819, 4900 PLN). Adapter crm:merge_leads.",
+        "pointOfContactId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "bizCardEmail": "",
+        "bizAdditionalEmails": {
+          "primaryEmail": "",
+          "additionalEmails": []
+        }
+      },
+      "survivor": {
+        "http": 200,
+        "id": "3fcd51f3-d168-45e6-ab2f-f61a0ba76ed8",
+        "name": "Zapytanie z strony: https://www.owocni.pl/kontakt",
+        "stage": "WON",
+        "ownerId": "23ac9976-0232-4097-b056-5dc391bf7c34",
+        "srcSystem": "PIPEDRIVE_LEGACY",
+        "idOid": "",
+        "pipedriveId": "6819",
+        "createdAt": "2026-07-01T09:01:10.000Z",
+        "updatedAt": "2026-08-04T13:55:36.269Z",
+        "closeDate": "2026-07-07T12:22:00.000Z",
+        "amount": {
+          "amountMicros": 4900000000,
+          "currencyCode": "PLN"
+        },
+        "rejectionReason": null,
+        "lossDescription": "",
+        "pointOfContactId": "ef3adc01-7839-4eeb-a756-a3c3a62069d2",
+        "bizCardEmail": "info@inkflowcollective.com",
+        "bizAdditionalEmails": {
+          "primaryEmail": "",
+          "additionalEmails": []
+        }
+      }
+    },
+    "at": "2026-09-12T06:44:20.654439+00:00"
+  },
+  "block4_dump_bb_match": {
+    "window": "2026-06-26..2026-07-03",
+    "excluded": {
+      "deleted_tests_plus_fakturownia": [
+        "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+        "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+        "82739981-f35b-4e25-bc21-fbdfc97a9519",
+        "97c956f1-c372-47c4-805b-bb27204fa0ad",
+        "c6d3fb6d-7601-4e09-89b1-099a86e18f64",
+        "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+        "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+        "f6503cba-c0cb-4b5c-8199-26b57b702612"
+      ],
+      "keep_mail_test": "a88aa583-646d-41f2-944f-20c988f63e3f",
+      "inkflow_merged_loser": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+      "batko_outside_window": "34b12db0-9f97-47ec-9b8c-508028eaa94a"
+    },
+    "n": 28,
+    "bb_hit": 20,
+    "bb_miss": 8,
+    "rows": [
+      {
+        "id": "09aa0285-81aa-4b1b-9f0d-c323dd3f61ac",
+        "name": "youtuber77@wp.pl · INNE",
+        "email": "youtuber77@wp.pl",
+        "emails": [
+          "youtuber77@wp.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T10:16:05.234Z",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "idOid": "F4WZ91CMN8WBR41JZZ1CS9A2M2",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8843,
+            "title": "Nazwa dla Wynajmu Kwater Pracowniczych",
+            "stage": "inquiry",
+            "owner": "Maciej",
+            "assigned_user_id": 79,
+            "created_at": "2026-06-30T10:14:54.013834+00:00",
+            "last_modified_at": "2026-06-30T19:19:58.465997+00:00",
+            "is_archived": false,
+            "primary_product": "nazwa",
+            "emails": [
+              "youtuber77@wp.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "0edeb863-afc4-4646-afcf-923193ba89b1",
+        "name": "magdalenka1993-1993@o2.pl · Logo",
+        "email": "magdalenka1993-1993@o2.pl",
+        "emails": [
+          "magdalenka1993-1993@o2.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T06:32:04.423Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "NNRXPBZFJ3DBWRF2Q3W0W5Q9RZ",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8840,
+            "title": "Logo dla Q&M Solid-Bud: Odświeżenie Marki Budowlanej",
+            "stage": "inquiry",
+            "owner": "Gosia",
+            "assigned_user_id": 257,
+            "created_at": "2026-06-30T06:31:28.245713+00:00",
+            "last_modified_at": "2026-06-30T07:13:44.842415+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "magdalenka1993-1993@o2.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "1e56276e-de81-4ca6-85b6-3c28478119a4",
+        "name": "info@invitely.in",
+        "email": "info@invitely.in",
+        "emails": [
+          "info@invitely.in",
+          "tesg8854@fastman.eu"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T05:36:54.428Z",
+        "bizProduct": null,
+        "bizSource": null,
+        "idOid": "EQZA64K5S46KJS3GNC9SDW3N8V",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8837,
+            "title": "Strona internetowa dla branży zaproszeń",
+            "stage": "inquiry",
+            "owner": "uid:293",
+            "assigned_user_id": 293,
+            "created_at": "2026-06-30T05:32:49.706202+00:00",
+            "last_modified_at": "2026-06-30T06:38:11.370003+00:00",
+            "is_archived": false,
+            "primary_product": "inne",
+            "emails": [
+              "info@invitely.in"
+            ]
+          },
+          {
+            "bb_id": 8897,
+            "title": "Copywriting dla Małej Lokalnej Firmy",
+            "stage": "inquiry",
+            "owner": "uid:293",
+            "assigned_user_id": 293,
+            "created_at": "2026-07-07T05:54:12.497958+00:00",
+            "last_modified_at": "2026-07-07T10:12:04.464857+00:00",
+            "is_archived": false,
+            "primary_product": "copywriting",
+            "emails": [
+              "tesg8854@fastman.eu"
+            ]
+          }
+        ],
+        "note": "invitely — nie kasować/nie przydzielać",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "2041db7f-b01c-4c76-9fd9-4bb3af67422b",
+        "name": "k.aleksandrowicz@kadeo.pl · Logo",
+        "email": "k.aleksandrowicz@kadeo.pl",
+        "emails": [
+          "k.aleksandrowicz@kadeo.pl"
+        ],
+        "stage": "CONTACTED",
+        "createdAt": "2026-07-01T09:56:04.854Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "YGAF1KSB1FS3SMCSFB6JYMNAR1",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8851,
+            "title": "Logo dla Nowej Marki Marketingowej Kadeo.pl",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-01T09:56:11.312677+00:00",
+            "last_modified_at": "2026-07-20T14:43:51.880499+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "k.aleksandrowicz@kadeo.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "CONTACTED",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "284c06cd-0c79-4ad3-9757-99088053e73f",
+        "name": "Lead · Strona",
+        "email": "",
+        "emails": [],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T10:11:32.967Z",
+        "bizProduct": "WEB",
+        "bizSource": "FORM",
+        "idOid": "WFTESTNOTIFY001",
+        "bb_hit": false,
+        "bb": [],
+        "note": "brak emaila — karta test/notify",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "344a11f5-f69b-4358-a163-61585c5a678c",
+        "name": "adamfrackowiak00@wp.pl · Logo",
+        "email": "adamfrackowiak00@wp.pl",
+        "emails": [
+          "adamfrackowiak00@wp.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-01T12:50:04.630Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "7XSP3NWD8KJQD8W404WQSK5RCZ",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8853,
+            "title": "Logo dla Nowej Firmy Rolniczej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-01T12:49:02.483491+00:00",
+            "last_modified_at": "2026-07-02T09:23:46.338194+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "adamfrackowiak00@wp.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "3ce39c89-6036-4816-8915-68abad8560cd",
+        "name": "agata.debska@drdebski.pl · Strona",
+        "email": "agata.debska@drdebski.pl",
+        "emails": [
+          "agata.debska@drdebski.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-01T12:58:04.451Z",
+        "bizProduct": "WEB",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "P5YHJ4SKRXGT0NPEK0CHKPKJAE",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8854,
+            "title": "Do Ewy: Strona Wizytówka dla Szpitala Chirurgii Plastycznej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-01T12:57:29.843892+00:00",
+            "last_modified_at": "2026-07-28T13:09:14.539139+00:00",
+            "is_archived": false,
+            "primary_product": "strona",
+            "emails": [
+              "agata.debska@drdebski.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "5712f373-b00f-412e-888f-7effe2dd2b0e",
+        "name": "wernerhubercio123@gmail.com · Logo",
+        "email": "wernerhubercio123@gmail.com",
+        "emails": [
+          "wernerhubercio123@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-02T09:18:04.585Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "XF1R2BZDGP5FJCYDVA59867JR8",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8857,
+            "title": "Logo dla Rodzinnej Firmy Pelletowej WERNER ENERGY SYSTEM",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-02T09:16:54.093055+00:00",
+            "last_modified_at": "2026-07-02T15:16:30.089838+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "wernerhubercio123@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "57b773d3-2312-4576-b7b0-b7751b1f72f4",
+        "name": "szczerbickaa@icloud.com · Logo",
+        "email": "szczerbickaa@icloud.com",
+        "emails": [
+          "szczerbickaa@icloud.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T12:34:04.569Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "6PY6RXT12YJRD8M4KMS18CBB44",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8844,
+            "title": "Logo dla Odświeżenia Marki w Kosmetologii Medycznej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-06-30T12:34:04.295494+00:00",
+            "last_modified_at": "2026-07-02T12:39:48.488886+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "szczerbickaa@icloud.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "5aa03ad6-0718-4336-853a-21bc14126c89",
+        "name": "pooja@cssplayer.com · INNE",
+        "email": "pooja@cssplayer.com",
+        "emails": [
+          "pooja@cssplayer.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-01T09:14:04.516Z",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "idOid": "234A6X09E9T4WY5PSSRZKF4B9P",
+        "bb_hit": false,
+        "bb": [],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "68801bf1-2c8a-4697-a6f5-499c7e4e7549",
+        "name": "galeriaurody@poczta.onet.pl · Logo",
+        "email": "galeriaurody@poczta.onet.pl",
+        "emails": [
+          "galeriaurody@poczta.onet.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T05:48:04.407Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "BAPVYCRQTTQCK09EVN8KW6WK90",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8839,
+            "title": "Logo dla Nowej Marki Kosmetycznej z Podologią",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-06-30T05:46:28.327913+00:00",
+            "last_modified_at": "2026-06-30T06:41:42.515495+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "galeriaurody@poczta.onet.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "6c4b64e8-8172-48bd-aa73-478a655fc031",
+        "name": "domgam2905@gmail.com · INNE",
+        "email": "domgam2905@gmail.com",
+        "emails": [
+          "domgam2905@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T07:48:04.391Z",
+        "bizProduct": "INNE",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "33DYPC3Q15AVKPXK8PC19J48CV",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8841,
+            "title": "Nazwa dla Barber Shopu z Head Spa dla Mężczyzn (Marta)",
+            "stage": "negotiations",
+            "owner": "Maciej",
+            "assigned_user_id": 79,
+            "created_at": "2026-06-30T07:48:21.924074+00:00",
+            "last_modified_at": "2026-06-30T12:48:36.297212+00:00",
+            "is_archived": false,
+            "primary_product": "nazwa",
+            "emails": [
+              "domgam2905@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "7133da57-81a0-4051-a20d-9257e1d2766f",
+        "name": "Lead · INNE",
+        "email": "",
+        "emails": [],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T10:12:08.807Z",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "idOid": "WFTESTNOTIFY002",
+        "bb_hit": false,
+        "bb": [],
+        "note": "brak emaila — karta test/notify",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "75537198-408b-48c5-a874-62fd92e5f5f8",
+        "name": "rplotka1@gmail.com · Logo",
+        "email": "rplotka1@gmail.com",
+        "emails": [
+          "rplotka1@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-02T08:08:04.490Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "8QA67JX0FKSJR4RFWG5T0PNT4R",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8856,
+            "title": "Logo dla Nowej Marki Edukacyjnej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-02T08:07:36.086267+00:00",
+            "last_modified_at": "2026-07-02T15:38:19.158181+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "rplotka1@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "76cb0120-ee87-45af-bd34-37ee9b937043",
+        "name": "info@invitely.in",
+        "email": "info@invitely.in",
+        "emails": [
+          "info@invitely.in",
+          "tesg8854@fastman.eu"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T05:34:47.362Z",
+        "bizProduct": null,
+        "bizSource": null,
+        "idOid": "8RVS58QCKWNG5Z2YRCMJQ23Y7A",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8837,
+            "title": "Strona internetowa dla branży zaproszeń",
+            "stage": "inquiry",
+            "owner": "uid:293",
+            "assigned_user_id": 293,
+            "created_at": "2026-06-30T05:32:49.706202+00:00",
+            "last_modified_at": "2026-06-30T06:38:11.370003+00:00",
+            "is_archived": false,
+            "primary_product": "inne",
+            "emails": [
+              "info@invitely.in"
+            ]
+          },
+          {
+            "bb_id": 8897,
+            "title": "Copywriting dla Małej Lokalnej Firmy",
+            "stage": "inquiry",
+            "owner": "uid:293",
+            "assigned_user_id": 293,
+            "created_at": "2026-07-07T05:54:12.497958+00:00",
+            "last_modified_at": "2026-07-07T10:12:04.464857+00:00",
+            "is_archived": false,
+            "primary_product": "copywriting",
+            "emails": [
+              "tesg8854@fastman.eu"
+            ]
+          }
+        ],
+        "note": "invitely — nie kasować/nie przydzielać",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "7c2118d4-2aa4-4dc2-a382-7ce31c31351d",
+        "name": "pawel@acepark.pl · Strona",
+        "email": "pawel@acepark.pl",
+        "emails": [
+          "pawel@acepark.pl"
+        ],
+        "stage": "CONTACTED",
+        "createdAt": "2026-07-02T10:28:04.356Z",
+        "bizProduct": "WEB",
+        "bizSource": "FORM",
+        "idOid": "VSJ3C15BQE72E1KXJ20YC76R21",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8858,
+            "title": "Strona: Modernizacja dla Szkółki Tenisowej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-02T10:27:59.299106+00:00",
+            "last_modified_at": "2026-07-08T12:17:42.104427+00:00",
+            "is_archived": false,
+            "primary_product": "strona",
+            "emails": [
+              "pawel@acepark.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "CONTACTED",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "885bd227-4d6b-4be1-98ea-4f84399ab3ba",
+        "name": "agnieszkamadetko@gmail.com · Strona",
+        "email": "agnieszkamadetko@gmail.com",
+        "emails": [
+          "agnieszkamadetko@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-01T09:22:04.494Z",
+        "bizProduct": "WEB",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "A003RRWE3KWHPXV374ZPY1HZ87",
+        "bb_hit": false,
+        "bb": [],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "94979075-0e12-4c0d-856a-62a5dc59c4af",
+        "name": "teresa1327@interia.pl · Strona",
+        "email": "teresa1327@interia.pl",
+        "emails": [
+          "teresa1327@interia.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T20:10:05.099Z",
+        "bizProduct": "WEB",
+        "bizSource": "FORM",
+        "idOid": "6CYTWJ222FN28QXZ7HDXV6K7CW",
+        "bb_hit": false,
+        "bb": [],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "97fb335a-45f6-4b89-a0e9-463ed4bbf458",
+        "name": "maksiucabajk@gmail.com · INNE",
+        "email": "maksiucabajk@gmail.com",
+        "emails": [
+          "maksiucabajk@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-01T07:04:04.537Z",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "idOid": "8P8Q2WG1QX7AWNCQ57FB9HNPP4",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8847,
+            "title": "CRM: Usprawnienie Procesu Sprzedaży dla Agencji B2B",
+            "stage": "inquiry",
+            "owner": "uid:294",
+            "assigned_user_id": 294,
+            "created_at": "2026-07-01T07:03:12.814919+00:00",
+            "last_modified_at": "2026-07-01T07:10:53.559636+00:00",
+            "is_archived": false,
+            "primary_product": "inne",
+            "emails": [
+              "maksiucabajk@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "a5c36940-ddd9-4b28-b3f2-cd7647e971f6",
+        "name": "mateuszrogalski1989@gmail.com · Logo",
+        "email": "mateuszrogalski1989@gmail.com",
+        "emails": [
+          "mateuszrogalski1989@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T20:40:04.557Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "PJE7NWHZE8GQC18BR9SNB2TSQH",
+        "bb_hit": false,
+        "bb": [],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "b0756933-2e1e-4936-8a1d-957f1ff81c27",
+        "name": "bartosz@bartoszkozlowski.pl · Logo",
+        "email": "bartosz@bartoszkozlowski.pl",
+        "emails": [
+          "bartosz@bartoszkozlowski.pl"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-02T19:00:04.676Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "8C680V6917FXPBMZYR0B1Q14QX",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8859,
+            "title": "Logo dla Rozwoju Marki w Branży Medialnej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-02T18:59:36.986305+00:00",
+            "last_modified_at": "2026-07-03T14:32:40.702086+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "bartosz@bartoszkozlowski.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "c12ab48f-6a0d-471b-b7ac-46fc5054d2ba",
+        "name": "zenonamielcarek58@gmail.com · Strona",
+        "email": "zenonamielcarek58@gmail.com",
+        "emails": [
+          "zenonamielcarek58@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-07-03T05:02:04.605Z",
+        "bizProduct": "WEB",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "BGXPBFSCJT9CCY4SPM2BPWZXPK",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8860,
+            "title": "Strona dla Nowej Firmy Kosmetycznej",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-03T05:02:08.627733+00:00",
+            "last_modified_at": "2026-07-10T14:39:01.48212+00:00",
+            "is_archived": false,
+            "primary_product": "strona",
+            "emails": [
+              "zenonamielcarek58@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "c9f1add0-b0ff-4ad6-a522-2bbfef65ea72",
+        "name": "paulinaslopiecka@gmail.com · INNE",
+        "email": "paulinaslopiecka@gmail.com",
+        "emails": [
+          "paulinaslopiecka@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T13:48:04.625Z",
+        "bizProduct": "INNE",
+        "bizSource": "FORM",
+        "idOid": "ZK7Z5SAD8Y5R1FSGG3B2KVTE8N",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8832,
+            "title": "Strona internetowa dla działalności doradczo-coachingowej",
+            "stage": "lead_won",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-06-29T13:47:44.436138+00:00",
+            "last_modified_at": "2026-07-06T16:07:10.136484+00:00",
+            "is_archived": false,
+            "primary_product": "strona",
+            "emails": [
+              "paulinaslopiecka@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "cb258db9-f5c4-4aaa-8c4f-72e329e0baae",
+        "name": "kgolembowski6b@gmail.com · Logo",
+        "email": "kgolembowski6b@gmail.com",
+        "emails": [
+          "kgolembowski6b@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T13:56:04.437Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "KAQPG8HE9S25GRXZKW86WNW769",
+        "bb_hit": false,
+        "bb": [],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "e4aee6f2-5bb9-4c1d-985f-5bcc0d9f9c81",
+        "name": "olga.kolomiiets@bedeko-europe.com · Strona",
+        "email": "olga.kolomiiets@bedeko-europe.com",
+        "emails": [
+          "olga.kolomiiets@bedeko-europe.com"
+        ],
+        "stage": "CONTACTED",
+        "createdAt": "2026-07-01T12:46:04.635Z",
+        "bizProduct": "WEB",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "KDCXDRGVN6Y2FDEQ07ZKXAVKT7",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8852,
+            "title": "Do Ewy:  Redesign dla Firmy B2B Bedeko Europe",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-07-01T12:44:53.057393+00:00",
+            "last_modified_at": "2026-07-08T13:27:28.584589+00:00",
+            "is_archived": false,
+            "primary_product": "strona",
+            "emails": [
+              "olga.kolomiiets@bedeko-europe.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "CONTACTED",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "ef3e530c-7ef7-4de4-90b0-27ce40efce31",
+        "name": "Lead · Strona",
+        "email": "",
+        "emails": [],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T10:20:21.838Z",
+        "bizProduct": "WEB",
+        "bizSource": "FORM",
+        "idOid": "LINKTEST001",
+        "bb_hit": false,
+        "bb": [],
+        "note": "brak emaila — karta test/notify",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "f6472e33-4a8f-4112-b16f-d40f26dcbdb8",
+        "name": "skitomasz@gmail.com · Logo",
+        "email": "skitomasz@gmail.com",
+        "emails": [
+          "skitomasz@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-29T13:00:04.654Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "1N4G72VTPVQAJAZY1ZQV041J52",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8831,
+            "title": "Logo dla Estermed: Odświeżenie Marki w Branży Medycznej",
+            "stage": "lead_lost",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-06-29T13:00:12.854416+00:00",
+            "last_modified_at": "2026-07-06T09:22:53.204206+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "skitomasz@gmail.com",
+              "ts@estermed.pl"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      },
+      {
+        "id": "fae4c42f-06a1-4985-995f-0b027005f83a",
+        "name": "maniakrolowa@gmail.com · Logo",
+        "email": "maniakrolowa@gmail.com",
+        "emails": [
+          "maniakrolowa@gmail.com"
+        ],
+        "stage": "NEW",
+        "createdAt": "2026-06-30T14:50:04.396Z",
+        "bizProduct": "LOGO",
+        "bizSource": "GOOGLE_ADS",
+        "idOid": "Q6QFAFZWJQ878F6VZT7V42XH58",
+        "bb_hit": true,
+        "bb": [
+          {
+            "bb_id": 8845,
+            "title": "Logo dla Nowej Marki w Branży Sublimacji",
+            "stage": "negotiations",
+            "owner": "Marta",
+            "assigned_user_id": 259,
+            "created_at": "2026-06-30T14:50:01.496868+00:00",
+            "last_modified_at": "2026-06-30T14:56:33.32072+00:00",
+            "is_archived": false,
+            "primary_product": "logo",
+            "emails": [
+              "maniakrolowa@gmail.com"
+            ]
+          }
+        ],
+        "note": "",
+        "live_http": 200,
+        "live_stage": "NEW",
+        "live_ownerId": null,
+        "live_src": "OWOCNI_SORTOWNIA"
+      }
+    ],
+    "recommendation": "Nie rozdawać Gosi/Marcie. Nie auto-LOST. Hit BB = historyczny lead innej osoby/etapu — nie syncować weekendu (inbound prod). Miss = dump formularzy Sortowni bez BB; zostawić null-owner albo archiwum LOST tylko po GO Dawida. invitely + WFTEST/LINKTEST nie ruszać."
+  },
+  "block5_open_vs_bb": {
+    "owners": {
+      "marta": "4704e0c0-8d77-4640-ad1e-1875294294df",
+      "gosia": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+      "maciej": "7fddba1d-e443-47d4-97b7-a3a829efd8c1"
+    },
+    "open_summary": {
+      "marta": {
+        "n": 216,
+        "src": {
+          "BETTER_BITRIX_LEGACY": 58,
+          "OWOCNI_SORTOWNIA": 148,
+          "∅": 3,
+          "TWENTY_EMAIL": 5,
+          "TWENTY_UI": 2
+        },
+        "stages": {
+          "PROPOSAL": 114,
+          "NEW": 65,
+          "QUALIFIED": 5,
+          "CONTACTED": 28,
+          "PAYING": 4
+        },
+        "with_bitrixDealId": 127,
+        "empty_bitrixDealId": 89,
+        "BETTER_BITRIX_LEGACY": 58,
+        "OWOCNI_SORTOWNIA": 148,
+        "sortownia_no_bitrixDealId": 79,
+        "TWENTY_EMAIL": 5,
+        "TWENTY_UI": 2
+      },
+      "gosia": {
+        "n": 290,
+        "src": {
+          "BETTER_BITRIX_LEGACY": 72,
+          "TWENTY_EMAIL": 7,
+          "OWOCNI_SORTOWNIA": 207,
+          "TWENTY_UI": 2,
+          "∅": 2
+        },
+        "stages": {
+          "CONTACTED": 119,
+          "PROPOSAL": 69,
+          "NEW": 101,
+          "PAYING": 1
+        },
+        "with_bitrixDealId": 167,
+        "empty_bitrixDealId": 123,
+        "BETTER_BITRIX_LEGACY": 72,
+        "OWOCNI_SORTOWNIA": 207,
+        "sortownia_no_bitrixDealId": 112,
+        "TWENTY_EMAIL": 7,
+        "TWENTY_UI": 2
+      },
+      "maciej": {
+        "n": 66,
+        "src": {
+          "OWOCNI_SORTOWNIA": 35,
+          "BETTER_BITRIX_LEGACY": 31
+        },
+        "stages": {
+          "CONTACTED": 28,
+          "PROPOSAL": 24,
+          "NEW": 13,
+          "CONTRACT_SENT": 1
+        },
+        "with_bitrixDealId": 50,
+        "empty_bitrixDealId": 16,
+        "BETTER_BITRIX_LEGACY": 31,
+        "OWOCNI_SORTOWNIA": 35,
+        "sortownia_no_bitrixDealId": 16,
+        "TWENTY_EMAIL": 0,
+        "TWENTY_UI": 0
+      },
+      "ALL3": {
+        "n": 572,
+        "src": {
+          "BETTER_BITRIX_LEGACY": 161,
+          "OWOCNI_SORTOWNIA": 390,
+          "∅": 5,
+          "TWENTY_EMAIL": 12,
+          "TWENTY_UI": 4
+        },
+        "stages": {
+          "PROPOSAL": 207,
+          "NEW": 179,
+          "QUALIFIED": 5,
+          "CONTACTED": 175,
+          "PAYING": 5,
+          "CONTRACT_SENT": 1
+        },
+        "with_bitrixDealId": 344,
+        "empty_bitrixDealId": 228,
+        "BETTER_BITRIX_LEGACY": 161,
+        "OWOCNI_SORTOWNIA": 390,
+        "sortownia_no_bitrixDealId": 207,
+        "TWENTY_EMAIL": 12,
+        "TWENTY_UI": 4
+      }
+    },
+    "friday_apply": {
+      "run": "20260911T180000Z",
+      "plan": {
+        "patch": 195,
+        "create": 33
+      },
+      "apply_status": {
+        "patched": 78,
+        "skipped_unchanged": 117
+      },
+      "patched": 78,
+      "skipped_unchanged": 117,
+      "creates_in_plan": 33,
+      "creates_applied": 0,
+      "patched_still_open_on_marta_gosia_maciej": 59,
+      "unchanged_still_open_on_marta_gosia_maciej": 116
+    },
+    "bb_now": {
+      "note": "Nie liczyć wszystkich historycznych BB owner 257/259/79 jako dziur. Dziury weekendu = 33 create z planu 20260911T180000Z (no_match, apply --actions patch).",
+      "friday_window_bb_leads": 228,
+      "friday_matched_patch_candidates": 195,
+      "friday_creates_skipped": 33,
+      "coverage_of_friday_window_percent": 85.5,
+      "holes": 33
+    },
+    "creates_skipped": [
+      {
+        "bb_id": "33783",
+        "bb_title": "Re: Animacja logo:",
+        "bb_stage": "lead_won",
+        "bb_owner": "Marta",
+        "emails": [
+          "artur.lignarski@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9342",
+        "bb_title": "Do Ewy: Mateusz Paszkowski Europłyta",
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "emails": [
+          "mateusz@europlyta.com.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "6155",
+        "bb_title": "Copywriting dla Branży Porządkowej - Zapytanie",
+        "bb_stage": "inquiry",
+        "bb_owner": "Maciej",
+        "emails": [
+          "panporzadek@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "6157",
+        "bb_title": "Copywriting dla Branży Marketingowej - Zapytanie",
+        "bb_stage": "inquiry",
+        "bb_owner": "Maciej",
+        "emails": [
+          "projektwysocki@wp.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "5066",
+        "bb_title": "Strona internetowa dla firmy placów zabaw",
+        "bb_stage": "negotiations",
+        "bb_owner": "Gosia",
+        "emails": [
+          "wludarskikrzysztof@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9335",
+        "bb_title": "Strona Internetowa dla Firmy Wyjazdów Zdrowotnych",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "pasionekkkrysia@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9339",
+        "bb_title": "Wycena strony z kalkulatorem cen dla biura rachunkowego online",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "biuro@biurorachunkowe451.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9340",
+        "bb_title": "Zapytanie ofertowe: identyfikacja wizualna i strona internetowa,",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "ania.burkiewicz@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9337",
+        "bb_title": "Strona Wizytówka dla Branży Magicznej",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "anunakissss666@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "3659",
+        "bb_title": "Do Ewy: Strona Wizytówka z Katalogiem dla Producenta Farb",
+        "bb_stage": "analysis",
+        "bb_owner": "Marta",
+        "emails": [
+          "martyna@hirsch-pol.com.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "6511",
+        "bb_title": "Nazwa dla Outsourcingu Kadrowo-Płacowego w HR",
+        "bb_stage": "pays",
+        "bb_owner": "Gosia",
+        "emails": [
+          "agnieszkawojcik.80@wp.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9328",
+        "bb_title": "Strona: Przebudowa dla Firmy Inżynieryjnej B2B",
+        "bb_stage": "negotiations",
+        "bb_owner": "Gosia",
+        "emails": [
+          "filip.majchrzak@fcm-automation.de"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9301",
+        "bb_title": "Nowe logo CINEMA WORLD 360",
+        "bb_stage": "lead_won",
+        "bb_owner": "Marta",
+        "emails": [
+          "booking@coreomusic.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9320",
+        "bb_title": "Strona Wizytówka dla Gabinetu Logopedycznego",
+        "bb_stage": "negotiations",
+        "bb_owner": "Gosia",
+        "emails": [
+          "biurowygadani@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9323",
+        "bb_title": "Strona: Odświeżenie E-commerce dla Drewnianych Obrazów",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "sliwinskifilip16@iclou.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9314",
+        "bb_title": "Logo dla Gabinetu Fizjoterapii i Treningów",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "koszczynska.m@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9318",
+        "bb_title": "Logo dla Nowego Lokalu Groomerskiego w Gdańsku",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "kontaktjjcestates@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9317",
+        "bb_title": "Logo dla Nowej Marki Stylizacji Rzęs i Szkoleń",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "ksenia.buchholz@op.pl"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9325",
+        "bb_title": "Strona Internetowa dla Firmy Sprzątającej Usługowej",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "maciekmaczka32@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9324",
+        "bb_title": "Strona Wizytówka dla Pośrednictwa Kredytowego",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "kontakt@krystynagzylfinanse.pl"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9322",
+        "bb_title": "Strona Internetowa dla Usług Transportowych",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "evanders@onet.pl"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9321",
+        "bb_title": "Strona: Modernizacja dla B2B Inwestycji w Polsce",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "direct-service@outlook.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9315",
+        "bb_title": "Strona Internetowa dla Dietetyka Klinicznego Nefrologia",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "elzbietakaszewska.dietetyk@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9313",
+        "bb_title": "Strona Internetowa dla Firmy Tynkarskiej Wrocław",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "k.huber@wp.pl"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9312",
+        "bb_title": "Strona Internetowa dla Firmy Technologicznej Jarlab",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "maciek.majchrowski@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9309",
+        "bb_title": "Social Media Promocja dla Firmy Budowlanej",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "k.bielarczyk@siltagroup.pl"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9311",
+        "bb_title": "Strona dla Nowej Restauracji z Sklepem Internetowym",
+        "bb_stage": "negotiations",
+        "bb_owner": "Gosia",
+        "emails": [
+          "skrytkapocztowa@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9310",
+        "bb_title": "Strona Wizytówka dla Greckiego Streetfoodu",
+        "bb_stage": "inquiry",
+        "bb_owner": "Marta",
+        "emails": [
+          "kubapan8@gmail.com"
+        ],
+        "in_open_twenty_email": true
+      },
+      {
+        "bb_id": "9297",
+        "bb_title": "Copywriting: Oferta Freelance dla Branży Owocowej",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "h.melotto@melottogroup.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9296",
+        "bb_title": "Marketing: Pozyskiwanie Klientów dla Branży ROI",
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "emails": [
+          "bbarber@referral-station.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "8127",
+        "bb_title": "Do Ewy: Strona: Modernizacja dla Integracji Systemów Wizyjnych B2B",
+        "bb_stage": "lead_won",
+        "bb_owner": "Marta",
+        "emails": [
+          "pawel.janczyk@mv-center.com",
+          "kinga.mieruszynska@exactforestall.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9272",
+        "bb_title": "Strona Wizytówka dla Kawiarnio-Cukierni z Zamówieniami Online",
+        "bb_stage": "lead_lost",
+        "bb_owner": "Gosia",
+        "emails": [
+          "brownie.elblag@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      },
+      {
+        "bb_id": "9139",
+        "bb_title": "Nazwa: Nowa Marka Biura Tłumaczeń",
+        "bb_stage": "lead_won",
+        "bb_owner": "Maciej",
+        "emails": [
+          "malgorzata.lato@gmail.com"
+        ],
+        "in_open_twenty_email": false
+      }
+    ],
+    "cards_vs_mail": {
+      "karty_sync_bb": "TAK — piątek patch-only: 78 patched + 117 unchanged / 195; 0 creates. Karty z bitrixDealId/BETTER_BITRIX_LEGACY = stan BB (etap/owner), nie treść maili.",
+      "historia_maili_out_bb": "NIE — IMAP APPEND nie był w syncu kart (BB_MAIL_IMAP_APPEND_RUNBOOK). Wysłane z BB maile nie siedzą na tych kartach z tego apply."
+    },
+    "open_three_interpretation": {
+      "karty": "TAK — 344/572 otwartych ma bitrixDealId (stamp z piątku lub wcześniejszy); 161 src=BETTER_BITRIX_LEGACY; 390 src=OWOCNI_SORTOWNIA (lejek restored / native Sortownia), z czego 207 bez bitrixDealId.",
+      "maile_out_bb": "NIE — sync kart nie importował historii IMAP."
+    }
+  },
+  "block2b_batko_hash": {
+    "no_emit": true,
+    "id": "34b12db0-9f97-47ec-9b8c-508028eaa94a",
+    "idOid": "BDYSD3QAQ7V0CHAF00CKD2GBR2",
+    "hash_sum": 1740,
+    "hash_mod2": 0,
+    "rule": "createLead.js: COPY/NAME→Maciej, FB/MARKETING→Robert, else sum(idOid)%2 even=Gosia odd=Marta",
+    "assigned_slug": "gosia",
+    "assigned_ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "before_ownerId": null,
+    "patch_http": 200,
+    "after_ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+    "stage_untouched": "NEW"
+  },
+  "block4b_assign_from_bb": {
+    "n": 28,
+    "actions": {
+      "assigned_from_bb": 17,
+      "skip_bb_owner_not_in_pool": 3,
+      "skip_no_bb": 8
+    },
+    "rows": [
+      {
+        "id": "09aa0285-81aa-4b1b-9f0d-c323dd3f61ac",
+        "email": "youtuber77@wp.pl",
+        "bb_id": 8843,
+        "bb_stage": "inquiry",
+        "bb_owner": "Maciej",
+        "bb_uid": 79,
+        "twenty_owner_target": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+          "bitrixDealId": "bb:8843",
+          "bizRoutingRule": "BB-owner:Maciej",
+          "stage": "CONTACTED"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb"
+      },
+      {
+        "id": "0edeb863-afc4-4646-afcf-923193ba89b1",
+        "email": "magdalenka1993-1993@o2.pl",
+        "bb_id": 8840,
+        "bb_stage": "inquiry",
+        "bb_owner": "Gosia",
+        "bb_uid": 257,
+        "twenty_owner_target": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+          "bitrixDealId": "bb:8840",
+          "bizRoutingRule": "BB-owner:Gosia",
+          "stage": "CONTACTED"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb"
+      },
+      {
+        "id": "1e56276e-de81-4ca6-85b6-3c28478119a4",
+        "email": "info@invitely.in",
+        "bb_id": 8837,
+        "bb_stage": "inquiry",
+        "bb_owner": "uid:293",
+        "bb_uid": 293,
+        "twenty_owner_target": null,
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [
+          {
+            "id": "76cb0120-ee87-45af-bd34-37ee9b937043",
+            "name": "info@invitely.in",
+            "stage": "NEW",
+            "ownerId": null,
+            "ownerSlug": "other",
+            "srcSystem": "OWOCNI_SORTOWNIA",
+            "bitrixDealId": "",
+            "open": true
+          }
+        ],
+        "siblings_bb_linked": [],
+        "action": "skip_bb_owner_not_in_pool",
+        "why": "BB assigned_user_id=293 poza Marta/Gosia/Maciej"
+      },
+      {
+        "id": "2041db7f-b01c-4c76-9fd9-4bb3af67422b",
+        "email": "k.aleksandrowicz@kadeo.pl",
+        "bb_id": 8851,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "CONTACTED",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8851",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "284c06cd-0c79-4ad3-9757-99088053e73f",
+        "email": "",
+        "name": "Lead · Strona",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "344a11f5-f69b-4358-a163-61585c5a678c",
+        "email": "adamfrackowiak00@wp.pl",
+        "bb_id": 8853,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8853",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "3ce39c89-6036-4816-8915-68abad8560cd",
+        "email": "agata.debska@drdebski.pl",
+        "bb_id": 8854,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8854",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "5712f373-b00f-412e-888f-7effe2dd2b0e",
+        "email": "wernerhubercio123@gmail.com",
+        "bb_id": 8857,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8857",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "57b773d3-2312-4576-b7b0-b7751b1f72f4",
+        "email": "szczerbickaa@icloud.com",
+        "bb_id": 8844,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8844",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "5aa03ad6-0718-4336-853a-21bc14126c89",
+        "email": "pooja@cssplayer.com",
+        "name": "pooja@cssplayer.com · INNE",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "68801bf1-2c8a-4697-a6f5-499c7e4e7549",
+        "email": "galeriaurody@poczta.onet.pl",
+        "bb_id": 8839,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8839",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "6c4b64e8-8172-48bd-aa73-478a655fc031",
+        "email": "domgam2905@gmail.com",
+        "bb_id": 8841,
+        "bb_stage": "negotiations",
+        "bb_owner": "Maciej",
+        "bb_uid": 79,
+        "twenty_owner_target": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+          "bitrixDealId": "bb:8841",
+          "bizRoutingRule": "BB-owner:Maciej",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "7133da57-81a0-4051-a20d-9257e1d2766f",
+        "email": "",
+        "name": "Lead · INNE",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "75537198-408b-48c5-a874-62fd92e5f5f8",
+        "email": "rplotka1@gmail.com",
+        "bb_id": 8856,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8856",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "76cb0120-ee87-45af-bd34-37ee9b937043",
+        "email": "info@invitely.in",
+        "bb_id": 8837,
+        "bb_stage": "inquiry",
+        "bb_owner": "uid:293",
+        "bb_uid": 293,
+        "twenty_owner_target": null,
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [
+          {
+            "id": "1e56276e-de81-4ca6-85b6-3c28478119a4",
+            "name": "info@invitely.in",
+            "stage": "NEW",
+            "ownerId": null,
+            "ownerSlug": "other",
+            "srcSystem": "OWOCNI_SORTOWNIA",
+            "bitrixDealId": "",
+            "open": true
+          }
+        ],
+        "siblings_bb_linked": [],
+        "action": "skip_bb_owner_not_in_pool",
+        "why": "BB assigned_user_id=293 poza Marta/Gosia/Maciej"
+      },
+      {
+        "id": "7c2118d4-2aa4-4dc2-a382-7ce31c31351d",
+        "email": "pawel@acepark.pl",
+        "bb_id": 8858,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "CONTACTED",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8858",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "885bd227-4d6b-4be1-98ea-4f84399ab3ba",
+        "email": "agnieszkamadetko@gmail.com",
+        "name": "agnieszkamadetko@gmail.com · Strona",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "94979075-0e12-4c0d-856a-62a5dc59c4af",
+        "email": "teresa1327@interia.pl",
+        "name": "teresa1327@interia.pl · Strona",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "97fb335a-45f6-4b89-a0e9-463ed4bbf458",
+        "email": "maksiucabajk@gmail.com",
+        "bb_id": 8847,
+        "bb_stage": "inquiry",
+        "bb_owner": "uid:294",
+        "bb_uid": 294,
+        "twenty_owner_target": null,
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "action": "skip_bb_owner_not_in_pool",
+        "why": "BB assigned_user_id=294 poza Marta/Gosia/Maciej"
+      },
+      {
+        "id": "a5c36940-ddd9-4b28-b3f2-cd7647e971f6",
+        "email": "mateuszrogalski1989@gmail.com",
+        "name": "mateuszrogalski1989@gmail.com · Logo",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "b0756933-2e1e-4936-8a1d-957f1ff81c27",
+        "email": "bartosz@bartoszkozlowski.pl",
+        "bb_id": 8859,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8859",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "c12ab48f-6a0d-471b-b7ac-46fc5054d2ba",
+        "email": "zenonamielcarek58@gmail.com",
+        "bb_id": 8860,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8860",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "c9f1add0-b0ff-4ad6-a522-2bbfef65ea72",
+        "email": "paulinaslopiecka@gmail.com",
+        "bb_id": 8832,
+        "bb_stage": "lead_won",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8832",
+          "bizRoutingRule": "BB-owner:Marta"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "cb258db9-f5c4-4aaa-8c4f-72e329e0baae",
+        "email": "kgolembowski6b@gmail.com",
+        "name": "kgolembowski6b@gmail.com · Logo",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "e4aee6f2-5bb9-4c1d-985f-5bcc0d9f9c81",
+        "email": "olga.kolomiiets@bedeko-europe.com",
+        "bb_id": 8852,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "CONTACTED",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8852",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "ef3e530c-7ef7-4de4-90b0-27ce40efce31",
+        "email": "",
+        "name": "Lead · Strona",
+        "action": "skip_no_bb"
+      },
+      {
+        "id": "f6472e33-4a8f-4112-b16f-d40f26dcbdb8",
+        "email": "skitomasz@gmail.com",
+        "bb_id": 8831,
+        "bb_stage": "lead_lost",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8831",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "LOST"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      },
+      {
+        "id": "fae4c42f-06a1-4985-995f-0b027005f83a",
+        "email": "maniakrolowa@gmail.com",
+        "bb_id": 8845,
+        "bb_stage": "negotiations",
+        "bb_owner": "Marta",
+        "bb_uid": 259,
+        "twenty_owner_target": "4704e0c0-8d77-4640-ad1e-1875294294df",
+        "live_stage": "NEW",
+        "live_owner": null,
+        "siblings_open": [],
+        "siblings_bb_linked": [],
+        "patch": {
+          "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df",
+          "bitrixDealId": "bb:8845",
+          "bizRoutingRule": "BB-owner:Marta",
+          "stage": "PROPOSAL"
+        },
+        "patch_http": 200,
+        "action": "assigned_from_bb",
+        "followup_off_http": 200
+      }
+    ]
+  },
+  "block4b_bb_sent": [
+    {
+      "email": "youtuber77@wp.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "magdalenka1993-1993@o2.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "info@invitely.in",
+      "n_sent": 2,
+      "inboxes": {
+        "studio@owocni.pl": 2
+      },
+      "sample": [
+        {
+          "id": 2056670,
+          "inbox": "studio@owocni.pl",
+          "sent_date": "2026-08-20T09:39:28+00:00",
+          "subject": "Re: To tylko test"
+        },
+        {
+          "id": 2055908,
+          "inbox": "studio@owocni.pl",
+          "sent_date": "2026-08-11T10:18:09+00:00",
+          "subject": "Re: To tylko test"
+        }
+      ]
+    },
+    {
+      "email": "k.aleksandrowicz@kadeo.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "adamfrackowiak00@wp.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "agata.debska@drdebski.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "wernerhubercio123@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "szczerbickaa@icloud.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "galeriaurody@poczta.onet.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "domgam2905@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "rplotka1@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "info@invitely.in",
+      "n_sent": 2,
+      "inboxes": {
+        "studio@owocni.pl": 2
+      },
+      "sample": [
+        {
+          "id": 2056670,
+          "inbox": "studio@owocni.pl",
+          "sent_date": "2026-08-20T09:39:28+00:00",
+          "subject": "Re: To tylko test"
+        },
+        {
+          "id": 2055908,
+          "inbox": "studio@owocni.pl",
+          "sent_date": "2026-08-11T10:18:09+00:00",
+          "subject": "Re: To tylko test"
+        }
+      ]
+    },
+    {
+      "email": "pawel@acepark.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "maksiucabajk@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "bartosz@bartoszkozlowski.pl",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "zenonamielcarek58@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "paulinaslopiecka@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "olga.kolomiiets@bedeko-europe.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    },
+    {
+      "email": "skitomasz@gmail.com",
+      "n_sent": 2,
+      "inboxes": {
+        "marta@owocni.pl": 2
+      },
+      "sample": [
+        {
+          "id": 2052600,
+          "inbox": "marta@owocni.pl",
+          "sent_date": "2026-06-29T14:03:06.363+00:00",
+          "subject": "RE: Projekt logo dla Pana Tomasza:"
+        },
+        {
+          "id": 2052599,
+          "inbox": "marta@owocni.pl",
+          "sent_date": "2026-06-29T13:57:56.532+00:00",
+          "subject": "RE: Projekt logo dla Pana Tomasza:"
+        }
+      ]
+    },
+    {
+      "email": "maniakrolowa@gmail.com",
+      "n_sent": 0,
+      "inboxes": {},
+      "sample": []
+    }
+  ],
+  "block5b_surplus": {
+    "friday_restore_park": 557,
+    "open_now_marta_gosia_maciej": 572,
+    "src_now": {
+      "BETTER_BITRIX_LEGACY": 161,
+      "OWOCNI_SORTOWNIA": 390,
+      "∅": 5,
+      "TWENTY_EMAIL": 12,
+      "TWENTY_UI": 4
+    },
+    "bitrixDealId_now": 344,
+    "sortownia_no_bbid": 207,
+    "friday_bb_window": 228,
+    "friday_matched": 195,
+    "friday_create_holes": 33,
+    "why": [
+      "11 IX restore sample-week: 557 otwartych kart wróciło z holdingu na Marty/Gosię/Maćka (stan sprzed parku 4 IX).",
+      "Piątkowy BB export to tylko 30 dni / 228 leadów — nie cały historyczny lejek Twenty.",
+      "390 OWOCNI_SORTOWNIA = natywne karty formularzy (w tym restored + sample-week + dump). 161 BETTER_BITRIX_LEGACY = legacy BB. 344 ma bitrixDealId (stamp, też na Sortowni).",
+      "Dump 26 VI–3 VII to drugie karty Sortowni na te same maile co BB — nadmiar duplikatów, nie brakujące deale BB.",
+      "33 create to odwrotna dziura: BB jest, Twenty nie miało karty w planie."
+    ]
+  },
+  "block4c_imap_dump_sent": {
+    "dump_sent_n": 4,
+    "appended": [],
+    "skipped": [
+      {
+        "bb_id": 2056670,
+        "inbox": "studio@owocni.pl",
+        "status": "skip_forbidden_or_unknown_inbox",
+        "client": "info@invitely.in"
+      },
+      {
+        "bb_id": 2055908,
+        "inbox": "studio@owocni.pl",
+        "status": "skip_forbidden_or_unknown_inbox",
+        "client": "info@invitely.in"
+      },
+      {
+        "bb_id": 2052600,
+        "inbox": "marta@owocni.pl",
+        "subject": "RE: Projekt logo dla Pana Tomasza:",
+        "sent_date": "2026-06-29T14:03:06.363+00:00",
+        "own": "<d8e85785-60ce-11ce-be86-42106d1ce156@owocni.pl>",
+        "parent": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+        "status": "skip_parent_not_in_twenty",
+        "parent_thread": null,
+        "parent_mailboxes": [],
+        "client": "skitomasz@gmail.com"
+      },
+      {
+        "bb_id": 2052599,
+        "inbox": "marta@owocni.pl",
+        "subject": "RE: Projekt logo dla Pana Tomasza:",
+        "sent_date": "2026-06-29T13:57:56.532+00:00",
+        "own": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+        "parent": "<048301dd07cb$85d00160$91700420$@gmail.com>",
+        "status": "skip_parent_not_in_twenty",
+        "parent_thread": null,
+        "parent_mailboxes": [],
+        "client": "skitomasz@gmail.com"
+      }
+    ],
+    "skip_counts": {
+      "skip_forbidden_or_unknown_inbox": 2,
+      "skip_parent_not_in_twenty": 2
+    },
+    "append_n": 0
+  },
+  "block4d_skitomasz_force_append": [
+    {
+      "bb_id": 2052599,
+      "status": "appended",
+      "msgid": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+      "subject": "RE: Projekt logo dla Pana Tomasza:",
+      "bytes": 43651
+    },
+    {
+      "bb_id": 2052600,
+      "status": "appended",
+      "msgid": "<d8e85785-60ce-11ce-be86-42106d1ce156@owocni.pl>",
+      "subject": "RE: Projekt logo dla Pana Tomasza:",
+      "bytes": 48759
+    }
+  ],
+  "block5c_cdelta_since_friday": {
+    "marta@owocni.pl": {
+      "appended": 3,
+      "skip_counts": {
+        "skip_other_channel": 1,
+        "skip_in_twenty": 3,
+        "skip_parent_not_in_twenty": 1
+      },
+      "scanned": 8,
+      "manifest": "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_t1_20260912/apply_marta_20260912T070147Z.json",
+      "subjects": [
+        "Re: Projekt logo dla Pana Roberta",
+        "Re: Strona dla studia tańca Pani Joanny:",
+        "Re: Do usłyszenia w przyszłym tygodniu:"
+      ]
+    },
+    "gosia@owocni.pl": {
+      "appended": 0,
+      "skip_counts": {},
+      "scanned": 0,
+      "manifest": "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_t1_20260912/apply_gosia_20260912T070147Z.json",
+      "subjects": []
+    },
+    "copywriting@owocni.pl": {
+      "appended": 0,
+      "skip_counts": {},
+      "scanned": 0,
+      "manifest": "/Volumes/Samsung_T5/owocni/owocni strona i bitrix/owocni-crm-github/integrations/runbooks/exports/bb_sync/cdelta_t1_20260912/apply_copywriting_20260912T070148Z.json",
+      "subjects": []
+    }
+  },
+  "block6_paulina_won_imap_spam": {
+    "at": "2026-09-12T07:10:23.141828+00:00",
+    "paulina_won_no_emit": {
+      "no_emit_mechanism": "srcSystem=BETTER_BITRIX_LEGACY → inbound SKIP_LEGACY_IMPORT (purchase nie idzie na Ads)",
+      "before": {
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "bb:8832",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df"
+      },
+      "patch": {
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "stage": "WON",
+        "bitrixDealId": "bb:8832",
+        "isFollowUp": false
+      },
+      "patch_http": 200,
+      "after": {
+        "stage": "WON",
+        "srcSystem": "BETTER_BITRIX_LEGACY",
+        "bitrixDealId": "bb:8832",
+        "ownerId": "4704e0c0-8d77-4640-ad1e-1875294294df"
+      }
+    },
+    "imap_appended_in_twenty": [
+      {
+        "msgid": "<21d9b316-4d34-f22d-eee7-7df543d05e84@owocni.pl>",
+        "in_twenty": false,
+        "n": 0,
+        "thread": null,
+        "mailboxes": null,
+        "direction": null,
+        "subject": null
+      },
+      {
+        "msgid": "<d8e85785-60ce-11ce-be86-42106d1ce156@owocni.pl>",
+        "in_twenty": false,
+        "n": 0,
+        "thread": null,
+        "mailboxes": null,
+        "direction": null,
+        "subject": null
+      },
+      {
+        "msgid": "<9a2d2a53-dc09-3548-b580-2ec9b3dc40fa@owocni.pl>",
+        "in_twenty": false,
+        "n": 0,
+        "thread": null,
+        "mailboxes": null,
+        "direction": null,
+        "subject": null
+      },
+      {
+        "msgid": "<109996f7-5f2e-7502-cc8b-86d9faf3d735@owocni.pl>",
+        "in_twenty": false,
+        "n": 0,
+        "thread": null,
+        "mailboxes": null,
+        "direction": null,
+        "subject": null
+      },
+      {
+        "msgid": "<924b1f04-860b-14d2-182e-e619ddb72f90@owocni.pl>",
+        "in_twenty": false,
+        "n": 0,
+        "thread": null,
+        "mailboxes": null,
+        "direction": null,
+        "subject": null
+      }
+    ],
+    "imap_in_twenty_n": 0,
+    "imap_appended_n": 5,
+    "bb_vs_twenty_sample": [
+      {
+        "email": "joanna.krysinska.ak@gmail.com",
+        "bb_owner": "Gosia",
+        "twenty_opp": "1c314d18-751b-4cd2-b29d-66a8859ce160",
+        "bb_sent_n": 0,
+        "twenty_hit": 0,
+        "twenty_miss": 0
+      },
+      {
+        "email": "abernaskiewicz@gmail.com",
+        "bb_owner": "Marta",
+        "twenty_opp": "69a74446-00b4-46ca-bef9-5572189ef9e7",
+        "bb_sent_n": 0,
+        "twenty_hit": 0,
+        "twenty_miss": 0
+      },
+      {
+        "email": "pablo91bialek@gmail.com",
+        "bb_owner": "Marta",
+        "twenty_opp": "a5ab18c7-2dca-444a-83b6-b53b0001624d",
+        "bb_sent_n": 1,
+        "twenty_hit": 1,
+        "twenty_miss": 0
+      },
+      {
+        "email": "anna.gryglewicz@aero-bw.pl",
+        "bb_owner": "Marta",
+        "twenty_opp": "264e1ed0-1b72-47ae-9fd8-e13f6defe875",
+        "bb_sent_n": 2,
+        "twenty_hit": 1,
+        "twenty_miss": 1
+      },
+      {
+        "email": "krzysztof.szymanski.tc@gmail.com",
+        "bb_owner": "Gosia",
+        "twenty_opp": "e5f04129-c70a-4223-9f9b-faae8989fc51",
+        "bb_sent_n": 2,
+        "twenty_hit": 2,
+        "twenty_miss": 0
+      },
+      {
+        "email": "kasia@mccloskeystudio.com",
+        "bb_owner": "Marta",
+        "twenty_opp": "619fa12e-02f9-45ce-8834-842a18109c91",
+        "bb_sent_n": 2,
+        "twenty_hit": 2,
+        "twenty_miss": 0
+      },
+      {
+        "email": "malgorzata@cholas.pl",
+        "bb_owner": "Gosia",
+        "twenty_opp": "849b2daa-79d9-4073-9aaf-cfdec3cb626f",
+        "bb_sent_n": 1,
+        "twenty_hit": 1,
+        "twenty_miss": 0
+      },
+      {
+        "email": "asz@entech.pl",
+        "bb_owner": "Gosia",
+        "twenty_opp": "105d78f0-4fe6-4c4f-94f0-21850ffba37d",
+        "bb_sent_n": 1,
+        "twenty_hit": 1,
+        "twenty_miss": 0
+      },
+      {
+        "email": "miloszwawrzyniak97@gmail.com",
+        "bb_owner": "Gosia",
+        "twenty_opp": "09432e37-66dd-4c89-b75f-3e3436c0b032",
+        "bb_sent_n": 1,
+        "twenty_hit": 1,
+        "twenty_miss": 0
+      },
+      {
+        "email": "marcinew123@gmail.com",
+        "bb_owner": "Gosia",
+        "twenty_opp": "44760437-74dd-4b5e-9db9-4a3a62a083b3",
+        "bb_sent_n": 1,
+        "twenty_hit": 1,
+        "twenty_miss": 0
+      },
+      {
+        "email": "ziajawork@gmail.com",
+        "bb_owner": "Maciej",
+        "twenty_opp": "a92c069b-d9f2-4fb1-accd-5901fea7e45a",
+        "bb_sent_n": 0,
+        "twenty_hit": 0,
+        "twenty_miss": 0
+      },
+      {
+        "email": "anna.charytoniuk@hotmail.com",
+        "bb_owner": "Marta",
+        "twenty_opp": "dc84ee95-fb98-4319-b1bb-7069bbf127ad",
+        "bb_sent_n": 0,
+        "twenty_hit": 0,
+        "twenty_miss": 0
+      }
+    ],
+    "token_spam_notes": 8,
+    "deleted": [
+      {
+        "id": "e5c2b892-2cf5-4b1c-b0fc-c84d9e09de5c",
+        "email": "gregoryburgess1197@gmail.com",
+        "token": "zUgJrBsnwLUwPckcCodgKH",
+        "name": "gregoryburgess1197@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "6ea167d5-2092-46bb-9088-9455f3289d61",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "99373aba-2975-4583-9fbe-52641eb090ee",
+        "email": "otecola973@gmail.com",
+        "token": "jZtchmRewPWMOyhT",
+        "name": "otecola973@gmail.com · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "820af58c-7e12-48c5-8f2e-9c58e7759391",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "06ba522d-6660-464a-a1f5-9636d8ff50cd",
+        "email": "derek@concernfounddation.org",
+        "token": "NcfnDwUBrHaIsOJIVm",
+        "name": "derek@concernfounddation.org · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "7a7b9cf4-db1a-4614-ab81-51ed12868665",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "62d5f0be-5a09-4d29-9ab0-bd12529cb3b7",
+        "email": "imekoqagex21@gmail.com",
+        "token": "UqzmgYgKDbnyDXYdBIZ",
+        "name": "imekoqagex21@gmail.com · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "ae0081ac-be09-4901-9a50-832566afb7c2",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "e530c0f3-af51-49c4-8001-b46fabc6cb5b",
+        "email": "wesiravanebu15@gmail.com",
+        "token": "OaiqBfkxAyjYHsOh",
+        "name": "wesiravanebu15@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "34d248bc-3d08-449a-b928-b30286f87f41",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "852904b1-4b08-4ab5-a1b6-61177e6583db",
+        "email": "sasizoyofo719@gmail.com",
+        "token": "rcTTEMPnfNkKCErrjykW",
+        "name": "sasizoyofo719@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "fd312c7d-2561-45d3-9c5e-b38ea92eedbf",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "6ba30645-d1ab-4ebe-bbd5-355cf456b362",
+        "email": "6128651100@txt.att.net",
+        "token": "TZifeBpvRCVVSptFR",
+        "name": "6128651100@txt.att.net · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "4202a807-ade4-4d64-8424-40c7906efb1d",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      }
+    ],
+    "deleted_n": 7,
+    "skipped_spam": [],
+    "token_spam_deleted": [
+      {
+        "id": "e5c2b892-2cf5-4b1c-b0fc-c84d9e09de5c",
+        "email": "gregoryburgess1197@gmail.com",
+        "token": "zUgJrBsnwLUwPckcCodgKH",
+        "name": "gregoryburgess1197@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "6ea167d5-2092-46bb-9088-9455f3289d61",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "99373aba-2975-4583-9fbe-52641eb090ee",
+        "email": "otecola973@gmail.com",
+        "token": "jZtchmRewPWMOyhT",
+        "name": "otecola973@gmail.com · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "820af58c-7e12-48c5-8f2e-9c58e7759391",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "06ba522d-6660-464a-a1f5-9636d8ff50cd",
+        "email": "derek@concernfounddation.org",
+        "token": "NcfnDwUBrHaIsOJIVm",
+        "name": "derek@concernfounddation.org · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "7a7b9cf4-db1a-4614-ab81-51ed12868665",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "62d5f0be-5a09-4d29-9ab0-bd12529cb3b7",
+        "email": "imekoqagex21@gmail.com",
+        "token": "UqzmgYgKDbnyDXYdBIZ",
+        "name": "imekoqagex21@gmail.com · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "ae0081ac-be09-4901-9a50-832566afb7c2",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "e530c0f3-af51-49c4-8001-b46fabc6cb5b",
+        "email": "wesiravanebu15@gmail.com",
+        "token": "OaiqBfkxAyjYHsOh",
+        "name": "wesiravanebu15@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "34d248bc-3d08-449a-b928-b30286f87f41",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "852904b1-4b08-4ab5-a1b6-61177e6583db",
+        "email": "sasizoyofo719@gmail.com",
+        "token": "rcTTEMPnfNkKCErrjykW",
+        "name": "sasizoyofo719@gmail.com",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "fd312c7d-2561-45d3-9c5e-b38ea92eedbf",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      },
+      {
+        "id": "6ba30645-d1ab-4ebe-bbd5-355cf456b362",
+        "email": "6128651100@txt.att.net",
+        "token": "TZifeBpvRCVVSptFR",
+        "name": "6128651100@txt.att.net · INNE",
+        "stage": "NEW",
+        "srcSystem": "OWOCNI_SORTOWNIA",
+        "bitrixDealId": "",
+        "ownerId": "ccac533d-a34b-4cfc-a036-9e75ee3f8910",
+        "person_id": "4202a807-ade4-4d64-8424-40c7906efb1d",
+        "delete_opp_http": 200,
+        "delete_opp_ok": true,
+        "delete_person_http": 200
+      }
+    ],
+    "token_spam_missing_person": []
+  }
+}

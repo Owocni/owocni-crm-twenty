@@ -1,0 +1,429 @@
+{
+  "bad_twenty_on_bb_waiting": [
+    {
+      "who": "Marta",
+      "id": "11cc5804-28fa-4f67-bd07-b4cf7b6c3a8e",
+      "email": "partydecor.lumi@gmail.com",
+      "stage": "PROPOSAL",
+      "tw_fu": true,
+      "bid": "bb:9285",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "partydecor.lumi@gmail.com · Logo · Nowe",
+      "bb_id": 9285,
+      "bb_fu": true,
+      "bb_stage": "negotiations"
+    },
+    {
+      "who": "Marta",
+      "id": "16cb754c-4ea5-4bfa-8708-63a5e36a7666",
+      "email": "k.wojda901003@gmail.com",
+      "stage": "PROPOSAL",
+      "tw_fu": true,
+      "bid": "bb:9286",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "k.wojda901003@gmail.com · Strona · Nowe · Ekspert",
+      "bb_id": 9286,
+      "bb_fu": true,
+      "bb_stage": "negotiations"
+    },
+    {
+      "who": "Marta",
+      "id": "6ef5dbf5-0f3f-4355-bd0f-6f7492f73359",
+      "email": "pawel.kacprzycki@wp.pl",
+      "stage": "PROPOSAL",
+      "tw_fu": true,
+      "bid": "bb:9299",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "pawel.kacprzycki@wp.pl · Strona · Nowe",
+      "bb_id": 9299,
+      "bb_fu": true,
+      "bb_stage": "negotiations"
+    },
+    {
+      "who": "Marta",
+      "id": "a05d49ec-7f5c-4fd5-91c7-06dd33c0640f",
+      "email": "joanna@2015security.co.uk",
+      "stage": "PROPOSAL",
+      "tw_fu": true,
+      "bid": "bb:9333",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "joanna@2015security.co.uk · Strona · Ekspert",
+      "bb_id": 9333,
+      "bb_fu": true,
+      "bb_stage": "negotiations"
+    },
+    {
+      "who": "Gosia",
+      "id": "0edeb863-afc4-4646-afcf-923193ba89b1",
+      "email": "",
+      "stage": "CONTACTED",
+      "tw_fu": true,
+      "bid": "bb:8840",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "magdalenka1993-1993@o2.pl · Logo",
+      "bb_id": 8840,
+      "bb_fu": true,
+      "bb_stage": "inquiry"
+    },
+    {
+      "who": "Gosia",
+      "id": "16355b01-5a6c-4018-971d-897e4009bac3",
+      "email": "m.szafranek@wp.pl",
+      "stage": "CONTACTED",
+      "tw_fu": true,
+      "bid": "bb:9308",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "m.szafranek@wp.pl · Logo · Redesign · Ekspert",
+      "bb_id": 9308,
+      "bb_fu": true,
+      "bb_stage": "inquiry"
+    },
+    {
+      "who": "Gosia",
+      "id": "54ba1f6c-7bec-4f8d-8ca2-a64566aa0724",
+      "email": "ruda@egrami.pl",
+      "stage": "CONTACTED",
+      "tw_fu": true,
+      "bid": "bb:7947",
+      "src": "BETTER_BITRIX_LEGACY",
+      "name": "ruda@egrami.pl · Strona",
+      "bb_id": 7947,
+      "bb_fu": true,
+      "bb_stage": "inquiry"
+    }
+  ],
+  "twenty_fu_no_bb": [
+    {
+      "id": "16fd97f2-3cc9-4fd4-8db0-af3e3319ca6b",
+      "who": "Marta",
+      "email": "damian.gradzik@protonmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "damian.gradzik@protonmail.com · Strona · Nowe · Ekspert"
+    },
+    {
+      "id": "5379a85f-5bb4-4e4b-9cf0-469d8e8d4e87",
+      "who": "Marta",
+      "email": "czokajlo.k@gmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "czokajlo.k@gmail.com · Strona · Ekspert"
+    },
+    {
+      "id": "b7df214e-391b-463d-ad1b-e02beec05a12",
+      "who": "Marta",
+      "email": "dorisino@interia.pl",
+      "stage": "CONTACTED",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "dorisino@interia.pl · Marketing"
+    },
+    {
+      "id": "f896db76-40ec-41b0-b177-8d84361dd52f",
+      "who": "Marta",
+      "email": "afis@onet.pl",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "afis@onet.pl · Strona · Ekspert"
+    },
+    {
+      "id": "fff7b0c6-a16d-4081-9568-1085c852971f",
+      "who": "Marta",
+      "email": "k.maciek04@icloud.com",
+      "stage": "CONTACTED",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "k.maciek04@icloud.com · Logo · Nowe"
+    },
+    {
+      "id": "34b12db0-9f97-47ec-9b8c-508028eaa94a",
+      "who": "Gosia",
+      "email": "lech.batko@poczta.fm",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "lech.batko@poczta.fm · Logo · Nowe"
+    },
+    {
+      "id": "38136c04-e0a3-4007-a35d-2ff8400d5111",
+      "who": "Gosia",
+      "email": "malaga82@op.pl",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "malaga82@op.pl · Strona · Ekspert"
+    },
+    {
+      "id": "227e4787-a084-4aab-8ad8-959d4e668c93",
+      "who": "Maciej",
+      "email": "debskaiga1@gmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "debskaiga1@gmail.com · Copywriting · Nowe"
+    },
+    {
+      "id": "91af4c11-816c-4791-9b55-c95755b410ad",
+      "who": "Maciej",
+      "email": "unitedshopsport@outlook.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "unitedshopsport@outlook.com · Copywriting · Nowe · Ekspert"
+    },
+    {
+      "id": "ba0630c7-b1bd-429d-aa1e-303e308ed9b5",
+      "who": "Maciej",
+      "email": "cezarypisowodzki@gmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "cezarypisowodzki@gmail.com · Copywriting · Nowe · Ekspert"
+    },
+    {
+      "id": "d6612032-0a6b-4957-9230-69eb1a2c3b58",
+      "who": "Maciej",
+      "email": "patrycjatookaj@gmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "patrycjatookaj@gmail.com · Copywriting · Nowe"
+    },
+    {
+      "id": "f31434ba-2c2e-40ca-88e7-c94c5e848ae3",
+      "who": "Maciej",
+      "email": "andrysiakmonika@gmail.com",
+      "stage": "NEW",
+      "src": "OWOCNI_SORTOWNIA",
+      "name": "andrysiakmonika@gmail.com · Copywriting · Nowe · Ekspert"
+    }
+  ],
+  "bb_our_turn_twenty_off": [
+    {
+      "bb_id": 9287,
+      "opp_id": "c2e56416-60bb-48c8-9eca-ba8308aac640",
+      "email": "biuro@stokre.com",
+      "tw_stage": "PROPOSAL"
+    },
+    {
+      "bb_id": 9380,
+      "opp_id": "a92c069b-d9f2-4fb1-accd-5901fea7e45a",
+      "email": "ziajawork@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9345,
+      "opp_id": "596167ff-78b2-4774-8ed8-9795aaab190b",
+      "email": "kontakt@czystylyk.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9160,
+      "opp_id": "51a7de55-0ddb-45b9-8bc7-fdc3068d6040",
+      "email": "aniawawro@poczta.fm",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9340,
+      "opp_id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+      "email": "ania.burkiewicz@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9336,
+      "opp_id": "6df92adf-3a9b-41dd-a457-cf3f434936f2",
+      "email": "kontakt@fortis7.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9327,
+      "opp_id": "e16d5d0a-bb9f-4f52-971a-2a5481fd1788",
+      "email": "paulinazieba.kontakt@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9316,
+      "opp_id": "4e43face-9477-4912-8603-f3ff15545182",
+      "email": "angel2210rsi@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9325,
+      "opp_id": "01fb4105-3524-4fb1-a112-41a22eb278dd",
+      "email": "maciekmaczka32@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9324,
+      "opp_id": "8c87e26a-2310-4b08-824d-edc01cb41808",
+      "email": "kontakt@krystynagzylfinanse.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9322,
+      "opp_id": "6d3fa2ac-99b6-4c33-bf6c-2045349070f2",
+      "email": "evanders@onet.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9321,
+      "opp_id": "2554b75c-1721-4858-855a-2b1ddd049b16",
+      "email": "direct-service@outlook.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9315,
+      "opp_id": "353d3f54-6bf9-4f97-9ea2-0ce0d3f62b18",
+      "email": "elzbietakaszewska.dietetyk@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9313,
+      "opp_id": "42bc74be-faae-4de2-9196-b02bef42c3e8",
+      "email": "k.huber@wp.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9312,
+      "opp_id": "51cbcff4-a34d-4d51-809e-d988c7f81698",
+      "email": "maciek.majchrowski@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9310,
+      "opp_id": "36b435f7-ca08-42a3-bee3-2291ee4f8b98",
+      "email": "kubapan8@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9279,
+      "opp_id": "be9cca16-827e-4151-960c-c036505bfceb",
+      "email": "kontaktklinikadobra@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9257,
+      "opp_id": "565d89fc-3f9e-4bee-bf0b-5ddacb8282bb",
+      "email": "was.dawid@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9252,
+      "opp_id": "92fe499f-a101-44f7-b410-7c882079a43c",
+      "email": "adabrowska3a1@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9251,
+      "opp_id": "3836b584-2bab-4f95-8c93-361c7807f565",
+      "email": "konrad.moc@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9250,
+      "opp_id": "c4dff2b2-0efe-4662-a2bb-29d0af58189a",
+      "email": "pawelpolanski02@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9246,
+      "opp_id": "b5ebae9f-9965-46b4-9cee-dbeb0f49fe3c",
+      "email": "konradbartkowiak2@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9237,
+      "opp_id": "87bb14c4-6fa2-4387-b66b-32bb1eac4a82",
+      "email": "grkozlowskikacper@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9236,
+      "opp_id": "ef38a88b-b20a-470c-b62a-6c3cb242d39e",
+      "email": "garusek1998@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9224,
+      "opp_id": "57b58cfa-f0b3-40a8-9a27-0469c29f7801",
+      "email": "karolina.sobotkiewicz@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9217,
+      "opp_id": "48c451ff-ab7e-4b52-8956-5452e19fd9bd",
+      "email": "t.braniewicz@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9201,
+      "opp_id": "6572bf5a-0998-4273-a134-c0a194035417",
+      "email": "wiktoria03210321@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 8938,
+      "opp_id": "bce2841c-db65-4a1a-a74c-b909241c11d8",
+      "email": "matpizpolska@gmail.com",
+      "tw_stage": "PROPOSAL"
+    },
+    {
+      "bb_id": 9190,
+      "opp_id": "27ecfbdb-bcbf-4dbc-99d2-f85bc3233261",
+      "email": "alalysiak1@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9142,
+      "opp_id": "5b77f81c-77ee-4c8e-a6c6-3b1acc59ddee",
+      "email": "rerusmilena7@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9127,
+      "opp_id": "dee6e63d-b334-4ffb-8092-6e2e7a50666a",
+      "email": "dietalight.czest@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9105,
+      "opp_id": "ff167020-17ed-4462-8a5c-d9cf6145d886",
+      "email": "monis88@o2.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9024,
+      "opp_id": "70a44ae0-9f5c-4227-a9c1-9363a2a45755",
+      "email": "plprofidach@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9087,
+      "opp_id": "51de1c2c-6160-42e6-9ecd-562f8bf2248a",
+      "email": "dominica.marek@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 9082,
+      "opp_id": "a382e3ab-c8dc-4fcb-a07c-4965dff32379",
+      "email": "karolina1301@onet.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 8994,
+      "opp_id": "d5571cda-0e6c-4b5a-96f3-790ab7c6cef4",
+      "email": "janlewandrowski10@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 8996,
+      "opp_id": "b295a671-bdb8-47e6-adf2-4d83ecdfbb71",
+      "email": "katarzyna.wysota@poczta.onet.pl",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 8973,
+      "opp_id": "b561edb5-d0a7-4071-b6b5-ff098354097e",
+      "email": "lanka.craft.rekodzielo@gmail.com",
+      "tw_stage": "CONTACTED"
+    },
+    {
+      "bb_id": 8841,
+      "opp_id": "6c4b64e8-8172-48bd-aa73-478a655fc031",
+      "email": "domgam2905@gmail.com",
+      "tw_stage": "PROPOSAL"
+    }
+  ]
+}

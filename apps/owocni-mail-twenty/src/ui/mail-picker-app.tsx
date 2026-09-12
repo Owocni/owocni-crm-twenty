@@ -15,6 +15,12 @@ import {
   MailBodyEditor,
   type MailBodyEditorHandle,
 } from 'src/front-components/mail-body-editor';
+import { ComposerV2Host } from 'src/front-components/composer-v2-host';
+import type { ComposerV2Envelope } from 'src/utils/composerV2Iframe';
+import {
+  readComposerV2Enabled,
+  writeComposerV2Enabled,
+} from 'src/utils/composerV2Flag';
 import {
   buildMailboxRecordShowPath,
   buildOpportunityRecordShowPath,
@@ -1087,11 +1093,15 @@ export const TemplatePicker = ({
   const [attachments, setAttachments] = useState<
     Array<EmailAttachmentRef & { size?: number }>
   >([]);
+  const [composerV2Enabled, setComposerV2Enabled] = useState(
+    readComposerV2Enabled,
+  );
   const [uploadingAttachments, setUploadingAttachments] = useState(false);
   const [attachmentError, setAttachmentError] = useState<string | null>(null);
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
   const [attachmentToken, setAttachmentToken] = useState('');
   const [composerExpanded, setComposerExpanded] = useState(false);
+  const [showTemplateList, setShowTemplateList] = useState(false);
   const [mailboxComposing, setMailboxComposing] = useState(false);
   const userDismissedFullscreenRef = useRef(false);
   const overlayRootRef = useRef<HTMLDivElement | null>(null);
@@ -1265,6 +1275,78 @@ export const TemplatePicker = ({
     return templates.find((template) => template.id === selectedId) ?? null;
   }, [templates, selectedId]);
 
+  const composerV2Envelope: ComposerV2Envelope = useMemo(() => {
+    const cc = formatEmailList(
+      emailsExcluding(
+        emailsExcluding(parseEmailList(ccEmail), sendToEmail),
+        internalHandoff ? person?.email : null,
+      ),
+    );
+    const bcc = formatEmailList(
+      emailsExcluding(
+        emailsExcluding(parseEmailList(bccEmail), sendToEmail),
+        internalHandoff ? person?.email : null,
+      ).filter((address) => !parseEmailList(cc).includes(address)),
+    );
+    const subject = externalForward
+      ? editSubject.trim() || toForwardSubject(replySubject)
+      : resolveSendSubject(editSubject, replySubject);
+
+    return {
+      to: sendToEmail,
+      ...(cc ? { cc } : {}),
+      ...(bcc ? { bcc } : {}),
+      subject: internalHandoff ? toInternalHandoffSubject(subject) : subject,
+      recordId: effectiveRecordId ?? undefined,
+      connectedAccountId: connectedAccountId ?? undefined,
+      inReplyToMessageId:
+        internalHandoff || externalForward
+          ? undefined
+          : (replyMessageId ?? undefined),
+      files: attachments.map(({ id, name }) => ({ id, name })),
+      ...(internalHandoff
+        ? {
+            mode: 'internal' as const,
+            opportunityId: opportunityRecordId ?? undefined,
+          }
+        : externalForward
+          ? { mode: 'forward' as const }
+          : {}),
+      ...(composeDraftKeyValue ? { composeDraftKey: composeDraftKeyValue } : {}),
+      templateId:
+        selected?.id && selected.id !== FREE_COMPOSE_TEMPLATE_ID
+          ? selected.id
+          : undefined,
+      canSend:
+        canSendEmail &&
+        !loadingDraft &&
+        (composerV2Enabled ||
+          (Boolean(sendToEmail) && !uploadingAttachments)),
+      sendBlockedReason: sendBlockedReason ?? undefined,
+    };
+  }, [
+    attachments,
+    bccEmail,
+    canSendEmail,
+    ccEmail,
+    composeDraftKeyValue,
+    composerV2Enabled,
+    connectedAccountId,
+    editSubject,
+    effectiveRecordId,
+    externalForward,
+    internalHandoff,
+    loadingDraft,
+    opportunityRecordId,
+    person?.email,
+    replyMessageId,
+    replySubject,
+    selected?.id,
+    sendBlockedReason,
+    sendToEmail,
+    uploadingAttachments,
+  ]);
+
   const setComposerFullscreen = (open: boolean, fromUser = false) => {
     if (fromUser) {
       userDismissedFullscreenRef.current = !open;
@@ -1361,6 +1443,7 @@ export const TemplatePicker = ({
     setExternalForward(false);
     subjectTouchedRef.current = false;
     setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
+    setShowTemplateList(false);
     const nextSessionId = createId();
     signatureSeededForSessionRef.current = connectedAccountHandle
       ? nextSessionId
@@ -2200,6 +2283,7 @@ export const TemplatePicker = ({
 
     subjectTouchedRef.current = false;
     setSelectedId(template.id);
+    setShowTemplateList(false);
     setEditSubject('');
     setEditBodyHtml('');
     setEditorSessionId(nextSessionId);
@@ -2456,6 +2540,45 @@ export const TemplatePicker = ({
     setComposeRequested(false);
     scheduleThreadRefreshAfterSend();
     void closeSidePanel().catch(() => undefined);
+  };
+
+  const handleComposerV2Sent = (result: Record<string, unknown>) => {
+    const to =
+      typeof result.to === 'string' && result.to.trim()
+        ? result.to
+        : sendToEmail;
+    const copiesDropped = result.copiesDropped === true;
+    const cc = copiesDropped
+      ? ''
+      : typeof result.cc === 'string'
+        ? result.cc
+        : composerV2Envelope.cc;
+    const bcc = copiesDropped ? '' : composerV2Envelope.bcc;
+
+    void (async () => {
+      await enqueueSnackbar({
+        message: formatSendReceipt(to, cc, bcc),
+        variant: copiesDropped ? 'warning' : 'success',
+        duration: copiesDropped ? 12000 : 6000,
+      });
+      if (copiesDropped) {
+        await enqueueSnackbar({
+          message:
+            'DW/UDW nie zostały przyjęte przez serwer — mail poszedł tylko do pola Do.',
+          variant: 'warning',
+          duration: 12000,
+        });
+      }
+      exitComposerAfterSuccessfulSend();
+    })();
+  };
+
+  const handleComposerV2Error = (message: string) => {
+    void enqueueSnackbar({
+      message,
+      variant: 'warning',
+      duration: 8000,
+    });
   };
 
   const startDelayedSend = (armed: ArmedSendPayload) => {
@@ -2846,7 +2969,7 @@ export const TemplatePicker = ({
     sendCountdown !== null;
 
   useEffect(() => {
-    if (!selected) {
+    if (!selected || composerV2Enabled) {
       setAttachmentPickerSrcDoc('');
       return;
     }
@@ -2886,7 +3009,7 @@ export const TemplatePicker = ({
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, editorSessionId, attachmentPickerLocked]);
+  }, [selected, editorSessionId, attachmentPickerLocked, composerV2Enabled]);
 
   useEffect(() => {
     if (!selected || !editorSessionId) {
@@ -3549,6 +3672,7 @@ export const TemplatePicker = ({
                 onClick={() => {
                   setComposerFullscreen(false);
                   setSelectedId(null);
+                  setShowTemplateList(true);
                   setInternalHandoff(false);
                   setExternalForward(false);
                 }}
@@ -3556,21 +3680,36 @@ export const TemplatePicker = ({
                 Wstaw szablon
               </button>
             ) : (
-              <button
-                type="button"
-                style={HEADER_ACTION_BUTTON_STYLE}
-                disabled={sending}
-                onClick={() => enterFreeCompose(replySubject)}
-              >
-                Bez szablonu
-              </button>
+              <>
+                <button
+                  type="button"
+                  style={HEADER_ACTION_BUTTON_STYLE}
+                  disabled={sending}
+                  onClick={() => {
+                    setComposerFullscreen(false);
+                    setShowTemplateList(true);
+                  }}
+                >
+                  Zmień szablon
+                </button>
+                <button
+                  type="button"
+                  style={HEADER_ACTION_BUTTON_STYLE}
+                  disabled={sending}
+                  onClick={() => enterFreeCompose(replySubject)}
+                >
+                  Bez szablonu
+                </button>
+              </>
             )}
           </div>
         ) : null}
       </div>
       {isRecordCompose ? <ReplyQueueBar recordId={opportunityRecordId} /> : null}
 
-      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID && !composerExpanded ? (
+      {!composerExpanded &&
+      selected?.id !== FREE_COMPOSE_TEMPLATE_ID &&
+      (showTemplateList || !selected) ? (
       <div
         style={{
           display: 'flex',
@@ -3848,12 +3987,13 @@ export const TemplatePicker = ({
       </div>
       ) : null}
 
-      {selected?.id !== FREE_COMPOSE_TEMPLATE_ID && !composerExpanded ? (
+      {!composerExpanded &&
+      selected?.id !== FREE_COMPOSE_TEMPLATE_ID &&
+      (showTemplateList || !selected) ? (
       <div
         style={{
           overflowY: 'auto',
-          flex: selected ? '0 0 auto' : 1,
-          maxHeight: selected ? 120 : undefined,
+          flex: 1,
           minHeight: 0,
         }}
       >
@@ -4009,6 +4149,14 @@ export const TemplatePicker = ({
               gap: 8,
             }}
           >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+          <div style={{ flex: 1, minWidth: 0 }}>
           {internalHandoff ? (
             <div
               style={{
@@ -4064,6 +4212,29 @@ export const TemplatePicker = ({
               ) : null}
             </div>
           ) : null}
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              const next = !composerV2Enabled;
+              writeComposerV2Enabled(next);
+              setComposerV2Enabled(next);
+            }}
+            style={{
+              flexShrink: 0,
+              padding: '4px 10px',
+              border: '1px solid #c7d2fe',
+              borderRadius: 4,
+              background: composerV2Enabled ? '#eef2ff' : '#fff',
+              color: '#3730a3',
+              fontWeight: 600,
+              fontSize: 12,
+              cursor: 'pointer',
+            }}
+          >
+            {composerV2Enabled ? 'Stary composer' : 'Nowy composer'}
+          </button>
+          </div>
           {!composerExpanded &&
           !isPageCompose &&
           (replyMessage?.text || isReplyContext) ? (
@@ -4105,6 +4276,7 @@ export const TemplatePicker = ({
               alignItems: 'flex-start',
             }}
           >
+            {!composerV2Enabled ? (
             <div
               style={{
                 display: 'flex',
@@ -4188,6 +4360,7 @@ export const TemplatePicker = ({
               onBccChange={setBccEmail}
             />
             </div>
+            ) : null}
 
             {allowedSendAccounts.length > 0 ? (
               <label
@@ -4254,12 +4427,8 @@ export const TemplatePicker = ({
               </span>
             ) : null}
           </div>
-          <p style={{ fontSize: 11, color: '#888', margin: '4px 0 0' }}>
-            Swoją stopkę: menu <strong>Stopki maili</strong> → kliknij imię
-            (nie ołówek).
-          </p>
 
-          {!personEmail && recentRecipients.length > 0 ? (
+          {!composerV2Enabled && !personEmail && recentRecipients.length > 0 ? (
             <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
                 Ostatni odbiorcy
@@ -4312,6 +4481,7 @@ export const TemplatePicker = ({
             </p>
           ) : null}
 
+          {!composerV2Enabled ? (
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <span style={{ fontWeight: 600, fontSize: 12, color: '#666' }}>
               Temat
@@ -4343,6 +4513,7 @@ export const TemplatePicker = ({
               disabled={loadingDraft || sending || sendCountdown !== null}
             />
           </label>
+          ) : null}
           </div>
           </div>
 
@@ -4371,19 +4542,38 @@ export const TemplatePicker = ({
                 Ładowanie treści szablonu…
               </div>
             ) : (
-              <MailBodyEditor
-                ref={editorRef}
-                sessionId={editorSessionId}
-                durableSessionId={
-                  durableReady ? composeDraftKeyValue ?? undefined : undefined
-                }
-                value={editBodyHtml}
-                onChange={setEditBodyHtml}
-                disabled={sending || sendPreparing || sendCountdown !== null}
-              />
+              <>
+                {composerV2Enabled ? (
+                  <ComposerV2Host
+                    ref={editorRef}
+                    sessionId={editorSessionId}
+                    durableSessionId={
+                      durableReady ? composeDraftKeyValue ?? undefined : undefined
+                    }
+                    value={editBodyHtml}
+                    onChange={setEditBodyHtml}
+                    envelope={composerV2Envelope}
+                    onSent={handleComposerV2Sent}
+                    onSendError={handleComposerV2Error}
+                    disabled={sending || sendPreparing}
+                  />
+                ) : (
+                  <MailBodyEditor
+                    ref={editorRef}
+                    sessionId={editorSessionId}
+                    durableSessionId={
+                      durableReady ? composeDraftKeyValue ?? undefined : undefined
+                    }
+                    value={editBodyHtml}
+                    onChange={setEditBodyHtml}
+                    disabled={sending || sendPreparing || sendCountdown !== null}
+                  />
+                )}
+              </>
             )}
           </div>
 
+          {!composerV2Enabled ? (
           <div
             style={{
               flexShrink: 0,
@@ -4474,7 +4664,7 @@ export const TemplatePicker = ({
             </div>
           ) : null}
 
-          {sendCountdown !== null ? (
+          {sendCountdown !== null && !composerV2Enabled ? (
             <div
               style={{
                 display: 'flex',
@@ -4581,6 +4771,7 @@ export const TemplatePicker = ({
                   </div>
                 )}
               </div>
+              {!composerV2Enabled ? (
               <button
                 type="button"
                 style={{
@@ -4637,9 +4828,23 @@ export const TemplatePicker = ({
                             ? `Wyślij email (${attachments.length})`
                             : 'Wyślij email'}
               </button>
+              ) : (
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: 12,
+                    color: '#4338ca',
+                  }}
+                >
+                  Wyślij jest w ramce edytora powyżej.
+                </div>
+              )}
             </div>
           )}
           </div>
+          ) : null}
         </div>
         </div>
       )}

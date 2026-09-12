@@ -1,0 +1,1028 @@
+{
+  "n": 39,
+  "gmail_dot_collisions": [],
+  "rows": [
+    {
+      "id": "00fad7e0-ffb3-40f8-afa2-ffbb9704f394",
+      "name": "info@inkflowcollective.com · INNE",
+      "stage": "CONTACTED",
+      "createdAt": "2026-07-01T08:52:04.507Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "W9SY88VMW56MVASQJFEJJ68D51",
+      "emails": [
+        "info@inkflowcollective.com"
+      ],
+      "gmail_canon": [
+        "info@inkflowcollective.com"
+      ],
+      "person_idOid": "W9SY88VMW56MVASQJFEJJ68D51",
+      "n_sibling_opps": 2,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 2,
+      "sibling_owners": [
+        "23ac9976-0232-4097-b056-5dc391bf7c34"
+      ],
+      "sibling_stages": [
+        "WON",
+        "WON"
+      ],
+      "sibling_src": [
+        "PIPEDRIVE_LEGACY",
+        "PIPEDRIVE_LEGACY"
+      ],
+      "looks_test": false,
+      "updatedAt": "2026-08-04T13:55:34.960Z"
+    },
+    {
+      "id": "09aa0285-81aa-4b1b-9f0d-c323dd3f61ac",
+      "name": "youtuber77@wp.pl · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T10:16:05.234Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "F4WZ91CMN8WBR41JZZ1CS9A2M2",
+      "emails": [
+        "youtuber77@wp.pl"
+      ],
+      "gmail_canon": [
+        "youtuber77@wp.pl"
+      ],
+      "person_idOid": "F4WZ91CMN8WBR41JZZ1CS9A2M2",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-16T07:47:21.863Z"
+    },
+    {
+      "id": "0edeb863-afc4-4646-afcf-923193ba89b1",
+      "name": "magdalenka1993-1993@o2.pl · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T06:32:04.423Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "NNRXPBZFJ3DBWRF2Q3W0W5Q9RZ",
+      "emails": [
+        "magdalenka1993-1993@o2.pl"
+      ],
+      "gmail_canon": [
+        "magdalenka1993-1993@o2.pl"
+      ],
+      "person_idOid": "NNRXPBZFJ3DBWRF2Q3W0W5Q9RZ",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-16T09:05:02.023Z"
+    },
+    {
+      "id": "10b309b9-f2ee-423b-822a-3c2b5cbfdbc8",
+      "name": "verify-create-lead-liimendf@example.com · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T07:42:22.950Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "01VERIFYCLLIIMENDF",
+      "emails": [
+        "verify-create-lead-liimendf@example.com"
+      ],
+      "gmail_canon": [
+        "verify-create-lead-liimendf@example.com"
+      ],
+      "person_idOid": "01VERIFYCLLIIMENDF",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T07:42:22.730Z"
+    },
+    {
+      "id": "186fb2a4-1461-41f2-b155-0efc4f0ec94b",
+      "name": "test858ggaf@fastman.eu · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:06:04.421Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "1YCXSZKBYFMGR9B10HPBC2SV7A",
+      "emails": [
+        "test858ggaf@fastman.eu"
+      ],
+      "gmail_canon": [
+        "test858ggaf@fastman.eu"
+      ],
+      "person_idOid": "1YCXSZKBYFMGR9B10HPBC2SV7A",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T10:06:09.115Z"
+    },
+    {
+      "id": "1e56276e-de81-4ca6-85b6-3c28478119a4",
+      "name": "info@invitely.in",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T05:36:54.428Z",
+      "bizProduct": null,
+      "bizSource": null,
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "EQZA64K5S46KJS3GNC9SDW3N8V",
+      "emails": [
+        "info@invitely.in",
+        "tesg8854@fastman.eu"
+      ],
+      "gmail_canon": [
+        "info@invitely.in",
+        "tesg8854@fastman.eu"
+      ],
+      "person_idOid": "EQZA64K5S46KJS3GNC9SDW3N8V",
+      "n_sibling_opps": 2,
+      "n_sibling_open": 1,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [
+        "WON",
+        "NEW"
+      ],
+      "sibling_src": [
+        "TWENTY_EMAIL",
+        "OWOCNI_SORTOWNIA"
+      ],
+      "looks_test": false,
+      "updatedAt": "2026-07-24T11:01:18.401Z"
+    },
+    {
+      "id": "2041db7f-b01c-4c76-9fd9-4bb3af67422b",
+      "name": "k.aleksandrowicz@kadeo.pl · Logo",
+      "stage": "CONTACTED",
+      "createdAt": "2026-07-01T09:56:04.854Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "YGAF1KSB1FS3SMCSFB6JYMNAR1",
+      "emails": [
+        "k.aleksandrowicz@kadeo.pl"
+      ],
+      "gmail_canon": [
+        "k.aleksandrowicz@kadeo.pl"
+      ],
+      "person_idOid": "YGAF1KSB1FS3SMCSFB6JYMNAR1",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-01T09:56:09.502Z"
+    },
+    {
+      "id": "284c06cd-0c79-4ad3-9757-99088053e73f",
+      "name": "Lead · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:11:32.967Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "WFTESTNOTIFY001",
+      "emails": [],
+      "gmail_canon": [],
+      "person_idOid": null,
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": null
+    },
+    {
+      "id": "344a11f5-f69b-4358-a163-61585c5a678c",
+      "name": "adamfrackowiak00@wp.pl · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-07-01T12:50:04.630Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "7XSP3NWD8KJQD8W404WQSK5RCZ",
+      "emails": [
+        "adamfrackowiak00@wp.pl"
+      ],
+      "gmail_canon": [
+        "adamfrackowiak00@wp.pl"
+      ],
+      "person_idOid": "7XSP3NWD8KJQD8W404WQSK5RCZ",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-16T09:08:19.256Z"
+    },
+    {
+      "id": "34b12db0-9f97-47ec-9b8c-508028eaa94a",
+      "name": "lech.batko@poczta.fm · Logo · Nowe",
+      "stage": "NEW",
+      "createdAt": "2026-08-30T17:10:05.927Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "BDYSD3QAQ7V0CHAF00CKD2GBR2",
+      "emails": [
+        "lech.batko@poczta.fm"
+      ],
+      "gmail_canon": [
+        "lech.batko@poczta.fm"
+      ],
+      "person_idOid": "BDYSD3QAQ7V0CHAF00CKD2GBR2",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-08-30T17:10:05.129Z"
+    },
+    {
+      "id": "3ce39c89-6036-4816-8915-68abad8560cd",
+      "name": "agata.debska@drdebski.pl · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-07-01T12:58:04.451Z",
+      "bizProduct": "WEB",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "P5YHJ4SKRXGT0NPEK0CHKPKJAE",
+      "emails": [
+        "agata.debska@drdebski.pl"
+      ],
+      "gmail_canon": [
+        "agata.debska@drdebski.pl"
+      ],
+      "person_idOid": "P5YHJ4SKRXGT0NPEK0CHKPKJAE",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-08-13T12:51:59.190Z"
+    },
+    {
+      "id": "5712f373-b00f-412e-888f-7effe2dd2b0e",
+      "name": "wernerhubercio123@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-07-02T09:18:04.585Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "XF1R2BZDGP5FJCYDVA59867JR8",
+      "emails": [
+        "wernerhubercio123@gmail.com"
+      ],
+      "gmail_canon": [
+        "wernerhubercio123@gmail.com"
+      ],
+      "person_idOid": "XF1R2BZDGP5FJCYDVA59867JR8",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-02T09:18:04.453Z"
+    },
+    {
+      "id": "57b773d3-2312-4576-b7b0-b7751b1f72f4",
+      "name": "szczerbickaa@icloud.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T12:34:04.569Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "6PY6RXT12YJRD8M4KMS18CBB44",
+      "emails": [
+        "szczerbickaa@icloud.com"
+      ],
+      "gmail_canon": [
+        "szczerbickaa@icloud.com"
+      ],
+      "person_idOid": "6PY6RXT12YJRD8M4KMS18CBB44",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-30T12:34:04.393Z"
+    },
+    {
+      "id": "5aa03ad6-0718-4336-853a-21bc14126c89",
+      "name": "pooja@cssplayer.com · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-07-01T09:14:04.516Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "234A6X09E9T4WY5PSSRZKF4B9P",
+      "emails": [
+        "pooja@cssplayer.com"
+      ],
+      "gmail_canon": [
+        "pooja@cssplayer.com"
+      ],
+      "person_idOid": "234A6X09E9T4WY5PSSRZKF4B9P",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-01T09:14:04.406Z"
+    },
+    {
+      "id": "68801bf1-2c8a-4697-a6f5-499c7e4e7549",
+      "name": "galeriaurody@poczta.onet.pl · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T05:48:04.407Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "BAPVYCRQTTQCK09EVN8KW6WK90",
+      "emails": [
+        "galeriaurody@poczta.onet.pl"
+      ],
+      "gmail_canon": [
+        "galeriaurody@poczta.onet.pl"
+      ],
+      "person_idOid": "BAPVYCRQTTQCK09EVN8KW6WK90",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-16T09:05:47.088Z"
+    },
+    {
+      "id": "6c4b64e8-8172-48bd-aa73-478a655fc031",
+      "name": "domgam2905@gmail.com · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T07:48:04.391Z",
+      "bizProduct": "INNE",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "33DYPC3Q15AVKPXK8PC19J48CV",
+      "emails": [
+        "domgam2905@gmail.com"
+      ],
+      "gmail_canon": [
+        "domgam2905@gmail.com"
+      ],
+      "person_idOid": "33DYPC3Q15AVKPXK8PC19J48CV",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-30T07:48:04.290Z"
+    },
+    {
+      "id": "7133da57-81a0-4051-a20d-9257e1d2766f",
+      "name": "Lead · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:12:08.807Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "WFTESTNOTIFY002",
+      "emails": [],
+      "gmail_canon": [],
+      "person_idOid": null,
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": null
+    },
+    {
+      "id": "75537198-408b-48c5-a874-62fd92e5f5f8",
+      "name": "rplotka1@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-07-02T08:08:04.490Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "8QA67JX0FKSJR4RFWG5T0PNT4R",
+      "emails": [
+        "rplotka1@gmail.com"
+      ],
+      "gmail_canon": [
+        "rplotka1@gmail.com"
+      ],
+      "person_idOid": "8QA67JX0FKSJR4RFWG5T0PNT4R",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-02T08:08:04.421Z"
+    },
+    {
+      "id": "76cb0120-ee87-45af-bd34-37ee9b937043",
+      "name": "info@invitely.in",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T05:34:47.362Z",
+      "bizProduct": null,
+      "bizSource": null,
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "8RVS58QCKWNG5Z2YRCMJQ23Y7A",
+      "emails": [
+        "info@invitely.in",
+        "tesg8854@fastman.eu"
+      ],
+      "gmail_canon": [
+        "info@invitely.in",
+        "tesg8854@fastman.eu"
+      ],
+      "person_idOid": "EQZA64K5S46KJS3GNC9SDW3N8V",
+      "n_sibling_opps": 2,
+      "n_sibling_open": 1,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [
+        "NEW",
+        "WON"
+      ],
+      "sibling_src": [
+        "OWOCNI_SORTOWNIA",
+        "TWENTY_EMAIL"
+      ],
+      "looks_test": false,
+      "updatedAt": "2026-07-24T11:01:18.401Z"
+    },
+    {
+      "id": "7c2118d4-2aa4-4dc2-a382-7ce31c31351d",
+      "name": "pawel@acepark.pl · Strona",
+      "stage": "CONTACTED",
+      "createdAt": "2026-07-02T10:28:04.356Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "VSJ3C15BQE72E1KXJ20YC76R21",
+      "emails": [
+        "pawel@acepark.pl"
+      ],
+      "gmail_canon": [
+        "pawel@acepark.pl"
+      ],
+      "person_idOid": "VSJ3C15BQE72E1KXJ20YC76R21",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-08-13T12:50:27.595Z"
+    },
+    {
+      "id": "82739981-f35b-4e25-bc21-fbdfc97a9519",
+      "name": "verify-create-lead-llmkbjml@example.com · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-26T05:48:19.884Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "01VERIFYCLLLMKBJML",
+      "emails": [
+        "verify-create-lead-llmkbjml@example.com"
+      ],
+      "gmail_canon": [
+        "verify-create-lead-llmkbjml@example.com"
+      ],
+      "person_idOid": "01VERIFYCLLLMKBJML",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-26T05:48:19.673Z"
+    },
+    {
+      "id": "885bd227-4d6b-4be1-98ea-4f84399ab3ba",
+      "name": "agnieszkamadetko@gmail.com · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-07-01T09:22:04.494Z",
+      "bizProduct": "WEB",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "A003RRWE3KWHPXV374ZPY1HZ87",
+      "emails": [
+        "agnieszkamadetko@gmail.com"
+      ],
+      "gmail_canon": [
+        "agnieszkamadetko@gmail.com"
+      ],
+      "person_idOid": "A003RRWE3KWHPXV374ZPY1HZ87",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-01T09:22:04.388Z"
+    },
+    {
+      "id": "94979075-0e12-4c0d-856a-62a5dc59c4af",
+      "name": "teresa1327@interia.pl · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T20:10:05.099Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "6CYTWJ222FN28QXZ7HDXV6K7CW",
+      "emails": [
+        "teresa1327@interia.pl"
+      ],
+      "gmail_canon": [
+        "teresa1327@interia.pl"
+      ],
+      "person_idOid": "6CYTWJ222FN28QXZ7HDXV6K7CW",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-16T09:04:39.007Z"
+    },
+    {
+      "id": "97c956f1-c372-47c4-805b-bb27204fa0ad",
+      "name": "tjagurtn489@fastman.eu · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T08:15:07.182Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "C226PHEG9ZR00SANA4VXCA1J7H",
+      "emails": [
+        "tjagurtn489@fastman.eu"
+      ],
+      "gmail_canon": [
+        "tjagurtn489@fastman.eu"
+      ],
+      "person_idOid": "C226PHEG9ZR00SANA4VXCA1J7H",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T08:08:08.337Z"
+    },
+    {
+      "id": "97fb335a-45f6-4b89-a0e9-463ed4bbf458",
+      "name": "maksiucabajk@gmail.com · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-07-01T07:04:04.537Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "8P8Q2WG1QX7AWNCQ57FB9HNPP4",
+      "emails": [
+        "maksiucabajk@gmail.com"
+      ],
+      "gmail_canon": [
+        "maksiucabajk@gmail.com"
+      ],
+      "person_idOid": "8P8Q2WG1QX7AWNCQ57FB9HNPP4",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-01T07:04:04.478Z"
+    },
+    {
+      "id": "a5c36940-ddd9-4b28-b3f2-cd7647e971f6",
+      "name": "mateuszrogalski1989@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T20:40:04.557Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "PJE7NWHZE8GQC18BR9SNB2TSQH",
+      "emails": [
+        "mateuszrogalski1989@gmail.com"
+      ],
+      "gmail_canon": [
+        "mateuszrogalski1989@gmail.com"
+      ],
+      "person_idOid": "PJE7NWHZE8GQC18BR9SNB2TSQH",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-29T20:40:04.442Z"
+    },
+    {
+      "id": "a88aa583-646d-41f2-944f-20c988f63e3f",
+      "name": "test9959058@fastman.eu · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T09:24:05.679Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "9QJNMC21E0ZZN41Y819R4WXGVT",
+      "emails": [
+        "test9959058@fastman.eu"
+      ],
+      "gmail_canon": [
+        "test9959058@fastman.eu"
+      ],
+      "person_idOid": "9QJNMC21E0ZZN41Y819R4WXGVT",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T09:24:04.150Z"
+    },
+    {
+      "id": "b0756933-2e1e-4936-8a1d-957f1ff81c27",
+      "name": "bartosz@bartoszkozlowski.pl · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-07-02T19:00:04.676Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "8C680V6917FXPBMZYR0B1Q14QX",
+      "emails": [
+        "bartosz@bartoszkozlowski.pl"
+      ],
+      "gmail_canon": [
+        "bartosz@bartoszkozlowski.pl"
+      ],
+      "person_idOid": "8C680V6917FXPBMZYR0B1Q14QX",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-02T19:02:40.150Z"
+    },
+    {
+      "id": "c12ab48f-6a0d-471b-b7ac-46fc5054d2ba",
+      "name": "zenonamielcarek58@gmail.com · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-07-03T05:02:04.605Z",
+      "bizProduct": "WEB",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "BGXPBFSCJT9CCY4SPM2BPWZXPK",
+      "emails": [
+        "zenonamielcarek58@gmail.com"
+      ],
+      "gmail_canon": [
+        "zenonamielcarek58@gmail.com"
+      ],
+      "person_idOid": "BGXPBFSCJT9CCY4SPM2BPWZXPK",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-07-03T05:02:04.395Z"
+    },
+    {
+      "id": "c6d3fb6d-7601-4e09-89b1-099a86e18f64",
+      "name": "TEST Fakturownia DEMO",
+      "stage": "NEW",
+      "createdAt": "2026-09-11T06:17:19.234Z",
+      "bizProduct": "WEB",
+      "bizSource": null,
+      "srcSystem": "TWENTY_UI",
+      "bitrixDealId": "",
+      "idOid": "BW8QEP3EA8TF19RTNTFK8RJ2ZM",
+      "emails": [],
+      "gmail_canon": [],
+      "person_idOid": null,
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": null
+    },
+    {
+      "id": "c9f1add0-b0ff-4ad6-a522-2bbfef65ea72",
+      "name": "paulinaslopiecka@gmail.com · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T13:48:04.625Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "ZK7Z5SAD8Y5R1FSGG3B2KVTE8N",
+      "emails": [
+        "paulinaslopiecka@gmail.com"
+      ],
+      "gmail_canon": [
+        "paulinaslopiecka@gmail.com"
+      ],
+      "person_idOid": "ZK7Z5SAD8Y5R1FSGG3B2KVTE8N",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-29T13:48:04.514Z"
+    },
+    {
+      "id": "cb258db9-f5c4-4aaa-8c4f-72e329e0baae",
+      "name": "kgolembowski6b@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T13:56:04.437Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "KAQPG8HE9S25GRXZKW86WNW769",
+      "emails": [
+        "kgolembowski6b@gmail.com"
+      ],
+      "gmail_canon": [
+        "kgolembowski6b@gmail.com"
+      ],
+      "person_idOid": "KAQPG8HE9S25GRXZKW86WNW769",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-29T13:56:04.351Z"
+    },
+    {
+      "id": "e4aee6f2-5bb9-4c1d-985f-5bcc0d9f9c81",
+      "name": "olga.kolomiiets@bedeko-europe.com · Strona",
+      "stage": "CONTACTED",
+      "createdAt": "2026-07-01T12:46:04.635Z",
+      "bizProduct": "WEB",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "KDCXDRGVN6Y2FDEQ07ZKXAVKT7",
+      "emails": [
+        "olga.kolomiiets@bedeko-europe.com"
+      ],
+      "gmail_canon": [
+        "olga.kolomiiets@bedeko-europe.com"
+      ],
+      "person_idOid": "KDCXDRGVN6Y2FDEQ07ZKXAVKT7",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-08-13T12:50:37.675Z"
+    },
+    {
+      "id": "eb6b7d69-c80b-4d20-a0f2-a5cfccb6b129",
+      "name": "v4-test-test@fastman.eu · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T09:12:04.392Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "XGG1Z4NWMGAFZAFTQFGCZSNZF3",
+      "emails": [
+        "v4-test-test@fastman.eu"
+      ],
+      "gmail_canon": [
+        "v4-test-test@fastman.eu"
+      ],
+      "person_idOid": "XGG1Z4NWMGAFZAFTQFGCZSNZF3",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T09:12:08.875Z"
+    },
+    {
+      "id": "ef3e530c-7ef7-4de4-90b0-27ce40efce31",
+      "name": "Lead · Strona",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:20:21.838Z",
+      "bizProduct": "WEB",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "LINKTEST001",
+      "emails": [],
+      "gmail_canon": [],
+      "person_idOid": null,
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": null
+    },
+    {
+      "id": "f4b9c846-9970-46b4-8405-7ff50e08e4da",
+      "name": "test120gagafg@fastman.eu · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:24:05.241Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "JT3DHN6VPGEQ31TMK88D21VDB3",
+      "emails": [
+        "test120gagafg@fastman.eu"
+      ],
+      "gmail_canon": [
+        "test120gagafg@fastman.eu"
+      ],
+      "person_idOid": "JT3DHN6VPGEQ31TMK88D21VDB3",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T10:28:23.756Z"
+    },
+    {
+      "id": "f6472e33-4a8f-4112-b16f-d40f26dcbdb8",
+      "name": "skitomasz@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T13:00:04.654Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "1N4G72VTPVQAJAZY1ZQV041J52",
+      "emails": [
+        "skitomasz@gmail.com"
+      ],
+      "gmail_canon": [
+        "skitomasz@gmail.com"
+      ],
+      "person_idOid": "1N4G72VTPVQAJAZY1ZQV041J52",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-29T13:00:04.541Z"
+    },
+    {
+      "id": "f6503cba-c0cb-4b5c-8199-26b57b702612",
+      "name": "15ffjfj949@fastman.eu · INNE",
+      "stage": "NEW",
+      "createdAt": "2026-06-29T10:18:05.050Z",
+      "bizProduct": "INNE",
+      "bizSource": "FORM",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "YKW9HPSH614WD1421S6HNVTRAN",
+      "emails": [
+        "15ffjfj949@fastman.eu"
+      ],
+      "gmail_canon": [
+        "15ffjfj949@fastman.eu"
+      ],
+      "person_idOid": "YKW9HPSH614WD1421S6HNVTRAN",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": true,
+      "updatedAt": "2026-06-29T10:18:13.306Z"
+    },
+    {
+      "id": "fae4c42f-06a1-4985-995f-0b027005f83a",
+      "name": "maniakrolowa@gmail.com · Logo",
+      "stage": "NEW",
+      "createdAt": "2026-06-30T14:50:04.396Z",
+      "bizProduct": "LOGO",
+      "bizSource": "GOOGLE_ADS",
+      "srcSystem": "OWOCNI_SORTOWNIA",
+      "bitrixDealId": "",
+      "idOid": "Q6QFAFZWJQ878F6VZT7V42XH58",
+      "emails": [
+        "maniakrolowa@gmail.com"
+      ],
+      "gmail_canon": [
+        "maniakrolowa@gmail.com"
+      ],
+      "person_idOid": "Q6QFAFZWJQ878F6VZT7V42XH58",
+      "n_sibling_opps": 0,
+      "n_sibling_open": 0,
+      "n_sibling_with_owner": 0,
+      "sibling_owners": [],
+      "sibling_stages": [],
+      "sibling_src": [],
+      "looks_test": false,
+      "updatedAt": "2026-06-30T14:50:04.349Z"
+    }
+  ]
+}

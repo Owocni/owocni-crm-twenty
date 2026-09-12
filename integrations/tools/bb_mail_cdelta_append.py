@@ -111,7 +111,14 @@ def twenty_get_messages_by_msgid(msgid: str) -> list[dict]:
     raise SystemExit(f"Twenty REST failed: {last_err}")
 
 
-def classify_row(row: dict, *, inbox: str, imap, folders: list[str]) -> dict:
+def classify_row(
+    row: dict,
+    *,
+    inbox: str,
+    imap,
+    folders: list[str],
+    allow_other_channel: bool = False,
+) -> dict:
     chip = CHIP[inbox]
     own = norm_msgid(row.get("message_id"))
     parent = norm_msgid(row.get("in_reply_to") or "")
@@ -151,6 +158,10 @@ def classify_row(row: dict, *, inbox: str, imap, folders: list[str]) -> dict:
     rec["parent_mailboxes"] = boxes
     rec["parent_thread"] = parent_msgs[0].get("messageThreadId")
     if chip not in boxes:
+        if allow_other_channel:
+            rec["status"] = "eligible"
+            rec["other_channel_override"] = True
+            return rec
         rec["status"] = "skip_other_channel"
         return rec
     rec["status"] = "eligible"
@@ -185,7 +196,13 @@ def cmd_discover(args: argparse.Namespace) -> None:
             f"offset={args.bb_offset}"
         )
         for i, row in enumerate(rows, 1):
-            rec = classify_row(row, inbox=inbox, imap=imap, folders=folders)
+            rec = classify_row(
+                row,
+                inbox=inbox,
+                imap=imap,
+                folders=folders,
+                allow_other_channel=bool(getattr(args, "allow_other_channel", False)),
+            )
             classified.append(rec)
             print(f"  {i}/{len(rows)} bb:{rec['bb_id']} {rec['status']} {(rec['subject'] or '')[:50]!r}")
     finally:
@@ -220,6 +237,7 @@ def run_apply(
     folder: str,
     manifest_dir: Path,
     since: str | None = None,
+    allow_other_channel: bool = False,
 ) -> dict:
     inbox = assert_mailbox(mailbox)
     folder = folder or DEFAULT_FOLDER
@@ -244,7 +262,13 @@ def run_apply(
         for i, row in enumerate(rows, 1):
             if len(appended) >= limit:
                 break
-            rec = classify_row(row, inbox=inbox, imap=imap, folders=folders)
+            rec = classify_row(
+                row,
+                inbox=inbox,
+                imap=imap,
+                folders=folders,
+                allow_other_channel=allow_other_channel,
+            )
             if rec["status"] != "eligible":
                 skipped.append(rec)
                 if i % 25 == 0:
@@ -340,6 +364,7 @@ def cmd_apply(args: argparse.Namespace) -> None:
         folder=args.folder or DEFAULT_FOLDER,
         manifest_dir=Path(args.manifest_dir),
         since=args.since or None,
+        allow_other_channel=bool(args.allow_other_channel),
     )
 
 
@@ -356,6 +381,11 @@ def main() -> None:
         help="ISO sent_date >= (np. 2026-09-06T07:21:00Z)",
     )
     d.add_argument("--out", default="")
+    d.add_argument(
+        "--allow-other-channel",
+        action="store_true",
+        help="APPEND gdy parent IN jest w Twenty, nawet na chipie LEADS",
+    )
     a = sub.add_parser("apply")
     a.add_argument("--mailbox", required=True)
     a.add_argument("--limit", type=int, default=10)
@@ -368,6 +398,11 @@ def main() -> None:
     )
     a.add_argument("--folder", default=DEFAULT_FOLDER)
     a.add_argument("--yes", action="store_true")
+    a.add_argument(
+        "--allow-other-channel",
+        action="store_true",
+        help="APPEND gdy parent IN jest w Twenty, nawet na chipie LEADS",
+    )
     a.add_argument(
         "--manifest-dir",
         default=str(

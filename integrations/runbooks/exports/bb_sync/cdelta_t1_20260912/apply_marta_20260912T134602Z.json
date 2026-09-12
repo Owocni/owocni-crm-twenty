@@ -1,0 +1,385 @@
+{
+  "mailbox": "marta@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 0,
+  "bb_limit": 200,
+  "rows": 184,
+  "scanned": 184,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_on_imap": 40,
+    "skip_parent_not_in_twenty": 63,
+    "skip_in_twenty": 70,
+    "skip_no_parent": 2
+  },
+  "appended": [
+    {
+      "bb_id": 2056611,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Uruchomienie projektu &gt; fakturaproforma nr 6097",
+      "sent_date": "2026-08-19T18:01:48.206+00:00",
+      "own": "<e1f02571-42f3-29c5-8f18-dc657b203791@owocni.pl>",
+      "parent": "<CAFgSwo9VsduME1Fc-YGkSRjySkb-MH1-rLa67CwVN=WNBtOGEg@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "84522c6a-6d91-421c-8989-76b9f076e1bd",
+      "parent_mailboxes": [
+        "STUDIO"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 9412
+    },
+    {
+      "bb_id": 2056560,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja dotycząca nowej strony Kosmicznego Rancza",
+      "sent_date": "2026-08-19T07:29:40.705+00:00",
+      "own": "<a25beea2-ef7d-54c3-38b9-1cf6065eadea@owocni.pl>",
+      "parent": "<333a4bba33656f16b663470112f31185@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "ae740216-c1ea-41ce-97c5-fed8fb065d77",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 8286
+    },
+    {
+      "bb_id": 2056552,
+      "inbox": "marta@owocni.pl",
+      "subject": "Nazwa dla Pana Kacpra:",
+      "sent_date": "2026-08-19T06:47:02.708+00:00",
+      "own": "<4f6c46b8-c7e9-98f2-1a1f-22a0a3bbe7a3@owocni.pl>",
+      "parent": "<8bd1a7c031292b1fc062a6546b2936dd@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "49d02fbc-2c99-4f51-8d46-cd2943f3bcd2",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 28002
+    },
+    {
+      "bb_id": 2056551,
+      "inbox": "marta@owocni.pl",
+      "subject": "Projekt logo dla Pana Jakuba:",
+      "sent_date": "2026-08-19T06:43:34.624+00:00",
+      "own": "<100deff7-d7d9-8e8f-56be-c8128ae76706@owocni.pl>",
+      "parent": "<2ecbee7530ad7809442a43749a72d1c0@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "f83138d0-cf86-4c9f-bfa4-a9f4c2bd933f",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 24320
+    },
+    {
+      "bb_id": 2056494,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pana Radosława:",
+      "sent_date": "2026-08-18T08:45:23.95+00:00",
+      "own": "<d8ad9bca-e8ca-b0fa-d194-4fed341b8c0b@owocni.pl>",
+      "parent": "<d5c083cca46cfc64de41700fdb9e6954@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "134c1c62-f620-49ba-8414-1d0ee1f68bb5",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 60231
+    },
+    {
+      "bb_id": 2056488,
+      "inbox": "marta@owocni.pl",
+      "subject": "Nowa odsłona strony Autoserwis EiA:",
+      "sent_date": "2026-08-18T08:20:05.968+00:00",
+      "own": "<daef2996-f954-48dd-2973-f5472e861460@owocni.pl>",
+      "parent": "<7f0de241d8d30d304d484a8151110fce@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "96136dbc-25b3-4d46-a335-be5001987ab0",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 61816
+    },
+    {
+      "bb_id": 2056446,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona typu katalog dla Pani Weroniki",
+      "sent_date": "2026-08-17T14:36:42.253+00:00",
+      "own": "<21dab91a-273e-1dd9-6922-27212d5cd44b@owocni.pl>",
+      "parent": "<4e126ec68bd44a9c466680467d474ff7@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "e906100a-b598-4914-94ae-ad50e54fc721",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 44236
+    },
+    {
+      "bb_id": 2056445,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pani Eweliny:",
+      "sent_date": "2026-08-17T14:28:16.091+00:00",
+      "own": "<f911e86f-c6f1-06ad-63e2-a2a13720299e@owocni.pl>",
+      "parent": "<3d958bfe919ca418c2816fb0e7abc954@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "ac840d09-13dc-49e3-8c30-ec94f2b37a8b",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 61763
+    },
+    {
+      "bb_id": 2056444,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja z owocnym ekspertem:",
+      "sent_date": "2026-08-17T14:14:08.006+00:00",
+      "own": "<5a61f32f-1534-a118-f270-02602381a652@owocni.pl>",
+      "parent": "<65fe405af225d87a5b9211cbfda5970b@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "a20684d4-06f7-4739-a5d2-1b00a20f3566",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 6311
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2056660,
+      "inbox": "marta@owocni.pl",
+      "subject": "Odp: Strona internetowa dla Pani Eweliny - opcja 3",
+      "sent_date": "2026-08-20T08:07:14.619+00:00",
+      "own": "<8c862bf7-fc27-a39b-0c06-27c65a387188@owocni.pl>",
+      "parent": "<aa41c72a-54f8-cfe2-e79b-0d11afed1ffa@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056658,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pani Anny:",
+      "sent_date": "2026-08-20T07:55:58.867+00:00",
+      "own": "<d9dfa379-012b-e9b3-f184-65ac929506da@owocni.pl>",
+      "parent": "<4dcdb181ab2065126830aca594ec858f@form.owocni.pl>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056657,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa dla Pani Anny:",
+      "sent_date": "2026-08-20T07:54:10.083+00:00",
+      "own": "<51bddd5d-30ec-83bc-537d-a51add40ac5c@owocni.pl>",
+      "parent": "<ba6781aa-57a6-e809-c4b1-e9f10e9b856b@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056656,
+      "inbox": "marta@owocni.pl",
+      "subject": "Konsultacja dotycząca nowej strony JP Group",
+      "sent_date": "2026-08-20T07:52:31.48+00:00",
+      "own": "<9cd58dab-5fec-9e16-b09b-c19a6930eb0b@owocni.pl>",
+      "parent": "<988c7aaceab4d607543fc310bfde1357@form.owocni.pl>",
+      "status": "skip_on_imap",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056652,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Przebudowa strony spreek.pl",
+      "sent_date": "2026-08-20T07:28:50.15+00:00",
+      "own": "<c938068d-1be0-3df2-4864-7eb0a7955e50@owocni.pl>",
+      "parent": "<CAH9jsK-tiA_bKnKC2YPtfobe3n2ECGhgae1qWuyvAOzAVYWf_g@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056614,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Draft umowy:",
+      "sent_date": "2026-08-19T18:24:49.261+00:00",
+      "own": "<b5076122-a07f-234c-7303-05ed116f4daf@owocni.pl>",
+      "parent": "<f7f5e4b8-7156-5164-f7f4-683d4109f59d@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056613,
+      "inbox": "marta@owocni.pl",
+      "subject": "Uruchomienie prac przy logo:",
+      "sent_date": "2026-08-19T18:21:40.6+00:00",
+      "own": "<00446034-cdea-0db2-f7d1-c4928a5f6d5f@owocni.pl>",
+      "parent": "<6aec8910-3c10-81ba-2925-b5ded07d52b8@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056612,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Konsultacja dotycząca nowej strony Kosmicznego Rancza",
+      "sent_date": "2026-08-19T18:05:12.887+00:00",
+      "own": "<78f4858a-2eed-a2b7-4bea-1765d590c978@owocni.pl>",
+      "parent": "<ed705e9b-b0d1-4b96-bf6e-d703125aab5d@kosmiczneranczo.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056610,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Zapytanie",
+      "sent_date": "2026-08-19T17:59:59.774+00:00",
+      "own": "<0a72709a-63e7-f4eb-e7f2-d6bb288ecc19@owocni.pl>",
+      "parent": "<10F16E00-F8A7-4384-B8AD-62ABED2FC159@rk9.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056567,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona typu katalog:",
+      "sent_date": "2026-08-19T08:03:38.049+00:00",
+      "own": "<7181f979-4bf9-8d53-ed58-869e533cdff6@owocni.pl>",
+      "parent": "<5081963a-afee-307d-1a3c-28e3c5405db7@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056563,
+      "inbox": "marta@owocni.pl",
+      "subject": "Owocna nazwa i logo:",
+      "sent_date": "2026-08-19T07:47:01.768+00:00",
+      "own": "<5081963a-afee-307d-1a3c-28e3c5405db7@owocni.pl>",
+      "parent": "",
+      "status": "skip_no_parent",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056553,
+      "inbox": "marta@owocni.pl",
+      "subject": "Strona internetowa",
+      "sent_date": "2026-08-19T06:52:39.596+00:00",
+      "own": "<196ed200-1b2a-6dde-43c8-9b4b5778f59a@owocni.pl>",
+      "parent": "<5c3580fb-d480-f4f3-36a7-ef4986b89fcf@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056510,
+      "inbox": "marta@owocni.pl",
+      "subject": "Draft umowy",
+      "sent_date": "2026-08-18T11:13:58.192+00:00",
+      "own": "<db023dab-c33f-b0d6-596d-644c04a7a6d8@owocni.pl>",
+      "parent": "<e2fa5293-b048-6f23-4022-c1118d68a445@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056506,
+      "inbox": "marta@owocni.pl",
+      "subject": "Odp: Strona internetowa dla Pani Eweliny:",
+      "sent_date": "2026-08-18T09:36:22.62+00:00",
+      "own": "<aa41c72a-54f8-cfe2-e79b-0d11afed1ffa@owocni.pl>",
+      "parent": "<221dba886dd54f7c81210282b2d1f8c2@grupawp.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056491,
+      "inbox": "marta@owocni.pl",
+      "subject": "Logo dla Pani Pauliny:",
+      "sent_date": "2026-08-18T08:24:20.241+00:00",
+      "own": "<4cc568e2-0925-c7eb-7b0f-8eb86614bfe3@owocni.pl>",
+      "parent": "<a2690936-d1c3-b63b-1043-11db5a789665@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056490,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Prośba o ofertę na wykonanie strony www",
+      "sent_date": "2026-08-18T08:22:42.101+00:00",
+      "own": "<5d6e2772-789d-f074-930c-b010eb55c3f1@owocni.pl>",
+      "parent": "<9b74906c-c0be-4a37-9980-209265cda374@aero-bw.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056481,
+      "inbox": "marta@owocni.pl",
+      "subject": "Odp: Strona internetowa dla Pani Eweliny:",
+      "sent_date": "2026-08-18T07:30:44.729+00:00",
+      "own": "<568ba58c-9b44-9783-bac2-be1d5902679e@owocni.pl>",
+      "parent": "<8b51ca9bd06f404a93950850f44e5f95@grupawp.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056443,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Karoliny:",
+      "sent_date": "2026-08-17T13:32:23.765+00:00",
+      "own": "<298ba28a-08ef-8af9-8f78-50af9eaa387a@owocni.pl>",
+      "parent": "<CAA_HKxBtzugBV96EDZ_ysiC8YLXTtkjtwhDfRpiBCM7W=e7JzA@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056441,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Projekt logo dla Pani Karoliny:",
+      "sent_date": "2026-08-17T12:32:55.555+00:00",
+      "own": "<02c6e850-33e2-eddc-ee1c-86f9e482d75c@owocni.pl>",
+      "parent": "<CAA_HKxBP5mjmSTyLB-WSGsaJP=ZvdVm=i1T5oUU4qC9zLORZ5w@mail.gmail.com>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056438,
+      "inbox": "marta@owocni.pl",
+      "subject": "Re: Konsultacja dotycząca strony Twinpigs Areny - jutro 13:00",
+      "sent_date": "2026-08-17T12:28:50.874+00:00",
+      "own": "<90d64683-267c-c4a9-489d-1c97fa819e8e@owocni.pl>",
+      "parent": "<472869927.1558727.1786950721309@poczta.home.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}

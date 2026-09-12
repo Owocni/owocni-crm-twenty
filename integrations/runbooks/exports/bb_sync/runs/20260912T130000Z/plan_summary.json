@@ -1,0 +1,10 @@
+{
+  "plannedAt": "2026-09-12T13:03:44.917699+00:00",
+  "total": 657,
+  "patch": 447,
+  "create": 205,
+  "review": 5,
+  "review_reasons": {
+    "person_ambiguous": 5
+  }
+}

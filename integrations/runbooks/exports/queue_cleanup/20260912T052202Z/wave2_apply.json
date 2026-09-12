@@ -1,0 +1,97 @@
+{
+  "n": 7,
+  "ok": 7,
+  "rows": [
+    {
+      "id": "0b16e0f4-eb29-4047-b630-47a5b88eea49",
+      "name": "igaizabelajanik@gmail.com · Strona",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "30182a91-49e9-4da2-b183-112ea55c05ce",
+      "name": "przyciemnianie.szyb@op.pl · Logo",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "50e64236-cbd6-452b-836c-db21b991285f",
+      "name": "audiaudi300ps@gmail.com · Strona",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "93f36c32-e55d-4516-a755-f5444c5a16fe",
+      "name": "bedzikowski96@gmail.com · Strona",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "94afd866-0b94-4ef7-b2c1-5555e2987ff4",
+      "name": "agnieszkaswit7@gmail.com · Strona",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "b0491b0a-4961-4460-b414-6e741f80eea0",
+      "name": "majapochylska96@gmail.com · Strona",
+      "ownerSlug": "gosia",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "9c8003c9-c9cb-4849-9852-ef2dd16c76db",
+      "name": "ciesielskip@gmail.com · INNE",
+      "ownerSlug": "marta",
+      "http": 200,
+      "ok": true,
+      "before": {
+        "isFollowUp": true
+      },
+      "rollback": {
+        "isFollowUp": true
+      }
+    }
+  ]
+}

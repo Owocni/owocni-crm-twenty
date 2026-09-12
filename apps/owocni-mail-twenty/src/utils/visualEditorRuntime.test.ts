@@ -28,6 +28,54 @@ describe('buildVisualEditorSrcDoc', () => {
     expect(html).toContain("event.preventDefault()");
     expect(html).toContain('<p>cześć</p>');
     expect(html).toContain('contenteditable="true"');
+    expect(html).toContain('owocni-mail-flush-result');
+    expect(html).toContain('owocni-mail-html-changed');
+    expect(html).toContain('parent.postMessage');
+    expect(html).toContain('placeCaretInReply');
+    expect(html).not.toContain('id="owocni-v2-send"');
+    expect(html).not.toContain('id="owocni-v2-to"');
+  });
+
+  it('bakes composer v2 send controls into the same editor document', () => {
+    const html = buildVisualEditorSrcDoc({
+      bodyHtml: '<p>cześć</p>',
+      sessionId: 'sess',
+      draftSaveUrl: 'https://example.com/s/mail/editor-draft',
+      accessToken: 'tok',
+      composerV2: {
+        sendUrl: 'https://example.com/s/mail/send-template',
+        sessionRefreshUrl: 'https://example.com/s/mail/refresh-composer-session',
+        sessionTicket: 'a'.repeat(64),
+        uploadUrl: 'https://example.com/s/mail/upload-attachment',
+        envelope: { to: 'test9959058@fastman.eu', subject: 'Test' },
+      },
+    });
+
+    expect(html).toContain('id="owocni-v2-send"');
+    expect(html).toContain('Wyślij email');
+    expect(html).toContain('composerV2: true');
+    expect(html).toContain('test9959058@fastman.eu');
+    expect(html).toContain('/s/mail/send-template');
+    expect(html).toContain('v2envelope:');
+    expect(html).toContain('editorSessionId');
+    expect(html).toContain('/s/mail/refresh-composer-session');
+    expect(html).toContain('action: \'pull\'');
+    expect(html).toContain('a'.repeat(64));
+    expect(html).toContain('Możesz pisać');
+    expect(html).toContain('attemptId: v2AttemptId');
+    expect(html).toContain('bodyHash: v2Hash(html)');
+    expect(html).toContain('htmlBodyBase64: toBase64(html)');
+    expect(html).toContain('id="owocni-v2-to"');
+    expect(html).toContain('id="owocni-v2-to-row"');
+    expect(html).toContain('id="owocni-v2-cc-toggle"');
+    expect(html).toContain('id="owocni-v2-bcc-toggle"');
+    expect(html).not.toContain('id="owocni-v2-copies"');
+    expect(html).toContain('label[hidden] { display: none !important; }');
+    expect(html).toContain('id="owocni-v2-subject"');
+    expect(html).toContain('id="owocni-v2-file"');
+    expect(html).toContain('test9959058@fastman.eu');
+    expect(html).toContain('/s/mail/upload-attachment');
+    expect(html).not.toContain('/mail/editor-frame');
   });
 
   it('dual-writes typed HTML to the durable compose key', () => {

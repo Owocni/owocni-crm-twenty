@@ -1,0 +1,272 @@
+{
+  "note": "Nie tworzymy kart — weekend bez create. Brak otwartego matcha w Twenty (holding+3 ownerów+Person).",
+  "count": 37,
+  "by_stage": {
+    "pays": 2,
+    "lead_lost": 14,
+    "lead_won": 11,
+    "negotiations": 3,
+    "inquiry": 7
+  },
+  "leads": [
+    {
+      "bb_id": "8424",
+      "bb_stage": "pays",
+      "owner": "Marta",
+      "emails": "zuzanna.kucharska@comekoprojekt.pl",
+      "title": "Strona Internetowa: Rebranding B2B dla Comeko Projekt"
+    },
+    {
+      "bb_id": "6155",
+      "bb_stage": "lead_lost",
+      "owner": "Maciej",
+      "emails": "panporzadek@gmail.com",
+      "title": "Copywriting dla Branży Porządkowej - Zapytanie"
+    },
+    {
+      "bb_id": "6157",
+      "bb_stage": "lead_lost",
+      "owner": "Maciej",
+      "emails": "projektwysocki@wp.pl",
+      "title": "Copywriting dla Branży Marketingowej - Zapytanie"
+    },
+    {
+      "bb_id": "9161",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "pablo91bialek@gmail.com",
+      "title": "Strona Wizytówka: Modernizacja dla Terapeuty Masażu"
+    },
+    {
+      "bb_id": "33783",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "artur.lignarski@gmail.com",
+      "title": "Re: Animacja logo:"
+    },
+    {
+      "bb_id": "9242",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "kasia@mccloskeystudio.com",
+      "title": "Strona: Zmiana dla Architektonicznego Portfolio"
+    },
+    {
+      "bb_id": "9342",
+      "bb_stage": "negotiations",
+      "owner": "Marta",
+      "emails": "mateusz@europlyta.com.pl",
+      "title": "Do Ewy: Mateusz Paszkowski Europłyta"
+    },
+    {
+      "bb_id": "5066",
+      "bb_stage": "negotiations",
+      "owner": "Gosia",
+      "emails": "wludarskikrzysztof@gmail.com",
+      "title": "Strona internetowa dla firmy placów zabaw"
+    },
+    {
+      "bb_id": "9339",
+      "bb_stage": "inquiry",
+      "owner": "Gosia",
+      "emails": "biuro@biurorachunkowe451.pl",
+      "title": "Wycena strony z kalkulatorem cen dla biura rachunkowego online"
+    },
+    {
+      "bb_id": "9340",
+      "bb_stage": "inquiry",
+      "owner": "Marta",
+      "emails": "ania.burkiewicz@gmail.com",
+      "title": "Zapytanie ofertowe: identyfikacja wizualna i strona internetowa,"
+    },
+    {
+      "bb_id": "8974",
+      "bb_stage": "lead_won",
+      "owner": "Gosia",
+      "emails": "gracek123_2001@o2.pl",
+      "title": "Logo dla Nowej Firmy Budowlanej"
+    },
+    {
+      "bb_id": "9337",
+      "bb_stage": "inquiry",
+      "owner": "Gosia",
+      "emails": "anunakissss666@gmail.com",
+      "title": "Strona Wizytówka dla Branży Magicznej"
+    },
+    {
+      "bb_id": "9159",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "justyna.gniadek@yahoo.com",
+      "title": "Nazwa dla Nowej Marki w Branży HR i Terapii"
+    },
+    {
+      "bb_id": "8908",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "celsko@interia.pl",
+      "title": "Logo dla Autokosmetyki - Nowa Marka w Siedlcach"
+    },
+    {
+      "bb_id": "6511",
+      "bb_stage": "pays",
+      "owner": "Gosia",
+      "emails": "agnieszkawojcik.80@wp.pl",
+      "title": "Nazwa dla Outsourcingu Kadrowo-Płacowego w HR"
+    },
+    {
+      "bb_id": "5527",
+      "bb_stage": "inquiry",
+      "owner": "Maciej",
+      "emails": "maciej@owocni.pl",
+      "title": "Copywriting: Tworzenie Nazw dla Branży Marketingowej"
+    },
+    {
+      "bb_id": "9301",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "booking@coreomusic.com",
+      "title": "Nowe logo CINEMA WORLD 360"
+    },
+    {
+      "bb_id": "6704",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "jakubbojanczyk@gmail.com",
+      "title": "Strona Internetowa dla Chirurga Barku - Wizytówka i Informacje"
+    },
+    {
+      "bb_id": "9077",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "biuro@mrcredo.pl",
+      "title": "Nazwa i logo dla Pana Roberta:"
+    },
+    {
+      "bb_id": "9309",
+      "bb_stage": "inquiry",
+      "owner": "Gosia",
+      "emails": "k.bielarczyk@siltagroup.pl",
+      "title": "Social Media Promocja dla Firmy Budowlanej"
+    },
+    {
+      "bb_id": "9245",
+      "bb_stage": "negotiations",
+      "owner": "Maciej",
+      "emails": "p.radkowska@poczta.fm",
+      "title": "Tytuł tomu wierszy i fraszek (Marta)"
+    },
+    {
+      "bb_id": "9307",
+      "bb_stage": "lead_won",
+      "owner": "Maciej",
+      "emails": "piotr.orzel.ortodoncja@gmail.com",
+      "title": "Nazwa dla Nowej Marki Ortodontycznej"
+    },
+    {
+      "bb_id": "8927",
+      "bb_stage": "lead_won",
+      "owner": "Gosia",
+      "emails": "sagitamark@gmail.com",
+      "title": "Nazwa dla Nowej Marki Kosmetycznej"
+    },
+    {
+      "bb_id": "8381",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "s.paulinaa@gmail.com",
+      "title": "Logo dla FizjoBambino: Rozwój Biznesu Fizjoterapii Dziecięcej"
+    },
+    {
+      "bb_id": "9181",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "mariusz.bulka@icloud.com",
+      "title": "Strona Internetowa i Marka dla Nowej Firmy"
+    },
+    {
+      "bb_id": "9297",
+      "bb_stage": "inquiry",
+      "owner": "Gosia",
+      "emails": "h.melotto@melottogroup.com",
+      "title": "Copywriting: Oferta Freelance dla Branży Owocowej"
+    },
+    {
+      "bb_id": "9296",
+      "bb_stage": "inquiry",
+      "owner": "Gosia",
+      "emails": "bbarber@referral-station.com",
+      "title": "Marketing: Pozyskiwanie Klientów dla Branży ROI"
+    },
+    {
+      "bb_id": "9235",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "mbrzozowiec@gmail.com",
+      "title": "Strona Wizytówka dla Nowej Firmy E-commerce"
+    },
+    {
+      "bb_id": "9115",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "hanna.goldyn@gmail.com",
+      "title": "Logo dla Centrum Zdrowia - Nowa Marka"
+    },
+    {
+      "bb_id": "8127",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "pawel.janczyk@mv-center.com;kinga.mieruszynska@exactforestall.com",
+      "title": "Do Ewy: Strona: Modernizacja dla Integracji Systemów Wizyjnych B2B"
+    },
+    {
+      "bb_id": "9272",
+      "bb_stage": "lead_lost",
+      "owner": "Gosia",
+      "emails": "brownie.elblag@gmail.com",
+      "title": "Strona Wizytówka dla Kawiarnio-Cukierni z Zamówieniami Online"
+    },
+    {
+      "bb_id": "9196",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "fradziula@gmail.com",
+      "title": "Strona Wizytówka dla Korepetycji Matematycznych Online"
+    },
+    {
+      "bb_id": "9208",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "ewla1231@o2.pl",
+      "title": "Strona Wizytówka dla Gabinetu Terapii Dziecięcej"
+    },
+    {
+      "bb_id": "9189",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "a.bacanska@highline.com.pl",
+      "title": "Strona Internetowa dla B2B Ekspertów Dotacji"
+    },
+    {
+      "bb_id": "9139",
+      "bb_stage": "lead_won",
+      "owner": "Maciej",
+      "emails": "malgorzata.lato@gmail.com",
+      "title": "Nazwa: Nowa Marka Biura Tłumaczeń"
+    },
+    {
+      "bb_id": "8413",
+      "bb_stage": "lead_won",
+      "owner": "Marta",
+      "emails": "gorzech@o2.pl;soja5@autograf.pl",
+      "title": "Nazwa: Tworzenie Nazwy dla Firmy Meblarskiej (Marta)"
+    },
+    {
+      "bb_id": "9094",
+      "bb_stage": "lead_lost",
+      "owner": "Marta",
+      "emails": "maja.wysinska@partner-nieruchomosci.pl",
+      "title": "Strona Internetowa: Nowoczesna Witryna dla Biura Nieruchomości"
+    }
+  ]
+}

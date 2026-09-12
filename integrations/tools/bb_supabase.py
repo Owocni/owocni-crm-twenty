@@ -86,7 +86,12 @@ def fetch_bb_leads(
     exclude_stages: frozenset[str] | None = DEFAULT_PIPELINE_EXCLUDE,
     include_closed: bool = False,
 ) -> list[dict]:
-    """Active pipeline leads from leads_extended_materialized."""
+    """Active pipeline leads from leads_extended_view.
+
+    Use the live view, not leads_extended_materialized: the MV lags new
+    form leads (e.g. 9388/9389 on 2026-09-12), so flag sync treated them
+    as Sortownia-without-BB and cleared isFollowUp.
+    """
     load_bb_env()
     owner_ids = owner_ids or list(OWNER_TWENTY.keys())
     ids = ",".join(str(i) for i in owner_ids)
@@ -110,7 +115,7 @@ def fetch_bb_leads(
         since = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S")
         params["last_modified_at"] = f"gte.{since}"
 
-    rows = bb_get("leads_extended_materialized", params=params)
+    rows = bb_get("leads_extended_view", params=params)
     if exclude_stages:
         rows = [r for r in rows if (r.get("stage_name") or "") not in exclude_stages]
     for r in rows:

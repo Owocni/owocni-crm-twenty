@@ -1,0 +1,835 @@
+{
+  "mailbox": "copywriting@owocni.pl",
+  "folder": "BB Archive",
+  "bb_offset": 0,
+  "bb_limit": 200,
+  "rows": 69,
+  "scanned": 69,
+  "hit_limit": false,
+  "window_done": true,
+  "append_fail": false,
+  "skip_counts": {
+    "skip_in_twenty": 19,
+    "skip_parent_not_in_twenty": 11
+  },
+  "appended": [
+    {
+      "bb_id": 2057865,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Tytuł —",
+      "sent_date": "2026-09-04T12:46:30.273+00:00",
+      "own": "<10e69e36-b90f-0629-b13d-21ea353d3c42@owocni.pl>",
+      "parent": "<nixeaepyiawpbyqozzng@cast>",
+      "status": "appended",
+      "parent_thread": "88d48cd3-f0cb-4d51-b617-4ef5e5c11b9b",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 5725
+    },
+    {
+      "bb_id": 2057862,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Tytuł —",
+      "sent_date": "2026-09-04T12:05:08.596+00:00",
+      "own": "<bfc830b7-857c-6efd-a82d-2a8f6544914c@owocni.pl>",
+      "parent": "<qeoixmitzjdpiinuhyay@naar>",
+      "status": "appended",
+      "parent_thread": "35e853a5-cd80-4b14-b75f-fa42460c3459",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 9171
+    },
+    {
+      "bb_id": 2057847,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-04T10:30:22.684+00:00",
+      "own": "<dfc83c21-6fd8-1291-e14c-1f8bb21f75c5@owocni.pl>",
+      "parent": "<272c4b60a741411abf7600834257b3d2@grupawp.pl>",
+      "status": "appended",
+      "parent_thread": "1d7bed3f-043d-4112-9c1d-a54d4d18bb14",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 4317
+    },
+    {
+      "bb_id": 2057835,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-04T09:26:06.099+00:00",
+      "own": "<69233324-0fff-b5de-7c03-674d6c9760b5@owocni.pl>",
+      "parent": "<a502fdb424934e739fc511f1556bb358@grupawp.pl>",
+      "status": "appended",
+      "parent_thread": "1d7bed3f-043d-4112-9c1d-a54d4d18bb14",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 4226
+    },
+    {
+      "bb_id": 2057830,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Tytuł —",
+      "sent_date": "2026-09-04T09:00:40.398+00:00",
+      "own": "<11916b9d-d667-4c60-84ae-d47b79bd66a1@owocni.pl>",
+      "parent": "<ectqvxxnyxnubpudywjj@wljm>",
+      "status": "appended",
+      "parent_thread": "12a94618-ecd8-4beb-82c5-1a45fc273d02",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 5205
+    },
+    {
+      "bb_id": 2057810,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Stała współpraca, nowa nazwa —",
+      "sent_date": "2026-09-04T06:09:44.684+00:00",
+      "own": "<3d29a20c-0e79-78a0-3aef-341c74f2c424@owocni.pl>",
+      "parent": "<0ea9006c48530c235672da181697fb4f@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "8b50db4e-f0e5-4aee-b13d-6d5d17b0ca36",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79551
+    },
+    {
+      "bb_id": 2057808,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-04T05:51:37.44+00:00",
+      "own": "<26065045-c604-609a-a976-03ffae2774e8@owocni.pl>",
+      "parent": "<15c248aa-9082-8dca-9a2a-a72ce4880bbe@owocni.pl>",
+      "status": "appended",
+      "parent_thread": "8aee82ad-6f34-4ac6-91bc-7d2771b1dfa2",
+      "parent_mailboxes": [
+        "COPYWRITING"
+      ],
+      "folder": "BB Archive",
+      "bytes": 4270
+    },
+    {
+      "bb_id": 2057674,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa PL i UK:",
+      "sent_date": "2026-09-02T13:33:33.74+00:00",
+      "own": "<f6529cb6-1e57-34cd-9262-d89c7f772459@owocni.pl>",
+      "parent": "<1f74a844d7fe48d438bed446caa7340f@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "fc5d4d0c-b9eb-44eb-8713-e256d2885419",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79177
+    },
+    {
+      "bb_id": 2057632,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Dobra nazwa —",
+      "sent_date": "2026-09-02T06:47:15.921+00:00",
+      "own": "<23b15582-d1d6-aa88-84fd-eff2fedcbc6d@owocni.pl>",
+      "parent": "<1c279a27a431809a6b4b11d28bacfcec@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "f5745e8a-f84a-4848-b5d6-de2190e7e90e",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79059
+    },
+    {
+      "bb_id": 2057019,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa drukarni i nie tylko — plan:",
+      "sent_date": "2026-08-26T09:55:18.152+00:00",
+      "own": "<da1a2f36-f335-7f01-8cbe-b3abbe58462d@owocni.pl>",
+      "parent": "<b5a2a395ff890dd8a104905f6ffcbeee@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "b679e5b3-b520-4297-b3fa-b5bbc281640f",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79082
+    },
+    {
+      "bb_id": 2057018,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla zaawansowanego wellness — plan:",
+      "sent_date": "2026-08-26T09:52:12.614+00:00",
+      "own": "<3d10ed83-c1b6-9f1b-1588-15ddf54ee43e@owocni.pl>",
+      "parent": "<6e8cc6f3623790d355d51a2ceb2564f7@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "4c938eca-9b94-42a1-9893-5c23a64c12cd",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79624
+    },
+    {
+      "bb_id": 2056954,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Tak możemy zaprojektować tę nazwę:",
+      "sent_date": "2026-08-25T10:32:14.611+00:00",
+      "own": "<ad9646c5-6c16-5f01-e2f6-ba9719641816@owocni.pl>",
+      "parent": "<89fd1b46cb02bcb17f46a3ea1895822a@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "57eb0571-d99d-48cc-bfa0-d1e0387134db",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79322
+    },
+    {
+      "bb_id": 2056953,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa furry —",
+      "sent_date": "2026-08-25T10:26:22.63+00:00",
+      "own": "<8c7b9e1a-931c-e5fb-f51a-2de6122ad569@owocni.pl>",
+      "parent": "<5c783196bb32e8edd181b2af3fa6b76e@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "8211071a-06ef-4c3e-babc-74c0e1165870",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78772
+    },
+    {
+      "bb_id": 2056952,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Topowa nazwa —",
+      "sent_date": "2026-08-25T10:23:39.265+00:00",
+      "own": "<b77fad3d-aa8d-28e2-a718-adb4e420b2e5@owocni.pl>",
+      "parent": "<86c35010b40d41816feb0bbe3034e7da@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "3d0ba3fe-acc3-4a1c-bce5-2ba3107b386a",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79206
+    },
+    {
+      "bb_id": 2056920,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-08-25T06:09:52.981+00:00",
+      "own": "<63a83d32-2b33-f5c7-9d3e-5df1cb1b9234@owocni.pl>",
+      "parent": "<34d456f193060327d6b27af01d332904@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "c73534ab-edea-4962-8cab-aec0ffbd3c0f",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 82525
+    },
+    {
+      "bb_id": 2056918,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Fwd: Tytuł —",
+      "sent_date": "2026-08-25T05:57:15.919+00:00",
+      "own": "<25cbcb31-397d-e7df-5f1d-96a22c35f1bb@owocni.pl>",
+      "parent": "<fuiuqxwfyjewfsuezoco@sigp>",
+      "status": "appended",
+      "parent_thread": "38734728-512e-44d0-83ff-a8acdc83b763",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 5258
+    },
+    {
+      "bb_id": 2056851,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Tytuł —",
+      "sent_date": "2026-08-24T11:25:06.797+00:00",
+      "own": "<c4c70444-64c3-ea54-09d0-691355116b3a@owocni.pl>",
+      "parent": "<pgjptjgsubuysayuozkp@vfxz>",
+      "status": "appended",
+      "parent_thread": "0ca1b7c8-10b0-4866-95df-7951f06fd15a",
+      "parent_mailboxes": [
+        "STUDIO"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 60727
+    },
+    {
+      "bb_id": 2056850,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa — plan i oferta (polerowanie pojazdów):",
+      "sent_date": "2026-08-24T11:17:41.49+00:00",
+      "own": "<c0d4b20f-c652-df5f-ddde-1e9c4dd926a2@owocni.pl>",
+      "parent": "<1e614a1e1b4637e9095ec8907cb85de7@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "b443eee9-f433-48e0-bdf8-3fb19357cfe2",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79716
+    },
+    {
+      "bb_id": 2056848,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa — plan i oferta (porządki mulczerem):",
+      "sent_date": "2026-08-24T11:05:53.34+00:00",
+      "own": "<79218dcd-5350-e39a-bdaf-24274aa65613@owocni.pl>",
+      "parent": "<6bf09bae74d18a14cc3eab94e9252934@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "c9d6f08c-0ffb-42b8-89a7-38214fba1981",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79579
+    },
+    {
+      "bb_id": 2056847,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa elewacje — plan i oferta:",
+      "sent_date": "2026-08-24T10:56:52.431+00:00",
+      "own": "<b3836592-ed52-510a-dbe0-1c4370ba7119@owocni.pl>",
+      "parent": "<8e20e12a4d8ce304d320f05449d2710e@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "ade9b713-b82d-440b-92e8-87d176153287",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79143
+    },
+    {
+      "bb_id": 2056759,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Fwd: Nazwa nie wymagająca tłumaczenia:",
+      "sent_date": "2026-08-21T10:42:20.852+00:00",
+      "own": "<b34a7b9a-9c85-1e2b-40b3-698178f1d7b9@owocni.pl>",
+      "parent": "<CAA7Ey8bS3hqMrzW06GCFbCoN=yVGHZdESnLu8zfNBknFXGiVdA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "490e6558-62ff-431a-829f-486e193ff93f",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 6682
+    },
+    {
+      "bb_id": 2056698,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa dobrze zaplanowana —",
+      "sent_date": "2026-08-20T11:50:24.054+00:00",
+      "own": "<f15ad311-2ea6-9ef4-f09d-61f18715be8a@owocni.pl>",
+      "parent": "<CAKWKRqnt11Rh-k_V=u+mcCTEb1Z+-Jkb1WJ0atRiK5zyf2torw@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "2343bced-0a4b-4e94-926a-0ab51f4e1ce4",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 5877
+    },
+    {
+      "bb_id": 2056691,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Teksty po nazwie —",
+      "sent_date": "2026-08-20T11:33:59.185+00:00",
+      "own": "<b836ae3b-e600-1f25-ee8f-88530d16799f@owocni.pl>",
+      "parent": "<d5ba050079b87d51e19091e1da49ee7f@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "3e53b385-397b-4dc1-afe2-9eaccdb8fc6b",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 7079
+    },
+    {
+      "bb_id": 2056688,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dobrze zaplanowana —",
+      "sent_date": "2026-08-20T11:27:18.901+00:00",
+      "own": "<5f60d3a1-46e5-a761-3ca0-7ec315c352c5@owocni.pl>",
+      "parent": "<55727107ea2c35ff75c33e998f27249b@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "58ff3571-ed6e-4eb1-aeca-c5aa834d8e8e",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79113
+    },
+    {
+      "bb_id": 2056586,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa nie wymagająca tłumaczenia:",
+      "sent_date": "2026-08-19T10:42:45.608+00:00",
+      "own": "<9239ee5d-5055-941d-751f-33d025e94812@owocni.pl>",
+      "parent": "<CAA7Ey8aebH-wqT9HmqDtqt_77YT8ddF5g9NMfrEaQ=QWt-_5sQ@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "490e6558-62ff-431a-829f-486e193ff93f",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 6441
+    },
+    {
+      "bb_id": 2056582,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa nie wymagająca tłumaczenia:",
+      "sent_date": "2026-08-19T10:24:14.277+00:00",
+      "own": "<6e498f01-f5f5-5e96-86a7-313d6d6e4c74@owocni.pl>",
+      "parent": "<CAA7Ey8ZchA-YAJha88ZA9KwB0KUvE_3jxpwNQvGzPUG6psfrrw@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "490e6558-62ff-431a-829f-486e193ff93f",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 6189
+    },
+    {
+      "bb_id": 2056578,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Owocna oferta handlowa dla Haba —",
+      "sent_date": "2026-08-19T09:51:52.783+00:00",
+      "own": "<f0048d9e-9182-80b3-1c9f-5393c5cc7ecb@owocni.pl>",
+      "parent": "<CAMS=j19haqNMwPwMZ-12oOMrs6vw1R1-kH2cTRTnWkK8st=DaA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "cea824a8-6f6a-458e-a7ef-438ef9115c1d",
+      "parent_mailboxes": [
+        "STUDIO"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 61655
+    },
+    {
+      "bb_id": 2056432,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa z branży produktów cyfrowych — skuteczna i bezpieczna:",
+      "sent_date": "2026-08-17T11:40:26.662+00:00",
+      "own": "<e0b6ce78-e7a4-8f9e-a80a-676c523d4987@owocni.pl>",
+      "parent": "<3dd7a65cafde9a1e2d276a0cf0a3c869@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "c501bba1-c945-4d6a-b126-d0f024448358",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 79444
+    },
+    {
+      "bb_id": 2056431,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa sklepu — skuteczna i bezpieczna:",
+      "sent_date": "2026-08-17T11:36:57.95+00:00",
+      "own": "<b86f620f-9c85-e588-313f-9f5fcba6812b@owocni.pl>",
+      "parent": "<825009df69e8640c5ae5896c0bd20e6c@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "082787ce-84fe-46a2-ae53-d6075abab6ba",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78863
+    },
+    {
+      "bb_id": 2056429,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Projekt nazwy marki — oferta i plan:",
+      "sent_date": "2026-08-17T11:02:11.531+00:00",
+      "own": "<e3f01566-2ba7-7b0d-7bb9-59ca82f7c166@owocni.pl>",
+      "parent": "<CAHuj0uFxxD4-JyknyAvfzxOy6gAWUrWPoV2hPPaLr6oaFTueDA@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "27f4fd03-06f4-436b-8b8b-f55ef5acf481",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 7243
+    },
+    {
+      "bb_id": 2056421,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Projekt nazwy marki — oferta i plan:",
+      "sent_date": "2026-08-17T09:51:49.714+00:00",
+      "own": "<6d870236-eba7-4404-6f48-5d3b2b39d321@owocni.pl>",
+      "parent": "<CAHuj0uEWxppsnRvFXMjY5iRdr_gMJLUAKXhTcaEhzjj8rQhd4Q@mail.gmail.com>",
+      "status": "appended",
+      "parent_thread": "27f4fd03-06f4-436b-8b8b-f55ef5acf481",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 59773
+    },
+    {
+      "bb_id": 2055771,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Narodziny nazwy :)",
+      "sent_date": "2026-08-10T06:44:27.889+00:00",
+      "own": "<caf9afc2-e6a0-9b0e-0720-da801e59f0e1@owocni.pl>",
+      "parent": "<99ae2399a38c725d160d30ba19f22c9a@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "75f11b56-38fa-49bc-adb7-ac0a1d6f7cec",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78905
+    },
+    {
+      "bb_id": 2055769,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-10T06:36:29.551+00:00",
+      "own": "<86a76e4f-6514-2cbb-b460-2adbff3a82a9@owocni.pl>",
+      "parent": "<6a20381b-3d53-04d2-64e2-cc34cc118afa@onet.eu>",
+      "status": "appended",
+      "parent_thread": "b23af4be-c4e5-4d90-a5b9-c73f25726a89",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 4541
+    },
+    {
+      "bb_id": 2055629,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-07T08:15:22.437+00:00",
+      "own": "<482eb328-1118-a239-c4ef-a56d6255b6a7@owocni.pl>",
+      "parent": "<785b9a58-1c16-48a9-f9e7-7d078ad5c2cc@onet.eu>",
+      "status": "appended",
+      "parent_thread": "1133abbb-b8b3-4eb8-9783-3b98749a5de9",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 5010
+    },
+    {
+      "bb_id": 2055481,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Piękna nazwa na dobry start —",
+      "sent_date": "2026-08-06T09:01:16.778+00:00",
+      "own": "<9d6935ba-f935-0ca8-9f3d-8d2357906a97@owocni.pl>",
+      "parent": "<e222cca11b9c21f66be9757dde6ebd59@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "58013e34-6005-4b18-aa7e-9d1e420eb3fb",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78662
+    },
+    {
+      "bb_id": 2055476,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa nie wymagająca tłumaczenia:",
+      "sent_date": "2026-08-06T08:49:04.675+00:00",
+      "own": "<4e9be987-5dc6-f2cd-2f23-85bb62ec060b@owocni.pl>",
+      "parent": "<9080b5e40c8ed40df9ab3199b27c787f@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "7bfd1fcd-260e-4354-843f-e6d6c8c94c23",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78804
+    },
+    {
+      "bb_id": 2055268,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-03T13:25:29.989+00:00",
+      "own": "<39969681-e064-63d1-2e76-0ed4f2fd7a09@owocni.pl>",
+      "parent": "<86CB85F6-35E2-4A98-99FA-B3588B04E154@onet.eu>",
+      "status": "appended",
+      "parent_thread": "a4f976d3-b019-45f5-8035-bf53ec8628e3",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 5252
+    },
+    {
+      "bb_id": 2055247,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa 'z tym czymś' —",
+      "sent_date": "2026-08-03T10:43:53.942+00:00",
+      "own": "<2ed016b8-1e0b-cb9b-45c5-0e30b27cb96c@owocni.pl>",
+      "parent": "<c87cec91dba809c39c2a83f6937d8846@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "1ae81510-a55d-40e4-a258-398ece5d23fc",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78910
+    },
+    {
+      "bb_id": 2055246,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-03T10:34:33.54+00:00",
+      "own": "<f73782ac-1103-555d-664d-fea6225002cb@owocni.pl>",
+      "parent": "<06187136-58f4-589f-6573-56a9b9fda7a0@onet.eu>",
+      "status": "appended",
+      "parent_thread": "2ff77c43-69e5-4a2e-9edb-725f4e86fc1b",
+      "parent_mailboxes": [],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 58128
+    }
+  ],
+  "skipped_sample": [
+    {
+      "bb_id": 2057721,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Odp: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-03T09:02:58+00:00",
+      "own": "<15c248aa-9082-8dca-9a2a-a72ce4880bbe@owocni.pl>",
+      "parent": "<getresponse.xserial.s56bx7M81AU9clDmoRnFSSdArlg8FKXthBMzO5F+1umTHjODVWbBE0dHzE55MhFASNLOwUUflgShl6nBGWirtna8QJmfrmXT3JX9oa7U9ayVOO5bJT0ud/4uENDOw/+OeCUkpg4+su3sKznHm+nHVi30dASlDJTMdCsEldUaT30bkTc=@getresponse-mail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057673,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-02T12:36:18.915+00:00",
+      "own": "<ad19e4ee-c381-e64f-11f4-1ac30d8dddf0@owocni.pl>",
+      "parent": "<ce17bfaab35b4c959ae280ab1b989c98@grupawp.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057655,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-09-02T08:39:30.159+00:00",
+      "own": "<aa9645e4-2701-adb0-d4a3-b5a8577e2e86@owocni.pl>",
+      "parent": "<a0c3b562526b4c1fb2859ffa32111a4e@grupawp.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057635,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Porządna nazwa —",
+      "sent_date": "2026-09-02T07:14:16+00:00",
+      "own": "<aae5b7c4-2ff0-f78e-6494-7dcaacbf7d41@owocni.pl>",
+      "parent": "<a24b71d7-8bb3-7af7-1314-4a74cf9049af@owocni.pl>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057401,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Fwd: Tytuł —",
+      "sent_date": "2026-08-28T14:51:30.099+00:00",
+      "own": "<f81bbe54-be23-2caf-d735-5ca495f324d4@owocni.pl>",
+      "parent": "<25cbcb31-397d-e7df-5f1d-96a22c35f1bb@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057376,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa marki (rowery × PPF) — plan i oferta:",
+      "sent_date": "2026-08-28T07:37:14.768+00:00",
+      "own": "<186b7c89-cfb4-a643-fed8-fd512c299b38@owocni.pl>",
+      "parent": "<63a83d32-2b33-f5c7-9d3e-5df1cb1b9234@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057375,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Topowa nazwa —",
+      "sent_date": "2026-08-28T07:35:17.23+00:00",
+      "own": "<c1dfac98-bb4c-c465-a09e-5518d593ddba@owocni.pl>",
+      "parent": "<b77fad3d-aa8d-28e2-a718-adb4e420b2e5@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057374,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa furry —",
+      "sent_date": "2026-08-28T07:34:39.628+00:00",
+      "own": "<5bae87ae-4e4c-fe23-8510-6444c06abbef@owocni.pl>",
+      "parent": "<8c7b9e1a-931c-e5fb-f51a-2de6122ad569@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057373,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa drukarni i nie tylko — plan:",
+      "sent_date": "2026-08-28T07:34:00.024+00:00",
+      "own": "<7dcb6bda-e966-18cd-3ffa-4337437b238e@owocni.pl>",
+      "parent": "<da1a2f36-f335-7f01-8cbe-b3abbe58462d@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057278,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa dla zaawansowanego wellness — plan:",
+      "sent_date": "2026-08-27T10:01:34.866+00:00",
+      "own": "<ee015f9e-c06d-000b-d844-0b55b1d21252@owocni.pl>",
+      "parent": "<879DB758-5D07-4BC4-95EE-8FCAFE8A8F4F@gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057206,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa dla zaawansowanego wellness — plan:",
+      "sent_date": "2026-08-26T12:45:28.783+00:00",
+      "own": "<cfa2c101-fcdf-6fe0-e77b-4577a403a30c@owocni.pl>",
+      "parent": "<D2F27C84-2850-4B41-958F-F93B88D11B6E@gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2057003,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Tak możemy zaprojektować tę nazwę:",
+      "sent_date": "2026-08-26T06:46:07.151+00:00",
+      "own": "<fd41ef28-4600-bf40-03f1-77cfbf0a2542@owocni.pl>",
+      "parent": "<5FBB794F-20AA-4DC5-8EFE-7DAD47682DE1@gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056936,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Zapytanie: copywriting.pl/kontakt [Czas: 00:02:07]",
+      "sent_date": "2026-08-25T08:51:57+00:00",
+      "own": "<74eb622d-02c2-4c7a-1375-4c122f950394@owocni.pl>",
+      "parent": "<CAGKryRLDeLE2ZqN7LHE57+Wmdkbr-8k_pMNvHcS4i2H20_Gx0g@mail.gmail.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056934,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Zapytanie: copywriting.pl/kontakt [Czas: 00:02:07]",
+      "sent_date": "2026-08-25T08:38:18+00:00",
+      "own": "<2ce2a115-87ba-425a-e5ac-c773c434d003@owocni.pl>",
+      "parent": "<PA3PR09MB8208AF4536FE87791B3C96F393AF2@PA3PR09MB8208.eurprd09.prod.outlook.com>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056712,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Teksty po nazwie — a do tego logo i strona:",
+      "sent_date": "2026-08-20T14:43:21.883+00:00",
+      "own": "<0893fd9c-09c0-1024-76f2-5b965de354cf@owocni.pl>",
+      "parent": "<tigrrmpjolhoevzhnbyj@bwge>",
+      "status": "skip_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2056699,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Projekt nazwy marki — oferta i plan:",
+      "sent_date": "2026-08-20T11:51:42.231+00:00",
+      "own": "<066d88cc-7d54-72bc-5030-7cab45331afc@owocni.pl>",
+      "parent": "<e3f01566-2ba7-7b0d-7bb9-59ca82f7c166@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055532,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-06T10:18:26.128+00:00",
+      "own": "<1e7b0823-e1f1-f8f7-cab6-c76e0f8cb259@owocni.pl>",
+      "parent": "<42f3bfbb-1bf9-d43f-8ccf-02b914e8b1e3@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055345,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Czy oferta na nazwę dotarła na miejsce?",
+      "sent_date": "2026-08-04T10:31:47.59+00:00",
+      "own": "<d0d1f6b9-0161-d63a-5204-596c0ea4e5c8@owocni.pl>",
+      "parent": "<2ed016b8-1e0b-cb9b-45c5-0e30b27cb96c@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055328,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Nazwa bezpieczna —",
+      "sent_date": "2026-08-04T08:46:04.736+00:00",
+      "own": "<42f3bfbb-1bf9-d43f-8ccf-02b914e8b1e3@owocni.pl>",
+      "parent": "<39969681-e064-63d1-2e76-0ed4f2fd7a09@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    },
+    {
+      "bb_id": 2055241,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Re: Plan na nazwę znaku towarowego —",
+      "sent_date": "2026-08-03T10:21:01.05+00:00",
+      "own": "<706babf7-32fa-2ebc-5be6-3b366e3b2ff5@owocni.pl>",
+      "parent": "<c295b76d-29d4-fa92-3845-2568f7f4d3d2@owocni.pl>",
+      "status": "skip_parent_not_in_twenty",
+      "parent_thread": null,
+      "parent_mailboxes": []
+    }
+  ]
+}
