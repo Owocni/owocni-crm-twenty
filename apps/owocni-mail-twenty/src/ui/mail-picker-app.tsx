@@ -88,6 +88,7 @@ import {
   parseComposeDraft,
 } from 'src/utils/composeDraft';
 import { resolveSendSubject, toReplySubject } from 'src/utils/replySubject';
+import { isolateNewMailContext } from 'src/utils/newMailContext';
 import {
   emailsExcluding,
   formatEmailList,
@@ -111,7 +112,8 @@ export const TEMPLATE_PICKER_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER =
 export type MailPickerSurface =
   | 'command-menu'
   | 'record-page'
-  | 'mailbox-record';
+  | 'mailbox-record'
+  | 'compose';
 
 type TemplatePickerProps = {
   surface?: MailPickerSurface;
@@ -989,20 +991,28 @@ export const TemplatePicker = ({
     return [...new Set(ids.filter(Boolean))];
   }, [selectedRecordIds, executionRecordIds, executionRecordId, recordId]);
 
-  const resolvedContext = useMemo(
-    () =>
-      resolveContextRecordId(
-        executionRecordId || recordId,
-        mergedSelectedIds,
-      ),
-    [executionRecordId, recordId, mergedSelectedIds],
-  );
+  const resolvedContext = useMemo(() => {
+    const isolated = isolateNewMailContext(
+      surface,
+      recordId || executionRecordId,
+    );
+    if (isolated) {
+      return isolated;
+    }
+    return resolveContextRecordId(
+      executionRecordId || recordId,
+      mergedSelectedIds,
+    );
+  }, [surface, executionRecordId, recordId, mergedSelectedIds]);
   const contextRecordId = resolvedContext.recordId;
 
   const [templates, setTemplates] = useState<MailTemplateSummary[]>([]);
   const [person, setPerson] = useState<PersonContext | null>(null);
   // Do not seed from global mailbox / stale cache without a real recordId.
   const [replySubject, setReplySubject] = useState<string | null>(() => {
+    if (surface === 'compose') {
+      return null;
+    }
     if (!contextRecordId) {
       return resolvedContext.scrapedSubject || null;
     }
@@ -1015,6 +1025,9 @@ export const TemplatePicker = ({
   const [contextKind, setContextKind] = useState<string | null>(null);
   const [emailSource, setEmailSource] = useState<string | null>(null);
   const [recipientEmail, setRecipientEmail] = useState(() => {
+    if (surface === 'compose') {
+      return '';
+    }
     if (!contextRecordId) {
       return resolvedContext.scrapedEmail || '';
     }
@@ -1116,11 +1129,16 @@ export const TemplatePicker = ({
   const overlayRootRef = useRef<HTMLDivElement | null>(null);
   const isRecordPage = surface === 'record-page';
   const isMailboxRecordPage = surface === 'mailbox-record';
-  const opportunityRecordId =
-    selectedRecordIds[0] ||
-    executionRecordId ||
-    contextRecordId ||
-    null;
+  const isComposeSurface = surface === 'compose';
+  const composeAnchorRecordId = isComposeSurface
+    ? recordId || executionRecordId || null
+    : null;
+  const opportunityRecordId = isComposeSurface
+    ? composeAnchorRecordId
+    : selectedRecordIds[0] ||
+      executionRecordId ||
+      contextRecordId ||
+      null;
   const restoringDraftRef = useRef(false);
   const restoredComposeKeyRef = useRef<string | null>(null);
   const prevComposeRecordIdRef = useRef<string | null>(null);
@@ -1128,19 +1146,27 @@ export const TemplatePicker = ({
   editBodyHtmlRef.current = editBodyHtml;
   const isRecordCompose = isRecordPage && composeRequested;
   const isMailboxCompose = isMailboxRecordPage && mailboxComposing;
-  const isPageCompose = isRecordCompose || isMailboxCompose;
+  const isPageCompose =
+    isRecordCompose || isMailboxCompose || isComposeSurface;
   const isRecordPeek = isRecordPage && !isRecordCompose;
-  const isMailboxPeek = !isRecordPage && !mailboxComposing;
+  const isMailboxPeek =
+    !isRecordPage && !isComposeSurface && !mailboxComposing;
   const isPeek = isRecordPeek || isMailboxPeek;
 
-  const personEmail = recipientEmail.trim() || person?.email?.trim() || '';
+  const personEmail =
+    recipientEmail.trim() ||
+    (isComposeSurface && !composeAnchorRecordId
+      ? ''
+      : person?.email?.trim() || '');
   const usesCustomTo = internalHandoff || externalForward;
   const sendToEmail = usesCustomTo ? handoffTo.trim() : personEmail;
   const canHandoff =
-    contextKind === 'opportunity' && Boolean(opportunityRecordId);
-  const canForward = Boolean(
-    replyMessage?.text || replyMessage?.subject || replySubject,
-  );
+    !isComposeSurface &&
+    contextKind === 'opportunity' &&
+    Boolean(opportunityRecordId);
+  const canForward =
+    !isComposeSurface &&
+    Boolean(replyMessage?.text || replyMessage?.subject || replySubject);
   const displayRecipientEmail =
     recipientEmail.trim() || person?.email?.trim() || '';
   const effectiveRecordId =
@@ -1151,6 +1177,7 @@ export const TemplatePicker = ({
   const composeDraftKeyValue = composeDraftKey(
     composeRecordId,
     currentUserEmail,
+    isComposeSurface ? 'new' : 'reply',
   );
   const isReplyContext = Boolean(replySubject);
 
@@ -1262,14 +1289,22 @@ export const TemplatePicker = ({
     }
   }, [isRecordPage, opportunityRecordId]);
 
-  // Keep „Do” input in sync with resolved lead / thread context (picker showed empty while send used person.email).
+  // Keep „Do” in sync with this lead on reply — never on blank Nowy mail.
   useEffect(() => {
+    if (isComposeSurface && !composeAnchorRecordId) {
+      return;
+    }
     const resolved = person?.email?.trim();
     if (!resolved || recipientEmail.trim()) {
       return;
     }
     setRecipientEmail(resolved);
-  }, [person?.email, recipientEmail]);
+  }, [
+    composeAnchorRecordId,
+    isComposeSurface,
+    person?.email,
+    recipientEmail,
+  ]);
 
   const openOpportunityRecordPage = (
     event?: { preventDefault: () => void },
@@ -1343,17 +1378,21 @@ export const TemplatePicker = ({
     );
     const subject = externalForward
       ? editSubject.trim() || toForwardSubject(replySubject)
-      : resolveSendSubject(editSubject, replySubject);
+      : isComposeSurface
+        ? editSubject.trim()
+        : resolveSendSubject(editSubject, replySubject);
 
     return {
       to: sendToEmail,
       ...(cc ? { cc } : {}),
       ...(bcc ? { bcc } : {}),
       subject: internalHandoff ? toInternalHandoffSubject(subject) : subject,
-      recordId: effectiveRecordId ?? undefined,
+      recordId: isComposeSurface
+        ? composeAnchorRecordId ?? undefined
+        : effectiveRecordId ?? undefined,
       connectedAccountId: connectedAccountId ?? undefined,
       inReplyToMessageId:
-        internalHandoff || externalForward
+        internalHandoff || externalForward || isComposeSurface
           ? undefined
           : (replyMessageId ?? undefined),
       files: attachments.map(({ id, name }) => ({ id, name })),
@@ -1384,11 +1423,13 @@ export const TemplatePicker = ({
     ccEmail,
     composeDraftKeyValue,
     composerV2Enabled,
+    composeAnchorRecordId,
     connectedAccountId,
     editSubject,
     effectiveRecordId,
     externalForward,
     internalHandoff,
+    isComposeSurface,
     loadingDraft,
     opportunityRecordId,
     person?.email,
@@ -1507,7 +1548,9 @@ export const TemplatePicker = ({
     setDraftError(null);
     setAttachments([]);
     setAttachmentError(null);
-    const subj = subjectHint?.trim() || replySubjectRef.current?.trim() || null;
+    const subj = isComposeSurface
+      ? subjectHint?.trim() || null
+      : subjectHint?.trim() || replySubjectRef.current?.trim() || null;
     if (subj) {
       setEditSubject(toReplySubject(subj));
     } else {
@@ -1635,18 +1678,18 @@ export const TemplatePicker = ({
 
   // Prefill Re:/Odp: from the thread. Never overwrite a subject the user already typed.
   useEffect(() => {
-    if (!replySubject || !selectedId || subjectTouchedRef.current) {
+    if (isComposeSurface || !replySubject || !selectedId || subjectTouchedRef.current) {
       return;
     }
 
     setEditSubject(toReplySubject(replySubject));
     setSubjectFromTemplate(false);
-  }, [replySubject, selectedId]);
+  }, [isComposeSurface, replySubject, selectedId]);
 
   // Search leads/people when Twenty did not pass record context.
   useEffect(() => {
     const query = leadSearchQuery.trim();
-    if (query.length < 2 || personEmail) {
+    if (query.length < 2 || (personEmail && !isComposeSurface)) {
       setLeadSearchHits([]);
       return;
     }
@@ -1680,7 +1723,7 @@ export const TemplatePicker = ({
       cancelled = true;
       globalThis.clearTimeout(timer);
     };
-  }, [leadSearchQuery, personEmail]);
+  }, [isComposeSurface, leadSearchQuery, personEmail]);
 
   useEffect(() => {
     let cancelled = false;
@@ -1752,7 +1795,7 @@ export const TemplatePicker = ({
                 const featured =
                   preferredThreadMessage(preview.threadMessages) ??
                   preview.threadMessages[0];
-                if (featured) {
+                if (featured && !isComposeSurface) {
                   setReplyMessage(threadMessageToPreview(featured));
                   if (featured.messageId) {
                     setReplyMessageId(featured.messageId);
@@ -1761,7 +1804,7 @@ export const TemplatePicker = ({
                     setReplySubject(featured.subject);
                   }
                 }
-              } else if (preview.replySubject) {
+              } else if (preview.replySubject && !isComposeSurface) {
                 setReplySubject(preview.replySubject);
               }
               setHydratingBody(true);
@@ -1826,10 +1869,17 @@ export const TemplatePicker = ({
           return;
         }
 
-        setPerson(data.person ?? null);
-
-        // No hooks (typical after native Reply) — restore last pinned lead/thread.
-        if (!data.person?.email && !data.replySubject && candidates.length === 0) {
+        setPerson(
+          isComposeSurface && !composeAnchorRecordId
+            ? null
+            : data.person ?? null,
+        );
+        if (
+          !isComposeSurface &&
+          !data.person?.email &&
+          !data.replySubject &&
+          candidates.length === 0
+        ) {
           try {
             const pinned = await client.get<{
               ok?: boolean;
@@ -1894,18 +1944,23 @@ export const TemplatePicker = ({
               candidates.includes(cached!.recordId));
           const fromCache = cacheMatches ? cached?.email?.trim() || '' : '';
 
-          const nextEmail = fromPerson || fromScrape || fromCache;
+          const nextEmail = isComposeSurface
+            ? composeAnchorRecordId
+              ? fromPerson
+              : ''
+            : fromPerson || fromScrape || fromCache;
           const source =
             (fromPerson && (payload.contextKind || data.contextKind || 'person')) ||
             (fromScrape && 'scrape') ||
             (fromCache && 'cache') ||
             null;
 
-          const finalReply =
-            payload.replySubject?.trim() ||
-            resolvedContext.scrapedSubject?.trim() ||
-            (cacheMatches ? cached?.replySubject?.trim() || null : null) ||
-            null;
+          const finalReply = isComposeSurface
+            ? null
+            : payload.replySubject?.trim() ||
+              resolvedContext.scrapedSubject?.trim() ||
+              (cacheMatches ? cached?.replySubject?.trim() || null : null) ||
+              null;
 
           if (finalReply) {
             setReplySubject(finalReply);
@@ -1913,7 +1968,7 @@ export const TemplatePicker = ({
             setReplySubject(null);
           }
 
-          if (payload.replyMessage) {
+          if (!isComposeSurface && payload.replyMessage) {
             setReplyMessage(payload.replyMessage);
             if (payload.replyMessage.messageId) {
               setReplyMessageId(payload.replyMessage.messageId);
@@ -1927,7 +1982,7 @@ export const TemplatePicker = ({
                 (message) =>
                   message.messageId === payload.replyMessage?.messageId,
               ) ?? payload.threadMessages[0];
-            if (featured && !payload.replyMessage) {
+            if (featured && !payload.replyMessage && !isComposeSurface) {
               setReplyMessage(threadMessageToPreview(featured));
               if (featured.messageId) {
                 setReplyMessageId(featured.messageId);
@@ -1951,7 +2006,7 @@ export const TemplatePicker = ({
           const pinRecordId =
             data.contextRecordId || contextRecordId || candidates[0] || null;
 
-          if (nextEmail && pinRecordId) {
+          if (nextEmail && pinRecordId && !isComposeSurface) {
             writeCachedMailContext({
               recordId: pinRecordId,
               email: nextEmail,
@@ -1976,7 +2031,11 @@ export const TemplatePicker = ({
           debug: data.debug,
         });
 
-        // Load mailbox list only for manual dropdown — never autofill from it.
+        // Load mailbox list only for reply dropdown — never on Nowy mail.
+        if (isComposeSurface) {
+          return;
+        }
+
         try {
           const suggestion = await client.get<{
             suggestedReply?: SuggestedReply | null;
@@ -1994,6 +2053,7 @@ export const TemplatePicker = ({
           // Thread reply: subject known but CRM person missing — use mailbox peer when subjects align.
           if (
             !cancelled &&
+            !isComposeSurface &&
             !recipientEmail.trim() &&
             !data.person?.email?.trim() &&
             suggestion.suggestedReply?.email?.trim() &&
@@ -2032,9 +2092,11 @@ export const TemplatePicker = ({
         );
         // Still keep free compose so Reply is usable without templates.
         enterFreeCompose(
-          resolvedContext.scrapedSubject?.trim() ||
-            replySubjectRef.current ||
-            null,
+          isComposeSurface
+            ? null
+            : resolvedContext.scrapedSubject?.trim() ||
+              replySubjectRef.current ||
+              null,
         );
       } finally {
         if (!cancelled) {
@@ -2056,6 +2118,7 @@ export const TemplatePicker = ({
     mergedSelectedIds.join(','),
     isRecordPage,
     isMailboxRecordPage,
+    isComposeSurface,
   ]);
 
   useEffect(() => {
@@ -2122,10 +2185,16 @@ export const TemplatePicker = ({
 
     restoredComposeKeyRef.current = null;
     setDurableReady(false);
-    enterFreeCompose(replySubjectRef.current);
-  }, [composeRecordId]);
+    enterFreeCompose(isComposeSurface ? null : replySubjectRef.current);
+  }, [composeRecordId, isComposeSurface]);
 
   useEffect(() => {
+    if (isComposeSurface) {
+      restoredComposeKeyRef.current = composeDraftKeyValue;
+      setDurableReady(true);
+      return;
+    }
+
     if (!composeDraftKeyValue) {
       setDurableReady(false);
       return;
@@ -2202,7 +2271,7 @@ export const TemplatePicker = ({
           } else {
             setSelectedId(FREE_COMPOSE_TEMPLATE_ID);
           }
-          if (envelope.replyMessageId) {
+          if (envelope.replyMessageId && !isComposeSurface) {
             setReplyMessageId(envelope.replyMessageId);
           }
           setAttachments([]);
@@ -2230,7 +2299,7 @@ export const TemplatePicker = ({
     };
     // Restore once per lead+user. Later template-list updates must not wipe a restored body.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [composeDraftKeyValue]);
+  }, [composeDraftKeyValue, isComposeSurface]);
 
   useEffect(() => {
     if (!durableReady || !composeDraftKeyValue || restoringDraftRef.current) {
@@ -2253,9 +2322,11 @@ export const TemplatePicker = ({
                 ? 'internal'
                 : externalForward
                   ? 'forward'
-                  : 'reply',
+                  : isComposeSurface
+                    ? 'new'
+                    : 'reply',
               handoffTo: usesCustomTo ? handoffTo : '',
-              replyMessageId: replyMessageId ?? '',
+              replyMessageId: isComposeSurface ? '' : replyMessageId ?? '',
             },
           });
         } catch {
@@ -2285,6 +2356,7 @@ export const TemplatePicker = ({
     handoffTo,
     replyMessageId,
     usesCustomTo,
+    isComposeSurface,
   ]);
 
   useEffect(() => {
@@ -2437,7 +2509,7 @@ export const TemplatePicker = ({
     subjectTouchedRef.current = false;
     setRecipientEmail(recipient.email);
     setEmailSource('manualRecent');
-    if (recipient.subject) {
+    if (recipient.subject && !isComposeSurface) {
       const nextSubject = toReplySubject(recipient.subject);
       setReplySubject(nextSubject);
       replySubjectRef.current = nextSubject;
@@ -2482,7 +2554,9 @@ export const TemplatePicker = ({
         });
       }
 
-      const nextReply = data.replySubject?.trim() || null;
+      const nextReply = isComposeSurface
+        ? null
+        : data.replySubject?.trim() || null;
       if (nextReply) {
         setReplySubject(nextReply);
         replySubjectRef.current = nextReply;
@@ -2591,8 +2665,7 @@ export const TemplatePicker = ({
     setBccEmail('');
     setShowCc(false);
     setShowBcc(false);
-    enterFreeCompose(replySubjectRef.current);
-    setComposeRequested(false);
+    enterFreeCompose(isComposeSurface ? null : replySubjectRef.current);
     scheduleThreadRefreshAfterSend();
     void closeSidePanel().catch(() => undefined);
   };
@@ -2972,7 +3045,9 @@ export const TemplatePicker = ({
     }
 
     return {
-      recordId: effectiveRecordId ?? undefined,
+      recordId: isComposeSurface
+        ? composeAnchorRecordId ?? undefined
+        : effectiveRecordId ?? undefined,
       to: sendToEmail,
       ...(cc ? { cc } : {}),
       ...(bcc ? { bcc } : {}),
@@ -2982,7 +3057,7 @@ export const TemplatePicker = ({
         selected.id === FREE_COMPOSE_TEMPLATE_ID ? undefined : selected.id,
       connectedAccountId: connectedAccountId ?? undefined,
       inReplyToMessageId:
-        internalHandoff || externalForward
+        internalHandoff || externalForward || isComposeSurface
           ? undefined
           : (replyMessageId ?? undefined),
       ...(internalHandoff
@@ -3405,7 +3480,8 @@ export const TemplatePicker = ({
         : [];
 
   const showOriginalPane = Boolean(
-    (composerExpanded || isPageCompose) &&
+    !isComposeSurface &&
+      (composerExpanded || isPageCompose) &&
       (replyMessage?.text ||
         isReplyContext ||
         threadMessages.length > 0 ||
@@ -3418,7 +3494,7 @@ export const TemplatePicker = ({
   const useComposeOverlay = composerExpanded && !isMailboxRecordPage;
   const rootClassName = useComposeOverlay
     ? 'owocni-mail-fs-root'
-    : isRecordPage || isMailboxRecordPage
+    : isRecordPage || isMailboxRecordPage || isComposeSurface
       ? 'owocni-mail-record-root'
       : undefined;
   const composeSplitClassName =
@@ -3438,7 +3514,11 @@ export const TemplatePicker = ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        minHeight: isPeek && !isRecordPage && !isMailboxRecordPage ? 360 : 0,
+        minHeight: isComposeSurface
+          ? 480
+          : isPeek && !isRecordPage && !isMailboxRecordPage
+            ? 360
+            : 0,
         overflow: 'hidden',
         maxWidth: '100%',
         boxSizing: 'border-box',
@@ -3596,7 +3676,9 @@ export const TemplatePicker = ({
             ? 'Przekaż wewnątrz'
             : externalForward
               ? 'Przekaż'
-              : 'Odpowiedz'}
+              : isComposeSurface
+                ? 'Nowy mail'
+                : 'Odpowiedz'}
         </strong>
         {connectedAccountHandle ? (
           <span
@@ -3611,7 +3693,7 @@ export const TemplatePicker = ({
             From: {connectedAccountHandle}
           </span>
         ) : null}
-        {isReplyContext && !internalHandoff && !externalForward ? (
+        {isReplyContext && !internalHandoff && !externalForward && !isComposeSurface ? (
           <span
             style={{
               fontSize: 11,
@@ -3657,11 +3739,11 @@ export const TemplatePicker = ({
               ? ` · ${toInternalHandoffSubject(replySubject || '').slice(0, 36)}`
               : externalForward
                 ? ` · ${toForwardSubject(replySubject || '').slice(0, 36)}`
-                : replySubject
+                : !isComposeSurface && replySubject
                   ? ` · ${toReplySubject(replySubject).slice(0, 36)}`
                   : ''}
           </span>
-        ) : !contextRecordId && !resolvedRecordId ? (
+        ) : isComposeSurface ? null : !contextRecordId && !resolvedRecordId ? (
           <span style={{ fontSize: 11, color: '#b45309', maxWidth: 480 }}>
             Brak kontekstu leada — wpisz email odbiorcy albo zamknij natywny Reply
             i otwórz <strong>Odpowiedz</strong> z karty leada.
@@ -3677,7 +3759,7 @@ export const TemplatePicker = ({
               alignItems: 'center',
             }}
           >
-            {!isRecordPage && !isMailboxRecordPage ? (
+            {!isRecordPage && !isMailboxRecordPage && !isComposeSurface ? (
             <button
               type="button"
               title={
@@ -3783,6 +3865,75 @@ export const TemplatePicker = ({
         ) : null}
       </div>
       {isRecordCompose ? <ReplyQueueBar recordId={opportunityRecordId} /> : null}
+
+      {isComposeSurface && selected ? (
+        <div
+          style={{
+            flexShrink: 0,
+            padding: '8px 16px',
+            borderBottom: '1px solid #eee',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+            background: personEmail ? '#fafafa' : '#fff7ed',
+          }}
+        >
+          <input
+            style={{
+              padding: '6px 8px',
+              border: `1px solid ${personEmail ? '#ddd' : '#f59e0b'}`,
+              borderRadius: 5,
+              fontSize: 13,
+            }}
+            value={leadSearchQuery}
+            onChange={(event) => setLeadSearchQuery(event.target.value)}
+            placeholder="Szukaj leada / osoby (np. Gryla)…"
+            disabled={sending}
+          />
+          {leadSearchLoading ? (
+            <span style={{ fontSize: 11, color: '#666' }}>Szukam…</span>
+          ) : null}
+          {leadSearchHits.length > 0 ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                maxHeight: 160,
+                overflowY: 'auto',
+                border: '1px solid #eee',
+                borderRadius: 5,
+                background: '#fff',
+              }}
+            >
+              {leadSearchHits.map((hit) => (
+                <button
+                  key={`${hit.kind}-${hit.recordId}`}
+                  type="button"
+                  style={{
+                    textAlign: 'left',
+                    padding: '8px 10px',
+                    border: 'none',
+                    borderBottom: '1px solid #f3f3f3',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    fontSize: 12,
+                  }}
+                  onClick={() => void applySearchHit(hit)}
+                >
+                  <strong>{hit.label}</strong>
+                  <span style={{ color: '#666' }}>
+                    {' '}
+                    · {hit.email}
+                    {hit.kind === 'opportunity' ? ' · lead' : ' · osoba'}
+                    {hit.companyName ? ` · ${hit.companyName}` : ''}
+                  </span>
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       {!composerExpanded &&
       selected?.id !== FREE_COMPOSE_TEMPLATE_ID &&
@@ -4607,11 +4758,33 @@ export const TemplatePicker = ({
                     ref={editorRef}
                     sessionId={editorSessionId}
                     durableSessionId={
-                      durableReady ? composeDraftKeyValue ?? undefined : undefined
+                      isComposeSurface
+                        ? undefined
+                        : durableReady
+                          ? composeDraftKeyValue ?? undefined
+                          : undefined
                     }
                     value={editBodyHtml}
                     onChange={setEditBodyHtml}
                     envelope={composerV2Envelope}
+                    onEnvelopeChange={(next) => {
+                      if (typeof next.to === 'string') {
+                        setRecipientEmail(next.to);
+                        setEmailSource('manual');
+                      }
+                      if (typeof next.cc === 'string') {
+                        setCcEmail(next.cc);
+                        setShowCc(Boolean(next.cc.trim()));
+                      }
+                      if (typeof next.bcc === 'string') {
+                        setBccEmail(next.bcc);
+                        setShowBcc(Boolean(next.bcc.trim()));
+                      }
+                      if (typeof next.subject === 'string') {
+                        subjectTouchedRef.current = true;
+                        setEditSubject(next.subject);
+                      }
+                    }}
                     onSent={handleComposerV2Sent}
                     onSendError={handleComposerV2Error}
                     disabled={sending || sendPreparing}

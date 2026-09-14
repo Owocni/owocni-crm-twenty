@@ -9,9 +9,12 @@ import {
   OPPORTUNITY_ACTIONS_WIDGET_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_HOME_FIELDS_WIDGET_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_HOME_TAB_UNIVERSAL_IDENTIFIER,
+  NEW_MAIL_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_MAIL_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_MAIL_TAB_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_MAIL_WIDGET_UNIVERSAL_IDENTIFIER,
+  OPPORTUNITY_NEW_MAIL_TAB_UNIVERSAL_IDENTIFIER,
+  OPPORTUNITY_NEW_MAIL_WIDGET_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_NOTES_TAB_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_NOTES_WIDGET_UNIVERSAL_IDENTIFIER,
   OPPORTUNITY_RECORD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIER,
@@ -85,9 +88,28 @@ export default definePageLayout({
       ],
     },
     {
+      universalIdentifier: OPPORTUNITY_NEW_MAIL_TAB_UNIVERSAL_IDENTIFIER,
+      title: 'Nowy mail',
+      position: 16,
+      icon: 'IconSend',
+      layoutMode: PageLayoutTabLayoutMode.CANVAS,
+      widgets: [
+        {
+          universalIdentifier: OPPORTUNITY_NEW_MAIL_WIDGET_UNIVERSAL_IDENTIFIER,
+          title: ' ',
+          type: 'FRONT_COMPONENT',
+          configuration: {
+            configurationType: 'FRONT_COMPONENT',
+            frontComponentUniversalIdentifier:
+              NEW_MAIL_FRONT_COMPONENT_UNIVERSAL_IDENTIFIER,
+          },
+        },
+      ],
+    },
+    {
       universalIdentifier: OPPORTUNITY_NOTES_TAB_UNIVERSAL_IDENTIFIER,
       title: 'Notes',
-      position: 16,
+      position: 17,
       icon: 'IconNotes',
       layoutMode: PageLayoutTabLayoutMode.CANVAS,
       widgets: [
@@ -104,7 +126,7 @@ export default definePageLayout({
     {
       universalIdentifier: OPPORTUNITY_TIMELINE_TAB_UNIVERSAL_IDENTIFIER,
       title: 'Timeline',
-      position: 17,
+      position: 18,
       icon: 'IconTimelineEvent',
       layoutMode: PageLayoutTabLayoutMode.CANVAS,
       widgets: [
@@ -121,7 +143,7 @@ export default definePageLayout({
     {
       universalIdentifier: OPPORTUNITY_TASKS_TAB_UNIVERSAL_IDENTIFIER,
       title: 'Tasks',
-      position: 18,
+      position: 19,
       icon: 'IconCheckbox',
       layoutMode: PageLayoutTabLayoutMode.CANVAS,
       widgets: [

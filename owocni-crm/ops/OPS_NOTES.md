@@ -186,6 +186,9 @@ Dom faktów platformowych Twenty (wersjonowanych, z datą/źródłem/recheck), l
 | 2026-09-13 | **Owocni Mail deploy 0.1.143** | Przycisk „Stary composer” zdjęty z UI (plan Mariusza §13: awaria = Thunderbird). Stary tor tylko `?owocniMailV2=0`. Cache: `/mail/app-version`. | **TAK** | Composer | Live `version=0.1.143` checksum `309c42130fc8700fd233beb28b5e5e51`. Cmd+Shift+R. |
 | 2026-09-14 | **Owocni Mail deploy 0.1.144** | Robert: Home (Nowy) / Tasks (reszta) tylko raz na otwarcie leada. Klik Email nie wraca sam na Tasks. Claim ~5 min. | **TAK** | Composer | Live `version=0.1.144` checksum `80adb787159b9f1e45d9138d7b89a8ea`. Cmd+Shift+R. Test jako Robert. |
 | 2026-09-14 | **Owocni Mail deploy 0.1.145** | Robert: Home/Tasks przy wejściu na innego leada. Ten sam lead — dowolna zakładka zostaje. Bez timera 5 min. | **TAK** | Composer | Live `version=0.1.145` checksum `11060763043ecd778f4f409410bb4427`. Cmd+Shift+R. |
+| 2026-09-14 | **Owocni Mail deploy 0.1.146** | Composer v2: status „Trwa załączanie pliku”, błąd w ramce + toast; kopia FileList przed czyszczeniem inputu (Safari/Gosia). | **TAK** | Composer | Live `version=0.1.146` checksum `d7840593374d253b22fd7c300dd5d790`. Cmd+Shift+R. |
+| 2026-09-14 | **Owocni Mail deploy 0.1.147** | Zakładka **Nowy mail**: lewe menu + karta leada + ⌘K. Composer v2 bez `Re:` / In-Reply-To. Mail/Odpowiedz bez zmian. | **TAK** | Composer | Live `version=0.1.147` checksum `bf60cfab5d657b2d5b71da9aef11bde0`. Cmd+Shift+R. |
+| 2026-09-14 | **Owocni Mail deploy 0.1.148** | Hotfix Nowy mail: puste Do (nie ostatni lead); wpisany adres zawsze wygrywa. Odpowiedz nietknięta. | **TAK** | Composer | Live `version=0.1.148` checksum `6a9ea645c2b52ef521708199a402180a`. Cmd+Shift+R. |
 
 > Każda operacja masowa (import / backfill / replay / mass-update) → wiersz z jawnym `no_emit`. `no_emit=NIE` jest dozwolone tylko dla operacji świadomie emitujących (rzadkość) i wymaga uzasadnienia w kolumnie Wynik.
 

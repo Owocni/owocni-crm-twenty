@@ -3,7 +3,8 @@ import { isEmptyComposeHtml } from 'src/utils/mailSignature';
 export const COMPOSE_DRAFT_PREFIX = 'compose:';
 export const COMPOSE_DRAFT_TTL_MS = 14 * 24 * 60 * 60 * 1000;
 
-export type ComposeDraftMode = 'reply' | 'internal' | 'forward';
+export type ComposeDraftMode = 'reply' | 'internal' | 'forward' | 'new';
+export type ComposeDraftKind = 'reply' | 'new';
 
 export type ComposeDraftEnvelope = {
   v: 1;
@@ -25,11 +26,23 @@ export function isComposeDraftKey(sessionId: string): boolean {
 export function composeDraftKey(
   recordId: string | null | undefined,
   userEmail: string | null | undefined,
+  kind: ComposeDraftKind = 'reply',
 ): string | null {
-  const record = recordId?.trim() ?? '';
   const email = userEmail?.trim().toLowerCase() ?? '';
 
-  if (!record || !email) {
+  if (!email) {
+    return null;
+  }
+
+  if (kind === 'new') {
+    const record = recordId?.trim() ?? '';
+    return record
+      ? `${COMPOSE_DRAFT_PREFIX}${encodeURIComponent(email)}:${record}:new`
+      : `${COMPOSE_DRAFT_PREFIX}${encodeURIComponent(email)}:new`;
+  }
+
+  const record = recordId?.trim() ?? '';
+  if (!record) {
     return null;
   }
 
@@ -84,7 +97,10 @@ export function parseComposeDraft(
           bcc: asString(parsed.bcc) || undefined,
           selectedId: asString(parsed.selectedId) || undefined,
           mode:
-            mode === 'internal' || mode === 'forward' || mode === 'reply'
+            mode === 'internal' ||
+            mode === 'forward' ||
+            mode === 'reply' ||
+            mode === 'new'
               ? mode
               : undefined,
           handoffTo: asString(parsed.handoffTo) || undefined,

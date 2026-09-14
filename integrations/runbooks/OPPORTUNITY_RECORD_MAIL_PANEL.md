@@ -47,9 +47,10 @@ Plik: `apps/owocni-mail-twenty/src/page-layouts/opportunity.page-layout.ts`
 |---|---|---|
 | Home | 10 | pasek SQL/odrzuć + `FIELDS` (Lead / Status / Więcej) |
 | Mail | 15 | `CANVAS` + FC `opportunity-mail-panel` — **default w panelu/mobile** |
-| Notes | 16 | natywny widget `NOTES` |
-| Timeline | 17 | natywny widget `TIMELINE` |
-| Tasks | 18 | natywny widget `TASKS` |
+| Nowy mail | 16 | `CANVAS` + FC `new-mail-compose` — composer v2, nowy wątek (bez `Re:` / In-Reply-To) |
+| Notes | 17 | natywny widget `NOTES` |
+| Timeline | 18 | natywny widget `TIMELINE` |
+| Tasks | 19 | natywny widget `TASKS` |
 | Rozmowy | 20 | relacja `callTranscripts` (`FIELD` / `CARD`) |
 
 Warunek: **jeden** niesystemowy `RECORD_PAGE` na Opportunity.
@@ -78,6 +79,7 @@ Kolejność akcji: Odpowiedz → Przyjmij jako SQL → Wystaw dokument → Wysta
 | Surface | Komponent | Zachowanie |
 |---|---|---|
 | `record-page` | `opportunity-mail-panel.tsx` | wąski panel = wątek + Odpowiedz; szeroka strona = dwie kolumny + composer |
+| `compose` | `new-mail-compose.tsx` | nowy mail (zakładka + lewe menu + ⌘K) — Do / temat puste albo z leada, bez wątku |
 | `command-menu` | `template-picker.tsx` (archiwum) | dotychczasowy composer w command panelu |
 
 ## Ładowanie wątków (dwufazowe)
@@ -101,8 +103,9 @@ Uzbrojenie po `flushHtmlAsync()` + `resolveAccessToken()`. Deadline `Date.now() 
 1. Kanban → klik kartę → **side panel** na Mail: lista wątku pojawia się zanim wczyta się pełna treść („Ładuję treść…”). `?owocniMailLoad=full` wraca do jednego requestu.
 2. Ostatnia wiadomość na górze (podświetlona na liście wątku); klik innej podmienia górę, lista zostaje kompletna.
 3. Duży **Odpowiedz** w panelu → pełna strona z composerem. Natywny kwadrat (expand) → ta sama pełna strona **z edytorem**; Odpowiedz na niej otwiera composer w miejscu, nie nawiguje w próżnię. Kanban = tylko wątek, bez okna odpowiedzi.
-4. Lead z rozmową → zakładka Rozmowy. Notes, Timeline i Tasks na karcie Owocni.
-5. Wyślij → 15 s / Anuluj. Zamknięcie panelu przy odliczaniu → mail wychodzi.
-6. Pinned Odpowiedz (command) nadal otwiera stary composer.
-7. Lead bez SQL → „Przyjmij jako SQL” na pasku i na Home. Po przyjęciu przycisk znika, Home pokazuje datę.
-8. Odrzucenie → przycisk znika z paska; Home pokazuje „Odrzucony · powód” (bez daty — nie ma takiego pola).
+4. **Nowy mail** (lewe menu / zakładka na karcie / ⌘K) → composer v2, pusty temat, bez `Re:` i bez dopięcia do starego wątku. Do: ręcznie albo wyszukiwarka leada. Mail (Odpowiedz) bez zmian.
+5. Lead z rozmową → zakładka Rozmowy. Notes, Timeline i Tasks na karcie Owocni.
+6. Wyślij → 15 s / Anuluj. Zamknięcie panelu przy odliczaniu → mail wychodzi.
+7. Pinned Odpowiedz (command) nadal otwiera stary composer.
+8. Lead bez SQL → „Przyjmij jako SQL” na pasku i na Home. Po przyjęciu przycisk znika, Home pokazuje datę.
+9. Odrzucenie → przycisk znika z paska; Home pokazuje „Odrzucony · powód” (bez daty — nie ma takiego pola).

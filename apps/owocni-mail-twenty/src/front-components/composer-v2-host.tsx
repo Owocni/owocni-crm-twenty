@@ -23,8 +23,8 @@ import {
   REFRESH_COMPOSER_SESSION_PATH,
 } from 'src/utils/composerSessionTicket';
 import {
-  composerV2EnvelopeKey,
   MAIL_V2_ENVELOPE,
+  MAIL_V2_ENVELOPE_EDIT,
   MAIL_V2_SENT,
   MAIL_V2_STATUS,
   type ComposerV2Envelope,
@@ -46,21 +46,13 @@ type ComposerV2HostProps = {
   envelope: ComposerV2Envelope;
   onSent: (result: Record<string, unknown>) => void;
   onSendError: (message: string) => void;
+  onEnvelopeChange?: (envelope: ComposerV2Envelope) => void;
 };
 
 function scheduleDelayPromise(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(), ms);
   });
-}
-
-function encodeBase64Utf8(text: string): string {
-  const bytes = new TextEncoder().encode(text);
-  let binary = '';
-  for (const byte of bytes) {
-    binary += String.fromCharCode(byte);
-  }
-  return btoa(binary);
 }
 
 async function resolveTokenReady(): Promise<string> {
@@ -125,6 +117,7 @@ export const ComposerV2Host = forwardRef<MailBodyEditorHandle, ComposerV2HostPro
       envelope,
       onSent,
       onSendError,
+      onEnvelopeChange,
     },
     ref,
   ) {
@@ -132,6 +125,7 @@ export const ComposerV2Host = forwardRef<MailBodyEditorHandle, ComposerV2HostPro
     const onChangeRef = useRef(onChange);
     const onSentRef = useRef(onSent);
     const onSendErrorRef = useRef(onSendError);
+    const onEnvelopeChangeRef = useRef(onEnvelopeChange);
     const envelopeRef = useRef(envelope);
     const latestHtmlRef = useRef(value);
     const handledStatusRef = useRef('');
@@ -142,6 +136,7 @@ export const ComposerV2Host = forwardRef<MailBodyEditorHandle, ComposerV2HostPro
     onChangeRef.current = onChange;
     onSentRef.current = onSent;
     onSendErrorRef.current = onSendError;
+    onEnvelopeChangeRef.current = onEnvelopeChange;
     envelopeRef.current = envelope;
 
     const postToIframe = useCallback((payload: Record<string, unknown>) => {
@@ -249,28 +244,6 @@ export const ComposerV2Host = forwardRef<MailBodyEditorHandle, ComposerV2HostPro
     }, [envelope, postToIframe, srcDoc]);
 
     useEffect(() => {
-      if (!sessionId) {
-        return undefined;
-      }
-
-      const json = JSON.stringify(envelope);
-      void (async () => {
-        try {
-          const client = new RestApiClient();
-          await client.post(EDITOR_DRAFT_PATH, {
-            sessionId: composerV2EnvelopeKey(sessionId),
-            htmlBase64: encodeBase64Utf8(json),
-            html: json.slice(0, 50_000),
-          });
-        } catch {
-          // iframe send still has the baked envelope; server may miss late files
-        }
-      })();
-
-      return undefined;
-    }, [envelope, sessionId]);
-
-    useEffect(() => {
       if (!srcDoc) {
         return undefined;
       }
@@ -332,6 +305,15 @@ export const ComposerV2Host = forwardRef<MailBodyEditorHandle, ComposerV2HostPro
         }
         if (data.type === MAIL_V2_STATUS && data.error) {
           onSendErrorRef.current(String(data.error));
+          return;
+        }
+        if (data.type === MAIL_V2_ENVELOPE_EDIT) {
+          onEnvelopeChangeRef.current?.({
+            to: typeof data.to === 'string' ? data.to : '',
+            cc: typeof data.cc === 'string' ? data.cc : '',
+            bcc: typeof data.bcc === 'string' ? data.bcc : '',
+            subject: typeof data.subject === 'string' ? data.subject : '',
+          });
         }
       };
 

@@ -89,21 +89,33 @@ def gql(url: str, token: str, query: str, variables: dict | None = None) -> dict
     body: dict[str, Any] = {"query": query}
     if variables is not None:
         body["variables"] = variables
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(body).encode(),
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        data = json.loads(resp.read())
-    if data.get("errors"):
-        raise RuntimeError(json.dumps(data["errors"], ensure_ascii=False)[:4000])
-    return data
+    payload = json.dumps(body).encode()
+    last_error = None
+    for attempt in range(1, 7):
+        req = urllib.request.Request(
+            url,
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=180) as resp:
+            data = json.loads(resp.read())
+        errors = data.get("errors")
+        if not errors:
+            return data
+        message = json.dumps(errors, ensure_ascii=False)
+        last_error = message
+        if "Limit reached" in message and attempt < 6:
+            wait = 8 * attempt
+            print(f"Rate limited, retry in {wait}s…")
+            time.sleep(wait)
+            continue
+        raise RuntimeError(message[:4000])
+    raise RuntimeError((last_error or "GraphQL failed")[:4000])
 
 
 def patch_manifest(manifest: dict) -> dict:
@@ -433,14 +445,18 @@ def main() -> None:
     token, metadata_url = load_oauth()
     manifest = update_checksums(raw)
 
-    uploads = collect_uploads(manifest)
-    print(f"Uploading {len(uploads)} files...")
-    for folder, rel, path in uploads:
-        if not path.exists():
-            print(f"  skip missing {rel}")
-            continue
-        upload_file(metadata_url, token, folder, rel, path)
-        print(f"  ok {rel}")
+    if os.environ.get("SKIP_UPLOADS") == "1":
+        print("Skipping file uploads (SKIP_UPLOADS=1)")
+    else:
+        uploads = collect_uploads(manifest)
+        print(f"Uploading {len(uploads)} files...")
+        for folder, rel, path in uploads:
+            if not path.exists():
+                print(f"  skip missing {rel}")
+                continue
+            upload_file(metadata_url, token, folder, rel, path)
+            print(f"  ok {rel}")
+            time.sleep(1.2)
 
     print("Syncing manifest (dry-run)...")
     dry = gql(

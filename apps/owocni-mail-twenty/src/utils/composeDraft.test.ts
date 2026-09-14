@@ -26,10 +26,26 @@ describe('composeDraftKey', () => {
     expect(isComposeDraftKey('send:abc')).toBe(false);
   });
 
-  it('keeps two salespeople on the same lead apart', () => {
+      it('keeps two salespeople on the same lead apart', () => {
     expect(composeDraftKey('opp-1', 'marta@owocni.pl')).not.toBe(
       composeDraftKey('opp-1', 'gosia@owocni.pl'),
     );
+  });
+
+  it('keys a new-mail draft separately from a reply on the same lead', () => {
+    expect(composeDraftKey('opp-1', 'marta@owocni.pl', 'new')).toBe(
+      'compose:marta%40owocni.pl:opp-1:new',
+    );
+    expect(composeDraftKey('opp-1', 'marta@owocni.pl', 'new')).not.toBe(
+      composeDraftKey('opp-1', 'marta@owocni.pl'),
+    );
+    expect(
+      isComposeDraftKey(composeDraftKey(null, 'marta@owocni.pl', 'new')!),
+    ).toBe(true);
+    expect(composeDraftKey(null, 'marta@owocni.pl', 'new')).toBe(
+      'compose:marta%40owocni.pl:new',
+    );
+    expect(composeDraftKey(null, 'marta@owocni.pl')).toBeNull();
   });
 });
 

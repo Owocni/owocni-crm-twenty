@@ -75,7 +75,13 @@ describe('buildVisualEditorSrcDoc', () => {
     expect(html).toContain('id="owocni-v2-file"');
     expect(html).toContain('test9959058@fastman.eu');
     expect(html).toContain('/s/mail/upload-attachment');
+    expect(html).toContain('Trwa załączanie pliku');
+    expect(html).toContain('#owocni-v2-status.is-error');
     expect(html).not.toContain('/mail/editor-frame');
+    expect(html).toContain('owocni-mail-v2-envelope-edit');
+    expect(html).toContain("el.addEventListener('change', onEdit)");
+    expect(html).toContain('if (storedFiles && storedFiles.length)');
+    expect(html).not.toContain('v2MergeEnvelope(parsed)');
   });
 
   it('dual-writes typed HTML to the durable compose key', () => {

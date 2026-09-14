@@ -176,7 +176,7 @@ Po normalizacji (`normalize_email` §5.8.1, `normalizePhone` E.164 — ta sama l
 
 **ADR #22 — twarda reguła OUT (2026-08-24, Dawid):**  
 **IN może być na ogólne (`leads@` / `studio@` / …). OUT handlowca ZAWSZE ze swojej skrzynki** (`marta@`, `gosia@`, `copywriting@`, …) — nawet gdy pierwszy mail klienta / formularza wpadł na ogólne.  
-**Override UI (24.08):** natywne command menu **Reply** / **Send Email** / **Compose Email** wyłączone w sandboxie; pinned **Odpowiedz** = Owocni Mail (`template-picker`, From = własna skrzynka, free compose). Wspólne skrzynki sync: konto operacyjne; osobiste: konto handlowca (bez dublowania IMAP).
+**Override UI (24.08):** natywne command menu **Reply** / **Send Email** / **Compose Email** wyłączone w sandboxie; pinned **Odpowiedz** = Owocni Mail (`template-picker`, From = własna skrzynka, free compose). **Nowy mail** (14.09): lewe menu + zakładka na karcie leada + ⌘K — composer v2 bez `Re:` i bez In-Reply-To (osobny wątek). Wspólne skrzynki sync: konto operacyjne; osobiste: konto handlowca (bez dublowania IMAP).
 
 Wdrożenie: Metadata override command menu + Owocni Mail (`findSendableEmailAccount`) + SOP sesji; wymaganie biznesowe zamknięte.
 

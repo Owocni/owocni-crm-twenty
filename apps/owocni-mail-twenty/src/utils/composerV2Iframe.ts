@@ -4,6 +4,7 @@ import {
 } from 'src/utils/emailAttachmentShared';
 
 export const MAIL_V2_ENVELOPE = 'owocni-mail-v2-envelope';
+export const MAIL_V2_ENVELOPE_EDIT = 'owocni-mail-v2-envelope-edit';
 export const MAIL_V2_SENT = 'owocni-mail-v2-sent';
 export const MAIL_V2_STATUS = 'owocni-mail-v2-status';
 export const COMPOSER_V2_ENVELOPE_PREFIX = 'v2envelope:';
@@ -104,6 +105,8 @@ export function composerV2Css(): string {
       color: #9a3412;
     }
     #owocni-v2-status { font-size: 12px; margin-top: 6px; color: #555; }
+    #owocni-v2-status.is-busy { color: #1d4ed8; }
+    #owocni-v2-status.is-error { color: #b91c1c; }
     #owocni-v2-hint { font-size: 11px; margin-top: 4px; color: #888; }
     #owocni-v2-envelope {
       flex-shrink: 0;
@@ -181,18 +184,25 @@ export function composerV2Css(): string {
       justify-content: center;
       color: #374151;
     }
+    #owocni-v2-clip svg { pointer-events: none; }
     #owocni-v2-clip input[type="file"] {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
     }
-    #owocni-v2-clip.busy, #owocni-v2-clip.disabled {
-      opacity: 0.55; pointer-events: none;
+    #owocni-v2-clip.busy {
+      opacity: 0.85; cursor: wait;
     }
+    #owocni-v2-clip.busy input[type="file"] { pointer-events: none; }
+    #owocni-v2-clip.busy svg { display: none; }
+    #owocni-v2-clip.busy::after { content: '…'; font-size: 16px; line-height: 1; color: #1d4ed8; }
     #owocni-v2-files { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 54px; }
     #owocni-v2-files:empty { display: none; }
     .owocni-v2-chip {
       display: inline-flex; align-items: center; gap: 6px;
       max-width: 100%; padding: 3px 8px; border-radius: 999px;
       background: #f3f4f6; border: 1px solid #e5e7eb; font-size: 12px; font-weight: 400; color: #374151;
+    }
+    .owocni-v2-chip.pending {
+      color: #1d4ed8; border-color: #bfdbfe; background: #eff6ff;
     }
     .owocni-v2-chip button {
       border: none; background: transparent; cursor: pointer; color: #6b7280; padding: 0; font-size: 14px; line-height: 1;
@@ -263,6 +273,7 @@ export function composerV2BootScript(config: ComposerV2SrcDocConfig): string {
   var sendUrl = ${JSON.stringify(config.sendUrl)};
   var envelope = ${JSON.stringify(config.envelope)};
   var envelopeMessage = ${JSON.stringify(MAIL_V2_ENVELOPE)};
+  var envelopeEditMessage = ${JSON.stringify(MAIL_V2_ENVELOPE_EDIT)};
   var sentMessage = ${JSON.stringify(MAIL_V2_SENT)};
   var v2StatusMessage = ${JSON.stringify(MAIL_V2_STATUS)};
   var envelopeKeyPrefix = ${JSON.stringify(COMPOSER_V2_ENVELOPE_PREFIX)};
@@ -280,6 +291,7 @@ export function composerV2IdleBootScript(): string {
   var sendUrl = '';
   var envelope = {};
   var envelopeMessage = ${JSON.stringify(MAIL_V2_ENVELOPE)};
+  var envelopeEditMessage = ${JSON.stringify(MAIL_V2_ENVELOPE_EDIT)};
   var sentMessage = ${JSON.stringify(MAIL_V2_SENT)};
   var v2StatusMessage = ${JSON.stringify(MAIL_V2_STATUS)};
   var envelopeKeyPrefix = ${JSON.stringify(COMPOSER_V2_ENVELOPE_PREFIX)};
@@ -308,9 +320,13 @@ export function composerV2RuntimeScript(): string {
       .trim();
   }
 
-  function v2SetStatus(text) {
+  function v2SetStatus(text, kind) {
     var node = document.getElementById('owocni-v2-status');
-    if (node) node.textContent = text || '';
+    if (!node) return;
+    node.textContent = text || '';
+    node.classList.remove('is-busy', 'is-error');
+    if (kind === 'busy') node.classList.add('is-busy');
+    if (kind === 'error') node.classList.add('is-error');
   }
 
   function v2Notify(type, extra) {
@@ -404,6 +420,15 @@ export function composerV2RuntimeScript(): string {
     envelope.subject = subject;
   }
 
+  function v2NotifyEnvelopeEdit() {
+    v2Notify(envelopeEditMessage, {
+      to: envelope && envelope.to ? envelope.to : '',
+      cc: envelope && envelope.cc ? envelope.cc : '',
+      bcc: envelope && envelope.bcc ? envelope.bcc : '',
+      subject: envelope && envelope.subject ? envelope.subject : ''
+    });
+  }
+
   function v2FillPristineForm() {
     var map = [
       ['owocni-v2-to', envelope && envelope.to ? envelope.to : ''],
@@ -463,6 +488,12 @@ export function composerV2RuntimeScript(): string {
     }, 200);
   }
 
+  var v2Uploading = false;
+  var v2WaitingAuth = false;
+  var v2PendingFiles = [];
+  var v2PendingUi = [];
+  var v2AuthWaitTries = 0;
+
   function v2RenderFiles() {
     var box = v2Input('owocni-v2-files');
     if (!box) return;
@@ -492,6 +523,13 @@ export function composerV2RuntimeScript(): string {
         box.appendChild(chip);
       })(files[i]);
     }
+    var pendingNames = v2PendingUi || [];
+    for (var p = 0; p < pendingNames.length; p++) {
+      var pendingChip = document.createElement('span');
+      pendingChip.className = 'owocni-v2-chip pending';
+      pendingChip.textContent = 'Trwa załączanie: ' + (pendingNames[p] || 'plik') + '…';
+      box.appendChild(pendingChip);
+    }
   }
 
   function v2FileToBase64(file) {
@@ -507,69 +545,176 @@ export function composerV2RuntimeScript(): string {
     });
   }
 
-  var v2Uploading = false;
   function v2SetClipBusy(on) {
     v2Uploading = on;
     var clip = v2Input('owocni-v2-clip');
     var input = v2Input('owocni-v2-file');
     if (clip) {
-      if (on) clip.classList.add('busy');
-      else clip.classList.remove('busy');
+      if (on) {
+        clip.classList.add('busy');
+        clip.setAttribute('title', 'Trwa załączanie pliku…');
+      } else {
+        clip.classList.remove('busy');
+        clip.setAttribute('title', 'Dodaj załącznik');
+      }
     }
-    if (input) input.disabled = on || !accessToken;
+    if (input) input.disabled = on;
   }
 
-  function v2UploadFiles(fileList) {
-    if (!uploadUrl || !accessToken) {
-      v2SetStatus('Brak tokenu — odśwież kartę (Cmd+Shift+R).');
+  function v2FailUpload(filename, detail) {
+    var msg = 'Nie udało się dodać „' + (filename || 'pliku') + '”';
+    if (detail) msg += ': ' + detail;
+    else msg += '.';
+    v2SetStatus(msg, 'error');
+    v2Notify(v2StatusMessage, { error: msg });
+    return msg;
+  }
+
+  function v2PostUpload(file, contentBase64, retried) {
+    return fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      },
+      body: JSON.stringify({
+        action: 'upload',
+        sessionId: sessionId,
+        filename: file.name,
+        contentType: file.type || 'application/octet-stream',
+        contentBase64: contentBase64
+      })
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        return { okHttp: res.ok, status: res.status, data: data || {} };
+      }).catch(function () {
+        return {
+          okHttp: res.ok,
+          status: res.status,
+          data: { ok: false, error: 'HTTP ' + res.status }
+        };
+      });
+    }).then(function (pack) {
+      if (pack.status === 401 && !retried) {
+        return new Promise(function (resolve, reject) {
+          v2PullAuth(function () {
+            v2PostUpload(file, contentBase64, true).then(resolve, reject);
+          });
+        });
+      }
+      return pack;
+    });
+  }
+
+  function v2FlushPendingUploads() {
+    if (v2Uploading) return;
+    if (!v2PendingFiles.length) {
+      v2PendingUi = [];
+      v2WaitingAuth = false;
+      v2AuthWaitTries = 0;
+      v2RenderFiles();
       return;
     }
-    var files = Array.prototype.slice.call(fileList || [], 0);
-    if (!files.length || v2Uploading) return;
+    if (!uploadUrl) {
+      var noUrl = v2PendingFiles[0] && v2PendingFiles[0].name;
+      v2PendingFiles = [];
+      v2PendingUi = [];
+      v2FailUpload(noUrl, 'brak adresu uploadu. Odśwież kartę (Cmd+Shift+R)');
+      v2RenderFiles();
+      return;
+    }
+    if (!accessToken) {
+      if (v2WaitingAuth) return;
+      v2WaitingAuth = true;
+      v2PendingUi = v2PendingFiles.map(function (file) {
+        return file && file.name ? file.name : 'plik';
+      });
+      v2SetClipBusy(false);
+      var clipWait = v2Input('owocni-v2-clip');
+      if (clipWait) {
+        clipWait.classList.add('busy');
+        clipWait.setAttribute('title', 'Trwa załączanie pliku…');
+      }
+      v2SetStatus('Trwa załączanie pliku. Czekam na uprawnienie…', 'busy');
+      v2RenderFiles();
+      v2PullAuth(function () {
+        v2WaitingAuth = false;
+        if (accessToken) {
+          v2AuthWaitTries = 0;
+          v2FlushPendingUploads();
+          return;
+        }
+        v2AuthWaitTries += 1;
+        if (v2AuthWaitTries >= 20) {
+          var waited = v2PendingFiles[0] && v2PendingFiles[0].name;
+          v2PendingFiles = [];
+          v2PendingUi = [];
+          v2AuthWaitTries = 0;
+          var clipGiveUp = v2Input('owocni-v2-clip');
+          if (clipGiveUp) {
+            clipGiveUp.classList.remove('busy');
+            clipGiveUp.setAttribute('title', 'Dodaj załącznik');
+          }
+          v2FailUpload(waited, 'brak uprawnienia. Odśwież kartę (Cmd+Shift+R)');
+          v2RenderFiles();
+          return;
+        }
+        setTimeout(function () { v2FlushPendingUploads(); }, 400);
+      });
+      return;
+    }
+    v2WaitingAuth = false;
+    v2AuthWaitTries = 0;
+    var queue = v2PendingFiles.slice();
+    v2PendingFiles = [];
+    v2PendingUi = queue.map(function (file) {
+      return file && file.name ? file.name : 'plik';
+    });
     v2SetClipBusy(true);
+    v2SetStatus(
+      queue.length === 1
+        ? ('Trwa załączanie pliku „' + v2PendingUi[0] + '”…')
+        : ('Trwa załączanie plików (' + queue.length + ')…'),
+      'busy'
+    );
+    v2RenderFiles();
+    var added = [];
+    var hadError = false;
     var chain = Promise.resolve();
-    files.forEach(function (file) {
+    queue.forEach(function (file, index) {
       chain = chain.then(function () {
+        var label = file && file.name ? file.name : 'plik';
+        v2SetStatus('Trwa załączanie pliku „' + label + '”…', 'busy');
         if (!file || file.size <= 0) {
-          v2SetStatus('Plik jest pusty.');
+          hadError = true;
+          v2FailUpload(label, 'plik jest pusty');
           return;
         }
         if (file.size > maxAttachmentBytes) {
-          v2SetStatus('Plik jest za duży (max ' + Math.round(maxAttachmentBytes / (1024 * 1024)) + ' MB).');
+          hadError = true;
+          v2FailUpload(label, 'plik jest za duży (max ' + Math.round(maxAttachmentBytes / (1024 * 1024)) + ' MB)');
           return;
         }
         if (v2FileCount() >= maxAttachments) {
-          v2SetStatus('Maks. ' + maxAttachments + ' załączników.');
+          hadError = true;
+          v2FailUpload(label, 'maks. ' + maxAttachments + ' załączników');
           return;
         }
         return v2FileToBase64(file).then(function (contentBase64) {
-          return fetch(uploadUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + accessToken
-            },
-            body: JSON.stringify({
-              action: 'upload',
-              sessionId: sessionId,
-              filename: file.name,
-              contentType: file.type || 'application/octet-stream',
-              contentBase64: contentBase64
-            })
-          }).then(function (res) {
-            return res.json().then(function (data) {
-              return { okHttp: res.ok, data: data || {} };
-            }).catch(function () {
-              return { okHttp: res.ok, data: { ok: false, error: 'HTTP ' + res.status } };
-            });
-          }).then(function (pack) {
+          return v2PostUpload(file, contentBase64, false).then(function (pack) {
             var uploaded = pack.data && pack.data.file;
             if (!pack.okHttp || !uploaded || !uploaded.id) {
-              v2SetStatus((pack.data && pack.data.error) || ('Nie udało się dodać „' + file.name + '”.'));
+              hadError = true;
+              var detail = (pack.data && pack.data.error)
+                ? pack.data.error
+                : ('HTTP ' + (pack.status || '?'));
+              v2FailUpload(label, detail);
               return;
             }
             if (!envelope.files) envelope.files = [];
-            envelope.files.push({ id: uploaded.id, name: uploaded.name || file.name });
+            envelope.files.push({ id: uploaded.id, name: uploaded.name || label });
+            added.push(uploaded.name || label);
+            v2PendingUi = v2PendingUi.slice(index + 1);
             v2RenderFiles();
             v2UpdateHint();
             v2PersistEnvelope();
@@ -579,21 +724,54 @@ export function composerV2RuntimeScript(): string {
     });
     chain.then(function () {
       v2SetClipBusy(false);
+      v2PendingUi = [];
+      v2RenderFiles();
+      if (!hadError && added.length) {
+        v2SetStatus(
+          added.length === 1
+            ? ('Załączono „' + added[0] + '”.')
+            : ('Załączono ' + added.length + ' pliki.')
+        );
+      } else if (!hadError && !added.length) {
+        v2SetStatus('Nie odczytano pliku. Spróbuj ponownie.', 'error');
+      }
+      if (v2PendingFiles.length) v2FlushPendingUploads();
     }).catch(function (err) {
       v2SetClipBusy(false);
-      v2SetStatus('Nie udało się dodać załącznika: ' + (err && err.message ? err.message : 'sieć'));
+      v2PendingUi = [];
+      v2RenderFiles();
+      v2FailUpload(
+        queue[0] && queue[0].name,
+        err && err.message ? err.message : 'sieć'
+      );
+      if (v2PendingFiles.length) v2FlushPendingUploads();
     });
+  }
+
+  function v2UploadFiles(fileList) {
+    var files = Array.prototype.slice.call(fileList || [], 0);
+    if (!files.length) {
+      v2SetStatus('Nie odczytano pliku. Spróbuj ponownie.', 'error');
+      v2Notify(v2StatusMessage, { error: 'Nie odczytano pliku. Spróbuj ponownie.' });
+      return;
+    }
+    for (var i = 0; i < files.length; i++) v2PendingFiles.push(files[i]);
+    v2FlushPendingUploads();
   }
 
   function v2BindEnvelopeForm() {
     ['owocni-v2-to', 'owocni-v2-cc', 'owocni-v2-bcc', 'owocni-v2-subject'].forEach(function (id) {
       var el = v2Input(id);
       if (!el) return;
-      el.addEventListener('input', function () {
+      function onEdit() {
         v2MarkDirty(el);
         v2ReadFormIntoEnvelope();
+        v2NotifyEnvelopeEdit();
         v2SchedulePersist();
-      });
+      }
+      el.addEventListener('input', onEdit);
+      el.addEventListener('change', onEdit);
+      el.addEventListener('blur', onEdit);
     });
     var ccToggle = v2Input('owocni-v2-cc-toggle');
     var bccToggle = v2Input('owocni-v2-bcc-toggle');
@@ -651,9 +829,9 @@ export function composerV2RuntimeScript(): string {
     var fileInput = v2Input('owocni-v2-file');
     if (fileInput) {
       fileInput.addEventListener('change', function () {
-        var list = fileInput.files;
+        var picked = Array.prototype.slice.call(fileInput.files || [], 0);
         fileInput.value = '';
-        v2UploadFiles(list);
+        v2UploadFiles(picked);
       });
     }
     v2RenderFiles();
@@ -663,11 +841,15 @@ export function composerV2RuntimeScript(): string {
     var hint = document.getElementById('owocni-v2-hint');
     var clip = v2Input('owocni-v2-clip');
     var fileInput = v2Input('owocni-v2-file');
-    if (clip) {
-      if (!accessToken) clip.classList.add('disabled');
-      else clip.classList.remove('disabled');
+    if (clip && !v2Uploading && !v2WaitingAuth) {
+      clip.classList.remove('busy');
+      clip.classList.remove('disabled');
     }
-    if (fileInput && !v2Uploading) fileInput.disabled = !accessToken;
+    if (fileInput && !v2Uploading) fileInput.disabled = false;
+    if (accessToken && v2PendingFiles.length && !v2Uploading) {
+      v2WaitingAuth = false;
+      v2FlushPendingUploads();
+    }
     if (!hint) return;
     if (!accessToken) {
       hint.textContent = 'Możesz pisać. Uprawnienie do wysyłki dociąga się w tle.';
@@ -723,7 +905,13 @@ export function composerV2RuntimeScript(): string {
           if (typeof raw === 'string' && raw.trim()) {
             try {
               var parsed = JSON.parse(raw);
-              if (parsed && typeof parsed === 'object') v2MergeEnvelope(parsed);
+              if (parsed && typeof parsed === 'object') {
+                var storedFiles = parsed.files;
+                if (storedFiles && storedFiles.length) {
+                  envelope.files = storedFiles;
+                  v2RenderFiles();
+                }
+              }
             } catch (e) {}
           }
           if (v2FileCount() === 0 && attempts < 3) {

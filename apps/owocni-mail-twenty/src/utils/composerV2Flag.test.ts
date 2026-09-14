@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { isComposerV2Payload, readComposerV2Enabled, writeComposerV2Enabled } from './composerV2Flag';
 import {
   composerV2EnvelopeKey,
+  composerV2RuntimeScript,
   escapeHtmlAttr,
   parseComposerV2EnvelopeJson,
 } from './composerV2Iframe';
@@ -91,5 +92,21 @@ describe('composer v2 envelope store', () => {
 
   it('escapes envelope values for srcDoc attributes', () => {
     expect(escapeHtmlAttr('a"b<c>')).toBe('a&quot;b&lt;c&gt;');
+  });
+});
+
+describe('composer v2 attachment picker', () => {
+  it('copies picked files before clearing the input and shows upload status', () => {
+    const src = composerV2RuntimeScript();
+    const copyAt = src.indexOf(
+      'Array.prototype.slice.call(fileInput.files || [], 0)',
+    );
+    const clearAt = src.indexOf("fileInput.value = ''");
+
+    expect(copyAt).toBeGreaterThan(0);
+    expect(clearAt).toBeGreaterThan(copyAt);
+    expect(src).toContain('Trwa załączanie pliku');
+    expect(src).toContain('Nie udało się dodać');
+    expect(src).toContain('Nie odczytano pliku');
   });
 });

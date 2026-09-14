@@ -40,6 +40,7 @@ import {
   parseEmailList,
 } from 'src/utils/parseEmailList';
 import { isComposerV2Payload } from 'src/utils/composerV2Flag';
+import { resolveOutboundEmail } from 'src/utils/newMailContext';
 import { isUnintendedEmptyReply } from 'src/utils/mailSignature';
 import {
   composerV2EnvelopeKey,
@@ -245,7 +246,11 @@ const handler = async (event: RoutePayload) => {
     });
     const email = internalHandoff
       ? customTo
-      : customTo || person?.email?.trim();
+      : resolveOutboundEmail({
+          composerV2,
+          customTo,
+          personEmail: person?.email,
+        });
 
     if (!email) {
       return { ok: false, error: 'Person has no primary email' };

@@ -1,0 +1,27 @@
+{
+  "mailbox": "copywriting@owocni.pl",
+  "folder": "BB Archive",
+  "reason": "one-off: BB Sent reply for  30 VI missing in Twenty; parent IN on LEADS",
+  "allow_other_channel": true,
+  "appended": [
+    {
+      "bb_id": 2052652,
+      "inbox": "copywriting@owocni.pl",
+      "subject": "Nazwa dla barbera — plan:",
+      "sent_date": "2026-06-30T09:47:34.813+00:00",
+      "own": "<0a8083a6-3205-cc4a-4a81-7dc52800b136@owocni.pl>",
+      "parent": "<15964002dde2482a7495ac42a71387e2@form.owocni.pl>",
+      "status": "appended",
+      "parent_thread": "6fce3ce5-8d27-45a0-8c70-116c3912dfd2",
+      "parent_mailboxes": [
+        "LEADS"
+      ],
+      "other_channel_override": true,
+      "folder": "BB Archive",
+      "bytes": 78847,
+      "imap_confirm": [
+        "BB Archive"
+      ]
+    }
+  ]
+}

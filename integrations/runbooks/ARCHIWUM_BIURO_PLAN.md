@@ -210,3 +210,94 @@ Marta bez pomocy:
 4. Nie musi logować się do Firmao ani odświeżać Thunderbirda.
 
 Dopiero wtedy można wyłączyć konto Firmao.
+
+---
+
+## 10. Wdrożenie Open Archiver — kroki na PC-archiwum
+
+Hasło `studio@`: `better-bitrix-main/.env` → `SMTP_USER_STUDIO` / `STMP_PASSWORD_STUDIO` (literówka `STMP_`). **Nie** z Thunderbirda Marty. **Nie** przenosić maili na serwerze.
+
+### A. Komputer
+
+- Docker Desktop zainstalowany i włączony, ≥ 4 GB RAM wolne, ≥ 50 GB na dysku (skrzynka może urosnąć).
+- Uśpienie **wyłączone**. Kabel, stały IP w LAN (zapisać, np. `192.168.1.50`).
+- Windows: sieć „Prywatna”. Git opcjonalnie (albo ZIP z GitHuba).
+
+### B. Instalacja
+
+```bash
+git clone https://github.com/LogicLabs-OU/OpenArchiver.git
+cd OpenArchiver
+cp .env.example .env
+```
+
+W `.env` **zostaw** `ENABLE_DELETION` puste / nie `true`. Ustaw i **nie gub** (bez tego szyfrowane maile nie odczytasz):
+
+```
+APP_URL=http://192.168.X.X:3000
+ORIGIN=http://192.168.X.X:3000
+STORAGE_TYPE=local
+STORAGE_LOCAL_ROOT_PATH=/var/data/open-archiver
+POSTGRES_PASSWORD=…   (silne, nie default)
+REDIS_PASSWORD=…
+MEILI_MASTER_KEY=…
+JWT_SECRET=…
+ENCRYPTION_KEY=<openssl rand -hex 32>
+STORAGE_ENCRYPTION_KEY=<openssl rand -hex 32>
+```
+
+`192.168.X.X` = IP tego PC w LAN, **nie** `localhost` (inaczej reszta biura się nie wloguje).
+
+Windows (PowerShell, w katalogu projektu): `openssl rand -hex 32` albo generator hex 32 bajty.
+
+Dane na dysku hosta, nie w anonimowym volume — w `docker-compose.yml` przy serwisie `open-archiver`:
+
+```yaml
+volumes:
+  - ./data/open-archiver:/var/data/open-archiver
+```
+
+i usuń named volume `archiver-data` z dołu pliku. Potem:
+
+```bash
+docker compose up -d
+docker compose ps
+```
+
+Pierwsze wejście **z tego PC**: `http://localhost:3000` → `/setup` → konto **admin Dawid**. Kto wejdzie pierwszy, ten jest adminem.
+
+Zapora: port **3000 tylko sieć prywatna**. Nie wystawiać na internet.
+
+### C. Ingest `studio@` (kopia IMAP)
+
+Dashboard → **Ingestions** → Create New:
+
+| Pole | Wartość |
+|---|---|
+| Name | `studio@owocni.pl` |
+| Provider | Generic IMAP |
+| Host | `mail.owocni.pl` |
+| Port | `993` |
+| Username | `studio@owocni.pl` |
+| Password | z `.env` Owocni, nie z Thunderbirda |
+
+Save. Status: **Importing** (może iść godzinami) → **Active**. **Error** = złe hasło/host.
+
+Thunderbirda **nie otwierać** do porządkowania. To jest FETCH (kopia), nie przenoszenie folderów.
+
+### D. Konta biura
+
+Users: Marta, Gosia, Maciej, Kinga — rola **read + search** (audytor), bez ingest/delete. Hasło IMAP zostaje tylko u admina.
+
+Z innego komputera w LAN: `http://192.168.X.X:3000`.
+
+### E. Kontrola zanim oddasz Martę
+
+1. Dashboard pokazuje rosnącą liczbę maili (nie zero po 15 min — chyba że skrzynka pusta).
+2. Szukaj **wysłanego** ze `studio@` (nie tylko odebranego). Docs IMAP mówią „INBOX”; jeśli Wysłane nie weszły — zatrzymaj się i dociągnij (mbox/EML Sent), nie oddawaj jeszcze.
+3. Szukaj nazwy znanego klienta + otwórz wątek z załącznikiem PDF.
+4. Konto Marty: widzi Search, **nie** kasuje i **nie** widzi hasła IMAP.
+
+### F. Potem (osobno, nie blokuje ingestu)
+
+Skopiować `Dla_ludzi/` + `faktury/` z T5 na ten PC → udział SMB `ArchiwumOwocni` (tylko odczyt). Open Archiver = poczta; SMB = faktury.
