@@ -11,6 +11,8 @@ import {
   robertAppliedStorageKey,
   robertDefaultTabId,
   robertDefaultTabKind,
+  robertTabLastRecordKey,
+  shouldApplyRobertDefaultTab,
   writeCachedRobertIdentity,
 } from './robertDefaultTab';
 
@@ -41,6 +43,20 @@ describe('robertDefaultTabId', () => {
     expect(robertDefaultTabId(null)).toBeNull();
     expect(robertDefaultTabId('')).toBeNull();
     expect(robertDefaultTabId('   ')).toBeNull();
+  });
+
+  it('stores one last-lead pointer per Robert mailbox', () => {
+    expect(robertTabLastRecordKey('  RobertMank@Owocni.pl  ')).toBe(
+      'roberttab:last:robertmank@owocni.pl',
+    );
+  });
+
+  it('applies Home/Tasks only when the sidebar lead changes', () => {
+    expect(shouldApplyRobertDefaultTab(null, 'lead-a')).toBe(true);
+    expect(shouldApplyRobertDefaultTab('', 'lead-a')).toBe(true);
+    expect(shouldApplyRobertDefaultTab('lead-a', 'lead-a')).toBe(false);
+    expect(shouldApplyRobertDefaultTab('lead-a', 'lead-b')).toBe(true);
+    expect(shouldApplyRobertDefaultTab('lead-b', 'lead-a')).toBe(true);
   });
 });
 
@@ -78,6 +94,14 @@ describe('session cache', () => {
     expect(hasAppliedRobertDefaultTab(recordId, robertId, storage)).toBe(true);
     expect(hasAppliedRobertDefaultTab(recordId, 'admin-user', storage)).toBe(
       false,
+    );
+  });
+
+  it('treats a user-less applied mark as already applied for that lead', () => {
+    const recordId = 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee';
+    markRobertDefaultTabApplied(recordId, null, storage);
+    expect(hasAppliedRobertDefaultTab(recordId, 'robert-user', storage)).toBe(
+      true,
     );
   });
 });

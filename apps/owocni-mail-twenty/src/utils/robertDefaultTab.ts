@@ -18,6 +18,9 @@ export const ROBERT_DEFAULT_TAB_PATH = '/s/mail/robert-default-tab';
 
 export const ROBERT_IDENTITY_STORAGE_KEY = 'owocni-robert-login-v1';
 export const ROBERT_APPLIED_STORAGE_PREFIX = 'owocni-robert-tab-applied-v2:';
+export const ROBERT_TAB_CLAIM_PREFIX = 'roberttab:';
+/** Safety TTL for the stored last-lead pointer — not a re-apply timer. */
+export const ROBERT_TAB_CLAIM_TTL_MS = 24 * 60 * 60 * 1000;
 
 export function normalizeEmail(value: string | null | undefined): string {
   return String(value || '')
@@ -45,6 +48,26 @@ export function robertAppliedStorageKey(
   return id
     ? `${ROBERT_APPLIED_STORAGE_PREFIX}${id}:${recordId}`
     : `${ROBERT_APPLIED_STORAGE_PREFIX}${recordId}`;
+}
+
+/** One pointer per Robert: last opportunity opened in the sidebar. */
+export function robertTabLastRecordKey(email: string): string {
+  return `${ROBERT_TAB_CLAIM_PREFIX}last:${normalizeEmail(email)}`;
+}
+
+/**
+ * Home/Tasks when Robert enters a different lead.
+ * Same lead (Email / any other tab) → do not steal the tab.
+ */
+export function shouldApplyRobertDefaultTab(
+  lastRecordId: string | null | undefined,
+  currentRecordId: string,
+): boolean {
+  const current = currentRecordId.trim();
+  if (!current) {
+    return false;
+  }
+  return String(lastRecordId || '').trim() !== current;
 }
 
 export function robertDefaultTabKind(
@@ -134,10 +157,20 @@ export function hasAppliedRobertDefaultTab(
   }
 
   try {
-    return storage?.getItem(robertAppliedStorageKey(recordId, userId)) === '1';
+    if (storage?.getItem(robertAppliedStorageKey(recordId, userId)) === '1') {
+      return true;
+    }
+    if (
+      userId &&
+      storage?.getItem(robertAppliedStorageKey(recordId)) === '1'
+    ) {
+      return true;
+    }
   } catch {
     return false;
   }
+
+  return false;
 }
 
 export function markRobertDefaultTabApplied(

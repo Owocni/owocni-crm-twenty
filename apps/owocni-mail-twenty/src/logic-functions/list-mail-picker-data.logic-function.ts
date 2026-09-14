@@ -2,6 +2,7 @@ import { CoreApiClient } from 'twenty-client-sdk/core';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
+import { OWOCNI_MAIL_VERSION } from 'src/constants/appVersion';
 import { prepareHtmlForPicker } from 'src/utils/prepareHtmlForPicker';
 import {
   catalogFromCrmRows,
@@ -262,6 +263,7 @@ const handler = async (event: RoutePayload) => {
   }
 
   return {
+    appVersion: OWOCNI_MAIL_VERSION,
     templates,
     signatureByHandle,
     person,

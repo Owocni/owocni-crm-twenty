@@ -17,9 +17,9 @@ describe('isComposerV2Payload', () => {
     expect(isComposerV2Payload({})).toBe(false);
   });
 
-  it('defaults to on unless localStorage opts out', () => {
+  it('defaults to on; only session/query opts out (no UI toggle)', () => {
     const store: Record<string, string> = {};
-    vi.stubGlobal('localStorage', {
+    vi.stubGlobal('sessionStorage', {
       getItem: (key: string) => store[key] ?? null,
       setItem: (key: string, value: string) => {
         store[key] = value;
@@ -35,6 +35,41 @@ describe('isComposerV2Payload', () => {
     expect(readComposerV2Enabled()).toBe(false);
     writeComposerV2Enabled(true);
     expect(readComposerV2Enabled()).toBe(true);
+    vi.unstubAllGlobals();
+  });
+
+  it('ignores leftover localStorage from the weekend button', () => {
+    vi.stubGlobal('localStorage', {
+      getItem: () => '0',
+      setItem: () => undefined,
+      removeItem: () => undefined,
+    });
+    vi.stubGlobal('sessionStorage', {
+      getItem: () => null,
+      setItem: () => undefined,
+      removeItem: () => undefined,
+    });
+    vi.stubGlobal('location', { search: '' });
+
+    expect(readComposerV2Enabled()).toBe(true);
+    vi.unstubAllGlobals();
+  });
+
+  it('lets a developer restore the legacy composer via query', () => {
+    const store: Record<string, string> = {};
+    vi.stubGlobal('sessionStorage', {
+      getItem: (key: string) => store[key] ?? null,
+      setItem: (key: string, value: string) => {
+        store[key] = value;
+      },
+      removeItem: (key: string) => {
+        delete store[key];
+      },
+    });
+    vi.stubGlobal('location', { search: '?owocniMailV2=0' });
+
+    expect(readComposerV2Enabled()).toBe(false);
+    expect(store['owocni.mail.composerV2']).toBe('0');
     vi.unstubAllGlobals();
   });
 });

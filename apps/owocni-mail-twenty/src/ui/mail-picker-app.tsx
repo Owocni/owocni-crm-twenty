@@ -16,11 +16,16 @@ import {
   type MailBodyEditorHandle,
 } from 'src/front-components/mail-body-editor';
 import { ComposerV2Host } from 'src/front-components/composer-v2-host';
-import type { ComposerV2Envelope } from 'src/utils/composerV2Iframe';
 import {
-  readComposerV2Enabled,
-  writeComposerV2Enabled,
-} from 'src/utils/composerV2Flag';
+  MAIL_APP_VERSION_PATH,
+  OWOCNI_MAIL_VERSION,
+} from 'src/constants/appVersion';
+import type { ComposerV2Envelope } from 'src/utils/composerV2Iframe';
+import { readComposerV2Enabled } from 'src/utils/composerV2Flag';
+import {
+  isStaleMailBundle,
+  tryReloadStaleHost,
+} from 'src/utils/staleMailBundle';
 import {
   buildMailboxRecordShowPath,
   buildOpportunityRecordShowPath,
@@ -170,6 +175,7 @@ type RecipientSearchHit = {
 };
 
 type PickerDataResponse = {
+  appVersion?: string;
   templates: MailTemplateSummary[];
   signatureByHandle?: SignatureCatalog;
   person: PersonContext | null;
@@ -1096,6 +1102,9 @@ export const TemplatePicker = ({
   const [composerV2Enabled, setComposerV2Enabled] = useState(
     readComposerV2Enabled,
   );
+  const [staleServerVersion, setStaleServerVersion] = useState<string | null>(
+    null,
+  );
   const [uploadingAttachments, setUploadingAttachments] = useState(false);
   const [attachmentError, setAttachmentError] = useState<string | null>(null);
   const [attachmentPickerSrcDoc, setAttachmentPickerSrcDoc] = useState('');
@@ -1147,6 +1156,50 @@ export const TemplatePicker = ({
 
   replySubjectRef.current = replySubject;
   editSubjectRef.current = editSubject;
+
+  const noteServerVersion = (version?: string | null) => {
+    const live = version?.trim() ?? '';
+    if (!isStaleMailBundle(live)) {
+      return;
+    }
+    if (tryReloadStaleHost(live) === 'reloading') {
+      return;
+    }
+    setStaleServerVersion(live);
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const checkLiveVersion = async () => {
+      try {
+        const client = new RestApiClient();
+        const result = await client.get<{ version?: string }>(
+          MAIL_APP_VERSION_PATH,
+        );
+        if (!cancelled) {
+          noteServerVersion(result.version);
+        }
+      } catch {
+        // Don't block compose if the version route is down.
+      }
+    };
+
+    void checkLiveVersion();
+
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        void checkLiveVersion();
+      }
+    };
+    globalThis.addEventListener('pageshow', onPageShow);
+
+    return () => {
+      cancelled = true;
+      globalThis.removeEventListener('pageshow', onPageShow);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useLayoutEffect(() => {
     if (!isRecordPage && !isMailboxRecordPage) {
@@ -1727,6 +1780,8 @@ export const TemplatePicker = ({
         if (cancelled) {
           return;
         }
+
+        noteServerVersion(data.appVersion);
 
         setTemplates(data.templates ?? []);
         adoptSignatureCatalog(data.signatureByHandle);
@@ -3503,6 +3558,28 @@ export const TemplatePicker = ({
       ) : null}
       {!isPeek ? (
       <>
+      {staleServerVersion ? (
+        <div
+          role="alert"
+          style={{
+            flexShrink: 0,
+            margin: '8px 16px 0',
+            padding: '10px 12px',
+            borderRadius: 6,
+            background: '#fff7ed',
+            border: '1px solid #fdba74',
+            color: '#9a3412',
+            fontSize: 13,
+            lineHeight: 1.45,
+          }}
+        >
+          <strong>Poczta ma nowszą wersję</strong>
+          {' '}
+          (serwer {staleServerVersion}, ta karta {OWOCNI_MAIL_VERSION}).
+          Odśwież twardo: <strong>Cmd+Shift+R</strong> (Windows: Ctrl+Shift+R),
+          żeby wczytać aktualny composer — nie wysyłaj ze starej kopii.
+        </div>
+      ) : null}
       <div
         style={{
           padding: '12px 16px',
@@ -4213,27 +4290,9 @@ export const TemplatePicker = ({
             </div>
           ) : null}
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              const next = !composerV2Enabled;
-              writeComposerV2Enabled(next);
-              setComposerV2Enabled(next);
-            }}
-            style={{
-              flexShrink: 0,
-              padding: '4px 10px',
-              border: '1px solid #c7d2fe',
-              borderRadius: 4,
-              background: composerV2Enabled ? '#eef2ff' : '#fff',
-              color: '#3730a3',
-              fontWeight: 600,
-              fontSize: 12,
-              cursor: 'pointer',
-            }}
-          >
-            {composerV2Enabled ? 'Stary composer' : 'Nowy composer'}
-          </button>
+          <span style={{ flexShrink: 0, fontSize: 11, color: '#9ca3af' }}>
+            v{OWOCNI_MAIL_VERSION}
+          </span>
           </div>
           {!composerExpanded &&
           !isPageCompose &&

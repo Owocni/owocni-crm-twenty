@@ -8,6 +8,7 @@ import {
   serializeComposeDraft,
   type ComposeDraftEnvelope,
 } from 'src/utils/composeDraft';
+import { ROBERT_TAB_CLAIM_TTL_MS } from 'src/utils/robertDefaultTab';
 
 /**
  * Draft store: in-memory Map (same worker) + durable mailEditorDraft (DB).
@@ -25,6 +26,10 @@ export function draftTtlMs(sessionId: string): number {
 
   if (sessionId.startsWith('handoff-pending:')) {
     return HANDOFF_PENDING_TTL_MS;
+  }
+
+  if (sessionId.startsWith('roberttab:')) {
+    return ROBERT_TAB_CLAIM_TTL_MS;
   }
 
   return DRAFT_TTL_MS;

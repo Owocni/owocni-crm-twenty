@@ -3,10 +3,13 @@ import { MetadataApiClient } from 'twenty-client-sdk/metadata';
 import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
+import { getEditorDraft, saveEditorDraft } from 'src/logic-functions/editor-draft-store';
 import { findOpportunityForActions } from 'src/utils/opportunityActionApi';
 import {
   isRobertLogin,
   robertDefaultTabId,
+  robertTabLastRecordKey,
+  shouldApplyRobertDefaultTab,
 } from 'src/utils/robertDefaultTab';
 
 type CurrentUserRow = {
@@ -68,14 +71,32 @@ const handler = async (event: RoutePayload) => {
     return { ok: true, apply: false, isRobert: true, tabId: null };
   }
 
-  return { ok: true, apply: true, isRobert: true, tabId };
+  const commit =
+    event.queryStringParameters?.commit === '1' ||
+    event.queryStringParameters?.commit === 'true';
+  const lastKey = robertTabLastRecordKey(email ?? '');
+  const lastRecordId = (await getEditorDraft(lastKey))?.trim() || '';
+  const apply = shouldApplyRobertDefaultTab(lastRecordId, recordId);
+
+  if (commit && apply) {
+    await saveEditorDraft(lastKey, recordId);
+  }
+
+  return {
+    ok: true,
+    apply,
+    isRobert: true,
+    tabId,
+    lastRecordId,
+    alreadyApplied: !apply,
+  };
 };
 
 export default defineLogicFunction({
   universalIdentifier: '7e8ccd3b-0026-4459-b894-4f8bd77dc357',
   name: 'get-robert-default-tab',
   description:
-    'Robert-only default Opportunity tab: Home on NEW, Tasks otherwise',
+    'Robert-only: Home on NEW / Tasks otherwise, once per newly opened lead',
   timeoutSeconds: 20,
   handler,
   httpRouteTriggerSettings: {

@@ -9,8 +9,6 @@ import {
 } from 'twenty-sdk/front-component';
 
 import {
-  hasAppliedRobertDefaultTab,
-  markRobertDefaultTabApplied,
   readCachedRobertIdentity,
   ROBERT_DEFAULT_TAB_PATH,
   writeCachedRobertIdentity,
@@ -21,7 +19,11 @@ type RobertTabResponse = {
   apply?: boolean;
   isRobert?: boolean;
   tabId?: string | null;
+  alreadyApplied?: boolean;
 };
+
+/** Survives effect re-runs in the same iframe; dies on Email remount (server last-lead decides). */
+let lastHandledRecordId: string | null = null;
 
 async function focusOpportunityTab(recordId: string, tabId: string): Promise<void> {
   try {
@@ -49,65 +51,73 @@ async function focusOpportunityTab(recordId: string, tabId: string): Promise<voi
 }
 
 /**
- * Robert lands on Home (Nowy) or Tasks (rest) when the Mail tab mounts
- * (workspace default). Everyone else keeps Mail. Fail-closed.
- *
- * Do not gate on host URL — the Mail FC iframe often cannot read parent
- * location, so a kanban check would skip the switch entirely.
+ * Robert: first paint of a lead in the sidebar → Home (Nowy) or Tasks (rest).
+ * After that he can open Email / any tab. Entering a *different* lead applies again.
+ * Everyone else keeps Mail. Fail-closed.
  */
 export function useRobertDefaultOpportunityTab(): boolean {
   const recordId = useSelectedRecordIds()[0] ?? null;
   const userId = useUserId();
-  const [hideMail, setHideMail] = useState(
-    () => readCachedRobertIdentity(userId) === true,
-  );
+  const [hideMail, setHideMail] = useState(false);
 
   useEffect(() => {
     if (!recordId) {
+      lastHandledRecordId = null;
       setHideMail(false);
       return;
     }
 
-    if (hasAppliedRobertDefaultTab(recordId, userId)) {
+    if (lastHandledRecordId === recordId) {
       setHideMail(false);
       return;
     }
 
     const cached = readCachedRobertIdentity(userId);
     if (cached === false) {
+      lastHandledRecordId = recordId;
       setHideMail(false);
       return;
     }
 
     let cancelled = false;
-    if (cached === true) {
-      setHideMail(true);
-    }
 
     void (async () => {
       try {
         const client = new RestApiClient();
-        const data = await client.get<RobertTabResponse>(ROBERT_DEFAULT_TAB_PATH, {
-          query: { recordId },
+        const peek = await client.get<RobertTabResponse>(ROBERT_DEFAULT_TAB_PATH, {
+          query: { recordId, _ts: String(Date.now()) },
         });
 
         if (cancelled) {
           return;
         }
 
-        const apply = Boolean(data?.ok && data.apply && data.tabId);
-        if (typeof data?.isRobert === 'boolean') {
-          writeCachedRobertIdentity(userId, data.isRobert);
+        if (typeof peek?.isRobert === 'boolean') {
+          writeCachedRobertIdentity(userId, peek.isRobert);
         }
 
-        if (!apply || !data.tabId) {
+        const apply = Boolean(peek?.ok && peek.apply && peek.tabId);
+        if (!apply || !peek.tabId) {
+          lastHandledRecordId = recordId;
           setHideMail(false);
           return;
         }
 
+        await client.get<RobertTabResponse>(ROBERT_DEFAULT_TAB_PATH, {
+          query: {
+            recordId,
+            commit: '1',
+            _ts: String(Date.now()),
+          },
+        });
+
+        if (cancelled) {
+          return;
+        }
+
+        lastHandledRecordId = recordId;
         setHideMail(true);
-        await focusOpportunityTab(recordId, data.tabId);
-        markRobertDefaultTabApplied(recordId, userId);
+        await focusOpportunityTab(recordId, peek.tabId);
       } catch {
         if (!cancelled) {
           setHideMail(false);

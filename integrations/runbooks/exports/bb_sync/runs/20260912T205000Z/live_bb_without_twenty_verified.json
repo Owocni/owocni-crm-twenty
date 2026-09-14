@@ -1,0 +1,1568 @@
+{
+  "true_no_card": 96,
+  "exists_any_stage": [
+    {
+      "bb_id": 9245,
+      "email": [
+        "p.radkowska@poczta.fm"
+      ],
+      "tw_id": "291b83d5-ce97-4140-abfd-6f9273ee3848",
+      "stage": "WON",
+      "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "name": "p.radkowska@poczta.fm"
+    },
+    {
+      "bb_id": 5874,
+      "email": [
+        "p.mruk@onet.eu"
+      ],
+      "tw_id": "a24760a0-d94f-48d5-96fa-114741147ca7",
+      "stage": "WON",
+      "ownerId": "7fddba1d-e443-47d4-97b7-a3a829efd8c1",
+      "name": "p.mruk@onet.eu · Naming"
+    }
+  ],
+  "internal": 1,
+  "still": [
+    {
+      "bb_id": 33325,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Jakub Pastwa - logo",
+      "emails": [
+        "jakub-pastwa-jpabudownictwo-pl@form2020.owocni.pl",
+        "jakub.pastwa@jpabudownictwo.pl"
+      ],
+      "created_at": "2024-09-18T06:01:48+00:00",
+      "last_modified_at": "2026-05-13T07:45:28.210564+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 9022,
+      "owner": "Maciej",
+      "stage": "inquiry",
+      "is_follow_up": false,
+      "title": "Nazwa dla Sklepu Zielarskiego i Warsztatów",
+      "emails": [
+        "angelika.k98@interia.pl"
+      ],
+      "created_at": "2026-07-23T11:25:34.223816+00:00",
+      "last_modified_at": "2026-07-23T11:52:17.512012+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 9021,
+      "owner": "Maciej",
+      "stage": "inquiry",
+      "is_follow_up": false,
+      "title": "Nazwa: Rebranding dla Firmy Filmowo-Fotograficznej",
+      "emails": [
+        "konop152411@gmail.com"
+      ],
+      "created_at": "2026-07-23T09:17:27.563084+00:00",
+      "last_modified_at": "2026-07-23T09:18:36.982391+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 9002,
+      "owner": "Maciej",
+      "stage": "inquiry",
+      "is_follow_up": false,
+      "title": "Copywriting dla Social Media w Edukacji Online",
+      "emails": [
+        "jolanta.krupinska.poczta@gmail.com"
+      ],
+      "created_at": "2026-07-21T10:59:30.131802+00:00",
+      "last_modified_at": "2026-07-27T09:17:12.793582+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8995,
+      "owner": "Maciej",
+      "stage": "inquiry",
+      "is_follow_up": false,
+      "title": "Nazwa: Suplementy Diety Premium dla Kobiet",
+      "emails": [
+        "debska.iga1@gmail.com"
+      ],
+      "created_at": "2026-07-20T18:43:43.538389+00:00",
+      "last_modified_at": "2026-07-21T07:51:45.944697+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8798,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Usług BHP i P-poż",
+      "emails": [
+        "pierwszapomoc@2gb.pl"
+      ],
+      "created_at": "2026-06-26T10:31:58.714036+00:00",
+      "last_modified_at": "2026-06-30T12:48:33.49653+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8793,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Rozwoju Marki w Branży Psychologicznej",
+      "emails": [
+        "s.anita1801@gmail.com"
+      ],
+      "created_at": "2026-06-26T06:54:08.921361+00:00",
+      "last_modified_at": "2026-06-30T12:48:27.83484+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8784,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting \"O nas\" dla Biura Rachunkowego (Marta)",
+      "emails": [
+        "ala.jarco@gmail.com"
+      ],
+      "created_at": "2026-06-24T14:27:35.424723+00:00",
+      "last_modified_at": "2026-06-30T12:48:26.290582+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8777,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Wierceń Geotermalnych",
+      "emails": [
+        "concept@lesinska.com"
+      ],
+      "created_at": "2026-06-23T03:00:42.544955+00:00",
+      "last_modified_at": "2026-06-30T12:48:30.04363+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8775,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Firmy Budowlano-Instalacyjnej",
+      "emails": [
+        "ogrodyvikinga@gmail.com"
+      ],
+      "created_at": "2026-06-23T03:00:42.19539+00:00",
+      "last_modified_at": "2026-06-30T12:48:31.64655+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8773,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriter for articles",
+      "emails": [
+        "mchrzanowski@n-n-n.net"
+      ],
+      "created_at": "2026-06-22T09:17:24.674639+00:00",
+      "last_modified_at": "2026-06-24T05:23:46.893499+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8766,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Lokalnej Firmy Sprzątającej",
+      "emails": [
+        "anna8797@o2.pl"
+      ],
+      "created_at": "2026-06-21T20:01:46.918303+00:00",
+      "last_modified_at": "2026-06-30T12:48:23.706792+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8760,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Obuwia Premium",
+      "emails": [
+        "dawid-zagraba@wp.pl"
+      ],
+      "created_at": "2026-06-20T12:49:58.725612+00:00",
+      "last_modified_at": "2026-06-30T12:48:24.821924+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8746,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa Restauracji: Nowa Tożsamość dla Lokalu Gastronomicznego",
+      "emails": [
+        "mon.tom141093@gmail.com"
+      ],
+      "created_at": "2026-06-18T10:59:55.655122+00:00",
+      "last_modified_at": "2026-06-30T12:48:21.471892+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8742,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Nowa Marka Wiercenia Studni Głębinowych",
+      "emails": [
+        "dobrymudzin123321@gmail.com"
+      ],
+      "created_at": "2026-06-18T06:56:26.898966+00:00",
+      "last_modified_at": "2026-06-30T12:48:22.598317+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8734,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Gabinetu Fizjoterapii Estetycznej",
+      "emails": [
+        "krzysiu.bernas@gmail.com"
+      ],
+      "created_at": "2026-06-17T14:09:55.110132+00:00",
+      "last_modified_at": "2026-06-26T09:45:07.294599+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8720,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Projektowania Przestrzeni w Branży Architektonicznej",
+      "emails": [
+        "m.sztompka@wp.pl"
+      ],
+      "created_at": "2026-06-16T03:00:42.598823+00:00",
+      "last_modified_at": "2026-06-30T12:48:20.168163+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8716,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla E-commerce w Branży Zoologicznej",
+      "emails": [
+        "blonde3005@o2.pl"
+      ],
+      "created_at": "2026-06-15T08:14:30.073893+00:00",
+      "last_modified_at": "2026-06-30T12:48:17.580088+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8686,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Nowej Firmy Przewozowej AGD",
+      "emails": [
+        "soltiskola029@gmail.com"
+      ],
+      "created_at": "2026-06-10T09:21:04.361776+00:00",
+      "last_modified_at": "2026-06-16T06:12:11.681715+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8631,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Nowej Marki Przedłużania Rzęs",
+      "emails": [
+        "marczakjoanna57@gmail.com"
+      ],
+      "created_at": "2026-06-02T03:00:38.295813+00:00",
+      "last_modified_at": "2026-06-16T06:12:08.886871+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8629,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Inwestora Zastępczego",
+      "emails": [
+        "kwapisiewicz.marcin@gmail.com"
+      ],
+      "created_at": "2026-06-01T13:36:42.981711+00:00",
+      "last_modified_at": "2026-06-30T12:48:15.826934+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8611,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Tworzenie Nazwy dla Biura Podróży",
+      "emails": [
+        "anastazjaaguiluz@gmail.com"
+      ],
+      "created_at": "2026-05-29T11:16:22.991598+00:00",
+      "last_modified_at": "2026-05-29T11:56:27.459877+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8602,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Prywatnej Szkoły Muzycznej",
+      "emails": [
+        "wojciechbuczak94@gmail.com"
+      ],
+      "created_at": "2026-05-28T08:41:21.180472+00:00",
+      "last_modified_at": "2026-05-28T09:52:19.209535+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8597,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Stomatologicznej i Medycznej",
+      "emails": [
+        "katarzyna.wiktoriaa@gmail.com"
+      ],
+      "created_at": "2026-05-27T16:23:50.231748+00:00",
+      "last_modified_at": "2026-05-28T09:52:18.26966+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8591,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "nazwa - oferta",
+      "emails": [
+        "rb.aleksandrovna@gmail.com"
+      ],
+      "created_at": "2026-05-26T13:08:39.710557+00:00",
+      "last_modified_at": "2026-05-28T09:52:17.145261+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8565,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Usług Ogrodniczych - Nowa Marka",
+      "emails": [
+        "jkuc740@gmail.com"
+      ],
+      "created_at": "2026-05-20T21:57:09.230834+00:00",
+      "last_modified_at": "2026-05-21T09:56:59.957052+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8564,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting Nazwa dla Nowej Marki Architektonicznej",
+      "emails": [
+        "siczekarolina@gmail.com"
+      ],
+      "created_at": "2026-05-20T17:47:09.078253+00:00",
+      "last_modified_at": "2026-05-21T06:05:37.986086+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8538,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Nowej Marki Architektury Krajobrazu",
+      "emails": [
+        "wiktoria.klosowska@vp.pl"
+      ],
+      "created_at": "2026-05-19T03:00:51.292682+00:00",
+      "last_modified_at": "2026-05-21T11:44:54.120069+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8516,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Zarządzania Nieruchomościami",
+      "emails": [
+        "jodlowskapl@gmail.com"
+      ],
+      "created_at": "2026-05-15T23:04:01.762854+00:00",
+      "last_modified_at": "2026-05-19T06:36:58.879719+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8477,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Mycia Ciśnieniowego - Nowa Marka",
+      "emails": [
+        "oskarzarzycki@gmail.com"
+      ],
+      "created_at": "2026-05-12T03:00:36.783889+00:00",
+      "last_modified_at": "2026-05-14T05:58:06.841603+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8427,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Edukacyjnej",
+      "emails": [
+        "ania734@interia.eu"
+      ],
+      "created_at": "2026-05-06T09:19:31.094691+00:00",
+      "last_modified_at": "2026-05-14T05:58:05.918156+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8417,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Biura Nieruchomości w Łodzi (Marta)",
+      "emails": [
+        "piotr.pl.leszczynski@gmail.com"
+      ],
+      "created_at": "2026-05-05T09:59:07.518043+00:00",
+      "last_modified_at": "2026-06-23T15:28:45.842772+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8395,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Sklepu Internetowego z Kosmetykami",
+      "emails": [
+        "antolak2002@wp.pl"
+      ],
+      "created_at": "2026-04-30T15:51:30.117776+00:00",
+      "last_modified_at": "2026-05-04T08:11:44.061409+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8392,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Logo dla Sali Gier Interaktywnych w Niepołomicach",
+      "emails": [
+        "konieczniak@gmail.com"
+      ],
+      "created_at": "2026-04-30T09:12:30.168985+00:00",
+      "last_modified_at": "2026-05-04T07:43:15.8501+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8370,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Stacji Paliw i Usług (Marta)",
+      "emails": [
+        "struskibiuro@gmail.com"
+      ],
+      "created_at": "2026-04-26T14:23:25.877935+00:00",
+      "last_modified_at": "2026-04-27T06:48:04.192107+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8365,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Zapytanie - utworzenie nazwy dla submarki (Marta)",
+      "emails": [
+        "beata.jankowska@agroubezpieczenia.pl"
+      ],
+      "created_at": "2026-04-25T15:00:03.623807+00:00",
+      "last_modified_at": "2026-04-27T08:05:46.248889+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8359,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Premium Siłowni - Budowanie Marki (Marta)",
+      "emails": [
+        "magdalena.ucinskaa@gmail.com"
+      ],
+      "created_at": "2026-04-24T13:46:57.183005+00:00",
+      "last_modified_at": "2026-04-27T06:33:00.014596+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8356,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Firmy Sprzątającej",
+      "emails": [
+        "alisavrancan@gmail.com"
+      ],
+      "created_at": "2026-04-23T18:13:48.41709+00:00",
+      "last_modified_at": "2026-04-24T05:56:35.487238+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8280,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Chwytliwa Nazwa dla Mobilnego Baru",
+      "emails": [
+        "dominikkusiolek16@gmail.com"
+      ],
+      "created_at": "2026-04-19T13:53:30.244143+00:00",
+      "last_modified_at": "2026-04-20T07:03:37.806451+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8269,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Stylizacji Rzęs i Brwi",
+      "emails": [
+        "wiktoriaseder@icloud.com"
+      ],
+      "created_at": "2026-04-17T17:09:30.042072+00:00",
+      "last_modified_at": "2026-04-20T10:11:57.877662+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8242,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Fundacji Rodzinnej w BHP",
+      "emails": [
+        "macha.r@wp.pl",
+        "renata_machala@rena-pol.pl"
+      ],
+      "created_at": "2026-04-14T15:12:15.239772+00:00",
+      "last_modified_at": "2026-05-25T12:16:03.038959+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8201,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Rękodzieła DIY z Recyklingu",
+      "emails": [
+        "2013oliwiasz@gmail.com"
+      ],
+      "created_at": "2026-04-09T20:12:55.701844+00:00",
+      "last_modified_at": "2026-04-10T09:08:20.961591+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8198,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki w Branży Hydroblastingowej (Marta)",
+      "emails": [
+        "pawelwojtala@poczta.onet.pl"
+      ],
+      "created_at": "2026-04-09T13:27:26.688836+00:00",
+      "last_modified_at": "2026-04-10T06:37:30.854487+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8185,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Innowacyjnego Produktu Dla Kancelarii Prawnych",
+      "emails": [
+        "ksawery.pomocnicze@gmail.com"
+      ],
+      "created_at": "2026-04-07T06:16:07.115072+00:00",
+      "last_modified_at": "2026-04-20T06:44:21.023187+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8177,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla marki akcesoriów kuchennych premium",
+      "emails": [
+        "igorwnuk5000@gmail.com"
+      ],
+      "created_at": "2026-04-04T19:24:43.080996+00:00",
+      "last_modified_at": "2026-04-08T11:17:28.202243+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8154,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Rebranding Pizzerii w Branży Gastronomicznej",
+      "emails": [
+        "mhosciej@op.pl",
+        "mgosciej@op.pl"
+      ],
+      "created_at": "2026-03-31T20:44:58.704351+00:00",
+      "last_modified_at": "2026-04-08T11:17:29.723235+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8153,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Stylistki Paznokci - Zapytanie o Pomoc",
+      "emails": [
+        "domamal19.10@gmail.com"
+      ],
+      "created_at": "2026-03-31T18:48:44.294574+00:00",
+      "last_modified_at": "2026-04-08T11:17:33.936234+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8119,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Marki Odzieżowej Streetwear Trawińska",
+      "emails": [
+        "wudzyn222@gmail.com"
+      ],
+      "created_at": "2026-03-25T11:45:20.606172+00:00",
+      "last_modified_at": "2026-04-08T11:17:39.480117+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8116,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Firmy Budowlanej",
+      "emails": [
+        "lelo77775@wp.pl"
+      ],
+      "created_at": "2026-03-24T11:44:11.140297+00:00",
+      "last_modified_at": "2026-04-08T11:17:35.414984+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8110,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowego Salonu Fryzjerskiego (Marta)",
+      "emails": [
+        "iwonaaklimkiewicz@gmail.com"
+      ],
+      "created_at": "2026-03-23T15:05:53.926675+00:00",
+      "last_modified_at": "2026-04-08T11:17:38.104794+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8108,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Indywidualne Podejście w Branży Fitness  (Marta)",
+      "emails": [
+        "boguslaw.juszczyk@gmail.com"
+      ],
+      "created_at": "2026-03-23T14:29:00.575124+00:00",
+      "last_modified_at": "2026-04-08T11:17:32.885708+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8101,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Niszowej Marki Odzieżowej",
+      "emails": [
+        "jarek.lesz@gmail.com"
+      ],
+      "created_at": "2026-03-22T22:25:20.401131+00:00",
+      "last_modified_at": "2026-04-08T11:17:40.972779+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8082,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Firmy Sprzątającej z Ekologicznym Podejściem (Marta)",
+      "emails": [
+        "natalia.nawrocka91@gmail.com"
+      ],
+      "created_at": "2026-03-20T12:22:31.736284+00:00",
+      "last_modified_at": "2026-04-08T11:17:42.241197+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8077,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki IT Pomagającej Biznesom",
+      "emails": [
+        "jacekmarki32@gmail.com"
+      ],
+      "created_at": "2026-03-19T19:45:37.942511+00:00",
+      "last_modified_at": "2026-04-08T11:17:43.596369+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8064,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Stylizacji Rzęs (Marta)",
+      "emails": [
+        "ewelonka98@wp.pl"
+      ],
+      "created_at": "2026-03-18T16:13:24.115432+00:00",
+      "last_modified_at": "2026-03-20T14:55:59.37316+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8040,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Agencji Social Media dla Firm",
+      "emails": [
+        "pablitokucharczyk@gmail.com"
+      ],
+      "created_at": "2026-03-16T16:00:29.370845+00:00",
+      "last_modified_at": "2026-04-08T11:17:45.051075+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8033,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Firmy Usług Technicznych (Marta)",
+      "emails": [
+        "ciachowy24@gmail.com"
+      ],
+      "created_at": "2026-03-16T08:12:56.697594+00:00",
+      "last_modified_at": "2026-04-08T11:17:46.420305+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 8030,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Sprzedaży Pomidorków (Marta)",
+      "emails": [
+        "rodzyn91@onet.pl"
+      ],
+      "created_at": "2026-03-16T05:04:44.748633+00:00",
+      "last_modified_at": "2026-04-08T11:17:48.028928+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7820,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Kafejki Bez Barier dla Niepełnosprawnych",
+      "emails": [
+        "lumas.t.three@gmail.com"
+      ],
+      "created_at": "2026-02-20T18:50:31.039923+00:00",
+      "last_modified_at": "2026-02-23T12:31:09.809653+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7811,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla nowej marki odzieżowej",
+      "emails": [
+        "oleksobol3@gmail.com"
+      ],
+      "created_at": "2026-02-20T07:24:40.875387+00:00",
+      "last_modified_at": "2026-02-23T12:07:20.313923+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7808,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Animacji Dla Dzieci",
+      "emails": [
+        "slodkierarytasy.wp@gmail.com"
+      ],
+      "created_at": "2026-02-19T22:24:28.976386+00:00",
+      "last_modified_at": "2026-02-23T12:07:21.760251+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7793,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla firmy BHP i odzieży roboczej",
+      "emails": [
+        "bartkowska.bhp@gmail.com"
+      ],
+      "created_at": "2026-02-18T13:36:23.257873+00:00",
+      "last_modified_at": "2026-02-23T12:07:23.264393+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7789,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Marketplace w Branży Energetycznej",
+      "emails": [
+        "s.maslo@neptunenergy.pl"
+      ],
+      "created_at": "2026-02-18T08:39:28.508524+00:00",
+      "last_modified_at": "2026-02-23T12:07:25.160219+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7787,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Sprzedaży Zwrotów Konsumenckich",
+      "emails": [
+        "aennegw@gmail.com"
+      ],
+      "created_at": "2026-02-17T21:42:14.482996+00:00",
+      "last_modified_at": "2026-02-23T12:07:24.072523+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7751,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowej Marki Mebli na Wymiar",
+      "emails": [
+        "cezarmax123@gmail.com"
+      ],
+      "created_at": "2026-02-14T15:39:02.476141+00:00",
+      "last_modified_at": "2026-02-16T15:20:33.789224+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7733,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Chwytliwa Nazwa dla Firmy Konstrukcji Stalowych",
+      "emails": [
+        "bau-zaun@wp.pl"
+      ],
+      "created_at": "2026-02-13T05:01:19.843773+00:00",
+      "last_modified_at": "2026-02-13T13:53:50.16673+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7732,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa dla Usług Analizy Kolorystycznej",
+      "emails": [
+        "momot.marta@o2.pl"
+      ],
+      "created_at": "2026-02-13T05:01:14.932538+00:00",
+      "last_modified_at": "2026-02-13T14:49:36.814142+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7726,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Konsultacji Home Stagingowych i Wykończeń Wnętrz",
+      "emails": [
+        "sgruszczynska@gmail.com"
+      ],
+      "created_at": "2026-02-13T05:01:01.135593+00:00",
+      "last_modified_at": "2026-02-13T13:55:29.917892+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7702,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa dla Koszulek Młodzieżowych",
+      "emails": [
+        "kcwik01@gmail.com"
+      ],
+      "created_at": "2026-02-11T05:00:41.197048+00:00",
+      "last_modified_at": "2026-02-11T09:19:11.04824+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7700,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa dla Serwisu Elektroniki",
+      "emails": [
+        "sebtech@poczta.onet.pl"
+      ],
+      "created_at": "2026-02-10T17:56:38.287666+00:00",
+      "last_modified_at": "2026-02-11T08:22:26.15312+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7696,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Projektu w Branży Dystrybucji Hurtowej",
+      "emails": [
+        "mgalinska@smkonline.eu"
+      ],
+      "created_at": "2026-02-10T13:56:29.508425+00:00",
+      "last_modified_at": "2026-02-17T07:42:35.432939+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7692,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Logo dla Rękodzieła i Budowy Basenów",
+      "emails": [
+        "malgorzata.sade@gmail.com"
+      ],
+      "created_at": "2026-02-10T12:39:41.109237+00:00",
+      "last_modified_at": "2026-02-12T07:46:29.776116+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7669,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Projektanta Ogrodów i Terenów Zielonych",
+      "emails": [
+        "kwiecien01@wp.pl"
+      ],
+      "created_at": "2026-02-09T11:40:07.25106+00:00",
+      "last_modified_at": "2026-02-09T14:42:35.647824+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7663,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Outletu Wielobranżowego z Odzieżą i Artykułami Domowymi",
+      "emails": [
+        "gabsoonx3@gmail.com"
+      ],
+      "created_at": "2026-02-08T20:03:59.581698+00:00",
+      "last_modified_at": "2026-02-09T11:19:29.030785+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7661,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Logo dla Maggo: Projektowanie w Branży Technologicznej",
+      "emails": [
+        "vovadrasko107@gmail.com"
+      ],
+      "created_at": "2026-02-08T17:06:13.50874+00:00",
+      "last_modified_at": "2026-02-09T14:20:05.624091+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7642,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa: Chwytliwa Nazwa dla Psychoterapeutycznej Działalności",
+      "emails": [
+        "joanna.urbanik@o2.pl"
+      ],
+      "created_at": "2026-02-07T09:17:07.09323+00:00",
+      "last_modified_at": "2026-02-09T14:51:55.129913+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7634,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Firmy Architektonicznej i Projektowej",
+      "emails": [
+        "d.wlostowska@gmail.com"
+      ],
+      "created_at": "2026-02-06T11:18:15.966849+00:00",
+      "last_modified_at": "2026-02-06T13:53:53.246188+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7633,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting Tekst na Stronę o Ustawieniach Systemowych",
+      "emails": [
+        "okapala4@gmail.com"
+      ],
+      "created_at": "2026-02-06T10:02:28.520816+00:00",
+      "last_modified_at": "2026-02-06T14:04:26.609936+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7618,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Firmy Deweloperskiej - Rebranding",
+      "emails": [
+        "malwinabiernat@tlen.pl"
+      ],
+      "created_at": "2026-02-06T05:00:36.148224+00:00",
+      "last_modified_at": "2026-04-11T15:09:57.623025+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7611,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa dla Rękodzieła Świec Sojowych",
+      "emails": [
+        "mazanaangelika9@gmail.com"
+      ],
+      "created_at": "2026-02-05T06:41:48.923597+00:00",
+      "last_modified_at": "2026-02-05T11:01:35.005209+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7603,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa dla Biura Nieruchomości",
+      "emails": [
+        "m.p.rutkowska@gmail.com"
+      ],
+      "created_at": "2026-02-04T17:04:37.197937+00:00",
+      "last_modified_at": "2026-02-05T10:57:19.86262+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7591,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa Marki Odzieżowej dla Psiarzy",
+      "emails": [
+        "bartosz_tuteja@o2.pl"
+      ],
+      "created_at": "2026-02-04T09:02:39.707795+00:00",
+      "last_modified_at": "2026-02-04T10:40:42.266301+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7556,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Firmy Doradztwa Finansowego i Kredytowego",
+      "emails": [
+        "kacper.kwasnik2@gmail.com"
+      ],
+      "created_at": "2026-02-02T14:04:34.921098+00:00",
+      "last_modified_at": "2026-02-03T07:48:30.386624+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7543,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Tworzenie Nazw dla Branży Edukacyjnej",
+      "emails": [
+        "marceligalinski87@gmail.com"
+      ],
+      "created_at": "2026-02-02T01:03:25.898515+00:00",
+      "last_modified_at": "2026-02-02T12:29:03.968326+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7539,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Nowego Salonu Fryzjerskiego",
+      "emails": [
+        "marc0097@op.pl"
+      ],
+      "created_at": "2026-02-01T18:43:55.721615+00:00",
+      "last_modified_at": "2026-02-02T12:25:03.642086+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7538,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Prowadzenie Bloga dla Branży Deweloperskiej",
+      "emails": [
+        "anm81501@gmail.com"
+      ],
+      "created_at": "2026-02-01T18:40:18.888207+00:00",
+      "last_modified_at": "2026-02-02T13:10:19.662755+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7537,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa Firmy: Profesjonalna Rebranding dla Branży Handlowej",
+      "emails": [
+        "tomek.sadowski@onet.eu"
+      ],
+      "created_at": "2026-02-01T16:58:09.653076+00:00",
+      "last_modified_at": "2026-02-02T12:38:38.076394+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7528,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Logo i Nazwa dla Matcharni w Hiszpanii",
+      "emails": [
+        "alicia.kosiba@gmail.com"
+      ],
+      "created_at": "2026-01-31T12:49:24.107565+00:00",
+      "last_modified_at": "2026-02-13T08:04:10.737734+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7526,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Salonu Urody i Stylizacji Rzęs",
+      "emails": [
+        "czubak.ewa@gmail.com"
+      ],
+      "created_at": "2026-01-31T05:07:20.444701+00:00",
+      "last_modified_at": "2026-02-02T12:51:58.553832+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7484,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Dewelopera na Zielonych Obrzeżach Warszawy",
+      "emails": [
+        "malwinabiernat@tlen.pl"
+      ],
+      "created_at": "2026-01-28T11:45:25.915327+00:00",
+      "last_modified_at": "2026-04-11T15:09:58.569403+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7464,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting dla Gabinetu Masażu w Niemczech i Polsce",
+      "emails": [
+        "cichocka1@onet.eu"
+      ],
+      "created_at": "2026-01-27T08:16:56.630918+00:00",
+      "last_modified_at": "2026-01-27T12:30:32.326977+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7399,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa dla Poradni Psychologicznej dla Dzieci",
+      "emails": [
+        "rafalska.walko@gmail.com"
+      ],
+      "created_at": "2026-01-22T12:01:27.147047+00:00",
+      "last_modified_at": "2026-03-31T08:25:21.915508+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7372,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Logo i Nazwa Resortu w Kambodży",
+      "emails": [
+        "jaroslawmeyer9@gmail.com",
+        "ninasabayresort@gmail.com"
+      ],
+      "created_at": "2026-01-20T13:28:04.466489+00:00",
+      "last_modified_at": "2026-05-04T13:54:13.524836+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 7341,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Nazwa Sklepu z Butami Barefoot",
+      "emails": [
+        "bartlomiej.mikosz@gmail.com"
+      ],
+      "created_at": "2026-01-18T10:52:35.235224+00:00",
+      "last_modified_at": "2026-01-29T06:37:43.867821+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 5966,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Copywriting: Chwytliwa Nazwa dla Branży Rękodzieła",
+      "emails": [
+        "o.klubowicz@wp.pl"
+      ],
+      "created_at": "2025-10-12T21:10:32.227003+00:00",
+      "last_modified_at": "2026-05-04T11:56:17.108464+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    },
+    {
+      "bb_id": 5637,
+      "owner": "Maciej",
+      "stage": "negotiations",
+      "is_follow_up": false,
+      "title": "Nazwa Szkoły Językowej dla Zajęć Uzupełniających",
+      "emails": [
+        "annamariabinkowska24@gmail.com"
+      ],
+      "created_at": "2025-09-18T14:04:23.252275+00:00",
+      "last_modified_at": "2026-05-06T13:46:16.534289+00:00",
+      "buckets": [
+        "our_turn"
+      ],
+      "create_candidate": false
+    }
+  ]
+}

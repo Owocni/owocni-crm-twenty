@@ -1,0 +1,106 @@
+{
+  "run": "20260912T205000Z",
+  "no_emit": true,
+  "appliedAt": "2026-09-12T20:51:51.465592+00:00",
+  "ok": 5,
+  "fail": 0,
+  "on": 0,
+  "off": 5,
+  "records": [
+    {
+      "id": "0f5e7fb3-f331-43aa-998f-79783e999654",
+      "email": "jasieklipiecki13@gmail.com",
+      "name": "jasieklipiecki13@gmail.com · Strona",
+      "stage": "PROPOSAL",
+      "owner": "Marta",
+      "bb_id": 8183,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting",
+      "http": 200,
+      "ok": true,
+      "rollback": {
+        "opportunity_id": "0f5e7fb3-f331-43aa-998f-79783e999654",
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "2eac0798-8844-4b79-97a0-43e5152ee830",
+      "email": "ewa@fabrykaczasu.pl",
+      "name": "ewa@fabrykaczasu.pl · Strona",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9300,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting",
+      "http": 200,
+      "ok": true,
+      "rollback": {
+        "opportunity_id": "2eac0798-8844-4b79-97a0-43e5152ee830",
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "36b435f7-ca08-42a3-bee3-2291ee4f8b98",
+      "email": "kubapan8@gmail.com",
+      "name": "kubapan8@gmail.com · Strona · Nowe",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9310,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting",
+      "http": 200,
+      "ok": true,
+      "rollback": {
+        "opportunity_id": "36b435f7-ca08-42a3-bee3-2291ee4f8b98",
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+      "email": "ania.burkiewicz@gmail.com",
+      "name": "ania.burkiewicz@gmail.com",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9340,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting",
+      "http": 200,
+      "ok": true,
+      "rollback": {
+        "opportunity_id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+        "isFollowUp": true
+      }
+    },
+    {
+      "id": "d5680e60-0832-436a-b54f-0013fc5126c8",
+      "email": "marcin.kraczek@inharbor.pl",
+      "name": "marcin.kraczek@inharbor.pl · Strona · Ekspert",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9293,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting",
+      "http": 200,
+      "ok": true,
+      "rollback": {
+        "opportunity_id": "d5680e60-0832-436a-b54f-0013fc5126c8",
+        "isFollowUp": true
+      }
+    }
+  ]
+}

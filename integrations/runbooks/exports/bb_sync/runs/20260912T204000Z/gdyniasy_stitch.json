@@ -1,0 +1,53 @@
+{
+  "run": "20260912T204000Z",
+  "no_emit": true,
+  "appliedAt": "2026-09-12T20:40:15.611539+00:00",
+  "note": "Stitch Marta OUT gdyniasy onto IMAP parent thread + isFollowUp=false (BB waiting)",
+  "message": {
+    "id": "511cadbd-cf00-4d32-ae34-ad2e929407a7",
+    "http": 200,
+    "ok": true,
+    "before": {
+      "messageThreadId": "915f1c30-6bd1-458f-81a8-adaac6d04530",
+      "direction": null,
+      "ourMailboxes": []
+    },
+    "after": {
+      "messageThreadId": "97aaefe9-1464-43e6-9b48-cf669d2953a3",
+      "direction": "OUTGOING",
+      "ourMailboxes": [
+        "MARTA"
+      ]
+    },
+    "rollback": {
+      "message_id": "511cadbd-cf00-4d32-ae34-ad2e929407a7",
+      "messageThreadId": "915f1c30-6bd1-458f-81a8-adaac6d04530",
+      "direction": null,
+      "ourMailboxes": []
+    }
+  },
+  "opportunity": {
+    "id": "6d50224f-d806-43c0-8a0e-1039f18afff4",
+    "email": "gdyniasy@gmail.com",
+    "bb_id": 9387,
+    "http": 200,
+    "ok": true,
+    "before": {
+      "isFollowUp": true,
+      "lastContactAt": "2026-09-12T06:59:50.661Z",
+      "stage": "CONTACTED"
+    },
+    "after": {
+      "isFollowUp": false,
+      "lastContactAt": "2026-09-12T07:25:48.000Z",
+      "stage": "CONTACTED"
+    },
+    "rollback": {
+      "opportunity_id": "6d50224f-d806-43c0-8a0e-1039f18afff4",
+      "isFollowUp": true,
+      "lastContactAt": "2026-09-12T06:59:50.661Z"
+    }
+  },
+  "parent_thread": "97aaefe9-1464-43e6-9b48-cf669d2953a3",
+  "thread_message_count": 2
+}

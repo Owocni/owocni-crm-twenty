@@ -1,6 +1,12 @@
 export const COMPOSER_V2_STORAGE_KEY = 'owocni.mail.composerV2';
 export const COMPOSER_V2_QUERY_PARAM = 'owocniMailV2';
 
+/**
+ * Legacy composer is off the UI (Mariusz §13: fallback = Thunderbird).
+ * Developer restore: add `?owocniMailV2=0` to the Twenty URL (session only).
+ * Back to v2: `?owocniMailV2=1` or a new tab.
+ */
+
 function readQueryFlag(): boolean | null {
   try {
     const search = globalThis.location?.search ?? '';
@@ -18,32 +24,48 @@ function readQueryFlag(): boolean | null {
   return null;
 }
 
-export function readComposerV2Enabled(): boolean {
-  const fromQuery = readQueryFlag();
-  if (fromQuery !== null) {
-    return fromQuery;
-  }
-
+function sessionStore(): Storage | null {
   try {
-    const stored = globalThis.localStorage?.getItem(COMPOSER_V2_STORAGE_KEY);
-    if (stored === '0' || stored === 'false') {
-      return false;
-    }
-    return true;
+    return globalThis.sessionStorage ?? null;
   } catch {
-    return true;
+    return null;
   }
 }
 
 export function writeComposerV2Enabled(enabled: boolean): void {
+  const store = sessionStore();
+
+  if (!store) {
+    return;
+  }
+
   try {
-    globalThis.localStorage?.setItem(
-      COMPOSER_V2_STORAGE_KEY,
-      enabled ? '1' : '0',
-    );
+    if (enabled) {
+      store.removeItem(COMPOSER_V2_STORAGE_KEY);
+    } else {
+      store.setItem(COMPOSER_V2_STORAGE_KEY, '0');
+    }
   } catch {
     // ignore
   }
+}
+
+export function readComposerV2Enabled(): boolean {
+  const fromQuery = readQueryFlag();
+  if (fromQuery !== null) {
+    writeComposerV2Enabled(fromQuery);
+    return fromQuery;
+  }
+
+  try {
+    if (sessionStore()?.getItem(COMPOSER_V2_STORAGE_KEY) === '0') {
+      return false;
+    }
+  } catch {
+    // ignore
+  }
+
+  return true;
 }
 
 export function isComposerV2Payload(payload: Record<string, unknown>): boolean {

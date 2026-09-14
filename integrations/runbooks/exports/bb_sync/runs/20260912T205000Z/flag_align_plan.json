@@ -1,0 +1,138 @@
+{
+  "plannedAt": "2026-09-12T20:51:36.124362+00:00",
+  "twenty_open": 591,
+  "linked_bb": 470,
+  "planned": [
+    {
+      "id": "0f5e7fb3-f331-43aa-998f-79783e999654",
+      "email": "jasieklipiecki13@gmail.com",
+      "name": "jasieklipiecki13@gmail.com · Strona",
+      "stage": "PROPOSAL",
+      "owner": "Marta",
+      "bb_id": 8183,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting"
+    },
+    {
+      "id": "2eac0798-8844-4b79-97a0-43e5152ee830",
+      "email": "ewa@fabrykaczasu.pl",
+      "name": "ewa@fabrykaczasu.pl · Strona",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9300,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting"
+    },
+    {
+      "id": "36b435f7-ca08-42a3-bee3-2291ee4f8b98",
+      "email": "kubapan8@gmail.com",
+      "name": "kubapan8@gmail.com · Strona · Nowe",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9310,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting"
+    },
+    {
+      "id": "c9d626d1-fc81-4a60-b2c4-10dc7b794db6",
+      "email": "ania.burkiewicz@gmail.com",
+      "name": "ania.burkiewicz@gmail.com",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9340,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting"
+    },
+    {
+      "id": "d5680e60-0832-436a-b54f-0013fc5126c8",
+      "email": "marcin.kraczek@inharbor.pl",
+      "name": "marcin.kraczek@inharbor.pl · Strona · Ekspert",
+      "stage": "CONTACTED",
+      "owner": "Marta",
+      "bb_id": 9293,
+      "bb_stage": "negotiations",
+      "bb_fu": true,
+      "before": true,
+      "isFollowUp": false,
+      "why": "bb_waiting"
+    }
+  ],
+  "skipped": [
+    {
+      "id": "1094737b-4da6-4a62-b460-cb97d3ad36c4",
+      "why": "future_snooze",
+      "snoozeUntil": "2026-09-14T13:15:00.000Z",
+      "bb_id": 9326,
+      "bb_fu": true,
+      "tw_fu": false
+    },
+    {
+      "id": "633fd52c-f5e5-44a1-805c-f2151fd59e81",
+      "why": "future_snooze",
+      "snoozeUntil": "2050-08-13T07:00:00.000Z",
+      "bb_id": 9006,
+      "bb_fu": true,
+      "tw_fu": false
+    },
+    {
+      "id": "ad5bcd66-c0e6-4153-b6fa-976bcebc5d3d",
+      "why": "future_snooze",
+      "snoozeUntil": "2026-09-15T10:05:00.000Z",
+      "bb_id": 9278,
+      "bb_fu": true,
+      "tw_fu": false
+    },
+    {
+      "id": "bc366687-45b0-4a2b-ae2a-e929b3219f91",
+      "why": "future_snooze",
+      "snoozeUntil": "2026-09-16T10:02:00.000Z",
+      "bb_id": 9259,
+      "bb_fu": true,
+      "tw_fu": false
+    },
+    {
+      "id": "c2e56416-60bb-48c8-9eca-ba8308aac640",
+      "why": "future_snooze",
+      "snoozeUntil": "2026-09-17T10:00:00.000Z",
+      "bb_id": 9287,
+      "bb_fu": true,
+      "tw_fu": true
+    },
+    {
+      "id": "c79c626d-09c6-4132-84fc-b99505c87e0c",
+      "why": "future_snooze",
+      "snoozeUntil": "2050-08-12T07:00:00.000Z",
+      "bb_id": 8868,
+      "bb_fu": true,
+      "tw_fu": false
+    },
+    {
+      "id": "4e43face-9477-4912-8603-f3ff15545182",
+      "why": "future_snooze",
+      "snoozeUntil": "2026-09-14T07:00:00.000Z",
+      "bb_id": 9316,
+      "bb_fu": false,
+      "tw_fu": true
+    },
+    {
+      "id": "b561edb5-d0a7-4071-b6b5-ff098354097e",
+      "why": "future_snooze",
+      "snoozeUntil": "2099-09-11T07:00:00.000Z",
+      "bb_id": 8973,
+      "bb_fu": false,
+      "tw_fu": true
+    }
+  ]
+}
