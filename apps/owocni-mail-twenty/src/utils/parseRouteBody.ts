@@ -89,6 +89,27 @@ export function readNumberField(
   return 0;
 }
 
+export function readBooleanField(
+  payload: Record<string, unknown>,
+  ...keys: string[]
+): boolean {
+  for (const object of payloadObjects(payload)) {
+    for (const key of keys) {
+      const value = object[key];
+
+      if (value === true || value === 1) {
+        return true;
+      }
+
+      if (typeof value === 'string' && /^(true|1|yes)$/i.test(value.trim())) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 function decodeBase64Utf8(value: string): string {
   try {
     return Buffer.from(value, 'base64').toString('utf8');

@@ -197,7 +197,30 @@ async function probeN8n() {
   if (!play) {
     return { error: "nie znaleziono workflow Play PBX" };
   }
-  return { active: Boolean(play.active), name: play.name };
+  const out = { active: Boolean(play.active), name: play.name, executions: [] };
+  if (!play.id) {
+    out.executionProbeError = "brak workflow id";
+    return out;
+  }
+  const exRes = await fetch(
+    `${base}/api/v1/executions?workflowId=${encodeURIComponent(play.id)}&limit=20`,
+    {
+      headers: { "X-N8N-API-KEY": key, Accept: "application/json" },
+    },
+  );
+  if (!exRes.ok) {
+    out.executionProbeError = `HTTP ${exRes.status}`;
+    return out;
+  }
+  const exBody = await exRes.json();
+  const executions = exBody.data || exBody || [];
+  out.executions = (Array.isArray(executions) ? executions : []).map((ex) => ({
+    id: ex.id,
+    status: ex.status,
+    startedAt: ex.startedAt,
+    stoppedAt: ex.stoppedAt,
+  }));
+  return out;
 }
 
 async function probeSchedulers() {

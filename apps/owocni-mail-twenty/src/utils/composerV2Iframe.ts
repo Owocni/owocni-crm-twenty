@@ -2,6 +2,7 @@ import {
   MAX_EMAIL_ATTACHMENT_BYTES,
   MAX_EMAIL_ATTACHMENTS,
 } from 'src/utils/emailAttachmentShared';
+import { SMS_TEMPLATES } from 'src/utils/smsTemplates';
 
 export const MAIL_V2_ENVELOPE = 'owocni-mail-v2-envelope';
 export const MAIL_V2_ENVELOPE_EDIT = 'owocni-mail-v2-envelope-edit';
@@ -37,6 +38,7 @@ export type ComposerV2Envelope = {
   templateId?: string;
   canSend?: boolean;
   sendBlockedReason?: string;
+  cardPhone?: string;
 };
 
 export type ComposerV2SrcDocConfig = {
@@ -108,6 +110,52 @@ export function composerV2Css(): string {
     #owocni-v2-status.is-busy { color: #1d4ed8; }
     #owocni-v2-status.is-error { color: #b91c1c; }
     #owocni-v2-hint { font-size: 11px; margin-top: 4px; color: #888; }
+    #owocni-v2-sms-toggle {
+      height: 42px;
+      padding: 0 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #c4b5fd;
+      background: #fff;
+      color: #5b21b6;
+    }
+    #owocni-v2-sms-toggle.is-on {
+      background: #5b21b6;
+      color: #fff;
+      border-color: #5b21b6;
+    }
+    #owocni-v2-sms {
+      margin-bottom: 8px;
+      padding: 8px;
+      border: 1px solid #ddd6fe;
+      border-radius: 6px;
+      background: #faf5ff;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #owocni-v2-sms[hidden] { display: none !important; }
+    #owocni-v2-sms-phone, #owocni-v2-sms-body {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font: inherit;
+      padding: 6px 8px;
+    }
+    #owocni-v2-sms-body { min-height: 72px; resize: vertical; }
+    #owocni-v2-sms-templates { display: flex; flex-wrap: wrap; gap: 4px; }
+    #owocni-v2-sms-templates button {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #c4b5fd;
+      background: #fff;
+      color: #5b21b6;
+      cursor: pointer;
+    }
     #owocni-v2-envelope {
       flex-shrink: 0;
       padding: 6px 8px 4px;
@@ -254,10 +302,19 @@ export function composerV2EnvelopeHtml(envelope: ComposerV2Envelope): string {
 </div>`;
 }
 
-export function composerV2BarHtml(): string {
+export function composerV2BarHtml(envelope: ComposerV2Envelope = {}): string {
+  const phone = escapeHtmlAttr(envelope.cardPhone ?? '');
   return `
 <div id="owocni-v2-bar">
+  <div id="owocni-v2-sms" hidden>
+    <label>Numer
+      <input id="owocni-v2-sms-phone" type="tel" inputmode="tel" autocomplete="tel" value="${phone}" placeholder="Wpisz numer telefonu">
+    </label>
+    <textarea id="owocni-v2-sms-body" rows="4" placeholder="Napisz SMS albo wklej szablon"></textarea>
+    <div id="owocni-v2-sms-templates"></div>
+  </div>
   <div id="owocni-v2-actions">
+    <button type="button" id="owocni-v2-sms-toggle">SMS</button>
     <button type="button" id="owocni-v2-send">Wyślij email</button>
     <button type="button" id="owocni-v2-now">Wyślij teraz</button>
     <button type="button" id="owocni-v2-cancel">Anuluj</button>
@@ -282,6 +339,7 @@ export function composerV2BootScript(config: ComposerV2SrcDocConfig): string {
   var uploadUrl = ${JSON.stringify(config.uploadUrl)};
   var maxAttachmentBytes = ${JSON.stringify(MAX_EMAIL_ATTACHMENT_BYTES)};
   var maxAttachments = ${JSON.stringify(MAX_EMAIL_ATTACHMENTS)};
+  var smsTemplates = ${JSON.stringify(SMS_TEMPLATES)};
 `;
 }
 
@@ -310,14 +368,41 @@ export function composerV2IdleBootScript(): string {
 /** Wired after editor helpers exist (toBase64, editor, accessToken, sessionId, draftSaveUrl). */
 export function composerV2RuntimeScript(): string {
   return `
-  function v2Plain(html) {
+  var v2SeedSigPlain = '';
+  var v2SeedHandle = '';
+
+  function v2HtmlToPlain(html) {
     return String(html || '')
-      .replace(/<section[^>]*data-owocni-signature[\\s\\S]*?<\\/section>/gi, '')
-      .replace(/<blockquote[\\s\\S]*?<\\/blockquote>/gi, '')
-      .replace(/<[^>]+>/g, ' ')
+      .replace(/<br\\s*\\/?>/gi, ' ')
       .replace(/&nbsp;/gi, ' ')
-      .replace(/\\s+/g, ' ')
-      .trim();
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\\s+/g, '');
+  }
+
+  function v2SigNode() {
+    return editor ? editor.querySelector('[data-owocni-signature]') : null;
+  }
+
+  function v2RememberSeed(force) {
+    var sig = v2SigNode();
+    var handle = (sig && sig.getAttribute('data-owocni-handle')) || '';
+    if (!force && v2SeedSigPlain && v2SeedHandle === handle) return;
+    v2SeedHandle = handle;
+    v2SeedSigPlain = sig ? v2HtmlToPlain(sig.innerHTML) : '';
+  }
+
+  function v2Plain(html) {
+    var raw = String(html || '');
+    raw = raw.replace(/<div[^>]*class="[^"]*gmail_quote[^"]*"[\\s\\S]*$/i, '');
+    raw = raw.replace(/<div[^>]*class="[^"]*moz-cite-prefix[^"]*"[\\s\\S]*$/i, '');
+    raw = raw.replace(/<blockquote\\b[^>]*>[\\s\\S]*?napisał\\(a\\):[\\s\\S]*?<\\/blockquote>/gi, '');
+    var withoutSig = raw.replace(/<section[^>]*data-owocni-signature[\\s\\S]*?<\\/section>/gi, ' ');
+    var outside = v2HtmlToPlain(withoutSig);
+    if (outside) return outside;
+    var match = /<section[^>]*data-owocni-signature="1"[^>]*>([\\s\\S]*?)<\\/section>/i.exec(raw);
+    var inside = v2HtmlToPlain(match && match[1] ? match[1] : '');
+    if (v2SeedSigPlain && inside && inside !== v2SeedSigPlain) return inside;
+    return '';
   }
 
   function v2SetStatus(text, kind) {
@@ -434,7 +519,8 @@ export function composerV2RuntimeScript(): string {
       ['owocni-v2-to', envelope && envelope.to ? envelope.to : ''],
       ['owocni-v2-cc', envelope && envelope.cc ? envelope.cc : ''],
       ['owocni-v2-bcc', envelope && envelope.bcc ? envelope.bcc : ''],
-      ['owocni-v2-subject', envelope && envelope.subject ? envelope.subject : '']
+      ['owocni-v2-subject', envelope && envelope.subject ? envelope.subject : ''],
+      ['owocni-v2-sms-phone', envelope && envelope.cardPhone ? envelope.cardPhone : '']
     ];
     for (var i = 0; i < map.length; i++) {
       var id = map[i][0];
@@ -1013,6 +1099,13 @@ export function composerV2RuntimeScript(): string {
       v2ShowIdle();
       return;
     }
+    var smsErr = v2SmsReadyError();
+    if (smsErr) {
+      v2SetStatus(smsErr, 'error');
+      v2Notify(v2StatusMessage, { error: smsErr });
+      v2ShowIdle();
+      return;
+    }
     v2Sending = true;
     var fileCount = v2FileCount();
     v2SetStatus(fileCount ? ('Wysyłanie… załączniki: ' + fileCount) : 'Wysyłanie…');
@@ -1033,9 +1126,13 @@ export function composerV2RuntimeScript(): string {
       composeDraftKey: envelope.composeDraftKey,
       templateId: envelope.templateId,
       htmlBodyBase64: toBase64(html),
+      seedSigPlain: v2SeedSigPlain,
       attemptId: v2AttemptId,
       bodyHash: v2Hash(html),
-      revision: 1
+      revision: 1,
+      smsEnabled: v2SmsOpen(),
+      smsPhone: v2InputVal('owocni-v2-sms-phone'),
+      smsMessage: v2InputVal('owocni-v2-sms-body')
     };
     fetch(sendUrl, {
       method: 'POST',
@@ -1060,7 +1157,15 @@ export function composerV2RuntimeScript(): string {
       }
       v2Sending = false;
       if (pack.data && (pack.data.ok || pack.data.alreadySent)) {
-        v2SetStatus('Wysłano.');
+        var sms = pack.data.sms;
+        if (sms && sms.attempted && !sms.ok) {
+          var smsFail = 'Mail wysłany · SMS wymaga sprawdzenia: ' + (sms.error || 'błąd');
+          v2SetStatus(smsFail, 'error');
+          v2SaveStatus('sent:' + JSON.stringify(pack.data));
+          v2Notify(sentMessage, { result: pack.data });
+          return;
+        }
+        v2SetStatus(sms && sms.attempted ? 'Wysłano mail i SMS.' : 'Wysłano.');
         v2SaveStatus('sent:' + JSON.stringify(pack.data));
         v2Notify(sentMessage, { result: pack.data });
         return;
@@ -1080,6 +1185,79 @@ export function composerV2RuntimeScript(): string {
     });
   }
 
+  function v2SmsOpen() {
+    var panel = document.getElementById('owocni-v2-sms');
+    return Boolean(panel && !panel.hidden);
+  }
+
+  function v2SetSmsOpen(on) {
+    var panel = document.getElementById('owocni-v2-sms');
+    var toggle = document.getElementById('owocni-v2-sms-toggle');
+    if (panel) panel.hidden = !on;
+    if (toggle) {
+      toggle.classList.toggle('is-on', Boolean(on));
+      toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    if (on) v2FillPristineForm();
+  }
+
+  function v2SmsDigits(value) {
+    return String(value || '').replace(/\\D/g, '').replace(/^00/, '');
+  }
+
+  function v2SmsPhoneError(raw) {
+    var digits = v2SmsDigits(raw);
+    if (digits.length === 9) digits = '48' + digits;
+    if (digits.length === 11 && digits.indexOf('48') === 0) {
+      var first = digits.charAt(2);
+      if (first === '5' || first === '6' || first === '7' || first === '8') return '';
+    }
+    if (!raw) return 'Brak numeru telefonu.';
+    return 'Niepoprawny numer. Wpisz 9 cyfr albo +48…';
+  }
+
+  function v2SmsReadyError() {
+    if (!v2SmsOpen()) return '';
+    var phoneErr = v2SmsPhoneError(v2InputVal('owocni-v2-sms-phone'));
+    if (phoneErr) return phoneErr;
+    if (!v2InputVal('owocni-v2-sms-body')) return 'SMS jest włączony, ale treść jest pusta.';
+    return '';
+  }
+
+  function v2BindSms() {
+    var toggle = document.getElementById('owocni-v2-sms-toggle');
+    var templates = document.getElementById('owocni-v2-sms-templates');
+    var phone = document.getElementById('owocni-v2-sms-phone');
+    var body = document.getElementById('owocni-v2-sms-body');
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        v2SetSmsOpen(!v2SmsOpen());
+      });
+    }
+    if (phone) {
+      phone.addEventListener('input', function () { v2MarkDirty(phone); });
+    }
+    if (body) {
+      body.addEventListener('input', function () { v2MarkDirty(body); });
+    }
+    if (templates && typeof smsTemplates !== 'undefined') {
+      smsTemplates.forEach(function (row) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = row.shortName;
+        btn.title = row.name;
+        btn.addEventListener('click', function () {
+          v2SetSmsOpen(true);
+          if (body) {
+            body.value = row.body;
+            v2MarkDirty(body);
+          }
+        });
+        templates.appendChild(btn);
+      });
+    }
+  }
+
   function v2StartCountdown() {
     if (v2Sending || v2Timer) return;
     v2ReadFormIntoEnvelope();
@@ -1091,6 +1269,11 @@ export function composerV2RuntimeScript(): string {
       }
       if (envelope && envelope.canSend === false) {
         v2SetStatus(envelope.sendBlockedReason || 'Nie można wysłać.');
+        return;
+      }
+      var smsErr = v2SmsReadyError();
+      if (smsErr) {
+        v2SetStatus(smsErr, 'error');
         return;
       }
       v2Remain = 15;
@@ -1133,7 +1316,9 @@ export function composerV2RuntimeScript(): string {
       v2DoSend();
     });
     if (cancelEl) cancelEl.addEventListener('click', v2Cancel);
+    v2BindSms();
     v2BindEnvelopeForm();
+    v2FillPristineForm();
     v2UpdateHint();
     var authTries = 0;
     var fastAuth = setInterval(function () {

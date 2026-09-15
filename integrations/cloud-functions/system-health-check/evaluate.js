@@ -9,6 +9,11 @@
 /** IMAP ~5 min + worker every 5 min + zapas. */
 const FORM_GRACE_MS = 45 * 60 * 1000;
 
+/** Okno, w którym error n8n Play PBX (402 Gateway itd.) = H-CALL DOWN. */
+const N8N_EXEC_WINDOW_MS = 36 * 60 * 60 * 1000;
+const N8N_RECOVERY_SUCCESSES = 2;
+const N8N_FAIL_STATUS = new Set(["error", "crashed", "failed"]);
+
 const RANK = { OK: 0, SKIP: 0, DEGRADED: 1, UNKNOWN: 2, DOWN: 3 };
 
 // HTTP „QUALIFIED → Stape” / „campaign rejected” = NIE MUST_ON.
@@ -83,6 +88,60 @@ function schedulerOk(jobs, patterns) {
     };
   }
   return { found: true, ok: true, detail: names };
+}
+
+function executionTimeMs(ex) {
+  const t = Date.parse(ex?.startedAt || ex?.stoppedAt || "");
+  return Number.isFinite(t) ? t : 0;
+}
+
+function isN8nFail(ex) {
+  return N8N_FAIL_STATUS.has(String(ex?.status || "").toLowerCase());
+}
+
+function isN8nSuccess(ex) {
+  return ["success", "ok"].includes(String(ex?.status || "").toLowerCase());
+}
+
+/**
+ * ACTIVE workflow ≠ działający łańcuch (incydent 2026-09-14: 402 Gateway
+ * credits przy zielonym Play PBX). Cisza bez error ≠ DOWN (NR-1).
+ * Recovery: ≥2 kolejne success nowsze niż ostatni error.
+ */
+function n8nPlayExecutionHealth(executions, nowMs = Date.now()) {
+  const windowed = (executions || [])
+    .filter((ex) => {
+      const t = executionTimeMs(ex);
+      return t > 0 && nowMs - t <= N8N_EXEC_WINDOW_MS;
+    })
+    .sort((a, b) => executionTimeMs(b) - executionTimeMs(a));
+
+  if (!windowed.length) {
+    return { status: "OK", detail: null };
+  }
+
+  const failCount = windowed.filter(isN8nFail).length;
+  if (!failCount) {
+    return { status: "OK", detail: null };
+  }
+
+  let consecutiveOk = 0;
+  for (const ex of windowed) {
+    if (isN8nSuccess(ex)) {
+      consecutiveOk += 1;
+      continue;
+    }
+    break;
+  }
+  if (consecutiveOk >= N8N_RECOVERY_SUCCESSES) {
+    return { status: "OK", detail: null };
+  }
+
+  const lastFail = windowed.find(isN8nFail);
+  return {
+    status: "DOWN",
+    detail: `${failCount} error n8n w 36h (ostatni #${lastFail?.id || "?"} ${lastFail?.status || "error"})`,
+  };
 }
 
 function workflowActive(workflow) {
@@ -347,6 +406,19 @@ function evaluateShared(input) {
   } else if (input.n8n?.active) {
     n8nStatus = "OK";
     n8nDetail = input.n8n.name || "Play PBX ACTIVE";
+    if (input.n8n.executionProbeError) {
+      n8nStatus = "DEGRADED";
+      n8nDetail = `${n8nDetail}; executions: ${input.n8n.executionProbeError}`;
+    } else {
+      const execHealth = n8nPlayExecutionHealth(
+        input.n8n.executions,
+        input.nowMs,
+      );
+      if (execHealth.status === "DOWN") {
+        n8nStatus = "DOWN";
+        n8nDetail = `${n8nDetail}; ${execHealth.detail}`;
+      }
+    }
   } else {
     n8nStatus = "DOWN";
     n8nDetail = "n8n Play PBX nieaktywny";
@@ -489,6 +561,8 @@ module.exports = {
   evaluateShared,
   evaluateLeadForm,
   FORM_GRACE_MS,
+  N8N_EXEC_WINDOW_MS,
+  n8nPlayExecutionHealth,
   schedulerOk,
   overallStatus,
   worstStatus,

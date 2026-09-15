@@ -19,6 +19,7 @@ const {
   findPersonByEmail,
   findOpenOpportunityByPersonId,
 } = require("../shared/twentyRest");
+const { isEmailOnLeadBlocklist } = require("../shared/leadEmailBlocklist");
 
 const ADAPTER_ID = "crm:twenty_create_lead";
 const GUARD_PREFIX = "form_mail_witness_";
@@ -205,6 +206,9 @@ async function processMessage(msg, cutoffMs) {
   }
   if (isInternalEmail(parsed.email)) {
     return { skipped: "internal" };
+  }
+  if (isEmailOnLeadBlocklist(parsed.email)) {
+    return { skipped: "blocked_email" };
   }
 
   const messageId = msg.id;

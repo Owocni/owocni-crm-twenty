@@ -3,12 +3,15 @@ import { describe, expect, it } from 'vitest';
 import {
   applySignatureForNewBody,
   catalogFromCrmRows,
+  composeMeaningfulPlain,
   hasSignatureMarker,
+  htmlToPlain,
   isEmptyComposeHtml,
   isUnintendedEmptyReply,
   mergeSignatureCatalog,
   pickSendableBodyHtml,
   signatureHtmlForHandle,
+  signatureInnerPlain,
   swapSignatureOnFromChange,
 } from './mailSignature';
 
@@ -94,6 +97,25 @@ describe('mailSignature', () => {
     );
 
     expect(isUnintendedEmptyReply(typedInside)).toBe(false);
+  });
+
+  it('counts Maciej typing above Pozdrawiam inside the CRM signature', () => {
+    const crmSig =
+      '<div>Pozdrawiam,<br>Maciej Wysocki</div><div>Owocni.pl</div>' +
+      '<div>+48 535 009 444</div><div>maciejwysocki@owocni.pl</div>';
+    const wrapped =
+      `<p><br></p><section data-owocni-signature="1" data-owocni-handle="maciejwysocki@owocni.pl">${crmSig}</section>`;
+    const seed = signatureInnerPlain(wrapped);
+    const typedInside = wrapped.replace(
+      /(<section[^>]*data-owocni-signature="1"[^>]*>)/i,
+      '$1<p>Dzień dobry,</p><p>Czy coś już wiadomo, zaczynamy w tym tygodniu :)?</p>',
+    );
+
+    expect(htmlToPlain(crmSig).length).toBeGreaterThan(0);
+    expect(composeMeaningfulPlain(wrapped, seed)).toBe('');
+    expect(composeMeaningfulPlain(typedInside, seed).length).toBeGreaterThan(0);
+    expect(isUnintendedEmptyReply(typedInside, seed)).toBe(false);
+    expect(isUnintendedEmptyReply(wrapped, seed)).toBe(true);
   });
 
   it('swaps signature on From change only when the block is still present', () => {

@@ -1397,13 +1397,14 @@ export const TemplatePicker = ({
           : (replyMessageId ?? undefined),
       files: attachments.map(({ id, name }) => ({ id, name })),
       ...(internalHandoff
-        ? {
-            mode: 'internal' as const,
-            opportunityId: opportunityRecordId ?? undefined,
-          }
+        ? { mode: 'internal' as const }
         : externalForward
           ? { mode: 'forward' as const }
           : {}),
+      ...(contextKind === 'opportunity' || internalHandoff
+        ? { opportunityId: opportunityRecordId ?? undefined }
+        : {}),
+      cardPhone: person?.phone?.trim() || '',
       ...(composeDraftKeyValue ? { composeDraftKey: composeDraftKeyValue } : {}),
       templateId:
         selected?.id && selected.id !== FREE_COMPOSE_TEMPLATE_ID
@@ -1433,6 +1434,8 @@ export const TemplatePicker = ({
     loadingDraft,
     opportunityRecordId,
     person?.email,
+    person?.phone,
+    contextKind,
     replyMessageId,
     replySubject,
     selected?.id,
@@ -2551,6 +2554,7 @@ export const TemplatePicker = ({
           clientName: hit.label,
           email: hit.email,
           companyName: hit.companyName ?? '',
+          phone: '',
         });
       }
 

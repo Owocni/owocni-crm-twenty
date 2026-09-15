@@ -1,6 +1,7 @@
 import type { CoreApiClient } from 'twenty-client-sdk/core';
 
 import { emailBodyToDisplayText } from 'src/utils/emailBodyText';
+import { formatPersonPhone } from 'src/utils/smsPhone';
 import {
   classifyBounceReason,
   isBounceMessage,
@@ -13,6 +14,7 @@ export type PersonContext = {
   clientName: string;
   email: string;
   companyName: string;
+  phone: string;
 };
 
 export type ReplyMessagePreview = {
@@ -86,6 +88,10 @@ type PersonRow = {
   id?: string;
   name?: { firstName?: string | null; lastName?: string | null } | null;
   emails?: { primaryEmail?: string | null } | null;
+  phones?: {
+    primaryPhoneNumber?: string | null;
+    primaryPhoneCallingCode?: string | null;
+  } | null;
   company?: { name?: string | null } | null;
 };
 
@@ -101,6 +107,7 @@ const PERSON_FIELDS = {
   id: true,
   name: { firstName: true, lastName: true },
   emails: { primaryEmail: true },
+  phones: { primaryPhoneNumber: true, primaryPhoneCallingCode: true },
   company: { name: true },
 } as const;
 
@@ -325,6 +332,7 @@ function toPersonContext(row: PersonRow | null | undefined): PersonContext | nul
     clientName: [firstName, lastName].filter(Boolean).join(' '),
     email,
     companyName: row.company?.name ?? '',
+    phone: formatPersonPhone(row.phones ?? {}),
   };
 }
 
@@ -336,6 +344,7 @@ function emailOnlyContext(email: string, recordId?: string | null): PersonContex
     clientName: '',
     email,
     companyName: '',
+    phone: '',
   };
 }
 
@@ -567,12 +576,13 @@ async function findPersonFromOpportunity(
         pointOfContactId: true,
         pointOfContact: PERSON_FIELDS,
         company: { name: true },
-        ...( { bizCardEmail: true } as Record<string, unknown> ),
+        ...({ bizCardEmail: true, bizCardPhone: true } as Record<string, unknown>),
       },
     } as never);
 
     const opportunity = (result as { opportunity?: {
       bizCardEmail?: string | null;
+      bizCardPhone?: string | null;
       pointOfContact?: PersonRow | null;
       company?: { name?: string | null } | null;
     } | null }).opportunity;
@@ -585,8 +595,21 @@ async function findPersonFromOpportunity(
       ? String(opportunity.company.name)
       : '';
     const cardEmail = opportunity.bizCardEmail?.trim().toLowerCase() || '';
+    const cardPhone = opportunity.bizCardPhone?.trim() || '';
 
-    const contact = toPersonContext(opportunity.pointOfContact);
+    const withCardPhone = (
+      row: PersonContext | null,
+    ): PersonContext | null => {
+      if (!row) {
+        return row;
+      }
+      if (cardPhone) {
+        row.phone = cardPhone;
+      }
+      return row;
+    };
+
+    const contact = withCardPhone(toPersonContext(opportunity.pointOfContact));
 
     if (contact?.email) {
       if (!contact.companyName && companyName) {
@@ -604,21 +627,21 @@ async function findPersonFromOpportunity(
           byEmail.companyName = companyName;
         }
 
-        return byEmail;
+        return withCardPhone(byEmail);
       }
 
       if (contact) {
-        return {
+        return withCardPhone({
           ...contact,
           email: cardEmail,
           companyName: contact.companyName || companyName,
-        };
+        });
       }
 
-      return {
+      return withCardPhone({
         ...emailOnlyContext(cardEmail, opportunityId),
         companyName,
-      };
+      });
     }
 
     if (contact) {
@@ -917,6 +940,16 @@ export async function resolveMailContext(
       threadId: null,
       contextKind: 'email',
     };
+  }
+
+  if (recordId && context.person && context.contextKind !== 'opportunity') {
+    const fromOpportunity = await findPersonFromOpportunity(
+      coreClient,
+      recordId,
+    );
+    if (fromOpportunity?.phone) {
+      context.person.phone = fromOpportunity.phone;
+    }
   }
 
   return enrichReplyMessage(coreClient, context);

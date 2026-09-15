@@ -7,6 +7,7 @@ const {
   evaluateInstance,
   evaluateShared,
   evaluateLeadForm,
+  n8nPlayExecutionHealth,
   diffAlerts,
   overallStatus,
   schedulerOk,
@@ -168,6 +169,90 @@ describe("evaluateInstance NR-1", () => {
     assert.equal(items.find((i) => i.id === "H-LEAD-FORM").status, "DOWN");
     assert.equal(items.find((i) => i.id === "H-ROBOT").status, "DOWN");
     assert.equal(items.find((i) => i.id === "H-LEAD-META").status, "DOWN");
+  });
+
+  it("n8n ACTIVE + recent execution error → H-CALL DOWN, H-MISSED OK", () => {
+    const items = evaluateShared({
+      nowMs: Date.parse("2026-09-15T10:00:00Z"),
+      schedulers: [{ name: "telefony-play-poller", state: "ENABLED" }],
+      n8n: {
+        active: true,
+        name: "Play PBX → GCP CallTranscript",
+        executions: [
+          {
+            id: "607",
+            status: "error",
+            startedAt: "2026-09-15T09:05:00.000Z",
+          },
+        ],
+      },
+    });
+    const call = items.find((i) => i.id === "H-CALL");
+    assert.equal(call.status, "DOWN");
+    assert.match(call.detail, /error n8n/);
+    assert.equal(items.find((i) => i.id === "H-MISSED").status, "OK");
+  });
+
+  it("n8n execution probe fail → H-CALL DEGRADED not pager DOWN", () => {
+    const items = evaluateShared({
+      schedulers: [{ name: "telefony-play-poller", state: "ENABLED" }],
+      n8n: {
+        active: true,
+        name: "Play PBX",
+        executionProbeError: "HTTP 403",
+      },
+    });
+    assert.equal(items.find((i) => i.id === "H-CALL").status, "DEGRADED");
+  });
+});
+
+describe("n8nPlayExecutionHealth", () => {
+  const now = Date.parse("2026-09-15T12:00:00Z");
+
+  it("empty / old executions stay OK (NR-1 cisza)", () => {
+    assert.equal(n8nPlayExecutionHealth([], now).status, "OK");
+    assert.equal(
+      n8nPlayExecutionHealth(
+        [{ id: "1", status: "error", startedAt: "2026-09-01T09:00:00Z" }],
+        now,
+      ).status,
+      "OK",
+    );
+  });
+
+  it("402-style error without later successes = DOWN", () => {
+    const result = n8nPlayExecutionHealth(
+      [
+        { id: "607", status: "error", startedAt: "2026-09-15T09:05:00Z" },
+        { id: "606", status: "error", startedAt: "2026-09-14T09:55:00Z" },
+      ],
+      now,
+    );
+    assert.equal(result.status, "DOWN");
+    assert.match(result.detail, /#607/);
+  });
+
+  it("two successes after errors = recovered OK", () => {
+    const result = n8nPlayExecutionHealth(
+      [
+        { id: "611", status: "success", startedAt: "2026-09-15T11:10:00Z" },
+        { id: "610", status: "success", startedAt: "2026-09-15T11:05:00Z" },
+        { id: "607", status: "error", startedAt: "2026-09-15T09:05:00Z" },
+      ],
+      now,
+    );
+    assert.equal(result.status, "OK");
+  });
+
+  it("single success after error is not recovery", () => {
+    const result = n8nPlayExecutionHealth(
+      [
+        { id: "608", status: "success", startedAt: "2026-09-15T11:00:00Z" },
+        { id: "607", status: "error", startedAt: "2026-09-15T09:05:00Z" },
+      ],
+      now,
+    );
+    assert.equal(result.status, "DOWN");
   });
 });
 

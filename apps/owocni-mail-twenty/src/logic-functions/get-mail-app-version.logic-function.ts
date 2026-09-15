@@ -2,6 +2,11 @@ import { defineLogicFunction } from 'twenty-sdk/define';
 import type { RoutePayload } from 'twenty-sdk/logic-function';
 
 import { OWOCNI_MAIL_VERSION } from 'src/constants/appVersion';
+import {
+  describeSmsapiToken,
+  readSmsapiToken,
+  smsapiTokenLooksUnusable,
+} from 'src/utils/smsapiSend';
 
 /**
  * Live app version from the currently deployed logic-function bundle.
@@ -9,9 +14,16 @@ import { OWOCNI_MAIL_VERSION } from 'src/constants/appVersion';
  * Stale composer tabs compare and ask for Cmd+Shift+R.
  */
 const handler = async (_event: RoutePayload) => {
+  const token = readSmsapiToken();
+  const rawLength = String(
+    process.env.SMSAPI_OAUTH_TOKEN ?? '',
+  ).trim().length;
   return {
     ok: true,
     version: OWOCNI_MAIL_VERSION,
+    smsToken: describeSmsapiToken(token),
+    smsTokenReady: Boolean(token) && !smsapiTokenLooksUnusable(token),
+    smsTokenRawChars: rawLength,
   };
 };
 

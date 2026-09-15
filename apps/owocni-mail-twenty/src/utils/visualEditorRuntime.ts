@@ -169,7 +169,7 @@ export function buildVisualEditorSrcDoc({
   const v2Envelope = composerV2
     ? composerV2EnvelopeHtml(composerV2.envelope)
     : '';
-  const v2Bar = composerV2 ? composerV2BarHtml() : '';
+  const v2Bar = composerV2 ? composerV2BarHtml(composerV2.envelope) : '';
   const v2Boot = composerV2
     ? composerV2BootScript(composerV2)
     : composerV2IdleBootScript();
@@ -817,6 +817,7 @@ ${v2Boot}
     if (event.data.type === setHtmlMessage && typeof event.data.html === 'string') {
       editor.innerHTML = event.data.html.trim() ? event.data.html : emptyBody;
       placeCaretInReply();
+      if (typeof v2RememberSeed === 'function') v2RememberSeed(false);
       publishHtml();
       return;
     }
@@ -833,6 +834,7 @@ ${v2Runtime}
 
   publishHtml();
   placeCaretInReply();
+  if (typeof v2RememberSeed === 'function') v2RememberSeed(true);
 })();
 </script>
 </body>

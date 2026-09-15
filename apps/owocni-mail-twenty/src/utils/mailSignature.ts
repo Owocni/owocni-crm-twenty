@@ -190,12 +190,54 @@ export function stripSignatureBlock(html: string): string {
   return html.replace(SIGNATURE_BLOCK_RE, '').trim();
 }
 
-function htmlToPlain(html: string): string {
+export function htmlToPlain(html: string): string {
   return html
     .replace(/<br\s*\/?>/gi, ' ')
     .replace(/&nbsp;/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, '');
+}
+
+export function signatureInnerPlain(html: string): string {
+  const match =
+    /<section[^>]*data-owocni-signature="1"[^>]*>([\s\S]*?)<\/section>/i.exec(
+      html,
+    );
+
+  return htmlToPlain(match?.[1] ?? '');
+}
+
+/**
+ * Visible reply text after dropping stock signature and quoted originals.
+ * `seedSigPlain` is the signature as first painted — typing inside that
+ * block still counts (the caret often lands there).
+ */
+export function composeMeaningfulPlain(
+  html: string,
+  seedSigPlain = '',
+): string {
+  if (!html.trim()) {
+    return '';
+  }
+
+  const withoutQuote = stripQuotedReplyHtml(html);
+  const outside = htmlToPlain(stripSignatureBlock(withoutQuote));
+
+  if (outside) {
+    return outside;
+  }
+
+  if (seedSigPlain) {
+    const inside = signatureInnerPlain(withoutQuote);
+
+    if (inside && inside !== seedSigPlain) {
+      return inside;
+    }
+
+    return '';
+  }
+
+  return extraTextInsideSignature(withoutQuote);
 }
 
 export function isEmptyComposeHtml(html: string): boolean {
@@ -249,18 +291,11 @@ function extraTextInsideSignature(html: string): string {
  * Text typed into the signature block still counts — the caret often lands there.
  * Template <blockquote> styling is not treated as a quote.
  */
-export function isUnintendedEmptyReply(html: string): boolean {
-  if (!html.trim()) {
-    return true;
-  }
-
-  const withoutQuote = stripQuotedReplyHtml(html);
-
-  if (!isEmptyComposeHtml(withoutQuote)) {
-    return false;
-  }
-
-  return extraTextInsideSignature(withoutQuote).length === 0;
+export function isUnintendedEmptyReply(
+  html: string,
+  seedSigPlain = '',
+): boolean {
+  return composeMeaningfulPlain(html, seedSigPlain).length === 0;
 }
 
 /** First candidate that is a real reply. Does not prefer longer HTML. */

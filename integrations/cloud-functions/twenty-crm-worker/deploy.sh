@@ -92,6 +92,9 @@ yaml_escape() {
   if [[ -n "${TWENTY_OWNER_HOLDING:-}" ]]; then
     echo "TWENTY_OWNER_HOLDING: $(yaml_escape "$TWENTY_OWNER_HOLDING")"
   fi
+  if [[ -n "${LEAD_EMAIL_BLOCKLIST:-}" ]]; then
+    echo "LEAD_EMAIL_BLOCKLIST: $(yaml_escape "$LEAD_EMAIL_BLOCKLIST")"
+  fi
 
   if [[ -n "${ENRICH_COMPANY_PL_TOKEN:-}" ]]; then
     echo "ENRICH_COMPANY_PL_TOKEN: $(yaml_escape "$ENRICH_COMPANY_PL_TOKEN")"

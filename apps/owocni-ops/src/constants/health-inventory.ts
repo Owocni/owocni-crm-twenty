@@ -34,7 +34,7 @@ export const HEALTH_ITEMS: HealthItem[] = [
     name: 'Rozmowy telefoniczne (nagrane)',
     prio: 'P0',
     scope: 'shared',
-    check: 'Poller Play + n8n Play PBX ACTIVE + worker ingest. DROP D-15 ≠ awaria.',
+    check: 'Poller Play + n8n Play PBX ACTIVE + ostatnie execution bez error (402 ≠ cisza). DROP D-15 ≠ awaria.',
   },
   {
     id: 'H-MISSED',

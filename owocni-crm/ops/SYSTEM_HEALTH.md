@@ -60,7 +60,7 @@ related:
 
 | ID | Zakaz | Powód | Konsekwencja | Odmraża | Gdzie |
 |---|---|---|---|---|---|
-| NR-1 | **NIE traktuj braku nowych rekordów jako DOWN.** Cisza biznesowa (weekend, brak reklam, brak submitów) ≠ awaria. **Wyjątek H-LEAD-FORM:** jest świadek — INCOMING mail formularza **Owocni** (`Zapytanie z formularza owocni.pl` / `Zapytanie z strony:` / `Zapytanie:` + host owocni.pl\|copywriting.pl\|logofirmowe.pl) — a nie ma nowszej Opportunity `OWOCNI_SORTOWNIA` po oknie 45 min → **DOWN**. **Nie** każde `Zapytanie*` (JuicyLogos `Zapytanie ze strony kontakt.` nie jest świadkiem). Scheduler workera 200 nie wystarcza (sGTM może nie pisać). | Weekend / DROP D-15 vs martwa Sortownia przy żywych formularzach. | Fałszywe alarmy albo ślepa cisza. | Właściciel + SLO §5.3 | §5.3, H-LEAD-FORM |
+| NR-1 | **NIE traktuj braku nowych rekordów jako DOWN.** Cisza biznesowa (weekend, brak reklam, brak submitów) ≠ awaria. **Wyjątek H-LEAD-FORM:** jest świadek — INCOMING mail formularza **Owocni** (`Zapytanie z formularza owocni.pl` / `Zapytanie z strony:` / `Zapytanie:` + host owocni.pl\|copywriting.pl\|logofirmowe.pl) — a nie ma nowszej Opportunity `OWOCNI_SORTOWNIA` po oknie 45 min → **DOWN**. **Nie** każde `Zapytanie*` (JuicyLogos `Zapytanie ze strony kontakt.` nie jest świadkiem). Scheduler workera 200 nie wystarcza (sGTM może nie pisać). **Wyjątek H-CALL:** n8n Play PBX `status=error` (np. 402 Gateway credits) przy żywym ACTIVE → **DOWN**. Sam brak `CallTranscript` bez error executions nadal ≠ DOWN. | Weekend / DROP D-15 vs martwa Sortownia przy żywych formularzach; 402 przy zielonym workflow. | Fałszywe alarmy albo ślepa cisza. | Właściciel + SLO §5.3 | §5.3, H-LEAD-FORM, H-CALL |
 | NR-2 | **NIE buduj zakładki na workflow HTTP Twenty ani na credits.** Probe = logika poza Twenty (GCP / logic function App) albo odczyt rekordów. | Limit credits Pro (`OPS_NOTES`). | Wyczerpanie puli, cisza eventów. | ADR | CONSTITUTION Prawo 7 / ARCHITECTURE NR-3 |
 | NR-3 | **NIE twórz custom object Deal / równoległego pipeline** „żeby mieć health”. Opportunity zostaje natywna. | Prawo 3a. | Dwa pipeline'y. | ADR | CONSTITUTION |
 | NR-4 | **NIE mieszaj pickera szablonów z panelem ops w jednym front component.** Health = osobna strona nawigacji (osobna app lub osobny page layout). | Inny user (handlowiec vs admin), inny cykl awarii. | Sales psuje ops, ops psuje mail. | Dawid przy Faza 1 | §5.5 |
@@ -162,10 +162,10 @@ Każda nowa integracja Owocni = nowy wiersz. Kolumna **Prio:** P0 = „CRM wydaj
 | **Objaw** | Nie pojawiają się nowe `CallTranscript` / „Rozmowy”. |
 | **Łańcuch** | Cloud Scheduler `*/5` → Cloud Run Job `telefony-play-poller` (GCS cursor, `hoursBack=2`) → STT ElevenLabs Scribe v2 → **n8n** webhook `play-pbx-ingest` (tylko gdy jest nowy tekst) → filtr D-15 + prompt 2/3 → `POST` worker `enqueue_call_transcript` → Stape `task_queue` → poll worker `*/5` → upsert `CallTranscript` |
 | **Kod / kontrakt** | sibling `telefony/` · `CALL_CHANNEL_ARCHITECTURE.md` · `CALL_INGEST_N8N.contract.md` · `workers/callTranscriptIngest.js` |
-| **Heartbeat** | Job poller zakończony (nawet `n8nTriggered=0`); n8n workflow **Play PBX → GCP CallTranscript** ACTIVE; worker `CALL_TRANSCRIPT_INGEST_ENABLED=true`; ostatni poll worker 200. |
+| **Heartbeat** | Job poller zakończony (nawet `n8nTriggered=0`); n8n workflow **Play PBX → GCP CallTranscript** ACTIVE; **GET executions** — error w 36h bez ≥2 kolejnych success = DOWN; worker `CALL_TRANSCRIPT_INGEST_ENABLED=true`; ostatni poll worker 200. |
 | **Freshness** | `CallTranscript.startedAt` max — **miękki**. DROP D-15 (poczta głosowa, transkrypt &lt; 100 znaków) = cisza **zamierzona**. |
 | **Kill-switch** | pusty `N8N_PLAY_WEBHOOK_URL`; n8n OFF; `CALL_TRANSCRIPT_INGEST_ENABLED=false` |
-| **Typowe awarie** | n8n Cloud pause / credentials; secret webhook; STT fail → nagranie nie oznaczone processed (retry OK); Stape paused → kolejka stoi; worker circuit breaker. |
+| **Typowe awarie** | n8n Cloud pause / credentials / **402 Gateway credits** (ACTIVE, execution error); secret webhook; STT fail → nagranie nie oznaczone processed (retry OK); Stape paused → kolejka stoi; worker circuit breaker. |
 | **NIE** | STT w n8n; scheduled n8n „profilaktycznie”; mylić z H-MISSED. |
 
 ##### H-MISSED — Nieodebrane (Play CDR)
@@ -330,7 +330,7 @@ Zasada: **heartbeat twardy, freshness miękka, okno = godziny pracy PL (pn–pt 
 
 | Pozycja | OK | DEGRADED | DOWN |
 |---|---|---|---|
-| H-CALL | Job + n8n ACTIVE + worker poll &lt; 15 min | Godziny pracy i brak nowego CallTranscript **oraz** w Play są nowe nagrania | Job nie startuje / n8n OFF / **n8n nie podpięte (brak API)** / ingest disabled / kolejka stoi &gt; 30 min przy pending |
+| H-CALL | Job + n8n ACTIVE + ostatnie execution success + worker poll &lt; 15 min | Godziny pracy i brak nowego CallTranscript **oraz** w Play są nowe nagrania; GET executions HTTP ≠ 2xx | Job nie startuje / n8n OFF / **n8n nie podpięte (brak API)** / **n8n execution error (np. 402) bez recovery** / ingest disabled / kolejka stoi &gt; 30 min przy pending |
 | H-MISSED | Poller + worker | — | Poller/worker DOWN (n8n ignoruj) |
 | H-LEAD-FORM | Worker poll **oraz** świadek: ostatni mail formularza **Owocni** ma nowszą (lub ≤45 min starszą) kartę `OWOCNI_SORTOWNIA` | Probe świadka HTTP ≠ 2xx | Scheduler worker DOWN **albo** mail Owocni ≥45 min bez nowszej karty Sortowni |
 | H-LEAD-MAIL | Sync + workflow ACTIVE | Mail w Twenty, brak Opportunity/notify | Sync error albo workflow DEACTIVATED poza gate |
@@ -344,7 +344,7 @@ Zasada: **heartbeat twardy, freshness miękka, okno = godziny pracy PL (pn–pt 
 | H-SYNC | — | — | **zawsze UNKNOWN w automacie** (brak w Core API) |
 
 **Faza 0 UI:** statusy w zakładce byłyby UNKNOWN — UI jeszcze nie istnieje.  
-**Probe maili:** czyta heartbeat (scheduler / workflow ACTIVE / szablony / webhook / n8n API) **oraz** parę świadek-formularz / karta Sortowni (H-LEAD-FORM). Sam brak kart bez maila Zapytanie **nie** jest DOWN (NR-1, NR-14).
+**Probe maili:** czyta heartbeat (scheduler / workflow ACTIVE / **n8n executions** / szablony / webhook / n8n API) **oraz** parę świadek-formularz / karta Sortowni (H-LEAD-FORM). Sam brak kart bez maila Zapytanie **nie** jest DOWN (NR-1, NR-14). ACTIVE bez error executions **nie** maluje H-CALL na zielono przy 402.
 
 ---
 
@@ -461,7 +461,7 @@ Gdy zadanie brzmi „zrób zakładkę / zaimplementuj Stan systemu”:
 | Źródło | Zakaz | Co zamiast | Szacunek |
 |---|---|---|---|
 | Twenty workflow credits | HTTP/Code w workflow, zapis rekordów health | tylko GET REST (`/workflows`, `/mailTemplates?limit=1`, `/webhooks`, `/opportunities?limit=1` Sortownia, `/messages?limit=20` Zapytanie, filtr Owocni) | ~6 GET × instancja × ~49 runów/dzień |
-| n8n | nowy workflow / cron / execution | 1× GET API `active`. **Brak klucza / nieaktywne = H-CALL DOWN** (fail-closed). | 49 wywołań/dzień gdy klucz jest; 0 executions |
+| n8n | nowy workflow / cron / **odpalanie** execution | 1× GET workflows (`active`) + 1× GET `executions?workflowId=&limit=20`. **Brak klucza / nieaktywne = H-CALL DOWN** (fail-closed). Error execution (402) = H-CALL DOWN. | ~98 GET/dzień gdy klucz jest; 0 nowych runów |
 | GCP / Stape | nowy job `*/5`; HTTP do worker/Robot/Play | 1 CF min-instances=0, **co 30 min** + **08:00**; odczyt listy **istniejących** Scheduler jobs | ~49 cold-startów/dzień, 256 MiB, timeout 60 s |
 | Twenty write | obiekt ping, Notes, Opportunity | snapshot GCS `last.json` (prywatny) + publiczny `ui.json` (bez sekretów) | ~4 ops GCS / run (write+cacheControl × 2) |
 
@@ -542,6 +542,7 @@ DEGRADED (np. 0 push Meta, poll żywy) **tylko w digescie**, nie w pagerze.
 
 | Data | Zmiana | Kto | Powód |
 |---|---|---|---|
+| 2026-09-15 | H-CALL: GET n8n executions; error (402 Gateway) przy ACTIVE = DOWN; ≥2 success = recovery. | Grok | Incydent 11–15.09: transkrypty nie wpadały, raport zielony |
 | 2026-09-07 | Faza 2: UI czyta `ui.json` (GCS publiczny) + LF fallback; probe zapisuje kopię bez sekretów. Screenshot nadal OPEN. | Composer | GO „faza druga” |
 | 2026-09-07 | Faza 1 start: app `owocni-ops` (STANDALONE + inwentarz H-\*, bez live probe). OQ-H1 = nowa app. Live sandbox nadal OPEN. | Composer | GO „wdrażamy A” |
 | 2026-08-17 | Fail-closed: n8n nie podpięte / brak schedulera = DOWN (nie UNKNOWN/OK) | Composer | n8n nieopłacone; nie malować H-CALL na zielono |

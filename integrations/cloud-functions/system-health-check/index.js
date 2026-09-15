@@ -19,7 +19,7 @@ const {
 } = require("./evaluate");
 const { sendHealthEmail } = require("./email");
 
-const BUILD_ID = "2026-09-07-health-ui-snapshot";
+const BUILD_ID = "2026-09-15-h-call-n8n-executions";
 
 function gateOpen() {
   const until = process.env.HEALTH_GATE_UNTIL;

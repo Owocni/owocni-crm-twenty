@@ -46,6 +46,11 @@ const {
   decideSampleWeekOwner,
   startOfWarsawDayIso,
 } = require("../shared/sampleWeekRouting");
+const {
+  isLeadEmailBlocked,
+  findBlockedLeadEmail,
+  collectTaskEmails,
+} = require("../shared/leadEmailBlocklist");
 
 const ADAPTER_ID = "crm:twenty_create_lead";
 
@@ -1488,6 +1493,20 @@ async function processOneTask(task, audit, allPending) {
     return;
   }
 
+  const blocked = findBlockedLeadEmail(collectTaskEmails(taskData));
+  if (blocked) {
+    console.log(
+      "SKIP — blocked email",
+      idOid,
+      "email=",
+      blocked.email,
+      "handle=",
+      blocked.handle,
+    );
+    await updateTaskDone(task.key, taskData, "skipped_blocked_email", audit);
+    return;
+  }
+
   console.log(
     ADAPTER_ID,
     "task",
@@ -1671,6 +1690,7 @@ module.exports = {
   shouldSeedFormInquiryEmail,
   normalizeFormMessageText,
   isFormInquiryTokenSpam,
+  isLeadEmailBlocked,
   FORM_INQUIRY_EMAIL_SUBJECT,
   addFormInquiryToParticipant,
   attachMessageToLeadsChannel,

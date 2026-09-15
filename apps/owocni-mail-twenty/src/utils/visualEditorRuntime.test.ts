@@ -47,11 +47,28 @@ describe('buildVisualEditorSrcDoc', () => {
         sessionRefreshUrl: 'https://example.com/s/mail/refresh-composer-session',
         sessionTicket: 'a'.repeat(64),
         uploadUrl: 'https://example.com/s/mail/upload-attachment',
-        envelope: { to: 'test9959058@fastman.eu', subject: 'Test' },
+        envelope: {
+          to: 'test9959058@fastman.eu',
+          subject: 'Test',
+          cardPhone: '+48790359039',
+        },
       },
     });
 
     expect(html).toContain('id="owocni-v2-send"');
+    expect(html).toContain('id="owocni-v2-sms-toggle"');
+    expect(html).toContain('id="owocni-v2-sms-body"');
+    expect(html).toContain('placeholder="Wpisz numer telefonu"');
+    expect(html).toContain('value="+48790359039"');
+    expect(html).not.toContain('placeholder="790 359 039"');
+    expect(html).toContain('v2FillPristineForm()');
+    expect(html).toContain('Oferta Marta');
+    expect(html).toContain('smsEnabled: v2SmsOpen()');
+    expect(html).toContain('v2RememberSeed(true)');
+    expect(html).toContain('v2SeedSigPlain');
+    expect(html).not.toContain(
+      '.replace(/<blockquote[\\s\\S]*?<\\/blockquote>/gi, \'\')',
+    );
     expect(html).toContain('Wyślij email');
     expect(html).toContain('composerV2: true');
     expect(html).toContain('test9959058@fastman.eu');
@@ -65,6 +82,7 @@ describe('buildVisualEditorSrcDoc', () => {
     expect(html).toContain('attemptId: v2AttemptId');
     expect(html).toContain('bodyHash: v2Hash(html)');
     expect(html).toContain('htmlBodyBase64: toBase64(html)');
+    expect(html).toContain('seedSigPlain: v2SeedSigPlain');
     expect(html).toContain('id="owocni-v2-to"');
     expect(html).toContain('id="owocni-v2-to-row"');
     expect(html).toContain('id="owocni-v2-cc-toggle"');

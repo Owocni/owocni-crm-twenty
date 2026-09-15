@@ -109,4 +109,15 @@ describe('composer v2 attachment picker', () => {
     expect(src).toContain('Nie udało się dodać');
     expect(src).toContain('Nie odczytano pliku');
   });
+
+  it('does not treat signature-caret typing as an empty body', () => {
+    const src = composerV2RuntimeScript();
+
+    expect(src).toContain('v2SeedSigPlain');
+    expect(src).toContain('v2RememberSeed');
+    expect(src).toContain('gmail_quote');
+    expect(src).not.toMatch(
+      /replace\(\/<blockquote\[\\s\\S\]\*\?<\\\/blockquote>/,
+    );
+  });
 });

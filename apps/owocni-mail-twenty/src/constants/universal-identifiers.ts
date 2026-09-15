@@ -99,3 +99,7 @@ export const MAIL_SIGNATURE_EDITOR_WIDGET_UNIVERSAL_IDENTIFIER =
 /** Opportunity.callTranscripts — sandbox field id (custom relation). */
 export const OPPORTUNITY_CALL_TRANSCRIPTS_FIELD_UNIVERSAL_IDENTIFIER =
   '047184ce-e269-4459-b268-119c1b5a9cd8';
+
+/** Owocni Mail application secret — paste from Bitwarden after deploy. */
+export const SMSAPI_OAUTH_TOKEN_VARIABLE_UNIVERSAL_IDENTIFIER =
+  'c3f8a1d4-6b2e-4f90-9c17-8a5e4d2b7f31';

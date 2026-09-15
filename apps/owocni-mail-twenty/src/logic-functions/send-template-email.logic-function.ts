@@ -11,6 +11,7 @@ import {
 } from 'src/utils/findSendableEmailAccount';
 import {
   parseRouteBody,
+  readBooleanField,
   readNumberField,
   readStringField,
 } from 'src/utils/parseRouteBody';
@@ -52,6 +53,7 @@ import {
   parseComposerSendAttempt,
   serializeComposerSendAttempt,
 } from 'src/utils/composerSendAttempt';
+import { sendComposerSms } from 'src/utils/sendComposerSms';
 
 function applyVars(text: string, vars: Record<string, string>): string {
   return Object.entries(vars).reduce(
@@ -189,7 +191,7 @@ const handler = async (event: RoutePayload) => {
     const { html: customBody, clientSent: clientSentBody } =
       await resolveSendHtmlBody(payload, composerV2 ? undefined : getEditorDraft);
 
-    if (composerV2 && isUnintendedEmptyReply(customBody)) {
+    if (composerV2 && isUnintendedEmptyReply(customBody, readStringField(payload, 'seedSigPlain'))) {
       return {
         ok: false,
         error:
@@ -559,6 +561,20 @@ const handler = async (event: RoutePayload) => {
       );
     }
 
+    const sms = await sendComposerSms({
+      coreClient,
+      request: {
+        enabled: readBooleanField(payload, 'smsEnabled'),
+        phone: readStringField(payload, 'smsPhone'),
+        message: readStringField(payload, 'smsMessage'),
+        opportunityId: opportunityId || undefined,
+        personId:
+          person?.id && person.id !== opportunityId
+            ? person.id
+            : undefined,
+      },
+    });
+
     return {
       ok: true,
       to: email,
@@ -571,6 +587,7 @@ const handler = async (event: RoutePayload) => {
       bodySource: clientSentBody || customBody ? 'client' : 'template',
       bodyLength: htmlBody.length,
       bodyHash,
+      sms,
       ...(internalHandoff ? { internalHandoff: true, threadAttached } : {}),
     };
   } catch (unexpectedError) {
